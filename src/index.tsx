@@ -13,7 +13,7 @@ const language = messages[navigatorLanguage] ? navigatorLanguage : 'en'
 const rootComponent = (
   <IntlProvider locale={language} messages={messages[language]}>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <App />
+      <App/>
     </BrowserRouter>
   </IntlProvider>
 )
