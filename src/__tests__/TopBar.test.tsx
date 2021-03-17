@@ -1,5 +1,5 @@
 import React from 'react'
-import {TopBar} from '../../components/topbar/TopBar'
+import {TopBar} from '../components/topbar/TopBar'
 import {shallow} from 'enzyme'
 
 describe('TopBar tests', function () {

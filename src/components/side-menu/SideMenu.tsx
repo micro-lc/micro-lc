@@ -10,19 +10,11 @@ export interface SideMenuProps {
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({entries}) => {
-  const entriesMapper = (entry: MenuEntry) => <SideMenuEntry key={entry.name} {...entry}/>
+  const entriesMapper = (entry: MenuEntry) => (<Menu.Item key={entry.name}>{entry.name}</Menu.Item>)
 
   return (
     <Menu mode="inline">
       {entries.map(entriesMapper)}
     </Menu>
-  )
-}
-
-const SideMenuEntry: React.FC<MenuEntry> = ({name}) => {
-  return (
-    <Menu.Item key={name}>
-      {name}
-    </Menu.Item>
   )
 }

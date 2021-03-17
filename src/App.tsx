@@ -3,7 +3,7 @@ import {Layout} from 'antd'
 import {Content, Header} from 'antd/lib/layout/layout'
 import {TopBar} from './components/topbar/TopBar'
 import {LayoutContent} from './components/layout-content/layout-content'
-import 'antd/dist/antd.min.css'
+import './App.less'
 
 const App: React.FC = () => {
   const [isSideMenuOpened, setSideMenuOpened] = useState(false)

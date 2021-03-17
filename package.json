@@ -4,7 +4,9 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
+    "@craco/craco": "^6.1.1",
     "antd": "^4.14.0",
+    "craco-less": "^1.17.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-intl": "^5.13.3",
@@ -12,9 +14,9 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "NODE_ENV=production INLINE_RUNTIME_CHUNK=false react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "lint": "eslint src --ext .js,.ts,.tsx",
     "coverage": "yarn test --coverage --watchAll=false",
     "dev:unit-watch": "yarn test",
