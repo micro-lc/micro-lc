@@ -1,6 +1,14 @@
-const en: {[key: string]: string} = require('./locales/en.json')
-const it: {[key: string]: string} = require('./locales/it.json')
+interface Translation {
+  [key: string]: string
+}
 
-const strings: {[key: string]: {[key: string]: string}} = {en, it}
+interface TranslationMap {
+  [key: string]: Translation
+}
+
+const en: Translation = require('./locales/en.json')
+const it: Translation = require('./locales/it.json')
+
+const strings: TranslationMap = {en, it}
 
 export default strings
