@@ -28,6 +28,7 @@
     "react/no-multi-comp": [2, {"ignoreStateless": true}],
     "react/no-unused-prop-types": 2,
     "react/no-unused-state": 2,
+    "react/prop-types": 0,
     "react/sort-prop-types": 2,
     "react/sort-comp": [2, {
         "order": [
