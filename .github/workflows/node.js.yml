@@ -16,7 +16,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    needs: prepare
 
     strategy:
       matrix:
