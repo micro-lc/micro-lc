@@ -1,11 +1,9 @@
-import {Layout} from 'antd'
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import {SideMenu} from '../side-menu/SideMenu'
+import {Layout} from 'antd'
 import {motion} from 'framer-motion'
 
-const {Sider, Content} = Layout
+import {SideMenu} from '../side-menu/SideMenu'
 
 const layoutContentProps = {
   burgerState: PropTypes.array.isRequired
@@ -23,12 +21,16 @@ export const LayoutContent: React.FC<LayoutContentProps> = ({burgerState: [isOpe
 
   return (
     <Layout>
-      <motion.nav animate={isOpened ? 'open' : 'closed'} variants={variants}>
-        <Sider>
+      <motion.nav
+        animate={isOpened ? 'open' : 'closed'}
+        transition={{ease: 'linear', duration: 0.2}}
+        variants={variants}
+      >
+        <Layout.Sider width={250}>
           {isOpened && <SideMenu entries={[{name: 'entry_1'}, {name: 'entry_2'}]}/>}
-        </Sider>
+        </Layout.Sider>
       </motion.nav>
-      <Content onClick={closeSideMenu}/>
+      <Layout.Content data-testid="layout-content-overlay" onClick={closeSideMenu}/>
     </Layout>
   )
 }

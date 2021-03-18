@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {Layout} from 'antd'
-import {Content, Header} from 'antd/lib/layout/layout'
 
 import {TopBar} from './components/topbar/TopBar'
 import {LayoutContent} from './components/layout-content/LayoutContent'
@@ -11,12 +10,12 @@ const App: React.FC = () => {
 
   return (
     <Layout>
-      <Header style={{background: 'white'}}>
+      <Layout.Header>
         <TopBar burgerState={burgerState}/>
-      </Header>
-      <Content>
+      </Layout.Header>
+      <Layout.Content>
         <LayoutContent burgerState={burgerState}/>
-      </Content>
+      </Layout.Content>
     </Layout>
   )
 }

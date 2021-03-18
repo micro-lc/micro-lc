@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
-import './TopBar.module.css'
+import styles from './TopBar.module.css'
 
 const topBarProps = {
   burgerState: PropTypes.array.isRequired
@@ -12,12 +12,12 @@ type TopBarProps = PropTypes.InferProps<typeof topBarProps>
 
 export const TopBar: React.FC<TopBarProps> = ({burgerState}) => {
   return (
-    <>
+    <div className={styles.container}>
       <BurgerIcon burgerState={burgerState}/>
       <span data-testid="topbar-title">
         <FormattedMessage id="topBarTitle"/>
       </span>
-    </>
+    </div>
   )
 }
 
@@ -28,7 +28,7 @@ const BurgerIcon: React.FC<TopBarProps> = ({burgerState: [isOpened, setOpened]})
 
   const manageToggle = () => {
     setChecked(!isChecked)
-    setOpened(!isChecked)
+    setOpened(!isOpened)
   }
 
   return (
