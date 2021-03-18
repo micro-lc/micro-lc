@@ -11,16 +11,16 @@ describe('TopBar tests', function () {
   })
 
   it('TopBar is toggling', () => {
-    let lastToggle = false
+    const mockBurgerClick = jest.fn((isToggled) => {
+    })
     render(
       <TopBar
-        onBurgerClick={(isToggled) => {
-          lastToggle = !lastToggle
-          expect(isToggled).toEqual(lastToggle)
-        }}
+        onBurgerClick={mockBurgerClick}
       />)
     const toggle = screen.queryByTestId('topbar-side-menu-toggle')
     userEvent.click(toggle)
     userEvent.click(toggle)
+    expect(mockBurgerClick.mock.calls[0][0]).toBeTruthy()
+    expect(mockBurgerClick.mock.calls[1][0]).not.toBeTruthy()
   })
 })
