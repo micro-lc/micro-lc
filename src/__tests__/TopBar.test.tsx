@@ -1,19 +1,20 @@
 import React from 'react'
-import {render, screen} from '@testing-library/react'
+import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import {TopBar} from '../components/topbar/TopBar'
+import RenderWithReactIntl from './utils'
 
 describe('TopBar tests', function () {
   it('TopBar is working', () => {
-    render(<TopBar/>)
+    RenderWithReactIntl(<TopBar/>)
     expect(screen.queryByTestId('topbar-title')).toHaveTextContent("Hello, I'm the TopBar!")
   })
 
   it('TopBar is toggling', () => {
     const mockBurgerClick = jest.fn((isToggled) => {
     })
-    render(
+    RenderWithReactIntl(
       <TopBar
         onBurgerClick={mockBurgerClick}
       />)

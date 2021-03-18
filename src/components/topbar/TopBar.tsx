@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useIntl} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 import './TopBar.module.css'
@@ -11,12 +11,12 @@ const topBarProps = {
 type TopBarProps = PropTypes.InferProps<typeof topBarProps>
 
 export const TopBar: React.FC<TopBarProps> = ({onBurgerClick}) => {
-  const intl = useIntl()
-
   return (
     <>
       <BurgerIcon onBurgerClick={onBurgerClick}/>
-      <span data-testid="topbar-title">{intl.formatMessage({id: 'topBarTitle'})}</span>
+      <span data-testid="topbar-title">
+        <FormattedMessage id="topBarTitle"/>
+      </span>
     </>
   )
 }
