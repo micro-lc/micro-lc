@@ -1,6 +1,7 @@
 import React from 'react'
-import {SideMenu} from '../components/side-menu/SideMenu'
 import {render, screen} from '@testing-library/react'
+
+import {SideMenu} from '../components/side-menu/SideMenu'
 
 describe('SideMenu tests', () => {
   it('side menu show entries', () => {
