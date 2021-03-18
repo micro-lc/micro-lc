@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import {useIntl} from 'react-intl'
-import {Button} from 'antd'
 
-import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
+import './TopBar.module.css'
 
 export interface TopBarProps {
   onBurgerClick?: (isToggled: boolean) => void
@@ -11,20 +10,29 @@ export interface TopBarProps {
 export const TopBar: React.FC<TopBarProps> = ({onBurgerClick}) => {
   const intl = useIntl()
 
-  const [isToggled, setToggled] = useState(false)
+  return (
+    <>
+      <BurgerIcon onBurgerClick={onBurgerClick}/>
+      <span id="topbar-title">{intl.formatMessage({id: 'topBarTitle'})}</span>
+    </>
+  )
+}
+
+const BurgerIcon: React.FC<TopBarProps> = ({onBurgerClick}) => {
+  const [isChecked, setChecked] = useState(false)
 
   const manageToggle = () => {
-    const newToggledState = !isToggled
-    setToggled(newToggledState)
-    onBurgerClick?.(newToggledState)
+    const newCheckedState = !isChecked
+    setChecked(newCheckedState)
+    onBurgerClick?.(newCheckedState)
   }
 
   return (
-    <>
-      <Button id="topbar-side-menu-toggle" onClick={manageToggle} style={{marginBottom: 16}} type="primary">
-        {isToggled ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-      </Button>
-      <span id="topbar-title">{intl.formatMessage({id: 'topBarTitle'})}</span>
-    </>
+    <label htmlFor="check" onClick={manageToggle}>
+      <input checked={isChecked} id="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
+      <span/>
+      <span/>
+      <span/>
+    </label>
   )
 }

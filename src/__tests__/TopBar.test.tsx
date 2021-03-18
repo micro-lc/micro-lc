@@ -1,6 +1,6 @@
 import React from 'react'
 import {TopBar} from '../components/topbar/TopBar'
-import {shallow} from 'enzyme'
+import {mount, shallow} from 'enzyme'
 
 describe('TopBar tests', function () {
   it('TopBar is working', () => {
@@ -10,13 +10,15 @@ describe('TopBar tests', function () {
 
   it('TopBar is toggling', () => {
     let lastToggle = false
-    const component = shallow(
+    const component = mount(
       <TopBar
         onBurgerClick={(isToggled) => {
           lastToggle = !lastToggle
           expect(isToggled).toEqual(lastToggle)
         }}
       />)
+    component.mount()
+    component.find('#topbar-side-menu-toggle').simulate('click')
     component.find('#topbar-side-menu-toggle').simulate('click')
   })
 })
