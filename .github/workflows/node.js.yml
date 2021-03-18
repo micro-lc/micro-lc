@@ -53,11 +53,10 @@ jobs:
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
             VERSION=$(echo ${VERSION} | sed s/^v//)
-          elif [[ $GITHUB_REF == refs/heads/master ]]; then
+          elif [[ $GITHUB_REF == refs/heads/main ]]; then
             VERSION=latest
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
-          echo ::set-output name=version::${VERSION}
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=image::${DOCKER_IMAGE}
 
