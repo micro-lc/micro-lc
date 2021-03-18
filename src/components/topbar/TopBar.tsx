@@ -5,15 +5,15 @@ import PropTypes from 'prop-types'
 import './TopBar.module.css'
 
 const topBarProps = {
-  onBurgerClick: PropTypes.func
+  burgerState: PropTypes.array.isRequired
 }
 
 type TopBarProps = PropTypes.InferProps<typeof topBarProps>
 
-export const TopBar: React.FC<TopBarProps> = ({onBurgerClick}) => {
+export const TopBar: React.FC<TopBarProps> = ({burgerState}) => {
   return (
     <>
-      <BurgerIcon onBurgerClick={onBurgerClick}/>
+      <BurgerIcon burgerState={burgerState}/>
       <span data-testid="topbar-title">
         <FormattedMessage id="topBarTitle"/>
       </span>
@@ -23,18 +23,17 @@ export const TopBar: React.FC<TopBarProps> = ({onBurgerClick}) => {
 
 TopBar.propTypes = topBarProps
 
-const BurgerIcon: React.FC<TopBarProps> = ({onBurgerClick}) => {
+const BurgerIcon: React.FC<TopBarProps> = ({burgerState: [isOpened, setOpened]}) => {
   const [isChecked, setChecked] = useState(false)
 
   const manageToggle = () => {
-    const newCheckedState = !isChecked
-    setChecked(newCheckedState)
-    onBurgerClick?.(newCheckedState)
+    setChecked(!isChecked)
+    setOpened(!isChecked)
   }
 
   return (
     <label htmlFor="check" onClick={manageToggle}>
-      <input checked={isChecked} data-testid="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
+      <input checked={isOpened} data-testid="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
       <span/>
       <span/>
       <span/>

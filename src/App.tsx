@@ -7,15 +7,15 @@ import {LayoutContent} from './components/layout-content/layout-content'
 import './App.less'
 
 const App: React.FC = () => {
-  const [isSideMenuOpened, setSideMenuOpened] = useState(false)
+  const burgerState = useState(false)
 
   return (
     <Layout>
       <Header style={{background: 'white'}}>
-        <TopBar onBurgerClick={setSideMenuOpened}/>
+        <TopBar burgerState={burgerState}/>
       </Header>
       <Content>
-        <LayoutContent isSideMenuOpened={isSideMenuOpened}/>
+        <LayoutContent burgerState={burgerState}/>
       </Content>
     </Layout>
   )

@@ -7,7 +7,7 @@ import RenderWithReactIntl from './utils'
 
 describe('TopBar tests', function () {
   it('TopBar is working', () => {
-    RenderWithReactIntl(<TopBar/>)
+    RenderWithReactIntl(<TopBar burgerState={[]}/>)
     expect(screen.queryByTestId('topbar-title')).toHaveTextContent("Hello, I'm the TopBar!")
   })
 
@@ -16,7 +16,7 @@ describe('TopBar tests', function () {
     })
     RenderWithReactIntl(
       <TopBar
-        onBurgerClick={mockBurgerClick}
+        burgerState={[false, mockBurgerClick]}
       />)
     const toggle = screen.queryByTestId('topbar-side-menu-toggle')
     userEvent.click(toggle)

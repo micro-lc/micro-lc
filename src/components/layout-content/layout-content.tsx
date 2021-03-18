@@ -4,20 +4,23 @@ import PropTypes from 'prop-types'
 
 import {SideMenu} from '../side-menu/SideMenu'
 
-const {Sider} = Layout
+const {Sider, Content} = Layout
 
 const layoutContentProps = {
-  isSideMenuOpened: PropTypes.bool
+  burgerState: PropTypes.array.isRequired
 }
 
 type LayoutContentProps = PropTypes.InferProps<typeof layoutContentProps>
 
-export const LayoutContent: React.FC<LayoutContentProps> = ({isSideMenuOpened}) => {
+export const LayoutContent: React.FC<LayoutContentProps> = ({burgerState: [isOpened, setOpened]}) => {
+  const closeSideMenu = () => setOpened(false)
+
   return (
     <Layout>
       <Sider>
-        {isSideMenuOpened && <SideMenu entries={[{name: 'entry_1'}, {name: 'entry_2'}]}/>}
+        {isOpened && <SideMenu entries={[{name: 'entry_1'}, {name: 'entry_2'}]}/>}
       </Sider>
+      <Content onClick={closeSideMenu}/>
     </Layout>
   )
 }
