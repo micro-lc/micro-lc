@@ -1,13 +1,20 @@
 import {Divider, Menu} from 'antd'
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export interface MenuEntry {
-  name: string
+const menuEntry = {
+  name: PropTypes.string.isRequired
 }
 
-export interface SideMenuProps {
-  entries: MenuEntry[]
+type MenuEntry = PropTypes.InferProps<typeof menuEntry>
+
+const sideMenuProps = {
+  entries: PropTypes.arrayOf(
+    PropTypes.exact(menuEntry).isRequired
+  ).isRequired
 }
+
+type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
 
 const dividerStyle: React.CSSProperties = {margin: 0, width: '80%', minWidth: '80%', float: 'right'}
 
@@ -25,3 +32,5 @@ export const SideMenu: React.FC<SideMenuProps> = ({entries}) => {
     </Menu>
   )
 }
+
+SideMenu.propTypes = sideMenuProps

@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 import {useIntl} from 'react-intl'
+import PropTypes from 'prop-types'
 
 import './TopBar.module.css'
 
-export interface TopBarProps {
-  onBurgerClick?: (isToggled: boolean) => void
+const topBarProps = {
+  onBurgerClick: PropTypes.func.isRequired
 }
+
+type TopBarProps = PropTypes.InferProps<typeof topBarProps>
 
 export const TopBar: React.FC<TopBarProps> = ({onBurgerClick}) => {
   const intl = useIntl()
@@ -17,6 +20,8 @@ export const TopBar: React.FC<TopBarProps> = ({onBurgerClick}) => {
     </>
   )
 }
+
+TopBar.propTypes = topBarProps
 
 const BurgerIcon: React.FC<TopBarProps> = ({onBurgerClick}) => {
   const [isChecked, setChecked] = useState(false)
@@ -36,3 +41,5 @@ const BurgerIcon: React.FC<TopBarProps> = ({onBurgerClick}) => {
     </label>
   )
 }
+
+BurgerIcon.propTypes = topBarProps

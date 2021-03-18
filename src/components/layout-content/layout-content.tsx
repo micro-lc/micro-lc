@@ -1,12 +1,16 @@
-import {SideMenu} from '../side-menu/SideMenu'
 import {Layout} from 'antd'
 import React from 'react'
+import PropTypes from 'prop-types'
+
+import {SideMenu} from '../side-menu/SideMenu'
 
 const {Sider} = Layout
 
-export interface LayoutContentProps {
-  isSideMenuOpened?: boolean
+const layoutContentProps = {
+  isSideMenuOpened: PropTypes.bool
 }
+
+type LayoutContentProps = PropTypes.InferProps<typeof layoutContentProps>
 
 export const LayoutContent: React.FC<LayoutContentProps> = ({isSideMenuOpened}) => {
   return (
@@ -17,3 +21,5 @@ export const LayoutContent: React.FC<LayoutContentProps> = ({isSideMenuOpened}) 
     </Layout>
   )
 }
+
+LayoutContent.propTypes = layoutContentProps
