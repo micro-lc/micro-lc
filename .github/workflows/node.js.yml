@@ -84,6 +84,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ./build
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}
 
