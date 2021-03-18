@@ -48,7 +48,7 @@ jobs:
 
   docker-build:
     name: Build docker
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' }}
 
