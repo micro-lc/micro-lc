@@ -4,13 +4,14 @@ label {
   width: 70px;
   cursor: pointer;
   float: left;
+  margin-top: 10px;
 }
 
 label span {
   background: #1DA57A;
   border-radius: 10px;
-  height: 7px;
-  margin: 7px 0;
+  height: 5px;
+  margin: 5px 0;
   transition: .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
