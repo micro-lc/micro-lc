@@ -1,4 +1,4 @@
-import {Divider, Menu} from 'antd'
+import {Menu} from 'antd'
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -21,8 +21,8 @@ const dividerStyle: React.CSSProperties = {margin: 0, width: '80%', minWidth: '8
 export const SideMenu: React.FC<SideMenuProps> = ({entries}) => {
   const entriesMapper = (entry: MenuEntry) => (
     <React.Fragment key={entry.name}>
-      <Menu.Item className="menu-entry" key={entry.name}>{entry.name}</Menu.Item>
-      <Divider style={dividerStyle} type="horizontal"/>
+      <Menu.Item className="menu-entry">{entry.name}</Menu.Item>
+      <Menu.Divider style={dividerStyle}/>
     </React.Fragment>
   )
 
