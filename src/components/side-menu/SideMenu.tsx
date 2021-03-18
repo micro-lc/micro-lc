@@ -27,7 +27,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({entries}) => {
   )
 
   return (
-    <Menu mode="inline" style={{height: '93vh'}}>
+    <Menu mode="inline" style={{height: '90.5vh', marginTop: '24px'}}>
       {entries.map(entriesMapper)}
     </Menu>
   )
