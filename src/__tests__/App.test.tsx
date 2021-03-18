@@ -18,7 +18,7 @@ describe('App test', () => {
     const toggle = screen.queryByTestId('topbar-side-menu-toggle')
     expect(await screen.queryByText('entry_1')).toBeNull()
     userEvent.click(toggle)
-    expect(await screen.findByText('entry_1')).toBeVisible()
+    expect(await screen.findByText('entry_1')).toBeTruthy()
     userEvent.click(toggle)
     expect(await screen.queryByText('entry_1')).toBeNull()
   })

@@ -7,6 +7,7 @@
     "@craco/craco": "^6.1.1",
     "antd": "^4.14.0",
     "craco-less": "^1.17.1",
+    "framer-motion": "^4.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-intl": "^5.13.3",
