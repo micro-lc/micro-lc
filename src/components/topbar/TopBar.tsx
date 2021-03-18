@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import './TopBar.module.css'
 
 const topBarProps = {
-  onBurgerClick: PropTypes.func.isRequired
+  onBurgerClick: PropTypes.func
 }
 
 type TopBarProps = PropTypes.InferProps<typeof topBarProps>
@@ -16,7 +16,7 @@ export const TopBar: React.FC<TopBarProps> = ({onBurgerClick}) => {
   return (
     <>
       <BurgerIcon onBurgerClick={onBurgerClick}/>
-      <span id="topbar-title">{intl.formatMessage({id: 'topBarTitle'})}</span>
+      <span data-testid="topbar-title">{intl.formatMessage({id: 'topBarTitle'})}</span>
     </>
   )
 }
@@ -34,7 +34,7 @@ const BurgerIcon: React.FC<TopBarProps> = ({onBurgerClick}) => {
 
   return (
     <label htmlFor="check" onClick={manageToggle}>
-      <input checked={isChecked} id="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
+      <input checked={isChecked} data-testid="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
       <span/>
       <span/>
       <span/>

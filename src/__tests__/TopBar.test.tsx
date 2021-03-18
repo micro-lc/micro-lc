@@ -1,24 +1,26 @@
 import React from 'react'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
 import {TopBar} from '../components/topbar/TopBar'
-import {mount, shallow} from 'enzyme'
 
 describe('TopBar tests', function () {
   it('TopBar is working', () => {
-    const component = shallow(<TopBar/>)
-    expect(component.find('#topbar-title').text()).toEqual("Hello, I'm the TopBar!")
+    render(<TopBar/>)
+    expect(screen.queryByTestId('topbar-title')).toHaveTextContent("Hello, I'm the TopBar!")
   })
 
   it('TopBar is toggling', () => {
     let lastToggle = false
-    const component = mount(
+    render(
       <TopBar
         onBurgerClick={(isToggled) => {
           lastToggle = !lastToggle
           expect(isToggled).toEqual(lastToggle)
         }}
       />)
-    component.mount()
-    component.find('#topbar-side-menu-toggle').simulate('click')
-    component.find('#topbar-side-menu-toggle').simulate('click')
+    const toggle = screen.queryByTestId('topbar-side-menu-toggle')
+    userEvent.click(toggle)
+    userEvent.click(toggle)
   })
 })

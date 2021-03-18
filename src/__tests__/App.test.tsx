@@ -1,30 +1,24 @@
 import React from 'react'
-import {mount, ReactWrapper} from 'enzyme'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import App from '../App'
 
 describe('App test', () => {
-  let component: ReactWrapper
-
   beforeEach(() => {
-    component = mount(<App/>)
-    component.mount()
-  })
-
-  afterEach(() => {
-    component.unmount()
+    render(<App/>)
   })
 
   it('renders without crashing', () => {
-    expect(component.length).toEqual(1)
+    expect(screen.queryByText("Hello, I'm the TopBar!")).toBeTruthy()
   })
 
-  it('toggle is working', () => {
-    const componentToggle = component.find('#topbar-side-menu-toggle').first()
-    expect(component.text()).not.toContain('entry_1')
-    componentToggle.simulate('click')
-    expect(component.text()).toContain('entry_1')
-    componentToggle.simulate('click')
-    expect(component.text()).not.toContain('entry_1')
+  it('toggle is working', async () => {
+    const toggle = screen.queryByTestId('topbar-side-menu-toggle')
+    expect(await screen.queryByText('entry_1')).toBeNull()
+    userEvent.click(toggle)
+    expect(await screen.findByText('entry_1')).toBeVisible()
+    userEvent.click(toggle)
+    expect(await screen.queryByText('entry_1')).toBeNull()
   })
 })
