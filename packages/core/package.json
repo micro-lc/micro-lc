@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "@mia-platform-microlc/core",
   "version": "0.1.0",
   "module": "dist/core.esm.js",
   "main": "dist/index.js",

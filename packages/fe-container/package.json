@@ -1,5 +1,5 @@
 {
-  "name": "container-website",
+  "name": "@mia-platform-microlc/container-website",
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
@@ -65,7 +65,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
-    "core": "0.1.0",
+    "@mia-platform-microlc/core": "0.1.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-config-standard-react": "^11.0.1",

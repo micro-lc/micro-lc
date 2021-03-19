@@ -3,12 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "fe-container",
-    "core",
-    "be-config"
+    "packages/*"
   ],
   "repository": "git@github.com:mia-platform/microlc.git",
   "scripts": {
-    "start": "yarn workspaces run start"
+    "start": "yarn workspaces run start",
+    "lerna": "lerna",
+    "be-config": "yarn workspace be-config",
+    "core": "yarn workspace core",
+    "fe-container": "yarn workspace fe-container"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
+    "@staticdeploy/mock-server": "^2.0.0",
+    "faker": "^5.1.0",
+    "husky": "^4.3.0",
+    "lerna": "^3.22.1",
+    "npm-run-all": "^4.1.5",
+    "ramda": "^0.27.1"
   }
 }
