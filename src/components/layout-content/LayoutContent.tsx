@@ -44,7 +44,7 @@ const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
       animate={isOpened ? 'open' : 'closed'}
       {...motionNavSettings}
     >
-      <Layout.Sider width={250}>
+      <Layout.Sider width={256}>
         {isOpened && <SideMenu entries={[{name: 'entry_1'}, {name: 'entry_2'}]}/>}
       </Layout.Sider>
     </motion.nav>
