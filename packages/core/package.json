@@ -12,10 +12,11 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsc -w",
-    "build": "tsc",
-    "lint": "eslint . --ignore-path=.gitignore",
-    "prepare": "tsc"
+    "prepare": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json",
+    "lint": "yarn build && yarn lint:post-build",
+    "test": "yarn build && yarn test:post-build",
+    "start": "tsc -p tsconfig.json --watch"
   },
   "husky": {
     "hooks": {
@@ -27,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "husky": "^5.1.3",
+    "json-schema-to-ts": "^1.6.0",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3"
   },
