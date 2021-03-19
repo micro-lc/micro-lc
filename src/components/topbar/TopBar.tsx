@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
-import styles from './TopBar.module.css'
+import './TopBar.less'
 
 const topBarProps = {
   burgerState: PropTypes.array.isRequired
@@ -12,7 +12,7 @@ type TopBarProps = PropTypes.InferProps<typeof topBarProps>
 
 export const TopBar: React.FC<TopBarProps> = ({burgerState}) => {
   return (
-    <div className={styles.container}>
+    <div className="container">
       <BurgerIcon burgerState={burgerState}/>
       <span data-testid="topbar-title">
         <FormattedMessage id="topBarTitle"/>
