@@ -7,7 +7,7 @@
   ],
   "repository": "git@github.com:mia-platform/microlc.git",
   "scripts": {
-    "start": "yarn workspaces run start",
+    "start": "npm-run-all 'fe-container start' 'be-config start' 'core start'",
     "lerna": "lerna",
     "be-config": "yarn workspace @mia-platform-microlc/fe-website",
     "core": "yarn workspace @mia-platform-microlc/core",
