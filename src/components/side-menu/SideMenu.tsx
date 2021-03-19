@@ -2,21 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Menu} from 'antd'
 
-// Antd Header height is 64px
-const menuHeight = window.innerHeight - 64
-const style: {[key: string]: React.CSSProperties} = {
-  menu: {
-    height: `${menuHeight}px`,
-    paddingTop: '24px',
-    borderTop: '1px solid #d9d9d9'
-  },
-  divider: {
-    width: '80%',
-    minWidth: '80%',
-    float: 'right',
-    margin: 0
-  }
-}
+import style from './SideMenu.style'
 
 const menuEntry = {
   name: PropTypes.string.isRequired
