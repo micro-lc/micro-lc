@@ -39,7 +39,7 @@ HTML page in `packages/*/coverage/lcov-report/index.html`.
 
 This folder uses yarn as package manager.
 
-To run a script in a sub package, you should use `yarn workspace PACKAGE_NAME SCRIPT_NAME`.
+To run a script in a sub package, you can run `yarn workspace PACKAGE_NAME SCRIPT_NAME`.
 
 So, for example, to run tests in website sub package you should run:
 
