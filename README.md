@@ -65,7 +65,7 @@ This command will spin up the `fe-container` on port `3000`.
 
 ### CI/CD
 
-The `CI/CD` is powered by [`GitHub Actions`][`github-actions`].
+The `CI/CD` is powered by [GitHub Actions][github-actions].
 
 The pipelines are divided in `.yml` files, that you can find under `.github/workflows` folder. 
 
