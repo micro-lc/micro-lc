@@ -37,7 +37,7 @@ HTML page in `packages/*/coverage/lcov-report/index.html`.
 
 ### Run a package script
 
-This folder use yarn as package manager.
+This folder uses yarn as package manager.
 
 To run a script in a sub package, you should use `yarn workspace PACKAGE_NAME SCRIPT_NAME`.
 
