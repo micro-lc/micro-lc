@@ -1,5 +1,5 @@
 import React from 'react'
-import {screen} from '@testing-library/react'
+import {screen, waitForElementToBeRemoved} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import App from '../App'
@@ -20,6 +20,6 @@ describe('App test', () => {
     userEvent.click(toggle)
     expect(await screen.findByText('entry_1')).toBeTruthy()
     userEvent.click(toggle)
-    expect(await screen.queryByText('entry_1')).toBeNull()
+    await waitForElementToBeRemoved(() => screen.queryByText('entry_1'))
   })
 })

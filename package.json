@@ -9,17 +9,19 @@
   "scripts": {
     "start": "npm-run-all 'fe-container start' 'be-config start' 'core start'",
     "lerna": "lerna",
-    "be-config": "yarn workspace @mia-platform-microlc/fe-website",
-    "core": "yarn workspace @mia-platform-microlc/core",
+    "be-config": "yarn workspace @mia-platform/fe-website",
+    "core": "yarn workspace @mia-platform/core",
     "coverage": "yarn fe-container coverage",
-    "fe-container": "yarn workspace @mia-platform-microlc/fe-website"
+    "fe-container": "yarn workspace @mia-platform/fe-website"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
     "@staticdeploy/mock-server": "^2.0.0",
+    "coveralls": "^3.1.0",
     "faker": "^5.1.0",
+    "handlebars": "4.5.0",
     "husky": "^4.3.0",
     "lerna": "^3.22.1",
     "npm-run-all": "^4.1.5",

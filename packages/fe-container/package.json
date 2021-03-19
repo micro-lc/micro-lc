@@ -1,5 +1,5 @@
 {
-  "name": "@mia-platform-microlc/fe-website",
+  "name": "@mia-platform/fe-website",
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@babel/register": "^7.13.8",
-    "@mia-platform-microlc/core": "0.1.0",
+    "@mia-platform/core": "0.1.0",
     "@staticdeploy/mock-server": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",

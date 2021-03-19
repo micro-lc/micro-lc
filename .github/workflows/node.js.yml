@@ -27,8 +27,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install --frozen-lockfile
-    - run: yarn add --dev coveralls
-    - run: yarn add -D handlebars@4.5.0
     - run: yarn coverage
     - name: Coveralls
       uses: coverallsapp/github-action@master

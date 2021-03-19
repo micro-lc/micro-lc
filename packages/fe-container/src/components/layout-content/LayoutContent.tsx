@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Layout} from 'antd'
 import {motion} from 'framer-motion'
@@ -39,13 +39,25 @@ const motionNavSettings = {
 }
 
 const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
+  const [animationState, setAnimationState] = useState(isOpened)
+
+  useEffect(() => {
+    if (isOpened) {
+      setAnimationState(isOpened)
+    } else {
+      setTimeout(() => {
+        setAnimationState(isOpened)
+      }, 250)
+    }
+  }, [isOpened])
+
   return (
     <motion.nav
       animate={isOpened ? 'open' : 'closed'}
       {...motionNavSettings}
     >
       <Layout.Sider width={256}>
-        {isOpened && <SideMenu entries={[{name: 'entry_1'}, {name: 'entry_2'}]}/>}
+        {animationState && <SideMenu entries={[{name: 'entry_1'}, {name: 'entry_2'}]}/>}
       </Layout.Sider>
     </motion.nav>
   )

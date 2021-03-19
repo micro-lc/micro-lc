@@ -1,5 +1,5 @@
 {
-  "name": "@mia-platform-microlc/be-config",
+  "name": "@mia-platform/be-config",
   "version": "0.1.0",
   "private": true,
   "scripts": {
