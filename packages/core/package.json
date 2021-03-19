@@ -1,0 +1,36 @@
+{
+  "name": "@mia-platform/core",
+  "version": "0.1.0",
+  "module": "dist/core.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsc -w",
+    "build": "tsc",
+    "lint": "eslint . --ignore-path=.gitignore",
+    "prepare": "tsc"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all lint"
+    }
+  },
+  "devDependencies": {
+    "@mia-platform/eslint-config-mia": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "husky": "^5.1.3",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
+  },
+  "eslintConfig": {
+    "extends": "@mia-platform/eslint-config-mia"
+  }
+}

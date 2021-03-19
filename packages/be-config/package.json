@@ -1,0 +1,8 @@
+{
+  "name": "@mia-platform/be-config",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "echo 'todo'"
+  }
+}
