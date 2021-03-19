@@ -9,9 +9,10 @@
   "scripts": {
     "start": "yarn workspaces run start",
     "lerna": "lerna",
-    "be-config": "yarn workspace be-config",
-    "core": "yarn workspace core",
-    "fe-container": "yarn workspace fe-container"
+    "be-config": "yarn workspace @mia-platform-microlc/fe-website",
+    "core": "yarn workspace @mia-platform-microlc/core",
+    "coverage": "yarn fe-container coverage",
+    "fe-container": "yarn workspace @mia-platform-microlc/fe-website"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
