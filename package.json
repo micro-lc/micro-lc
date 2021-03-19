@@ -2,82 +2,9 @@
   "name": "mia-microlc",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
-  "dependencies": {
-    "@craco/craco": "^6.1.1",
-    "antd": "^4.14.0",
-    "craco-less": "^1.17.1",
-    "framer-motion": "^4.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-intl": "^5.13.3",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3"
-  },
+  "workspaces": ["fe-container", "core"],
+  "repository": "git@github.com:mia-platform/microlc.git",
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "lint": "eslint src --ext .js,.ts,.tsx",
-    "coverage": "craco test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx",
-    "dev:unit-watch": "cracotest",
-    "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register",
-    "dev": "npm-run-all -p dev:** start",
-    "update-docker-version": "sed -i.bck \"s|version=\\\"[0-9]*\\.[0-9]*\\.[0-9]*.*\\\"|version=\\\"${npm_package_version}\\\"|\" Dockerfile",
-    "version": "npm run update-docker-version && rm -fr Dockerfile.bck && git add Dockerfile"
-  },
-  "proxy": "http://localhost:3456",
-  "standard-version": {
-    "skip": {
-      "bump": true,
-      "tag": true
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all lint coverage"
-    }
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/register": "^7.13.8",
-    "@staticdeploy/mock-server": "^2.0.0",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/react-hooks": "^5.1.0",
-    "@testing-library/user-event": "^13.0.1",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/react-router-dom": "^5.1.7",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-config-standard-react": "^11.0.1",
-    "eslint-plugin-flowtype": "^5.4.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-standard": "^5.0.0",
-    "husky": "^4.3.8",
-    "npm-run-all": "^4.1.5",
-    "standard-version": "^9.1.1",
-    "typescript": "^4.2.3"
+    "start": "yarn workspaces run start"
   }
 }
