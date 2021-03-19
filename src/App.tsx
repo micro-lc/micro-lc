@@ -1,8 +1,23 @@
-import React from 'react'
-import {useIntl} from 'react-intl'
+import React, {useState} from 'react'
+import {Layout} from 'antd'
 
-export default function App () {
-  const intl = useIntl()
+import {TopBar} from './components/topbar/TopBar'
+import {LayoutContent} from './components/layout-content/LayoutContent'
+import './App.less'
 
-  return <div>{intl.formatMessage({id: 'hello-word'})}</div>
+const App: React.FC = () => {
+  const burgerState = useState(false)
+
+  return (
+    <Layout>
+      <Layout.Header>
+        <TopBar burgerState={burgerState}/>
+      </Layout.Header>
+      <Layout.Content>
+        <LayoutContent burgerState={burgerState}/>
+      </Layout.Content>
+    </Layout>
+  )
 }
+
+export default App
