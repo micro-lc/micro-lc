@@ -2,7 +2,11 @@
   "name": "mia-microlc",
   "version": "0.1.0",
   "private": true,
-  "workspaces": ["fe-container", "core"],
+  "workspaces": [
+    "fe-container",
+    "core",
+    "be-config"
+  ],
   "repository": "git@github.com:mia-platform/microlc.git",
   "scripts": {
     "start": "yarn workspaces run start"

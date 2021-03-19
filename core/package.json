@@ -15,10 +15,8 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "lint": "eslint . --ignore-path=.gitignore",
+    "prepare": "tsdx build"
   },
   "husky": {
     "hooks": {
@@ -26,21 +24,15 @@
     }
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.1",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^5.0.0",
+    "@mia-platform/eslint-config-mia": "^3.0.0",
     "husky": "^5.1.3",
-    "size-limit": "^4.10.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.1.0",
-    "typescript": "^4.2.3"
-  },
-  "peerDependencies": {},
-  "dependencies": {
+    "typescript": "^4.2.3",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0"
+  },
+  "eslintConfig": {
+    "extends": "@mia-platform/eslint-config-mia"
   }
 }
