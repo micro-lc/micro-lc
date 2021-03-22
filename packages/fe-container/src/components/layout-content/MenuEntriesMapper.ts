@@ -1,4 +1,4 @@
-import {Plugin} from '@mia-platform/core/dist/models/configuration/plugin/Plugin'
+import {Plugin} from '@mia-platform/core'
 
 import {MenuEntry} from '../side-menu/SideMenu'
 

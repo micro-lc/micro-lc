@@ -12,11 +12,11 @@
     "node": ">=10"
   },
   "scripts": {
-    "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
     "lint": "yarn build && yarn lint:post-build",
-    "test": "yarn build && yarn test:post-build",
-    "start": "tsc -p tsconfig.json --watch"
+    "prepare": "tsc -p tsconfig.json",
+    "start": "tsc -p tsconfig.json --watch",
+    "test": "yarn build && yarn test:post-build"
   },
   "husky": {
     "hooks": {

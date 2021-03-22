@@ -15,7 +15,6 @@
     "lerna": "lerna",
     "lint": "npm-run-all 'fe-container lint'",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
-    "preinstall": "yarn core build",
     "start": "npm-run-all 'fe-container start' 'be-config start' 'core start'"
   },
   "devDependencies": {
