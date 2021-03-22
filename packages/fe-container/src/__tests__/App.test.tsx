@@ -13,8 +13,8 @@ describe('App test', () => {
     RenderWithReactIntl(<App/>)
   })
 
-  it('renders without crashing', () => {
-    expect(screen.queryByText("Hello, I'm the TopBar!")).toBeTruthy()
+  it('renders without crashing', async () => {
+    expect(await screen.findByText("Hello, I'm the TopBar!")).toBeTruthy()
   })
 
   it('toggle is working', async () => {
@@ -27,7 +27,7 @@ describe('App test', () => {
           id: '1'
         }]
       })
-    const toggle = screen.queryByTestId('topbar-side-menu-toggle')
+    const toggle = await screen.findByTestId('topbar-side-menu-toggle')
     expect(await screen.queryByText('entry_1')).toBeNull()
     userEvent.click(toggle)
     expect(await screen.findByText('entry_1')).toBeTruthy()

@@ -1,19 +1,13 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
-import PropTypes from 'prop-types'
 
 import './TopBar.less'
+import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 
-const topBarProps = {
-  burgerState: PropTypes.array.isRequired
-}
-
-type TopBarProps = PropTypes.InferProps<typeof topBarProps>
-
-export const TopBar: React.FC<TopBarProps> = ({burgerState}) => {
+export const TopBar: React.FC = () => {
   return (
     <div className="container">
-      <BurgerIcon burgerState={burgerState}/>
+      <BurgerIcon/>
       <span data-testid="topbar-title">
         <FormattedMessage id="topBarTitle"/>
       </span>
@@ -21,24 +15,21 @@ export const TopBar: React.FC<TopBarProps> = ({burgerState}) => {
   )
 }
 
-TopBar.propTypes = topBarProps
-
-const BurgerIcon: React.FC<TopBarProps> = ({burgerState: [isOpened, setOpened]}) => {
+const BurgerIcon: React.FC = () => {
+  const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
   const [isChecked, setChecked] = useState(false)
 
   const manageToggle = () => {
     setChecked(!isChecked)
-    setOpened(!isOpened)
+    setMenuOpened(!isMenuOpened)
   }
 
   return (
     <label htmlFor="check" onClick={manageToggle}>
-      <input checked={isOpened} data-testid="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
+      <input checked={isMenuOpened} data-testid="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
       <span/>
       <span/>
       <span/>
     </label>
   )
 }
-
-BurgerIcon.propTypes = topBarProps

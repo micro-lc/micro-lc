@@ -1,31 +1,25 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Layout} from 'antd'
 import {motion} from 'framer-motion'
 
 import {MenuEntry, SideMenu} from '../side-menu/SideMenu'
 import {useDelayedState} from '../../hooks/useDelayedState'
-import {retrieveConfiguration} from '../../services/microlc/microlc.service'
 import menuEntriesMapper from './MenuEntriesMapper'
+import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
+import {ConfigurationContext} from '../../contexts/Configuration.context'
 
-const layoutContentProps = {
-  burgerState: PropTypes.array.isRequired
-}
-
-type LayoutContentProps = PropTypes.InferProps<typeof layoutContentProps>
-
-export const LayoutContent: React.FC<LayoutContentProps> = ({burgerState: [isOpened, setOpened]}) => {
-  const closeSideMenu = () => setOpened(false)
+export const LayoutContent: React.FC = () => {
+  const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
+  const closeSideMenu = () => setMenuOpened(false)
 
   return (
     <Layout>
-      <AnimatedLayoutSider isOpened={isOpened}/>
+      <AnimatedLayoutSider isOpened={isMenuOpened}/>
       <Layout.Content data-testid="layout-content-overlay" onClick={closeSideMenu}/>
     </Layout>
   )
 }
-
-LayoutContent.propTypes = layoutContentProps
 
 const animatedLayoutProps = {
   isOpened: PropTypes.bool.isRequired
@@ -44,15 +38,12 @@ const motionNavSettings = {
 const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
   const [animationState] = useDelayedState(isOpened, 250)
   const [menuEntries, setMenuEntries] = useState<MenuEntry[]>([])
+  const configuration = useContext(ConfigurationContext)
 
   useEffect(() => {
-    const subscription = retrieveConfiguration()
-      .subscribe((configurations) => {
-        setMenuEntries(menuEntriesMapper(configurations.plugins))
-        document.title = configurations?.theming?.header?.pageTitle || document.title
-      })
-    return () => subscription.unsubscribe()
-  }, [])
+    document.title = configuration?.theming?.header?.pageTitle || document.title
+    setMenuEntries(menuEntriesMapper(configuration?.plugins))
+  }, [configuration])
 
   return (
     <motion.nav
