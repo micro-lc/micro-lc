@@ -4,6 +4,8 @@ import {catchError, map} from 'rxjs/operators'
 import {fromPromise} from 'rxjs/internal-compatibility'
 import axios, {AxiosRequestConfig} from 'axios'
 
+import {configuration} from '../../constants.json'
+
 const microlcAxiosConfig: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_CONFIG_HOST,
   responseType: 'json'
@@ -12,7 +14,7 @@ const microlcAxiosConfig: AxiosRequestConfig = {
 const axiosInstance = axios.create(microlcAxiosConfig)
 
 export const retrieveConfiguration: () => Observable<Configuration> = () => {
-  return fromPromise(axiosInstance.get<Configuration>('/api/v1/microlc/configuration'))
+  return fromPromise(axiosInstance.get<Configuration>(`${configuration.baseUrl}${configuration.endpoint}`))
     .pipe(
       map(response => response.data),
       catchError(() => of({}))

@@ -46,7 +46,7 @@ export const pluginSchema = {
     },
     externalLink: externalLinkSchema,
   },
-  required: ['id', 'label', 'pluginRoute', 'integrationMode'],
+  required: ['id', 'label', 'integrationMode'],
   additionalProperties: false,
 } as const
 

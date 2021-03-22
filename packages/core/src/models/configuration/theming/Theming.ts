@@ -8,7 +8,7 @@ export const themingSchema = {
     header: headerSchema,
     logo: {
       type: 'string',
-      description: 'Url del logo',
+      description: 'Logo url',
     },
     variables: {
       type: 'object',
