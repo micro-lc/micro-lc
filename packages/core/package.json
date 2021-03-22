@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "yarn build && yarn lint:post-build",
+    "lint": "yarn build && eslint src --ext .js,.ts,.tsx",
     "prepare": "tsc -p tsconfig.json",
     "start": "tsc -p tsconfig.json --watch",
     "test": "yarn build && yarn test:post-build"
@@ -31,8 +31,5 @@
     "json-schema-to-ts": "^1.6.0",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3"
-  },
-  "eslintConfig": {
-    "extends": "@mia-platform/eslint-config-mia"
   }
 }

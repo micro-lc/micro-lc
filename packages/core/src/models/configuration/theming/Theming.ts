@@ -1,21 +1,21 @@
-import {FromSchema} from "json-schema-to-ts";
+import {FromSchema} from 'json-schema-to-ts'
 
-import {headerSchema} from "./Header";
+import {headerSchema} from './Header'
 
 export const themingSchema = {
-  type: "object",
+  type: 'object',
   properties: {
     header: headerSchema,
     logo: {
-      type: "string",
-      description: "Url del logo"
+      type: 'string',
+      description: 'Url del logo',
     },
     variables: {
-      type: "object"
-    }
+      type: 'object',
+    },
   },
   required: ['logo', 'variables'],
-  additionalProperties: false
-} as const;
+  additionalProperties: false,
+} as const
 
 export type Theming = FromSchema<typeof themingSchema>

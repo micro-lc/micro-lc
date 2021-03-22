@@ -1,53 +1,53 @@
-import {FromSchema} from "json-schema-to-ts";
-import {externalLinkSchema} from "./ExternalLink";
+import {FromSchema} from 'json-schema-to-ts'
+import {externalLinkSchema} from './ExternalLink'
 
 export const pluginSchema = {
   type: 'object',
   properties: {
     id: {
       type: 'string',
-      description: 'Unique identifier of the plugin'
+      description: 'Unique identifier of the plugin',
     },
     allowedGroups: {
       type: 'array',
       items: {
-        type: 'string'
+        type: 'string',
       },
-      description: 'List of groups that can access the plugin'
+      description: 'List of groups that can access the plugin',
     },
     label: {
       type: 'string',
-      description: 'Label visualized in the side menu'
+      description: 'Label visualized in the side menu',
     },
     icon: {
       type: 'string',
-      description: 'Icon visualized in the side menu'
+      description: 'Icon visualized in the side menu',
     },
     order: {
       type: 'integer',
-      description: 'Position of the plugin in the side menu'
+      description: 'Position of the plugin in the side menu',
     },
     integrationMode: {
       type: 'string',
-      enum: ["href", "qiankun", "iframe"],
-      description: 'Way in which the plugin is integrated.'
+      enum: ['href', 'qiankun', 'iframe'],
+      description: 'Way in which the plugin is integrated.',
     },
     pluginRoute: {
       type: 'string',
-      description: 'Path on which the plugin will be rendered'
+      description: 'Path on which the plugin will be rendered',
     },
     pluginUrl: {
       type: 'string',
-      description: 'Entry of the plugin'
+      description: 'Entry of the plugin',
     },
     props: {
       type: 'object',
-      description: 'Data passed to the plugin'
+      description: 'Data passed to the plugin',
     },
-    externalLink: externalLinkSchema
+    externalLink: externalLinkSchema,
   },
   required: ['id', 'label', 'pluginRoute', 'integrationMode'],
-  additionalProperties: false
-} as const;
+  additionalProperties: false,
+} as const
 
 export type Plugin = FromSchema<typeof pluginSchema>

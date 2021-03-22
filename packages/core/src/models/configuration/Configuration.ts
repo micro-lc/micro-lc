@@ -1,17 +1,17 @@
-import {FromSchema} from "json-schema-to-ts";
+import {FromSchema} from 'json-schema-to-ts'
 
-import {themingSchema} from "./theming/Theming";
-import {pluginSchema} from "./plugin/Plugin";
+import {pluginSchema} from './plugin/Plugin'
+import {themingSchema} from './theming/Theming'
 
 export const configurationSchema = {
-  type: "object",
+  type: 'object',
   properties: {
     theming: themingSchema,
     plugins: {
-      type: "array",
-      items: pluginSchema
-    }
-  }
-} as const;
+      type: 'array',
+      items: pluginSchema,
+    },
+  },
+} as const
 
 export type Configuration = FromSchema<typeof configurationSchema>
