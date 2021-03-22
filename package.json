@@ -14,6 +14,7 @@
     "fe-container": "yarn workspace @mia-platform/fe-website",
     "lerna": "lerna",
     "lint": "npm-run-all 'fe-container lint' 'core lint'",
+    "lint:fix": "npm-run-all 'fe-container lint --fix' 'core lint --fix'",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
     "start": "npm-run-all 'fe-container start' 'be-config start' 'core start'"
   },

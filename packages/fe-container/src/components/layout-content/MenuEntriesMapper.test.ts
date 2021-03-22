@@ -22,10 +22,20 @@ describe('Test entries mapper', () => {
 
     const expectedMappedEntries = [{
       id: 'test-1',
-      name: 'Test1'
+      name: 'Test1',
+      pluginStrategy: 'href',
+      hrefConfig: {
+        sameWindow: false,
+        url: ''
+      }
     }, {
       id: 'test-2',
-      name: 'Test2'
+      name: 'Test2',
+      pluginStrategy: 'href',
+      hrefConfig: {
+        sameWindow: false,
+        url: ''
+      }
     }]
 
     expect(mappedEntry).toStrictEqual(expectedMappedEntries)
@@ -46,10 +56,20 @@ describe('Test entries mapper', () => {
 
     const expectedMappedEntries = [{
       id: 'test-2',
-      name: 'Test2'
+      name: 'Test2',
+      pluginStrategy: 'href',
+      hrefConfig: {
+        sameWindow: false,
+        url: ''
+      }
     }, {
       id: 'test-1',
-      name: 'Test1'
+      name: 'Test1',
+      pluginStrategy: 'href',
+      hrefConfig: {
+        sameWindow: false,
+        url: ''
+      }
     }]
 
     expect(mappedEntry).toStrictEqual(expectedMappedEntries)

@@ -12,11 +12,21 @@ module.exports = (request, response) => {
       label: 'Second test plugin',
       icon: 'home',
       order: 2,
+      integrationMode: 'href',
+      externalLink: {
+        url: 'https://google.it',
+        sameWindow: true
+      }
     }, {
       id: 'plugin-test-1',
       label: 'First test plugin',
       icon: 'clipboard',
       order: 1,
+      integrationMode: 'href',
+      externalLink: {
+        url: 'https://google.it',
+        sameWindow: false
+      }
     }]
   })
 }

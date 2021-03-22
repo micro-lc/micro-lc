@@ -1,13 +1,14 @@
 import {Plugin} from '@mia-platform/core'
-
 import {MenuEntry} from '../side-menu/SideMenu'
 
-const menuEntriesMapper: (plugins?: Plugin[]) => MenuEntry[] = (plugins) => {
-  return (plugins || [])
+const menuEntriesMapper = (plugins: Plugin[] = []) => {
+  return plugins
     .sort((pluginA, pluginB) => (pluginA?.order || 0) - (pluginB?.order || 0))
-    .map(plugin => ({
+    .map<MenuEntry>(plugin => ({
       id: plugin?.id,
-      name: plugin?.label
+      name: plugin?.label,
+      pluginStrategy: plugin?.integrationMode,
+      hrefConfig: plugin?.externalLink || {sameWindow: false, url: ''}
     }))
 }
 
