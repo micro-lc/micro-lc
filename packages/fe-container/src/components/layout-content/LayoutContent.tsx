@@ -49,6 +49,7 @@ const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
     const subscription = retrieveConfiguration()
       .subscribe((configurations) => {
         setMenuEntries(menuEntriesMapper(configurations.plugins))
+        document.title = configurations?.theming?.header?.pageTitle || document.title
       })
     return () => subscription.unsubscribe()
   }, [])
