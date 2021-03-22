@@ -13,6 +13,7 @@
     "coverage": "yarn fe-container coverage",
     "fe-container": "yarn workspace @mia-platform/fe-website",
     "lerna": "lerna",
+    "lint": "npm-run-all 'fe-container lint'",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
     "preinstall": "yarn core build",
     "start": "npm-run-all 'fe-container start' 'be-config start' 'core start'"
@@ -29,5 +30,10 @@
     "lerna": "^3.22.1",
     "npm-run-all": "^4.1.5",
     "ramda": "^0.27.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all lint coverage"
+    }
   }
 }

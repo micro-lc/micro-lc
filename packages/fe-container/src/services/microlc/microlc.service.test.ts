@@ -1,4 +1,4 @@
-import nock from 'nock';
+import nock from 'nock'
 
 import {retrieveConfiguration} from './microlc.service'
 

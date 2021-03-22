@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {Layout} from 'antd'
 import {motion} from 'framer-motion'
 
 import {SideMenu} from '../side-menu/SideMenu'
+import {useDelayedState} from '../../hooks/useDelayedState'
 
 const layoutContentProps = {
   burgerState: PropTypes.array.isRequired
@@ -39,17 +40,7 @@ const motionNavSettings = {
 }
 
 const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
-  const [animationState, setAnimationState] = useState(isOpened)
-
-  useEffect(() => {
-    if (isOpened) {
-      setAnimationState(isOpened)
-    } else {
-      setTimeout(() => {
-        setAnimationState(isOpened)
-      }, 250)
-    }
-  }, [isOpened])
+  const [animationState] = useDelayedState(isOpened, 250)
 
   return (
     <motion.nav
