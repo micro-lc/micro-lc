@@ -6,9 +6,9 @@ import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 
 export const TopBar: React.FC = () => {
   return (
-    <div className="container">
+    <div className="topBar_container">
       <BurgerIcon/>
-      <span data-testid="topbar-title">
+      <span data-testid="top-bar-title">
         <FormattedMessage id="topBarTitle"/>
       </span>
     </div>
@@ -26,7 +26,7 @@ const BurgerIcon: React.FC = () => {
 
   return (
     <label htmlFor="check" onClick={manageToggle}>
-      <input checked={isMenuOpened} data-testid="topbar-side-menu-toggle" readOnly={true} type="checkbox"/>
+      <input checked={isMenuOpened} data-testid="top-bar-side-menu-toggle" readOnly={true} type="checkbox"/>
       <span/>
       <span/>
       <span/>

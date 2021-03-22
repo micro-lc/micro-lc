@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {Configuration} from '@mia-platform/core'
 
 import './App.less'
-import {LoadingStructure} from './components/loading-structure/LoadingStructure'
-import {LoadedStructure} from './components/loaded-structure/LoadedStructure'
 import {retrieveConfiguration} from './services/microlc/microlc.service'
+import {Launcher} from './containers/launcher/Launcher'
 
 interface AppState {
   isLoading: boolean,
@@ -22,12 +21,7 @@ const App: React.FC = () => {
     return () => configurationSubscription.unsubscribe()
   }, [])
 
-  return (
-    <>{appState.isLoading ?
-      <LoadingStructure/> :
-      <LoadedStructure configuration={appState.configuration}/>
-    }</>
-  )
+  return <Launcher configuration={appState.configuration} isLoading={appState.isLoading}/>
 }
 
 export default App

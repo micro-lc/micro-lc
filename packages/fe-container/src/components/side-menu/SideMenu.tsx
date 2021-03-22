@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Menu} from 'antd'
 
-import style from './SideMenu.style'
+import './SideMenu.less'
 
 const menuEntry = {
   id: PropTypes.string.isRequired,
@@ -23,12 +23,12 @@ export const SideMenu: React.FC<SideMenuProps> = ({entries}) => {
   const entriesMapper = (entry: MenuEntry) => (
     <React.Fragment key={entry.id}>
       <Menu.Item className="menu-entry">{entry.name}</Menu.Item>
-      <Menu.Divider style={style.divider}/>
+      <Menu.Divider className='sideMenu_divider'/>
     </React.Fragment>
   )
 
   return (
-    <Menu mode="inline" style={style.menu}>
+    <Menu className='sideMenu_menu' mode="inline">
       {entries.map(entriesMapper)}
     </Menu>
   )

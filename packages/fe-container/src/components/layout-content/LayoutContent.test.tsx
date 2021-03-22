@@ -19,6 +19,7 @@ describe('LayoutContent tests', () => {
     )
     const overlay = screen.queryByTestId('layout-content-overlay')
 
+    // @ts-ignore
     userEvent.click(overlay)
     expect(setMenuOpened.mock.calls[0][0]).not.toBeTruthy()
   })
@@ -34,19 +35,22 @@ describe('LayoutContent tests', () => {
           variables: {},
           logo: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
         },
-        plugins: [{
-          integrationMode: 'href',
-          id: 'plugin-test-2',
-          label: 'Second test plugin',
-          icon: 'home',
-          order: 2
-        }, {
-          integrationMode: 'href',
-          id: 'plugin-test-1',
-          label: 'First test plugin',
-          icon: 'clipboard',
-          order: 1
-        }]
+        plugins: [
+          {
+            integrationMode: 'href',
+            id: 'plugin-test-2',
+            label: 'Second test plugin',
+            icon: 'home',
+            order: 2
+          },
+          {
+            integrationMode: 'href',
+            id: 'plugin-test-1',
+            label: 'First test plugin',
+            icon: 'clipboard',
+            order: 1
+          }
+        ]
       }}
       >
         <MenuOpenedProvider value={{

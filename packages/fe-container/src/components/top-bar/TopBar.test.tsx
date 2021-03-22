@@ -18,7 +18,7 @@ describe('TopBar tests', function () {
         <TopBar/>
       </MenuOpenedProvider>
     )
-    expect(screen.queryByTestId('topbar-title')).toHaveTextContent("Hello, I'm the TopBar!")
+    expect(screen.queryByTestId('top-bar-title')).toHaveTextContent("Hello, I'm the TopBar!")
   })
 
   it('Closed TopBar is opening', () => {
@@ -29,8 +29,9 @@ describe('TopBar tests', function () {
       <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
         <TopBar/>
       </MenuOpenedProvider>)
-    const toggle = screen.queryByTestId('topbar-side-menu-toggle')
+    const toggle = screen.queryByTestId('top-bar-side-menu-toggle')
 
+    // @ts-ignore
     userEvent.click(toggle)
     expect(mockBurgerClick.mock.calls[0][0]).toBeTruthy()
   })
@@ -42,8 +43,9 @@ describe('TopBar tests', function () {
     RenderWithReactIntl(<MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>
       <TopBar/>
     </MenuOpenedProvider>)
-    const toggle = screen.queryByTestId('topbar-side-menu-toggle')
+    const toggle = screen.queryByTestId('top-bar-side-menu-toggle')
 
+    // @ts-ignore
     userEvent.click(toggle)
     expect(mockBurgerClick.mock.calls[0][0]).not.toBeTruthy()
   })

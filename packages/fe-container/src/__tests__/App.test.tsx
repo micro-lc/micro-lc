@@ -27,7 +27,7 @@ describe('App test', () => {
           id: '1'
         }]
       })
-    const toggle = await screen.findByTestId('topbar-side-menu-toggle')
+    const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
     expect(await screen.queryByText('entry_1')).toBeNull()
     userEvent.click(toggle)
     expect(await screen.findByText('entry_1')).toBeTruthy()
