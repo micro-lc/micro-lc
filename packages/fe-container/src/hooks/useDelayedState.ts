@@ -11,7 +11,7 @@ export const useDelayedState = (initialState: boolean, delayValue: number) => {
         setAnimationState(initialState)
       }, delayValue)
     }
-  }, [initialState])
+  }, [initialState, delayValue])
 
   return [animationState, setAnimationState]
 }

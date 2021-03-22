@@ -5,10 +5,11 @@ import {Menu} from 'antd'
 import style from './SideMenu.style'
 
 const menuEntry = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 }
 
-type MenuEntry = PropTypes.InferProps<typeof menuEntry>
+export type MenuEntry = PropTypes.InferProps<typeof menuEntry>
 
 const sideMenuProps = {
   entries: PropTypes.arrayOf(
@@ -20,7 +21,7 @@ type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
 
 export const SideMenu: React.FC<SideMenuProps> = ({entries}) => {
   const entriesMapper = (entry: MenuEntry) => (
-    <React.Fragment key={entry.name}>
+    <React.Fragment key={entry.id}>
       <Menu.Item className="menu-entry">{entry.name}</Menu.Item>
       <Menu.Divider style={style.divider}/>
     </React.Fragment>

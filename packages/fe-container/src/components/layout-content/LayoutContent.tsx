@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Layout} from 'antd'
 import {motion} from 'framer-motion'
 
-import {SideMenu} from '../side-menu/SideMenu'
+import {MenuEntry, SideMenu} from '../side-menu/SideMenu'
 import {useDelayedState} from '../../hooks/useDelayedState'
+import {retrieveConfiguration} from '../../services/microlc/microlc.service'
+import menuEntriesMapper from './MenuEntriesMapper'
 
 const layoutContentProps = {
   burgerState: PropTypes.array.isRequired
@@ -41,6 +43,15 @@ const motionNavSettings = {
 
 const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
   const [animationState] = useDelayedState(isOpened, 250)
+  const [menuEntries, setMenuEntries] = useState<MenuEntry[]>([])
+
+  useEffect(() => {
+    const subscription = retrieveConfiguration()
+      .subscribe((configurations) => {
+        setMenuEntries(menuEntriesMapper(configurations.plugins))
+      })
+    return () => subscription.unsubscribe()
+  }, [])
 
   return (
     <motion.nav
@@ -48,7 +59,7 @@ const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
       {...motionNavSettings}
     >
       <Layout.Sider width={256}>
-        {animationState && <SideMenu entries={[{name: 'entry_1'}, {name: 'entry_2'}]}/>}
+        {animationState && <SideMenu entries={menuEntries}/>}
       </Layout.Sider>
     </motion.nav>
   )

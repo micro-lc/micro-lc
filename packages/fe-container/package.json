@@ -22,7 +22,7 @@
     "build": "craco build",
     "test": "craco test",
     "lint": "eslint src --ext .js,.ts,.tsx",
-    "coverage": "craco test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx",
+    "coverage": "craco test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts",
     "dev:unit-watch": "cracotest",
     "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register",
     "dev": "npm-run-all -p dev:** start",
