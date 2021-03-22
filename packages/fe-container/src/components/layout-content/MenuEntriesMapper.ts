@@ -6,8 +6,8 @@ const menuEntriesMapper: (plugins?: Plugin[]) => MenuEntry[] = (plugins) => {
   return (plugins || [])
     .sort((pluginA, pluginB) => (pluginA?.order || 0) - (pluginB?.order || 0))
     .map(plugin => ({
-      id: plugin?.id || '',
-      name: plugin?.label || ''
+      id: plugin?.id,
+      name: plugin?.label
     }))
 }
 

@@ -30,4 +30,28 @@ describe('Test entries mapper', () => {
 
     expect(mappedEntry).toStrictEqual(expectedMappedEntries)
   })
+
+  it('Not sort plugins without order', () => {
+    const mappedEntry = menuEntriesMapper([{
+      id: 'test-2',
+      label: 'Test2',
+      pluginRoute: 'http://...',
+      integrationMode: 'href'
+    }, {
+      id: 'test-1',
+      label: 'Test1',
+      pluginRoute: 'http://...',
+      integrationMode: 'href'
+    }])
+
+    const expectedMappedEntries = [{
+      id: 'test-2',
+      name: 'Test2'
+    }, {
+      id: 'test-1',
+      name: 'Test1'
+    }]
+
+    expect(mappedEntry).toStrictEqual(expectedMappedEntries)
+  })
 })

@@ -23,7 +23,8 @@ describe('App test', () => {
       .get('/api/v1/microlc/configuration')
       .reply(200, {
         plugins: [{
-          label: 'entry_1'
+          label: 'entry_1',
+          id: '1'
         }]
       })
     const toggle = screen.queryByTestId('topbar-side-menu-toggle')
