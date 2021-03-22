@@ -6,20 +6,23 @@
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "antd": "^4.14.0",
+    "axios": "^0.21.1",
     "craco-less": "^1.17.1",
     "framer-motion": "^4.0.0",
+    "nock": "^13.0.11",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-intl": "^5.13.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3"
+    "react-scripts": "4.0.3",
+    "rxjs": "^6.6.6"
   },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "lint": "eslint src --ext .js,.ts,.tsx",
-    "coverage": "craco test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx",
+    "coverage": "craco test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts",
     "dev:unit-watch": "cracotest",
     "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register",
     "dev": "npm-run-all -p dev:** start",

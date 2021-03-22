@@ -1,3 +1,1 @@
-export const log = () => {
-  console.log("todo")
-}
+export * from './models/model'

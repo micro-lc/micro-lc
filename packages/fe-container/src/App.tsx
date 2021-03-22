@@ -1,23 +1,27 @@
-import React, {useState} from 'react'
-import {Layout} from 'antd'
+import React, {useEffect, useState} from 'react'
+import {Configuration} from '@mia-platform/core'
 
-import {TopBar} from './components/topbar/TopBar'
-import {LayoutContent} from './components/layout-content/LayoutContent'
 import './App.less'
+import {retrieveConfiguration} from './services/microlc/microlc.service'
+import {Launcher} from './containers/launcher/Launcher'
+
+interface AppState {
+  isLoading: boolean,
+  configuration: Configuration
+}
 
 const App: React.FC = () => {
-  const burgerState = useState(false)
+  const [appState, setAppState] = useState<AppState>({isLoading: true, configuration: {}})
 
-  return (
-    <Layout>
-      <Layout.Header>
-        <TopBar burgerState={burgerState}/>
-      </Layout.Header>
-      <Layout.Content>
-        <LayoutContent burgerState={burgerState}/>
-      </Layout.Content>
-    </Layout>
-  )
+  useEffect(() => {
+    const configurationSubscription = retrieveConfiguration()
+      .subscribe((configuration) => {
+        setAppState({isLoading: false, configuration})
+      })
+    return () => configurationSubscription.unsubscribe()
+  }, [])
+
+  return <Launcher configuration={appState.configuration} isLoading={appState.isLoading}/>
 }
 
 export default App
