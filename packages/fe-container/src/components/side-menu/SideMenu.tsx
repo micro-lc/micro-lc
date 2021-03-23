@@ -27,9 +27,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
     </React.Fragment>
   )
 
+  const entriesSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
+
   return (
     <Menu className='sideMenu_menu' mode="inline">
-      {plugins?.map(entriesMapper)}
+      {plugins?.sort(entriesSorter).map(entriesMapper)}
     </Menu>
   )
 }

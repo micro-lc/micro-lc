@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {BrowserRouter} from 'react-router-dom'
 import {IntlProvider} from 'react-intl'
 
 import './index.css'
@@ -12,9 +11,7 @@ const language = messages[navigatorLanguage] ? navigatorLanguage : 'en'
 
 const rootComponent = (
   <IntlProvider locale={language} messages={messages[language]}>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <App/>
-    </BrowserRouter>
+    <App/>
   </IntlProvider>
 )
 
