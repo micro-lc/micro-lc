@@ -31,12 +31,11 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         path-to-lcov: './packages/fe-container/coverage/lcov.info'
         base-path: './packages/fe-container/'
+    - run: echo "${{github.base_ref}}, ${{refs/heads/main}}"
 
     - name: Compile file and build
       if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'refs/heads/main') && matrix.node-version == '14.x' }}
-      run: |
-      echo "${{github.base_ref}}, ${{refs/heads/main}}"
-      yarn build
+      run: yarn build
 
     - name: Cache build
       if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'refs/heads/main') && matrix.node-version == '14.x' }}
