@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {Menu} from 'antd'
 import {Plugin} from '@mia-platform/core'
 import PropTypes from 'prop-types'
@@ -13,21 +13,23 @@ const sideMenuProps = {
 type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
 
 export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
-  const manageEntryClick = (plugin: Plugin) => {
+  const manageEntryClick = useCallback((plugin: Plugin) => {
     const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
     return () => {
       pluginStrategy.handlePluginLoad()
     }
-  }
+  }, [])
 
-  const entriesMapper = (plugin: Plugin) => (
+  const entriesMapper = useCallback((plugin: Plugin) => (
     <React.Fragment key={plugin.id}>
       <Menu.Item className="menu-entry" onClick={manageEntryClick(plugin)}>{plugin.label}</Menu.Item>
       <Menu.Divider className='sideMenu_divider'/>
     </React.Fragment>
-  )
+  ), [])
 
-  const entriesSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
+  const entriesSorter = useCallback(
+    (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0),
+    [])
 
   return (
     <Menu className='sideMenu_menu' mode="inline">

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useCallback, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {Layout} from 'antd'
 import {motion} from 'framer-motion'
@@ -10,7 +10,7 @@ import {ConfigurationContext} from '../../contexts/Configuration.context'
 
 export const LayoutContent: React.FC = () => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
-  const closeSideMenu = () => setMenuOpened(false)
+  const closeSideMenu = useCallback(() => setMenuOpened(false), [])
 
   return (
     <Layout>
