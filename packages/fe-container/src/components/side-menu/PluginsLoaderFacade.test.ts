@@ -40,4 +40,30 @@ describe('Test plugin loading', () => {
     pluginStrategy.handlePluginLoad()
     expect(window.open).toBeCalledWith('http://google.it')
   })
+
+  it('test href fallback', () => {
+    window.open = jest.fn()
+    const pluginStrategy = retrievePluginLoadingStrategy({
+      pluginStrategy: 'notKnownStrategy',
+      hrefConfig: {
+        sameWindow: false,
+        url: 'http://google.it'
+      }
+    })
+    pluginStrategy.handlePluginLoad()
+    expect(window.open).toBeCalledWith('http://google.it')
+  })
+
+  it('invalid plugin url configuration: do nothing', () => {
+    window.open = jest.fn()
+    const pluginStrategy = retrievePluginLoadingStrategy({
+      pluginStrategy: 'notKnownStrategy',
+      hrefConfig: {
+        sameWindow: false,
+        url: ''
+      }
+    })
+    pluginStrategy.handlePluginLoad()
+    expect(window.open).not.toBeCalled()
+  })
 })
