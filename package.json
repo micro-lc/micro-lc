@@ -1,22 +1,22 @@
 {
   "name": "mia-microlc",
   "version": "0.1.0",
+  "description": "The Mia-Platform micro frontend solution",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "repository": "git@github.com:mia-platform/microlc.git",
   "scripts": {
-    "be-config": "yarn workspace @mia-platform/fe-website",
-    "build": "npm-run-all 'fe-container build'",
-    "core": "yarn workspace @mia-platform/core",
-    "coverage": "yarn fe-container coverage",
-    "fe-container": "yarn workspace @mia-platform/fe-website",
     "lerna": "lerna",
-    "lint": "npm-run-all 'fe-container lint' 'core lint'",
-    "lint:fix": "npm-run-all 'fe-container lint --fix' 'core lint --fix'",
+    "fe-container": "yarn workspace @mia-platform/fe-website",
+    "core": "yarn workspace @mia-platform/core",
+    "be-config": "yarn workspace @mia-platform/be-config",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
-    "start": "concurrently --kill-others 'yarn fe-container start' 'yarn be-config start' 'yarn core start' 'yarn mock-server'",
+    "dev:fe-container": "yarn fe-container dev",
+    "dev:core": "yarn core dev",
+    "lint": "lerna run lint",
+    "build": "yarn fe-container build",
+    "coverage": "yarn fe-container coverage",
     "postinstall": "yarn core build"
   },
   "devDependencies": {
@@ -24,7 +24,6 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
     "@staticdeploy/mock-server": "^2.0.0",
-    "concurrently": "^6.0.0",
     "coveralls": "^3.1.0",
     "faker": "^5.1.0",
     "handlebars": "4.5.0",
@@ -37,5 +36,7 @@
     "hooks": {
       "pre-commit": "npm-run-all lint coverage"
     }
-  }
+  },
+  "repository": "git@github.com:mia-platform/microlc.git",
+  "license": "SEE LICENSE IN LICENSE"
 }

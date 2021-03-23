@@ -1,6 +1,6 @@
 FROM nginx:1.17.2-alpine as build
 
-LABEL name="mia-microlc" \
+LABEL name="mia-microlc-website" \
       description="The Mia-Platform micro fontend solution" \
       eu.mia-platform.url="https://www.mia-platform.eu" \
       eu.mia-platform.version="0.1.0"
