@@ -23,7 +23,7 @@ const App: React.FC = () => {
     return () => configurationSubscription.unsubscribe()
   }, [])
 
-  return <Launcher configuration={appState.configuration} isLoading={appState.isLoading}/>
+  return <Launcher {...appState}/>
 }
 
 export default App
