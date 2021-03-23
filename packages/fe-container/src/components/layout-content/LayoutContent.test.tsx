@@ -17,9 +17,7 @@ describe('LayoutContent tests', () => {
         <LayoutContent/>
       </MenuOpenedProvider>
     )
-    const overlay = screen.queryByTestId('layout-content-overlay')
-
-    // @ts-ignore
+    const overlay = screen.getByTestId('layout-content-overlay')
     userEvent.click(overlay)
     expect(setMenuOpened.mock.calls[0][0]).not.toBeTruthy()
   })

@@ -1,11 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {Layout} from 'antd'
 import {motion} from 'framer-motion'
 
-import {MenuEntry, SideMenu} from '../side-menu/SideMenu'
+import {SideMenu} from '../side-menu/SideMenu'
 import {useDelayedState} from '../../hooks/useDelayedState'
-import menuEntriesMapper from './MenuEntriesMapper'
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 import {ConfigurationContext} from '../../contexts/Configuration.context'
 
@@ -37,12 +36,10 @@ const motionNavSettings = {
 
 const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
   const [animationState] = useDelayedState(isOpened, 250)
-  const [menuEntries, setMenuEntries] = useState<MenuEntry[]>([])
   const configuration = useContext(ConfigurationContext)
 
   useEffect(() => {
     document.title = configuration?.theming?.header?.pageTitle || document.title
-    setMenuEntries(menuEntriesMapper(configuration?.plugins))
   }, [configuration])
 
   return (
@@ -51,7 +48,7 @@ const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
       {...motionNavSettings}
     >
       <Layout.Sider width={256}>
-        {animationState && <SideMenu entries={menuEntries}/>}
+        {animationState && <SideMenu plugins={configuration?.plugins}/>}
       </Layout.Sider>
     </motion.nav>
   )

@@ -7,10 +7,10 @@ import userEvent from '@testing-library/user-event'
 
 describe('SideMenu tests', () => {
   it('side menu show entries', () => {
-    const entriesHref = {pluginStrategy: 'href', hrefConfig: {sameWindow: false, url: ''}}
+    const entriesHref = {integrationMode: 'href', externalLink: {sameWindow: false, url: ''}}
     RenderWithReactIntl(<SideMenu
-      entries={[
-        {name: 'entry_1', id: '1', ...entriesHref}, {name: 'entry_2', id: '2', ...entriesHref}
+      plugins={[
+        {label: 'entry_1', id: '1', ...entriesHref}, {label: 'entry_2', id: '2', ...entriesHref}
       ]}
                         />)
     expect(screen.queryByText('entry_1')).toBeVisible()
@@ -21,11 +21,11 @@ describe('SideMenu tests', () => {
   it('side menu click correctly works', () => {
     window.open = jest.fn()
     RenderWithReactIntl(<SideMenu
-      entries={[
-        {name: 'entry_1', id: '1', pluginStrategy: 'href', hrefConfig: {sameWindow: false, url: 'http://google.it'}}
+      plugins={[
+        {label: 'entry_1', id: '1', integrationMode: 'href', externalLink: {sameWindow: false, url: 'http://google.it'}}
       ]}
                         />)
-    userEvent.click(screen.queryByText('entry_1'))
+    userEvent.click(screen.getByText('entry_1'))
     expect(window.open).toBeCalledWith('http://google.it')
   })
 })

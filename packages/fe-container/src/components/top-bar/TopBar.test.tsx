@@ -29,9 +29,7 @@ describe('TopBar tests', function () {
       <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
         <TopBar/>
       </MenuOpenedProvider>)
-    const toggle = screen.queryByTestId('top-bar-side-menu-toggle')
-
-    // @ts-ignore
+    const toggle = screen.getByTestId('top-bar-side-menu-toggle')
     userEvent.click(toggle)
     expect(mockBurgerClick.mock.calls[0][0]).toBeTruthy()
   })
@@ -43,9 +41,7 @@ describe('TopBar tests', function () {
     RenderWithReactIntl(<MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>
       <TopBar/>
     </MenuOpenedProvider>)
-    const toggle = screen.queryByTestId('top-bar-side-menu-toggle')
-
-    // @ts-ignore
+    const toggle = screen.getByTestId('top-bar-side-menu-toggle')
     userEvent.click(toggle)
     expect(mockBurgerClick.mock.calls[0][0]).not.toBeTruthy()
   })
