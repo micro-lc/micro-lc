@@ -45,7 +45,8 @@ describe('Test plugin loading', () => {
   })
 
   it('test href fallback', () => {
-    const integrationMode: 'qiankun' = 'qiankun'
+    // @ts-ignore
+    const integrationMode: 'qiankun' = 'invalidMode'
     window.open = jest.fn()
     const pluginToRegister = {
       id: 'plugin-1',
@@ -80,6 +81,21 @@ describe('Test plugin loading', () => {
 
   it('test iframe', () => {
     const integrationMode: 'iframe' = 'iframe'
+    window.open = jest.fn()
+    const pluginToRegister = {
+      id: 'plugin-1',
+      label: 'Plugin 1',
+      integrationMode,
+      pluginRoute: '/iframeTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }
+    registerPlugin(pluginToRegister)
+    retrievePluginStrategy(pluginToRegister).handlePluginLoad()
+    expect(history.push).toHaveBeenCalledWith('/iframeTest')
+  })
+
+  it('test qiankun', () => {
+    const integrationMode: 'qiankun' = 'qiankun'
     window.open = jest.fn()
     const pluginToRegister = {
       id: 'plugin-1',

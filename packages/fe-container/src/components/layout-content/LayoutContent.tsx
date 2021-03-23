@@ -89,6 +89,10 @@ LayoutCenter.propTypes = layoutCenterProps
 
 const CenterPluginManager: React.FC<Plugin> = (plugin) => {
   return (
-    <iframe className="layout-iframe" src={plugin.pluginUrl} title={plugin.id}/>
+    <>
+      {plugin.integrationMode === 'iframe' &&
+      <iframe className="layout-iframe" src={plugin.pluginUrl} title={plugin.id}/>}
+      {plugin.integrationMode === 'qiankun' && <div id={plugin.id}/>}
+    </>
   )
 }
