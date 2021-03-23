@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {Configuration, Plugin} from '@mia-platform/core'
 
@@ -15,10 +15,10 @@ interface AppState {
 const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>({isLoading: true, configuration: {}})
 
-  const routerFilter = (plugin: Plugin) => plugin.pluginRoute
-  const routerMapper = (plugin: Plugin) => {
+  const routerFilter = useCallback((plugin: Plugin) => plugin.pluginRoute, [])
+  const routerMapper = useCallback((plugin: Plugin) => {
     return <Route path={plugin.pluginRoute}/>
-  }
+  }, [])
 
   useEffect(() => {
     const configurationSubscription = retrieveConfiguration()

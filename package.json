@@ -8,7 +8,7 @@
   "repository": "git@github.com:mia-platform/microlc.git",
   "scripts": {
     "be-config": "yarn workspace @mia-platform/fe-website",
-    "build": "npm-run-all 'core build' 'fe-container build'",
+    "build": "npm-run-all 'fe-container build'",
     "core": "yarn workspace @mia-platform/core",
     "coverage": "yarn fe-container coverage",
     "fe-container": "yarn workspace @mia-platform/fe-website",
@@ -16,7 +16,8 @@
     "lint": "npm-run-all 'fe-container lint' 'core lint'",
     "lint:fix": "npm-run-all 'fe-container lint --fix' 'core lint --fix'",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
-    "start": "concurrently --kill-others 'yarn fe-container start' 'yarn be-config start' 'yarn core start' 'yarn mock-server'"
+    "start": "concurrently --kill-others 'yarn fe-container start' 'yarn be-config start' 'yarn core start' 'yarn mock-server'",
+    "postinstall": "yarn core build"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
