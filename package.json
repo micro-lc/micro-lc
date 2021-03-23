@@ -8,7 +8,7 @@
   "repository": "git@github.com:mia-platform/microlc.git",
   "scripts": {
     "be-config": "yarn workspace @mia-platform/fe-website",
-    "build": "npm-run-all 'fe-container build' 'core build'",
+    "build": "npm-run-all 'core build' 'fe-container build'",
     "core": "yarn workspace @mia-platform/core",
     "coverage": "yarn fe-container coverage",
     "fe-container": "yarn workspace @mia-platform/fe-website",
