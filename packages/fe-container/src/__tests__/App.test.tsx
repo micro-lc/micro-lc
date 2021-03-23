@@ -24,7 +24,12 @@ describe('App test', () => {
       .reply(200, {
         plugins: [{
           label: 'entry_1',
-          id: '1'
+          id: '1',
+          integrationMode: 'href',
+          externalLink: {
+            url: 'https://google.it',
+            sameWindow: false
+          }
         }]
       })
     const toggle = await screen.findByTestId('top-bar-side-menu-toggle')

@@ -1,35 +1,39 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, {useCallback} from 'react'
 import {Menu} from 'antd'
+import {Plugin} from '@mia-platform/core'
+import PropTypes from 'prop-types'
 
 import './SideMenu.less'
-
-const menuEntry = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
-}
-
-export type MenuEntry = PropTypes.InferProps<typeof menuEntry>
+import {PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
 
 const sideMenuProps = {
-  entries: PropTypes.arrayOf(
-    PropTypes.exact(menuEntry).isRequired
-  ).isRequired
+  plugins: PropTypes.array
 }
 
 type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
 
-export const SideMenu: React.FC<SideMenuProps> = ({entries}) => {
-  const entriesMapper = (entry: MenuEntry) => (
-    <React.Fragment key={entry.id}>
-      <Menu.Item className="menu-entry">{entry.name}</Menu.Item>
+export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
+  const manageEntryClick = useCallback((plugin: Plugin) => {
+    const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
+    return () => {
+      pluginStrategy.handlePluginLoad()
+    }
+  }, [])
+
+  const entriesMapper = useCallback((plugin: Plugin) => (
+    <React.Fragment key={plugin.id}>
+      <Menu.Item className="menu-entry" onClick={manageEntryClick(plugin)}>{plugin.label}</Menu.Item>
       <Menu.Divider className='sideMenu_divider'/>
     </React.Fragment>
-  )
+  ), [manageEntryClick])
+
+  const entriesSorter = useCallback(
+    (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0),
+    [])
 
   return (
     <Menu className='sideMenu_menu' mode="inline">
-      {entries.map(entriesMapper)}
+      {plugins?.sort(entriesSorter).map(entriesMapper)}
     </Menu>
   )
 }
