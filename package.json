@@ -16,13 +16,14 @@
     "lint": "npm-run-all 'fe-container lint' 'core lint'",
     "lint:fix": "npm-run-all 'fe-container lint --fix' 'core lint --fix'",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
-    "start": "npm-run-all 'fe-container start' 'be-config start' 'core start'"
+    "start": "concurrently --kill-others 'yarn fe-container start' 'yarn be-config start' 'yarn core start' 'yarn mock-server'"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
     "@staticdeploy/mock-server": "^2.0.0",
+    "concurrently": "^6.0.0",
     "coveralls": "^3.1.0",
     "faker": "^5.1.0",
     "handlebars": "4.5.0",
