@@ -4,5 +4,6 @@
   "private": true,
   "scripts": {
     "start": "echo 'todo'"
-  }
+  },
+  "license": "SEE LICENSE IN LICENSE"
 }

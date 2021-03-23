@@ -1,6 +1,7 @@
 {
   "name": "@mia-platform/fe-website",
   "version": "0.1.0",
+  "description": "Launcher of microlc",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -18,15 +19,15 @@
     "rxjs": "^6.6.6"
   },
   "scripts": {
+    "lint": "eslint src --ext .js,.ts,.tsx",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "lint": "eslint src --ext .js,.ts,.tsx",
-    "coverage": "craco test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts",
-    "dev:unit-watch": "cracotest",
-    "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register",
+    "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts",
+    "dev:unit-watch": "yarn test",
+    "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register --root ../../mock-server",
     "dev": "npm-run-all -p dev:** start",
-    "update-docker-version": "sed -i.bck \"s|version=\\\"[0-9]*\\.[0-9]*\\.[0-9]*.*\\\"|version=\\\"${npm_package_version}\\\"|\" Dockerfile",
+    "update-docker-version": "sed -i.bck \\\\\\\"s|version=\\\\\\\\\\\\\\\"[0-9]*\\\\\\\\.[0-9]*\\\\\\\\.[0-9]*.*\\\\\\\\\\\\\\\"|version=\\\\\\\\\\\\\\\"${npm_package_version}\\\\\\\\\\\\\\\"|\\\\\\\" Dockerfile",
     "version": "npm run update-docker-version && rm -fr Dockerfile.bck && git add Dockerfile"
   },
   "proxy": "http://localhost:3456",
@@ -34,11 +35,6 @@
     "skip": {
       "bump": true,
       "tag": true
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all lint coverage"
     }
   },
   "eslintConfig": {
@@ -79,9 +75,9 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-standard": "^5.0.0",
-    "husky": "^4.3.8",
     "npm-run-all": "^4.1.5",
     "standard-version": "^9.1.1",
     "typescript": "^4.2.3"
-  }
+  },
+  "license": "SEE LICENSE IN LICENSE"
 }
