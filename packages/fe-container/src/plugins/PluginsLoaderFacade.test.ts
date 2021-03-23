@@ -1,13 +1,8 @@
-import {registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
+import {history, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
+
+history.push = jest.fn()
 
 describe('Test plugin loading', () => {
-  const originalWindow = {...window}
-
-  afterEach(() => {
-    // eslint-disable-next-line
-    window = originalWindow
-  })
-
   it('test href same window', () => {
     // eslint-disable-next-line
     window = Object.create(window)
@@ -50,7 +45,7 @@ describe('Test plugin loading', () => {
   })
 
   it('test href fallback', () => {
-    const integrationMode: 'iframe' = 'iframe'
+    const integrationMode: 'qiankun' = 'qiankun'
     window.open = jest.fn()
     const pluginToRegister = {
       id: 'plugin-1',
@@ -81,5 +76,20 @@ describe('Test plugin loading', () => {
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     expect(window.open).not.toBeCalled()
+  })
+
+  it('test iframe', () => {
+    const integrationMode: 'iframe' = 'iframe'
+    window.open = jest.fn()
+    const pluginToRegister = {
+      id: 'plugin-1',
+      label: 'Plugin 1',
+      integrationMode,
+      pluginRoute: '/iframeTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }
+    registerPlugin(pluginToRegister)
+    retrievePluginStrategy(pluginToRegister).handlePluginLoad()
+    expect(history.push).toHaveBeenCalledWith('/iframeTest')
   })
 })

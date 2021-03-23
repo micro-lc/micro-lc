@@ -27,6 +27,14 @@ module.exports = (request, response) => {
         url: 'https://google.it',
         sameWindow: false
       }
+    }, {
+      id: 'plugin-test-3',
+      label: 'IFrame',
+      icon: 'clipboard',
+      order: 3,
+      integrationMode: 'iframe',
+      pluginRoute: '/iframeTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
     }]
   })
 }
