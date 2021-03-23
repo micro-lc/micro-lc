@@ -6,8 +6,7 @@
 
 **The Mia-Platform micro frontend solution**
 
-**microlc** enables you to create modular applications composed by multiple,
-independent [micro frontends][micro-frontends]
+**microlc** enables you to create modular applications composed by multiple, independent [micro frontends][micro-frontends]
 called *plugins* integrated at runtime using [qiankun][qiankun].
 
 # Getting Started
