@@ -9,7 +9,7 @@ module.exports = (request, response) => {
     },
     plugins: [{
       id: 'plugin-test-2',
-      label: 'Second test plugin',
+      label: 'Href same window',
       icon: 'home',
       order: 2,
       integrationMode: 'href',
@@ -19,7 +19,7 @@ module.exports = (request, response) => {
       }
     }, {
       id: 'plugin-test-1',
-      label: 'First test plugin',
+      label: 'Href different window',
       icon: 'clipboard',
       order: 1,
       integrationMode: 'href',
@@ -32,6 +32,14 @@ module.exports = (request, response) => {
       label: 'IFrame',
       icon: 'clipboard',
       order: 3,
+      integrationMode: 'iframe',
+      pluginRoute: '/iframeTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }, {
+      id: 'plugin-test-4',
+      label: 'Qiankun',
+      icon: 'clipboard',
+      order: 4,
       integrationMode: 'iframe',
       pluginRoute: '/iframeTest',
       pluginUrl: 'https://www.google.com/webhp?igu=1'

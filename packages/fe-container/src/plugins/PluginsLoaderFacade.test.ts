@@ -101,11 +101,11 @@ describe('Test plugin loading', () => {
       id: 'plugin-1',
       label: 'Plugin 1',
       integrationMode,
-      pluginRoute: '/iframeTest',
+      pluginRoute: '/qiankunTest',
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    expect(history.push).toHaveBeenCalledWith('/iframeTest')
+    expect(history.push).toHaveBeenCalledWith('/qiankunTest')
   })
 })
