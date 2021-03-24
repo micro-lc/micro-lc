@@ -24,10 +24,10 @@ export const retrievePluginStrategy = (plugin: Plugin) => {
 
 export const finish = () => {
   const quiankunConfig = qiankunPlugins.map<RegistrableApp<any>>(plugin => ({
-    name: plugin.label,
+    name: plugin.id,
     entry: plugin.pluginUrl || '',
     container: `#${plugin.id}`,
-    activeRule: plugin.pluginUrl || ''
+    activeRule: plugin.pluginRoute || ''
   }))
   registerMicroApps(quiankunConfig)
   start()

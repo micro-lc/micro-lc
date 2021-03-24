@@ -4,7 +4,7 @@ import {Configuration} from '@mia-platform/core'
 import './App.less'
 import {retrieveConfiguration} from './services/microlc/microlc.service'
 import {Launcher} from './containers/launcher/Launcher'
-import {registerPlugin} from './plugins/PluginsLoaderFacade'
+import {registerPlugin, finish} from './plugins/PluginsLoaderFacade'
 
 interface AppState {
   isLoading: boolean,
@@ -18,6 +18,7 @@ const App: React.FC = () => {
     const configurationSubscription = retrieveConfiguration()
       .subscribe((configuration: Configuration) => {
         configuration.plugins?.forEach(registerPlugin)
+        finish()
         setAppState({isLoading: false, configuration})
       })
     return () => configurationSubscription.unsubscribe()

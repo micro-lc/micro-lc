@@ -33,16 +33,16 @@ module.exports = (request, response) => {
       icon: 'clipboard',
       order: 3,
       integrationMode: 'iframe',
-      pluginRoute: '/iframeTest',
+      pluginRoute: '/iframe',
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }, {
-      id: 'plugin-test-4',
+      id: 'qiankun-test',
       label: 'Qiankun',
       icon: 'clipboard',
       order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframeTest',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
+      integrationMode: 'qiankun',
+      pluginRoute: '/qiankun',
+      pluginUrl: '//localhost:8764'
     }]
   })
 }
