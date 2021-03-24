@@ -3,7 +3,7 @@ import {Layout} from 'antd'
 
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 import {AnimatedLayoutSider} from './animated-layout-sider/AnimatedLayoutSider'
-import {LayoutCenter} from './layout-center/layout-center'
+import {LayoutCenter} from './layout-center/LayoutCenter'
 
 import './LayoutContent.less'
 
