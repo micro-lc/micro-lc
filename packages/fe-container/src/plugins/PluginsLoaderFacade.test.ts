@@ -1,6 +1,11 @@
-import {history, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
+import {finish, history, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
+import {registerMicroApps, start} from 'qiankun'
 
 history.push = jest.fn()
+jest.mock('qiankun', () => ({
+  start: jest.fn(),
+  registerMicroApps: jest.fn()
+}))
 
 describe('Test plugin loading', () => {
   it('test href same window', () => {
@@ -64,15 +69,14 @@ describe('Test plugin loading', () => {
 
   it('invalid plugin url configuration: do nothing', () => {
     const integrationMode: 'href' = 'href'
+    // @ts-ignore
+    const externalLink = undefined
     window.open = jest.fn()
     const pluginToRegister = {
       id: 'plugin-1',
       label: 'Plugin 1',
       integrationMode,
-      externalLink: {
-        sameWindow: false,
-        url: ''
-      }
+      externalLink
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
@@ -92,6 +96,9 @@ describe('Test plugin loading', () => {
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('/iframeTest')
+    finish()
+    expect(start).toHaveBeenCalled()
+    expect(registerMicroApps).toHaveBeenCalledWith([])
   })
 
   it('test qiankun', () => {
@@ -107,5 +114,33 @@ describe('Test plugin loading', () => {
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('/qiankunTest')
+    finish()
+    expect(start).toHaveBeenCalled()
+    expect(registerMicroApps).toHaveBeenCalledWith([{
+      name: 'plugin-1',
+      entry: 'https://www.google.com/webhp?igu=1',
+      container: '#plugin-1',
+      activeRule: '/qiankunTest'
+    }])
+  })
+
+  it('test undefined plugin route: empty fallback', () => {
+    // @ts-ignore
+    const pluginRoute: string = undefined
+    const integrationMode: 'qiankun' = 'qiankun'
+    window.open = jest.fn()
+    const pluginToRegister = {
+      id: 'plugin-1',
+      label: 'Plugin 1',
+      integrationMode,
+      pluginRoute,
+      pluginUrl: pluginRoute
+    }
+    registerPlugin(pluginToRegister)
+    retrievePluginStrategy(pluginToRegister).handlePluginLoad()
+    expect(history.push).toHaveBeenCalledWith('')
+    finish()
+    expect(start).toHaveBeenCalled()
+    expect(registerMicroApps).toHaveBeenCalled()
   })
 })

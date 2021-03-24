@@ -39,7 +39,7 @@ function hrefStrategy (externalLink?: ExternalLink): PluginStrategy {
   return {
     handlePluginLoad: () => {
       if (externalLink?.sameWindow) {
-        window.location.href = externalLink?.url || ''
+        window.location.href = externalLink.url
       } else if (externalLink?.url) {
         window.open(externalLink.url)
       }
