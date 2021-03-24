@@ -43,6 +43,14 @@ module.exports = (request, response) => {
       integrationMode: 'qiankun',
       pluginRoute: '/qiankun',
       pluginUrl: '//localhost:8764'
+    }, {
+      id: 'qiankun-as-iframe',
+      label: 'Qiankun as iframe',
+      icon: 'clipboard',
+      order: 5,
+      integrationMode: 'iframe',
+      pluginRoute: '/qiankunIframe',
+      pluginUrl: '//localhost:8764'
     }]
   })
 }

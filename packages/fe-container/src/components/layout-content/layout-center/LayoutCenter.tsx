@@ -15,7 +15,11 @@ type LayoutCenterProps = PropTypes.InferProps<typeof layoutCenterProps>
 export const LayoutCenter: React.FC<LayoutCenterProps> = ({closeSideMenu}) => {
   const configuration = useContext(ConfigurationContext)
   const hasRoute = useCallback((plugin: Plugin) => plugin.pluginRoute, [])
-  const routerMapper = useCallback((plugin: Plugin) => <PluginRoute key={plugin.id} {...plugin}/>, [])
+  const routerMapper = useCallback((plugin: Plugin) => (
+    <Route path={plugin.pluginRoute}>
+      <CenterPluginManager {...plugin}/>
+    </Route>
+  ), [])
 
   return (
     <Layout.Content data-testid="layout-content-overlay" onClick={closeSideMenu}>
@@ -29,14 +33,6 @@ export const LayoutCenter: React.FC<LayoutCenterProps> = ({closeSideMenu}) => {
 }
 
 LayoutCenter.propTypes = layoutCenterProps
-
-const PluginRoute: React.FC<Plugin> = (plugin) => {
-  return (
-    <Route path={plugin.pluginRoute}>
-      <CenterPluginManager {...plugin}/>
-    </Route>
-  )
-}
 
 const CenterPluginManager: React.FC<Plugin> = (plugin) => {
   return (
