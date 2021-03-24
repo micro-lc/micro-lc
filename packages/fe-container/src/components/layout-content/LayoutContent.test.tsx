@@ -61,6 +61,14 @@ describe('LayoutContent tests', () => {
           integrationMode: 'iframe',
           pluginRoute: '/iframeTest',
           pluginUrl: 'https://www.google.com/webhp?igu=1'
+        }, {
+          id: 'plugin-test-4',
+          label: 'Qiankun',
+          icon: 'clipboard',
+          order: 1,
+          integrationMode: 'qiankun',
+          pluginRoute: '/qiankunTest',
+          pluginUrl: 'https://www.google.com/webhp?igu=1'
         }]
       }}
       >
@@ -77,7 +85,8 @@ describe('LayoutContent tests', () => {
 
     expect(await screen.findByText('First test plugin')).toBeTruthy()
     expect(await screen.findByText('Second test plugin')).toBeTruthy()
-
+    expect(await screen.findByText('IFrame')).toBeTruthy()
+    expect(await screen.findByText('Qiankun')).toBeTruthy()
     expect(global.window.document.title).toEqual('Mia Care')
   })
 })
