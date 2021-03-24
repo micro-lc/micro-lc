@@ -16,7 +16,7 @@ export const LayoutCenter: React.FC<LayoutCenterProps> = ({closeSideMenu}) => {
   const configuration = useContext(ConfigurationContext)
   const hasRoute = useCallback((plugin: Plugin) => plugin.pluginRoute, [])
   const routerMapper = useCallback((plugin: Plugin) => (
-    <Route path={plugin.pluginRoute}>
+    <Route key={plugin.id} path={plugin.pluginRoute}>
       <CenterPluginManager {...plugin}/>
     </Route>
   ), [])

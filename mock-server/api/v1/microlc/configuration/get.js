@@ -37,7 +37,7 @@ module.exports = (request, response) => {
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }, {
       id: 'qiankun-test',
-      label: 'Qiankun',
+      label: 'Qiankun plugin 1',
       icon: 'clipboard',
       order: 4,
       integrationMode: 'qiankun',
