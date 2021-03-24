@@ -14,20 +14,14 @@ type LayoutCenterProps = PropTypes.InferProps<typeof layoutCenterProps>
 
 export const LayoutCenter: React.FC<LayoutCenterProps> = ({closeSideMenu}) => {
   const configuration = useContext(ConfigurationContext)
-  const routerFilter = useCallback((plugin: Plugin) => plugin.pluginRoute, [])
-  const routerMapper = useCallback((plugin: Plugin) => {
-    return (
-      <Route key={plugin.id} path={plugin.pluginRoute}>
-        <CenterPluginManager {...plugin}/>
-      </Route>
-    )
-  }, [])
+  const hasRoute = useCallback((plugin: Plugin) => plugin.pluginRoute, [])
+  const routerMapper = useCallback((plugin: Plugin) => <PluginRoute key={plugin.id} {...plugin}/>, [])
 
   return (
     <Layout.Content data-testid="layout-content-overlay" onClick={closeSideMenu}>
       <Router history={history}>
         <Switch>
-          {configuration.plugins?.filter(routerFilter).map(routerMapper)}
+          {configuration.plugins?.filter(hasRoute).map(routerMapper)}
         </Switch>
       </Router>
     </Layout.Content>
@@ -35,6 +29,14 @@ export const LayoutCenter: React.FC<LayoutCenterProps> = ({closeSideMenu}) => {
 }
 
 LayoutCenter.propTypes = layoutCenterProps
+
+const PluginRoute: React.FC<Plugin> = (plugin) => {
+  return (
+    <Route path={plugin.pluginRoute}>
+      <CenterPluginManager {...plugin}/>
+    </Route>
+  )
+}
 
 const CenterPluginManager: React.FC<Plugin> = (plugin) => {
   return (
