@@ -9,7 +9,6 @@
     "antd": "^4.14.0",
     "axios": "^0.21.1",
     "craco-less": "^1.17.1",
-    "framer-motion": "^4.0.0",
     "history": "^4.10.1",
     "nock": "^13.0.11",
     "qiankun": "^2.4.0",

@@ -14,6 +14,7 @@ export const useConfiguration = () => {
   useEffect(() => {
     const configurationSubscription = retrieveConfiguration()
       .subscribe((configuration: Configuration) => {
+        document.title = configuration?.theming?.header?.pageTitle || document.title
         configuration.plugins?.forEach(registerPlugin)
         finish()
         setAppState({isLoading: false, configuration})
