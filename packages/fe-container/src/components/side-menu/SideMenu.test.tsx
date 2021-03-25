@@ -60,4 +60,18 @@ describe('SideMenu tests', () => {
     expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(3)
     expect(document.getElementsByClassName('external')).toHaveLength(1)
   })
+
+  it('Test void menu selected', () => {
+    RenderWithReactIntl(<SideMenu
+      plugins={[
+        {label: 'entry_1', id: '1', integrationMode: 'href'},
+        {label: 'entry_2', id: '2', integrationMode: 'iframe'}
+      ]}
+                        />)
+    expect(document.getElementsByClassName('ant-menu-item-selected')).toHaveLength(0)
+    userEvent.click(screen.getByText('entry_1'))
+    expect(document.getElementsByClassName('ant-menu-item-selected')).toHaveLength(0)
+    userEvent.click(screen.getByText('entry_2'))
+    expect(document.getElementsByClassName('ant-menu-item-selected')).toHaveLength(1)
+  })
 })
