@@ -1,16 +1,16 @@
-import React from 'react'
-import {FormattedMessage} from 'react-intl'
+import React, {useContext} from 'react'
 
 import './TopBar.less'
 import {BurgerIcon} from '../burger-icon/BurgerIcon'
+import {ConfigurationContext} from '../../contexts/Configuration.context'
 
 export const TopBar: React.FC = () => {
+  const configuration = useContext(ConfigurationContext)
+
   return (
     <div className="topBar_container">
       <BurgerIcon/>
-      <span data-testid="top-bar-title">
-        <FormattedMessage id="topBarTitle"/>
-      </span>
+      <img className="logo" data-testid="company-logo" src={configuration?.theming?.logo}/>
     </div>
   )
 }

@@ -14,7 +14,7 @@ describe('App test', () => {
   })
 
   it('renders without crashing', async () => {
-    expect(await screen.findByText("Hello, I'm the TopBar!")).toBeTruthy()
+    expect(await screen.findByTestId('company-logo')).toBeTruthy()
   })
 
   it('toggle is working', async () => {

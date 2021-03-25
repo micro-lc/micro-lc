@@ -19,7 +19,7 @@ describe('TopBar tests', function () {
         <TopBar/>
       </MenuOpenedProvider>
     )
-    expect(screen.queryByTestId('top-bar-title')).toHaveTextContent("Hello, I'm the TopBar!")
+    expect(screen.queryByTestId('company-logo')).toBeTruthy()
   })
 
   it('Closed TopBar is opening', () => {
