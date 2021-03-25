@@ -10,7 +10,7 @@ export const TopBar: React.FC = () => {
   return (
     <div className="topBar_container">
       <BurgerIcon/>
-      <img className="logo" data-testid="company-logo" src={configuration?.theming?.logo}/>
+      <img alt="Logo" className="logo" data-testid="company-logo" src={configuration?.theming?.logo}/>
     </div>
   )
 }

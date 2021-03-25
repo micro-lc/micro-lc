@@ -1,11 +1,27 @@
-import {Configuration} from '@mia-platform/core'
+import {Configuration, Plugin} from '@mia-platform/core'
 import {useEffect, useState} from 'react'
 import {retrieveConfiguration} from '../services/microlc/microlc.service'
-import {finish, registerPlugin} from '../plugins/PluginsLoaderFacade'
+import {finish, registerPlugin, retrievePluginStrategy} from '../plugins/PluginsLoaderFacade'
 
 export interface AppState {
   isLoading: boolean,
   configuration: Configuration
+}
+
+const pluginsSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
+
+const notHref = (plugin: Plugin) => ['qiankun', 'iframe'].includes(plugin.integrationMode)
+
+const registerPlugins = (configuration: Configuration) => {
+  configuration.plugins?.forEach(registerPlugin)
+  finish()
+}
+
+const navigateToFirstPlugin = (configuration: Configuration) => {
+  const firstValidPlugin: Plugin | undefined = configuration.plugins?.find(notHref)
+  if (firstValidPlugin) {
+    retrievePluginStrategy(firstValidPlugin).handlePluginLoad()
+  }
 }
 
 export const useConfiguration = () => {
@@ -15,9 +31,10 @@ export const useConfiguration = () => {
     const configurationSubscription = retrieveConfiguration()
       .subscribe((configuration: Configuration) => {
         document.title = configuration?.theming?.header?.pageTitle || document.title
-        configuration.plugins?.forEach(registerPlugin)
-        finish()
+        configuration.plugins = configuration.plugins?.sort(pluginsSorter)
+        registerPlugins(configuration)
         setAppState({isLoading: false, configuration})
+        navigateToFirstPlugin(configuration)
       })
     return () => configurationSubscription.unsubscribe()
   }, [])
