@@ -28,4 +28,24 @@ describe('SideMenu tests', () => {
     userEvent.click(screen.getByText('entry_1'))
     expect(window.open).toBeCalledWith('http://google.it')
   })
+
+  it('display the icon', () => {
+    window.open = jest.fn()
+    RenderWithReactIntl(<SideMenu
+      plugins={[
+        {label: 'entry_1', id: '1', integrationMode: 'iframe', icon: 'test-icon'}
+      ]}
+                        />)
+    expect(document.getElementsByClassName('test-icon')).toHaveLength(1)
+  })
+
+  it('no icon, just placeholder', () => {
+    window.open = jest.fn()
+    RenderWithReactIntl(<SideMenu
+      plugins={[
+        {label: 'entry_1', id: '1', integrationMode: 'iframe'}
+      ]}
+                        />)
+    expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(1)
+  })
 })

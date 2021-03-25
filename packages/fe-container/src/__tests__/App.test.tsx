@@ -47,7 +47,7 @@ describe('App test', () => {
     expect(entry1).toBeTruthy()
     userEvent.click(toggle)
     // @ts-ignore
-    expect(entry1.parentElement.parentElement.classList).toContain('ant-dropdown-hidden')
+    expect(entry1.parentElement.parentElement.parentElement.classList).toContain('ant-dropdown-hidden')
     mockedResponse.done()
   })
 
@@ -67,7 +67,6 @@ describe('App test', () => {
         plugins: [{
           label: 'entry_1',
           id: '1',
-          order: 1,
           integrationMode: 'href',
           externalLink: {
             url: 'https://google.it',
@@ -77,7 +76,6 @@ describe('App test', () => {
           id: 'not-supported',
           label: 'IFrame',
           icon: 'clipboard',
-          order: 2,
           integrationMode: 'href',
           pluginRoute: '/iframeTest',
           pluginUrl: 'https://www.google.com/webhp?igu=1'

@@ -10,7 +10,7 @@ module.exports = (request, response) => {
     plugins: [{
       id: 'plugin-test-2',
       label: 'Href same window',
-      icon: 'home',
+      icon: 'far fa-window-restore',
       order: 2,
       integrationMode: 'href',
       externalLink: {
@@ -20,7 +20,7 @@ module.exports = (request, response) => {
     }, {
       id: 'plugin-test-1',
       label: 'Href different window',
-      icon: 'clipboard',
+      icon: 'far fa-window-maximize',
       order: 1,
       integrationMode: 'href',
       externalLink: {
@@ -30,7 +30,7 @@ module.exports = (request, response) => {
     }, {
       id: 'plugin-test-3',
       label: 'IFrame',
-      icon: 'clipboard',
+      icon: 'fab fa-google',
       order: 3,
       integrationMode: 'iframe',
       pluginRoute: '/iframe',
@@ -38,7 +38,7 @@ module.exports = (request, response) => {
     }, {
       id: 'qiankun-test',
       label: 'Qiankun plugin 1',
-      icon: 'clipboard',
+      icon: 'fab fa-react',
       order: 4,
       integrationMode: 'qiankun',
       pluginRoute: '/qiankun',
@@ -46,7 +46,7 @@ module.exports = (request, response) => {
     }, {
       id: 'qiankun-as-iframe',
       label: 'Qiankun as iframe',
-      icon: 'clipboard',
+      icon: 'fab fa-reacteurope',
       order: 5,
       integrationMode: 'iframe',
       pluginRoute: '/qiankunIframe',
