@@ -61,7 +61,7 @@ describe('SideMenu tests', () => {
     expect(document.getElementsByClassName('external')).toHaveLength(1)
   })
 
-  it('Test void menu selected', () => {
+  it('Avoid href menu selected', () => {
     RenderWithReactIntl(<SideMenu
       plugins={[
         {label: 'entry_1', id: '1', integrationMode: 'href'},
