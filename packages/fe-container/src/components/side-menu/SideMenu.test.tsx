@@ -39,7 +39,7 @@ describe('SideMenu tests', () => {
     expect(document.getElementsByClassName('test-icon')).toHaveLength(1)
   })
 
-  it('no icon, just placeholder', () => {
+  it('no icon, just placeholder class', () => {
     window.open = jest.fn()
     RenderWithReactIntl(<SideMenu
       plugins={[
@@ -47,5 +47,17 @@ describe('SideMenu tests', () => {
       ]}
                         />)
     expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(1)
+  })
+
+  it('show external link icon', () => {
+    window.open = jest.fn()
+    RenderWithReactIntl(<SideMenu
+      plugins={[
+        {label: 'entry_1', id: '1', integrationMode: 'href'},
+        {label: 'entry_2', id: '2', integrationMode: 'iframe'}
+      ]}
+                        />)
+    expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(3)
+    expect(document.getElementsByClassName('external')).toHaveLength(1)
   })
 })

@@ -28,6 +28,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
     <React.Fragment key={plugin.id}>
       <Menu.Item className="sideMenu_entry" icon={menuIcon(plugin)} onClick={manageEntryClick(plugin)}>
         {plugin.label}
+        {plugin.integrationMode === 'href' && <i className="fas fa-external-link-alt sideMenu_icon external"/>}
       </Menu.Item>
       <Menu.Divider className='sideMenu_divider'/>
     </React.Fragment>
