@@ -7,7 +7,7 @@ import axios, {AxiosRequestConfig} from 'axios'
 import {configuration} from '../../constants.json'
 
 const microlcAxiosConfig: AxiosRequestConfig = {
-  baseURL: process.env.REACT_APP_CONFIG_HOST,
+  baseURL: '/',
   responseType: 'json'
 }
 
