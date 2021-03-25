@@ -3,6 +3,7 @@ import {Plugin} from '@mia-platform/core'
 
 import RenderWithReactIntl from '../../__tests__/utils'
 import {IframePlugin} from './IframePlugin'
+import userEvent from '@testing-library/user-event'
 
 describe('Test iframe plugin', () => {
   it('Menu close on iframe click', () => {
@@ -18,7 +19,12 @@ describe('Test iframe plugin', () => {
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }
     RenderWithReactIntl(<IframePlugin {...plugin}/>)
-    const allWindowListenersType = window.addEventListener.mock.calls.map(call => call[0])
+    const iframeElement = document.getElementsByClassName('layout-iframe')[0]
+    userEvent.hover(iframeElement, undefined)
+    userEvent.unhover(iframeElement, undefined)
+    // @ts-ignore
+    const allWindowListenersType = window.addEventListener.mock.calls.map(call => call[0]).filter(type => type === 'blur')
     expect(allWindowListenersType).toContain('blur')
+    expect(allWindowListenersType).toHaveLength(3)
   })
 })
