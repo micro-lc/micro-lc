@@ -6,6 +6,7 @@ import {Route, Router, Switch} from 'react-router-dom'
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 import {ConfigurationContext} from '../../contexts/Configuration.context'
 import {history} from '../../plugins/PluginsLoaderFacade'
+import {IframePlugin} from './IframePlugin'
 
 import './LayoutContent.less'
 
@@ -44,8 +45,7 @@ const LayoutCenter: React.FC = () => {
 const CenterPluginManager: React.FC<Plugin> = (plugin) => {
   return (
     <>
-      {plugin.integrationMode === 'iframe' &&
-      <iframe className="layout-iframe" frameBorder="0" src={plugin.pluginUrl} title={plugin.id}/>}
+      {plugin.integrationMode === 'iframe' && <IframePlugin {...plugin}/>}
       {plugin.integrationMode === 'qiankun' && <div id={plugin.id}/>}
     </>
   )

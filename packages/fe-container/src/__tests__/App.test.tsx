@@ -74,7 +74,7 @@ describe('App test', () => {
           }
         }, {
           id: 'not-supported',
-          label: 'IFrame',
+          label: 'Href',
           icon: 'clipboard',
           integrationMode: 'href',
           pluginRoute: '/iframeTest',
