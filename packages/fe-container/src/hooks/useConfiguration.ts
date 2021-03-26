@@ -1,7 +1,7 @@
 import {Configuration, Plugin} from '@mia-platform/core'
 import {useEffect, useState} from 'react'
 import {retrieveConfiguration} from '../services/microlc/microlc.service'
-import {finish, registerPlugin, retrievePluginStrategy, isPluginLoaded} from '../plugins/PluginsLoaderFacade'
+import {finish, registerPlugin, retrievePluginStrategy, isCurrentPluginLoaded} from '../plugins/PluginsLoaderFacade'
 
 export interface AppState {
   isLoading: boolean,
@@ -19,7 +19,7 @@ const registerPlugins = (configuration: Configuration) => {
 
 const navigateToFirstPlugin = (configuration: Configuration) => {
   const firstValidPlugin: Plugin | undefined = configuration.plugins?.find(notHref)
-  if (firstValidPlugin && !isPluginLoaded()) {
+  if (firstValidPlugin && !isCurrentPluginLoaded()) {
     retrievePluginStrategy(firstValidPlugin).handlePluginLoad()
   }
 }

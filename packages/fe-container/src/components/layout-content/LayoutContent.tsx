@@ -2,21 +2,14 @@ import React, {useCallback, useContext} from 'react'
 import {Layout} from 'antd'
 import {Plugin} from '@mia-platform/core'
 import {Route, Router, Switch} from 'react-router-dom'
-
-import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 import {ConfigurationContext} from '../../contexts/Configuration.context'
 import {history} from '../../plugins/PluginsLoaderFacade'
-import {IframePlugin} from '../iframe-layout/IframePlugin'
 
 import './LayoutContent.less'
 
 export const LayoutContent: React.FC = () => {
-  const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
-
-  const closeSideMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
-
   return (
-    <Layout className={isMenuOpened ? 'layout-container-overlay' : ''} onClick={closeSideMenu}>
+    <Layout>
       <LayoutCenter/>
     </Layout>
   )
@@ -32,7 +25,7 @@ const LayoutCenter: React.FC = () => {
   ), [])
 
   return (
-    <Layout.Content data-testid="layout-content-overlay">
+    <Layout.Content data-testid="layout-content">
       <Router history={history}>
         <Switch>
           {configuration.plugins?.filter(hasRoute).map(routerMapper)}
@@ -45,7 +38,8 @@ const LayoutCenter: React.FC = () => {
 const CenterPluginManager: React.FC<Plugin> = (plugin) => {
   return (
     <>
-      {plugin.integrationMode === 'iframe' && <IframePlugin {...plugin}/>}
+      {plugin.integrationMode === 'iframe' &&
+      <iframe className="layout-iframe" frameBorder="0" src={plugin.pluginUrl} title={plugin.id}/>}
       {plugin.integrationMode === 'qiankun' && <div className="layout-plugin" id={plugin.id}/>}
     </>
   )

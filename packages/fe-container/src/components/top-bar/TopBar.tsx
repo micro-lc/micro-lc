@@ -1,8 +1,9 @@
 import React, {useContext} from 'react'
 
-import './TopBar.less'
 import {BurgerIcon} from '../burger-icon/BurgerIcon'
 import {ConfigurationContext} from '../../contexts/Configuration.context'
+
+import './TopBar.less'
 
 export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)

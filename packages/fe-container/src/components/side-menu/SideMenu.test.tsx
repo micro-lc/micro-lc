@@ -1,11 +1,16 @@
 import React from 'react'
 import {screen} from '@testing-library/react'
 import {Plugin} from '@mia-platform/core'
+import userEvent from '@testing-library/user-event'
 
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
-import userEvent from '@testing-library/user-event'
-import {registerPlugin} from '../../plugins/PluginsLoaderFacade'
+import {isPluginLoaded, registerPlugin} from '../../plugins/PluginsLoaderFacade'
+
+jest.mock('../../plugins/PluginsLoaderFacade', () => ({
+  ...jest.requireActual('../../plugins/PluginsLoaderFacade'),
+  isPluginLoaded: jest.fn()
+}))
 
 describe('SideMenu tests', () => {
   it('side menu show entries', () => {
@@ -55,15 +60,14 @@ describe('SideMenu tests', () => {
   })
 
   it('show external link icon', () => {
-    window.open = jest.fn()
     RenderWithReactIntl(<SideMenu
       plugins={[
         {label: 'entry_1', id: '1', integrationMode: 'href'},
         {label: 'entry_2', id: '2', integrationMode: 'iframe'}
       ]}
                         />)
-    expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(3)
-    expect(document.getElementsByClassName('external')).toHaveLength(1)
+    expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(2)
+    expect(document.getElementsByClassName('sideMenu_externalLink')).toHaveLength(1)
   })
 
   it('Avoid href menu selected', () => {
@@ -73,10 +77,64 @@ describe('SideMenu tests', () => {
         {label: 'entry_2', id: '2', integrationMode: 'iframe'}
       ]}
                         />)
-    expect(document.getElementsByClassName('ant-menu-item-selected')).toHaveLength(0)
+    expect(isPluginLoaded).toHaveBeenCalledTimes(2)
+    // @ts-ignore
+    expect(isPluginLoaded.mock.calls[0][0]).toStrictEqual({label: 'entry_1', id: '1', integrationMode: 'href'})
+    // @ts-ignore
+    expect(isPluginLoaded.mock.calls[1][0]).toStrictEqual({label: 'entry_2', id: '2', integrationMode: 'iframe'})
     userEvent.click(screen.getByText('entry_1'))
-    expect(document.getElementsByClassName('ant-menu-item-selected')).toHaveLength(0)
+    expect(isPluginLoaded).toHaveBeenCalledTimes(3)
+    // @ts-ignore
+    expect(isPluginLoaded.mock.calls[2][0]).toStrictEqual({label: 'entry_1', id: '1', integrationMode: 'href'})
     userEvent.click(screen.getByText('entry_2'))
-    expect(document.getElementsByClassName('ant-menu-item-selected')).toHaveLength(1)
+    expect(isPluginLoaded).toHaveBeenCalledTimes(4)
+    // @ts-ignore
+    expect(isPluginLoaded.mock.calls[3][0]).toStrictEqual({label: 'entry_2', id: '2', integrationMode: 'iframe'})
+  })
+
+  it('Generate menu using the configurations', () => {
+    RenderWithReactIntl(<SideMenu plugins={[{
+      id: 'plugin-test-2',
+      label: 'Second test plugin',
+      icon: 'home',
+      order: 2,
+      integrationMode: 'href',
+      externalLink: {
+        url: 'https://google.it',
+        sameWindow: true
+      }
+    }, {
+      id: 'plugin-test-1',
+      label: 'First test plugin',
+      icon: 'clipboard',
+      order: 1,
+      integrationMode: 'href',
+      externalLink: {
+        url: 'https://google.it',
+        sameWindow: false
+      }
+    }, {
+      id: 'plugin-test-3',
+      label: 'IFrame',
+      icon: 'clipboard',
+      order: 1,
+      integrationMode: 'iframe',
+      pluginRoute: '/iframeTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }, {
+      id: 'plugin-test-4',
+      label: 'Qiankun',
+      icon: 'clipboard',
+      order: 1,
+      integrationMode: 'qiankun',
+      pluginRoute: '/qiankunTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }]}
+                        />)
+
+    expect(screen.getByText('First test plugin')).toBeTruthy()
+    expect(screen.getByText('Second test plugin')).toBeTruthy()
+    expect(screen.getByText('IFrame')).toBeTruthy()
+    expect(screen.getByText('Qiankun')).toBeTruthy()
   })
 })

@@ -1,38 +1,80 @@
 @import "../../variables";
 @import "../../colors";
 
-.sideMenu_menu {
-  height: @content-height;
+.sideMenu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 999;
+  top: @top-bar-height;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
   padding-top: 24px;
-  border-top: 1px solid #d9d9d9;
-}
 
-.sideMenu_entry {
-  margin-bottom: 4px !important;
+  &.opened {
+    width: 256px;
+  }
 }
 
 .sideMenu_overlay {
-  top: @top-bar-height !important;
-  width: 256px;
   position: fixed;
-  left: 0 !important;
+  top: @top-bar-height;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 998;
+  display: block;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &.closed {
+    display: none;
+  }
 }
 
-.sideMenu_divider {
-  width: 80%;
-  min-width: 80%;
-  float: right;
-  margin: 0;
-}
+.sideMenu_voice {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 
-.sideMenu_icon {
-  color: @primary-color;
-
-  &.external {
-    height: 100%;
-    float: right;
+  .sideMenu_entry {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    height: 40px;
+
+    &.active, &:hover {
+      & .sideMenu_label {
+        color: @primary-color;
+      }
+
+      background: @menu-hover-bgcolor;
+    }
+
+    & .sideMenu_label {
+      color: @menu-label-color;
+    }
+
+    & .sideMenu_icon {
+      color: @primary-color;
+      margin-left: 24px;
+      margin-right: 12px;
+    }
+
+    & .sideMenu_externalLink {
+      color: @primary-color;
+      margin-left: auto;
+      margin-right: 12px;
+    }
   }
 
+  .sideMenu_divider {
+    width: 204px;
+    height: 1px;
+    margin-right: 0;
+  }
 }

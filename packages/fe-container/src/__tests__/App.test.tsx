@@ -41,13 +41,14 @@ describe('App test', () => {
       })
     const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
     expect(global.window.document.title).toEqual('Mia Care')
-    expect(await screen.queryByText('entry_1')).toBeNull()
-    userEvent.click(toggle)
-    const entry1 = await screen.findByText('entry_1')
-    expect(entry1).toBeTruthy()
+    // @ts-ignore
+    expect(screen.getByText('entry_1').parentElement.parentElement.parentElement.classList).not.toContain('opened')
     userEvent.click(toggle)
     // @ts-ignore
-    expect(entry1.parentElement.parentElement.parentElement.classList).toContain('ant-dropdown-hidden')
+    expect(screen.getByText('entry_1').parentElement.parentElement.parentElement.classList).toContain('opened')
+    userEvent.click(toggle)
+    // @ts-ignore
+    expect(screen.getByText('entry_1').parentElement.parentElement.parentElement.classList).not.toContain('opened')
     mockedResponse.done()
   })
 
