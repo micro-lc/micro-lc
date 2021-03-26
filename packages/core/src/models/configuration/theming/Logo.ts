@@ -5,7 +5,7 @@ export const logoSchema = {
   properties: {
     url: {
       type: 'string',
-      description: 'Url del logo',
+      description: 'Logo url',
     },
     alt: {
       type: 'string',
