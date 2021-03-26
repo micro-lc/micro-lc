@@ -1,15 +1,13 @@
 import {FromSchema} from 'json-schema-to-ts'
 
 import {headerSchema} from './Header'
+import {logoSchema} from './Logo'
 
 export const themingSchema = {
   type: 'object',
   properties: {
     header: headerSchema,
-    logo: {
-      type: 'string',
-      description: 'Logo url',
-    },
+    logo: logoSchema,
     variables: {
       type: 'object',
     },
