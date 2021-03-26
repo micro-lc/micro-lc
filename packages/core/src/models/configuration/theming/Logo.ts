@@ -9,7 +9,7 @@ export const logoSchema = {
     },
     alt: {
       type: 'string',
-      description: 'Logo alt,
+      description: 'Logo alt',
     },
   },
   required: ['url', 'alt'],
