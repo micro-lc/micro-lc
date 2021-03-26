@@ -19,7 +19,8 @@ const registerPlugins = (configuration: Configuration) => {
 
 const navigateToFirstPlugin = (configuration: Configuration) => {
   const firstValidPlugin: Plugin | undefined = configuration.plugins?.find(notHref)
-  if (firstValidPlugin) {
+  const isInRoot = ['', '/'].includes(window.location.pathname)
+  if (firstValidPlugin && isInRoot) {
     retrievePluginStrategy(firstValidPlugin).handlePluginLoad()
   }
 }

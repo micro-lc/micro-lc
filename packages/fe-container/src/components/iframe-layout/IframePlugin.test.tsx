@@ -20,10 +20,17 @@ describe('Test iframe plugin', () => {
     }
     RenderWithReactIntl(<IframePlugin {...plugin}/>)
     const iframeElement = document.getElementsByClassName('layout-iframe')[0]
+    // @ts-ignore
+    let allWindowListenersType = window.addEventListener.mock.calls.map(call => call[0]).filter(type => type === 'blur')
+    expect(allWindowListenersType).toContain('blur')
+    expect(allWindowListenersType).toHaveLength(1)
     userEvent.hover(iframeElement, undefined)
+    // @ts-ignore
+    allWindowListenersType = window.addEventListener.mock.calls.map(call => call[0]).filter(type => type === 'blur')
+    expect(allWindowListenersType).toHaveLength(2)
     userEvent.unhover(iframeElement, undefined)
     // @ts-ignore
-    const allWindowListenersType = window.addEventListener.mock.calls.map(call => call[0]).filter(type => type === 'blur')
+    allWindowListenersType = window.addEventListener.mock.calls.map(call => call[0]).filter(type => type === 'blur')
     expect(allWindowListenersType).toContain('blur')
     expect(allWindowListenersType).toHaveLength(3)
   })

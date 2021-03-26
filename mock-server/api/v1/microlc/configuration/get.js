@@ -10,7 +10,7 @@ module.exports = (request, response) => {
     plugins: [{
       id: 'plugin-test-2',
       label: 'Href same window',
-      icon: 'far fa-window-restore',
+      icon: 'far fa-window-maximize',
       order: 2,
       integrationMode: 'href',
       externalLink: {
@@ -20,7 +20,7 @@ module.exports = (request, response) => {
     }, {
       id: 'plugin-test-1',
       label: 'Href different window',
-      icon: 'far fa-window-maximize',
+      icon: 'far fa-window-restore',
       order: 1,
       integrationMode: 'href',
       externalLink: {

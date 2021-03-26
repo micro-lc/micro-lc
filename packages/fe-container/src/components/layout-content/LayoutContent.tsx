@@ -6,7 +6,7 @@ import {Route, Router, Switch} from 'react-router-dom'
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 import {ConfigurationContext} from '../../contexts/Configuration.context'
 import {history} from '../../plugins/PluginsLoaderFacade'
-import {IframePlugin} from './IframePlugin'
+import {IframePlugin} from '../iframe-layout/IframePlugin'
 
 import './LayoutContent.less'
 
