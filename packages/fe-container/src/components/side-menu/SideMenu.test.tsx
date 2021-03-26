@@ -1,5 +1,6 @@
 import React from 'react'
 import {screen} from '@testing-library/react'
+import {Plugin} from '@mia-platform/core'
 
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
@@ -19,15 +20,17 @@ describe('SideMenu tests', () => {
     expect(screen.queryByText('entry_3')).toBeNull()
   })
 
-  it('side menu click correctly works', () => {
+  it('side menu click correctly works', async () => {
     window.open = jest.fn()
-    registerPlugin({label: 'entry_1', id: '1', integrationMode: 'href', externalLink: {sameWindow: false, url: 'http://google.it'}})
-    RenderWithReactIntl(<SideMenu
-      plugins={[
-        {label: 'entry_1', id: '1', integrationMode: 'href', externalLink: {sameWindow: false, url: 'http://google.it'}}
-      ]}
-                        />)
-    userEvent.click(screen.getByText('entry_1'))
+    const plugin: Plugin = {
+      label: 'entry_1',
+      id: '1',
+      integrationMode: 'href',
+      externalLink: {sameWindow: false, url: 'http://google.it'}
+    }
+    registerPlugin(plugin)
+    RenderWithReactIntl(<SideMenu plugins={[plugin]}/>)
+    userEvent.click(await screen.findByText('entry_1'))
     expect(window.open).toBeCalledWith('http://google.it')
   })
 
