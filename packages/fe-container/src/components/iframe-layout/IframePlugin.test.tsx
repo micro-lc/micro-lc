@@ -31,7 +31,6 @@ describe('Test iframe plugin', () => {
     userEvent.unhover(iframeElement, undefined)
     // @ts-ignore
     allWindowListenersType = window.addEventListener.mock.calls.map(call => call[0]).filter(type => type === 'blur')
-    expect(allWindowListenersType).toContain('blur')
     expect(allWindowListenersType).toHaveLength(3)
   })
 })
