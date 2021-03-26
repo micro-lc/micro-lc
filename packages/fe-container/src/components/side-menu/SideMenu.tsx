@@ -1,9 +1,9 @@
-import React, {useCallback, useContext, useState} from 'react'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Plugin} from '@mia-platform/core'
 
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
-import {isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
+import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
 
 import './SideMenu.less'
 
@@ -42,9 +42,12 @@ const SideMenuEntry: React.FC<Plugin> = (plugin) => {
     const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
     return () => {
       pluginStrategy.handlePluginLoad()
-      setIsActive(isPluginLoaded(plugin))
     }
   }, [])
+
+  useEffect(() => {
+    return history.listen(() => setIsActive(isPluginLoaded(plugin)))
+  }, [plugin])
 
   return (
     <div className="sideMenu_voice" onClick={menuClick(plugin)}>

@@ -20,7 +20,7 @@ export const retrievePluginStrategy = (plugin: Plugin) => {
 }
 
 export const isPluginLoaded = (plugin: Plugin) =>
-  plugin.pluginRoute ? window.location.pathname.includes(plugin.pluginRoute) : false
+  plugin.pluginRoute ? window.location.pathname.endsWith(plugin.pluginRoute) : false
 
 export const isCurrentPluginLoaded = () => {
   return registeredPlugins.findIndex(isPluginLoaded) !== -1

@@ -5,11 +5,14 @@ import userEvent from '@testing-library/user-event'
 
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
-import {isPluginLoaded, registerPlugin} from '../../plugins/PluginsLoaderFacade'
+import {isPluginLoaded, registerPlugin, history} from '../../plugins/PluginsLoaderFacade'
 
 jest.mock('../../plugins/PluginsLoaderFacade', () => ({
   ...jest.requireActual('../../plugins/PluginsLoaderFacade'),
-  isPluginLoaded: jest.fn()
+  isPluginLoaded: jest.fn(),
+  history: {
+    listen: jest.fn(() => {})
+  }
 }))
 
 describe('SideMenu tests', () => {
@@ -82,14 +85,7 @@ describe('SideMenu tests', () => {
     expect(isPluginLoaded.mock.calls[0][0]).toStrictEqual({label: 'entry_1', id: '1', integrationMode: 'href'})
     // @ts-ignore
     expect(isPluginLoaded.mock.calls[1][0]).toStrictEqual({label: 'entry_2', id: '2', integrationMode: 'iframe'})
-    userEvent.click(screen.getByText('entry_1'))
-    expect(isPluginLoaded).toHaveBeenCalledTimes(3)
-    // @ts-ignore
-    expect(isPluginLoaded.mock.calls[2][0]).toStrictEqual({label: 'entry_1', id: '1', integrationMode: 'href'})
-    userEvent.click(screen.getByText('entry_2'))
-    expect(isPluginLoaded).toHaveBeenCalledTimes(4)
-    // @ts-ignore
-    expect(isPluginLoaded.mock.calls[3][0]).toStrictEqual({label: 'entry_2', id: '2', integrationMode: 'iframe'})
+    expect(history.listen).toHaveBeenCalledTimes(2)
   })
 
   it('Generate menu using the configurations', () => {
