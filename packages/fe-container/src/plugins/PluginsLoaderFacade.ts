@@ -6,29 +6,43 @@ export interface PluginStrategy {
   handlePluginLoad: () => void
 }
 
-const registeredPlugins: Map<string, PluginStrategy> = new Map<string, PluginStrategy>()
-const qiankunPlugins: Plugin[] = []
-const routerStrategyModes = ['qiankun', 'iframe']
+const registeredPlugins = new Map<Plugin, PluginStrategy>()
 
 export const registerPlugin = (plugin: Plugin) => {
-  if (plugin.integrationMode === 'qiankun') {
-    qiankunPlugins.push(plugin)
-  }
-  const pluginStrategy = routerStrategyModes.includes(plugin.integrationMode) ? routeStrategy(plugin) : hrefStrategy(plugin.externalLink)
-  registeredPlugins.set(plugin.id, pluginStrategy)
+  const pluginStrategy: PluginStrategy = strategyBuilder(plugin)
+  registeredPlugins.set(plugin, pluginStrategy)
 }
 
 export const retrievePluginStrategy = (plugin: Plugin) => {
-  return registeredPlugins.get(plugin.id) || hrefStrategy(plugin.externalLink)
+  return registeredPlugins.get(plugin) || noOpStrategy()
+}
+
+export const isPluginLoaded = () => {
+  return Array.from(registeredPlugins.keys())
+    .findIndex(plugin => plugin.pluginRoute && window.location.pathname.includes(plugin.pluginRoute)) !== -1
+}
+
+const strategyBuilder = (plugin: Plugin) => {
+  switch (plugin.integrationMode) {
+    case 'href':
+      return hrefStrategy(plugin.externalLink)
+    case 'qiankun':
+    case 'iframe':
+      return routeStrategy(plugin)
+    default:
+      return noOpStrategy()
+  }
 }
 
 export const finish = () => {
-  const quiankunConfig = qiankunPlugins.map<RegistrableApp<any>>(plugin => ({
-    name: plugin.id,
-    entry: plugin.pluginUrl || '',
-    container: `#${plugin.id}`,
-    activeRule: plugin.pluginRoute || ''
-  }))
+  const quiankunConfig = Array.from(registeredPlugins.keys())
+    .filter(plugin => plugin.integrationMode === 'qiankun')
+    .map<RegistrableApp<any>>(plugin => ({
+      name: plugin.id,
+      entry: plugin.pluginUrl || '',
+      container: `#${plugin.id}`,
+      activeRule: plugin.pluginRoute || ''
+    }))
   registerMicroApps(quiankunConfig)
   start()
 }
@@ -51,6 +65,13 @@ function routeStrategy (plugin: Plugin): PluginStrategy {
   return {
     handlePluginLoad: () => {
       history.push(plugin?.pluginRoute || '')
+    }
+  }
+}
+
+function noOpStrategy (): PluginStrategy {
+  return {
+    handlePluginLoad: () => {
     }
   }
 }

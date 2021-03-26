@@ -64,7 +64,7 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    expect(window.open).toBeCalledWith('http://google.it')
+    expect(window.open).not.toHaveBeenCalled()
   })
 
   it('invalid plugin url configuration: do nothing', () => {
