@@ -7,33 +7,36 @@ import {TopBar} from '../../components/top-bar/TopBar'
 import {LayoutContent} from '../../components/layout-content/LayoutContent'
 import {ConfigurationProvider} from '../../contexts/Configuration.context'
 import {MenuOpenedProvider} from '../../contexts/MenuOpened.context'
-
-type LauncherProps = {
-  configuration: Configuration;
-  isLoading: boolean
-}
+import {AppState} from '../../hooks/useConfiguration'
 
 // eslint-disable-next-line
-export const Launcher: React.FC<LauncherProps> = ({configuration, isLoading}) => {
-  const [isMenuOpened, setMenuOpened] = useState(false)
+export const Launcher: React.FC<AppState> = ({configuration, isLoading}) => {
 
   return (
-    <>{isLoading ?
-      <Skeleton.Input active className='launcher_skeleton' /> :
-        (
-          <ConfigurationProvider value={configuration}>
-            <MenuOpenedProvider value={{isMenuOpened, setMenuOpened}}>
-              <Layout>
-                <Layout.Header className='launcher_header'>
-                  <TopBar/>
-                </Layout.Header>
-                <Layout.Content>
-                  <LayoutContent/>
-                </Layout.Content>
-              </Layout>
-            </MenuOpenedProvider>
-          </ConfigurationProvider>
-        )
-    }</>
+    <>
+      {
+        isLoading ?
+          <Skeleton.Input active className='launcher_skeleton'/> :
+          <LoadedLauncher {...configuration}/>
+      }
+    </>
+  )
+}
+
+const LoadedLauncher: React.FC<Configuration> = (configuration) => {
+  const [isMenuOpened, setMenuOpened] = useState(false)
+  return (
+    <ConfigurationProvider value={configuration}>
+      <MenuOpenedProvider value={{isMenuOpened, setMenuOpened}}>
+        <Layout>
+          <Layout.Header className='launcher_header'>
+            <TopBar/>
+          </Layout.Header>
+          <Layout.Content>
+            <LayoutContent/>
+          </Layout.Content>
+        </Layout>
+      </MenuOpenedProvider>
+    </ConfigurationProvider>
   )
 }

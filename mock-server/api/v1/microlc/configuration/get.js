@@ -9,8 +9,8 @@ module.exports = (request, response) => {
     },
     plugins: [{
       id: 'plugin-test-2',
-      label: 'Second test plugin',
-      icon: 'home',
+      label: 'Href same window',
+      icon: 'far fa-window-maximize',
       order: 2,
       integrationMode: 'href',
       externalLink: {
@@ -19,14 +19,38 @@ module.exports = (request, response) => {
       }
     }, {
       id: 'plugin-test-1',
-      label: 'First test plugin',
-      icon: 'clipboard',
+      label: 'Href different window',
+      icon: 'far fa-window-restore',
       order: 1,
       integrationMode: 'href',
       externalLink: {
         url: 'https://google.it',
         sameWindow: false
       }
+    }, {
+      id: 'plugin-test-3',
+      label: 'IFrame',
+      icon: 'fab fa-google',
+      order: 3,
+      integrationMode: 'iframe',
+      pluginRoute: '/iframe',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }, {
+      id: 'qiankun-test',
+      label: 'Qiankun plugin 1',
+      icon: 'fab fa-react',
+      order: 4,
+      integrationMode: 'qiankun',
+      pluginRoute: '/qiankun',
+      pluginUrl: '//localhost:8764'
+    }, {
+      id: 'qiankun-as-iframe',
+      label: 'Qiankun as iframe',
+      icon: 'fab fa-reacteurope',
+      order: 5,
+      integrationMode: 'iframe',
+      pluginRoute: '/qiankunIframe',
+      pluginUrl: '//localhost:8764'
     }]
   })
 }

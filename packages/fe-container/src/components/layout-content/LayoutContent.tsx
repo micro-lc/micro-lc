@@ -1,57 +1,52 @@
-import React, {useCallback, useContext, useEffect} from 'react'
-import PropTypes from 'prop-types'
+import React, {useCallback, useContext} from 'react'
 import {Layout} from 'antd'
-import {motion} from 'framer-motion'
+import {Plugin} from '@mia-platform/core'
+import {Route, Router, Switch} from 'react-router-dom'
 
-import {SideMenu} from '../side-menu/SideMenu'
-import {useDelayedState} from '../../hooks/useDelayedState'
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 import {ConfigurationContext} from '../../contexts/Configuration.context'
+import {history} from '../../plugins/PluginsLoaderFacade'
+import {IframePlugin} from '../iframe-layout/IframePlugin'
+
+import './LayoutContent.less'
 
 export const LayoutContent: React.FC = () => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
+
   const closeSideMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
 
   return (
-    <Layout>
-      <AnimatedLayoutSider isOpened={isMenuOpened}/>
-      <Layout.Content data-testid="layout-content-overlay" onClick={closeSideMenu}/>
+    <Layout className={isMenuOpened ? 'layout-container-overlay' : ''} onClick={closeSideMenu}>
+      <LayoutCenter/>
     </Layout>
   )
 }
 
-const animatedLayoutProps = {
-  isOpened: PropTypes.bool.isRequired
-}
-
-type AnimatedLayoutProps = PropTypes.InferProps<typeof animatedLayoutProps>
-
-const motionNavSettings = {
-  transition: {ease: 'linear', duration: 0.2},
-  variants: {
-    open: {opacity: 1, x: 0},
-    closed: {opacity: 0, x: '-100%'}
-  }
-}
-
-const AnimatedLayoutSider: React.FC<AnimatedLayoutProps> = ({isOpened}) => {
-  const [animationState] = useDelayedState(isOpened, 250)
+const LayoutCenter: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
-
-  useEffect(() => {
-    document.title = configuration?.theming?.header?.pageTitle || document.title
-  }, [configuration])
+  const hasRoute = useCallback((plugin: Plugin) => plugin.pluginRoute, [])
+  const routerMapper = useCallback((plugin: Plugin) => (
+    <Route key={plugin.id} path={plugin.pluginRoute}>
+      <CenterPluginManager {...plugin}/>
+    </Route>
+  ), [])
 
   return (
-    <motion.nav
-      animate={isOpened ? 'open' : 'closed'}
-      {...motionNavSettings}
-    >
-      <Layout.Sider width={256}>
-        {animationState && <SideMenu plugins={configuration?.plugins}/>}
-      </Layout.Sider>
-    </motion.nav>
+    <Layout.Content data-testid="layout-content-overlay">
+      <Router history={history}>
+        <Switch>
+          {configuration.plugins?.filter(hasRoute).map(routerMapper)}
+        </Switch>
+      </Router>
+    </Layout.Content>
   )
 }
 
-AnimatedLayoutSider.propTypes = animatedLayoutProps
+const CenterPluginManager: React.FC<Plugin> = (plugin) => {
+  return (
+    <>
+      {plugin.integrationMode === 'iframe' && <IframePlugin {...plugin}/>}
+      {plugin.integrationMode === 'qiankun' && <div className="layout-plugin" id={plugin.id}/>}
+    </>
+  )
+}

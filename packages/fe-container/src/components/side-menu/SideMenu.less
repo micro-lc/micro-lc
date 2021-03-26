@@ -1,7 +1,21 @@
+@import "../../variables";
+@import "../../colors";
+
 .sideMenu_menu {
-  height: calc(100vh - 64px);
+  height: @content-height;
   padding-top: 24px;
   border-top: 1px solid #d9d9d9;
+}
+
+.sideMenu_entry {
+  margin-bottom: 4px !important;
+}
+
+.sideMenu_overlay {
+  top: @top-bar-height !important;
+  width: 256px;
+  position: fixed;
+  left: 0 !important;
 }
 
 .sideMenu_divider {
@@ -9,4 +23,16 @@
   min-width: 80%;
   float: right;
   margin: 0;
+}
+
+.sideMenu_icon {
+  color: @primary-color;
+
+  &.external {
+    height: 100%;
+    float: right;
+    display: flex;
+    align-items: center;
+  }
+
 }

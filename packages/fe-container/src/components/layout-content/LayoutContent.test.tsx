@@ -13,17 +13,6 @@ describe('LayoutContent tests', () => {
     })
 
     RenderWithReactIntl(
-      <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened}}>
-        <LayoutContent/>
-      </MenuOpenedProvider>
-    )
-    const overlay = screen.getByTestId('layout-content-overlay')
-    userEvent.click(overlay)
-    expect(setMenuOpened.mock.calls[0][0]).not.toBeTruthy()
-  })
-
-  it('Configuration application', async () => {
-    RenderWithReactIntl(
       <ConfigurationProvider value={{
         theming: {
           header: {
@@ -53,23 +42,32 @@ describe('LayoutContent tests', () => {
             url: 'https://google.it',
             sameWindow: false
           }
+        }, {
+          id: 'plugin-test-3',
+          label: 'IFrame',
+          icon: 'clipboard',
+          order: 1,
+          integrationMode: 'iframe',
+          pluginRoute: '/iframeTest',
+          pluginUrl: 'https://www.google.com/webhp?igu=1'
+        }, {
+          id: 'plugin-test-4',
+          label: 'Qiankun',
+          icon: 'clipboard',
+          order: 1,
+          integrationMode: 'qiankun',
+          pluginRoute: '/qiankunTest',
+          pluginUrl: 'https://www.google.com/webhp?igu=1'
         }]
       }}
       >
-        <MenuOpenedProvider value={{
-          isMenuOpened: true,
-          setMenuOpened: () => {
-          }
-        }}
-        >
+        <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened}}>
           <LayoutContent/>
         </MenuOpenedProvider>
       </ConfigurationProvider>
     )
-
-    expect(await screen.findByText('First test plugin')).toBeTruthy()
-    expect(await screen.findByText('Second test plugin')).toBeTruthy()
-
-    expect(global.window.document.title).toEqual('Mia Care')
+    const overlay = screen.getByTestId('layout-content-overlay')
+    userEvent.click(overlay)
+    expect(setMenuOpened.mock.calls[0][0]).not.toBeTruthy()
   })
 })

@@ -1,35 +1,16 @@
-import React, {useContext, useState} from 'react'
-import {FormattedMessage} from 'react-intl'
+import React, {useContext} from 'react'
 
 import './TopBar.less'
-import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
+import {BurgerIcon} from '../burger-icon/BurgerIcon'
+import {ConfigurationContext} from '../../contexts/Configuration.context'
 
 export const TopBar: React.FC = () => {
+  const configuration = useContext(ConfigurationContext)
+
   return (
     <div className="topBar_container">
       <BurgerIcon/>
-      <span data-testid="top-bar-title">
-        <FormattedMessage id="topBarTitle"/>
-      </span>
+      <img alt="Logo" className="logo" data-testid="company-logo" src={configuration?.theming?.logo}/>
     </div>
-  )
-}
-
-const BurgerIcon: React.FC = () => {
-  const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
-  const [isChecked, setChecked] = useState(false)
-
-  const manageToggle = () => {
-    setChecked(!isChecked)
-    setMenuOpened(!isMenuOpened)
-  }
-
-  return (
-    <label htmlFor="check" onClick={manageToggle}>
-      <input checked={isMenuOpened} data-testid="top-bar-side-menu-toggle" readOnly={true} type="checkbox"/>
-      <span/>
-      <span/>
-      <span/>
-    </label>
   )
 }
