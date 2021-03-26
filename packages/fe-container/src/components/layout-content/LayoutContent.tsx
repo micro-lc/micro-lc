@@ -44,9 +44,9 @@ const LayoutCenter: React.FC = () => {
 
 const CenterPluginManager: React.FC<Plugin> = (plugin) => {
   return (
-    <div className="layout-plugin">
+    <>
       {plugin.integrationMode === 'iframe' && <IframePlugin {...plugin}/>}
-      {plugin.integrationMode === 'qiankun' && <div id={plugin.id}/>}
-    </div>
+      {plugin.integrationMode === 'qiankun' && <div className="layout-plugin" id={plugin.id}/>}
+    </>
   )
 }
