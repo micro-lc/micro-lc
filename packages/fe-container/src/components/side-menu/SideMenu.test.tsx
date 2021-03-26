@@ -4,6 +4,7 @@ import {screen} from '@testing-library/react'
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
 import userEvent from '@testing-library/user-event'
+import {registerPlugin} from '../../plugins/PluginsLoaderFacade'
 
 describe('SideMenu tests', () => {
   it('side menu show entries', () => {
@@ -20,6 +21,7 @@ describe('SideMenu tests', () => {
 
   it('side menu click correctly works', () => {
     window.open = jest.fn()
+    registerPlugin({label: 'entry_1', id: '1', integrationMode: 'href', externalLink: {sameWindow: false, url: 'http://google.it'}})
     RenderWithReactIntl(<SideMenu
       plugins={[
         {label: 'entry_1', id: '1', integrationMode: 'href', externalLink: {sameWindow: false, url: 'http://google.it'}}

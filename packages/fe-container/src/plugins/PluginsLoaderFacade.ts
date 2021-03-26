@@ -8,18 +8,29 @@ export interface PluginStrategy {
 
 const registeredPlugins: Map<string, PluginStrategy> = new Map<string, PluginStrategy>()
 const qiankunPlugins: Plugin[] = []
-const routerStrategyModes = ['qiankun', 'iframe']
 
 export const registerPlugin = (plugin: Plugin) => {
   if (plugin.integrationMode === 'qiankun') {
     qiankunPlugins.push(plugin)
   }
-  const pluginStrategy = routerStrategyModes.includes(plugin.integrationMode) ? routeStrategy(plugin) : hrefStrategy(plugin.externalLink)
+  const pluginStrategy: PluginStrategy = strategyBuilder(plugin)
   registeredPlugins.set(plugin.id, pluginStrategy)
 }
 
 export const retrievePluginStrategy = (plugin: Plugin) => {
-  return registeredPlugins.get(plugin.id) || hrefStrategy(plugin.externalLink)
+  return registeredPlugins.get(plugin.id) || noOpStrategy()
+}
+
+const strategyBuilder = (plugin: Plugin) => {
+  switch (plugin.integrationMode) {
+    case 'href':
+      return hrefStrategy(plugin.externalLink)
+    case 'qiankun':
+    case 'iframe':
+      return routeStrategy(plugin)
+    default:
+      return noOpStrategy()
+  }
 }
 
 export const finish = () => {
@@ -51,6 +62,13 @@ function routeStrategy (plugin: Plugin): PluginStrategy {
   return {
     handlePluginLoad: () => {
       history.push(plugin?.pluginRoute || '')
+    }
+  }
+}
+
+function noOpStrategy (): PluginStrategy {
+  return {
+    handlePluginLoad: () => {
     }
   }
 }
