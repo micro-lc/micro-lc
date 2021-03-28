@@ -6,13 +6,17 @@
 
 **The Mia-Platform micro frontend solution**
 
-**microlc** enables you to create modular applications composed by multiple, independent [micro frontends][micro-frontends]
-called *plugins* integrated at runtime using [qiankun][qiankun].
+**Microlc** enables you to create modular applications composed by multiple, independent [micro frontends][micro-frontends]
+called *plugins* integrated at runtime. Microlc consists of a core interface that loads, embeds, and orchestrates plugins, while
+providing configuration options and useful out-of-the-box features.
+
+The core components are written in Typescript and React, microlc is technology-agnostic, which means that it integrates
+seamlessly with your favourite toolkit, being it Angular, React, Vue, or anything else you like.
 
 # Getting Started
 
 The project is a monorepo built with [yarn workspaces][workspaces] and [lerna][lerna]. All workspaces can be found under
-the `packages` folder.
+the `packages` folder. Each package has its own readme file which contains detailed information about its content.
 
 ### Set up the local environment
 
@@ -52,7 +56,6 @@ yarn fe-container test
 ```
 
 [micro-frontends]: https://micro-frontends.org/
-[qiankun]: https://github.com/umijs/qiankun
 [workspaces]: https://classic.yarnpkg.com/en/docs/workspaces/
 [lerna]: https://github.com/lerna/lerna
 [nvm]: https://github.com/creationix/nvm
