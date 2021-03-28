@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {Layout, Skeleton} from 'antd'
+import PropTypes from 'prop-types'
 import {Configuration} from '@mia-platform/core'
 
 import './Launcher.less'
@@ -10,7 +11,6 @@ import {MenuOpenedProvider} from '../../contexts/MenuOpened.context'
 import {AppState} from '../../hooks/useConfiguration'
 import {SideMenu} from '../../components/side-menu/SideMenu'
 
-// eslint-disable-next-line
 export const Launcher: React.FC<AppState> = ({configuration, isLoading}) => {
   return (
     <>
@@ -23,8 +23,14 @@ export const Launcher: React.FC<AppState> = ({configuration, isLoading}) => {
   )
 }
 
+Launcher.propTypes = {
+  configuration: PropTypes.any.isRequired,
+  isLoading: PropTypes.bool.isRequired
+}
+
 const LoadedLauncher: React.FC<Configuration> = (configuration) => {
   const [isMenuOpened, setMenuOpened] = useState(false)
+
   return (
     <ConfigurationProvider value={configuration}>
       <MenuOpenedProvider value={{isMenuOpened, setMenuOpened}}>

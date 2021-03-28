@@ -1,6 +1,8 @@
-import {ExternalLink, Plugin} from '@mia-platform/core'
 import {createBrowserHistory} from 'history'
 import {registerMicroApps, RegistrableApp, start} from 'qiankun'
+import {ExternalLink, Plugin} from '@mia-platform/core'
+
+import {INTEGRATION_METHODS} from '../constants'
 
 export interface PluginStrategy {
   handlePluginLoad: () => void
@@ -28,10 +30,10 @@ export const isCurrentPluginLoaded = () => {
 
 const strategyBuilder = (plugin: Plugin) => {
   switch (plugin.integrationMode) {
-    case 'href':
+    case INTEGRATION_METHODS.HREF:
       return hrefStrategy(plugin.externalLink)
-    case 'qiankun':
-    case 'iframe':
+    case INTEGRATION_METHODS.QIANKUN:
+    case INTEGRATION_METHODS.IFRAME:
       return routeStrategy(plugin)
     default:
       return noOpStrategy()
@@ -40,7 +42,7 @@ const strategyBuilder = (plugin: Plugin) => {
 
 export const finish = () => {
   const quiankunConfig = registeredPlugins
-    .filter(plugin => plugin.integrationMode === 'qiankun')
+    .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(plugin => ({
       name: plugin.id,
       entry: plugin.pluginUrl || '',
@@ -75,7 +77,6 @@ function routeStrategy (plugin: Plugin): PluginStrategy {
 
 function noOpStrategy (): PluginStrategy {
   return {
-    handlePluginLoad: () => {
-    }
+    handlePluginLoad: () => {}
   }
 }

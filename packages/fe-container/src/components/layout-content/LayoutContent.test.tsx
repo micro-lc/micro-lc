@@ -8,60 +8,59 @@ import {ConfigurationProvider} from '../../contexts/Configuration.context'
 
 describe('LayoutContent tests', () => {
   it('LayoutContent renders', () => {
-    const setMenuOpened = jest.fn(close => {
-    })
+    const setMenuOpened = jest.fn(close => {})
 
     RenderWithReactIntl(
-      <ConfigurationProvider value={{
-        theming: {
-          header: {
-            pageTitle: 'Mia Care',
-            favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
+      <ConfigurationProvider
+        value={{
+          theming: {
+            header: {pageTitle: 'Mia Care', favicon: 'favicon_url'},
+            variables: {},
+            logo: {url: 'logo_url', alt: 'logo'}
           },
-          variables: {},
-          logo: {
-            url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI',
-            alt: 'logo'
-          }
-        },
-        plugins: [{
-          id: 'plugin-test-2',
-          label: 'Second test plugin',
-          icon: 'home',
-          order: 2,
-          integrationMode: 'href',
-          externalLink: {
-            url: 'https://google.it',
-            sameWindow: true
-          }
-        }, {
-          id: 'plugin-test-1',
-          label: 'First test plugin',
-          icon: 'clipboard',
-          order: 1,
-          integrationMode: 'href',
-          externalLink: {
-            url: 'https://google.it',
-            sameWindow: false
-          }
-        }, {
-          id: 'plugin-test-3',
-          label: 'IFrame',
-          icon: 'clipboard',
-          order: 1,
-          integrationMode: 'iframe',
-          pluginRoute: '/iframeTest',
-          pluginUrl: 'https://www.google.com/webhp?igu=1'
-        }, {
-          id: 'plugin-test-4',
-          label: 'Qiankun',
-          icon: 'clipboard',
-          order: 1,
-          integrationMode: 'qiankun',
-          pluginRoute: '/qiankunTest',
-          pluginUrl: 'https://www.google.com/webhp?igu=1'
-        }]
-      }}
+          plugins: [
+            {
+              id: 'plugin-test-2',
+              label: 'Second test plugin',
+              icon: 'home',
+              order: 2,
+              integrationMode: 'href',
+              externalLink: {
+                url: 'https://google.it',
+                sameWindow: true
+              }
+            },
+            {
+              id: 'plugin-test-1',
+              label: 'First test plugin',
+              icon: 'clipboard',
+              order: 1,
+              integrationMode: 'href',
+              externalLink: {
+                url: 'https://google.it',
+                sameWindow: false
+              }
+            },
+            {
+              id: 'plugin-test-3',
+              label: 'IFrame',
+              icon: 'clipboard',
+              order: 1,
+              integrationMode: 'iframe',
+              pluginRoute: '/iframeTest',
+              pluginUrl: 'https://www.google.com/webhp?igu=1'
+            },
+            {
+              id: 'plugin-test-4',
+              label: 'Qiankun',
+              icon: 'clipboard',
+              order: 1,
+              integrationMode: 'qiankun',
+              pluginRoute: '/qiankunTest',
+              pluginUrl: 'https://www.google.com/webhp?igu=1'
+            }
+          ]
+        }}
       >
         <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened}}>
           <LayoutContent/>
