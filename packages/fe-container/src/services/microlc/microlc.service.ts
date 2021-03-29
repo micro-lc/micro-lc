@@ -2,9 +2,9 @@ import {Observable, of} from 'rxjs'
 import {catchError, map} from 'rxjs/operators'
 import {fromPromise} from 'rxjs/internal-compatibility'
 import axios, {AxiosRequestConfig} from 'axios'
-import {Configuration} from '@mia-platform/core'
+import {Configuration, User} from '@mia-platform/core'
 
-import {CONFIGURATION_SERVICE} from '@constants'
+import {CONFIGURATION_SERVICE, GET_USER_SERVICE} from '@constants'
 
 const microlcAxiosConfig: AxiosRequestConfig = {
   baseURL: '/',
@@ -13,10 +13,20 @@ const microlcAxiosConfig: AxiosRequestConfig = {
 
 const axiosInstance = axios.create(microlcAxiosConfig)
 
-export const retrieveConfiguration: () => Observable<Configuration> = () => {
-  const url = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
+const RETRIEVE_CONFIGURATION_URL = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
 
-  return fromPromise(axiosInstance.get<Configuration>(url))
+export const retrieveConfiguration = () => {
+  return extractDataFromUrl<Configuration>(RETRIEVE_CONFIGURATION_URL)
+}
+
+const RETRIEVE_USER_URL = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOINT}`
+
+export const retrieveUser = () => {
+  return extractDataFromUrl<User>(RETRIEVE_USER_URL)
+}
+
+const extractDataFromUrl: <T>(url: string) => Observable<Partial<T>> = (url) => {
+  return fromPromise(axiosInstance.get(url))
     .pipe(
       map(response => response.data),
       catchError(() => of({}))

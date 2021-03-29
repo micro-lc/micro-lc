@@ -5315,6 +5315,11 @@ coveralls@^3.1.0:
     minimist "^1.2.5"
     request "^2.88.2"
 
+craco-alias@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/craco-alias/-/craco-alias-2.2.0.tgz#adfd37f1623d394cd5e72ef9bab54a1e451bd205"
+  integrity sha512-FLSRaCWI/CKLUO+Cb/GH9ljSYWdrlzkYf3N373Kuof0hckJ1tj+wPN0XyToR8KPUggoIB5+IDkGs1uKUBuGUiA==
+
 craco-less@^1.17.1:
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/craco-less/-/craco-less-1.17.1.tgz#aa23cf10d09f0f99657bed977788cc9b501add70"

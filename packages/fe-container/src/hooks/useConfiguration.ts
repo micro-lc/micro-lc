@@ -32,7 +32,7 @@ export const useConfiguration = () => {
   useEffect(() => {
     const configurationSubscription = retrieveConfiguration()
       .subscribe((configuration: Configuration) => {
-        document.title = configuration?.theming?.header?.pageTitle || document.title
+        document.title = configuration.theming?.header?.pageTitle || document.title
         configuration.plugins = configuration.plugins?.sort(pluginsSorter)
         registerPlugins(configuration)
         setAppState({isLoading: false, configuration})
