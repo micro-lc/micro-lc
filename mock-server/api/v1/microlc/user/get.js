@@ -10,6 +10,6 @@ module.exports = (request, response) => {
       "name": "Mocked User",
       "nickname": "mocked.user",
       "phone": "+393333333333",
-      "picture": "https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1",
+      "avatar": "https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1",
     })
 }

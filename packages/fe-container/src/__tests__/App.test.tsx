@@ -69,6 +69,7 @@ describe('App test', () => {
 
   it('renders without crashing', async () => {
     expect(await screen.findByTestId('company-logo')).toBeTruthy()
+    expect(await screen.findByText('Mocked User')).toBeTruthy()
   })
 
   it('toggle is working', async () => {

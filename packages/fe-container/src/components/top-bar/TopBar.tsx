@@ -18,7 +18,9 @@ export const TopBar: React.FC = () => {
         data-testid='company-logo'
         src={configuration?.theming?.logo.url}
       />
-      <UserMenu/>
+      <div className='topBar_userMenu'>
+        <UserMenu/>
+      </div>
     </div>
   )
 }
