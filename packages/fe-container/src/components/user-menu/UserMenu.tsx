@@ -5,6 +5,7 @@ import {User} from '@mia-platform/core'
 import {UserContext} from '@contexts/User.context'
 
 import './UserMenu.less'
+import {FormattedMessage} from 'react-intl'
 
 const retrieveUserAvatar = (user: Partial<User>) => {
   const fallbackUrl = `https://eu.ui-avatars.com/api/?name=${user.name || ''}&size=24x24`
@@ -20,8 +21,10 @@ export const UserMenu: React.FC = () => {
 
   const overlayMenu = (
     <Menu>
-      <Menu.Item>
-        <button>{'Logout'}</button>
+      <Menu.Item className='userMenu_entry'>
+        <span className='userMenu_logout'>
+          <FormattedMessage id='logout'/>
+        </span>
       </Menu.Item>
     </Menu>
   )
