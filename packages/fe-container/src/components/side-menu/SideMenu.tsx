@@ -2,9 +2,10 @@ import React, {useCallback, useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Plugin} from '@mia-platform/core'
 
-import './SideMenu.less'
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
 import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
+
+import './SideMenu.less'
 
 const sideMenuProps = {
   plugins: PropTypes.array

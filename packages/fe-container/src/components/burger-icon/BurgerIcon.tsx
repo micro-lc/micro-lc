@@ -1,7 +1,8 @@
 import React, {useContext} from 'react'
 
-import './BurgerIcon.less'
 import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
+
+import './BurgerIcon.less'
 
 export const BurgerIcon: React.FC = () => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
