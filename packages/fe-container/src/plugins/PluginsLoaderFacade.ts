@@ -1,33 +1,39 @@
-import {ExternalLink, Plugin} from '@mia-platform/core'
 import {createBrowserHistory} from 'history'
 import {registerMicroApps, RegistrableApp, start} from 'qiankun'
+import {ExternalLink, Plugin} from '@mia-platform/core'
+
+import {INTEGRATION_METHODS} from '../constants'
 
 export interface PluginStrategy {
   handlePluginLoad: () => void
 }
 
-const registeredPlugins = new Map<Plugin, PluginStrategy>()
+const registeredPluginsStrategies = new Map<string, PluginStrategy>()
+const registeredPlugins: Plugin[] = []
 
 export const registerPlugin = (plugin: Plugin) => {
   const pluginStrategy: PluginStrategy = strategyBuilder(plugin)
-  registeredPlugins.set(plugin, pluginStrategy)
+  registeredPlugins.push(plugin)
+  registeredPluginsStrategies.set(plugin.id, pluginStrategy)
 }
 
 export const retrievePluginStrategy = (plugin: Plugin) => {
-  return registeredPlugins.get(plugin) || noOpStrategy()
+  return registeredPluginsStrategies.get(plugin.id) || noOpStrategy()
 }
 
-export const isPluginLoaded = () => {
-  return Array.from(registeredPlugins.keys())
-    .findIndex(plugin => plugin.pluginRoute && window.location.pathname.includes(plugin.pluginRoute)) !== -1
+export const isPluginLoaded = (plugin: Plugin) =>
+  plugin.pluginRoute ? window.location.pathname.endsWith(plugin.pluginRoute) : false
+
+export const isCurrentPluginLoaded = () => {
+  return registeredPlugins.findIndex(isPluginLoaded) !== -1
 }
 
 const strategyBuilder = (plugin: Plugin) => {
   switch (plugin.integrationMode) {
-    case 'href':
+    case INTEGRATION_METHODS.HREF:
       return hrefStrategy(plugin.externalLink)
-    case 'qiankun':
-    case 'iframe':
+    case INTEGRATION_METHODS.QIANKUN:
+    case INTEGRATION_METHODS.IFRAME:
       return routeStrategy(plugin)
     default:
       return noOpStrategy()
@@ -35,8 +41,8 @@ const strategyBuilder = (plugin: Plugin) => {
 }
 
 export const finish = () => {
-  const quiankunConfig = Array.from(registeredPlugins.keys())
-    .filter(plugin => plugin.integrationMode === 'qiankun')
+  const quiankunConfig = registeredPlugins
+    .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(plugin => ({
       name: plugin.id,
       entry: plugin.pluginUrl || '',
@@ -71,7 +77,6 @@ function routeStrategy (plugin: Plugin): PluginStrategy {
 
 function noOpStrategy (): PluginStrategy {
   return {
-    handlePluginLoad: () => {
-    }
+    handlePluginLoad: () => {}
   }
 }

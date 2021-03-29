@@ -1,38 +1,84 @@
-@import "../../variables";
-@import "../../colors";
+@import "../../styles/_variables";
+@import "../../styles/_colors";
 
-.sideMenu_menu {
-  height: @content-height;
+@side-menu-width: 256px;
+
+.sideMenu {
+  height: 100%;
+  width: 256px;
+  position: fixed;
+  z-index: 999;
+  top: @top-bar-height;
+  left: -@side-menu-width;
+  background-color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: left .2s linear;
   padding-top: 24px;
-  border-top: 1px solid #d9d9d9;
-}
+  box-shadow: none;
 
-.sideMenu_entry {
-  margin-bottom: 4px !important;
+  &.opened {
+    left: 0;
+    box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.2), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12);
+  }
 }
 
 .sideMenu_overlay {
-  top: @top-bar-height !important;
-  width: 256px;
+  display: none;
   position: fixed;
-  left: 0 !important;
+  top: @top-bar-height;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 998;
+  background-color: @overlay-background;
+
+  &.sideMenu_visible {
+    display: block;
+  }
 }
 
-.sideMenu_divider {
-  width: 80%;
-  min-width: 80%;
-  float: right;
-  margin: 0;
-}
+.sideMenu_voice {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 12px;
+  align-items: center;
+  padding-left: 24px;
 
-.sideMenu_icon {
-  color: @primary-color;
-
-  &.external {
-    height: 100%;
-    float: right;
-    display: flex;
-    align-items: center;
+  .sideMenu_icon {
+    font-size: 16px;
+    color: @primary-color;
   }
 
+  .sideMenu_entry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 11px 11px 0;
+
+    .sideMenu_label {
+      color: @menu-label-color;
+      min-width: 160px;
+    }
+
+    .sideMenu_externalLink {
+      color: @primary-color;
+      margin-left: 4px;
+    }
+  }
+
+  &:hover .sideMenu_label {
+    color: @primary-color;
+  }
+
+  &.active {
+    background: @menu-hover-bg-color;
+    box-shadow: inset 3px 0 0 0 @primary-color;
+
+    .sideMenu_label {
+      color: @primary-color;
+    }
+  }
 }

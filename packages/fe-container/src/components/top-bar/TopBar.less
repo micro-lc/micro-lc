@@ -1,48 +1,11 @@
-@import '../../colors';
-@import '../../variables';
+@import '../../styles/_variables';
 
 .topBar_container {
-  align-items: center;
+  height: @top-bar-height;
   display: flex;
-
-  label {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    float: left;
-    margin-right: 24px;
-    width: 32px;
-
-    span {
-      background: @primary-color;
-      border-radius: 10px;
-      height: 4px;
-      transition: .2s linear;
-    }
-  }
-
-  span {
-    &:nth-of-type(1), &:nth-of-type(3) {
-      width: 50%;
-    }
-
-    &:nth-of-type(2) {
-      margin: 6px 0;
-      width: 100%;
-    }
-  }
-
-  input[type="checkbox"] {
-    display: none;
-
-    &:checked {
-      ~ span:nth-of-type(1), ~ span:nth-of-type(3) {
-        transform: translateX(100%);
-      }
-    }
-  }
+  align-items: center;
 
   .logo {
-    max-height: @top-bar-height;
+    max-height: 90%;
   }
 }

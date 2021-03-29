@@ -1,7 +1,9 @@
-import {Configuration, Plugin} from '@mia-platform/core'
 import {useEffect, useState} from 'react'
+import {Configuration, Plugin} from '@mia-platform/core'
+
 import {retrieveConfiguration} from '../services/microlc/microlc.service'
-import {finish, registerPlugin, retrievePluginStrategy, isPluginLoaded} from '../plugins/PluginsLoaderFacade'
+import {finish, registerPlugin, retrievePluginStrategy, isCurrentPluginLoaded} from '../plugins/PluginsLoaderFacade'
+import {INTEGRATION_METHODS} from '../constants'
 
 export interface AppState {
   isLoading: boolean,
@@ -10,7 +12,7 @@ export interface AppState {
 
 const pluginsSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
 
-const notHref = (plugin: Plugin) => ['qiankun', 'iframe'].includes(plugin.integrationMode)
+const notHref = (plugin: Plugin) => plugin.integrationMode !== INTEGRATION_METHODS.HREF
 
 const registerPlugins = (configuration: Configuration) => {
   configuration.plugins?.forEach(registerPlugin)
@@ -19,7 +21,7 @@ const registerPlugins = (configuration: Configuration) => {
 
 const navigateToFirstPlugin = (configuration: Configuration) => {
   const firstValidPlugin: Plugin | undefined = configuration.plugins?.find(notHref)
-  if (firstValidPlugin && !isPluginLoaded()) {
+  if (firstValidPlugin && !isCurrentPluginLoaded()) {
     retrievePluginStrategy(firstValidPlugin).handlePluginLoad()
   }
 }

@@ -1,11 +1,11 @@
-import React, {useCallback} from 'react'
-import {Menu} from 'antd'
-import {Plugin} from '@mia-platform/core'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
+import {Plugin} from '@mia-platform/core'
+
+import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
+import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
 
 import './SideMenu.less'
-import {PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
-import {MenuInfo} from 'rc-menu/lib/interface'
 
 const sideMenuProps = {
   plugins: PropTypes.array
@@ -13,42 +13,51 @@ const sideMenuProps = {
 
 type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
 
-const avoidMenuSelectIfHref = (event: MenuInfo, plugin: Plugin) => {
-  if (plugin.integrationMode === 'href') {
-    event.domEvent.preventDefault()
-    event.domEvent.stopPropagation()
-    event.key = ''
-  }
-}
-
-const manageEntryClick = (plugin: Plugin) => {
-  const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
-  return (event: MenuInfo) => {
-    avoidMenuSelectIfHref(event, plugin)
-    pluginStrategy.handlePluginLoad()
-  }
-}
-
 export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
-  const menuIcon = useCallback((plugin: Plugin) => {
-    return <i className={'sideMenu_icon ' + (plugin.icon || '')}/>
-  }, [])
+  const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
 
-  const entriesMapper = useCallback((plugin: Plugin) => (
-    <React.Fragment key={plugin.id}>
-      <Menu.Item className="sideMenu_entry" icon={menuIcon(plugin)} onClick={manageEntryClick(plugin)}>
-        {plugin.label}
-        {plugin.integrationMode === 'href' && <i className="fas fa-external-link-alt sideMenu_icon external"/>}
-      </Menu.Item>
-      <Menu.Divider className='sideMenu_divider'/>
-    </React.Fragment>
-  ), [menuIcon])
+  const closeMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
+
+  const entriesMapper = useCallback((plugin: Plugin) => <SideMenuEntry key={plugin.id} {...plugin}/>, [])
 
   return (
-    <Menu className='sideMenu_menu' mode="inline">
-      {plugins?.map(entriesMapper)}
-    </Menu>
+    <>
+      <div className={'sideMenu ' + (isMenuOpened ? 'opened' : '')}>
+        {plugins?.map(entriesMapper)}
+      </div>
+
+      <div
+        className={'sideMenu_overlay ' + (isMenuOpened ? 'sideMenu_visible' : '')}
+        data-testid="layout-content-overlay"
+        onClick={closeMenu}
+      />
+    </>
   )
 }
 
 SideMenu.propTypes = sideMenuProps
+
+const SideMenuEntry: React.FC<Plugin> = (plugin) => {
+  const [isActive, setIsActive] = useState<boolean>(isPluginLoaded(plugin))
+
+  const menuClick = useCallback((plugin: Plugin) => {
+    const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
+    return () => {
+      pluginStrategy.handlePluginLoad()
+    }
+  }, [])
+
+  useEffect(() => {
+    return history.listen(() => setIsActive(isPluginLoaded(plugin)))
+  }, [plugin])
+
+  return (
+    <div className={'sideMenu_voice ' + (isActive ? 'active' : '')} onClick={menuClick(plugin)}>
+      <i className={'sideMenu_icon ' + (plugin.icon || '')}/>
+      <div className='sideMenu_entry'>
+        <span className='sideMenu_label'>{plugin.label}</span>
+        {plugin.integrationMode === 'href' && <i className='fas fa-external-link-alt sideMenu_externalLink'/>}
+      </div>
+    </div>
+  )
+}

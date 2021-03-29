@@ -1,24 +1,27 @@
 import nock from 'nock'
 
+import {CONFIGURATION_SERVICE} from '../../constants'
 import {retrieveConfiguration} from './microlc.service'
 
 nock.disableNetConnect()
 
 describe('microlc configuration service test', () => {
+  const url = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
+
   beforeAll(() => {
     nock.cleanAll()
   })
 
   it('return the response content', (done) => {
     const mockedResponse = nock('http://localhost')
-      .get('/api/v1/microlc/configuration')
+      .get(url)
       .reply(200, {
         theming: {
           logo: 'test'
         },
-        plugins: [{
-          id: 'test-plugin'
-        }]
+        plugins: [
+          {id: 'test-plugin'}
+        ]
       })
 
     retrieveConfiguration()
@@ -33,7 +36,7 @@ describe('microlc configuration service test', () => {
 
   it('return empty response for http errors', (done) => {
     const mockedResponse = nock('http://localhost:80')
-      .get('/api/v1/microlc/configuration')
+      .get(url)
       .reply(500)
 
     retrieveConfiguration()

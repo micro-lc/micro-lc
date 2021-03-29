@@ -1,6 +1,0 @@
-{
-  "configuration": {
-    "baseUrl": "/api/v1/microlc",
-    "endpoint": "/configuration"
-  }
-}
