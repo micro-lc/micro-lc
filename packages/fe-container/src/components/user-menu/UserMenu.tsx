@@ -1,6 +1,7 @@
 import React, {useCallback, useContext, useState} from 'react'
 import {Dropdown, Menu} from 'antd'
 import {User} from '@mia-platform/core'
+import classNames from 'classnames'
 
 import {UserContext} from '@contexts/User.context'
 
@@ -29,6 +30,8 @@ export const UserMenu: React.FC = () => {
     </Menu>
   )
 
+  const iconClasses = classNames('fas userMenu_icon fa-chevron-down', {opened: dropdownOpened})
+
   return (
     <Dropdown
       arrow
@@ -38,7 +41,7 @@ export const UserMenu: React.FC = () => {
       trigger={['click']}
     >
       <div className='userMenu_container' data-testid='userMenu_container'>
-        <i className={'fas userMenu_icon fa-chevron-down ' + (dropdownOpened ? 'opened' : '')}/>
+        <i className={iconClasses}/>
         <span className='userMenu_name'>{user.name}</span>
         <img alt='Avatar' className='userMenu_avatar' src={retrieveUserAvatar(user)}/>
       </div>
