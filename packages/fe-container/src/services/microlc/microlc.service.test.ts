@@ -35,19 +35,12 @@ describe('microlc configuration service test', () => {
       })
   })
 
-  it('return empty response for http errors', (done) => {
-    const mockedResponse = nock('http://localhost')
-      .get(configurationUrl)
-      .reply(500)
+  it('return empty configuration response for http errors', (done) => {
+    const mockedResponse = nock('http://localhost').get(configurationUrl).reply(500)
 
     retrieveConfiguration()
       .subscribe((response) => {
-        expect(response).toEqual({})
-        expect(response.theming).toBeUndefined()
-        expect(response.theming?.logo).toBeUndefined()
-        expect(response.plugins).toBeUndefined()
-        expect(response.plugins?.length).toBeUndefined()
-        expect(response.plugins?.[0].id).toBeUndefined()
+        expect(response).toStrictEqual({})
         mockedResponse.done()
         done()
       })
@@ -77,6 +70,17 @@ describe('microlc configuration service test', () => {
         expect(response.nickname).toEqual('mocked.user')
         expect(response.phone).toEqual('+393333333333')
         expect(response.picture).toEqual('https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1')
+        mockedResponse.done()
+        done()
+      })
+  })
+
+  it('return empty user response for http errors', (done) => {
+    const mockedResponse = nock('http://localhost').get(userUrl).reply(500)
+
+    retrieveUser()
+      .subscribe((response) => {
+        expect(response).toStrictEqual({})
         mockedResponse.done()
         done()
       })
