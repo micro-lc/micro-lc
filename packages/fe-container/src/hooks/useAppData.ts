@@ -15,9 +15,9 @@ const pluginsSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0)
 
 const notHref = (plugin: Plugin) => plugin.integrationMode !== INTEGRATION_METHODS.HREF
 
-const registerPlugins = (configuration: Configuration) => {
+const registerPlugins = (configuration: Configuration, user: Partial<User>) => {
   configuration.plugins?.forEach(registerPlugin)
-  finish()
+  finish(user)
 }
 
 const navigateToFirstPlugin = (configuration: Configuration) => {
@@ -35,7 +35,7 @@ export const useAppData = () => {
       .subscribe(({configuration, user}) => {
         document.title = configuration.theming?.header?.pageTitle || document.title
         configuration.plugins = configuration.plugins?.sort(pluginsSorter)
-        registerPlugins(configuration)
+        registerPlugins(configuration, user)
         setAppState({isLoading: false, configuration, user})
         navigateToFirstPlugin(configuration)
       })

@@ -96,7 +96,7 @@ describe('Test plugin loading', () => {
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('/iframeTest')
-    finish()
+    finish({})
     expect(start).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([])
   })
@@ -114,13 +114,16 @@ describe('Test plugin loading', () => {
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('/qiankunTest')
-    finish()
+    finish({})
     expect(start).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([{
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
       container: '#plugin-1',
-      activeRule: '/qiankunTest'
+      activeRule: '/qiankunTest',
+      props: {
+        currentUser: {}
+      }
     }])
   })
 
@@ -139,7 +142,7 @@ describe('Test plugin loading', () => {
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('')
-    finish()
+    finish({})
     expect(start).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalled()
   })
