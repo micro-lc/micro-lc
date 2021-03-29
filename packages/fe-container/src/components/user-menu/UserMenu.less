@@ -7,6 +7,11 @@
     font-size: 16px;
     margin-right: 10px;
     color: @primary-color;
+    transition: .2s linear;
+
+    &.opened {
+      transform: rotate(180deg);
+    }
   }
 
   & .userMenu_name {

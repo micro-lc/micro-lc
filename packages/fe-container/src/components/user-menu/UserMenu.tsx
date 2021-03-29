@@ -35,7 +35,7 @@ export const UserMenu: React.FC = () => {
       trigger={['click']}
     >
       <div className='userMenu_container' data-testid='userMenu_container'>
-        <i className={'fas userMenu_icon ' + (dropdownOpened ? 'fa-chevron-up' : 'fa-chevron-down')}/>
+        <i className={'fas userMenu_icon fa-chevron-down ' + (dropdownOpened ? 'opened' : '')}/>
         <span className='userMenu_name'>{user.name}</span>
         <img alt='Avatar' className='userMenu_avatar' src={retrieveUserAvatar(user)}/>
       </div>
