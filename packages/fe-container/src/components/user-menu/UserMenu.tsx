@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useCallback, useContext, useState} from 'react'
 import {Dropdown, Menu} from 'antd'
 import {User} from '@mia-platform/core'
 
@@ -13,19 +13,29 @@ const retrieveUserAvatar = (user: Partial<User>) => {
 
 export const UserMenu: React.FC = () => {
   const user = useContext(UserContext)
+  const [dropdownOpened, setDropdownOpened] = useState<boolean>(false)
+  const dropdownChanged = useCallback(() => {
+    setDropdownOpened((wasOpened) => !wasOpened)
+  }, [setDropdownOpened])
 
   const overlayMenu = (
     <Menu>
       <Menu.Item>
-        <button>{'ciao'}</button>
+        <button>{'Logout'}</button>
       </Menu.Item>
     </Menu>
   )
 
   return (
-    <Dropdown overlay={overlayMenu}>
-      <div className="userMenu_container">
-        <i className='fas fa-chevron-down userMenu_icon'/>
+    <Dropdown
+      arrow
+      onVisibleChange={dropdownChanged}
+      overlay={overlayMenu}
+      placement='bottomCenter'
+      trigger={['click']}
+    >
+      <div className='userMenu_container' data-testid='userMenu_container'>
+        <i className={'fas userMenu_icon ' + (dropdownOpened ? 'fa-chevron-up' : 'fa-chevron-down')}/>
         <span className='userMenu_name'>{user.name}</span>
         <img alt='Avatar' className='userMenu_avatar' src={retrieveUserAvatar(user)}/>
       </div>
