@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["./components/*"],
+      "@contexts/*": ["./contexts/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@plugins/*": ["./plugins/*"],
+      "@services/*": ["./services/*"],
+      "@constants": ["./constants.ts"]
+    }
+  }
+}

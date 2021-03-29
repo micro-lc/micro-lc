@@ -2,8 +2,8 @@ import React, {useCallback, useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Plugin} from '@mia-platform/core'
 
-import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
-import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
+import {MenuOpenedContext} from '@contexts/MenuOpened.context'
+import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '@plugins/PluginsLoaderFacade'
 
 import './SideMenu.less'
 

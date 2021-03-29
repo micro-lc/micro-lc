@@ -2,6 +2,7 @@ import {createContext} from 'react'
 
 export const MenuOpenedContext = createContext({
   isMenuOpened: false,
-  setMenuOpened: (_: boolean) => {}
+  setMenuOpened: (_: boolean) => {
+  }
 })
 export const MenuOpenedProvider = MenuOpenedContext.Provider

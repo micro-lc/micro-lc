@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 
 import App from '../App'
 import RenderWithReactIntl from './utils'
-import {CONFIGURATION_SERVICE} from '../constants'
+import {CONFIGURATION_SERVICE} from '@constants'
 
 nock.disableNetConnect()
 

@@ -3,12 +3,12 @@ import {Layout, Skeleton} from 'antd'
 import PropTypes from 'prop-types'
 import {Configuration} from '@mia-platform/core'
 
-import {TopBar} from '../../components/top-bar/TopBar'
-import {LayoutContent} from '../../components/layout-content/LayoutContent'
-import {ConfigurationProvider} from '../../contexts/Configuration.context'
-import {MenuOpenedProvider} from '../../contexts/MenuOpened.context'
-import {AppState} from '../../hooks/useConfiguration'
-import {SideMenu} from '../../components/side-menu/SideMenu'
+import {TopBar} from '@components/top-bar/TopBar'
+import {LayoutContent} from '@components/layout-content/LayoutContent'
+import {ConfigurationProvider} from '@contexts/Configuration.context'
+import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
+import {AppState} from '@hooks/useConfiguration'
+import {SideMenu} from '@components/side-menu/SideMenu'
 
 import './Launcher.less'
 

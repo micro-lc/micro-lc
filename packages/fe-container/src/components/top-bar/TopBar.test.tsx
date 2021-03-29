@@ -4,12 +4,17 @@ import userEvent from '@testing-library/user-event'
 
 import {TopBar} from './TopBar'
 import RenderWithReactIntl from '../../__tests__/utils'
-import {MenuOpenedProvider} from '../../contexts/MenuOpened.context'
+import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 
 describe('TopBar tests', function () {
   it('TopBar is working', () => {
     RenderWithReactIntl(
-      <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: () => {}}}>
+      <MenuOpenedProvider value={{
+        isMenuOpened: false,
+        setMenuOpened: () => {
+        }
+      }}
+      >
         <TopBar/>
       </MenuOpenedProvider>
     )
@@ -17,7 +22,8 @@ describe('TopBar tests', function () {
   })
 
   it('Closed TopBar is opening', () => {
-    const mockBurgerClick = jest.fn(isToggled => {})
+    const mockBurgerClick = jest.fn(isToggled => {
+    })
 
     RenderWithReactIntl(
       <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
@@ -30,7 +36,8 @@ describe('TopBar tests', function () {
   })
 
   it('Open TopBar is closing', () => {
-    const mockBurgerClick = jest.fn(isToggled => {})
+    const mockBurgerClick = jest.fn(isToggled => {
+    })
 
     RenderWithReactIntl(
       <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>

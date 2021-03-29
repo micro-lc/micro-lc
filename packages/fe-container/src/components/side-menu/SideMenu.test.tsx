@@ -5,13 +5,14 @@ import userEvent from '@testing-library/user-event'
 
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
-import {isPluginLoaded, registerPlugin, history} from '../../plugins/PluginsLoaderFacade'
+import {history, isPluginLoaded, registerPlugin} from '@plugins/PluginsLoaderFacade'
 
 jest.mock('../../plugins/PluginsLoaderFacade', () => ({
   ...jest.requireActual('../../plugins/PluginsLoaderFacade'),
   isPluginLoaded: jest.fn(),
   history: {
-    listen: jest.fn(() => {})
+    listen: jest.fn(() => {
+    })
   }
 }))
 

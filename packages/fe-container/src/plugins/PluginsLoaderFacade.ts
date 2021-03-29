@@ -2,7 +2,7 @@ import {createBrowserHistory} from 'history'
 import {registerMicroApps, RegistrableApp, start} from 'qiankun'
 import {ExternalLink, Plugin} from '@mia-platform/core'
 
-import {INTEGRATION_METHODS} from '../constants'
+import {INTEGRATION_METHODS} from '@constants'
 
 export interface PluginStrategy {
   handlePluginLoad: () => void
@@ -77,6 +77,7 @@ function routeStrategy (plugin: Plugin): PluginStrategy {
 
 function noOpStrategy (): PluginStrategy {
   return {
-    handlePluginLoad: () => {}
+    handlePluginLoad: () => {
+    }
   }
 }

@@ -1,6 +1,6 @@
 import nock from 'nock'
 
-import {CONFIGURATION_SERVICE} from '../../constants'
+import {CONFIGURATION_SERVICE} from '@constants'
 import {retrieveConfiguration} from './microlc.service'
 
 nock.disableNetConnect()

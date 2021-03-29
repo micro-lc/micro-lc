@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 
-import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
+import {MenuOpenedContext} from '@contexts/MenuOpened.context'
 
 import './BurgerIcon.less'
 

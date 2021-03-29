@@ -3,9 +3,9 @@ import {Layout} from 'antd'
 import {Route, Router, Switch} from 'react-router-dom'
 import {Plugin} from '@mia-platform/core'
 
-import {ConfigurationContext} from '../../contexts/Configuration.context'
-import {history} from '../../plugins/PluginsLoaderFacade'
-import {INTEGRATION_METHODS} from '../../constants'
+import {ConfigurationContext} from '@contexts/Configuration.context'
+import {history} from '@plugins/PluginsLoaderFacade'
+import {INTEGRATION_METHODS} from '@constants'
 
 import './LayoutContent.less'
 

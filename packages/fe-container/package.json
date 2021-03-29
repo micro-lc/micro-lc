@@ -67,6 +67,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "craco-alias": "^2.2.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-config-standard-react": "^11.0.1",

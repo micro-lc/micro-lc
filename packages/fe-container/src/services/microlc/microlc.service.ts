@@ -4,7 +4,7 @@ import {fromPromise} from 'rxjs/internal-compatibility'
 import axios, {AxiosRequestConfig} from 'axios'
 import {Configuration} from '@mia-platform/core'
 
-import {CONFIGURATION_SERVICE} from '../../constants'
+import {CONFIGURATION_SERVICE} from '@constants'
 
 const microlcAxiosConfig: AxiosRequestConfig = {
   baseURL: '/',

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 
-import {BurgerIcon} from '../burger-icon/BurgerIcon'
-import {ConfigurationContext} from '../../contexts/Configuration.context'
+import {BurgerIcon} from '@components/burger-icon/BurgerIcon'
+import {ConfigurationContext} from '@contexts/Configuration.context'
 
 import './TopBar.less'
 

@@ -1,4 +1,6 @@
+const path = require('path')
 const CracoLessPlugin = require('craco-less')
+const CracoAlias = require('craco-alias')
 
 module.exports = {
   plugins: [
@@ -10,6 +12,14 @@ module.exports = {
             javascriptEnabled: true
           }
         }
+      }
+    },
+    {
+      plugin: CracoAlias,
+      options: {
+        baseUrl: './src',
+        source: 'tsconfig',
+        tsConfigPath: './tsconfig.extend.json'
       }
     }
   ]

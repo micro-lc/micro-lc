@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react'
 import {Configuration, Plugin} from '@mia-platform/core'
 
-import {retrieveConfiguration} from '../services/microlc/microlc.service'
-import {finish, registerPlugin, retrievePluginStrategy, isCurrentPluginLoaded} from '../plugins/PluginsLoaderFacade'
-import {INTEGRATION_METHODS} from '../constants'
+import {retrieveConfiguration} from '@services/microlc/microlc.service'
+import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins/PluginsLoaderFacade'
+import {INTEGRATION_METHODS} from '@constants'
 
 export interface AppState {
   isLoading: boolean,
