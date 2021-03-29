@@ -2,11 +2,12 @@ import React, {useCallback, useContext, useState} from 'react'
 import {Dropdown, Menu} from 'antd'
 import {User} from '@mia-platform/core'
 import classNames from 'classnames'
-
+import {FormattedMessage} from 'react-intl'
 import {UserContext} from '@contexts/User.context'
 
+import {logOutUser} from '@services/microlc/user.service'
+
 import './UserMenu.less'
-import {FormattedMessage} from 'react-intl'
 
 const retrieveUserAvatar = (user: Partial<User>) => {
   const fallbackUrl = `https://eu.ui-avatars.com/api/?name=${user.name || ''}&size=24x24`
@@ -19,11 +20,14 @@ export const UserMenu: React.FC = () => {
   const dropdownChanged = useCallback(() => {
     setDropdownOpened((wasOpened) => !wasOpened)
   }, [setDropdownOpened])
+  const logOut = useCallback(() => {
+    logOutUser().subscribe(() => window.location.reload())
+  }, [])
 
   const overlayMenu = (
     <Menu>
       <Menu.Item className='userMenu_entry'>
-        <span className='userMenu_logout'>
+        <span className='userMenu_logout' onClick={logOut}>
           <FormattedMessage id='logout'/>
         </span>
       </Menu.Item>

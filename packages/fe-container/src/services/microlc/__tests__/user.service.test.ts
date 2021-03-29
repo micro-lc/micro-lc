@@ -1,49 +1,14 @@
 import nock from 'nock'
 
-import {CONFIGURATION_SERVICE, GET_USER_SERVICE} from '@constants'
-import {retrieveConfiguration, retrieveUser} from './microlc.service'
+import {logOutUser, retrieveUser} from '@services/microlc/user.service'
+import {GET_USER_SERVICE, LOGOUT_USER_SERVICE} from '@constants'
 
-nock.disableNetConnect()
-
-describe('microlc configuration service test', () => {
-  const configurationUrl = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
+describe('User service tests', () => {
   const userUrl = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOINT}`
+  const logOutUrl = `${LOGOUT_USER_SERVICE.BASE_URL}${LOGOUT_USER_SERVICE.ENDPOINT}`
 
   beforeAll(() => {
     nock.cleanAll()
-  })
-
-  it('return the response content for configuration', (done) => {
-    const mockedResponse = nock('http://localhost')
-      .get(configurationUrl)
-      .reply(200, {
-        theming: {
-          logo: 'test'
-        },
-        plugins: [
-          {id: 'test-plugin'}
-        ]
-      })
-
-    retrieveConfiguration()
-      .subscribe((response) => {
-        expect(response.theming?.logo).toEqual('test')
-        expect(response.plugins?.length).toEqual(1)
-        expect(response.plugins?.[0].id).toEqual('test-plugin')
-        mockedResponse.done()
-        done()
-      })
-  })
-
-  it('return empty configuration response for http errors', (done) => {
-    const mockedResponse = nock('http://localhost').get(configurationUrl).reply(500)
-
-    retrieveConfiguration()
-      .subscribe((response) => {
-        expect(response).toStrictEqual({})
-        mockedResponse.done()
-        done()
-      })
   })
 
   it('return the response content for user', (done) => {
@@ -81,6 +46,17 @@ describe('microlc configuration service test', () => {
     retrieveUser()
       .subscribe((response) => {
         expect(response).toStrictEqual({})
+        mockedResponse.done()
+        done()
+      })
+  })
+
+  it('return empty user logout response for http errors', (done) => {
+    const mockedResponse = nock('http://localhost').post(logOutUrl).reply(500)
+
+    logOutUser()
+      .subscribe((response) => {
+        expect(response).toStrictEqual(false)
         mockedResponse.done()
         done()
       })
