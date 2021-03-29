@@ -1,4 +1,4 @@
-import {Observable, of} from 'rxjs'
+import {forkJoin, Observable, of} from 'rxjs'
 import {catchError, map} from 'rxjs/operators'
 import {fromPromise} from 'rxjs/internal-compatibility'
 import axios, {AxiosRequestConfig} from 'axios'
@@ -23,6 +23,18 @@ const RETRIEVE_USER_URL = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOI
 
 export const retrieveUser = () => {
   return extractDataFromUrl<User>(RETRIEVE_USER_URL)
+}
+
+type AppData = {
+  user: Partial<User>,
+  configuration: Configuration
+}
+
+export const retrieveAppData: () => Observable<AppData> = () => {
+  return forkJoin({
+    user: retrieveUser(),
+    configuration: retrieveConfiguration()
+  })
 }
 
 const extractDataFromUrl: <T>(url: string) => Observable<Partial<T>> = (url) => {

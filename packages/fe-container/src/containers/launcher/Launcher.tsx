@@ -7,7 +7,7 @@ import {TopBar} from '@components/top-bar/TopBar'
 import {LayoutContent} from '@components/layout-content/LayoutContent'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
-import {AppState} from '@hooks/useConfiguration'
+import {AppState} from '@hooks/useAppData'
 import {SideMenu} from '@components/side-menu/SideMenu'
 
 import './Launcher.less'

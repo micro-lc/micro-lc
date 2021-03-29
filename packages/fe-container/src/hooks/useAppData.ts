@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react'
-import {Configuration, Plugin} from '@mia-platform/core'
+import {Configuration, Plugin, User} from '@mia-platform/core'
 
-import {retrieveConfiguration} from '@services/microlc/microlc.service'
+import {retrieveAppData} from '@services/microlc/microlc.service'
 import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins/PluginsLoaderFacade'
 import {INTEGRATION_METHODS} from '@constants'
 
 export interface AppState {
   isLoading: boolean,
-  configuration: Configuration
+  configuration: Configuration,
+  user: Partial<User>
 }
 
 const pluginsSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
@@ -26,16 +27,16 @@ const navigateToFirstPlugin = (configuration: Configuration) => {
   }
 }
 
-export const useConfiguration = () => {
-  const [appState, setAppState] = useState<AppState>({isLoading: true, configuration: {}})
+export const useAppData = () => {
+  const [appState, setAppState] = useState<AppState>({isLoading: true, configuration: {}, user: {}})
 
   useEffect(() => {
-    const configurationSubscription = retrieveConfiguration()
-      .subscribe((configuration: Configuration) => {
+    const configurationSubscription = retrieveAppData()
+      .subscribe(({configuration, user}) => {
         document.title = configuration.theming?.header?.pageTitle || document.title
         configuration.plugins = configuration.plugins?.sort(pluginsSorter)
         registerPlugins(configuration)
-        setAppState({isLoading: false, configuration})
+        setAppState({isLoading: false, configuration, user})
         navigateToFirstPlugin(configuration)
       })
     return () => configurationSubscription.unsubscribe()

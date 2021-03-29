@@ -1,12 +1,12 @@
 import React from 'react'
 
 import {Launcher} from './containers/launcher/Launcher'
-import {useConfiguration} from './hooks/useConfiguration'
+import {useAppData} from '@hooks/useAppData'
 
 import './App.less'
 
 const App: React.FC = () => {
-  const appState = useConfiguration()
+  const appState = useAppData()
 
   return <Launcher {...appState}/>
 }
