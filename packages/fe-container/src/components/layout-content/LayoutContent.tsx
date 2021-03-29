@@ -48,11 +48,6 @@ const CenterPluginManager: React.FC<Plugin> = (plugin) => {
 
 const PluginIframe: React.FC<Plugin> = (plugin) => {
   return (
-    <iframe
-      className='layout-iframe'
-      frameBorder='0'
-      src={plugin.pluginUrl}
-      title={plugin.id}
-    />
+    <iframe className='layout-iframe' frameBorder='0' src={plugin.pluginUrl} title={plugin.id}/>
   )
 }

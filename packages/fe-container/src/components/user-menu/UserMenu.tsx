@@ -30,7 +30,7 @@ export const UserMenu: React.FC = () => {
     </Menu>
   )
 
-  const iconClasses = classNames('fas userMenu_icon fa-chevron-down', {opened: dropdownOpened})
+  const iconClasses = classNames('fas', 'fa-chevron-down', 'userMenu_icon', {opened: dropdownOpened})
 
   return (
     <Dropdown
