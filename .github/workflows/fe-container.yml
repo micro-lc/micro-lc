@@ -53,6 +53,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
       - name: Prepare
         id: prep
@@ -89,7 +90,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: './packages/fe-container/'
           pull: true
           push: true
           cache-from: type=registry,ref=${{ steps.prep.outputs.image }}:latest
