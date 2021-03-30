@@ -28,7 +28,6 @@
     "test": "craco test",
     "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts",
     "dev:unit-watch": "yarn test",
-    "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register --root ../../mock-server",
     "dev": "npm-run-all -p dev:** start",
     "update-docker-version": "sed -i.bck \\\\\\\"s|version=\\\\\\\\\\\\\\\"[0-9]*\\\\\\\\.[0-9]*\\\\\\\\.[0-9]*.*\\\\\\\\\\\\\\\"|version=\\\\\\\\\\\\\\\"${npm_package_version}\\\\\\\\\\\\\\\"|\\\\\\\" Dockerfile",
     "version": "npm run update-docker-version && rm -fr Dockerfile.bck && git add Dockerfile"
