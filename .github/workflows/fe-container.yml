@@ -41,7 +41,7 @@ jobs:
       if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '14.x' }}
       uses: actions/cache@v2
       with:
-        path: ./build
+        path: ${{ env.context }}build
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}
 
   docker-build:
@@ -82,7 +82,7 @@ jobs:
       - name: Cache build
         uses: actions/cache@v2
         with:
-          path: ./build
+          path: ${{ env.context }}build
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}
