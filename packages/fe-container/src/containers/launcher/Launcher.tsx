@@ -1,50 +1,70 @@
 import React, {useState} from 'react'
 import {Layout, Skeleton} from 'antd'
 import PropTypes from 'prop-types'
-import {Configuration} from '@mia-platform/core'
 
-import {TopBar} from '../../components/top-bar/TopBar'
-import {LayoutContent} from '../../components/layout-content/LayoutContent'
-import {ConfigurationProvider} from '../../contexts/Configuration.context'
-import {MenuOpenedProvider} from '../../contexts/MenuOpened.context'
-import {AppState} from '../../hooks/useConfiguration'
-import {SideMenu} from '../../components/side-menu/SideMenu'
+import {TopBar} from '@components/top-bar/TopBar'
+import {LayoutContent} from '@components/layout-content/LayoutContent'
+import {ConfigurationProvider} from '@contexts/Configuration.context'
+import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
+import {AppState} from '@hooks/useAppData'
+import {SideMenu} from '@components/side-menu/SideMenu'
 
 import './Launcher.less'
+import {UserContextProvider} from '@contexts/User.context'
 
-export const Launcher: React.FC<AppState> = ({configuration, isLoading}) => {
+export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) => {
   return (
     <>
       {
         isLoading ?
           <Skeleton.Input active className='launcher_skeleton'/> :
-          <LoadedLauncher {...configuration}/>
+          <LoadedLauncher configuration={configuration} user={user}/>
       }
     </>
   )
 }
 
-Launcher.propTypes = {
-  configuration: PropTypes.any.isRequired,
-  isLoading: PropTypes.bool.isRequired
+type LoadedLauncherProps = Omit<AppState, 'isLoading'>
+
+const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) => {
+  return (
+    <AppProvider configuration={configuration} user={user}>
+      <Layout>
+        <Layout.Header className='launcher_header'>
+          <TopBar/>
+        </Layout.Header>
+        <Layout.Content>
+          <SideMenu plugins={configuration.plugins}/>
+          <LayoutContent/>
+        </Layout.Content>
+      </Layout>
+    </AppProvider>
+  )
 }
 
-const LoadedLauncher: React.FC<Configuration> = (configuration) => {
+const AppProvider: React.FC<LoadedLauncherProps> = ({configuration, user, children}) => {
   const [isMenuOpened, setMenuOpened] = useState(false)
-
   return (
     <ConfigurationProvider value={configuration}>
-      <MenuOpenedProvider value={{isMenuOpened, setMenuOpened}}>
-        <Layout>
-          <Layout.Header className='launcher_header'>
-            <TopBar/>
-          </Layout.Header>
-          <Layout.Content>
-            <SideMenu plugins={configuration.plugins}/>
-            <LayoutContent/>
-          </Layout.Content>
-        </Layout>
-      </MenuOpenedProvider>
+      <UserContextProvider value={user}>
+        <MenuOpenedProvider value={{isMenuOpened, setMenuOpened}}>
+          {children}
+        </MenuOpenedProvider>
+      </UserContextProvider>
     </ConfigurationProvider>
   )
+}
+
+LoadedLauncher.propTypes = {
+  configuration: PropTypes.any.isRequired,
+  user: PropTypes.any.isRequired
+}
+
+AppProvider.propTypes = {
+  ...LoadedLauncher.propTypes
+}
+
+Launcher.propTypes = {
+  ...LoadedLauncher.propTypes,
+  isLoading: PropTypes.bool.isRequired
 }

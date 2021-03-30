@@ -51,6 +51,15 @@ const plugins = [
     pluginUrl: '//localhost:8764'
   },
   {
+    id: 'qiankun-test-2',
+    label: 'Qiankun plugin 2',
+    icon: 'fab fa-react',
+    order: 3,
+    integrationMode: 'qiankun',
+    pluginRoute: '/qiankun2',
+    pluginUrl: '//localhost:8764'
+  },
+  {
     id: 'qiankun-as-iframe',
     label: 'Qiankun as iframe',
     icon: 'fab fa-reacteurope',

@@ -1,8 +1,8 @@
 import {createBrowserHistory} from 'history'
 import {registerMicroApps, RegistrableApp, start} from 'qiankun'
-import {ExternalLink, Plugin} from '@mia-platform/core'
+import {ExternalLink, Plugin, User} from '@mia-platform/core'
 
-import {INTEGRATION_METHODS} from '../constants'
+import {INTEGRATION_METHODS} from '@constants'
 
 export interface PluginStrategy {
   handlePluginLoad: () => void
@@ -40,14 +40,17 @@ const strategyBuilder = (plugin: Plugin) => {
   }
 }
 
-export const finish = () => {
+export const finish = (user: Partial<User>) => {
   const quiankunConfig = registeredPlugins
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(plugin => ({
       name: plugin.id,
       entry: plugin.pluginUrl || '',
       container: `#${plugin.id}`,
-      activeRule: plugin.pluginRoute || ''
+      activeRule: plugin.pluginRoute || '',
+      props: {
+        currentUser: user
+      }
     }))
   registerMicroApps(quiankunConfig)
   start()
@@ -77,6 +80,7 @@ function routeStrategy (plugin: Plugin): PluginStrategy {
 
 function noOpStrategy (): PluginStrategy {
   return {
-    handlePluginLoad: () => {}
+    handlePluginLoad: () => {
+    }
   }
 }

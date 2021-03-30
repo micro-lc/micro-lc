@@ -1,24 +1,17 @@
-import {Observable, of} from 'rxjs'
-import {catchError, map} from 'rxjs/operators'
-import {fromPromise} from 'rxjs/internal-compatibility'
-import axios, {AxiosRequestConfig} from 'axios'
-import {Configuration} from '@mia-platform/core'
+import {forkJoin, Observable} from 'rxjs'
+import {Configuration, User} from '@mia-platform/core'
 
-import {CONFIGURATION_SERVICE} from '../../constants'
+import {retrieveConfiguration} from '@services/microlc/configuration.service'
+import {retrieveUser} from '@services/microlc/user.service'
 
-const microlcAxiosConfig: AxiosRequestConfig = {
-  baseURL: '/',
-  responseType: 'json'
+type AppData = {
+  user: Partial<User>,
+  configuration: Configuration
 }
 
-const axiosInstance = axios.create(microlcAxiosConfig)
-
-export const retrieveConfiguration: () => Observable<Configuration> = () => {
-  const url = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
-
-  return fromPromise(axiosInstance.get<Configuration>(url))
-    .pipe(
-      map(response => response.data),
-      catchError(() => of({}))
-    )
+export const retrieveAppData: () => Observable<AppData> = () => {
+  return forkJoin({
+    user: retrieveUser(),
+    configuration: retrieveConfiguration()
+  })
 }

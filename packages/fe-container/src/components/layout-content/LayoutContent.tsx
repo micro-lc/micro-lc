@@ -3,9 +3,9 @@ import {Layout} from 'antd'
 import {Route, Router, Switch} from 'react-router-dom'
 import {Plugin} from '@mia-platform/core'
 
-import {ConfigurationContext} from '../../contexts/Configuration.context'
-import {history} from '../../plugins/PluginsLoaderFacade'
-import {INTEGRATION_METHODS} from '../../constants'
+import {ConfigurationContext} from '@contexts/Configuration.context'
+import {history} from '@plugins/PluginsLoaderFacade'
+import {INTEGRATION_METHODS} from '@constants'
 
 import './LayoutContent.less'
 
@@ -38,21 +38,16 @@ const LayoutCenter: React.FC = () => {
 }
 
 const CenterPluginManager: React.FC<Plugin> = (plugin) => {
+  const components = {
+    [INTEGRATION_METHODS.IFRAME]: <PluginIframe {...plugin}/>,
+    [INTEGRATION_METHODS.QIANKUN]: <div className='layout-plugin' id={plugin.id}/>
+  }
+
+  return (<>{components[plugin.integrationMode]}</>)
+}
+
+const PluginIframe: React.FC<Plugin> = (plugin) => {
   return (
-    <>
-      {
-        plugin.integrationMode === INTEGRATION_METHODS.IFRAME && (
-          <iframe
-            className='layout-iframe'
-            frameBorder='0'
-            src={plugin.pluginUrl}
-            title={plugin.id}
-          />
-        )
-      }
-      {
-        plugin.integrationMode === INTEGRATION_METHODS.QIANKUN && <div className='layout-plugin' id={plugin.id}/>
-      }
-    </>
+    <iframe className='layout-iframe' frameBorder='0' src={plugin.pluginUrl} title={plugin.id}/>
   )
 }

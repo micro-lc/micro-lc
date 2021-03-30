@@ -3,12 +3,13 @@ import {screen} from '@testing-library/react'
 
 import {LayoutContent} from './LayoutContent'
 import RenderWithReactIntl from '../../__tests__/utils'
-import {MenuOpenedProvider} from '../../contexts/MenuOpened.context'
-import {ConfigurationProvider} from '../../contexts/Configuration.context'
+import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
+import {ConfigurationProvider} from '@contexts/Configuration.context'
 
 describe('LayoutContent tests', () => {
   it('LayoutContent renders', () => {
-    const setMenuOpened = jest.fn(close => {})
+    const setMenuOpened = jest.fn(close => {
+    })
 
     RenderWithReactIntl(
       <ConfigurationProvider

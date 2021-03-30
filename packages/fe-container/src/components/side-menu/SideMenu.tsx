@@ -1,9 +1,10 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Plugin} from '@mia-platform/core'
+import classNames from 'classnames'
 
-import {MenuOpenedContext} from '../../contexts/MenuOpened.context'
-import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '../../plugins/PluginsLoaderFacade'
+import {MenuOpenedContext} from '@contexts/MenuOpened.context'
+import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '@plugins/PluginsLoaderFacade'
 
 import './SideMenu.less'
 
@@ -20,17 +21,15 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
 
   const entriesMapper = useCallback((plugin: Plugin) => <SideMenuEntry key={plugin.id} {...plugin}/>, [])
 
+  const sideMenuClasses = classNames('sideMenu', {opened: isMenuOpened})
+  const sideMenuOverlayClasses = classNames('sideMenu_overlay', {sideMenu_visible: isMenuOpened})
+
   return (
     <>
-      <div className={'sideMenu ' + (isMenuOpened ? 'opened' : '')}>
+      <div className={sideMenuClasses}>
         {plugins?.map(entriesMapper)}
       </div>
-
-      <div
-        className={'sideMenu_overlay ' + (isMenuOpened ? 'sideMenu_visible' : '')}
-        data-testid="layout-content-overlay"
-        onClick={closeMenu}
-      />
+      <div className={sideMenuOverlayClasses} data-testid="layout-content-overlay" onClick={closeMenu}/>
     </>
   )
 }
