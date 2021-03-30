@@ -30,7 +30,7 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: '${{ env.context }}/coverage/lcov.info'
+        path-to-lcov: '${{ env.context }}coverage/lcov.info'
         base-path: '${{ env.context }}'
 
     - name: Compile file and build
