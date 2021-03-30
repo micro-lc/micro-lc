@@ -1,4 +1,3 @@
-const path = require('path')
 const CracoLessPlugin = require('craco-less')
 const CracoAlias = require('craco-alias')
 
