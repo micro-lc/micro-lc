@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {Launcher} from './containers/launcher/Launcher'
-import {useAppData} from '@hooks/useAppData'
+import {useAppData} from '@hooks/useAppData/useAppData'
 
 import './App.less'
 
