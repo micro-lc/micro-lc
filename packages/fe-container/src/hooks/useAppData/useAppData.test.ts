@@ -1,20 +1,18 @@
 import nock from 'nock'
 
-import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins/PluginsLoaderFacade'
+import {finish, isCurrentPluginLoaded, registerPlugin} from '@plugins-utils/PluginsLoaderFacade'
 import {CONFIGURATION_SERVICE, GET_USER_SERVICE} from '@constants'
 import {renderHook} from '@testing-library/react-hooks'
 import {useAppData} from '@hooks/useAppData/useAppData'
 
 nock.disableNetConnect()
 
-jest.mock('@plugins/PluginsLoaderFacade', () => ({
-  ...jest.requireActual('@plugins/PluginsLoaderFacade'),
+jest.mock('@plugins-utils/PluginsLoaderFacade', () => ({
   finish: jest.fn((param) => {
   }),
   isCurrentPluginLoaded: jest.fn(() => false),
   registerPlugin: jest.fn((param) => {
-  }),
-  retrievePluginStrategy: jest.fn((param) => ({}))
+  })
 }))
 
 describe('Test useAppData hook', () => {
@@ -94,7 +92,6 @@ describe('Test useAppData hook', () => {
     expect(registerPlugin).toHaveBeenCalledTimes(3)
     expect(finish).toHaveBeenCalledWith(user)
     expect(isCurrentPluginLoaded).toHaveBeenCalled()
-    expect(retrievePluginStrategy).toHaveBeenCalledWith(plugin3)
     expect(result.current).toMatchObject(expectedState)
   })
 })
