@@ -5,7 +5,7 @@
       "@components/*": ["./components/*"],
       "@contexts/*": ["./contexts/*"],
       "@hooks/*": ["./hooks/*"],
-      "@plugins/*": ["./plugins/*"],
+      "@plugins-utils/*": ["./plugins-utils/*"],
       "@services/*": ["./services/*"],
       "@constants": ["./constants.ts"]
     }

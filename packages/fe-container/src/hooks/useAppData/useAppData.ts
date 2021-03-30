@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {Configuration, Plugin, User} from '@mia-platform/core'
 
 import {retrieveAppData} from '@services/microlc/microlc.service'
-import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins/PluginsLoaderFacade'
+import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins-utils/PluginsLoaderFacade'
 import {INTEGRATION_METHODS} from '@constants'
 
 export interface AppState {

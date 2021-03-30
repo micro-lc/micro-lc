@@ -10,3 +10,19 @@ The fe-container offers the following functionalities:
 - plugin management
 - preferences management
 - branding
+
+# Project structure
+
+The root directory for the business logic is `src`.
+
+This folder is divided in:
+
+- `components`: contains all the UI components, made with [React](https://reactjs.org/);
+- `containers`: provide the `launcher` components: the entry point of `microlc` provided by Mia-Platform;
+- `contexts`: contains the applications contexts, used to save the application states
+- `hooks`: includes all the React's custom [hooks](https://reactjs.org/docs/hooks-intro.html) used by components
+- `plugin-utils`: where there is the facade used to register and handle the behaviour of each plugin
+- `services`: contains all the functions used to interact with external services (eg. APIs)
+- `strings`: store the configurations of i18n
+- `styles`: collects all the [LESS](http://lesscss.org/) variables, divided by purpose
+

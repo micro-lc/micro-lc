@@ -40,6 +40,14 @@ yarn install
 This command will install the dependencies for every workspace and will trigger a build of the [core](./packages/core/README.md) 
 workspace.
 
+### Start the project
+
+In order to try `microlc` on your machine with mocked configurations, you have to execute only the `dev` script, using the following command:
+
+```shell
+yarn dev
+```
+
 ### Run a package script
 
 To run a script in a workspace, you can run `yarn workspace PACKAGE_NAME SCRIPT_NAME`. For example, to run tests in 
