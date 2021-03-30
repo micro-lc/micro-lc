@@ -86,8 +86,11 @@ describe('Test useAppData hook', () => {
     const expectedState = {isLoading: false, user, configuration: {theming, plugins: [plugin1, plugin2, plugin3]}}
     await waitForNextUpdate()
     expect(document.title).toBe('Mia Care')
+    // @ts-ignore
     expect(registerPlugin.mock.calls[0][0]).toMatchObject(plugin1)
+    // @ts-ignore
     expect(registerPlugin.mock.calls[1][0]).toMatchObject(plugin2)
+    // @ts-ignore
     expect(registerPlugin.mock.calls[2][0]).toMatchObject(plugin3)
     expect(registerPlugin).toHaveBeenCalledTimes(3)
     expect(finish).toHaveBeenCalledWith(user)
