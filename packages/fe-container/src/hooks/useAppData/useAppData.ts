@@ -3,7 +3,7 @@ import {Configuration, Plugin, User} from '@mia-platform/core'
 
 import {retrieveAppData} from '@services/microlc/microlc.service'
 import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins-utils/PluginsLoaderFacade'
-import {INTEGRATION_METHODS} from '@constants'
+import {COLORS, INTEGRATION_METHODS} from '@constants'
 
 export interface AppState {
   isLoading: boolean,
@@ -27,13 +27,25 @@ const navigateToFirstPlugin = (configuration: Configuration) => {
   }
 }
 
+const setCssProperty = (propertyName: string, propertyValue: string | undefined) => {
+  document.documentElement.style.setProperty(
+    propertyName,
+    propertyValue || getComputedStyle(document.documentElement).getPropertyValue(propertyName)
+  )
+}
+
+const manageTheming = (configuration: Configuration) => {
+  document.title = configuration.theming?.header?.pageTitle || document.title
+  setCssProperty(COLORS.primaryColor, configuration.theming?.variables.primaryColor)
+}
+
 export const useAppData = () => {
   const [appState, setAppState] = useState<AppState>({isLoading: true, configuration: {}, user: {}})
 
   useEffect(() => {
     const configurationSubscription = retrieveAppData()
       .subscribe(({configuration, user}) => {
-        document.title = configuration.theming?.header?.pageTitle || document.title
+        manageTheming(configuration)
         configuration.plugins = configuration.plugins?.sort(pluginsSorter)
         registerPlugins(configuration, user)
         setAppState({isLoading: false, configuration, user})

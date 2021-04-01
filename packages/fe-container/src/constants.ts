@@ -20,3 +20,7 @@ export const INTEGRATION_METHODS = {
   IFRAME: 'iframe',
   QIANKUN: 'qiankun'
 }
+
+export const COLORS = {
+  primaryColor: '--primary-color'
+}
