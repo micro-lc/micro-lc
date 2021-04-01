@@ -13,7 +13,9 @@ jest.mock('@plugins-utils/PluginsLoaderFacade', () => ({
   isCurrentPluginLoaded: jest.fn(() => false),
   registerPlugin: jest.fn((param) => {
   }),
-  retrievePluginStrategy: jest.fn((param) => {})
+  retrievePluginStrategy: jest.fn((param) => ({
+    handlePluginLoad: () => {}
+  }))
 }))
 
 describe('Test useAppData hook', () => {
