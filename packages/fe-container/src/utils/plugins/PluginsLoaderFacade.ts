@@ -1,8 +1,11 @@
 import {createBrowserHistory} from 'history'
 import {registerMicroApps, RegistrableApp, start} from 'qiankun'
-import {ExternalLink, Plugin, User} from '@mia-platform/core'
+import {Plugin, User} from '@mia-platform/core'
 
 import {INTEGRATION_METHODS} from '@constants'
+import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
+import {hrefStrategy} from '@utils/plugins/strategies/HrefStrategy'
+import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
 
 export interface PluginStrategy {
   handlePluginLoad: () => void
@@ -57,30 +60,3 @@ export const finish = (user: Partial<User>) => {
 }
 
 export const history = createBrowserHistory({basename: process.env.PUBLIC_URL})
-
-function hrefStrategy (externalLink?: ExternalLink): PluginStrategy {
-  return {
-    handlePluginLoad: () => {
-      if (externalLink?.sameWindow) {
-        window.location.href = externalLink.url
-      } else if (externalLink?.url) {
-        window.open(externalLink.url)
-      }
-    }
-  }
-}
-
-function routeStrategy (plugin: Plugin): PluginStrategy {
-  return {
-    handlePluginLoad: () => {
-      history.push(plugin?.pluginRoute || '')
-    }
-  }
-}
-
-function noOpStrategy (): PluginStrategy {
-  return {
-    handlePluginLoad: () => {
-    }
-  }
-}

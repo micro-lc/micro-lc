@@ -5,15 +5,22 @@ import userEvent from '@testing-library/user-event'
 
 import App from '../App'
 import RenderWithReactIntl from './utils'
-import {CONFIGURATION_SERVICE, GET_USER_SERVICE} from '@constants'
+import {CONFIGURATION_SERVICE, USER_CONFIGURATION_SERVICE} from '@constants'
 
 nock.disableNetConnect()
 
 describe('App test', () => {
   const configurationUrl = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
-  const userUrl = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOINT}`
+  const authUrl = `${USER_CONFIGURATION_SERVICE.BASE_URL}${USER_CONFIGURATION_SERVICE.ENDPOINT}`
+  const userUrl = '/api/v1/microlc/user'
 
   beforeEach(() => {
+    nock('http://localhost')
+      .get(authUrl)
+      .reply(200, {
+        isAuthNecessary: true,
+        authUrl: userUrl
+      })
     nock('http://localhost')
       .persist()
       .get(configurationUrl)

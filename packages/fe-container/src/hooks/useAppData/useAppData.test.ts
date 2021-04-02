@@ -1,7 +1,7 @@
 import nock from 'nock'
 
 import {finish, isCurrentPluginLoaded, registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
-import {CONFIGURATION_SERVICE, GET_USER_SERVICE} from '@constants'
+import {CONFIGURATION_SERVICE, USER_CONFIGURATION_SERVICE} from '@constants'
 import {renderHook} from '@testing-library/react-hooks'
 import {useAppData} from '@hooks/useAppData/useAppData'
 
@@ -20,7 +20,8 @@ jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
 
 describe('Test useAppData hook', () => {
   const configurationUrl = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
-  const userUrl = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOINT}`
+  const authUrl = `${USER_CONFIGURATION_SERVICE.BASE_URL}${USER_CONFIGURATION_SERVICE.ENDPOINT}`
+  const userUrl = '/api/v1/microlc/user'
 
   afterAll(() => {
     jest.clearAllMocks()
@@ -81,6 +82,13 @@ describe('Test useAppData hook', () => {
       },
       logo: 'logo_url'
     }
+
+    nock('http://localhost')
+      .get(authUrl)
+      .reply(200, {
+        isAuthNecessary: true,
+        authUrl: userUrl
+      })
 
     nock('http://localhost')
       .persist()
