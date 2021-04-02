@@ -7,6 +7,7 @@
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "@types/tinycolor2": "^1.4.2",
     "antd": "^4.14.0",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
@@ -19,7 +20,8 @@
     "react-intl": "^5.13.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "rxjs": "^6.6.6"
+    "rxjs": "^6.6.6",
+    "tinycolor2": "^1.4.2"
   },
   "scripts": {
     "lint": "eslint src --ext .js,.ts,.tsx",

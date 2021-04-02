@@ -71,7 +71,9 @@ describe('Test useAppData hook', () => {
         pageTitle: 'Mia Care',
         favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
       },
-      variables: {},
+      variables: {
+        primaryColor: 'red'
+      },
       logo: 'logo_url'
     }
 

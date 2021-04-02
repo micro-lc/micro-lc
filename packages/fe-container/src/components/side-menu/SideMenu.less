@@ -48,7 +48,7 @@
 
   .sideMenu_icon {
     font-size: 16px;
-    color: var(--primary-color);
+    color: var(--microlc-primary-color);
   }
 
   .sideMenu_entry {
@@ -64,21 +64,21 @@
     }
 
     .sideMenu_externalLink {
-      color: var(--primary-color);
+      color: var(--microlc-primary-color);
       margin-left: 4px;
     }
   }
 
   &:hover .sideMenu_label {
-    color: var(--primary-color);
+    color: var(--microlc-primary-color);
   }
 
   &.active {
-    background: @menu-hover-bg-color;
-    box-shadow: inset 3px 0 0 0 var(--primary-color);
+    background: var(--microlc-menu-entry-selected-bg-color);
+    box-shadow: inset 3px 0 0 0 var(--microlc-primary-color);
 
     .sideMenu_label {
-      color: var(--primary-color);
+      color: var(--microlc-primary-color);
     }
   }
 }

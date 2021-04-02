@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import {Configuration, Plugin, User} from '@mia-platform/core'
+import tinycolor from 'tinycolor2'
 
 import {retrieveAppData} from '@services/microlc/microlc.service'
 import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins-utils/PluginsLoaderFacade'
@@ -28,15 +29,24 @@ const navigateToFirstPlugin = (configuration: Configuration) => {
 }
 
 const setCssProperty = (propertyName: string, propertyValue: string | undefined) => {
-  document.documentElement.style.setProperty(
-    propertyName,
-    propertyValue || getComputedStyle(document.documentElement).getPropertyValue(propertyName)
-  )
+  const propertyColor = tinycolor(propertyValue)
+  const propertyToApply = propertyColor.isValid() ? propertyColor.toString() : getComputedStyle(document.documentElement).getPropertyValue(propertyName)
+  document.documentElement.style.setProperty(propertyName, propertyToApply)
+}
+
+const applyColorAlpha = (propertyValue: string | undefined, alphaValue: number) => {
+  const propertyColor = tinycolor(propertyValue)
+  if (propertyColor.isValid()) {
+    propertyColor.setAlpha(alphaValue)
+  }
+  return propertyColor.toRgbString()
 }
 
 const manageTheming = (configuration: Configuration) => {
   document.title = configuration.theming?.header?.pageTitle || document.title
-  setCssProperty(COLORS.primaryColor, configuration.theming?.variables.primaryColor)
+  const primaryColor = configuration.theming?.variables.primaryColor
+  setCssProperty(COLORS.primaryColor, primaryColor)
+  setCssProperty(COLORS.menuEntrySelectedBackgroundColor, applyColorAlpha(primaryColor, 0.2))
 }
 
 export const useAppData = () => {

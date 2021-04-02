@@ -22,5 +22,6 @@ export const INTEGRATION_METHODS = {
 }
 
 export const COLORS = {
-  primaryColor: '--primary-color'
+  primaryColor: '--microlc-primary-color',
+  menuEntrySelectedBackgroundColor: '--microlc-menu-entry-selected-bg-color'
 }
