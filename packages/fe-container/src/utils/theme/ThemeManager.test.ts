@@ -4,6 +4,7 @@ import {COLORS} from '@constants'
 
 describe('ThemeManager tests', () => {
   afterEach(() => {
+    document.title = ''
     document.documentElement.style.setProperty(COLORS.primaryColor, null)
     document.documentElement.style.setProperty(COLORS.menuEntrySelectedBackgroundColor, null)
   })
@@ -29,6 +30,22 @@ describe('ThemeManager tests', () => {
     expect(document.title).toBe('')
     manageTheming(configuration)
     expect(document.title).toBe('Mia Care')
+  })
+
+  it('Document title is not applied', () => {
+    expect(document.title).toBe('')
+    manageTheming({
+      theming: {
+        header: {},
+        variables: {},
+        logo: {
+          alt: 'alt-logo',
+          url: 'logo_url'
+        }
+      },
+      plugins: []
+    })
+    expect(document.title).toBe('')
   })
 
   it('Compute primary color and its derived', () => {
