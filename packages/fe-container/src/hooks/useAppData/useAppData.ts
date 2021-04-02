@@ -2,8 +2,9 @@ import {useEffect, useState} from 'react'
 import {Configuration, Plugin, User} from '@mia-platform/core'
 
 import {retrieveAppData} from '@services/microlc/microlc.service'
-import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins-utils/PluginsLoaderFacade'
+import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
 import {INTEGRATION_METHODS} from '@constants'
+import {manageTheming} from '@utils/theme/ThemeManager'
 
 export interface AppState {
   isLoading: boolean,
@@ -33,7 +34,7 @@ export const useAppData = () => {
   useEffect(() => {
     const configurationSubscription = retrieveAppData()
       .subscribe(({configuration, user}) => {
-        document.title = configuration.theming?.header?.pageTitle || document.title
+        manageTheming(configuration)
         configuration.plugins = configuration.plugins?.sort(pluginsSorter)
         registerPlugins(configuration, user)
         setAppState({isLoading: false, configuration, user})

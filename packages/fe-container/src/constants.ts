@@ -20,3 +20,8 @@ export const INTEGRATION_METHODS = {
   IFRAME: 'iframe',
   QIANKUN: 'qiankun'
 }
+
+export const COLORS = {
+  primaryColor: '--microlc-primary-color',
+  menuEntrySelectedBackgroundColor: '--microlc-menu-entry-selected-bg-color'
+}

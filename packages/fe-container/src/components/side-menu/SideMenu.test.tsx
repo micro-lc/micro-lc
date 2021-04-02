@@ -5,10 +5,10 @@ import userEvent from '@testing-library/user-event'
 
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
-import {history, isPluginLoaded, registerPlugin} from '@plugins-utils/PluginsLoaderFacade'
+import {history, isPluginLoaded, registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
 
-jest.mock('@plugins-utils/PluginsLoaderFacade', () => ({
-  ...jest.requireActual('@plugins-utils/PluginsLoaderFacade'),
+jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
+  ...jest.requireActual('@utils/plugins/PluginsLoaderFacade'),
   isPluginLoaded: jest.fn(),
   history: {
     listen: jest.fn(() => {
@@ -17,6 +17,11 @@ jest.mock('@plugins-utils/PluginsLoaderFacade', () => ({
 }))
 
 describe('SideMenu tests', () => {
+  afterAll(() => {
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it('side menu show entries', () => {
     const entriesHref = {integrationMode: 'href', externalLink: {sameWindow: false, url: ''}}
     RenderWithReactIntl(

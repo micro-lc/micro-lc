@@ -1,24 +1,31 @@
 import nock from 'nock'
 
-import {finish, isCurrentPluginLoaded, registerPlugin} from '@plugins-utils/PluginsLoaderFacade'
+import {finish, isCurrentPluginLoaded, registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
 import {CONFIGURATION_SERVICE, GET_USER_SERVICE} from '@constants'
 import {renderHook} from '@testing-library/react-hooks'
 import {useAppData} from '@hooks/useAppData/useAppData'
 
 nock.disableNetConnect()
 
-jest.mock('@plugins-utils/PluginsLoaderFacade', () => ({
+jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
   finish: jest.fn((param) => {
   }),
   isCurrentPluginLoaded: jest.fn(() => false),
   registerPlugin: jest.fn((param) => {
   }),
-  retrievePluginStrategy: jest.fn((param) => {})
+  retrievePluginStrategy: jest.fn((param) => ({
+    handlePluginLoad: () => {}
+  }))
 }))
 
 describe('Test useAppData hook', () => {
   const configurationUrl = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
   const userUrl = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOINT}`
+
+  afterAll(() => {
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
 
   it('Retrieve and apply configurations', async () => {
     const user = {
@@ -69,7 +76,9 @@ describe('Test useAppData hook', () => {
         pageTitle: 'Mia Care',
         favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
       },
-      variables: {},
+      variables: {
+        primaryColor: 'red'
+      },
       logo: 'logo_url'
     }
 
