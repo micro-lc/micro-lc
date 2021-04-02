@@ -22,6 +22,11 @@ describe('Test useAppData hook', () => {
   const configurationUrl = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
   const userUrl = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOINT}`
 
+  afterAll(() => {
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it('Retrieve and apply configurations', async () => {
     const user = {
       email: 'mocked.user@mia-platform.eu',

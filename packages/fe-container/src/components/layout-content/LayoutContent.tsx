@@ -4,7 +4,7 @@ import {Route, Router, Switch} from 'react-router-dom'
 import {Plugin} from '@mia-platform/core'
 
 import {ConfigurationContext} from '@contexts/Configuration.context'
-import {history} from '../../utils/plugins/PluginsLoaderFacade'
+import {history} from '@utils/plugins/PluginsLoaderFacade'
 import {INTEGRATION_METHODS} from '@constants'
 
 import './LayoutContent.less'

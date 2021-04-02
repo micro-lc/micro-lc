@@ -17,6 +17,11 @@ jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
 }))
 
 describe('SideMenu tests', () => {
+  afterAll(() => {
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it('side menu show entries', () => {
     const entriesHref = {integrationMode: 'href', externalLink: {sameWindow: false, url: ''}}
     RenderWithReactIntl(

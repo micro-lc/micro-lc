@@ -11,16 +11,16 @@ export const manageTheming = (configuration: Configuration) => {
   setCssProperty(COLORS.menuEntrySelectedBackgroundColor, applyColorAlpha(primaryColor, MENU_ENTRY_ALPHA))
 }
 
-const applyColorAlpha = (propertyValue: string | undefined, alphaValue: number) => {
-  const propertyColor = tinycolor(propertyValue)
+const applyColorAlpha = (colorValue: string | undefined, alphaValue: number) => {
+  const propertyColor = tinycolor(colorValue)
   if (propertyColor.isValid()) {
     propertyColor.setAlpha(alphaValue)
   }
   return propertyColor.toRgbString()
 }
 
-const setCssProperty = (propertyName: string, propertyValue: string | undefined) => {
-  const propertyColor = tinycolor(propertyValue)
+const setCssProperty = (propertyName: string, colorValue: string | undefined) => {
+  const propertyColor = tinycolor(colorValue)
   const propertyToApply = propertyColor.isValid() ? propertyColor.toString() : getComputedStyle(document.documentElement).getPropertyValue(propertyName)
   document.documentElement.style.setProperty(propertyName, propertyToApply)
 }
