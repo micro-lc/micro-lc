@@ -1,6 +1,6 @@
 import {FromSchema} from 'json-schema-to-ts'
 
-export const variableSchema = {
+export const variablesSchema = {
   type: 'object',
   properties: {
     primaryColor: {
@@ -10,4 +10,4 @@ export const variableSchema = {
   },
 } as const
 
-export type Variable = FromSchema<typeof variableSchema>
+export type Variables = FromSchema<typeof variablesSchema>
