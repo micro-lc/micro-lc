@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react'
 import {Configuration, Plugin, User} from '@mia-platform/core'
-import tinycolor from 'tinycolor2'
 
 import {retrieveAppData} from '@services/microlc/microlc.service'
-import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@plugins-utils/PluginsLoaderFacade'
-import {COLORS, INTEGRATION_METHODS} from '@constants'
+import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {INTEGRATION_METHODS} from '@constants'
+import {manageTheming} from '@utils/theme/ThemeManager'
 
 export interface AppState {
   isLoading: boolean,
@@ -26,27 +26,6 @@ const navigateToFirstPlugin = (configuration: Configuration) => {
   if (firstValidPlugin && !isCurrentPluginLoaded()) {
     retrievePluginStrategy(firstValidPlugin).handlePluginLoad()
   }
-}
-
-const setCssProperty = (propertyName: string, propertyValue: string | undefined) => {
-  const propertyColor = tinycolor(propertyValue)
-  const propertyToApply = propertyColor.isValid() ? propertyColor.toString() : getComputedStyle(document.documentElement).getPropertyValue(propertyName)
-  document.documentElement.style.setProperty(propertyName, propertyToApply)
-}
-
-const applyColorAlpha = (propertyValue: string | undefined, alphaValue: number) => {
-  const propertyColor = tinycolor(propertyValue)
-  if (propertyColor.isValid()) {
-    propertyColor.setAlpha(alphaValue)
-  }
-  return propertyColor.toRgbString()
-}
-
-const manageTheming = (configuration: Configuration) => {
-  document.title = configuration.theming?.header?.pageTitle || document.title
-  const primaryColor = configuration.theming?.variables.primaryColor
-  setCssProperty(COLORS.primaryColor, primaryColor)
-  setCssProperty(COLORS.menuEntrySelectedBackgroundColor, applyColorAlpha(primaryColor, 0.2))
 }
 
 export const useAppData = () => {

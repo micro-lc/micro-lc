@@ -1,13 +1,13 @@
 import nock from 'nock'
 
-import {finish, isCurrentPluginLoaded, registerPlugin} from '@plugins-utils/PluginsLoaderFacade'
+import {finish, isCurrentPluginLoaded, registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
 import {CONFIGURATION_SERVICE, GET_USER_SERVICE} from '@constants'
 import {renderHook} from '@testing-library/react-hooks'
 import {useAppData} from '@hooks/useAppData/useAppData'
 
 nock.disableNetConnect()
 
-jest.mock('@plugins-utils/PluginsLoaderFacade', () => ({
+jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
   finish: jest.fn((param) => {
   }),
   isCurrentPluginLoaded: jest.fn(() => false),
