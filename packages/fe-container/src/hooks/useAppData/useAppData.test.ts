@@ -87,7 +87,7 @@ describe('Test useAppData hook', () => {
       .get(authUrl)
       .reply(200, {
         isAuthNecessary: true,
-        authUrl: userUrl
+        userInfoUrl: userUrl
       })
 
     nock('http://localhost')

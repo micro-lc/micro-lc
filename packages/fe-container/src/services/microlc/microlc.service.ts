@@ -13,7 +13,7 @@ type AppData = {
 
 const retrieveConditionalUser = (authenticationConfiguration: Partial<Authentication>) =>
   defer(() => authenticationConfiguration.isAuthNecessary ?
-    retrieveUser(authenticationConfiguration.authUrl) :
+    retrieveUser(authenticationConfiguration.userInfoUrl) :
     of({})
   )
 

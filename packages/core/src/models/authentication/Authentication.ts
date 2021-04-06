@@ -7,7 +7,7 @@ export const authenticationSchema = {
       type: 'boolean',
       default: false,
     },
-    authUrl: {
+    userInfoUrl: {
       type: 'string',
     },
   },

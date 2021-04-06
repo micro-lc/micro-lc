@@ -19,7 +19,7 @@ describe('App test', () => {
       .get(authUrl)
       .reply(200, {
         isAuthNecessary: true,
-        authUrl: userUrl
+        userInfoUrl: userUrl
       })
     nock('http://localhost')
       .persist()
