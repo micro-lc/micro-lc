@@ -5,9 +5,11 @@ import {ConfigurationContext} from '@contexts/Configuration.context'
 import {UserMenu} from '@components/user-menu/UserMenu'
 
 import './TopBar.less'
+import {UserContext} from '@contexts/User.context'
 
 export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
+  const user = useContext(UserContext)
 
   return (
     <div className='topBar_container'>
@@ -19,7 +21,9 @@ export const TopBar: React.FC = () => {
         src={configuration?.theming?.logo.url}
       />
       <div className='topBar_userMenu'>
-        <UserMenu/>
+        {
+          user.name && <UserMenu {...user}/>
+        }
       </div>
     </div>
   )

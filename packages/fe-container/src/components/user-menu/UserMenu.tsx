@@ -1,9 +1,8 @@
-import React, {useCallback, useContext, useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {Dropdown, Menu} from 'antd'
 import {User} from '@mia-platform/core'
 import classNames from 'classnames'
 import {FormattedMessage} from 'react-intl'
-import {UserContext} from '@contexts/User.context'
 
 import {logOutUser} from '@services/microlc/user.service'
 
@@ -14,8 +13,7 @@ const retrieveUserAvatar = (user: Partial<User>) => {
   return user.avatar || fallbackUrl
 }
 
-export const UserMenu: React.FC = () => {
-  const user = useContext(UserContext)
+export const UserMenu: React.FC<Partial<User>> = (user) => {
   const [dropdownOpened, setDropdownOpened] = useState<boolean>(false)
   const dropdownChanged = useCallback(() => {
     setDropdownOpened((wasOpened) => !wasOpened)

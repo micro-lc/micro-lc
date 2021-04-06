@@ -1,10 +1,11 @@
 import nock from 'nock'
 
 import {logOutUser, retrieveUser} from '@services/microlc/user.service'
-import {GET_USER_SERVICE, LOGOUT_USER_SERVICE} from '@constants'
+import {LOGOUT_USER_SERVICE} from '@constants'
+import {User} from '@mia-platform/core'
 
 describe('User service tests', () => {
-  const userUrl = `${GET_USER_SERVICE.BASE_URL}${GET_USER_SERVICE.ENDPOINT}`
+  const userUrl = '/api/v1/microlc/user'
   const logOutUrl = `${LOGOUT_USER_SERVICE.BASE_URL}${LOGOUT_USER_SERVICE.ENDPOINT}`
 
   beforeAll(() => {
@@ -26,8 +27,8 @@ describe('User service tests', () => {
         picture: 'https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1'
       })
 
-    retrieveUser()
-      .subscribe((response) => {
+    retrieveUser(userUrl)
+      .subscribe((response: Partial<User>) => {
         expect(response.email).toEqual('mocked.user@mia-platform.eu')
         expect(response.groups?.length).toEqual(2)
         expect(response.groups?.[0]).toEqual('users')
@@ -43,7 +44,7 @@ describe('User service tests', () => {
   it('return empty user response for http errors', (done) => {
     const mockedResponse = nock('http://localhost').get(userUrl).reply(500)
 
-    retrieveUser()
+    retrieveUser(userUrl)
       .subscribe((response) => {
         expect(response).toStrictEqual({})
         mockedResponse.done()
@@ -60,5 +61,12 @@ describe('User service tests', () => {
         mockedResponse.done()
         done()
       })
+  })
+
+  it('Empty observable for invalid url', (done) => {
+    retrieveUser(undefined).subscribe((retrievedUser) => {
+      expect(retrievedUser).toStrictEqual({})
+      done()
+    })
   })
 })

@@ -5,7 +5,6 @@ import nock from 'nock'
 
 import RenderWithReactIntl from '../../__tests__/utils'
 import {UserMenu} from '@components/user-menu/UserMenu'
-import {UserContextProvider} from '@contexts/User.context'
 import {LOGOUT_USER_SERVICE} from '@constants'
 
 nock.disableNetConnect()
@@ -26,9 +25,7 @@ describe('UserMenu tests', () => {
       phone: '+393333333333',
       avatar: 'https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1'
     }
-    RenderWithReactIntl(<UserContextProvider value={user}>
-      <UserMenu/>
-    </UserContextProvider>)
+    RenderWithReactIntl(<UserMenu {...user}/>)
 
     expect(screen.getByText('Mocked User')).toBeTruthy()
     expect(screen.queryByText('mocked.user')).not.toBeTruthy()
@@ -44,9 +41,7 @@ describe('UserMenu tests', () => {
       nickname: 'mocked.user2',
       phone: '+393333333333'
     }
-    RenderWithReactIntl(<UserContextProvider value={user}>
-      <UserMenu/>
-    </UserContextProvider>)
+    RenderWithReactIntl(<UserMenu {...user}/>)
 
     expect(screen.getByText('Mocked User 2')).toBeTruthy()
     expect(screen.queryByText('mocked.user2')).not.toBeTruthy()

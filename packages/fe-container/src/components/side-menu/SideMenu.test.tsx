@@ -5,16 +5,7 @@ import userEvent from '@testing-library/user-event'
 
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
-import {history, isPluginLoaded, registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
-
-jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
-  ...jest.requireActual('@utils/plugins/PluginsLoaderFacade'),
-  isPluginLoaded: jest.fn(),
-  history: {
-    listen: jest.fn(() => {
-    })
-  }
-}))
+import {registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
 
 describe('SideMenu tests', () => {
   afterAll(() => {
@@ -71,23 +62,6 @@ describe('SideMenu tests', () => {
     )
     expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(2)
     expect(document.getElementsByClassName('sideMenu_externalLink')).toHaveLength(1)
-  })
-
-  it('Avoid href menu selected', () => {
-    RenderWithReactIntl(
-      <SideMenu
-        plugins={[
-          {label: 'entry_1', id: '1', integrationMode: 'href'},
-          {label: 'entry_2', id: '2', integrationMode: 'iframe'}
-        ]}
-      />
-    )
-    expect(isPluginLoaded).toHaveBeenCalledTimes(2)
-    // @ts-ignore
-    expect(isPluginLoaded.mock.calls[0][0]).toStrictEqual({label: 'entry_1', id: '1', integrationMode: 'href'})
-    // @ts-ignore
-    expect(isPluginLoaded.mock.calls[1][0]).toStrictEqual({label: 'entry_2', id: '2', integrationMode: 'iframe'})
-    expect(history.listen).toHaveBeenCalledTimes(2)
   })
 
   it('Generate menu using the configurations', () => {
