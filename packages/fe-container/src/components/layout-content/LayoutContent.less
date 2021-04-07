@@ -1,11 +1,20 @@
 @import "../../styles/_variables";
 
-.layout-iframe {
+.layoutContent_plugin_container {
   height: 100%;
   width: 100%;
-}
 
-.layout-plugin {
-  overflow: auto;
-  height: @content-height;
+  &.hide {
+    display: none;
+  }
+
+  & .layoutContent_iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  & .layoutContent_plugin {
+    overflow: auto;
+    height: @content-height;
+  }
 }
