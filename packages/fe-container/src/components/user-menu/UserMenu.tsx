@@ -1,10 +1,10 @@
 import React, {useCallback, useState} from 'react'
-import {Dropdown, Menu} from 'antd'
+import {Dropdown} from 'antd'
 import {User} from '@mia-platform/core'
-import classNames from 'classnames'
-import {FormattedMessage} from 'react-intl'
+import PropTypes from 'prop-types'
 
-import {logOutUser} from '@services/microlc/user.service'
+import {DropdownIcon} from '@components/dropdown-icon/DropdownIcon'
+import {UserMenuOverlay} from '@components/user-menu-overlay/UserMenuOverlay'
 
 import './UserMenu.less'
 
@@ -18,35 +18,37 @@ export const UserMenu: React.FC<Partial<User>> = (user) => {
   const dropdownChanged = useCallback(() => {
     setDropdownOpened((wasOpened) => !wasOpened)
   }, [setDropdownOpened])
-  const logOut = useCallback(() => {
-    logOutUser().subscribe(() => window.location.reload())
-  }, [])
-
-  const overlayMenu = (
-    <Menu>
-      <Menu.Item className='userMenu_entry'>
-        <span className='userMenu_logout' onClick={logOut}>
-          <FormattedMessage id='logout'/>
-        </span>
-      </Menu.Item>
-    </Menu>
-  )
-
-  const iconClasses = classNames('fas', 'fa-chevron-down', 'userMenu_icon', {opened: dropdownOpened})
 
   return (
     <Dropdown
-      arrow
       onVisibleChange={dropdownChanged}
-      overlay={overlayMenu}
+      overlay={<UserMenuOverlay/>}
       placement='bottomCenter'
       trigger={['click']}
     >
       <div className='userMenu_container' data-testid='userMenu_container'>
-        <i className={iconClasses}/>
-        <span className='userMenu_name'>{user.name}</span>
-        <img alt='Avatar' className='userMenu_avatar' src={retrieveUserAvatar(user)}/>
+        <UserMenuContent dropdownOpened={dropdownOpened} user={user}/>
       </div>
     </Dropdown>
   )
+}
+
+type UserMenuContentProps = {
+  dropdownOpened: boolean,
+  user: Partial<User>
+}
+
+const UserMenuContent: React.FC<UserMenuContentProps> = ({user, dropdownOpened}) => {
+  return (
+    <>
+      <DropdownIcon dropdownOpened={dropdownOpened}/>
+      <span className='userMenu_name'>{user.name}</span>
+      <img alt='Avatar' className='userMenu_avatar' src={retrieveUserAvatar(user)}/>
+    </>
+  )
+}
+
+UserMenuContent.propTypes = {
+  dropdownOpened: PropTypes.bool.isRequired,
+  user: PropTypes.any.isRequired
 }

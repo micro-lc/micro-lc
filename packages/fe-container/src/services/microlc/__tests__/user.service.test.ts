@@ -23,7 +23,6 @@ describe('User service tests', () => {
         ],
         name: 'Mocked User',
         nickname: 'mocked.user',
-        phone: '+393333333333',
         picture: 'https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1'
       })
 
@@ -34,7 +33,6 @@ describe('User service tests', () => {
         expect(response.groups?.[0]).toEqual('users')
         expect(response.name).toEqual('Mocked User')
         expect(response.nickname).toEqual('mocked.user')
-        expect(response.phone).toEqual('+393333333333')
         expect(response.picture).toEqual('https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1')
         mockedResponse.done()
         done()
