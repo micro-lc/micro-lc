@@ -10,7 +10,7 @@ const microlcAxiosConfig: AxiosRequestConfig = {
 
 const axiosInstance = axios.create(microlcAxiosConfig)
 
-export const extractDataFromGet: <T>(url: string) => Observable<Partial<T>> = (url) => {
+export const extractDataFromGet: <T>(url: string) => Observable<T> = (url) => {
   return fromPromise(axiosInstance.get(url))
     .pipe(
       map(response => response.data)
