@@ -1,0 +1,13 @@
+*.DS_Store
+.idea
+.vscode
+.nyc_output
+build/Release # Compiled binary addons (https://nodejs.org/api/addons.html)
+coverage
+node_modules
+*.env
+*.log*
+.yarn-integrity
+!default.env
+.npmrc
+dist

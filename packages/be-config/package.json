@@ -12,7 +12,9 @@
     "update-changelog": "node ./scripts/update-changelog.js ${npm_package_version}",
     "unit": "jest",
     "version": "npm run update-changelog && npm run update-docker-version && rm -fr Dockerfile.bck && git add CHANGELOG.md Dockerfile",
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "dev:build": "tsc -p tsconfig.json",
+    "dev": "npm-run-all dev:** start"
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
