@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
 import {registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
+import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 
 describe('SideMenu tests', () => {
   afterAll(() => {
@@ -29,12 +30,12 @@ describe('SideMenu tests', () => {
       label: 'entry_1',
       id: '1',
       integrationMode: 'href',
-      externalLink: {sameWindow: false, url: 'http://google.it'}
+      externalLink: {sameWindow: false, url: 'https://google.it'}
     }
     registerPlugin(plugin)
     RenderWithReactIntl(<SideMenu plugins={[plugin]}/>)
     userEvent.click(await screen.findByText('entry_1'))
-    expect(window.open).toBeCalledWith('http://google.it')
+    expect(window.open).toBeCalledWith('https://google.it')
   })
 
   it('display the icon', () => {
@@ -113,5 +114,23 @@ describe('SideMenu tests', () => {
     expect(screen.getByText('Second test plugin')).toBeTruthy()
     expect(screen.getByText('IFrame')).toBeTruthy()
     expect(screen.getByText('Qiankun')).toBeTruthy()
+  })
+
+  it('Overlay close menu correctly', () => {
+    const setMenuOpened = jest.fn()
+    const menuOpenedConfig = {
+      isMenuOpened: true,
+      setMenuOpened
+    }
+    RenderWithReactIntl(
+      <MenuOpenedProvider value={menuOpenedConfig}>
+        <SideMenu plugins={[]}/>
+      </MenuOpenedProvider>
+    )
+    expect(setMenuOpened).not.toHaveBeenCalled()
+    expect(document.getElementsByClassName('opened').length).toBe(1)
+    expect(document.getElementsByClassName('sideMenu_visible').length).toBe(1)
+    userEvent.click(screen.getByTestId('layout-content-overlay'))
+    expect(setMenuOpened).toHaveBeenCalledWith(false)
   })
 })
