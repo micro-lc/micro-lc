@@ -8,19 +8,20 @@ import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {AppState} from '@hooks/useAppData/useAppData'
 import {SideMenu} from '@components/side-menu/SideMenu'
+import {UserContextProvider} from '@contexts/User.context'
+import {MicrolcErrorBoundary} from '@components/microlc-error-boundary/MicrolcErrorBoundary'
 
 import './Launcher.less'
-import {UserContextProvider} from '@contexts/User.context'
 
 export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) => {
   return (
-    <>
+    <MicrolcErrorBoundary>
       {
         isLoading ?
           <Skeleton.Input active className='launcher_skeleton'/> :
           <LoadedLauncher configuration={configuration} user={user}/>
       }
-    </>
+    </MicrolcErrorBoundary>
   )
 }
 
