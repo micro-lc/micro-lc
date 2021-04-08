@@ -8,9 +8,9 @@ import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {AppState} from '@hooks/useAppData/useAppData'
 import {SideMenu} from '@components/side-menu/SideMenu'
+import {UserContextProvider} from '@contexts/User.context'
 
 import './Launcher.less'
-import {UserContextProvider} from '@contexts/User.context'
 
 export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) => {
   return (

@@ -1,3 +1,4 @@
 {
-  "logout": "Disconnetti"
+  "logout": "Disconnetti",
+  "error": "Qualcosa è andato storto:"
 }
