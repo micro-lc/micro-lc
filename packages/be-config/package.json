@@ -3,7 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "echo 'todo'"
+    "coverage": "npm run unit -- --coverage",
+    "lint": "eslint . --ignore-path=.gitignore",
+    "start": "lc39 dist/index.js",
+    "start:local": "npm start -- --env-path ./default.env",
+    "test": "npm run lint && npm run unit",
+    "update-docker-version": "sed -i.bck \"s|version=\\\"[0-9]*\\.[0-9]*\\.[0-9]*.*\\\"|version=\\\"${npm_package_version}\\\"|\" Dockerfile",
+    "update-changelog": "node ./scripts/update-changelog.js ${npm_package_version}",
+    "unit": "jest",
+    "version": "npm run update-changelog && npm run update-docker-version && rm -fr Dockerfile.bck && git add CHANGELOG.md Dockerfile",
+    "build": "tsc --project tsconfig.json"
   },
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "@mia-platform/custom-plugin-lib": "^2.3.0",
+    "fastify": "^2.15.1",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {
+    "@mia-platform/eslint-config-mia": "^3.0.0",
+    "@types/jest": "^26.0.22",
+    "eslint": "^7.23.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.4"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "eslintConfig": {
+    "extends": "@mia-platform/eslint-config-mia"
+  }
 }
