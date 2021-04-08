@@ -90,8 +90,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: '${{ env.context }}'
-          pull: true
           push: true
-          cache-from: type=registry,ref=${{ steps.prep.outputs.image }}:latest
-          cache-to: type=inline
           tags: ${{ steps.prep.outputs.tags }}
