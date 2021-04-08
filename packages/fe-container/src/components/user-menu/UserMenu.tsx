@@ -1,12 +1,10 @@
 import React, {useCallback, useState} from 'react'
-import {Dropdown, Menu} from 'antd'
+import {Dropdown} from 'antd'
 import {User} from '@mia-platform/core'
-import {FormattedMessage} from 'react-intl'
-
-import {logOutUser} from '@services/microlc/user.service'
 
 import './UserMenu.less'
 import {DropdownIcon} from '@components/dropdown-icon/DropdownIcon'
+import {UserMenuOverlay} from '@components/user-menu-overlay/UserMenuOverlay'
 
 const retrieveUserAvatar = (user: Partial<User>) => {
   const fallbackUrl = `https://eu.ui-avatars.com/api/?name=${user.name || ''}&size=24x24`
@@ -18,25 +16,11 @@ export const UserMenu: React.FC<Partial<User>> = (user) => {
   const dropdownChanged = useCallback(() => {
     setDropdownOpened((wasOpened) => !wasOpened)
   }, [setDropdownOpened])
-  const logOut = useCallback(() => {
-    logOutUser().subscribe(() => window.location.reload())
-  }, [])
-
-  const overlayMenu = (
-    <Menu>
-      <Menu.Item className='userMenu_entry'>
-        <span className='userMenu_logout' onClick={logOut}>
-          <FormattedMessage id='logout'/>
-        </span>
-      </Menu.Item>
-    </Menu>
-  )
 
   return (
     <Dropdown
-      arrow
       onVisibleChange={dropdownChanged}
-      overlay={overlayMenu}
+      overlay={<UserMenuOverlay/>}
       placement='bottomCenter'
       trigger={['click']}
     >
