@@ -21,9 +21,6 @@ export const userSchema = {
     nickname: {
       type: 'string',
     },
-    phone: {
-      type: 'string',
-    },
   },
   required: ['email', 'groups', 'name'],
 } as const

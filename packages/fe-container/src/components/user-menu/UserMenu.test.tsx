@@ -52,9 +52,9 @@ describe('UserMenu tests', () => {
 
   it('Dropdown toggle on click', () => {
     RenderWithReactIntl(<UserMenu/>)
-    expect(screen.queryByText('Logout')).not.toBeTruthy()
+    expect(screen.queryByText('Log Out')).not.toBeTruthy()
     userEvent.click(screen.getByTestId('userMenu_container'))
-    expect(screen.queryByText('Logout')).toBeTruthy()
+    expect(screen.queryByText('Log Out')).toBeTruthy()
   })
 
   it('Correctly log out', (done) => {
@@ -71,7 +71,7 @@ describe('UserMenu tests', () => {
     })
     RenderWithReactIntl(<UserMenu/>)
     userEvent.click(screen.getByTestId('userMenu_container'))
-    userEvent.click(screen.getByText('Logout'))
+    userEvent.click(screen.getByText('Log Out'))
     setTimeout(() => {
       expect(window.location.reload).toHaveBeenCalled()
       done()
