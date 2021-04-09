@@ -13,8 +13,9 @@
     "unit": "jest",
     "version": "npm run update-changelog && npm run update-docker-version && rm -fr Dockerfile.bck && git add CHANGELOG.md Dockerfile",
     "build": "tsc -p tsconfig.json",
-    "dev:build": "tsc -p tsconfig.json",
-    "dev": "npm-run-all dev:** start"
+    "dev:unit-watch": "yarn test",
+    "dev:build": "tsc -p tsconfig.json --watch",
+    "dev": "npm-run-all -p dev:unit-watch start"
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
