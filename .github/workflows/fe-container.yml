@@ -42,7 +42,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ${{ env.context }}build
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}-${{ github.sha }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
 
   docker-build:
     name: Build docker
@@ -82,9 +82,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.context }}build
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}-${{ github.sha }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ secrets.GITHUB_ACTIONS }}-${{ github.sha }}
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
