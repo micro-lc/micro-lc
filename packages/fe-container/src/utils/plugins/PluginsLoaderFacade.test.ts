@@ -24,12 +24,12 @@ describe('Test plugin loading', () => {
       integrationMode,
       externalLink: {
         sameWindow: true,
-        url: 'http://google.it'
+        url: 'https://google.it'
       }
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    expect(window.location.href).toBe('http://google.it')
+    expect(window.location.href).toBe('https://google.it')
   })
 
   it('test href new window', () => {
@@ -41,12 +41,12 @@ describe('Test plugin loading', () => {
       integrationMode,
       externalLink: {
         sameWindow: false,
-        url: 'http://google.it'
+        url: 'https://google.it'
       }
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    expect(window.open).toBeCalledWith('http://google.it')
+    expect(window.open).toBeCalledWith('https://google.it')
   })
 
   it('test href fallback', () => {
@@ -59,7 +59,7 @@ describe('Test plugin loading', () => {
       integrationMode,
       externalLink: {
         sameWindow: false,
-        url: 'http://google.it'
+        url: 'https://google.it'
       }
     }
     registerPlugin(pluginToRegister)
