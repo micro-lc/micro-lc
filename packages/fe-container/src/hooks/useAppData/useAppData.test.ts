@@ -14,7 +14,8 @@ jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
   registerPlugin: jest.fn((param) => {
   }),
   retrievePluginStrategy: jest.fn((param) => ({
-    handlePluginLoad: () => {}
+    handlePluginLoad: () => {
+    }
   }))
 }))
 
@@ -23,9 +24,16 @@ describe('Test useAppData hook', () => {
   const authUrl = `${USER_CONFIGURATION_SERVICE.BASE_URL}${USER_CONFIGURATION_SERVICE.ENDPOINT}`
   const userUrl = '/api/v1/microlc/user'
 
-  afterAll(() => {
-    jest.clearAllMocks()
-    jest.resetAllMocks()
+  it('Rethrow the error', async () => {
+    nock('http://localhost')
+      .get(authUrl)
+      .replyWithError('ERROR')
+    try {
+      const {waitForNextUpdate} = renderHook(() => useAppData())
+      await waitForNextUpdate()
+    } catch (e) {
+      expect(e).toMatch('error')
+    }
   })
 
   it('Retrieve and apply configurations', async () => {

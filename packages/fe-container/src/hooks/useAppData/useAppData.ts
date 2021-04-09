@@ -39,7 +39,7 @@ export const useAppData = () => {
         registerPlugins(configuration, user)
         setAppState({isLoading: false, configuration, user})
         navigateToFirstPlugin(configuration)
-      })
+      }, (err) => setAppState(() => { throw err }))
     return () => configurationSubscription.unsubscribe()
   }, [])
 

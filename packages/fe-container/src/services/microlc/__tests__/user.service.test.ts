@@ -39,17 +39,6 @@ describe('User service tests', () => {
       })
   })
 
-  it('return empty user response for http errors', (done) => {
-    const mockedResponse = nock('http://localhost').get(userUrl).reply(500)
-
-    retrieveUser(userUrl)
-      .subscribe((response) => {
-        expect(response).toStrictEqual({})
-        mockedResponse.done()
-        done()
-      })
-  })
-
   it('return empty user logout response for http errors', (done) => {
     const mockedResponse = nock('http://localhost').post(logOutUrl).reply(500)
 

@@ -31,15 +31,4 @@ describe('Configuration service tests', () => {
         done()
       })
   })
-
-  it('return empty configuration response for http errors', (done) => {
-    const mockedResponse = nock('http://localhost').get(configurationUrl).reply(500)
-
-    retrieveConfiguration()
-      .subscribe((response) => {
-        expect(response).toStrictEqual({})
-        mockedResponse.done()
-        done()
-      })
-  })
 })
