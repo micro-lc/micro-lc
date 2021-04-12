@@ -19,7 +19,7 @@
     "dev": "npm-run-all -p dev:**",
     "lint": "lerna run lint",
     "build": "yarn fe-container build",
-    "coverage": "yarn fe-container coverage",
+    "coverage": "lerna run coverage",
     "postinstall": "yarn core build"
   },
   "devDependencies": {
