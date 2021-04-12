@@ -24,10 +24,5 @@
   },
   "include": [
     "src"
-  ],
-  "baseUrl": "./src",
-  "paths": {
-    "@utils/*": ["./utils/*"],
-    "@apis/*": ["./apis/*"]
-  }
+  ]
 }

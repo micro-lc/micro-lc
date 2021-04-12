@@ -3,7 +3,7 @@ import customService, {DecoratedFastify} from '@mia-platform/custom-plugin-lib'
 import {AUTHENTICATION_ENDPOINT, CONFIGURATION_ENDPOINT} from './constants'
 import {authenticationApiHandlerBuilder, authenticationApiSchema} from './apis/authenticationApi'
 import {configurationApiHandlerBuilder, configurationApiSchema} from './apis/configurationApi'
-import {environmentVariablesSchema} from './environmentVariablesSchema'
+import {environmentVariablesSchema} from './schemas/environmentVariablesSchema'
 
 module.exports = customService(environmentVariablesSchema)(async function index(service: DecoratedFastify) {
   const authenticationApiHandler = await authenticationApiHandlerBuilder(service)
