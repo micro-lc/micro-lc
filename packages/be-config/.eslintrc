@@ -6,7 +6,8 @@
   "parser": "@typescript-eslint/parser",
   "settings": {},
   "env": {
-    "mocha": true
+    "mocha": true,
+    "jest": true
   },
   "rules": {
     "no-console": 2,
@@ -16,6 +17,7 @@
       "never"
     ],
     "sort-imports": "off",
+    "max-len": "off",
     "operator-linebreak": [
       2,
       "after"

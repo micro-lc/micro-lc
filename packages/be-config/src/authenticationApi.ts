@@ -1,11 +1,19 @@
 import {Authentication, authenticationSchema} from '@mia-platform/core'
+import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
-import {AUTHENTICATION_ENV} from './constants'
+import {readValidateConfiguration} from './configurationManager'
 
-export const authenticationApiHandler: () => Authentication = () => {
-  return {
-    isAuthNecessary: process.env[AUTHENTICATION_ENV.IS_AUTH_NECESSARY] === 'true',
-    userInfoUrl: process.env[AUTHENTICATION_ENV.USER_INFO_URL],
+const readAuthenticationConfiguration = async(fastifyInstance: DecoratedFastify) => {
+  // @ts-ignore
+  const configurationPath = fastifyInstance.config.AUTHENTICATION_CONFIGURATION_PATH
+  const validateConfiguration = await readValidateConfiguration(configurationPath, authenticationSchema)
+  return validateConfiguration as Authentication
+}
+
+export const authenticationApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Promise<Handler> = async(fastifyInstance) => {
+  const configuration: Authentication = await readAuthenticationConfiguration(fastifyInstance)
+  return (_, reply) => {
+    reply.send(configuration)
   }
 }
 
