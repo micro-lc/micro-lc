@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "commonjs",
     "lib": [
-      "dom",
-      "esnext"
+      "DOM",
+      "ESNext",
+      "ES6"
     ],
     "importHelpers": true,
     "declaration": true,
