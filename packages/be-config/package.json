@@ -21,6 +21,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.13.15",
     "@mia-platform/custom-plugin-lib": "^2.3.0",
+    "ajv": "^8.1.0",
     "fastify": "^2.15.1",
     "typescript": "^4.2.3"
   },

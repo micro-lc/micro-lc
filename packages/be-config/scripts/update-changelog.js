@@ -1,7 +1,5 @@
-'use strict'
-
-const { join } = require('path')
-const { readFileSync, writeFileSync } = require('fs')
+const {join} = require('path')
+const {readFileSync, writeFileSync} = require('fs')
 
 function getISODateStringFrom(aJSDate) {
   return aJSDate
@@ -10,13 +8,13 @@ function getISODateStringFrom(aJSDate) {
     .shift()
 }
 
-function getNewContentForCHANGELOG({ aSemVerString, anISODateString }) {
+function getNewContentForCHANGELOG({aSemVerString, anISODateString}) {
   return `[Unreleased]\n\n## [${aSemVerString}] ${anISODateString}`
 }
 
 const CHANGELOG_PATH = join(__dirname, '../CHANGELOG.md')
 
-let changelog = readFileSync(CHANGELOG_PATH, { encoding: 'utf-8' })
+let changelog = readFileSync(CHANGELOG_PATH, {encoding: 'utf-8'})
 
 changelog = changelog.replace('[Unreleased]', getNewContentForCHANGELOG({
   aSemVerString: process.argv[2],
