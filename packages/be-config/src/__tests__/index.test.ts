@@ -1,5 +1,8 @@
 import {FastifyInstance} from 'fastify'
 import path from 'path'
+import validAuthenticationConfig from './configurationMocks/validAuthenticationConfig.json'
+import validMicrolcConfig from './configurationMocks/validMicrolcConfig.json'
+import {AUTHENTICATION_ENDPOINT, CONFIGURATION_ENDPOINT} from '../constants'
 
 export interface ProcessEnv {
   [key: string]: string | undefined
@@ -35,6 +38,16 @@ describe('mia_template_service_name_placeholder', () => {
       MICROLC_CONFIGURATION_PATH: path.join(__dirname, '/configurationMocks/validMicrolcConfig.json'),
     })
     expect(fastify).not.toBeNull()
+    const authenticationContent = await fastify.inject({
+      method: 'GET',
+      url: AUTHENTICATION_ENDPOINT.PATH,
+    })
+    const configurationContent = await fastify.inject({
+      method: 'GET',
+      url: CONFIGURATION_ENDPOINT.PATH,
+    })
+    expect(JSON.parse(authenticationContent.body)).toMatchObject(validAuthenticationConfig)
+    expect(JSON.parse(configurationContent.body)).toMatchObject(validMicrolcConfig)
   })
 
   test('Fastify fail for bad auth config path', async() => {
