@@ -9,7 +9,7 @@ describe('Authentication api tests', () => {
   // @ts-ignore
   const fastifyInstance: DecoratedFastify = {
     config: {
-      AUTHENTICATION_CONFIGURATION_PATH: path.join(__dirname, 'validAuthenticationConfig.json'),
+      AUTHENTICATION_CONFIGURATION_PATH: path.join(__dirname, '../../__tests__/configurationMocks/validAuthenticationConfig.json'),
     },
   }
 

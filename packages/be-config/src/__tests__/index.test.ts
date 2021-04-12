@@ -27,8 +27,8 @@ describe('mia_template_service_name_placeholder', () => {
 
   beforeAll(async() => {
     await setupFastify({
-      AUTHENTICATION_CONFIGURATION_PATH: path.join(__dirname, './validAuthenticationConfig.json'),
-      MICROLC_CONFIGURATION_PATH: path.join(__dirname, './validMicrolcConfig.json'),
+      AUTHENTICATION_CONFIGURATION_PATH: path.join(__dirname, '/configurationMocks/validAuthenticationConfig.json'),
+      MICROLC_CONFIGURATION_PATH: path.join(__dirname, '/configurationMocks/validMicrolcConfig.json'),
     })
   })
 

@@ -9,7 +9,7 @@ describe('Configuration api tests', () => {
   // @ts-ignore
   const fastifyInstance: DecoratedFastify = {
     config: {
-      MICROLC_CONFIGURATION_PATH: path.join(__dirname, 'validMicrolcConfig.json'),
+      MICROLC_CONFIGURATION_PATH: path.join(__dirname, '../../__tests__/configurationMocks/validMicrolcConfig.json'),
     },
   }
 

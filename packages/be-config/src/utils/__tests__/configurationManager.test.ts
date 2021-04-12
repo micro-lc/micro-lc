@@ -1,10 +1,10 @@
 import path from 'path'
-
-import {readConfigurationFile, readValidateConfiguration, validateConfigurationContent} from '../configurationManager'
 import {authenticationSchema} from '@mia-platform/core'
 
+import {readConfigurationFile, readValidateConfiguration, validateConfigurationContent} from '../configurationManager'
+
 describe('Configuration loader tests', () => {
-  const configurationPath = path.join(__dirname, './validAuthenticationConfig.json')
+  const configurationPath = path.join(__dirname, '../../__tests__/configurationMocks/validAuthenticationConfig.json')
   const invalidSchema = {
     type: 'object',
     properties: {

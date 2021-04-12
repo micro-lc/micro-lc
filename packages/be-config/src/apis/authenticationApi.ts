@@ -1,7 +1,7 @@
 import {Authentication, authenticationSchema} from '@mia-platform/core'
 import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
-import {readValidateConfiguration} from './configurationManager'
+import {readValidateConfiguration} from '../utils/configurationManager'
 
 const readAuthenticationConfiguration = async(fastifyInstance: DecoratedFastify) => {
   // @ts-ignore
