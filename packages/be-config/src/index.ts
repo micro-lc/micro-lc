@@ -5,7 +5,7 @@ import {authenticationApiHandlerBuilder, authenticationApiSchema} from './authen
 import {configurationApiHandlerBuilder, configurationApiSchema} from './configurationApi'
 import {environmentVariablesSchema} from './environmentVariablesSchema'
 
-const enrichedCustomService = customService(environmentVariablesSchema)(async function index(service: DecoratedFastify) {
+module.exports = customService(environmentVariablesSchema)(async function index(service: DecoratedFastify) {
   const authenticationApiHandler = await authenticationApiHandlerBuilder(service)
   const configurationApiHandler = await configurationApiHandlerBuilder(service)
   service.addRawCustomPlugin(
@@ -15,5 +15,3 @@ const enrichedCustomService = customService(environmentVariablesSchema)(async fu
     CONFIGURATION_ENDPOINT.METHOD, CONFIGURATION_ENDPOINT.PATH, configurationApiHandler, configurationApiSchema
   )
 })
-
-export default enrichedCustomService
