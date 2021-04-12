@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx}",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src --ext .js,.ts,.tsx",
     "start": "lc39 dist/index.js",
     "start:local": "yarn start -- --env-path ./default.env",
     "test": "yarn lint && yarn unit",
