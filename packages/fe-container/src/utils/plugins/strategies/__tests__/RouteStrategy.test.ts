@@ -23,6 +23,6 @@ describe('RouteStrategy tests', () => {
 
   it('Handle invalid plugin', () => {
     routeStrategy({id: '', label: '', integrationMode: 'iframe'}).handlePluginLoad()
-    expect(history.push).toHaveBeenCalledWith('')
+    expect(history.push).toHaveBeenCalledWith('/')
   })
 })
