@@ -1,19 +1,22 @@
-FROM node:12.3.1-alpine
+FROM node:erbium-stretch-slim
 
 LABEL name="mia-microlc-config-manager" \
       description="The Mia-Platform micro fontend solution configuration manager" \
       eu.mia-platform.url="https://www.mia-platform.eu" \
       eu.mia-platform.version="0.1.0"
 
-ENV NODE_ENV=production
 ENV LOG_LEVEL=info
 ENV SERVICE_PREFIX=/
 ENV HTTP_PORT=3000
 
 WORKDIR /home/node/app
 
-COPY packages/be-config .
+COPY . .
+
+RUN rm -rf ./packages/fe-container && yarn install && yarn be-config build
+
+ENV NODE_ENV=production
 
 USER node
 
-CMD ["yarn", "be-config", "start", "--", "--options", "--port", "${HTTP_PORT}", "--log-level", "${LOG_LEVEL}", "--prefix=${SERVICE_PREFIX}", "--address", "0.0.0.0"]
+CMD ["yarn", "be-config", "start", "--options", "--port", "${HTTP_PORT}", "--log-level", "${LOG_LEVEL}", "--prefix=${SERVICE_PREFIX}", "--address", "0.0.0.0"]

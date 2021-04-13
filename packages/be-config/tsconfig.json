@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "module": "ES6",
     "lib": [
       "ES6"
     ],
