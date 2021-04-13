@@ -63,4 +63,4 @@ export const finish = (user: Partial<User>) => {
   start()
 }
 
-export const history = createBrowserHistory({basename: process.env.PUBLIC_URL})
+export const history = createBrowserHistory({basename: process.env.PUBLIC_URL, forceRefresh: true})
