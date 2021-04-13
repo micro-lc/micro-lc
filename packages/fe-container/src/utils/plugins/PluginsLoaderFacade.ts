@@ -64,3 +64,12 @@ export const finish = (user: Partial<User>) => {
 }
 
 export const history = createBrowserHistory({basename: process.env.PUBLIC_URL, forceRefresh: true})
+
+export const retrieveBasePath = () => {
+  let basePath = `${window.location.pathname || ''}`
+  const currentPlugin = findCurrentPlugin()
+  if (currentPlugin) {
+    basePath = window.location.pathname.replace(currentPlugin?.pluginRoute || '', '')
+  }
+  return basePath.replace('//', '/')
+}

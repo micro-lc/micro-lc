@@ -14,7 +14,8 @@ describe('Test plugin loading', () => {
     Object.defineProperty(window, 'location', {
       value: {
         href: '',
-        writable: true
+        writable: true,
+        pathname: ''
       }
     })
     const integrationMode: 'href' = 'href'

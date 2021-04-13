@@ -1,10 +1,11 @@
 import {Plugin} from '@mia-platform/core'
-import {history, PluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {history, PluginStrategy, retrieveBasePath} from '@utils/plugins/PluginsLoaderFacade'
 
 export function routeStrategy (plugin: Plugin): PluginStrategy {
-  const pluginRoute = `${window.location.pathname || ''}${plugin?.pluginRoute || ''}`.replace('//', '/')
   return {
     handlePluginLoad: () => {
+      const basePath = retrieveBasePath()
+      const pluginRoute = `${basePath}${plugin?.pluginRoute || ''}`.replace('//', '/')
       history.push(pluginRoute)
     }
   }

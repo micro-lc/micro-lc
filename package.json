@@ -12,7 +12,6 @@
     "core": "yarn workspace @mia-platform/core",
     "be-config": "yarn workspace @mia-platform/be-config",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
-    "dev:be-config": "yarn be-config dev",
     "dev:fe-container": "yarn fe-container dev",
     "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register",
     "dev:core": "yarn core dev",
