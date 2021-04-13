@@ -1,0 +1,4 @@
+{
+  "isAuthNecessary": true,
+  "userInfoUrl": "/api/v1/microlc/user"
+}

@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ES6",
     "lib": [
-      "DOM",
-      "ESNext",
       "ES6"
     ],
     "importHelpers": true,
@@ -16,7 +14,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
-    "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

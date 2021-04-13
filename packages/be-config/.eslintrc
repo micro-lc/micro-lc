@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "standard",
+    "@mia-platform/eslint-config-mia"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "settings": {},
+  "env": {
+    "mocha": true,
+    "jest": true
+  },
+  "rules": {
+    "no-console": 2,
+    "no-unused-vars": 2,
+    "object-curly-spacing": [
+      2,
+      "never"
+    ],
+    "sort-imports": "off",
+    "max-len": "off",
+    "operator-linebreak": [
+      2,
+      "after"
+    ]
+  }
+}

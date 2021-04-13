@@ -2,7 +2,7 @@ name: Node.js CI
 
 env:
   cache-name: cache-build
-  context: ./packages/fe-container/
+  context: ./packages/be-config/
 
 on:
   push:
@@ -19,30 +19,30 @@ jobs:
       matrix:
         node-version: [12.x, 14.x]
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: yarn install --frozen-lockfile
-    - run: yarn fe-container coverage
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: '${{ env.context }}coverage/lcov.info'
-        base-path: '${{ env.context }}'
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn be-config coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: '${{ env.context }}coverage/lcov.info'
+          base-path: '${{ env.context }}'
 
-    - name: Compile file and build
-      if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '14.x' }}
-      run: yarn fe-container build
+      - name: Compile file and build
+        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '14.x' }}
+        run: yarn fe-container build
 
-    - name: Cache build
-      if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '14.x' }}
-      uses: actions/cache@v2
-      with:
-        path: ${{ env.context }}build
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+      - name: Cache build
+        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '14.x' }}
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.context }}build
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
 
   docker-build:
     name: Build docker
@@ -57,7 +57,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=miaplatform/microlc
+          DOCKER_IMAGE=miaplatform/microlc-config-manager
           VERSION=latest
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
@@ -89,5 +89,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: '${{ env.context }}'
+          pull: true
           push: true
+          cache-from: type=registry,ref=${{ steps.prep.outputs.image }}:latest
+          cache-to: type=inline
           tags: ${{ steps.prep.outputs.tags }}
