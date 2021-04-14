@@ -48,11 +48,12 @@ const strategyBuilder = (plugin: Plugin) => {
 }
 
 export const finish = (user: Partial<User>) => {
+  const basePath = retrieveBasePath()
   const quiankunConfig = registeredPlugins
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(plugin => ({
       name: plugin.id,
-      entry: plugin.pluginUrl || '',
+      entry: `${basePath}${plugin.pluginUrl || ''}`,
       container: `#${plugin.id}`,
       activeRule: plugin.pluginRoute || '',
       props: {
