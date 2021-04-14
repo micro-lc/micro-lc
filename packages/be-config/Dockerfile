@@ -1,19 +1,3 @@
-FROM node:erbium-stretch-slim as build
-
-WORKDIR /build
-
-COPY package.json .
-COPY yarn.lock .
-COPY packages/core ./packages/core
-COPY packages/be-config ./packages/be-config
-
-RUN yarn install --frozen-lockfile
-
-WORKDIR /build/packages/be-config
-RUN yarn build
-
-########################################################################################################################
-
 FROM node:erbium-stretch-slim
 
 LABEL name="mia-microlc-config-manager" \
@@ -32,11 +16,11 @@ WORKDIR /home/node/app
 COPY package.json .
 COPY yarn.lock .
 
-COPY --from=build /build/packages/core/package.json ./packages/core/package.json
-COPY --from=build /build/packages/core/dist ./packages/core/dist
+COPY ./packages/core/package.json ./packages/core/package.json
+COPY ./packages/core/dist ./packages/core/dist
 
-COPY --from=build /build/packages/be-config/package.json ./packages/be-config/package.json
-COPY --from=build /build/packages/be-config/dist ./packages/be-config/dist
+COPY ./packages/be-config/package.json ./packages/be-config/package.json
+COPY ./packages/be-config/dist ./packages/be-config/dist
 
 RUN yarn be-config install --frozen-lockfile --ignore-scripts
 
