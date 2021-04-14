@@ -3,7 +3,7 @@ name: Node.js CI
 env:
   cache-name: cache-build
   context-be: ./packages/be-config/
-  context-core: ./packages/be-config/
+  context-core: ./packages/core/
 
 on:
   push:
