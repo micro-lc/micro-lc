@@ -6,7 +6,6 @@
       "ESNext",
       "ES6"
     ],
-    "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
     "rootDir": "./src",

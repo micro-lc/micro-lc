@@ -5,10 +5,11 @@
 
 coverage
 __mocks__
-__tests__	
+__tests__
 .babelrc
 
 mock-server
+**/node_modules
 node_modules
 public
 src
