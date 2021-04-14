@@ -1,4 +1,4 @@
-import {finish, history, registerPlugin, retrieveBasePath, retrievePluginStrategy} from './PluginsLoaderFacade'
+import {finish, history, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
 import {registerMicroApps, start} from 'qiankun'
 
 history.push = jest.fn()
@@ -123,6 +123,7 @@ describe('Test plugin loading', () => {
       container: '#plugin-1',
       activeRule: '/qiankunTest',
       props: {
+        basePath: '',
         currentUser: {}
       }
     }])
@@ -146,41 +147,5 @@ describe('Test plugin loading', () => {
     finish({})
     expect(start).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalled()
-  })
-
-  it('Extract correct basePath with loaded plugin', () => {
-    // eslint-disable-next-line
-    window = Object.create(window)
-    // @ts-ignore
-    delete window.location
-    const pluginRoute: string = '/test-plugin'
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: '',
-        pathname: `/test${pluginRoute}`
-      },
-      writable: true
-    })
-    const integrationMode: 'qiankun' = 'qiankun'
-    const pluginToRegister = {
-      id: 'plugin-correct-base-path',
-      label: 'Plugin 1',
-      integrationMode,
-      pluginRoute,
-      pluginUrl: pluginRoute
-    }
-    registerPlugin(pluginToRegister)
-    expect(retrieveBasePath()).toBe('/test')
-  })
-
-  it('Extract correct basePath without loaded plugin', () => {
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: '',
-        pathname: ''
-      },
-      writable: true
-    })
-    expect(retrieveBasePath()).toBe('')
   })
 })

@@ -48,7 +48,7 @@ const strategyBuilder = (plugin: Plugin) => {
 }
 
 export const finish = (user: Partial<User>) => {
-  const basePath = retrieveBasePath()
+  basePath = retrieveBasePath()
   const quiankunConfig = registeredPlugins
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(plugin => ({
@@ -57,6 +57,7 @@ export const finish = (user: Partial<User>) => {
       container: `#${plugin.id}`,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,
       props: {
+        basePath,
         currentUser: user
       }
     }))
@@ -66,11 +67,14 @@ export const finish = (user: Partial<User>) => {
 
 export const history = createBrowserHistory({basename: process.env.PUBLIC_URL})
 
-export const retrieveBasePath = () => {
+const retrieveBasePath = () => {
   let basePath = `${window.location.pathname || ''}`
   const currentPlugin = findCurrentPlugin()
   if (currentPlugin) {
     basePath = window.location.pathname.replace(currentPlugin?.pluginRoute || '', '')
   }
-  return basePath.replace('//', '/')
+  basePath = basePath.replace('//', '/')
+  return basePath === '/' ? '' : basePath
 }
+
+export let basePath = ''
