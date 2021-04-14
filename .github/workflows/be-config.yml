@@ -89,7 +89,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: './'
-          file: 'Dockerfile-be-config'
+          file: 'packages/be-config/Dockerfile'
           pull: true
           push: true
           cache-from: type=registry,ref=${{ steps.prep.outputs.image }}:latest
