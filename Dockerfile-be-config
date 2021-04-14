@@ -31,14 +31,14 @@ WORKDIR /home/node/app
 COPY package.json .
 COPY yarn.lock .
 
-COPY --from=build /build/packages/core/package.json /home/node/app/packages/core/package.json
-COPY --from=build /build/packages/core/dist /home/node/app/packages/core/dist
+COPY --from=build /build/packages/core/package.json ./packages/core/package.json
+COPY --from=build /build/packages/core/dist ./packages/core/dist
 
-COPY --from=build /build/packages/be-config/package.json /home/node/app/packages/be-config/package.json
-COPY --from=build /build/packages/be-config/dist /home/node/app/packages/be-config/dist
+COPY --from=build /build/packages/be-config/package.json ./packages/be-config/package.json
+COPY --from=build /build/packages/be-config/dist ./packages/be-config/dist
 
-RUN yarn install --frozen-lockfile --ignore-scripts
+RUN yarn be-config install --frozen-lockfile --ignore-scripts
 
 USER node
 
-CMD yarn be-config start --options --port "$HTTP_PORT" --log-level "$LOG_LEVEL" --prefix="$SERVICE_PREFIX" --address 0.0.0.0
+CMD ./node_modules/.bin/lc39 ./packages/be-config/dist/index.js --options --port "$HTTP_PORT" --log-level "$LOG_LEVEL" --prefix="$SERVICE_PREFIX" --address 0.0.0.0
