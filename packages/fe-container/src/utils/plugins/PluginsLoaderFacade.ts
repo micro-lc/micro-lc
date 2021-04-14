@@ -53,9 +53,9 @@ export const finish = (user: Partial<User>) => {
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(plugin => ({
       name: plugin.id,
-      entry: `${basePath}${plugin.pluginUrl || ''}`,
+      entry: plugin.pluginUrl || '',
       container: `#${plugin.id}`,
-      activeRule: plugin.pluginRoute || '',
+      activeRule: `${basePath}${plugin.pluginRoute || ''}`,
       props: {
         currentUser: user
       }
@@ -64,7 +64,7 @@ export const finish = (user: Partial<User>) => {
   start()
 }
 
-export const history = createBrowserHistory({basename: process.env.PUBLIC_URL, forceRefresh: true})
+export const history = createBrowserHistory({basename: process.env.PUBLIC_URL})
 
 export const retrieveBasePath = () => {
   let basePath = `${window.location.pathname || ''}`
