@@ -1,0 +1,36 @@
+@import "../../styles/_variables";
+
+.errorPage_container {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    
+    & .mainMessage {
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 34px;
+        text-align: center;
+        color: #0E0E0E;
+    }
+
+    & .descriptionMessage {
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 28px;
+        text-align: center;
+        color: #0E0E0E;
+    }
+}
+
+svg {
+    & .svg_primaryColor {
+        fill: var(--microlc-menu-entry-selected-bg-color);
+    }
+}

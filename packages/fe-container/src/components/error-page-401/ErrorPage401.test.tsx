@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import React from 'react'
+import {screen} from '@testing-library/react'
 
-import {ErrorPageContainer} from '@components/error-page-container/ErrorPageContainer'
-import {ReactComponent as Error401Logo} from './assets/ErrorImage401.svg'
+import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
 
-export const ErrorPage401: React.FC = () => {
-  return (
-    <ErrorPageContainer descriptionKeys={['401_description', '401_description_1']} titleKey='401_title'>
-        <Error401Logo/>
-      </ErrorPageContainer>
-  )
-}
+import RenderWithReactIntl from '../../__tests__/utils'
+beforeEach(() => {
+  RenderWithReactIntl(<ErrorPage401></ErrorPage401>)
+})
+describe('ErrorPage404 tests', () => {
+  it('renders without crashing', async () => {
+    expect(await screen.findByText('Unauthorized access')).toBeTruthy()
+    expect(await screen.findByText("It would seem that you don't have permission to access this page, but don't")).toBeTruthy()
+  })
+})

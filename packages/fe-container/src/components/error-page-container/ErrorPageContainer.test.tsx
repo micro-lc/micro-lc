@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 import React from 'react'
+import {screen} from '@testing-library/react'
 
-import {ErrorPageContainer} from '@components/error-page-container/ErrorPageContainer'
+import {ErrorPageContainer} from './ErrorPageContainer'
+import RenderWithReactIntl from '../../__tests__/utils'
 import {ReactComponent as Error404Logo} from '@components/error-page-404/assets/ErrorImage404.svg'
 
-export const ErrorPage404: React.FC = () => {
-  return (
-    <ErrorPageContainer descriptionKeys={['404_description', '404_description_1', '404_description_2']} titleKey='404_title'>
-        <Error404Logo/>
-      </ErrorPageContainer>
-  )
-}
+describe('ErrorPageContainer tests', () => {
+  it('Test ErrorPage 404 renders', () => {
+    RenderWithReactIntl(
+        <ErrorPageContainer descriptionKeys={['404_description', '404_description_1', '404_description_2']} titleKey='404_title'>
+            <Error404Logo/>
+        </ErrorPageContainer>
+    )
+    expect(screen.getByText('PAGE NOT FOUND')).toBeTruthy()
+  })
+})

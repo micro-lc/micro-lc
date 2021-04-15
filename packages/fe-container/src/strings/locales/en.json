@@ -1,14 +1,14 @@
 {
   "logout": "Log Out",
   "error": "Something went wrong:",
-  "404_page_not_found" : "Oh No! Manca qualcosa.",
-  "404_description" :"PAGINA NON TROVATA",
-  "404_description_spec":"La pagina che stavi cercando potrebbe essere stata rimossa, aver cambiato nome o essere temporaneamente non disponibile.",
-  "401_page_not_found" : "Oh No! Manca qualcosa.",
-  "401_description" :"",
-  "401_description_spec":"Sembrerebbe che non hai il permesso di accedere a questa pagina, ma non ti preoccupare: c’è sempre un modo per tornare alla home.",
-  "500_page_not_found" : "Ops! Qualcosa è andato storto.",
-  "500_description" :" ",
-  "500_description_spec":"Il nostro team è stato informato e sta lavorando per risolvere il problema. Non ci vorrà molto... riprova più tardi."
-
+  "404_title" : "Oh No! Something is missing.",
+  "404_description" :"PAGE NOT FOUND",
+  "404_description_1":"The page you were looking for may have been removed, have changed its name, or be",
+  "404_description_2": "temporarily unavailable",  
+  "401_title" : "Unauthorized access",
+  "401_description" :"It would seem that you don't have permission to access this page, but don't",
+  "401_description_1":"worry: there is always a way to go back to the home page.",
+  "500_title" : "Oops! Something went wrong.",
+  "500_description" :"Our team has been informed and is working to fix the problem.",
+  "500_description_1":"It won't take long ... try again later."
 }
