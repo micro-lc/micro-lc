@@ -24,6 +24,10 @@ import {INTEGRATION_METHODS} from '@constants'
 import './LayoutContent.less'
 import classNames from 'classnames'
 
+// import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
+import {ErrorPage404} from '@components/error-page-404/ErrorPage404'
+// import {ErrorPage500} from '@components/error-page-500/ErrorPage500'
+
 export const LayoutContent: React.FC = () => {
   return (
     <Layout>
@@ -51,6 +55,9 @@ const LayoutCenter: React.FC = () => {
 
   return (
     <Layout.Content data-testid="layout-content">
+      {/* <ErrorPage500 /> */}
+      <ErrorPage404 />
+      {/* <ErrorPage401 /> */}
       {configuration.plugins?.filter(hasRoute).map(routerMapper)}
     </Layout.Content>
   )

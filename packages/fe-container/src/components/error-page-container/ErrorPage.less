@@ -1,0 +1,93 @@
+@import "../../styles/_variables";
+
+.errorPage_container{
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+
+
+    & .svgContainer{
+        position: absolute;
+        width: 53.44%;
+        height: 33.71%;
+        left: 23.26%;
+        top: 24.51%;
+        }
+    
+    & .mainMessage{
+        position: absolute;
+        width: 53.40%;
+        height: 34px;
+        left: 23.26%;
+        top: 70%;
+
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 34px;
+        /* identical to box height, or 142% */
+
+        text-align: center;
+
+        /* Neutral/Black */
+
+        color: #0E0E0E;
+    }
+
+    & .descriptionMessage{
+        position: absolute;
+        width: 53.40%;
+        height: 84px;
+        left: 23.26%;
+        top: 77.95%;
+
+        /* Heading/h2 regular */
+
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 28px;
+        /* or 140% */
+
+        text-align: center;
+
+        /* Neutral/Black */
+
+        color: #0E0E0E;
+
+    }
+
+    & .descriptionMessageSpec{
+        position: absolute;
+        width: 53.40%;
+        height: 84px;
+        left: 23.26%;
+        top: 82%;
+
+        /* Heading/h2 regular */
+
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 28px;
+        /* or 140% */
+
+        text-align: center;
+
+        /* Neutral/Black */
+
+        color: #0E0E0E;
+
+    }
+
+    @media only screen and (max-height: 400px) {
+        & .description {
+            display: none;
+        }
+    }
+}
