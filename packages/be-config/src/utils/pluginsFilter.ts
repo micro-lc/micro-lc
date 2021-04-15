@@ -32,10 +32,7 @@ const userGroupsObjectBuilder = (userGroups: string[]) => {
 
 const buildPluginFunction = (plugin: Plugin) => {
   // eslint-disable-next-line no-new-func
-  return new Function(
-    GROUPS_CONFIGURATION.function.key,
-    `return !!(${plugin.allowedExpression})`
-  )
+  return new Function(GROUPS_CONFIGURATION.function.key, `return !!(${plugin.allowedExpression})`)
 }
 
 const evaluatePluginExpression = (userGroupsObject: UserGroupsObject) => {

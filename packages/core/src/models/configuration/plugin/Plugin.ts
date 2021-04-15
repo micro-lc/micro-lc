@@ -25,7 +25,7 @@ export const pluginSchema = {
     },
     allowedExpression: {
       type: 'string',
-      description: 'Expression to evaluate to filter the users that can access the plugin',
+      description: 'Expression to evaluate the users that can access the plugin',
     },
     label: {
       type: 'string',
