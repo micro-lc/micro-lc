@@ -23,21 +23,21 @@ const MENU_ENTRY_TINT_WEIGHT = 89
 
 export const manageTheming = (configuration: Configuration) => {
   document.title = configuration.theming?.header?.pageTitle || document.title
-  if (isPrimaryColorValid(configuration)) {
-    const primaryColor = new Value(configuration.theming?.variables.primaryColor)
+  const primaryColor = retrievePrimaryColor(configuration)
+  if (primaryColor) {
     setCssProperty(COLORS.primaryColor, primaryColor)
     setCssProperty(COLORS.menuEntrySelectedBackgroundColor, calculateColorTint(primaryColor, MENU_ENTRY_TINT_WEIGHT))
   }
 }
 
-const isPrimaryColorValid = (configuration: Configuration) => {
-  let colorValid = true
+const retrievePrimaryColor = (configuration: Configuration) => {
+  let primaryColor
   try {
-    colorValid && new Value(configuration.theming?.variables.primaryColor)
+    primaryColor = new Value(configuration.theming?.variables.primaryColor)
   } catch (e) {
-    colorValid = false
+    primaryColor = undefined
   }
-  return colorValid
+  return primaryColor
 }
 
 const calculateColorTint = (color: any, tintWeight: number) => {
