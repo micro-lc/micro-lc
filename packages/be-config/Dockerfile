@@ -1,4 +1,4 @@
-FROM node:erbium-stretch-slim
+FROM node:erbium-alpine
 
 LABEL name="mia-microlc-config-manager" \
       description="The Mia-Platform micro fontend solution configuration manager" \
