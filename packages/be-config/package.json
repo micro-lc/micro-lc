@@ -13,7 +13,7 @@
     "unit": "jest",
     "version": "yarn update-changelog && yarn update-docker-version && rm -fr Dockerfile.bck && git add CHANGELOG.md Dockerfile",
     "build": "tsc -p tsconfig.json",
-    "dev:unit-watch": "yarn test",
+    "dev:unit-watch": "yarn test --watch",
     "dev:build": "tsc -p tsconfig.json --watch",
     "dev": "npm-run-all -p dev:unit-watch start"
   },

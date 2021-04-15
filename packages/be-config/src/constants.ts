@@ -30,3 +30,13 @@ export const CONFIGURATION_ENDPOINT: EndpointConfiguration = {
   METHOD: 'GET',
   PATH: `/api/${API_VERSION}/microlc/configuration`,
 }
+
+export const GROUPS_CONFIGURATION = {
+  header: {
+    key: 'GROUPS_HEADER_KEY',
+    separator: ',',
+  },
+  function: {
+    key: 'groups',
+  },
+}

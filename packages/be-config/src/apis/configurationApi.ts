@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-import {Configuration, configurationSchema} from '@mia-platform/core'
+import {Configuration, configurationSchema, Plugin} from '@mia-platform/core'
 import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {readValidateConfiguration} from '../utils/configurationManager'
+import {GROUPS_CONFIGURATION} from '../constants'
+import {pluginsFilter} from '../utils/pluginsFilter'
 
 const readPluginConfiguration = async(fastifyInstance: DecoratedFastify) => {
   // @ts-ignore
@@ -26,10 +28,20 @@ const readPluginConfiguration = async(fastifyInstance: DecoratedFastify) => {
   return validateConfiguration as Configuration
 }
 
+const buildNewConfiguration = (oldConfiguration: Configuration, allowedPlugins: Plugin[]) => {
+  return {
+    ...oldConfiguration,
+    plugins: allowedPlugins,
+  }
+}
+
 export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Promise<Handler> = async(fastifyInstance) => {
   const configuration: Configuration = await readPluginConfiguration(fastifyInstance)
-  return (_, reply) => {
-    reply.send(configuration)
+  return (request, reply) => {
+    const userGroups = request.headers[GROUPS_CONFIGURATION.header.key]?.split(GROUPS_CONFIGURATION.header.separator) || []
+    const allowedPlugins = pluginsFilter(configuration.plugins || [], userGroups)
+    const configurationForUser = buildNewConfiguration(configuration, allowedPlugins)
+    reply.send(configurationForUser)
   }
 }
 

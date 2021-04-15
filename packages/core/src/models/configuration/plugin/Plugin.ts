@@ -23,12 +23,9 @@ export const pluginSchema = {
       type: 'string',
       description: 'Unique identifier of the plugin',
     },
-    allowedGroups: {
-      type: 'array',
-      items: {
-        type: 'string',
-      },
-      description: 'List of groups that can access the plugin',
+    allowedExpression: {
+      type: 'string',
+      description: 'Expression to evaluate to filter the users that can access the plugin',
     },
     label: {
       type: 'string',
