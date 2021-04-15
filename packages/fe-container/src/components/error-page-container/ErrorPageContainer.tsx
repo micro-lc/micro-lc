@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from 'react'
+import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {FormattedMessage} from 'react-intl'
 
@@ -29,17 +29,23 @@ const errorProps = {
 type ErrorProps = PropTypes.InferProps<typeof errorProps>
 
 export const ErrorPageContainer: React.FC<ErrorProps> = ({children, titleKey, descriptionKeys}) => {
+  const descriptionMapper = useCallback((descriptionKey : string) => {
+    return (
+      <div className = 'descriptionMessage' key={descriptionKey}>
+          <FormattedMessage id={descriptionKey}/>
+        </div>
+    )
+  }, [])
+
   return (
     <div className = 'errorPage_container'>
       <div className='svgContainer'>
         {children}
       </div>
-      <p className = 'mainMessage'><FormattedMessage id={titleKey}/></p>
-      {descriptionKeys.map(descriptionKey => (
-        <div className = 'descriptionMessage' key={descriptionKey}>
-          <FormattedMessage id={descriptionKey}/>
-        </div>
-      ))}
+      <p className = 'mainMessage'>
+        <FormattedMessage id={titleKey}/>
+      </p>
+      {descriptionKeys.map(descriptionMapper)}
     </div>
   )
 }

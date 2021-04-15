@@ -26,6 +26,6 @@ beforeEach(() => {
 describe('ErrorPage404 tests', () => {
   it('renders without crashing', async () => {
     expect(await screen.findByText('Unauthorized access')).toBeTruthy()
-    expect(await screen.findByText("It would seem that you don't have permission to access this page, but don't")).toBeTruthy()
+    expect(await screen.findByText('It would seem that you don\'t have permission to access this page, but don\'t')).toBeTruthy()
   })
 })

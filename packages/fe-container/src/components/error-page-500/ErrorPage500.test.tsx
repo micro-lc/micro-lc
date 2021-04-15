@@ -26,6 +26,6 @@ describe('ErrorPage500 tests', () => {
   it('renders without crashing', async () => {
     expect(await screen.findByText('Oops! Something went wrong.')).toBeTruthy()
     expect(await screen.findByText('Our team has been informed and is working to fix the problem.')).toBeTruthy()
-    expect(await screen.findByText("It won't take long ... try again later.")).toBeTruthy()
+    expect(await screen.findByText('It won\'t take long ... try again later.')).toBeTruthy()
   })
 })
