@@ -39,7 +39,8 @@ const registerPlugins = (configuration: Configuration, user: Partial<User>) => {
 const navigateToFirstPlugin = (configuration: Configuration) => {
   const firstValidPlugin: Plugin | undefined = configuration.plugins?.find(notHref)
   if (firstValidPlugin && !isCurrentPluginLoaded()) {
-    retrievePluginStrategy(firstValidPlugin).handlePluginLoad()
+    const pluginStrategy = retrievePluginStrategy(firstValidPlugin)
+    pluginStrategy && pluginStrategy.handlePluginLoad()
   }
 }
 
@@ -53,10 +54,17 @@ export const useAppData = () => {
         configuration.plugins = configuration.plugins?.sort(pluginsSorter)
         registerPlugins(configuration, user)
         setAppState({isLoading: false, configuration, user})
-        navigateToFirstPlugin(configuration)
-      }, (err) => setAppState(() => { throw err }))
+      }, (err) => setAppState(() => {
+        throw err
+      }))
     return () => configurationSubscription.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    if (!appState.isLoading) {
+      navigateToFirstPlugin(appState.configuration)
+    }
+  }, [appState])
 
   return appState
 }

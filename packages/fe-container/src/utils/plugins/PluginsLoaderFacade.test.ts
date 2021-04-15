@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {finish, history, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
+import {finish, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
 import {registerMicroApps, start} from 'qiankun'
 
-history.push = jest.fn()
 jest.mock('qiankun', () => ({
   start: jest.fn(),
   registerMicroApps: jest.fn()
@@ -111,7 +110,6 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    expect(history.push).toHaveBeenCalledWith('/iframeTest')
     finish({})
     expect(start).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([])
@@ -129,7 +127,6 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    expect(history.push).toHaveBeenCalledWith('/qiankunTest')
     finish({})
     expect(start).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([{
@@ -158,7 +155,6 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    expect(history.push).toHaveBeenCalledWith('')
     finish({})
     expect(start).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalled()
