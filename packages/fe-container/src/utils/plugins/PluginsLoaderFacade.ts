@@ -85,8 +85,8 @@ export const history = createBrowserHistory({basename: process.env.PUBLIC_URL})
 const retrieveBasePath = () => {
   let basePath = `${window.location.pathname || ''}`
   const currentPlugin = findCurrentPlugin()
-  if (currentPlugin) {
-    basePath = window.location.pathname.replace(currentPlugin?.pluginRoute || '', '')
+  if (currentPlugin?.pluginRoute) {
+    basePath = window.location.pathname.replace(currentPlugin.pluginRoute, '')
   }
   basePath = basePath.replace('//', '/')
   return basePath === '/' ? '' : basePath
