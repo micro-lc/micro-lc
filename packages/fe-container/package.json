@@ -22,7 +22,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "rxjs": "^6.6.6",
-    "tinycolor2": "^1.4.2"
+    "values.js": "^2.0.0"
   },
   "scripts": {
     "lint": "eslint src --ext .js,.ts,.tsx",

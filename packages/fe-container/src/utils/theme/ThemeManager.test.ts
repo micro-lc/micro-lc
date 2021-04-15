@@ -24,26 +24,28 @@ describe('ThemeManager tests', () => {
     document.documentElement.style.setProperty(COLORS.menuEntrySelectedBackgroundColor, null)
   })
 
-  const configuration = {
-    theming: {
-      header: {
-        pageTitle: 'Mia Care',
-        favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
+  const configurationBuilder = (primaryColor = 'red') => {
+    return {
+      theming: {
+        header: {
+          pageTitle: 'Mia Care',
+          favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
+        },
+        variables: {
+          primaryColor
+        },
+        logo: {
+          alt: 'alt-logo',
+          url: 'logo_url'
+        }
       },
-      variables: {
-        primaryColor: 'red'
-      },
-      logo: {
-        alt: 'alt-logo',
-        url: 'logo_url'
-      }
-    },
-    plugins: []
+      plugins: []
+    }
   }
 
   it('Document title applied', () => {
     expect(document.title).toBe('')
-    manageTheming(configuration)
+    manageTheming(configurationBuilder())
     expect(document.title).toBe('Mia Care')
   })
 
@@ -63,35 +65,27 @@ describe('ThemeManager tests', () => {
     expect(document.title).toBe('')
   })
 
-  it('Compute primary color and its derived', () => {
-    manageTheming(configuration)
+  it('Compute primary color and its derived from string color', () => {
+    manageTheming(configurationBuilder())
     const primaryColor = getComputedStyle(document.documentElement).getPropertyValue(COLORS.primaryColor)
-    expect(primaryColor).toBe('red')
+    expect(primaryColor).toBe('#ff0000')
     const menuEntryColor = getComputedStyle(document.documentElement).getPropertyValue(COLORS.menuEntrySelectedBackgroundColor)
-    expect(menuEntryColor).toBe('rgba(255, 0, 0, 0.2)')
+    expect(menuEntryColor).toBe('#ffe3e3')
   })
 
-  it('Return emtpy and black for invalid color', () => {
-    const invalidColorConfiguration = {
-      theming: {
-        header: {
-          pageTitle: 'Mia Care',
-          favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
-        },
-        variables: {
-          primaryColor: 'blallo'
-        },
-        logo: {
-          alt: 'alt-logo',
-          url: 'logo_url'
-        }
-      },
-      plugins: []
-    }
-    manageTheming(invalidColorConfiguration)
+  it('Compute primary color and its derived from hex color', () => {
+    manageTheming(configurationBuilder('#1890ff'))
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue(COLORS.primaryColor)
+    expect(primaryColor).toBe('#1890ff')
+    const menuEntryColor = getComputedStyle(document.documentElement).getPropertyValue(COLORS.menuEntrySelectedBackgroundColor)
+    expect(menuEntryColor).toBe('#e6f3ff')
+  })
+
+  it('Return empty for invalid color', () => {
+    manageTheming(configurationBuilder('blallo'))
     const primaryColor = getComputedStyle(document.documentElement).getPropertyValue(COLORS.primaryColor)
     expect(primaryColor).toBe('')
     const menuEntryColor = getComputedStyle(document.documentElement).getPropertyValue(COLORS.menuEntrySelectedBackgroundColor)
-    expect(menuEntryColor).toBe('rgb(0, 0, 0)')
+    expect(menuEntryColor).toBe('')
   })
 })
