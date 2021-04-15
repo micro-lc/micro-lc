@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-const API_VERSION = 'v1'
-
 interface EndpointConfiguration {
   METHOD: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD',
   PATH: string
@@ -23,10 +21,10 @@ interface EndpointConfiguration {
 
 export const AUTHENTICATION_ENDPOINT: EndpointConfiguration = {
   METHOD: 'GET',
-  PATH: `/api/${API_VERSION}/microlc/authentication`,
+  PATH: `/authentication`,
 }
 
 export const CONFIGURATION_ENDPOINT: EndpointConfiguration = {
   METHOD: 'GET',
-  PATH: `/api/${API_VERSION}/microlc/configuration`,
+  PATH: `/configuration`,
 }
