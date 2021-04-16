@@ -15,7 +15,7 @@
  */
 import React from 'react'
 
-import {ErrorPageContainer} from '@components/error-page-container/ErrorPageContainer'
+import {ErrorPageContainer} from '../../containers/error-page/ErrorPageContainer'
 import {ReactComponent as Error404Logo} from '@components/error-page-404/assets/ErrorImage404.svg'
 
 export const ErrorPage404: React.FC = () => {
