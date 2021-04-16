@@ -28,3 +28,12 @@ export const CONFIGURATION_ENDPOINT: EndpointConfiguration = {
   METHOD: 'GET',
   PATH: `/configuration`,
 }
+
+export const GROUPS_CONFIGURATION = {
+  header: {
+    separator: ',',
+  },
+  function: {
+    key: 'groups',
+  },
+}
