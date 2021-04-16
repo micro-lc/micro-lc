@@ -31,18 +31,18 @@ type ErrorProps = PropTypes.InferProps<typeof errorProps>
 export const ErrorPageContainer: React.FC<ErrorProps> = ({children, titleKey, descriptionKeys}) => {
   const descriptionMapper = useCallback((descriptionKey : string) => {
     return (
-      <div className = 'descriptionMessage' key={descriptionKey}>
+      <div className='descriptionMessage' key={descriptionKey}>
           <FormattedMessage id={descriptionKey}/>
         </div>
     )
   }, [])
 
   return (
-    <div className = 'errorPage_container'>
+    <div className='errorPage_container'>
       <div className='svgContainer'>
         {children}
       </div>
-      <p className = 'mainMessage'>
+      <p className='mainMessage'>
         <FormattedMessage id={titleKey}/>
       </p>
       {descriptionKeys.map(descriptionMapper)}
