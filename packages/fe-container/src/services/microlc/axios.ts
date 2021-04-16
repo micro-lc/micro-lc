@@ -24,6 +24,12 @@ const microlcAxiosConfig: AxiosRequestConfig = {
 }
 
 const axiosInstance = axios.create(microlcAxiosConfig)
+axiosInstance.interceptors.response.use(
+  undefined,
+  (error) => {
+    // eslint-disable-next-line
+    throw {errorStatusCode: error.response.status}
+  })
 
 export const extractDataFromGet: <T>(url: string) => Observable<T> = (url) => {
   return fromPromise(axiosInstance.get(url))
