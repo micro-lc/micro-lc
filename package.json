@@ -19,6 +19,7 @@
     "lint": "lerna run lint",
     "build": "yarn fe-container build",
     "coverage": "lerna run coverage",
+    "e2e": "npx folio --config=e2e/config.ts",
     "postinstall": "yarn core build"
   },
   "devDependencies": {
