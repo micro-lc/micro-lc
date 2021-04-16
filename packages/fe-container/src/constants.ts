@@ -40,3 +40,5 @@ export const COLORS = {
   primaryColor: '--microlc-primary-color',
   menuEntrySelectedBackgroundColor: '--microlc-primary-color-tint-89'
 }
+
+export const MICROLC_QIANKUN_CONTAINER = 'microlc-qiankun-contaier'

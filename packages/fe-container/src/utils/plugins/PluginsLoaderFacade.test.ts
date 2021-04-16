@@ -132,7 +132,7 @@ describe('Test plugin loading', () => {
     expect(registerMicroApps).toHaveBeenCalledWith([{
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
-      container: '#plugin-1',
+      container: '#microlc-qiankun-contaier',
       activeRule: '/qiankunTest',
       props: {
         basePath: '',

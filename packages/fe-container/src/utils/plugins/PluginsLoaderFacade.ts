@@ -17,7 +17,7 @@ import {createBrowserHistory} from 'history'
 import {registerMicroApps, RegistrableApp, start} from 'qiankun'
 import {Plugin, User} from '@mia-platform/core'
 
-import {INTEGRATION_METHODS} from '@constants'
+import {INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
 import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
 import {hrefStrategy} from '@utils/plugins/strategies/HrefStrategy'
 import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
@@ -70,7 +70,7 @@ export const finish = (user: Partial<User>) => {
     .map<RegistrableApp<any>>(plugin => ({
       name: plugin.id,
       entry: plugin.pluginUrl || '',
-      container: `#${plugin.id}`,
+      container: `#${MICROLC_QIANKUN_CONTAINER}`,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,
       props: {
         basePath,
