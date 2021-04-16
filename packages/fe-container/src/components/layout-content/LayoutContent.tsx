@@ -13,11 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Layout} from 'antd'
-import {Plugin} from '@mia-platform/core'
+import {Configuration, Plugin} from '@mia-platform/core'
+import {Route, Router, Switch} from 'react-router-dom'
+import PropTypes from 'prop-types'
+
 import {findCurrentPlugin, history} from '@utils/plugins/PluginsLoaderFacade'
-import {INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
+import {ConfigurationContext} from '@contexts/Configuration.context'
+import {ERROR_PATH, MICROLC_QIANKUN_CONTAINER} from '@constants'
+import {ErrorPage500} from '@components/error-page-500/ErrorPage500'
+import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
+import {ErrorPage404} from '@components/error-page-404/ErrorPage404'
 
 import './LayoutContent.less'
 
@@ -29,25 +36,51 @@ export const LayoutContent: React.FC = () => {
   )
 }
 
+// @ts-ignore
+const findPluginRoutes: (configuration: Configuration) => string[] = (configuration: Configuration) => {
+  return (configuration.plugins || [])
+    .filter(plugin => plugin.pluginRoute !== undefined)
+    .map(plugin => plugin.pluginRoute)
+}
+
 const LayoutCenter: React.FC = () => {
   const [currentPlugin, setCurrentPlugin] = useState<Plugin | undefined>(findCurrentPlugin())
-
+  const pluginsRoute = findPluginRoutes(useContext(ConfigurationContext))
   useEffect(() => {
     return history.listen(() => setCurrentPlugin(findCurrentPlugin()))
   })
 
   return (
     <Layout.Content data-testid='layout-content'>
-      <div className='layoutContent_plugin_container'>
-        {currentPlugin?.integrationMode === INTEGRATION_METHODS.IFRAME && <PluginIframe {...currentPlugin}/>}
-        <div className='layoutContent_plugin' id={MICROLC_QIANKUN_CONTAINER}/>
-      </div>
+      <Router history={history}>
+        <Switch>
+          <Route path={pluginsRoute}>
+            <div className='layoutContent_plugin_container'>
+              <PluginIframe plugin={currentPlugin}/>
+              <div className='layoutContent_plugin' id={MICROLC_QIANKUN_CONTAINER}/>
+            </div>
+          </Route>
+          <Route component={ErrorPage500} path={ERROR_PATH.INTERNAL_ERROR}/>
+          <Route component={ErrorPage401} path={ERROR_PATH.UNAUTHORIZED}/>
+          <Route component={ErrorPage404} path={ERROR_PATH.PAGE_NOT_FOUND}/>
+        </Switch>
+      </Router>
     </Layout.Content>
   )
 }
 
-const PluginIframe: React.FC<Plugin> = (plugin) => {
+type PluginIframeProps = {
+  plugin: Plugin | undefined
+}
+
+const PluginIframe: React.FC<PluginIframeProps> = ({plugin}) => {
   return (
-    <iframe className='layoutContent_iframe' frameBorder='0' src={plugin.pluginUrl} title={plugin.id}/>
+    <>
+      {plugin && <iframe className='layoutContent_iframe' frameBorder='0' src={plugin.pluginUrl} title={plugin.id}/>}
+    </>
   )
+}
+
+PluginIframe.propTypes = {
+  plugin: PropTypes.any
 }

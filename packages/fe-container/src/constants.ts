@@ -42,3 +42,9 @@ export const COLORS = {
 }
 
 export const MICROLC_QIANKUN_CONTAINER = 'microlc-qiankun-contaier'
+
+export const ERROR_PATH = {
+  INTERNAL_ERROR: '/microlc_internal_error',
+  PAGE_NOT_FOUND: '*',
+  UNAUTHORIZED: '/microlc_unauthorized'
+}
