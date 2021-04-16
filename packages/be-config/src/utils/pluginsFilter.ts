@@ -32,7 +32,7 @@ const userGroupsObjectBuilder = (userGroups: string[]) => {
 
 const buildPluginFunction = (plugin: Plugin) => {
   // eslint-disable-next-line no-new-func
-  return new Function(GROUPS_CONFIGURATION.function.key, `return !!(${plugin.allowedExpression})`)
+  return new Function(GROUPS_CONFIGURATION.function.key, `return !!(${plugin.aclExpression})`)
 }
 
 const evaluatePluginExpression = (userGroupsObject: UserGroupsObject) => {
@@ -44,9 +44,9 @@ const evaluatePluginExpression = (userGroupsObject: UserGroupsObject) => {
 
 export const pluginsFilter = (plugins: Plugin[], userGroups: string[]) => {
   const userGroupsObject = userGroupsObjectBuilder(userGroups)
-  const pluginsWithoutExpression = plugins.filter(plugin => !plugin.allowedExpression)
-  const pluginsWithAllowedExpression = plugins
-    .filter(plugin => plugin.allowedExpression)
+  const pluginsWithoutExpression = plugins.filter(plugin => !plugin.aclExpression)
+  const pluginsWithAclExpression = plugins
+    .filter(plugin => plugin.aclExpression)
     .filter(evaluatePluginExpression(userGroupsObject))
-  return [...pluginsWithoutExpression, ...pluginsWithAllowedExpression]
+  return [...pluginsWithoutExpression, ...pluginsWithAclExpression]
 }

@@ -31,13 +31,13 @@ describe('Plugins filter tests', () => {
       id: '1',
       integrationMode: 'iframe',
       label: 'Plugin 1',
-      allowedExpression: 'groups.admin && groups.ceo',
+      aclExpression: 'groups.admin && groups.ceo',
     }
     const plugins: Plugin[] = [allowedPlugin, {
       id: '2',
       integrationMode: 'iframe',
       label: 'Plugin 2',
-      allowedExpression: '!groups.developer',
+      aclExpression: '!groups.developer',
     }]
     const pluginsFiltered = pluginsFilter(plugins, ['ceo', 'admin', 'developer'])
     expect(pluginsFiltered.length).toBe(1)
@@ -53,13 +53,13 @@ describe('Plugins filter tests', () => {
       id: '2',
       integrationMode: 'iframe',
       label: 'Plugin 2',
-      allowedExpression: '!groups.developer',
+      aclExpression: '!groups.developer',
     }]
     const plugins: Plugin[] = [...allowedPlugins, {
       id: '1',
       integrationMode: 'iframe',
       label: 'Plugin 1',
-      allowedExpression: 'groups.admin && groups.ceo',
+      aclExpression: 'groups.admin && groups.ceo',
     }]
     const pluginsFiltered = pluginsFilter(plugins, ['po', 'reviewer'])
     expect(pluginsFiltered.length).toBe(2)

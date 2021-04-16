@@ -23,7 +23,7 @@ export const pluginSchema = {
       type: 'string',
       description: 'Unique identifier of the plugin',
     },
-    allowedExpression: {
+    aclExpression: {
       type: 'string',
       description: 'Expression to evaluate the users that can access the plugin',
     },
