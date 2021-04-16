@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 import {createBrowserHistory} from 'history'
-import {registerMicroApps, RegistrableApp, start} from 'qiankun'
+import {registerMicroApps, RegistrableApp, start, addErrorHandler} from 'qiankun'
 import {Plugin, User} from '@mia-platform/core'
 
-import {INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
+import {ERROR_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
 import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
 import {hrefStrategy} from '@utils/plugins/strategies/HrefStrategy'
 import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
@@ -75,6 +75,7 @@ export const finish = (user: Partial<User>) => {
       }
     }))
   registerMicroApps(quiankunConfig)
+  addErrorHandler(_ => history.push(ERROR_PATH.INTERNAL_ERROR))
   start()
 }
 

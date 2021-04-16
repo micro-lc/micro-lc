@@ -50,7 +50,7 @@ describe('App test', () => {
           logo: 'logo_url'
         },
         plugins: [{
-          label: 'entry_1',
+          label: 'Href entry',
           id: '1',
           integrationMode: 'href',
           externalLink: {
@@ -59,19 +59,19 @@ describe('App test', () => {
           }
         }, {
           id: 'not-supported',
-          label: 'Href',
+          label: 'iframe entry',
           icon: 'clipboard',
-          integrationMode: 'href',
+          integrationMode: 'iframe',
           pluginRoute: '/iframeTest',
           pluginUrl: 'https://www.google.com/webhp?igu=1'
         }, {
           id: 'plugin-test-3',
-          label: 'IFrame',
+          label: 'Qiankun entry',
           icon: 'clipboard',
           order: 3,
-          integrationMode: 'iframe',
+          integrationMode: 'qiankun',
           pluginRoute: '/iframeTest',
-          pluginUrl: 'https://www.google.com/webhp?igu=1'
+          pluginUrl: '//localhost:8764'
         }]
       })
     nock('http://localhost')
@@ -89,29 +89,40 @@ describe('App test', () => {
     RenderWithReactIntl(<App/>)
   })
 
+  const clickToggle = async () => {
+    const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
+    userEvent.click(toggle)
+  }
+
   it('renders without crashing', async () => {
     expect(await screen.findByTestId('company-logo')).toBeTruthy()
     expect(await screen.findByText('Mocked User')).toBeTruthy()
   })
 
   it('toggle is working', async () => {
-    const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
-
     expect(global.window.document.title).toEqual('Mia Care')
+    await clickToggle()
+    await clickToggle()
     // @ts-ignore
-    expect(screen.getByText('entry_1').parentElement.parentElement.parentElement.classList).not.toContain('opened')
+    expect(screen.getByText('Href entry').parentElement.parentElement.parentElement.classList).not.toContain('opened')
 
-    userEvent.click(toggle)
+    await clickToggle()
     // @ts-ignore
-    expect(screen.getByText('entry_1').parentElement.parentElement.parentElement.classList).toContain('opened')
+    expect(screen.getByText('Href entry').parentElement.parentElement.parentElement.classList).toContain('opened')
 
-    userEvent.click(toggle)
+    await clickToggle()
     // @ts-ignore
-    expect(screen.getByText('entry_1').parentElement.parentElement.parentElement.classList).not.toContain('opened')
+    expect(screen.getByText('Href entry').parentElement.parentElement.parentElement.classList).not.toContain('opened')
   })
 
   it('navigate to first not href plugin', async () => {
     await screen.findByTestId('top-bar-side-menu-toggle')
     expect(window.location.href).toContain('/iframeTest')
+  })
+
+  it('Correctly handle redirect', async () => {
+    await clickToggle()
+    userEvent.click(screen.getByText('Qiankun entry'))
+    expect(window.location.href).toContain('/microlc_internal_error')
   })
 })
