@@ -21,7 +21,7 @@ import {ReactComponent as Error401Logo} from './assets/ErrorImage401.svg'
 export const ErrorPage401: React.FC = () => {
   return (
     <ErrorPageContainer descriptionKeys={['401_description', '401_description_1']} titleKey='401_title'>
-        <Error401Logo/>
-      </ErrorPageContainer>
+      <Error401Logo/>
+    </ErrorPageContainer>
   )
 }

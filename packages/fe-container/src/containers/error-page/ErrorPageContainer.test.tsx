@@ -23,9 +23,12 @@ import {ReactComponent as Error404Logo} from '@components/error-page-404/assets/
 describe('ErrorPageContainer tests', () => {
   it('Test ErrorPage 404 renders', () => {
     RenderWithReactIntl(
-        <ErrorPageContainer descriptionKeys={['404_description', '404_description_1', '404_description_2']} titleKey='404_title'>
-            <Error404Logo/>
-        </ErrorPageContainer>
+      <ErrorPageContainer
+descriptionKeys={['404_description', '404_description_1', '404_description_2']}
+                          titleKey='404_title'
+      >
+        <Error404Logo/>
+      </ErrorPageContainer>
     )
     expect(screen.getByText('PAGE NOT FOUND')).toBeTruthy()
   })

@@ -19,6 +19,7 @@ import {screen} from '@testing-library/react'
 import {ErrorPage404} from '@components/error-page-404/ErrorPage404'
 
 import RenderWithReactIntl from '../../__tests__/utils'
+
 beforeEach(() => {
   RenderWithReactIntl(<ErrorPage404></ErrorPage404>)
 })

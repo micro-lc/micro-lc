@@ -20,8 +20,11 @@ import {ReactComponent as Error404Logo} from '@components/error-page-404/assets/
 
 export const ErrorPage404: React.FC = () => {
   return (
-    <ErrorPageContainer descriptionKeys={['404_description', '404_description_1', '404_description_2']} titleKey='404_title'>
-        <Error404Logo/>
-      </ErrorPageContainer>
+    <ErrorPageContainer
+descriptionKeys={['404_description', '404_description_1', '404_description_2']}
+                        titleKey='404_title'
+    >
+      <Error404Logo/>
+    </ErrorPageContainer>
   )
 }
