@@ -38,7 +38,8 @@ const buildNewConfiguration = (oldConfiguration: Configuration, allowedPlugins: 
 export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Promise<Handler> = async(fastifyInstance) => {
   const configuration: Configuration = await readPluginConfiguration(fastifyInstance)
   return (request, reply) => {
-    const userGroups = request.headers[GROUPS_CONFIGURATION.header.key]?.split(GROUPS_CONFIGURATION.header.separator) || []
+    // @ts-ignore
+    const userGroups = request.headers[fastifyInstance.config.GROUPS_HEADER_KEY]?.split(GROUPS_CONFIGURATION.header.separator) || []
     const allowedPlugins = pluginsFilter(configuration.plugins || [], userGroups)
     const configurationForUser = buildNewConfiguration(configuration, allowedPlugins)
     reply.send(configurationForUser)

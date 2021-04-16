@@ -20,7 +20,6 @@ import http from 'http'
 import {DecoratedFastify} from '@mia-platform/custom-plugin-lib'
 
 import {configurationApiHandlerBuilder} from '../configurationApi'
-import {GROUPS_CONFIGURATION} from '../../constants'
 import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcConfig.json'
 
 describe('Configuration api tests', () => {
@@ -29,6 +28,7 @@ describe('Configuration api tests', () => {
     return {
       config: {
         MICROLC_CONFIGURATION_PATH: path.join(__dirname, '../../__tests__/configurationMocks/', `${configFile}.json`),
+        GROUPS_HEADER_KEY: 'groups',
       },
     } as DecoratedFastify
   }
@@ -38,7 +38,7 @@ describe('Configuration api tests', () => {
   // @ts-ignore
   const requestMock: fastify.FastifyRequest = {
     headers: {
-      [GROUPS_CONFIGURATION.header.key]: 'admin,developer',
+      groups: 'admin,developer',
     },
   }
 
