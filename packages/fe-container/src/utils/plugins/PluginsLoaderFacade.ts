@@ -21,10 +21,7 @@ import {INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
 import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
 import {hrefStrategy} from '@utils/plugins/strategies/HrefStrategy'
 import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
-
-export interface PluginStrategy {
-  handlePluginLoad: () => void
-}
+import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
 
 const registeredPluginsStrategies = new Map<string, PluginStrategy>()
 const registeredPlugins: Plugin[] = []

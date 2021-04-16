@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 import {Plugin} from '@mia-platform/core'
-import {history, PluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {history} from '@utils/plugins/PluginsLoaderFacade'
+import {PluginStrategy} from './PluginStrategy'
 
 export function routeStrategy (plugin: Plugin): PluginStrategy {
   return {

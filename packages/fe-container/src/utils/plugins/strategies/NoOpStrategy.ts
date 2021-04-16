@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {PluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {PluginStrategy} from './PluginStrategy'
 
 export function noOpStrategy (): PluginStrategy {
   return {
