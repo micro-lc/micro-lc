@@ -21,7 +21,7 @@ import './LoadingAnimation.less'
 
 export const LoadingAnimation: React.FC = () => {
   return (
-    <div className='svgContainer' data-testid="svgContainer">
+    <div className='loadingAnimation_svg_container' data-testid="svgContainer">
       <SvgAnimation />
     </div>
   )
