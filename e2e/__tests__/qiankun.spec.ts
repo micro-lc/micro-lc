@@ -17,12 +17,11 @@
 import {expect, test} from '@playwright/test'
 
 import {closeSidemenu, openSideMenu} from '../utils/utils'
-import {burgerSelector} from "../utils/constants";
 
 test('Correctly load qiankun plugin', async ({page}) => {
   await openSideMenu(page)
   await page.click('"Qiankun plugin 1"')
-  await page.$eval(burgerSelector, (element: any) => element.click())
+  await closeSidemenu(page)
   await page.textContent('"Go to other qiankun plugin"')
   const arrivedHere = await page.$('"You arrived here from:"')
   expect(arrivedHere).not.toBeTruthy()
