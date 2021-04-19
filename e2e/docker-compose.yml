@@ -11,7 +11,7 @@ services:
   fe-container:
     image: miaplatform/microlc
     labels:
-      - "traefik.http.routers.fecontainer.rule=PathPrefix(`/microlc`)"
+      - "traefik.http.routers.fecontainer.rule=Host(`localhost`)"
       - "traefik.http.services.fecontainer.loadbalancer.server.port=8080"
   be-config:
     image: miaplatform/microlc-config-manager
@@ -33,5 +33,6 @@ services:
       - ./config/microlcConfig.json:/microlc/config.json
   plugin:
     build: ../example
-    ports:
-      - 8764:8080
+    labels:
+      - "traefik.http.routers.plugin.rule=Host(`127.0.0.1`)"
+      - "traefik.http.services.plugin.loadbalancer.server.port=8080"

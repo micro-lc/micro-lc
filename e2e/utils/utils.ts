@@ -27,3 +27,7 @@ export const openSideMenu = async (page: Page) => {
   await waitMicrolcLoaded(page)
   await page.$eval(burgerSelector, (element: any) => element.click())
 }
+
+export const closeSidemenu = async (page: Page) => {
+  await page.$eval(burgerSelector, (element: any) => element.click())
+}

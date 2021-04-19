@@ -16,7 +16,7 @@
 
 import {expect, test} from '@playwright/test'
 
-import {openSideMenu} from '../utils/utils'
+import {closeSidemenu, openSideMenu} from '../utils/utils'
 import {burgerSelector} from "../utils/constants";
 
 test('Correctly load qiankun plugin', async ({page}) => {
@@ -31,6 +31,7 @@ test('Correctly load qiankun plugin', async ({page}) => {
 test('Correctly load another qiankun plugin', async ({page}) => {
   await openSideMenu(page)
   await page.click('"Qiankun plugin 1"')
+  await closeSidemenu(page)
   await page.click('"Go to other qiankun plugin"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun1"')
@@ -39,6 +40,7 @@ test('Correctly load another qiankun plugin', async ({page}) => {
 test('Correctly go to another qiankun plugin', async ({page}) => {
   await openSideMenu(page)
   await page.click('"Qiankun plugin 2"')
+  await closeSidemenu(page)
   await page.click('"Go to other qiankun plugin"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun2"')
@@ -47,6 +49,7 @@ test('Correctly go to another qiankun plugin', async ({page}) => {
 test('Correctly switch from and to another qiankun plugin', async ({page}) => {
   await openSideMenu(page)
   await page.click('"Qiankun plugin 2"')
+  await closeSidemenu(page)
   await page.click('"Go to other qiankun plugin"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun2"')
