@@ -12,21 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     #if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' }}
     steps:
+      - uses: actions/checkout@v2
+      - uses: microsoft/playwright-github-action@v1
+      - name: 'Install dependencies'
+        run: yarn install --frozen-lockfile
       - name: 'Wait for status checks'
         id: waitforstatuschecks
         uses: "WyriHaximus/github-action-wait-for-status@v1"
         with:
           ignoreActions: e2e
+          checkInterval: 30
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      - uses: actions/checkout@v2
-        if: steps.waitforstatuschecks.outputs.status == 'success'
       - name: 'Bootstrap microlc'
         if: steps.waitforstatuschecks.outputs.status == 'success'
         run: docker-compose -f e2e/docker-compose.yml up -d
-      - name: 'Install dependencies'
-        if: steps.waitforstatuschecks.outputs.status == 'success'
-        run: yarn install
       - name: 'Run PlayWright'
         if: steps.waitforstatuschecks.outputs.status == 'success'
         run: yarn e2e
