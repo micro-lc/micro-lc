@@ -18,6 +18,6 @@ RUN touch ./off \
 
 WORKDIR /usr/static
 
-COPY ./build .
+COPY --from=builder /builder/build .
 
 USER nginx

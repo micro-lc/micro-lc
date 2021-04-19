@@ -1,7 +1,6 @@
 {
   "edit": "Edit src/App.js and save to reload",
   "learn": "Learn React",
-  "qiankun1": "Go to plugin qiuankun 1",
-  "qiankun2": "Go to plugin qiuankun 2",
+  "otherPlugin": "Go to other qiankun plugin",
   "arrivedFrom": "You arrived here from: "
 }

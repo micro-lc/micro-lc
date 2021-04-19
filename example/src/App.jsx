@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
 import {FormattedMessage} from 'react-intl'
 
 import logo from './logo.svg'
@@ -22,17 +21,12 @@ import './App.css'
 
 function App () {
 
-  const history = useHistory()
-  const location = useLocation()
-  const searchParams = new URLSearchParams(location.search);
+  let searchParams = new URLSearchParams(window.location.search);
 
-  const goToPlugin = (pluginRoute, from) => {
-    return () => {
-      history.push({
-        pathname: `/${pluginRoute}`,
-        search: `?from=${from}`
-      })
-    }
+  const goToPlugin = () => {
+    const [pluginRoute, from] = window.location.pathname.endsWith('qiankun1') ? ['qiankun2', 'qiankun1'] : ['qiankun1', 'qiankun2']
+    window.history.pushState({}, `/${pluginRoute}`, `/${pluginRoute}?from=${from}`)
+    searchParams = new URLSearchParams(window.location.search);
   }
 
   return (
@@ -54,11 +48,8 @@ function App () {
           <FormattedMessage id='arrivedFrom' />
           <p>{searchParams.get('from')}</p>
         </div>}
-        <button onClick={goToPlugin('qiankun1', 'qiankun2')}>
-          <FormattedMessage id='qiankun1' />
-        </button>
-        <button onClick={goToPlugin('qiankun1', 'qiankun2')}>
-          <FormattedMessage id='qiankun2' />
+        <button onClick={goToPlugin}>
+          <FormattedMessage id='otherPlugin' />
         </button>
       </header>
     </div>

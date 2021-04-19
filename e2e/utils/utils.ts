@@ -22,3 +22,8 @@ export const waitMicrolcLoaded = async (page: Page) => {
   await page.goto(baseUrl)
   await page.waitForSelector(burgerSelector, {state: 'attached'})
 }
+
+export const openSideMenu = async (page: Page) => {
+  await waitMicrolcLoaded(page)
+  await page.$eval(burgerSelector, (element: any) => element.click())
+}

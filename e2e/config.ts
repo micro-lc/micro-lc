@@ -30,4 +30,4 @@ const options: PlaywrightOptions = {
 
 test.runWith(new ChromiumEnv(options), {tag: 'chromium'});
 test.runWith(new FirefoxEnv(options), {tag: 'firefox'});
-test.runWith(new WebKitEnv(options), {tag: 'webkit'});
+// test.runWith(new WebKitEnv(options), {tag: 'webkit'});
