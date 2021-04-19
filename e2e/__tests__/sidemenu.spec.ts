@@ -1,7 +1,7 @@
 import {expect, test} from '@playwright/test'
 
-import {baseUrl, burgerSelector, firstValidPlugin} from './constants'
-import {waitMicrolcLoaded} from './utils'
+import {baseUrl, burgerSelector, firstValidPlugin} from '../utils/constants'
+import {waitMicrolcLoaded} from '../utils/utils'
 
 test('Sidemenu has loaded plugins correctly', async ({page}) => {
   await waitMicrolcLoaded(page)

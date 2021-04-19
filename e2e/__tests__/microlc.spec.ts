@@ -1,7 +1,7 @@
 import {expect, test} from '@playwright/test'
 
-import {firstValidPlugin} from './constants'
-import {waitMicrolcLoaded} from "./utils";
+import {firstValidPlugin} from '../utils/constants'
+import {waitMicrolcLoaded} from "../utils/utils";
 
 
 test('Navigate to first valid plugin', async ({page}) => {

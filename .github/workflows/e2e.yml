@@ -23,7 +23,7 @@ jobs:
         if: steps.waitforstatuschecks.outputs.status == 'success'
       - name: 'Bootstrap microlc'
         if: steps.waitforstatuschecks.outputs.status == 'success'
-        run: cd /e2e && docker-compose up
+        run: docker-compose -f e2e/docker-compose.yml up -d
       - name: 'Run PlayWright'
         if: steps.waitforstatuschecks.outputs.status == 'success'
         run: npm run e2e
