@@ -1,0 +1,33 @@
+version: "3"
+services:
+  reverse-proxy:
+    image: traefik:v2.4
+    command: --api.insecure=true --providers.docker
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  fe-container:
+    image: miaplatform/microlc
+    labels:
+      - "traefik.http.routers.fecontainer.rule=Host(`localhost`)"
+      - "traefik.http.services.fecontainer.loadbalancer.server.port=8080"
+  be-config:
+    image: miaplatform/microlc-config-manager
+    environment:
+      SERVICE_PREFIX: /api/v1/microlc/
+      AUTHENTICATION_CONFIGURATION_PATH: /microlc/auth.json
+      MICROLC_CONFIGURATION_PATH: /microlc/config.json
+      USERID_HEADER_KEY: miauserid
+      GROUPS_HEADER_KEY: miausergroups
+      CLIENTTYPE_HEADER_KEY: client-type
+      BACKOFFICE_HEADER_KEY: isbackoffice
+      USER_PROPERTIES_HEADER_KEY: miauserproperties
+      MICROSERVICE_GATEWAY_SERVICE_NAME: microservice-gateway
+    labels:
+      - "traefik.http.routers.beconfig.rule=PathPrefix(`/api`)"
+      - "traefik.http.services.beconfig.loadbalancer.server.port=3000"
+    volumes:
+      - ./config/auth.json:/microlc/auth.json
+      - ./config/microlcConfig.json:/microlc/config.json

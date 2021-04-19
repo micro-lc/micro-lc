@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js be-config CI
 
 env:
   cache-name: cache-build
