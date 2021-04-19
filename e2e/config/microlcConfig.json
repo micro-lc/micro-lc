@@ -34,6 +34,15 @@
         "url": "https://google.it",
         "sameWindow": false
       }
+    },
+    {
+      "id": "plugin-test-3",
+      "label": "IFrame",
+      "icon": "fab fa-google",
+      "order": 4,
+      "integrationMode": "iframe",
+      "pluginRoute": "/iframe",
+      "pluginUrl": "https://www.google.com/webhp?igu=1"
     }
   ]
 }

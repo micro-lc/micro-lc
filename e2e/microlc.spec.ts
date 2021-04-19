@@ -1,8 +1,10 @@
-import {test} from '@playwright/test'
+import {expect, test} from '@playwright/test'
 
-import {baseUrl, burgerSelector} from './constants'
+import {firstValidPlugin} from './constants'
+import {waitMicrolcLoaded} from "./utils";
 
 
-test('Navigation to first plugin', async ({page}) => {
-  await page.goto(baseUrl)
+test('Navigate to first valid plugin', async ({page}) => {
+  await waitMicrolcLoaded(page)
+  expect(page.url()).toBe(firstValidPlugin)
 })

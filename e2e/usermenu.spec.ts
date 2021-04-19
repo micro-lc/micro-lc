@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test'
+import {expect, test} from '@playwright/test'
 
-import {baseUrl, burgerSelector, userMenuSelector} from "./constants";
+import {userMenuSelector} from './constants'
+import {waitMicrolcLoaded} from './utils'
 
 test('User menu is not in page', async ({page}) => {
-  await page.goto(baseUrl)
-  await page.waitForSelector(burgerSelector, {state: 'attached'})
+  await waitMicrolcLoaded(page)
   const userMenu = await page.$(userMenuSelector)
   expect(userMenu).not.toBeTruthy()
 })
