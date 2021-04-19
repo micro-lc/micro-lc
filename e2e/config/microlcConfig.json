@@ -23,6 +23,17 @@
         "url": "https://google.it",
         "sameWindow": true
       }
+    },
+    {
+      "id": "plugin-test-1",
+      "label": "Href different window",
+      "icon": "far fa-window-restore",
+      "order": 1,
+      "integrationMode": "href",
+      "externalLink": {
+        "url": "https://google.it",
+        "sameWindow": false
+      }
     }
   ]
 }
