@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 import {finish, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
-import {registerMicroApps, start} from 'qiankun'
+import {addErrorHandler, registerMicroApps, start} from 'qiankun'
 
 jest.mock('qiankun', () => ({
   start: jest.fn(),
-  registerMicroApps: jest.fn()
+  registerMicroApps: jest.fn(),
+  addErrorHandler: jest.fn()
 }))
 
 describe('Test plugin loading', () => {
@@ -112,6 +113,7 @@ describe('Test plugin loading', () => {
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     finish({})
     expect(start).toHaveBeenCalled()
+    expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([])
   })
 
@@ -129,10 +131,11 @@ describe('Test plugin loading', () => {
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     finish({})
     expect(start).toHaveBeenCalled()
+    expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([{
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
-      container: '#plugin-1',
+      container: '#microlc-qiankun-contaier',
       activeRule: '/qiankunTest',
       props: {
         basePath: '',
@@ -157,6 +160,7 @@ describe('Test plugin loading', () => {
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
     finish({})
     expect(start).toHaveBeenCalled()
+    expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalled()
   })
 })

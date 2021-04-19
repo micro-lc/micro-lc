@@ -19,7 +19,8 @@ import {Plugin} from '@mia-platform/core'
 import classNames from 'classnames'
 
 import {MenuOpenedContext} from '@contexts/MenuOpened.context'
-import {history, isPluginLoaded, PluginStrategy, retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {history, isPluginLoaded, retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
 
 import './SideMenu.less'
 

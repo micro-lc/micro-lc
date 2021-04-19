@@ -24,6 +24,11 @@ const ThrowableComponent: React.FC = () => {
   throw new Error('Error that must be catched in boundary!')
 }
 
+const ThrowableWithErrorComponent: React.FC<{errorStatusCode: number}> = ({errorStatusCode}) => {
+  // eslint-disable-next-line no-throw-literal
+  throw {errorStatusCode}
+}
+
 describe('MicrolcErrorBoundary tests', () => {
   it('Show correctly children', () => {
     RenderWithReactIntl(
@@ -32,10 +37,10 @@ describe('MicrolcErrorBoundary tests', () => {
       </MicrolcErrorBoundary>
     )
     expect(screen.getByText('Everything is ok')).toBeTruthy()
-    expect(screen.queryByText('Something went wrong:')).not.toBeTruthy()
+    expect(screen.queryByText('Oops! Something went wrong.')).not.toBeTruthy()
   })
 
-  it('Handle correctly errors', () => {
+  it('Handle correctly errors without errorStatusCode as 500', () => {
     RenderWithReactIntl(
       <MicrolcErrorBoundary>
         <p>{'Everything is ok'}</p>
@@ -43,7 +48,43 @@ describe('MicrolcErrorBoundary tests', () => {
       </MicrolcErrorBoundary>
     )
     expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
-    expect(screen.getByText('Something went wrong:')).toBeTruthy()
-    expect(screen.getByText('Error that must be catched in boundary!')).toBeTruthy()
+    expect(screen.getByText('Oops! Something went wrong.')).toBeTruthy()
+    expect(screen.getByText('Our team has been informed and is working to fix the problem.')).toBeTruthy()
+  })
+
+  it('Handle correctly errors with unknown errorStatusCode as 500', () => {
+    RenderWithReactIntl(
+      <MicrolcErrorBoundary>
+        <p>{'Everything is ok'}</p>
+        <ThrowableWithErrorComponent errorStatusCode={403}/>
+      </MicrolcErrorBoundary>
+    )
+    expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
+    expect(screen.getByText('Oops! Something went wrong.')).toBeTruthy()
+    expect(screen.getByText('Our team has been informed and is working to fix the problem.')).toBeTruthy()
+  })
+
+  it('Handle correctly errors with errorStatusCode as 404', () => {
+    RenderWithReactIntl(
+      <MicrolcErrorBoundary>
+        <p>{'Everything is ok'}</p>
+        <ThrowableWithErrorComponent errorStatusCode={404}/>
+      </MicrolcErrorBoundary>
+    )
+    expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
+    expect(screen.getByText('Oh No! Something is missing.')).toBeTruthy()
+    expect(screen.getByText('PAGE NOT FOUND')).toBeTruthy()
+  })
+
+  it('Handle correctly errors with errorStatusCode as 401', () => {
+    RenderWithReactIntl(
+      <MicrolcErrorBoundary>
+        <p>{'Everything is ok'}</p>
+        <ThrowableWithErrorComponent errorStatusCode={401}/>
+      </MicrolcErrorBoundary>
+    )
+    expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
+    expect(screen.getByText('Unauthorized access')).toBeTruthy()
+    expect(screen.getByText('It would seem that you don\'t have permission to access this page, but don\'t')).toBeTruthy()
   })
 })

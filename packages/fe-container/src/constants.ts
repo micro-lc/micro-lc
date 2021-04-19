@@ -38,5 +38,13 @@ export const INTEGRATION_METHODS = {
 
 export const COLORS = {
   primaryColor: '--microlc-primary-color',
-  menuEntrySelectedBackgroundColor: '--microlc-menu-entry-selected-bg-color'
+  menuEntrySelectedBackgroundColor: '--microlc-primary-color-tint-89'
+}
+
+export const MICROLC_QIANKUN_CONTAINER = 'microlc-qiankun-contaier'
+
+export const ERROR_PATH = {
+  INTERNAL_ERROR: '/microlc_internal_error',
+  PAGE_NOT_FOUND: '*',
+  UNAUTHORIZED: '/microlc_unauthorized'
 }

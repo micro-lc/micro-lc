@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {ExternalLink} from '@mia-platform/core'
-import {PluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {PluginStrategy} from './PluginStrategy'
 
 export function hrefStrategy (externalLink?: ExternalLink): PluginStrategy {
   return {
