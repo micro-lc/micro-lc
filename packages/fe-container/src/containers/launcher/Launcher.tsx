@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React, {useState} from 'react'
-import {Layout, Skeleton} from 'antd'
+import {Layout} from 'antd'
 import PropTypes from 'prop-types'
 
 import {TopBar} from '@components/top-bar/TopBar'
@@ -24,6 +24,7 @@ import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {AppState} from '@hooks/useAppData/useAppData'
 import {SideMenu} from '@components/side-menu/SideMenu'
 import {UserContextProvider} from '@contexts/User.context'
+import {LoadingAnimation} from '@components/loading-animation/LoadingAnimation'
 
 import './Launcher.less'
 
@@ -32,7 +33,7 @@ export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) =
     <>
       {
         isLoading ?
-          <Skeleton.Input active className='launcher_skeleton'/> :
+        <LoadingAnimation /> :
           <LoadedLauncher configuration={configuration} user={user}/>
       }
     </>
