@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-import {Page} from 'playwright'
+import React from 'react'
 
-import {baseUrl, burgerSelector} from './constants'
+import {shallowWithIntl} from '../utilsTests'
+import App from '../App'
 
-export const waitMicrolcLoaded = async (page: Page) => {
-  await page.goto(baseUrl)
-  await page.waitForSelector(burgerSelector, {state: 'attached'})
-}
+it('renders without crashing', () => {
+  const element = shallowWithIntl(<App />)
+  expect(element.length).toEqual(1)
+})
