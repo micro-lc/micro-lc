@@ -33,7 +33,7 @@ export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) =
     <>
       {
         isLoading ?
-        <LoadingAnimation /> :
+            <LoadingAnimation /> :
           <LoadedLauncher configuration={configuration} user={user}/>
       }
     </>

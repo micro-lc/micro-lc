@@ -15,6 +15,7 @@
  */
 
 import React from 'react'
+
 import {ReactComponent as SvgAnimation} from './assets/LoadingAnimation.svg'
 import './LoadingAnimation.less'
 

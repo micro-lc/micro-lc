@@ -18,8 +18,8 @@ import {screen} from '@testing-library/react'
 import {LoadingAnimation} from './LoadingAnimation'
 import RenderWithReactIntl from '../../__tests__/utils'
 
-describe('ErrorPageContainer tests', () => {
-  it('Test ErrorPage 404 renders', () => {
+describe('Loading Page tests', () => {
+  it('Test LoadingPage renders', () => {
     RenderWithReactIntl(
     <LoadingAnimation />
     )
