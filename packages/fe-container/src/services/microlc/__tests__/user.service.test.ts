@@ -64,6 +64,17 @@ describe('User service tests', () => {
       })
   })
 
+  it('return empty user logout response for http ok', (done) => {
+    const mockedResponse = nock('http://localhost').post(logOutUrl).reply(200)
+    logOutUserBuilder(logOutUrl)
+    logOutUser()
+      .subscribe((response) => {
+        expect(response).toStrictEqual(true)
+        mockedResponse.done()
+        done()
+      })
+  })
+
   it('Empty observable for invalid url', (done) => {
     retrieveUser(undefined).subscribe((retrievedUser) => {
       expect(retrievedUser).toStrictEqual({})
