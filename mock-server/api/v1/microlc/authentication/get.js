@@ -3,6 +3,7 @@ module.exports = (request, response) => {
     .delay(1000)
     .send({
       isAuthNecessary: true,
-      userInfoUrl: '/api/v1/microlc/user'
+      userInfoUrl: '/api/v1/microlc/user',
+      userLogoutUrl: '/api/v1/microlc/user/logout'
     })
 }
