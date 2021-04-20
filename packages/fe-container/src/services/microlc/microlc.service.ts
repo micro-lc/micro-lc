@@ -17,9 +17,9 @@ import {defer, forkJoin, Observable, of} from 'rxjs'
 import {Authentication, Configuration, User} from '@mia-platform/core'
 
 import {retrieveConfiguration} from '@services/microlc/configuration.service'
-import {retrieveUser} from '@services/microlc/user.service'
+import {logOutUserBuilder, retrieveUser} from '@services/microlc/user.service'
 import {retrieveAuthentication} from '@services/microlc/authentication.service'
-import {switchMap} from 'rxjs/operators'
+import {switchMap, tap} from 'rxjs/operators'
 
 type AppData = {
   user: Partial<User>,
@@ -34,6 +34,7 @@ const retrieveConditionalUser = (authenticationConfiguration: Partial<Authentica
 
 export const retrieveAppData: () => Observable<AppData> = () => {
   return retrieveAuthentication().pipe(
+    tap(authenticationConfiguration => logOutUserBuilder(authenticationConfiguration.userLogoutUrl)),
     switchMap(authenticationConfiguration => forkJoin({
       user: retrieveConditionalUser(authenticationConfiguration),
       configuration: retrieveConfiguration()

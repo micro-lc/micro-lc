@@ -15,13 +15,12 @@
  */
 import nock from 'nock'
 
-import {logOutUser, retrieveUser} from '@services/microlc/user.service'
-import {LOGOUT_USER_SERVICE} from '@constants'
+import {logOutUser, logOutUserBuilder, retrieveUser} from '@services/microlc/user.service'
 import {User} from '@mia-platform/core'
 
 describe('User service tests', () => {
   const userUrl = '/api/v1/microlc/user'
-  const logOutUrl = `${LOGOUT_USER_SERVICE.BASE_URL}${LOGOUT_USER_SERVICE.ENDPOINT}`
+  const logOutUrl = '/api/v1/microlc/user/logout'
 
   beforeAll(() => {
     nock.cleanAll()
@@ -56,7 +55,7 @@ describe('User service tests', () => {
 
   it('return empty user logout response for http errors', (done) => {
     const mockedResponse = nock('http://localhost').post(logOutUrl).reply(500)
-
+    logOutUserBuilder(logOutUrl)
     logOutUser()
       .subscribe((response) => {
         expect(response).toStrictEqual(false)
