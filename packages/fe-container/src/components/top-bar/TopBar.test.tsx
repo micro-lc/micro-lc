@@ -20,6 +20,7 @@ import userEvent from '@testing-library/user-event'
 import {TopBar} from './TopBar'
 import RenderWithReactIntl from '../../__tests__/utils'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
+import {ConfigurationProvider} from '@contexts/Configuration.context'
 
 describe('TopBar tests', function () {
   it('TopBar is working', () => {
@@ -39,11 +40,39 @@ describe('TopBar tests', function () {
   it('Closed TopBar is opening', () => {
     const mockBurgerClick = jest.fn(isToggled => {
     })
+    const theming = {
+      header: {
+        pageTitle: 'Mia Care',
+        favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
+      },
+      logo: {
+        alt: 'Mia Care',
+        url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
+      },
+      variables: {
+        primaryColor: 'red'
+      }
+    }
 
     RenderWithReactIntl(
-      <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
-        <TopBar/>
-      </MenuOpenedProvider>
+
+      <ConfigurationProvider value={{
+        theming,
+        plugins: [{
+          id: 'qiankun-test',
+          label: 'Qiankun plugin 1',
+          icon: 'fab fa-react',
+          order: 3,
+          integrationMode: 'qiankun',
+          pluginRoute: '/qiankun',
+          pluginUrl: '//localhost:8764'
+        }]
+      }}
+      >
+        <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
+          <TopBar/>
+        </MenuOpenedProvider>
+      </ConfigurationProvider>
     )
     const toggle = screen.getByTestId('top-bar-side-menu-toggle')
     userEvent.click(toggle)
@@ -54,10 +83,39 @@ describe('TopBar tests', function () {
     const mockBurgerClick = jest.fn(isToggled => {
     })
 
+    const theming = {
+      header: {
+        pageTitle: 'Mia Care',
+        favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
+      },
+      logo: {
+        alt: 'Mia Care',
+        url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
+      },
+      variables: {
+        primaryColor: 'red'
+      }
+    }
+
     RenderWithReactIntl(
-      <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>
-        <TopBar/>
-      </MenuOpenedProvider>
+
+      <ConfigurationProvider value={{
+        theming,
+        plugins: [{
+          id: 'qiankun-test',
+          label: 'Qiankun plugin 1',
+          icon: 'fab fa-react',
+          order: 3,
+          integrationMode: 'qiankun',
+          pluginRoute: '/qiankun',
+          pluginUrl: '//localhost:8764'
+        }]
+      }}
+      >
+        <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>
+          <TopBar/>
+        </MenuOpenedProvider>
+      </ConfigurationProvider>
     )
     const toggle = screen.getByTestId('top-bar-side-menu-toggle')
     userEvent.click(toggle)

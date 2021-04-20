@@ -16,6 +16,8 @@
 import React, {useContext} from 'react'
 
 import {BurgerIcon} from '@components/burger-icon/BurgerIcon'
+import {Divider} from 'antd'
+import {HelpIcon} from '@components/help-icon/HelpIcon'
 import {ConfigurationContext} from '@contexts/Configuration.context'
 import {UserMenu} from '@components/user-menu/UserMenu'
 
@@ -25,20 +27,25 @@ import {UserContext} from '@contexts/User.context'
 export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
   const user = useContext(UserContext)
+  const mustShowBurgerIcon = (configuration?.plugins || []).length > 0
 
   return (
     <div className='topBar_container'>
-      <BurgerIcon/>
+      {mustShowBurgerIcon && <BurgerIcon />}
       <img
-        alt={configuration?.theming?.logo.alt || 'Logo'}
+        alt={configuration.theming?.logo.alt || 'Logo'}
         className='logo'
         data-testid='company-logo'
-        src={configuration?.theming?.logo.url}
+        src={configuration.theming?.logo.url}
       />
-      <div className='topBar_userMenu'>
-        {
-          user.name && <UserMenu {...user}/>
-        }
+      <div className = 'topBar_rightSide'>
+        <HelpIcon/>
+        <Divider className='topBar_divider' type="vertical"/>
+        <div className='topBar_userMenu'>
+          {
+            user.name && <UserMenu {...user}/>
+          }
+        </div>
       </div>
     </div>
   )
