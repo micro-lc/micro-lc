@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 import React, {useContext} from 'react'
+import {Divider} from 'antd'
 
 import {BurgerIcon} from '@components/burger-icon/BurgerIcon'
-import {Divider} from 'antd'
 import {HelpIcon} from '@components/help-icon/HelpIcon'
 import {ConfigurationContext} from '@contexts/Configuration.context'
 import {UserMenu} from '@components/user-menu/UserMenu'
+import {UserContext} from '@contexts/User.context'
 
 import './TopBar.less'
-import {UserContext} from '@contexts/User.context'
 
 export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
@@ -40,12 +40,13 @@ export const TopBar: React.FC = () => {
       />
       <div className = 'topBar_rightSide'>
         <HelpIcon/>
-        <Divider className='topBar_divider' type="vertical"/>
-        <div className='topBar_userMenu'>
-          {
-            user.name && <UserMenu {...user}/>
-          }
-        </div>
+         {
+            user.name &&
+            <div className = 'topBar_rightSide'>
+              <Divider className='topBar_divider' type="vertical"/>
+              <UserMenu {...user}/>
+            </div>
+         }
       </div>
     </div>
   )

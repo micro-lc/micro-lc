@@ -23,6 +23,20 @@ import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 
 describe('TopBar tests', function () {
+  const theming = {
+    header: {
+      pageTitle: 'Mia Care',
+      favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
+    },
+    logo: {
+      alt: 'Mia Care',
+      url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
+    },
+    variables: {
+      primaryColor: 'red'
+    }
+  }
+
   it('TopBar is working', () => {
     RenderWithReactIntl(
       <MenuOpenedProvider value={{
@@ -40,19 +54,6 @@ describe('TopBar tests', function () {
   it('Closed TopBar is opening', () => {
     const mockBurgerClick = jest.fn(isToggled => {
     })
-    const theming = {
-      header: {
-        pageTitle: 'Mia Care',
-        favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
-      },
-      logo: {
-        alt: 'Mia Care',
-        url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
-      },
-      variables: {
-        primaryColor: 'red'
-      }
-    }
 
     RenderWithReactIntl(
 
@@ -82,20 +83,6 @@ describe('TopBar tests', function () {
   it('Open TopBar is closing', () => {
     const mockBurgerClick = jest.fn(isToggled => {
     })
-
-    const theming = {
-      header: {
-        pageTitle: 'Mia Care',
-        favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
-      },
-      logo: {
-        alt: 'Mia Care',
-        url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
-      },
-      variables: {
-        primaryColor: 'red'
-      }
-    }
 
     RenderWithReactIntl(
 

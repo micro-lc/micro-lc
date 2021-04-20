@@ -17,10 +17,11 @@ import React from 'react'
 
 import './HelpIcon.less'
 
+const clickHandler = () => {
+  window.open('https://docs.mia-platform.eu/docs/business_suite/microlc/overview')
+}
+
 export const HelpIcon: React.FC = () => {
-  const clickHandler = () => {
-    window.open('https://docs.mia-platform.eu/docs/business_suite/microlc/overview')
-  }
   return (
     <div className='help_button_container' data-testid='help_button_test' onClick={clickHandler}>
         <i className='topBar_documentationLink fas fa-question-circle fa-lg'/>
