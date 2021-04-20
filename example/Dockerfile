@@ -3,6 +3,8 @@ COPY . /builder
 WORKDIR /builder
 RUN yarn install && yarn build
 
+########################################################################################################################
+
 FROM nginx:1.17.2-alpine as build
 
 LABEL name="mia_template_service_name_placeholder" \
