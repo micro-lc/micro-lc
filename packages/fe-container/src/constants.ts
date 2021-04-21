@@ -31,6 +31,8 @@ export const INTEGRATION_METHODS = {
   QIANKUN: 'qiankun'
 }
 
+export const DOCUMENTATION_URL = 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+
 export const COLORS = {
   primaryColor: '--microlc-primary-color',
   menuEntrySelectedBackgroundColor: '--microlc-primary-color-tint-89'
