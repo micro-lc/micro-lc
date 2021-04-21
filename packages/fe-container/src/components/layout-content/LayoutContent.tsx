@@ -21,7 +21,7 @@ import PropTypes from 'prop-types'
 
 import {findCurrentPlugin, history} from '@utils/plugins/PluginsLoaderFacade'
 import {ConfigurationContext} from '@contexts/Configuration.context'
-import {ERROR_PATH, MICROLC_QIANKUN_CONTAINER} from '@constants'
+import {ERROR_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
 import {ErrorPage500} from '@components/error-page-500/ErrorPage500'
 import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
 import {ErrorPage404} from '@components/error-page-404/ErrorPage404'
@@ -77,7 +77,7 @@ const PluginIframe: React.FC<PluginIframeProps> = ({plugin}) => {
   return (
     <>
       {
-        plugin &&
+        plugin?.integrationMode === INTEGRATION_METHODS.IFRAME &&
         <iframe className='layoutContent_iframe' frameBorder='0' src={plugin.pluginUrl} title={plugin.id}/>
       }
     </>
