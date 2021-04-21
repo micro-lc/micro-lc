@@ -22,8 +22,8 @@ jest.mock('history', () => ({
   }))
 }))
 
-describe('RouteStrategy tests', (done) => {
-  it('Handle pluginRoute', () => {
+describe('RouteStrategy tests', () => {
+  it('Handle pluginRoute', (done) => {
     routeStrategy({
       id: 'plugin-test-3',
       label: 'IFrame',
@@ -40,8 +40,12 @@ describe('RouteStrategy tests', (done) => {
     }, 10)
   })
 
-  it('Handle invalid plugin', () => {
+  it('Handle invalid plugin', (done) => {
     routeStrategy({id: '', label: '', integrationMode: 'iframe'}).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('')
+    setTimeout(() => {
+      expect(history.push).toHaveBeenCalledWith('')
+      done()
+    }, 10)
   })
 })
