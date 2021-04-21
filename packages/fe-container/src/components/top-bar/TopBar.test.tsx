@@ -21,6 +21,7 @@ import {TopBar} from './TopBar'
 import RenderWithReactIntl from '../../__tests__/utils'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
+import {Plugin} from '@mia-platform/core'
 
 describe('TopBar tests', function () {
   const theming = {
@@ -36,6 +37,16 @@ describe('TopBar tests', function () {
       primaryColor: 'red'
     }
   }
+
+  const plugins: Plugin [] = [{
+    id: 'qiankun-test',
+    label: 'Qiankun plugin 1',
+    icon: 'fab fa-react',
+    order: 3,
+    integrationMode: 'qiankun',
+    pluginRoute: '/qiankun',
+    pluginUrl: '//localhost:8764'
+  }]
 
   it('TopBar is working', () => {
     RenderWithReactIntl(
@@ -59,15 +70,7 @@ describe('TopBar tests', function () {
 
       <ConfigurationProvider value={{
         theming,
-        plugins: [{
-          id: 'qiankun-test',
-          label: 'Qiankun plugin 1',
-          icon: 'fab fa-react',
-          order: 3,
-          integrationMode: 'qiankun',
-          pluginRoute: '/qiankun',
-          pluginUrl: '//localhost:8764'
-        }]
+        plugins
       }}
       >
         <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
@@ -88,15 +91,7 @@ describe('TopBar tests', function () {
 
       <ConfigurationProvider value={{
         theming,
-        plugins: [{
-          id: 'qiankun-test',
-          label: 'Qiankun plugin 1',
-          icon: 'fab fa-react',
-          order: 3,
-          integrationMode: 'qiankun',
-          pluginRoute: '/qiankun',
-          pluginUrl: '//localhost:8764'
-        }]
+        plugins
       }}
       >
         <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>
