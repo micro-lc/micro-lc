@@ -27,7 +27,7 @@ import './TopBar.less'
 export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
   const user = useContext(UserContext)
-  const mustShowBurgerIcon = (configuration?.plugins || []).length > 0
+  const mustShowBurgerIcon = (configuration?.plugins || []).length > 1
 
   return (
     <div className='topBar_container'>

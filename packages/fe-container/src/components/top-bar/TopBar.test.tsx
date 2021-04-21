@@ -46,6 +46,15 @@ describe('TopBar tests', function () {
     integrationMode: 'qiankun',
     pluginRoute: '/qiankun',
     pluginUrl: '//localhost:8764'
+  },
+  {
+    id: 'qiankun-test2',
+    label: 'Qiankun plugin 2',
+    icon: 'fab fa-react',
+    order: 3,
+    integrationMode: 'qiankun',
+    pluginRoute: '/qiankun',
+    pluginUrl: '//localhost:8764'
   }]
 
   it('TopBar is working', () => {
