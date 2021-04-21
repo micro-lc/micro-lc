@@ -1,4 +1,4 @@
-@import '../../styles/_variables';
+@import "../../styles/_variables";
 
 .topBar_container {
   height: @top-bar-height;
@@ -9,7 +9,15 @@
     max-height: 90%;
   }
 
-  .topBar_userMenu {
+  .ant-divider-vertical {
+    height: 2em;
+    margin: 15px;
+  }
+
+  .topBar_rightSide {
+    max-height: 100%;
+    display: flex;
+    align-items: center;
     margin-left: auto;
   }
 }

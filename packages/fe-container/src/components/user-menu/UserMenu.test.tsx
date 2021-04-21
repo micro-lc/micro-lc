@@ -20,12 +20,11 @@ import nock from 'nock'
 
 import RenderWithReactIntl from '../../__tests__/utils'
 import {UserMenu} from '@components/user-menu/UserMenu'
-import {LOGOUT_USER_SERVICE} from '@constants'
 
 nock.disableNetConnect()
 
 describe('UserMenu tests', () => {
-  const logoutUrl = `${LOGOUT_USER_SERVICE.BASE_URL}${LOGOUT_USER_SERVICE.ENDPOINT}`
+  const logoutUrl = '/api/v1/microlc/user/logout'
 
   it('Render without crash', () => {
     RenderWithReactIntl(<UserMenu/>)

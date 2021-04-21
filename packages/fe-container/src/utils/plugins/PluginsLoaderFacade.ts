@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 import {createBrowserHistory} from 'history'
-import {registerMicroApps, RegistrableApp, start} from 'qiankun'
+import {addErrorHandler, registerMicroApps, RegistrableApp, start} from 'qiankun'
 import {Plugin, User} from '@mia-platform/core'
 
-import {INTEGRATION_METHODS} from '@constants'
+import {ERROR_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
 import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
 import {hrefStrategy} from '@utils/plugins/strategies/HrefStrategy'
 import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
-
-export interface PluginStrategy {
-  handlePluginLoad: () => void
-}
+import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
 
 const registeredPluginsStrategies = new Map<string, PluginStrategy>()
 const registeredPlugins: Plugin[] = []
@@ -47,7 +44,8 @@ export const findCurrentPlugin = () => {
 }
 
 export const isCurrentPluginLoaded = () => {
-  return findCurrentPlugin() !== undefined
+  const isErrorPage = window.location.pathname.endsWith(ERROR_PATH.INTERNAL_ERROR) || window.location.pathname.endsWith(ERROR_PATH.UNAUTHORIZED)
+  return isErrorPage || findCurrentPlugin() !== undefined
 }
 
 const strategyBuilder = (plugin: Plugin) => {
@@ -70,7 +68,7 @@ export const finish = (user: Partial<User>) => {
     .map<RegistrableApp<any>>(plugin => ({
       name: plugin.id,
       entry: plugin.pluginUrl || '',
-      container: `#${plugin.id}`,
+      container: `#${MICROLC_QIANKUN_CONTAINER}`,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,
       props: {
         basePath,
@@ -78,8 +76,11 @@ export const finish = (user: Partial<User>) => {
       }
     }))
   registerMicroApps(quiankunConfig)
+  addErrorHandler(_ => history.push(ERROR_PATH.INTERNAL_ERROR))
   start()
 }
+
+const DOUBLE_SLASH = /\/\//g
 
 const retrieveBasePath = () => {
   let basePath = `${window.location.pathname || ''}`
@@ -87,7 +88,9 @@ const retrieveBasePath = () => {
   if (currentPlugin?.pluginRoute) {
     basePath = window.location.pathname.replace(currentPlugin.pluginRoute, '')
   }
-  basePath = basePath.replace('//', '/')
+  basePath = basePath.replace(new RegExp(ERROR_PATH.INTERNAL_ERROR, 'g'), '')
+    .replace(new RegExp(ERROR_PATH.UNAUTHORIZED, 'g'), '')
+    .replace(DOUBLE_SLASH, '/')
   return basePath.endsWith('/') ? basePath.slice(0, -1) : basePath
 }
 

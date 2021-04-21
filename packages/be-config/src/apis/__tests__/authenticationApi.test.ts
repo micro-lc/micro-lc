@@ -43,6 +43,7 @@ describe('Authentication api tests', () => {
     expect(replySendMock).toHaveBeenCalledWith({
       'isAuthNecessary': true,
       'userInfoUrl': '/api/v1/microlc/user',
+      'userLogoutUrl': '/api/v1/microlc/user/logout',
     })
   })
 })

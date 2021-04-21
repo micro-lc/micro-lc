@@ -25,6 +25,9 @@ export const authenticationSchema = {
     userInfoUrl: {
       type: 'string',
     },
+    userLogoutUrl: {
+      type: 'string',
+    },
   },
   required: ['isAuthNecessary'],
 } as const

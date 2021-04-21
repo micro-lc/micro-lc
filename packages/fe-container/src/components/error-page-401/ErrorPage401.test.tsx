@@ -13,11 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {PluginStrategy} from './PluginStrategy'
 
-export function noOpStrategy (): PluginStrategy {
-  return {
-    handlePluginLoad: () => {
-    }
-  }
-}
+import React from 'react'
+import {screen} from '@testing-library/react'
+
+import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
+
+import RenderWithReactIntl from '../../__tests__/utils'
+
+beforeEach(() => {
+  RenderWithReactIntl(<ErrorPage401></ErrorPage401>)
+})
+describe('ErrorPage404 tests', () => {
+  it('renders without crashing', async () => {
+    expect(await screen.findByText('Unauthorized access')).toBeTruthy()
+    expect(await screen.findByText('It would seem that you don\'t have permission to access this page, but don\'t')).toBeTruthy()
+  })
+})

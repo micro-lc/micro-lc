@@ -25,18 +25,23 @@ export const CONFIGURATION_SERVICE = {
   ENDPOINT: '/configuration'
 }
 
-export const LOGOUT_USER_SERVICE = {
-  BASE_URL: MICROLC_BASE_URL,
-  ENDPOINT: '/user/logout'
-}
-
 export const INTEGRATION_METHODS = {
   HREF: 'href',
   IFRAME: 'iframe',
   QIANKUN: 'qiankun'
 }
 
+export const DOCUMENTATION_URL = 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+
 export const COLORS = {
   primaryColor: '--microlc-primary-color',
-  menuEntrySelectedBackgroundColor: '--microlc-menu-entry-selected-bg-color'
+  menuEntrySelectedBackgroundColor: '--microlc-primary-color-tint-89'
+}
+
+export const MICROLC_QIANKUN_CONTAINER = 'microlc-qiankun-contaier'
+
+export const ERROR_PATH = {
+  INTERNAL_ERROR: '/microlc_internal_error',
+  PAGE_NOT_FOUND: '*',
+  UNAUTHORIZED: '/microlc_unauthorized'
 }

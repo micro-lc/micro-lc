@@ -85,4 +85,26 @@ describe('LayoutContent tests', () => {
     )
     expect(screen.getByTestId('layout-content')).toBeTruthy()
   })
+
+  it('LayoutContent renders even without plugins', () => {
+    const setMenuOpened = jest.fn(close => {
+    })
+
+    RenderWithReactIntl(
+      <ConfigurationProvider
+        value={{
+          theming: {
+            header: {pageTitle: 'Mia Care', favicon: 'favicon_url'},
+            variables: {},
+            logo: {url: 'logo_url', alt: 'logo'}
+          }
+        }}
+      >
+        <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened}}>
+          <LayoutContent/>
+        </MenuOpenedProvider>
+      </ConfigurationProvider>
+    )
+    expect(screen.getByTestId('layout-content')).toBeTruthy()
+  })
 })

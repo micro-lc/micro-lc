@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {PluginStrategy} from './PluginStrategy'
+import React from 'react'
 
-export function noOpStrategy (): PluginStrategy {
-  return {
-    handlePluginLoad: () => {
-    }
-  }
+import {ErrorPageContainer} from '../../containers/error-page/ErrorPageContainer'
+import {ReactComponent as Error401Logo} from './assets/ErrorImage401.svg'
+
+export const ErrorPage401: React.FC = () => {
+  return (
+    <ErrorPageContainer descriptionKeys={['401_description', '401_description_1']} titleKey='401_title'>
+      <Error401Logo/>
+    </ErrorPageContainer>
+  )
 }

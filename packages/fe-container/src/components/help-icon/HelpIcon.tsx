@@ -13,11 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {PluginStrategy} from './PluginStrategy'
+import React from 'react'
 
-export function noOpStrategy (): PluginStrategy {
-  return {
-    handlePluginLoad: () => {
-    }
-  }
+import {DOCUMENTATION_URL} from '@constants'
+import './HelpIcon.less'
+
+const clickHandler = () => {
+  window.open(DOCUMENTATION_URL)
+}
+
+export const HelpIcon: React.FC = () => {
+  return (
+    <div className='help_button_container' data-testid='help_button_test' onClick={clickHandler}>
+        <i className='topBar_documentationLink far fa-question-circle' />
+    </div>
+  )
 }

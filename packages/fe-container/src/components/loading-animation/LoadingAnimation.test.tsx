@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {PluginStrategy} from './PluginStrategy'
+import React from 'react'
+import {screen} from '@testing-library/react'
 
-export function noOpStrategy (): PluginStrategy {
-  return {
-    handlePluginLoad: () => {
-    }
-  }
-}
+import {LoadingAnimation} from './LoadingAnimation'
+import RenderWithReactIntl from '../../__tests__/utils'
+
+describe('Loading Page tests', () => {
+  it('Test LoadingPage renders', () => {
+    RenderWithReactIntl(
+    <LoadingAnimation />
+    )
+    expect(screen.getAllByTestId('svgContainer')).toBeTruthy()
+  })
+})
