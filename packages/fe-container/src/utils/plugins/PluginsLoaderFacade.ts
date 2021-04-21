@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {createBrowserHistory} from 'history'
-import {registerMicroApps, RegistrableApp, start, addErrorHandler} from 'qiankun'
+import {addErrorHandler, registerMicroApps, RegistrableApp, start} from 'qiankun'
 import {Plugin, User} from '@mia-platform/core'
 
 import {ERROR_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
@@ -44,7 +44,8 @@ export const findCurrentPlugin = () => {
 }
 
 export const isCurrentPluginLoaded = () => {
-  return findCurrentPlugin() !== undefined
+  const isErrorPage = window.location.pathname.endsWith(ERROR_PATH.INTERNAL_ERROR) || window.location.pathname.endsWith(ERROR_PATH.UNAUTHORIZED)
+  return isErrorPage || findCurrentPlugin() !== undefined
 }
 
 const strategyBuilder = (plugin: Plugin) => {
@@ -79,13 +80,17 @@ export const finish = (user: Partial<User>) => {
   start()
 }
 
+const DOUBLE_SLASH = /\/\//g
+
 const retrieveBasePath = () => {
   let basePath = `${window.location.pathname || ''}`
   const currentPlugin = findCurrentPlugin()
   if (currentPlugin?.pluginRoute) {
     basePath = window.location.pathname.replace(currentPlugin.pluginRoute, '')
   }
-  basePath = basePath.replace('//', '/')
+  basePath = basePath.replace(new RegExp(ERROR_PATH.INTERNAL_ERROR, 'g'), '')
+    .replace(new RegExp(ERROR_PATH.UNAUTHORIZED, 'g'), '')
+    .replace(DOUBLE_SLASH, '/')
   return basePath.endsWith('/') ? basePath.slice(0, -1) : basePath
 }
 

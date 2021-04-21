@@ -58,7 +58,7 @@ describe('App test', () => {
             sameWindow: false
           }
         }, {
-          id: 'not-supported',
+          id: 'iframe-google',
           label: 'iframe entry',
           icon: 'clipboard',
           integrationMode: 'iframe',
@@ -70,8 +70,8 @@ describe('App test', () => {
           icon: 'clipboard',
           order: 3,
           integrationMode: 'qiankun',
-          pluginRoute: '/iframeTest',
-          pluginUrl: '//localhost:8764'
+          pluginRoute: '/qiankunTest',
+          pluginUrl: 'http://localhost:8764'
         }]
       })
     nock('http://localhost')
@@ -86,6 +86,9 @@ describe('App test', () => {
         nickname: 'mocked.user',
         picture: 'https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1'
       })
+    nock('http://localhost:8764')
+      .get('/')
+      .reply(500)
     RenderWithReactIntl(<App/>)
   })
 
@@ -120,9 +123,13 @@ describe('App test', () => {
     expect(window.location.href).toContain('/iframeTest')
   })
 
-  it('Correctly handle redirect', async () => {
-    await clickToggle()
-    userEvent.click(screen.getByText('Qiankun entry'))
-    expect(window.location.href).toContain('/microlc_internal_error')
+  it('Correctly handle redirect', (done) => {
+    clickToggle().then(() => {
+      userEvent.click(screen.getByText('Qiankun entry'))
+      setTimeout(() => {
+        expect(window.location.href).toContain('/microlc_internal_error')
+        done()
+      }, 1000)
+    })
   })
 })
