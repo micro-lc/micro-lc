@@ -15,9 +15,9 @@
  */
 import React from 'react'
 
+import {DOCUMENTATION_URL} from '@constants'
 import './HelpIcon.less'
 
-const DOCUMENTATION_URL = 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
 const clickHandler = () => {
   window.open(DOCUMENTATION_URL)
 }
@@ -25,7 +25,7 @@ const clickHandler = () => {
 export const HelpIcon: React.FC = () => {
   return (
     <div className='help_button_container' data-testid='help_button_test' onClick={clickHandler}>
-        <i className='topBar_documentationLink fas fa-question-circle' />
+        <i className='topBar_documentationLink far fa-question-circle' />
     </div>
   )
 }
