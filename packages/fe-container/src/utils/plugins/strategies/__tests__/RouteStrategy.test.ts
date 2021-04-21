@@ -22,7 +22,7 @@ jest.mock('history', () => ({
   }))
 }))
 
-describe('RouteStrategy tests', () => {
+describe('RouteStrategy tests', (done) => {
   it('Handle pluginRoute', () => {
     routeStrategy({
       id: 'plugin-test-3',
@@ -33,7 +33,11 @@ describe('RouteStrategy tests', () => {
       pluginRoute: '/iframeTest',
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }).handlePluginLoad()
-    expect(history.push).toHaveBeenCalledWith('/iframeTest')
+    expect(history.push).toHaveBeenCalledWith('')
+    setTimeout(() => {
+      expect(history.push).toHaveBeenCalledWith('/iframeTest')
+      done()
+    }, 10)
   })
 
   it('Handle invalid plugin', () => {
