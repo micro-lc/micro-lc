@@ -17,10 +17,10 @@
 import {expect, test} from '@playwright/test'
 
 import {baseUrl, firstValidPlugin} from '../utils/constants'
-import {openSideMenu} from '../utils/utils'
+import {toggleSideMenu} from '../utils/utils'
 
 test('Sidemenu has loaded plugins correctly', async ({page}) => {
-  await openSideMenu(page)
+  await toggleSideMenu(page)
   await page.textContent('"Href same window"')
   await page.textContent('"Href different window"')
   await page.textContent('"IFrame"')
@@ -29,19 +29,19 @@ test('Sidemenu has loaded plugins correctly', async ({page}) => {
 });
 
 test('Correctly change page for href same window', async ({page}) => {
-  await openSideMenu(page)
+  await toggleSideMenu(page)
   await page.click('"Href same window"')
   expect(page.url()).toBe('https://www.google.it/')
 });
 
 test('Correctly stay on previous page for href different window', async ({page}) => {
-  await openSideMenu(page)
+  await toggleSideMenu(page)
   await page.click('"Href different window"')
   expect(page.url()).toBe(firstValidPlugin)
 });
 
 test('Correctly change url for iframe plugin', async ({page}) => {
-  await openSideMenu(page)
+  await toggleSideMenu(page)
   await page.click('"IFrame"')
   expect(page.url()).toBe(`${baseUrl}/iframe`)
 });
