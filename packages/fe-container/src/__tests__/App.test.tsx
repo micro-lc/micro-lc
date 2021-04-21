@@ -103,19 +103,22 @@ describe('App test', () => {
   })
 
   it('toggle is working', async () => {
+    const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
+
+    // @ts-ignore
+    const retrieveEntryClasses = () => screen.getByText('entry_1').parentElement.parentElement.parentElement.parentElement.classList
+
     expect(global.window.document.title).toEqual('Mia Care')
-    await clickToggle()
-    await clickToggle()
-    // @ts-ignore
-    expect(screen.getByText('Href entry').parentElement.parentElement.parentElement.classList).not.toContain('opened')
 
-    await clickToggle()
-    // @ts-ignore
-    expect(screen.getByText('Href entry').parentElement.parentElement.parentElement.classList).toContain('opened')
+    expect(retrieveEntryClasses()).not.toContain('opened')
 
-    await clickToggle()
-    // @ts-ignore
-    expect(screen.getByText('Href entry').parentElement.parentElement.parentElement.classList).not.toContain('opened')
+    userEvent.click(toggle)
+
+    expect(retrieveEntryClasses()).toContain('opened')
+
+    userEvent.click(toggle)
+
+    expect(retrieveEntryClasses()).not.toContain('opened')
   })
 
   it('navigate to first not href plugin', async () => {

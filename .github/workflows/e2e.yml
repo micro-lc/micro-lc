@@ -1,0 +1,32 @@
+name: Node.js e2e CI
+
+on:
+  push:
+    branches: [ main ]
+    tags: '*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: microsoft/playwright-github-action@v1
+      - name: 'Install dependencies'
+        run: yarn install --frozen-lockfile
+      - name: 'Wait for status checks'
+        id: waitforstatuschecks
+        uses: "WyriHaximus/github-action-wait-for-status@v1"
+        with:
+          ignoreActions: e2e
+          checkInterval: 30
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: 'Bootstrap microlc'
+        if: steps.waitforstatuschecks.outputs.status == 'success'
+        run: docker-compose -f e2e/docker-compose.yml up -d
+      - name: 'Run PlayWright'
+        if: steps.waitforstatuschecks.outputs.status == 'success'
+        run: yarn e2e

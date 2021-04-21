@@ -43,7 +43,9 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
   return (
     <>
       <div className={sideMenuClasses}>
-        {plugins?.map(entriesMapper)}
+        <div onClick={closeMenu}>
+          {plugins?.map(entriesMapper)}
+        </div>
       </div>
       <div className={sideMenuOverlayClasses} data-testid="layout-content-overlay" onClick={closeMenu}/>
     </>
@@ -54,20 +56,14 @@ SideMenu.propTypes = sideMenuProps
 
 const SideMenuEntry: React.FC<Plugin> = (plugin) => {
   const [isActive, setIsActive] = useState<boolean>(isPluginLoaded(plugin))
-
-  const menuClick = useCallback((plugin: Plugin) => {
-    const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
-    return () => {
-      pluginStrategy.handlePluginLoad()
-    }
-  }, [])
+  const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
 
   useEffect(() => {
     return history.listen(() => setIsActive(isPluginLoaded(plugin)))
   }, [plugin])
 
   return (
-    <div className={'sideMenu_voice ' + (isActive ? 'active' : '')} onClick={menuClick(plugin)}>
+    <div className={'sideMenu_voice ' + (isActive ? 'active' : '')} onClick={pluginStrategy.handlePluginLoad}>
       <i className={'sideMenu_icon ' + (plugin.icon || '')}/>
       <div className='sideMenu_entry'>
         <span className='sideMenu_label'>{plugin.label}</span>

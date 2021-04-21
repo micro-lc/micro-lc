@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js fe-container CI
 
 env:
   cache-name: cache-build

@@ -1,0 +1,66 @@
+{
+  "theming": {
+    "header": {
+      "pageTitle": "Mia Care",
+      "favicon": "https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png"
+    },
+    "logo": {
+      "alt": "Mia Care",
+      "url": "https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI"
+    },
+    "variables": {
+      "primaryColor": "red"
+    }
+  },
+  "plugins": [
+    {
+      "id": "plugin-test-2",
+      "label": "Href same window",
+      "icon": "far fa-window-maximize",
+      "order": 2,
+      "integrationMode": "href",
+      "externalLink": {
+        "url": "https://google.it",
+        "sameWindow": true
+      }
+    },
+    {
+      "id": "plugin-test-1",
+      "label": "Href different window",
+      "icon": "far fa-window-restore",
+      "order": 1,
+      "integrationMode": "href",
+      "externalLink": {
+        "url": "https://google.it",
+        "sameWindow": false
+      }
+    },
+    {
+      "id": "plugin-test-3",
+      "label": "IFrame",
+      "icon": "fab fa-google",
+      "order": 4,
+      "integrationMode": "iframe",
+      "pluginRoute": "/iframe",
+      "pluginUrl": "https://www.google.com/webhp?igu=1"
+    },
+    {
+      "id": "plugin-test-5",
+      "label": "Qiankun plugin 1",
+      "icon": "fab fa-react",
+      "order": 5,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/qiankun1",
+      "pluginUrl": "//127.0.0.1/"
+    },
+    {
+      "id": "plugin-test-6",
+      "label": "Qiankun plugin 2",
+      "icon": "fab fa-react",
+      "order": 6,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/qiankun2",
+      "pluginUrl": "//127.0.0.1/"
+    }
+  ]
+}
