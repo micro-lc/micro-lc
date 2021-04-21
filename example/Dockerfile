@@ -1,4 +1,4 @@
-FROM node:erbium-alpine as builder
+FROM node:fermium-alpine as builder
 COPY . /builder
 WORKDIR /builder
 RUN yarn install && yarn build
