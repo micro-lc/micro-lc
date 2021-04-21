@@ -106,7 +106,7 @@ describe('App test', () => {
     const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
 
     // @ts-ignore
-    const retrieveEntryClasses = () => screen.getByText('entry_1').parentElement.parentElement.parentElement.parentElement.classList
+    const retrieveEntryClasses = () => screen.getByText('Href entry').parentElement.parentElement.parentElement.parentElement.classList
 
     expect(global.window.document.title).toEqual('Mia Care')
 

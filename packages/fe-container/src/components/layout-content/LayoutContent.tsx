@@ -76,7 +76,10 @@ type PluginIframeProps = {
 const PluginIframe: React.FC<PluginIframeProps> = ({plugin}) => {
   return (
     <>
-      {plugin && <iframe className='layoutContent_iframe' frameBorder='0' src={plugin.pluginUrl} title={plugin.id}/>}
+      {
+        plugin &&
+        <iframe className='layoutContent_iframe' frameBorder='0' src={plugin.pluginUrl} title={plugin.id}/>
+      }
     </>
   )
 }
