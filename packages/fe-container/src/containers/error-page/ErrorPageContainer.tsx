@@ -39,9 +39,7 @@ export const ErrorPageContainer: React.FC<ErrorProps> = ({children, titleKey, de
 
   return (
     <div className='errorPage_container'>
-      <div className='svgContainer'>
-        {children}
-      </div>
+      {children}
       <p className='mainMessage'>
         <FormattedMessage id={titleKey}/>
       </p>
