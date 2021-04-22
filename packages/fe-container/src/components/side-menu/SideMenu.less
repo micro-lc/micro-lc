@@ -1,5 +1,4 @@
 @import "../../styles/_variables";
-@import "../../styles/_colors";
 
 @side-menu-width: 256px;
 
@@ -10,7 +9,7 @@
   z-index: 999;
   top: @top-bar-height;
   left: -@side-menu-width;
-  background-color: white;
+  background-color: var(--microlc-side-menu-background);
   overflow-x: hidden;
   overflow-y: auto;
   transition: left .2s linear;
@@ -31,7 +30,7 @@
   bottom: 0;
   left: 0;
   z-index: 998;
-  background-color: @overlay-background;
+  background-color: var(--microlc-overlay-background);
 
   &.sideMenu_visible {
     display: block;
@@ -59,7 +58,7 @@
     padding: 11px 11px 11px 0;
 
     .sideMenu_label {
-      color: @menu-label-color;
+      color: var(--microlc-menu-label-color);
       min-width: 160px;
     }
 
