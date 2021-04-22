@@ -1,0 +1,61 @@
+@import "../../styles/_colors";
+
+@slider-size: 18px;
+@slider-padding: 2px;
+
+.darkModeSwitch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  & input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .slider {
+      background-color: var(--microlc-primary-color);
+    }
+
+    &:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    &:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+  }
+
+  & .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--microlc-primary-color);
+    transition: .4s;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: @slider-size;
+      width: @slider-size;
+      left: @slider-padding;
+      bottom: @slider-padding;
+      background-color: @light-slider-color;
+      transition: .4s;
+    }
+
+    &.round {
+      border-radius: 34px;
+
+      &:before {
+        border-radius: 50%;
+      }
+    }
+  }
+}

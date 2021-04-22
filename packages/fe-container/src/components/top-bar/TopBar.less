@@ -1,23 +1,29 @@
 @import "../../styles/_variables";
+@import "../../styles/_colors";
 
 .topBar_container {
   height: @top-bar-height;
   display: flex;
   align-items: center;
+  color: @top-bar-text-color;
 
-  .logo {
+  & .logo {
     max-height: 90%;
   }
 
-  .topBar_divider {
+  & .topBar_divider {
     height: 44px;
     margin: 10px 25px;
   }
 
-  .topBar_rightSide {
+  & .topBar_rightSide {
     max-height: 100%;
     display: flex;
     align-items: center;
     margin-left: auto;
+  }
+
+  & .topBar_userMenu {
+    margin-left: 24px;
   }
 }
