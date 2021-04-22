@@ -15,20 +15,24 @@
  */
 import {FromSchema} from 'json-schema-to-ts'
 
-import {analyticsSchema} from './analytics/Analytics'
-import {pluginSchema} from './plugin/Plugin'
-import {themingSchema} from './theming/Theming'
-
-export const configurationSchema = {
+export const analyticsSchema = {
   type: 'object',
   properties: {
-    theming: themingSchema,
-    plugins: {
-      type: 'array',
-      items: pluginSchema,
+    privacyLink: {
+      type: 'string',
+      description: 'Url to the privacy information page',
     },
-    analytics: analyticsSchema,
+    disclaimer: {
+      type: 'string',
+      description: 'Informative message inside the banner',
+    },
+    gtmId: {
+      type: 'string',
+      description: 'Google tag manager id of the current user needed to instaciate analytics',
+    },
   },
+  required: ['privacyLink', 'disclaimer', 'gtmId'],
+  additionalProperties: false,
 } as const
 
-export type Configuration = FromSchema<typeof configurationSchema>
+export type Analytics = FromSchema<typeof analyticsSchema>

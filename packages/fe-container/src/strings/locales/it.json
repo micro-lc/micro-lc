@@ -9,5 +9,9 @@
   "401_description_1": "preoccupare: c’è sempre un modo per tornare alla home.",
   "500_title": "Ops! Qualcosa è andato storto.",
   "500_description": "Il nostro team è stato informato e sta lavorando per risolvere il problema.",
-  "500_description_1": "Non ci vorrà molto... riprova più tardi."
+  "500_description_1": "Non ci vorrà molto... riprova più tardi.",
+  "cookie_policy": "Cookie policy",
+  "accept_button": "Accetta",
+  "decline_button": "Rifiuta"
+
 }

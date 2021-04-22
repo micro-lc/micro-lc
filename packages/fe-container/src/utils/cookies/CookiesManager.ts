@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './Configuration'
-export * from './plugin/ExternalLink'
-export * from './plugin/Plugin'
-export * from './theming/Header'
-export * from './theming/Logo'
-export * from './theming/Theming'
-export * from './analytics/Analytics'
-export * from './theming/Variables'
+
+export const retrieveCookies = () => {
+  // retrieve cookies about privacy
+  return false
+}
+export const setCookies = () => {
+  // set cookies about privacy
+  return true
+}
