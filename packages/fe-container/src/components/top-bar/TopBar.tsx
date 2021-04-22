@@ -31,22 +31,22 @@ export const TopBar: React.FC = () => {
 
   return (
     <div className='topBar_container'>
-      {mustShowBurgerIcon && <BurgerIcon />}
+      {mustShowBurgerIcon && <BurgerIcon/>}
       <img
         alt={configuration.theming?.logo.alt || 'Logo'}
         className='logo'
         data-testid='company-logo'
         src={configuration.theming?.logo.url}
       />
-      <div className = 'topBar_rightSide'>
+      <div className='topBar_rightSide'>
         <HelpIcon/>
-         {
-            user.name &&
-            <div className = 'topBar_rightSide'>
-              <Divider className='topBar_divider' type="vertical"/>
-              <UserMenu {...user}/>
-            </div>
-         }
+        <Divider className='topBar_divider' type="vertical"/>
+        {
+          user.name &&
+          <div className='topBar_userMenu'>
+            <UserMenu {...user}/>
+          </div>
+        }
       </div>
     </div>
   )
