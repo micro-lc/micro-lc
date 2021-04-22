@@ -71,6 +71,7 @@ export const finish = (user: Partial<User>) => {
       container: `#${MICROLC_QIANKUN_CONTAINER}`,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,
       props: {
+        ...plugin.props,
         basePath,
         currentUser: user
       }

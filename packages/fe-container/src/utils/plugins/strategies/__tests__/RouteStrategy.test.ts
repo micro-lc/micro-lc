@@ -23,7 +23,7 @@ jest.mock('history', () => ({
 }))
 
 describe('RouteStrategy tests', () => {
-  it('Handle pluginRoute', () => {
+  it('Handle pluginRoute', (done) => {
     routeStrategy({
       id: 'plugin-test-3',
       label: 'IFrame',
@@ -33,11 +33,19 @@ describe('RouteStrategy tests', () => {
       pluginRoute: '/iframeTest',
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }).handlePluginLoad()
-    expect(history.push).toHaveBeenCalledWith('/iframeTest')
+    expect(history.push).toHaveBeenCalledWith('')
+    setTimeout(() => {
+      expect(history.push).toHaveBeenCalledWith('/iframeTest')
+      done()
+    }, 10)
   })
 
-  it('Handle invalid plugin', () => {
+  it('Handle invalid plugin', (done) => {
     routeStrategy({id: '', label: '', integrationMode: 'iframe'}).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('')
+    setTimeout(() => {
+      expect(history.push).toHaveBeenCalledWith('')
+      done()
+    }, 10)
   })
 })
