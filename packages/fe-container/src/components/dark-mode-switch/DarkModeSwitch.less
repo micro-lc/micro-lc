@@ -23,6 +23,9 @@
 
     &:checked + .slider:before {
       transform: translateX(@slider-x-size);
+      border-radius: 50%;
+      box-shadow: inset -9px 0px 0px 0px @light-slider-color;
+      background-color: transparent;
     }
   }
 
@@ -56,3 +59,18 @@
     }
   }
 }
+
+/*
+transform: translateX(22px);
+    border-radius: 50%;
+    box-shadow: -9px 0px 0px 0px green;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+ */
