@@ -1,7 +1,8 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 
 import './DarkModeSwitch.less'
+import {switchTheme} from '@utils/theme/ThemeManager'
 
 export const DarkModeSwitch: React.FC = () => {
   return (
@@ -14,13 +15,15 @@ export const DarkModeSwitch: React.FC = () => {
 }
 
 const Switch: React.FC = () => {
+  const [toggleChecked, isToggleChecked] = useState(false)
   const toggleHandler = useCallback(() => {
-    document.body.classList.toggle('dark_theme')
+    isToggleChecked((oldValue) => !oldValue)
+    switchTheme()
   }, [])
 
   return (
     <label className="darkModeSwitch">
-      <input onClick={toggleHandler} type="checkbox"/>
+      <input checked={toggleChecked} onChange={toggleHandler} type="checkbox"/>
       <span className="slider round"/>
     </label>
   )

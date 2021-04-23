@@ -26,8 +26,13 @@ export const manageTheming = (configuration: Configuration) => {
   const primaryColor = retrievePrimaryColor(configuration)
   if (primaryColor) {
     setCssProperty(COLORS.primaryColor, primaryColor)
-    setCssProperty(COLORS.menuEntrySelectedBackgroundColor, calculateColorTint(primaryColor, MENU_ENTRY_TINT_WEIGHT))
+    setCssProperty(COLORS.tint89Color, calculateColorTint(primaryColor, MENU_ENTRY_TINT_WEIGHT))
   }
+}
+
+export const switchTheme = () => {
+  toggleTheme()
+  togglePrimaryColor()
 }
 
 const retrievePrimaryColor = (configuration: Configuration) => {
@@ -47,4 +52,22 @@ const calculateColorTint = (color: any, tintWeight: number) => {
 const setCssProperty = (propertyName: string, color: any) => {
   const valueToApply = color.hexString()
   document.documentElement.style.setProperty(propertyName, valueToApply)
+}
+
+const toggleTheme = () => {
+  const dataThemeValue = document.documentElement.getAttribute('data-theme')
+  const dataThemeNew = dataThemeValue === 'dark' ? '' : 'dark'
+  document.documentElement.setAttribute('data-theme', dataThemeNew)
+}
+
+const togglePrimaryColor = () => {
+  const primaryColor = getCssColorProperty(COLORS.primaryColor)
+  const tintColor = getCssColorProperty(COLORS.tint89Color)
+  setCssProperty(COLORS.primaryColor, tintColor)
+  setCssProperty(COLORS.tint89Color, primaryColor)
+}
+
+const getCssColorProperty = (propertyName: string) => {
+  const colorValue = getComputedStyle(document.documentElement).getPropertyValue(propertyName)
+  return new Value(colorValue)
 }
