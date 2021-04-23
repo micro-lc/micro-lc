@@ -45,3 +45,5 @@ export const ERROR_PATH = {
   PAGE_NOT_FOUND: '*',
   UNAUTHORIZED: '/microlc_unauthorized'
 }
+
+export const DARK_THEME_ATTRIBUTE = 'dark-theme'

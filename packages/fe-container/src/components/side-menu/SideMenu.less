@@ -44,10 +44,10 @@
   column-gap: 12px;
   align-items: center;
   padding-left: 24px;
+  color: var(--microlc-primary-color);
 
   .sideMenu_icon {
     font-size: 16px;
-    color: var(--microlc-primary-color);
   }
 
   .sideMenu_entry {
@@ -63,13 +63,15 @@
     }
 
     .sideMenu_externalLink {
-      color: var(--microlc-primary-color);
       margin-left: 4px;
     }
   }
 
   &:hover .sideMenu_label {
     color: var(--microlc-primary-color);
+    [dark-theme] & {
+      color: var(--microlc-primary-color-tint-89);
+    }
   }
 
   &.active {

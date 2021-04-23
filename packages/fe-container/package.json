@@ -28,7 +28,7 @@
     "lint": "eslint src --ext .js,.ts,.tsx",
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test": "craco test --runInBand",
     "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts",
     "dev:unit-watch": "yarn test",
     "dev": "npm-run-all -p dev:** start",

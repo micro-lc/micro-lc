@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {manageTheming} from './ThemeManager'
+import {manageTheming, switchTheme} from './ThemeManager'
 
-import {COLORS} from '@constants'
+import {COLORS, DARK_THEME_ATTRIBUTE} from '@constants'
 
 describe('ThemeManager tests', () => {
   afterEach(() => {
@@ -87,5 +87,16 @@ describe('ThemeManager tests', () => {
     expect(primaryColor).toBe('')
     const menuEntryColor = getComputedStyle(document.documentElement).getPropertyValue(COLORS.tint89Color)
     expect(menuEntryColor).toBe('')
+  })
+
+  it('Correctly switch theme', () => {
+    Object.defineProperty(window, 'getComputedStyle', {
+      value: jest.fn(() => ({
+        getPropertyValue: () => 'red'
+      }))
+    })
+    expect(document.documentElement.getAttribute(DARK_THEME_ATTRIBUTE)).toBeNull()
+    switchTheme()
+    expect(document.documentElement.getAttribute(DARK_THEME_ATTRIBUTE)).toBe('')
   })
 })
