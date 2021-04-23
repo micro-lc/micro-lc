@@ -17,7 +17,7 @@ import {Configuration} from '@mia-platform/core'
 // @ts-ignore
 import Value from 'values.js'
 
-import {COLORS} from '@constants'
+import {COLORS, DARK_THEME_ATTRIBUTE} from '@constants'
 
 const MENU_ENTRY_TINT_WEIGHT = 89
 
@@ -26,14 +26,19 @@ export const manageTheming = (configuration: Configuration) => {
   const primaryColor = retrievePrimaryColor(configuration)
   if (primaryColor) {
     setCssProperty(COLORS.primaryColor, primaryColor)
-    setCssProperty(COLORS.menuEntrySelectedBackgroundColor, calculateColorTint(primaryColor, MENU_ENTRY_TINT_WEIGHT))
+    setCssProperty(COLORS.tint89Color, calculateColorTint(primaryColor, MENU_ENTRY_TINT_WEIGHT))
   }
+}
+
+export const switchTheme = () => {
+  toggleTheme()
+  togglePrimaryColor()
 }
 
 const retrievePrimaryColor = (configuration: Configuration) => {
   let primaryColor
   try {
-    primaryColor = new Value(configuration.theming?.variables.primaryColor)
+    primaryColor = new Value(configuration.theming?.variables.primaryColor || '')
   } catch (e) {
     primaryColor = undefined
   }
@@ -47,4 +52,20 @@ const calculateColorTint = (color: any, tintWeight: number) => {
 const setCssProperty = (propertyName: string, color: any) => {
   const valueToApply = color.hexString()
   document.documentElement.style.setProperty(propertyName, valueToApply)
+}
+
+const toggleTheme = () => {
+  document.documentElement.toggleAttribute(DARK_THEME_ATTRIBUTE)
+}
+
+const togglePrimaryColor = () => {
+  const primaryColor = getCssColorProperty(COLORS.primaryColor)
+  const tintColor = getCssColorProperty(COLORS.tint89Color)
+  setCssProperty(COLORS.primaryColor, tintColor)
+  setCssProperty(COLORS.tint89Color, primaryColor)
+}
+
+const getCssColorProperty = (propertyName: string) => {
+  const colorValue = getComputedStyle(document.documentElement).getPropertyValue(propertyName).trim()
+  return new Value(colorValue)
 }

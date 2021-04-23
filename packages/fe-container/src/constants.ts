@@ -35,7 +35,7 @@ export const DOCUMENTATION_URL = 'https://docs.mia-platform.eu/docs/business_sui
 
 export const COLORS = {
   primaryColor: '--microlc-primary-color',
-  menuEntrySelectedBackgroundColor: '--microlc-primary-color-tint-89'
+  tint89Color: '--microlc-primary-color-tint-89'
 }
 
 export const MICROLC_QIANKUN_CONTAINER = 'microlc-qiankun-contaier'
@@ -45,3 +45,5 @@ export const ERROR_PATH = {
   PAGE_NOT_FOUND: '*',
   UNAUTHORIZED: '/microlc_unauthorized'
 }
+
+export const DARK_THEME_ATTRIBUTE = 'dark-theme'

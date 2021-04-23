@@ -9,5 +9,7 @@
   "401_description_1": "preoccupare: c’è sempre un modo per tornare alla home.",
   "500_title": "Ops! Qualcosa è andato storto.",
   "500_description": "Il nostro team è stato informato e sta lavorando per risolvere il problema.",
-  "500_description_1": "Non ci vorrà molto... riprova più tardi."
+  "500_description_1": "Non ci vorrà molto... riprova più tardi.",
+  "dark": "Scuro",
+  "light": "Chiaro"
 }

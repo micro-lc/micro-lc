@@ -9,5 +9,7 @@
   "401_description_1": "worry: there is always a way to go back to the home page.",
   "500_title": "Oops! Something went wrong.",
   "500_description": "Our team has been informed and is working to fix the problem.",
-  "500_description_1": "It won't take long ... try again later."
+  "500_description_1": "It won't take long ... try again later.",
+  "dark": "Dark",
+  "light": "Light"
 }

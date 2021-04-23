@@ -15,6 +15,7 @@
  */
 import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
 import {history} from '@utils/plugins/PluginsLoaderFacade'
+import {waitFor} from '@testing-library/react'
 
 jest.mock('history', () => ({
   createBrowserHistory: jest.fn((params) => ({
@@ -23,7 +24,7 @@ jest.mock('history', () => ({
 }))
 
 describe('RouteStrategy tests', () => {
-  it('Handle pluginRoute', (done) => {
+  it('Handle pluginRoute', async () => {
     routeStrategy({
       id: 'plugin-test-3',
       label: 'IFrame',
@@ -34,18 +35,12 @@ describe('RouteStrategy tests', () => {
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('')
-    setTimeout(() => {
-      expect(history.push).toHaveBeenCalledWith('/iframeTest')
-      done()
-    }, 10)
+    await waitFor(() => expect(history.push).toHaveBeenCalledWith('/iframeTest'))
   })
 
-  it('Handle invalid plugin', (done) => {
+  it('Handle invalid plugin', async () => {
     routeStrategy({id: '', label: '', integrationMode: 'iframe'}).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith('')
-    setTimeout(() => {
-      expect(history.push).toHaveBeenCalledWith('')
-      done()
-    }, 10)
+    await waitFor(() => expect(history.push).toHaveBeenCalledWith(''))
   })
 })
