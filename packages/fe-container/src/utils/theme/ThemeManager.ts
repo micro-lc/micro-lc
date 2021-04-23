@@ -55,9 +55,7 @@ const setCssProperty = (propertyName: string, color: any) => {
 }
 
 const toggleTheme = () => {
-  const dataThemeValue = document.documentElement.getAttribute('data-theme')
-  const dataThemeNew = dataThemeValue === 'dark' ? '' : 'dark'
-  document.documentElement.setAttribute('data-theme', dataThemeNew)
+  document.documentElement.toggleAttribute('dark-theme')
 }
 
 const togglePrimaryColor = () => {

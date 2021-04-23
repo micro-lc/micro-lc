@@ -1,8 +1,9 @@
 import React, {useCallback, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 
-import './DarkModeSwitch.less'
 import {switchTheme} from '@utils/theme/ThemeManager'
+
+import './DarkModeSwitch.less'
 
 export const DarkModeSwitch: React.FC = () => {
   return (
