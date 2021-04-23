@@ -24,7 +24,7 @@ const Switch: React.FC = () => {
 
   return (
     <label className="darkModeSwitch">
-      <input checked={toggleChecked} onChange={toggleHandler} type="checkbox"/>
+      <input checked={toggleChecked} data-testid='dark-theme-toggle' onChange={toggleHandler} type="checkbox"/>
       <span className="slider round"/>
     </label>
   )
