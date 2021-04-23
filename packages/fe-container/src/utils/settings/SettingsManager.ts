@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-export const retrieveCookies = () => {
-  // retrieve cookies about privacy
-  return false
+export const retrieveSettings = (key : string) => {
+  return localStorage.getItem(key)
 }
-export const setCookies = () => {
-  // set cookies about privacy
-  return true
+export const setSettings = (key : string, response : boolean) => {
+  localStorage.setItem(key, `${response}`)
 }

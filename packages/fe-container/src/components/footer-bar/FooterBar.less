@@ -4,11 +4,11 @@
   width: 100%;
   height: @footer-bar-height;
   display: flex;
-  align-items: center;
   background: white;
 
   & .cookies_svg {
     float: left;
+    margin-top: 25px;
     margin-left: 24px;
     margin-right: 24px;
     & .svg_primaryColor {
@@ -24,12 +24,19 @@
     display: flex;
     flex-direction: column;
     float: left;
+    margin-top: 24px;
+    margin-bottom: 24px;
 
+    & .banner_text {
+      line-height: 26px;
+      display: flex;
+      flex-direction: column;
+    }
     a {
       color: var(--microlc-primary-color);
     }
-
     & .footerBar_buttons {
+      margin-top: 24px;
       .accept_button {
         background: var(--microlc-primary-color);
         border-color: var(--microlc-primary-color-tint-89);

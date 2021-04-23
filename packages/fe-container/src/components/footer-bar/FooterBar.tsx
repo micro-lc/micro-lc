@@ -21,65 +21,77 @@ import {ReactComponent as Cookies} from './assets/cookies.svg'
 import {FormattedMessage} from 'react-intl'
 import {Button} from 'antd'
 import PropTypes from 'prop-types'
-import {retrieveCookies, setCookies} from '@utils/cookies/CookiesManager'
+import {retrieveSettings, setSettings} from '@utils/settings/SettingsManager'
+import TagManager from 'react-gtm-module'
 
 import './FooterBar.less'
 
 export const FooterBar: React.FC = () => {
-  const [userHasAccepted, setUserHasAccepted] = useState<boolean>(false)
+  const configuration = useContext(ConfigurationContext)
+  const [userHasAccepted, setUserHasReplied] = useState<boolean>(false)
 
-  // TODO
   useEffect(() => {
-    // if retrieveCookies is not empty and user has accepted
-    retrieveCookies() && setUserHasAccepted(true)
-    // else nothing
-  }, [])
+    if (configuration.analytics) {
+      const {gtmId} = configuration.analytics
+      const settings = retrieveSettings('settings')
+      if (settings) {
+        setUserHasReplied(true)
+        const settingsObject = JSON.parse(settings)
+        settingsObject?.hasAccepted && TagManager.initialize({gtmId})
+      }
+    } else {
+      setUserHasReplied(true)
+    }
+  }, [configuration.analytics])
 
   return (
       <div>
           {!userHasAccepted ?
-            <FooterContent setUserHasAccepted = {setUserHasAccepted} userHasAccepted = {userHasAccepted} /> :
-            < div></div>
+            <FooterContent setUserHasReplied = {setUserHasReplied} userHasAccepted = {userHasAccepted} /> :
+            <div></div>
             }
       </div>
   )
 }
 
 const footerProps = {
-  setUserHasAccepted: PropTypes.any.isRequired,
+  setUserHasReplied: PropTypes.any.isRequired,
   userHasAccepted: PropTypes.any.isRequired
 }
 
 type FooterProps = PropTypes.InferProps<typeof footerProps>
 
-const FooterContent: React.FC<FooterProps> = ({userHasAccepted, setUserHasAccepted}) => {
+const FooterContent: React.FC<FooterProps> = ({userHasAccepted, setUserHasReplied}) => {
   const configuration = useContext(ConfigurationContext)
 
-  // TODO: Implement both handlers accept and decline handlers
-  const clickHandler = () => {
-    setCookies()
-    setUserHasAccepted(true)
+  const acceptHandler = () => {
+    setSettings('settings', true)
+    setUserHasReplied(true)
+  }
+
+  const rejectHandler = () => {
+    setSettings('settings', false)
+    setUserHasReplied(true)
   }
 
   return (
-    <div className='footerBar_container'>
+    <div className='footerBar_container' data-testid='footer' >
         <Cookies className='cookies_svg' />
         <div className = 'footerBar_rightSide'>
-            <div>
+            <div className='banner_text'>
                 <b>
                 <FormattedMessage id="cookie_policy"/>
                 </b>
-                <p>
+                <span>
                     {configuration.analytics?.disclaimer}
                     <a href = {configuration.analytics?.privacyLink} target='blank' >{'Privacy Policy'}</a>
-                </p>
+                </span>
             </div>
-            {/* VERY IMPORTANT ON CLICK SETCOOKIES FROM FUNCTIONS AND SET STATE */}
             <div className='footerBar_buttons'>
-                <Button className="accept_button" onClick={clickHandler} type='primary'>
+                <Button className="accept_button" data-testid='accept_button' onClick={acceptHandler} type='primary'>
                     <FormattedMessage id="accept_button"/>
                 </Button>
-                <Button className ="reject_button">
+                <Button className ="reject_button" data-testid='reject_button' onClick={rejectHandler}>
                     <FormattedMessage id="decline_button"/>
                 </Button>
             </div>
