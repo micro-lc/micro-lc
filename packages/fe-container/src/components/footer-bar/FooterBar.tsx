@@ -15,88 +15,88 @@
  */
 
 import React, {useContext, useEffect, useState} from 'react'
-
-import {ConfigurationContext} from '@contexts/Configuration.context'
-import {ReactComponent as Cookies} from './assets/cookies.svg'
 import {FormattedMessage} from 'react-intl'
 import {Button} from 'antd'
-import PropTypes from 'prop-types'
-import {retrieveSettings, setSettings} from '@utils/settings/SettingsManager'
 import TagManager from 'react-gtm-module'
+import PropTypes from 'prop-types'
+
+import {ConfigurationContext} from '@contexts/Configuration.context'
+import {AnalyticsSettings, retrieveAnalyticsSettings} from '@utils/settings/AnalyticsSettingsManager'
+
+import {ReactComponent as Cookies} from './assets/cookies.svg'
 
 import './FooterBar.less'
 
 export const FooterBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
-  const [userHasAccepted, setUserHasReplied] = useState<boolean>(false)
+  const [analyticsSettings, setAnalyticsSettings] = useState<AnalyticsSettings>(retrieveAnalyticsSettings())
 
   useEffect(() => {
-    if (configuration.analytics) {
+    if (configuration.analytics && analyticsSettings.hasUserAccepted) {
       const {gtmId} = configuration.analytics
-      const settings = retrieveSettings('settings')
-      if (settings) {
-        setUserHasReplied(true)
-        const settingsObject = JSON.parse(settings)
-        settingsObject?.hasAccepted && TagManager.initialize({gtmId})
-      }
-    } else {
-      setUserHasReplied(true)
+      TagManager.initialize({gtmId})
     }
-  }, [configuration.analytics])
+  }, [configuration, analyticsSettings])
 
   return (
-      <div>
-          {!userHasAccepted ?
-            <FooterContent setUserHasReplied = {setUserHasReplied} userHasAccepted = {userHasAccepted} /> :
-            <div></div>
-            }
-      </div>
+    <>
+      { configuration.analytics && !analyticsSettings.hasUserResponded &&
+        <div className='footerBar_container' data-testid='footer'>
+          <Cookies className='cookies_svg'/>
+          <div className='footerBar_rightSide'>
+            <AnalyticsDisclaimer/>
+            <AnalyticsButtons setAnalyticsSettings={setAnalyticsSettings}/>
+          </div>
+        </div>
+      }
+    </>
   )
 }
 
-const footerProps = {
-  setUserHasReplied: PropTypes.any.isRequired,
-  userHasAccepted: PropTypes.any.isRequired
-}
-
-type FooterProps = PropTypes.InferProps<typeof footerProps>
-
-const FooterContent: React.FC<FooterProps> = ({userHasAccepted, setUserHasReplied}) => {
+const AnalyticsDisclaimer: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
 
-  const acceptHandler = () => {
-    setSettings('settings', true)
-    setUserHasReplied(true)
-  }
-
-  const rejectHandler = () => {
-    setSettings('settings', false)
-    setUserHasReplied(true)
-  }
-
   return (
-    <div className='footerBar_container' data-testid='footer' >
-        <Cookies className='cookies_svg' />
-        <div className = 'footerBar_rightSide'>
-            <div className='banner_text'>
-                <b>
-                <FormattedMessage id="cookie_policy"/>
-                </b>
-                <span>
-                    {configuration.analytics?.disclaimer}
-                    <a href = {configuration.analytics?.privacyLink} target='blank' >{'Privacy Policy'}</a>
-                </span>
-            </div>
-            <div className='footerBar_buttons'>
-                <Button className="accept_button" data-testid='accept_button' onClick={acceptHandler} type='primary'>
-                    <FormattedMessage id="accept_button"/>
-                </Button>
-                <Button className ="reject_button" data-testid='reject_button' onClick={rejectHandler}>
-                    <FormattedMessage id="decline_button"/>
-                </Button>
-            </div>
-        </div>
+    <div className='banner_text'>
+      <b>
+        <FormattedMessage id='cookie_policy'/>
+      </b>
+      <span>
+        {configuration.analytics?.disclaimer}
+        <a href={configuration.analytics?.privacyLink} target='blank'>
+          <FormattedMessage id='privacyPolicy'/>
+        </a>
+      </span>
     </div>
   )
 }
-FooterContent.propTypes = footerProps
+
+interface AnalyticsButtonProps {
+  setAnalyticsSettings: (analyticsSettings: AnalyticsSettings) => void
+}
+
+const AnalyticsButtons: React.FC<AnalyticsButtonProps> = ({setAnalyticsSettings}) => {
+  const answerHandler = (hasUserAccepted: boolean) => {
+    return () => {
+      setAnalyticsSettings({
+        hasUserResponded: true,
+        hasUserAccepted
+      })
+    }
+  }
+
+  return (
+    <div className='footerBar_buttons'>
+      <Button className="accept_button" data-testid='accept_button' onClick={answerHandler(true)} type='primary'>
+        <FormattedMessage id="accept_button"/>
+      </Button>
+      <Button className="reject_button" data-testid='reject_button' onClick={answerHandler(false)}>
+        <FormattedMessage id="decline_button"/>
+      </Button>
+    </div>
+  )
+}
+
+AnalyticsButtons.propTypes = {
+  setAnalyticsSettings: PropTypes.func.isRequired
+}

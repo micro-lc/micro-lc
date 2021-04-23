@@ -31,12 +31,12 @@ describe('FooterBar tests', function () {
 
   it('FooterBar is working', () => {
     RenderWithReactIntl(
-    <ConfigurationProvider value={{
-      analytics
-    }}
-    >
-      <FooterBar/>
-    </ConfigurationProvider>)
+      <ConfigurationProvider value={{
+        analytics
+      }}
+      >
+        <FooterBar/>
+      </ConfigurationProvider>)
     expect(screen.queryByTestId('footer')).toBeTruthy()
   })
 
@@ -48,7 +48,7 @@ describe('FooterBar tests', function () {
       >
         <FooterBar/>
       </ConfigurationProvider>)
-    const toggle = screen.getByTestId('reject_button')
+    const toggle = screen.getByText('Decline')
     userEvent.click(toggle)
     expect(screen.queryByTestId('footer')).not.toBeTruthy()
     window.localStorage.clear()
@@ -62,7 +62,7 @@ describe('FooterBar tests', function () {
       >
         <FooterBar/>
       </ConfigurationProvider>)
-    const toggle = screen.getByTestId('accept_button')
+    const toggle = screen.getByText('Accept')
     userEvent.click(toggle)
     expect(screen.queryByTestId('footer')).not.toBeTruthy()
     window.localStorage.clear()
@@ -85,7 +85,7 @@ describe('FooterBar tests', function () {
 
   it('FooterBar is not showing when analytics not passed inside configuration', function () {
     RenderWithReactIntl(
-        <FooterBar/>
+      <FooterBar/>
     )
     expect(screen.queryByTestId('footer')).not.toBeTruthy()
   })

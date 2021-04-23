@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
-export const retrieveSettings = (key : string) => {
-  return localStorage.getItem(key)
+import {ANALYTICS_STORAGE_KEY} from '@constants'
+
+export interface AnalyticsSettings {
+  hasUserResponded: boolean,
+  hasUserAccepted: boolean
 }
-export const setSettings = (key : string, response : boolean) => {
-  localStorage.setItem(key, `${response}`)
+
+export const retrieveAnalyticsSettings: () => AnalyticsSettings = () => {
+  return {
+    hasUserResponded: Boolean(localStorage.getItem(ANALYTICS_STORAGE_KEY)),
+    hasUserAccepted: localStorage.getItem(ANALYTICS_STORAGE_KEY) === 'true'
+  }
+}
+
+export const saveSettings = (analyticsSettings: AnalyticsSettings) => {
+  const savedValue = analyticsSettings.hasUserAccepted ? 'true' : 'false'
+  localStorage.setItem(ANALYTICS_STORAGE_KEY, savedValue)
 }
