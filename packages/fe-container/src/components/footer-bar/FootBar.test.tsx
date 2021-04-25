@@ -38,6 +38,7 @@ describe('FooterBar tests', function () {
         <FooterBar/>
       </ConfigurationProvider>)
     expect(screen.queryByTestId('footer')).toBeTruthy()
+    window.localStorage.clear()
   })
 
   it('FooterBar is closing when cookies rejected', function () {
@@ -69,7 +70,7 @@ describe('FooterBar tests', function () {
   })
 
   it('FooterBar is not showing when cookies already accepted', function () {
-    window.localStorage.setItem('settings', JSON.stringify({
+    window.localStorage.setItem('gtmAccepted', JSON.stringify({
       hasAccepted: true
     }))
     RenderWithReactIntl(

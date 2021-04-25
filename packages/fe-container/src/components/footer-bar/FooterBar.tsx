@@ -21,7 +21,7 @@ import TagManager from 'react-gtm-module'
 import PropTypes from 'prop-types'
 
 import {ConfigurationContext} from '@contexts/Configuration.context'
-import {AnalyticsSettings, retrieveAnalyticsSettings} from '@utils/settings/AnalyticsSettingsManager'
+import {AnalyticsSettings, retrieveAnalyticsSettings, saveSettings} from '@utils/settings/AnalyticsSettingsManager'
 
 import {ReactComponent as Cookies} from './assets/cookies.svg'
 
@@ -33,8 +33,11 @@ export const FooterBar: React.FC = () => {
 
   useEffect(() => {
     if (configuration.analytics && analyticsSettings.hasUserAccepted) {
+      saveSettings(analyticsSettings)
       const {gtmId} = configuration.analytics
       TagManager.initialize({gtmId})
+    } else {
+      saveSettings(analyticsSettings)
     }
   }, [configuration, analyticsSettings])
 
