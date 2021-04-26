@@ -47,3 +47,5 @@ export const ERROR_PATH = {
 }
 
 export const DARK_THEME_ATTRIBUTE = 'dark-theme'
+
+export const ANALYTICS_STORAGE_KEY = 'gtmAccepted'

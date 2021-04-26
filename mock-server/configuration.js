@@ -73,4 +73,9 @@ const plugins = [
   }
 ]
 
-module.exports = {theming, plugins}
+const analytics = {
+  privacyLink : 'https://www.mia-platform.eu/img/Privacy_Policy_Website_EN.pdf',
+  disclaimer: 'Questo sito utilizza cookie proprietari e di terze parti per assicurarti la migliore esperienza di navigazione. Per ulteriori informazioni, leggi la ',
+  gtmId: 'GTM-000000'
+}
+module.exports = {theming, plugins, analytics}

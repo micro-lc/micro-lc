@@ -25,6 +25,7 @@ import {AppState} from '@hooks/useAppData/useAppData'
 import {SideMenu} from '@components/side-menu/SideMenu'
 import {UserContextProvider} from '@contexts/User.context'
 import {LoadingAnimation} from '@components/loading-animation/LoadingAnimation'
+import {FooterBar} from '@components/footer-bar/FooterBar'
 
 import './Launcher.less'
 
@@ -53,6 +54,9 @@ const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) =>
           <SideMenu plugins={configuration.plugins}/>
           <LayoutContent/>
         </Layout.Content>
+        <Layout.Footer className='launcher_footer'>
+          <FooterBar />
+        </Layout.Footer>
       </Layout>
     </AppProvider>
   )

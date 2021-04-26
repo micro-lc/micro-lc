@@ -11,5 +11,9 @@
   "500_description": "Our team has been informed and is working to fix the problem.",
   "500_description_1": "It won't take long ... try again later.",
   "dark": "Dark",
-  "light": "Light"
+  "light": "Light",
+  "cookie_policy": "Cookie policy",
+  "accept_button": "Accept",
+  "decline_button": "Decline",
+  "privacyPolicy": "Privacy Policy"
 }

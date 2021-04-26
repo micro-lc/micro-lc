@@ -1,0 +1,69 @@
+@import "../../styles/_variables";
+
+.footerBar_container {
+  width: 100%;
+  height: @footer-bar-height;
+  display: flex;
+  background: var(--microlc-footer-background);
+  opacity: 0.9;
+  padding: @footer-margin;
+
+  & .cookies_svg {
+    margin-right: @footer-margin;
+    min-height: 46px;
+    min-width: 46px;
+
+    & .svg_primaryColor {
+      fill: var(--microlc-primary-color);
+    }
+
+    & .cookie_border_color {
+      fill: var(--microlc-cookie-image-border);
+    }
+
+    & .svg_primaryColorTint89 {
+      fill: var(--microlc-primary-color-tint-89);
+    }
+  }
+
+  & .footerBar_rightSide {
+    display: flex;
+    flex-direction: column;
+
+    & .cookie_policy {
+      display: flex;
+      flex-direction: column;
+      color: var(--microlc-footer-text-color);
+
+      & .cookie_policy_title {
+        font-size: 18px;
+        line-height: 26px;
+      }
+
+    }
+
+    a {
+      color: var(--microlc-primary-color);
+    }
+
+    & .footerBar_buttons {
+      margin-top: @footer-margin;
+
+      button {
+        border-radius: 4px;
+        margin-right: @footer-margin;
+        border-color: var(--microlc-primary-color);
+      }
+
+      .accept_button {
+        background: var(--microlc-primary-color);
+        color: var(--microlc-footer-background);
+      }
+
+      .reject_button {
+        background: var(--microlc-footer-background);
+        color: var(--microlc-primary-color);
+      }
+    }
+  }
+}
