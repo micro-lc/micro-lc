@@ -58,8 +58,8 @@ const AnalyticsDisclaimer: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
 
   return (
-    <div className='banner_text'>
-      <b>
+    <div className='cookie_policy'>
+      <b className='cookie_policy_title'>
         <FormattedMessage id='cookie_policy'/>
       </b>
       <span>

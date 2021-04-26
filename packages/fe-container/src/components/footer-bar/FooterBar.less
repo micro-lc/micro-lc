@@ -30,11 +30,16 @@
     float: left;
     margin-top: @footer-margin;
 
-    & .banner_text {
-      line-height: 26px;
+    & .cookie_policy {
       display: flex;
       flex-direction: column;
       color: var(--microlc-footer-text-color);
+
+      & .cookie_policy_title {
+        font-size: 18px;
+        line-height: 26px;
+      }
+
     }
     a {
       color: var(--microlc-primary-color);
