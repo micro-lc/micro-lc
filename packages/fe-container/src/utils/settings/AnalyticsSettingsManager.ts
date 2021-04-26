@@ -22,9 +22,10 @@ export interface AnalyticsSettings {
 }
 
 export const retrieveAnalyticsSettings: () => AnalyticsSettings = () => {
+  const storageContent = localStorage.getItem(ANALYTICS_STORAGE_KEY)
   return {
-    hasUserResponded: Boolean(localStorage.getItem(ANALYTICS_STORAGE_KEY)),
-    hasUserAccepted: localStorage.getItem(ANALYTICS_STORAGE_KEY) === 'true'
+    hasUserResponded: Boolean(storageContent),
+    hasUserAccepted: storageContent === 'true'
   }
 }
 

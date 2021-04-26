@@ -15,9 +15,9 @@
 //  */
 
 import React from 'react'
-
 import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+
 import {FooterBar} from './FooterBar'
 import RenderWithReactIntl from '../../__tests__/utils'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
@@ -34,10 +34,7 @@ describe('FooterBar tests', function () {
 
   it('FooterBar is working', () => {
     RenderWithReactIntl(
-      <ConfigurationProvider value={{
-        analytics
-      }}
-      >
+      <ConfigurationProvider value={{analytics}}>
         <FooterBar/>
       </ConfigurationProvider>)
     expect(screen.queryByText('Accept')).toBeTruthy()
@@ -45,10 +42,7 @@ describe('FooterBar tests', function () {
 
   it('FooterBar is closing when cookies rejected', function () {
     RenderWithReactIntl(
-      <ConfigurationProvider value={{
-        analytics
-      }}
-      >
+      <ConfigurationProvider value={{analytics}}>
         <FooterBar/>
       </ConfigurationProvider>)
     const toggle = screen.getByText('Decline')
@@ -59,10 +53,7 @@ describe('FooterBar tests', function () {
 
   it('FooterBar is closing when cookies accepted', function () {
     RenderWithReactIntl(
-      <ConfigurationProvider value={{
-        analytics
-      }}
-      >
+      <ConfigurationProvider value={{analytics}}>
         <FooterBar/>
       </ConfigurationProvider>)
     const toggle = screen.getByText('Accept')
