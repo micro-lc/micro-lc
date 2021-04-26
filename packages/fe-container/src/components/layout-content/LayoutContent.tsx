@@ -51,7 +51,7 @@ const LayoutCenter: React.FC = () => {
   })
 
   return (
-    <Layout.Content data-testid='layout-content'>
+    <Layout.Content className='layoutContent_container' data-testid='layout-content'>
       <Router history={history}>
         <Switch>
           <Route path={pluginsRoute}>

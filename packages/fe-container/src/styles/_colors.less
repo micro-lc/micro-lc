@@ -1,12 +1,29 @@
-@body-background: #e8e8e8;
-@overlay-background: rgba(0, 0, 0, 0.25);
-@layout-header-background: white;
-@menu-label-color: #666666;
-@menu-hover-bg-color: rgba(45, 168, 155, 0.2);
-@menu-user-logout-color: #f54b42;
-@error-page-text-color: #0E0E0E;
+@layout-body-background: var(--microlc-body-background);
 
 :root {
   --microlc-primary-color: #1890FF;
   --microlc-primary-color-tint-89: #E6F3FF;
+  --microlc-body-background: #FAFAFA;
+  --microlc-overlay-background: rgba(0, 0, 0, 0.25);
+  --microlc-layout-header-background: #FFFFFF;
+  --microlc-layout-header-border-color: #D4D4D4;
+  --microlc-menu-label-color: #AAAAAA;
+  --microlc-error-page-text-color: #0E0E0E;
+  --microlc-theme-slider-color: #FFE58F;
+  --microlc-top-bar-text-color: #858585;
+  --microlc-top-bar-divider-color: #D4D4D4;
+  --microlc-side-menu-background: #FFFFFF;
+}
+
+[dark-theme] {
+  --microlc-body-background: #858585;
+  --microlc-overlay-background: rgba(0, 0, 0, 0.25);
+  --microlc-layout-header-background: #666666;
+  --microlc-layout-header-border-color: #1E1E1E;
+  --microlc-menu-label-color: #FFFFFF;
+  --microlc-error-page-text-color: #FFFFFF;
+  --microlc-theme-slider-color: #FFE58F;
+  --microlc-top-bar-text-color: #FFFFFF;
+  --microlc-top-bar-divider-color: #1E1E1E;
+  --microlc-side-menu-background: #666666;
 }

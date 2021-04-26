@@ -50,7 +50,7 @@ const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) =>
         <Layout.Header className='launcher_header'>
           <TopBar/>
         </Layout.Header>
-        <Layout.Content>
+        <Layout.Content className='launcher_content_container'>
           <SideMenu plugins={configuration.plugins}/>
           <LayoutContent/>
         </Layout.Content>

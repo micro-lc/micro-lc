@@ -20,7 +20,10 @@ import {PluginStrategy} from './PluginStrategy'
 export function routeStrategy (plugin: Plugin): PluginStrategy {
   return {
     handlePluginLoad: () => {
-      history.push(plugin?.pluginRoute || '')
+      history.push('')
+      setTimeout(() => {
+        history.push(plugin?.pluginRoute || '')
+      })
     }
   }
 }
