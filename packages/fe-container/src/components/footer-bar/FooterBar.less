@@ -4,7 +4,8 @@
   width: 100%;
   height: @footer-bar-height;
   display: flex;
-  background: white;
+  background: var(--microlc-footer-background);
+  opacity: 0.9;
 
   & .cookies_svg {
     float: left;
@@ -13,6 +14,9 @@
     margin-right: @footer-margin;
     & .svg_primaryColor {
       fill: var(--microlc-primary-color);
+    }
+    & .cookie_border_color {
+      fill: var(--microlc-cookie-image-border);
     }
 
     & .svg_primaryColorTint89 {
@@ -30,9 +34,10 @@
       line-height: 26px;
       display: flex;
       flex-direction: column;
+      color: var(--microlc-footer-text-color);
     }
     a {
-      color: var(--microlc-primary-color);
+      color: var(--microlc-privacy-link-color);
     }
     & .footerBar_buttons {
       margin-bottom: @footer-margin;
@@ -41,16 +46,17 @@
       button {
         border-radius: 4px;
         margin-right: @footer-margin;
+        border-color: var(--microlc-primary-color);
       }
 
       .accept_button {
-        background: var(--microlc-primary-color);
-        border-color: var(--microlc-primary-color-tint-89);
+        background: var(--microlc-accept-button-background);
+        color: var(--microlc-accept-button-text);
       }
 
       .reject_button {
-        border-color: var(--microlc-primary-color);
-        color: var(--microlc-primary-color);
+        background: var(--microlc-decline-button-background);
+        color: var(--microlc-decline-button-text);
       }
     }
   }
