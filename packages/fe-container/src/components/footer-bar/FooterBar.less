@@ -6,15 +6,17 @@
   display: flex;
   background: var(--microlc-footer-background);
   opacity: 0.9;
+  padding: @footer-margin;
 
   & .cookies_svg {
-    float: left;
-    margin-top: @footer-margin;
-    margin-left: @footer-margin;
     margin-right: @footer-margin;
+    min-height: 46px;
+    min-width: 46px;
+
     & .svg_primaryColor {
       fill: var(--microlc-primary-color);
     }
+
     & .cookie_border_color {
       fill: var(--microlc-cookie-image-border);
     }
@@ -27,8 +29,6 @@
   & .footerBar_rightSide {
     display: flex;
     flex-direction: column;
-    float: left;
-    margin-top: @footer-margin;
 
     & .cookie_policy {
       display: flex;
@@ -41,11 +41,12 @@
       }
 
     }
+
     a {
       color: var(--microlc-primary-color);
     }
+
     & .footerBar_buttons {
-      margin-bottom: @footer-margin;
       margin-top: @footer-margin;
 
       button {
