@@ -48,6 +48,7 @@ test('Correctly switch from and to another qiankun plugin', async ({page}) => {
   await toggleSideMenu(page)
   await page.click('"Qiankun plugin 2"')
   await page.click('"Go to other qiankun plugin"')
+  await page.click('"Accept"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun2"')
   await page.click('"Go to other qiankun plugin"')
