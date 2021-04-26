@@ -8,9 +8,9 @@
 
   & .cookies_svg {
     float: left;
-    margin-top: 25px;
-    margin-left: 24px;
-    margin-right: 24px;
+    margin-top: @footer-margin;
+    margin-left: @footer-margin;
+    margin-right: @footer-margin;
     & .svg_primaryColor {
       fill: var(--microlc-primary-color);
     }
@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: column;
     float: left;
-    margin-top: 24px;
+    margin-top: @footer-margin;
 
     & .banner_text {
       line-height: 26px;
@@ -35,19 +35,21 @@
       color: var(--microlc-primary-color);
     }
     & .footerBar_buttons {
-      margin-bottom: 24px;
-      margin-top: 24px;
+      margin-bottom: @footer-margin;
+      margin-top: @footer-margin;
+
+      button {
+        border-radius: 4px;
+        margin-right: @footer-margin;
+      }
+
       .accept_button {
         background: var(--microlc-primary-color);
         border-color: var(--microlc-primary-color-tint-89);
-        margin-right: 24px;
-        border-radius: 4px;
       }
 
       .reject_button {
         border-color: var(--microlc-primary-color);
-        margin-right: 24px;
-        border-radius: 4px;
         color: var(--microlc-primary-color);
       }
     }

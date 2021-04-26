@@ -23,6 +23,8 @@ import RenderWithReactIntl from '../../__tests__/utils'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 
 describe('FooterBar tests', function () {
+  afterEach(() => window.localStorage.clear())
+
   const analytics = {
     privacyLink: 'https://www.mia-platform.eu/img/Privacy_Policy_Website_EN.pdf',
     disclaimer: 'Questo sito utilizza cookie proprietari e di terze parti per assicurarti la migliore esperienza di navigazione. Per ulteriori informazioni, leggi la ',
@@ -37,8 +39,7 @@ describe('FooterBar tests', function () {
       >
         <FooterBar/>
       </ConfigurationProvider>)
-    expect(screen.queryByTestId('footer')).toBeTruthy()
-    window.localStorage.clear()
+    expect(screen.queryByText('Accept')).toBeTruthy()
   })
 
   it('FooterBar is closing when cookies rejected', function () {
@@ -51,8 +52,8 @@ describe('FooterBar tests', function () {
       </ConfigurationProvider>)
     const toggle = screen.getByText('Decline')
     userEvent.click(toggle)
-    expect(screen.queryByTestId('footer')).not.toBeTruthy()
-    window.localStorage.clear()
+    expect(window.localStorage.getItem('gtmAccepted') === 'false').toBeTruthy()
+    expect(screen.queryByText('Accept')).not.toBeTruthy()
   })
 
   it('FooterBar is closing when cookies accepted', function () {
@@ -65,8 +66,8 @@ describe('FooterBar tests', function () {
       </ConfigurationProvider>)
     const toggle = screen.getByText('Accept')
     userEvent.click(toggle)
-    expect(screen.queryByTestId('footer')).not.toBeTruthy()
-    window.localStorage.clear()
+    expect(window.localStorage.getItem('gtmAccepted') === 'true').toBeTruthy()
+    expect(screen.queryByText('Accept')).not.toBeTruthy()
   })
 
   it('FooterBar is not showing when cookies already accepted', function () {
@@ -80,14 +81,13 @@ describe('FooterBar tests', function () {
       >
         <FooterBar/>
       </ConfigurationProvider>)
-    expect(screen.queryByTestId('footer')).not.toBeTruthy()
-    window.localStorage.clear()
+    expect(screen.queryByText('Accept')).not.toBeTruthy()
   })
 
   it('FooterBar is not showing when analytics not passed inside configuration', function () {
     RenderWithReactIntl(
       <FooterBar/>
     )
-    expect(screen.queryByTestId('footer')).not.toBeTruthy()
+    expect(screen.queryByText('Accept')).not.toBeTruthy()
   })
 })

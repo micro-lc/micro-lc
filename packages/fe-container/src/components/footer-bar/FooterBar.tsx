@@ -33,18 +33,16 @@ export const FooterBar: React.FC = () => {
 
   useEffect(() => {
     if (configuration.analytics && analyticsSettings.hasUserAccepted) {
-      saveSettings(analyticsSettings)
       const {gtmId} = configuration.analytics
       TagManager.initialize({gtmId})
-    } else {
-      saveSettings(analyticsSettings)
     }
+    saveSettings(analyticsSettings)
   }, [configuration, analyticsSettings])
 
   return (
     <>
       { configuration.analytics && !analyticsSettings.hasUserResponded &&
-        <div className='footerBar_container' data-testid='footer'>
+        <div className='footerBar_container'>
           <Cookies className='cookies_svg'/>
           <div className='footerBar_rightSide'>
             <AnalyticsDisclaimer/>
@@ -90,10 +88,10 @@ const AnalyticsButtons: React.FC<AnalyticsButtonProps> = ({setAnalyticsSettings}
 
   return (
     <div className='footerBar_buttons'>
-      <Button className="accept_button" data-testid='accept_button' onClick={answerHandler(true)} type='primary'>
+      <Button className="accept_button" onClick={answerHandler(true)} type='primary'>
         <FormattedMessage id="accept_button"/>
       </Button>
-      <Button className="reject_button" data-testid='reject_button' onClick={answerHandler(false)}>
+      <Button className="reject_button" onClick={answerHandler(false)}>
         <FormattedMessage id="decline_button"/>
       </Button>
     </div>

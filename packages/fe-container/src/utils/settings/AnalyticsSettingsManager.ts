@@ -29,6 +29,6 @@ export const retrieveAnalyticsSettings: () => AnalyticsSettings = () => {
 }
 
 export const saveSettings = (analyticsSettings: AnalyticsSettings) => {
-  const savedValue = analyticsSettings.hasUserAccepted ? 'true' : 'false'
+  const savedValue = analyticsSettings.hasUserAccepted.toString()
   localStorage.setItem(ANALYTICS_STORAGE_KEY, savedValue)
 }
