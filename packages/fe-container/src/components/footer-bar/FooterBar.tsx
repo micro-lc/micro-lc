@@ -36,7 +36,7 @@ export const FooterBar: React.FC = () => {
       const {gtmId} = configuration.analytics
       TagManager.initialize({gtmId})
     }
-    saveSettings(analyticsSettings)
+    if (analyticsSettings.hasUserResponded) saveSettings(analyticsSettings)
   }, [configuration, analyticsSettings])
 
   return (
