@@ -28,6 +28,7 @@ jobs:
     - run: yarn fe-container coverage
     - name: Coveralls
       uses: coverallsapp/github-action@master
+      continue-on-error: true
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         path-to-lcov: '${{ env.context }}coverage/lcov.info'
