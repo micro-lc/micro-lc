@@ -81,6 +81,6 @@ const analytics = {
 }
 
 const helpMenu = {
-  documentationLink : 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+  helpLink : 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
 }
 module.exports = {theming, plugins, analytics, helpMenu}

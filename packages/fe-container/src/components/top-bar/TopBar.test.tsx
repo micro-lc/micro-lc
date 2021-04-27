@@ -62,7 +62,7 @@ describe('TopBar tests', function () {
     pluginUrl: '//localhost:8764'
   }]
   const helpMenu = {
-    documentationLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+    helpLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
   }
 
   it('TopBar is working', () => {

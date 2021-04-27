@@ -21,12 +21,15 @@ import './HelpIcon.less'
 
 export const HelpIcon: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
+  const mustShowHelpIcon = configuration?.helpMenu !== undefined
   const clickHandler = () => {
-    window.open(configuration.helpMenu?.documentationLink)
+    window.open(configuration.helpMenu?.helpLink)
   }
-  return (
+  if (mustShowHelpIcon) {
+    return (
     <div className='help_button_container' data-testid='help_button_test' onClick={clickHandler}>
         <i className='topBar_documentationLink far fa-question-circle' />
     </div>
-  )
+    )
+  } else return <></>
 }

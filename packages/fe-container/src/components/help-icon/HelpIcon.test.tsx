@@ -24,7 +24,7 @@ import RenderWithReactIntl from '../../__tests__/utils'
 
 describe('Help icon tests', () => {
   const helpMenu = {
-    documentationLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+    helpLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
   }
 
   it('Render without crash', () => {

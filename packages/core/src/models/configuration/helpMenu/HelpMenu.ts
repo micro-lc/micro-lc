@@ -19,12 +19,12 @@ import {FromSchema} from 'json-schema-to-ts'
 export const helpMenuSchema = {
   type: 'object',
   properties: {
-    documentationLink: {
+    helpLink: {
       type: 'string',
-      description: 'Link to the documentation page',
+      description: 'Link to the help page',
     },
   },
-  required: ['documentationLink'],
+  required: ['helpLink'],
   additionalProperties: false,
 } as const
 export type HelpMenu = FromSchema<typeof helpMenuSchema>

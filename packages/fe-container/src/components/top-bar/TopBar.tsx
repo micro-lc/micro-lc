@@ -29,7 +29,6 @@ export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
   const user = useContext(UserContext)
   const mustShowBurgerIcon = (configuration?.plugins || []).length > 1
-  const mustShowHelpIcon = configuration?.helpMenu && true
   const logo = configuration.theming?.logo
   const [logoDarkTheme, setLogoDarkTheme] = useState(false)
   const switchLogo = useCallback(() => {
@@ -46,11 +45,8 @@ export const TopBar: React.FC = () => {
         src={logoDarkTheme ? logo?.url_dark : logo?.url_light}
       />
       <div className='topBar_rightSide'>
-        {mustShowHelpIcon &&
-          <>
-            <HelpIcon/>
-            <Divider className='topBar_divider' type="vertical"/>
-          </>}
+        <HelpIcon/>
+        <Divider className='topBar_divider' type="vertical"/>
         <DarkModeSwitch toggleCallback ={switchLogo}/>
         {
           user.name &&
