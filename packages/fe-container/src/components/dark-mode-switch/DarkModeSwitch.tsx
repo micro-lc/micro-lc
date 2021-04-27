@@ -27,7 +27,7 @@ const Switch: React.FC<DarkModeSwitchProps> = ({toggleCallback}) => {
     isToggleChecked((oldValue) => !oldValue)
     toggleCallback()
     switchTheme()
-  }, [])
+  }, [toggleCallback])
 
   return (
     <label className="darkModeSwitch">
