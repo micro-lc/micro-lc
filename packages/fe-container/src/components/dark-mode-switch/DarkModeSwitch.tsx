@@ -25,7 +25,7 @@ const Switch: React.FC<SwitchProps> = ({toggleCallback}) => {
   const [toggleChecked, isToggleChecked] = useState(false)
   const toggleHandler = useCallback(() => {
     isToggleChecked((oldValue) => !oldValue)
-    if (toggleCallback) toggleCallback()
+    toggleCallback?.()
     switchTheme()
   }, [toggleCallback])
 

@@ -47,7 +47,7 @@ export const TopBar: React.FC = () => {
       <div className='topBar_rightSide'>
         <HelpIcon/>
         <Divider className='topBar_divider' type="vertical"/>
-        <DarkModeSwitch toggleCallback ={switchLogo}/>
+        <DarkModeSwitch toggleCallback= {switchLogo}/>
         {
           user.name &&
           <div className='topBar_userMenu'>

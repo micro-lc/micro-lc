@@ -25,11 +25,12 @@ export const HelpIcon: React.FC = () => {
   const clickHandler = () => {
     window.open(configuration.helpMenu?.helpLink)
   }
-  if (mustShowHelpIcon) {
-    return (
-    <div className='help_button_container' data-testid='help_button_test' onClick={clickHandler}>
-        <i className='topBar_documentationLink far fa-question-circle' />
-    </div>
-    )
-  } else return <></>
+  return (
+    <>
+    {mustShowHelpIcon &&
+      <div className='help_button_container' data-testid='help_button_test' onClick={clickHandler}>
+          <i className='topBar_documentationLink far fa-question-circle' />
+      </div>}
+    </>
+  )
 }
