@@ -13,12 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './Configuration'
-export * from './plugin/ExternalLink'
-export * from './plugin/Plugin'
-export * from './theming/Header'
-export * from './helpMenu/HelpMenu'
-export * from './theming/Logo'
-export * from './theming/Theming'
-export * from './analytics/Analytics'
-export * from './theming/Variables'
+
+import {FromSchema} from 'json-schema-to-ts'
+
+export const helpMenuSchema = {
+  type: 'object',
+  properties: {
+    documentationLink: {
+      type: 'string',
+      description: 'Link to the documentation page',
+    },
+  },
+  required: ['documentationLink'],
+  additionalProperties: false,
+} as const
+export type HelpMenu = FromSchema<typeof helpMenuSchema>

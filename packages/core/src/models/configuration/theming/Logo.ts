@@ -18,16 +18,20 @@ import {FromSchema} from 'json-schema-to-ts'
 export const logoSchema = {
   type: 'object',
   properties: {
-    url: {
+    url_light: {
       type: 'string',
-      description: 'Logo url',
+      description: 'Light logo url',
+    },
+    url_dark: {
+      type: 'string',
+      description: 'Dark logo url',
     },
     alt: {
       type: 'string',
       description: 'Logo alt',
     },
   },
-  required: ['url', 'alt'],
+  required: ['url_light', 'alt'],
 } as const
 
 export type Logo = FromSchema<typeof logoSchema>

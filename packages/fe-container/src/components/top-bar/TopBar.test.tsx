@@ -23,6 +23,10 @@ import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {Plugin} from '@mia-platform/core'
 
+jest.mock('@utils/theme/ThemeManager', () => ({
+  switchTheme: jest.fn()
+}))
+
 describe('TopBar tests', function () {
   const theming = {
     header: {
@@ -31,7 +35,8 @@ describe('TopBar tests', function () {
     },
     logo: {
       alt: 'Mia Care',
-      url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
+      url_light: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
+      url_dark: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png'
     },
     variables: {
       primaryColor: 'red'
@@ -56,6 +61,9 @@ describe('TopBar tests', function () {
     pluginRoute: '/qiankun',
     pluginUrl: '//localhost:8764'
   }]
+  const helpMenu = {
+    documentationLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+  }
 
   it('TopBar is working', () => {
     RenderWithReactIntl(
@@ -71,6 +79,24 @@ describe('TopBar tests', function () {
     expect(screen.queryByTestId('company-logo')).toBeTruthy()
   })
 
+  it('TopBar logo changes with thema', async () => {
+    RenderWithReactIntl(
+      <ConfigurationProvider value={{theming}}>
+        <MenuOpenedProvider value={{
+          isMenuOpened: false,
+          setMenuOpened: () => {
+          }
+        }}
+        >
+          <TopBar/>
+        </MenuOpenedProvider>
+      </ConfigurationProvider>
+    )
+    const image = screen.getAllByTestId('company-logo')[0]
+    await userEvent.click(screen.getByTestId('dark-theme-toggle'))
+    expect(image).toHaveAttribute('src', 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png')
+  })
+
   it('Closed TopBar is opening', () => {
     const mockBurgerClick = jest.fn(isToggled => {
     })
@@ -79,7 +105,8 @@ describe('TopBar tests', function () {
 
       <ConfigurationProvider value={{
         theming,
-        plugins
+        plugins,
+        helpMenu
       }}
       >
         <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
@@ -100,7 +127,8 @@ describe('TopBar tests', function () {
 
       <ConfigurationProvider value={{
         theming,
-        plugins
+        plugins,
+        helpMenu
       }}
       >
         <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>

@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from 'react'
+import React, {useContext} from 'react'
 
-import {DOCUMENTATION_URL} from '@constants'
+import {ConfigurationContext} from '@contexts/Configuration.context'
+
 import './HelpIcon.less'
 
-const clickHandler = () => {
-  window.open(DOCUMENTATION_URL)
-}
-
 export const HelpIcon: React.FC = () => {
+  const configuration = useContext(ConfigurationContext)
+  const clickHandler = () => {
+    window.open(configuration.helpMenu?.documentationLink)
+  }
   return (
     <div className='help_button_container' data-testid='help_button_test' onClick={clickHandler}>
         <i className='topBar_documentationLink far fa-question-circle' />

@@ -12,13 +12,13 @@ jest.mock('@utils/theme/ThemeManager', () => ({
 
 describe('DarkModeSwitch tests', () => {
   it('Has left and right label', () => {
-    RenderWithReactIntl(<DarkModeSwitch/>)
+    RenderWithReactIntl(<DarkModeSwitch toggleCallback ={() => {}}/>)
     expect(screen.findByDisplayValue('Light')).toBeTruthy()
     expect(screen.findByDisplayValue('Dark')).toBeTruthy()
   })
 
   it('Toggle calls the switchTheme', async () => {
-    RenderWithReactIntl(<DarkModeSwitch/>)
+    RenderWithReactIntl(<DarkModeSwitch toggleCallback ={() => {}}/>)
     await userEvent.click(screen.getByTestId('dark-theme-toggle'))
     expect(switchTheme).toHaveBeenCalled()
   })

@@ -5,7 +5,8 @@ const theming =  {
     },
     logo: {
       alt: 'Mia Care',
-      url: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI'
+      url_light: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
+      url_dark : 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png'
     },
     variables: {
       primaryColor: 'red'
@@ -78,4 +79,8 @@ const analytics = {
   disclaimer: 'Questo sito utilizza cookie proprietari e di terze parti per assicurarti la migliore esperienza di navigazione. Per ulteriori informazioni, leggi la ',
   gtmId: 'GTM-000000'
 }
-module.exports = {theming, plugins, analytics}
+
+const helpMenu = {
+  documentationLink : 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+}
+module.exports = {theming, plugins, analytics, helpMenu}
