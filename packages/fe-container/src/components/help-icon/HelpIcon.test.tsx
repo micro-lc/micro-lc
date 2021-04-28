@@ -19,18 +19,30 @@ import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import {HelpIcon} from '@components/help-icon/HelpIcon'
+import {ConfigurationProvider} from '@contexts/Configuration.context'
 import RenderWithReactIntl from '../../__tests__/utils'
 
 describe('Help icon tests', () => {
+  const helpMenu = {
+    helpLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+  }
+
   it('Render without crash', () => {
-    RenderWithReactIntl(<HelpIcon/>)
+    RenderWithReactIntl(
+    <ConfigurationProvider value={{helpMenu}}>
+      <HelpIcon/>
+    </ConfigurationProvider>)
     expect(screen.findByTestId('help_button_test')).toBeTruthy()
   })
 
   it('Open new window with the url', async () => {
     window.open = jest.fn()
-    RenderWithReactIntl(<HelpIcon/>)
-    userEvent.click(await screen.findByTestId('help_button_test'))
+    RenderWithReactIntl(
+    <ConfigurationProvider value={{helpMenu}}>
+      <HelpIcon/>
+    </ConfigurationProvider>)
+    const toggle = screen.getByTestId('help_button_test')
+    userEvent.click(toggle)
     expect(window.open).toBeCalledWith('https://docs.mia-platform.eu/docs/business_suite/microlc/overview')
   })
 })

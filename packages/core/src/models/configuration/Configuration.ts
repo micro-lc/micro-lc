@@ -16,6 +16,7 @@
 import {FromSchema} from 'json-schema-to-ts'
 
 import {analyticsSchema} from './analytics/Analytics'
+import {helpMenuSchema} from './helpMenu/HelpMenu'
 import {pluginSchema} from './plugin/Plugin'
 import {themingSchema} from './theming/Theming'
 
@@ -28,6 +29,7 @@ export const configurationSchema = {
       items: pluginSchema,
     },
     analytics: analyticsSchema,
+    helpMenu: helpMenuSchema,
   },
 } as const
 

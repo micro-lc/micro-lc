@@ -1,26 +1,33 @@
 import React, {useCallback, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
+import PropTypes from 'prop-types'
 
 import {switchTheme} from '@utils/theme/ThemeManager'
 
 import './DarkModeSwitch.less'
 
-export const DarkModeSwitch: React.FC = () => {
+const switchProps = {
+  toggleCallback: PropTypes.func
+}
+
+type SwitchProps = PropTypes.InferProps<typeof switchProps>
+export const DarkModeSwitch: React.FC<SwitchProps> = ({toggleCallback}) => {
   return (
     <>
       <FormattedMessage id='light'/>
-      <Switch/>
+      <Switch toggleCallback={toggleCallback}/>
       <FormattedMessage id='dark'/>
     </>
   )
 }
 
-const Switch: React.FC = () => {
+const Switch: React.FC<SwitchProps> = ({toggleCallback}) => {
   const [toggleChecked, isToggleChecked] = useState(false)
   const toggleHandler = useCallback(() => {
     isToggleChecked((oldValue) => !oldValue)
+    toggleCallback?.()
     switchTheme()
-  }, [])
+  }, [toggleCallback])
 
   return (
     <label className="darkModeSwitch">
@@ -29,3 +36,6 @@ const Switch: React.FC = () => {
     </label>
   )
 }
+
+DarkModeSwitch.propTypes = switchProps
+Switch.propTypes = switchProps
