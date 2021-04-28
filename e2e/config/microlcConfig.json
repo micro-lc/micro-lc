@@ -6,7 +6,8 @@
     },
     "logo": {
       "alt": "Mia Care",
-      "url": "https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI"
+      "url_light_image": "https://media-exp1.licdn.com/dms/image/C4D0BAQEf8hJ29mN6Gg/company-logo_200_200/0/1615282397253?e=2159024400&v=beta&t=tQixwAMJ5po8IkukxMyFfeCs-t-zZjyPgDfdy12opvI",
+      "navigation_url": "https://www.google.com"
     },
     "variables": {
       "primaryColor": "red"

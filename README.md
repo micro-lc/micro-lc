@@ -7,7 +7,7 @@
 **The Mia-Platform micro frontend solution**
 
 **Microlc** enables you to create modular applications composed by multiple, independent [micro frontends][micro-frontends]
-called *plugins* integrated at runtime. Microlc consists of a core interface that loads, embeds, and orchestrates plugins, while
+called _plugins_ integrated at runtime. Microlc consists of a core interface that loads, embeds, and orchestrates plugins, while
 providing configuration options and useful out-of-the-box features.
 
 The core components are written in Typescript and React, microlc is technology-agnostic, which means that it integrates
@@ -37,7 +37,7 @@ Once you have all the dependency in place, you can launch:
 yarn install
 ```
 
-This command will install the dependencies for every workspace and will trigger a build of the [core](./packages/core/README.md) 
+This command will install the dependencies for every workspace and will trigger a build of the [core](./packages/core/README.md)
 workspace.
 
 ### Start the project
@@ -50,7 +50,7 @@ yarn dev
 
 ### Run a package script
 
-To run a script in a workspace, you can run `yarn workspace PACKAGE_NAME SCRIPT_NAME`. For example, to run tests in 
+To run a script in a workspace, you can run `yarn workspace PACKAGE_NAME SCRIPT_NAME`. For example, to run tests in
 [fe-container](./packages/fe-container/README.md) you should run:
 
 ```shell
@@ -62,6 +62,34 @@ or you can use the shortcut:
 ```shell
 yarn fe-container test
 ```
+
+### Run tests e2e
+
+To run the e2e tests you should first of all run inside the `fe-container` directory the command
+
+```shell
+docker build -t miaplatform/microlc .
+```
+
+to build the docker container for the frontend and than inside the `main` directory
+
+```shell
+docker build -f packages/be-config/Dockerfile -t miaplatform/microlc-config-manager .
+```
+
+Once done it you will be able to run inside the `e2e` directory the
+
+```shell
+docker-compose up
+```
+
+command that let you luch without problems
+
+```shell
+yarn e2e
+```
+
+to run your tests
 
 [micro-frontends]: https://micro-frontends.org/
 [workspaces]: https://classic.yarnpkg.com/en/docs/workspaces/

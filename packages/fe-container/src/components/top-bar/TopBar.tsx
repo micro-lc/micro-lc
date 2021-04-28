@@ -33,7 +33,7 @@ export const TopBar: React.FC = () => {
   const [logoDarkTheme, setLogoDarkTheme] = useState(false)
 
   const logoClickHandler = () => {
-    window.open(configuration.theming?.logo.navigation_url, '_self')
+    window.open(configuration.theming?.logo.navigation_url)
   }
   const switchLogo = useCallback(() => {
     setLogoDarkTheme((oldValue) => !oldValue)

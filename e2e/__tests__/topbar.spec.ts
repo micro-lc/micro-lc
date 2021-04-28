@@ -23,4 +23,11 @@ test('Logo is loaded correctly', async ({page}) => {
   await waitMicrolcLoaded(page)
   const logoSrc = await page.$eval(logoSelector, (element) => element.getAttribute('src'))
   expect(logoSrc).toBe(logoUrl)
-});
+})
+
+test('Logo when clicked open a new page', async({page})=>{
+  await waitMicrolcLoaded(page)
+  const initialUrl = page.url()
+  const logo = await page.click(logoSelector)
+  expect(page.url()).toBe(initialUrl)
+})

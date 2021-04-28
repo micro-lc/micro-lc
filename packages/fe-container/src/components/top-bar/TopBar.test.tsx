@@ -151,6 +151,6 @@ describe('TopBar tests', function () {
     </ConfigurationProvider>)
     const toggle = screen.getByTestId('company-logo')
     await userEvent.click(toggle)
-    expect(window.open).toBeCalledWith(theming.logo.navigation_url, '_self')
+    expect(window.open).toBeCalledWith(theming.logo.navigation_url)
   })
 })
