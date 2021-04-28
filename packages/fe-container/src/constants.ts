@@ -31,8 +31,6 @@ export const INTEGRATION_METHODS = {
   QIANKUN: 'qiankun'
 }
 
-export const DOCUMENTATION_URL = 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
-
 export const COLORS = {
   primaryColor: '--microlc-primary-color',
   tint89Color: '--microlc-primary-color-tint-89'
@@ -49,3 +47,8 @@ export const ERROR_PATH = {
 export const DARK_THEME_ATTRIBUTE = 'dark-theme'
 
 export const ANALYTICS_STORAGE_KEY = 'gtmAccepted'
+
+export const MENU_LOCATION = {
+  sideBar: 'sideBar',
+  topBar: 'topBar'
+}
