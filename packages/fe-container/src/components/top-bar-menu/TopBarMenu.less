@@ -1,0 +1,35 @@
+@import '../../styles/_variables';
+
+.topBarMenu_container  {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: space-around;
+  max-height: @top-bar-height;
+
+  & .topBarMenu_entry {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    cursor: pointer;
+
+    & .topBarMenuEntry_icon {
+      font-size: @top-bar-icon-size;
+      display: none;
+      color: var(--microlc-primary-color);
+      @media (max-width: 1280px) {
+        display: initial;
+      }
+    }
+
+    & .topBarMenuEntry_text {
+      color: var(--microlc-menu-label-color);
+      display: none;
+      @media (min-width: 1280px) {
+        display: initial;
+      }
+    }
+
+  }
+}

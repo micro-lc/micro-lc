@@ -62,8 +62,10 @@ const SideMenuEntry: React.FC<Plugin> = (plugin) => {
     return history.listen(() => setIsActive(isPluginLoaded(plugin)))
   }, [plugin])
 
+  const sideMenuVoiceClasses = classNames('sideMenu_voice', {active: isActive})
+
   return (
-    <div className={'sideMenu_voice ' + (isActive ? 'active' : '')} onClick={pluginStrategy.handlePluginLoad}>
+    <div className={sideMenuVoiceClasses} onClick={pluginStrategy.handlePluginLoad}>
       <i className={'sideMenu_icon ' + (plugin.icon || '')}/>
       <div className='sideMenu_entry'>
         <span className='sideMenu_label'>{plugin.label}</span>

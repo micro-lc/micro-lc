@@ -79,7 +79,7 @@ describe('TopBar tests', function () {
     expect(screen.queryByTestId('company-logo')).toBeTruthy()
   })
 
-  it('TopBar logo changes with thema', async () => {
+  it('TopBar logo changes with theme', async () => {
     RenderWithReactIntl(
       <ConfigurationProvider value={{theming}}>
         <MenuOpenedProvider value={{

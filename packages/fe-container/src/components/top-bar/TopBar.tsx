@@ -24,11 +24,11 @@ import {UserContext} from '@contexts/User.context'
 
 import './TopBar.less'
 import {DarkModeSwitch} from '../dark-mode-switch/DarkModeSwitch'
+import {TopBarMenu} from '@components/top-bar-menu/TopBarMenu'
 
 export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
   const user = useContext(UserContext)
-  const mustShowBurgerIcon = (configuration?.plugins || []).length > 1
   const logo = configuration.theming?.logo
   const [logoDarkTheme, setLogoDarkTheme] = useState(false)
   const switchLogo = useCallback(() => {
@@ -37,13 +37,14 @@ export const TopBar: React.FC = () => {
 
   return (
     <div className='topBar_container'>
-      {mustShowBurgerIcon && <BurgerIcon/>}
+      <BurgerIcon/>
       <img
         alt={configuration.theming?.logo.alt || 'Logo'}
         className='logo'
         data-testid='company-logo'
         src={logoDarkTheme ? logo?.url_dark : logo?.url_light}
       />
+      <TopBarMenu/>
       <div className='topBar_rightSide'>
         <HelpIcon/>
         <Divider className='topBar_divider' type="vertical"/>
