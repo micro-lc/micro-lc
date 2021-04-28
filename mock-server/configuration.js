@@ -5,8 +5,9 @@ const theming =  {
     },
     logo: {
       alt: 'Mia Care',
-      url_light: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
-      url_dark : 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png'
+      url_light_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
+      url_dark_image : 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png',
+      navigation_url: 'https://www.google.com'
     },
     variables: {
       primaryColor: 'red'

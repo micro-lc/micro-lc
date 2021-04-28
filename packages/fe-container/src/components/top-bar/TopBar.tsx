@@ -31,6 +31,10 @@ export const TopBar: React.FC = () => {
   const mustShowBurgerIcon = (configuration?.plugins || []).length > 1
   const logo = configuration.theming?.logo
   const [logoDarkTheme, setLogoDarkTheme] = useState(false)
+
+  const logoClickHandler = () => {
+    window.open(configuration.theming?.logo.navigation_url, '_self')
+  }
   const switchLogo = useCallback(() => {
     setLogoDarkTheme((oldValue) => !oldValue)
   }, [])
@@ -42,7 +46,8 @@ export const TopBar: React.FC = () => {
         alt={configuration.theming?.logo.alt || 'Logo'}
         className='logo'
         data-testid='company-logo'
-        src={logoDarkTheme ? logo?.url_dark : logo?.url_light}
+        onClick = {logoClickHandler}
+        src={logoDarkTheme ? logo?.url_dark_image : logo?.url_light_image}
       />
       <div className='topBar_rightSide'>
         <HelpIcon/>

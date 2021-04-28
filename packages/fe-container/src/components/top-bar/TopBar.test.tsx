@@ -35,8 +35,10 @@ describe('TopBar tests', function () {
     },
     logo: {
       alt: 'Mia Care',
-      url_light: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
-      url_dark: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png'
+      url_light_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
+      url_dark_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png',
+      _image_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png',
+      navigation_url: 'https://www.google.com'
     },
     variables: {
       primaryColor: 'red'
@@ -94,7 +96,7 @@ describe('TopBar tests', function () {
     )
     const image = screen.getAllByTestId('company-logo')[0]
     await userEvent.click(screen.getByTestId('dark-theme-toggle'))
-    expect(image).toHaveAttribute('src', 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png')
+    expect(image).toHaveAttribute('src', theming.logo.url_dark_image)
   })
 
   it('Closed TopBar is opening', () => {
@@ -139,5 +141,16 @@ describe('TopBar tests', function () {
     const toggle = screen.getByTestId('top-bar-side-menu-toggle')
     userEvent.click(toggle)
     expect(mockBurgerClick.mock.calls[0][0]).not.toBeTruthy()
+  })
+
+  it('Logo on click Open new window with the url', async () => {
+    window.open = jest.fn()
+    RenderWithReactIntl(
+    <ConfigurationProvider value={{theming}}>
+      <TopBar/>
+    </ConfigurationProvider>)
+    const toggle = screen.getByTestId('company-logo')
+    await userEvent.click(toggle)
+    expect(window.open).toBeCalledWith(theming.logo.navigation_url, '_self')
   })
 })
