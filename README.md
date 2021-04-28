@@ -2,6 +2,12 @@
 
 # Micro Launch Complex
 
+[![Build Status][github-actions-svg]][github-actions]
+[![javascript style guide][standard-mia-svg]][standard-mia]
+[![Coverage Status][coverall-svg]][coverall-io]
+[![Docker fe pull][docker-frontend-pull-svg]][docker-frontend-pull]
+[![Docker be pull][docker-backend-pull-svg]][docker-backend-pull]
+
 </div>
 
 **The Mia-Platform micro frontend solution**
@@ -96,3 +102,13 @@ to run your tests
 [lerna]: https://github.com/lerna/lerna
 [nvm]: https://github.com/creationix/nvm
 [mock-server]: https://github.com/staticdeploy/mock-server
+[standard-mia-svg]: https://img.shields.io/badge/code_style-standard--mia-orange.svg
+[standard-mia]: https://github.com/mia-platform/eslint-config-mia
+[coverall-svg]: https://coveralls.io/repos/github/mia-platform/microlc/badge.svg
+[coverall-io]: https://coveralls.io/github/mia-platform/microlc
+[docker-frontend-pull]: https://hub.docker.com/r/miaplatform/microlc
+[docker-frontend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc
+[docker-backend-pull]: https://hub.docker.com/r/miaplatform/microlc-config-manager
+[docker-backend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc-config-manager
+[github-actions]: https://github.com/mia-platform/microlc/actions
+[github-actions-svg]: https://img.shields.io/github/workflow/status/mia-platform/microlc/Node.js%20fe-container%20CI
