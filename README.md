@@ -107,8 +107,8 @@ to run your tests
 [coverall-svg]: https://coveralls.io/repos/github/mia-platform/microlc/badge.svg
 [coverall-io]: https://coveralls.io/github/mia-platform/microlc
 [docker-frontend-pull]: https://hub.docker.com/r/miaplatform/microlc
-[docker-frontend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc
+[docker-frontend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc?label=Frontend%20pulls
 [docker-backend-pull]: https://hub.docker.com/r/miaplatform/microlc-config-manager
-[docker-backend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc-config-manager
+[docker-backend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc-config-manager?label=Backend%20pulls
 [github-actions]: https://github.com/mia-platform/microlc/actions
 [github-actions-svg]: https://img.shields.io/github/workflow/status/mia-platform/microlc/Node.js%20fe-container%20CI
