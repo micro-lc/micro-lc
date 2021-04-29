@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react'
-import {screen} from '@testing-library/react'
+import {cleanup, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import {TopBar} from './TopBar'
@@ -28,16 +28,19 @@ jest.mock('@utils/theme/ThemeManager', () => ({
 }))
 
 describe('TopBar tests', function () {
+  afterEach(cleanup)
+  const URL_LIGHT_IMAGE = 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png'
+  const URL_DARK_IMAGE = 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png'
+
   const theming = {
     header: {
-      pageTitle: 'Mia Care',
+      pageTitle: 'My Company',
       favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
     },
     logo: {
-      alt: 'Mia Care',
-      url_light_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
-      url_dark_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png',
-      _image_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png',
+      alt: 'My Company',
+      url_light_image: URL_LIGHT_IMAGE,
+      url_dark_image: URL_DARK_IMAGE,
       navigation_url: 'https://www.google.com'
     },
     variables: {
@@ -96,7 +99,7 @@ describe('TopBar tests', function () {
     )
     const image = screen.getAllByTestId('company-logo')[0]
     await userEvent.click(screen.getByTestId('dark-theme-toggle'))
-    expect(image).toHaveAttribute('src', theming.logo.url_dark_image)
+    expect(image).toHaveAttribute('src', URL_DARK_IMAGE)
   })
 
   it('Closed TopBar is opening', () => {
@@ -151,6 +154,6 @@ describe('TopBar tests', function () {
     </ConfigurationProvider>)
     const toggle = screen.getByTestId('company-logo')
     await userEvent.click(toggle)
-    expect(window.open).toBeCalledWith(theming.logo.navigation_url)
+    expect(window.open).toBeCalledWith(theming.logo.navigation_url, '_self')
   })
 })

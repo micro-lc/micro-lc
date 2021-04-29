@@ -28,7 +28,7 @@ describe('microlc configuration service test', () => {
   const configurationMock = {
     theming: {
       header: {
-        pageTitle: 'Mia Care',
+        pageTitle: 'My Company',
         favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
       },
       variables: {},

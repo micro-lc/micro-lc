@@ -30,9 +30,9 @@ describe('LayoutContent tests', () => {
       <ConfigurationProvider
         value={{
           theming: {
-            header: {pageTitle: 'Mia Care', favicon: 'favicon_url'},
+            header: {pageTitle: 'My Company', favicon: 'favicon_url'},
             variables: {},
-            logo: {url: 'logo_url', alt: 'logo'}
+            logo: {url_light_image: 'logo_url', alt: 'logo'}
           },
           plugins: [
             {
@@ -94,9 +94,9 @@ describe('LayoutContent tests', () => {
       <ConfigurationProvider
         value={{
           theming: {
-            header: {pageTitle: 'Mia Care', favicon: 'favicon_url'},
+            header: {pageTitle: 'My Company', favicon: 'favicon_url'},
             variables: {},
-            logo: {url: 'logo_url', alt: 'logo'}
+            logo: {url_light_image: 'logo_url', alt: 'logo'}
           }
         }}
       >

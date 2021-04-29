@@ -28,7 +28,7 @@ describe('ThemeManager tests', () => {
     return {
       theming: {
         header: {
-          pageTitle: 'Mia Care',
+          pageTitle: 'My Company',
           favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
         },
         variables: {
@@ -36,7 +36,7 @@ describe('ThemeManager tests', () => {
         },
         logo: {
           alt: 'alt-logo',
-          url: 'logo_url'
+          url_light_image: 'logo_url'
         }
       },
       plugins: []
@@ -46,7 +46,7 @@ describe('ThemeManager tests', () => {
   it('Document title applied', () => {
     expect(document.title).toBe('')
     manageTheming(configurationBuilder())
-    expect(document.title).toBe('Mia Care')
+    expect(document.title).toBe('My Company')
   })
 
   it('Document title is not applied', () => {
@@ -57,7 +57,7 @@ describe('ThemeManager tests', () => {
         variables: {},
         logo: {
           alt: 'alt-logo',
-          url: 'logo_url'
+          url_light_image: 'logo_url'
         }
       },
       plugins: []

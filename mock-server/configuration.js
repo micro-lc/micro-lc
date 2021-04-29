@@ -1,10 +1,10 @@
 const theming =  {
     header: {
-      pageTitle: 'Mia Care',
+      pageTitle: 'My Company',
       favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
     },
     logo: {
-      alt: 'Mia Care',
+      alt: 'My Company',
       url_light_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
       url_dark_image : 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png',
       navigation_url: 'https://www.google.com'

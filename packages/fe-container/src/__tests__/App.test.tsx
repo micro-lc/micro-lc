@@ -43,7 +43,7 @@ describe('App test', () => {
       .reply(200, {
         theming: {
           header: {
-            pageTitle: 'Mia Care',
+            pageTitle: 'My Company',
             favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
           },
           variables: {},
@@ -108,7 +108,7 @@ describe('App test', () => {
     // @ts-ignore
     const retrieveEntryClasses = () => screen.getByText('Href entry').parentElement.parentElement.parentElement.parentElement.classList
 
-    expect(global.window.document.title).toEqual('Mia Care')
+    expect(global.window.document.title).toEqual('My Company')
 
     expect(retrieveEntryClasses()).not.toContain('opened')
 

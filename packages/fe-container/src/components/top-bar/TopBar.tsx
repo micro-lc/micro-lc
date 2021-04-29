@@ -33,19 +33,19 @@ export const TopBar: React.FC = () => {
   const [logoDarkTheme, setLogoDarkTheme] = useState(false)
 
   const logoClickHandler = useCallback(() => {
-    window.open(configuration.theming?.logo.navigation_url)
-  }, [configuration])
+    logo?.navigation_url && window.open(logo?.navigation_url, '_self')
+  }, [logo])
 
   const switchLogo = useCallback(() => {
-    setLogoDarkTheme((oldValue) => !oldValue)
-  }, [])
+    logo?.url_dark_image && setLogoDarkTheme((oldValue) => !oldValue)
+  }, [logo])
 
   return (
     <div className='topBar_container'>
       {mustShowBurgerIcon && <BurgerIcon/>}
       <img
-        alt={configuration.theming?.logo.alt || 'Logo'}
-        className='logo'
+        alt={logo?.alt || 'Logo'}
+        className={logo?.navigation_url ? 'logo_with_navigation' : 'logo'}
         data-testid='company-logo'
         onClick = {logoClickHandler}
         src={logoDarkTheme ? logo?.url_dark_image : logo?.url_light_image}
