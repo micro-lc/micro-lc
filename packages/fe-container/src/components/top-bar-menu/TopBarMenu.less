@@ -13,21 +13,42 @@
     justify-content: space-between;
     overflow: hidden;
     cursor: pointer;
+    padding-left: 11px;
+    padding-right: 11px;
+
+    &.active {
+      background: var(--microlc-primary-color-tint-89);
+      margin-bottom: @menu-entry-active-border;
+      box-shadow: 0 @menu-entry-active-border var(--microlc-primary-color);
+
+      .topBarMenuEntry_text {
+        color: var(--microlc-primary-color);
+      }
+    }
 
     & .topBarMenuEntry_icon {
+      height: @top-bar-height;
       font-size: @top-bar-icon-size;
-      display: none;
       color: var(--microlc-primary-color);
+      display: none;
+      justify-content: center;
+      flex-direction: column;
+
       @media (max-width: 1280px) {
-        display: initial;
+        display: flex;
       }
     }
 
     & .topBarMenuEntry_text {
       color: var(--microlc-menu-label-color);
       display: none;
+
       @media (min-width: 1280px) {
         display: initial;
+      }
+
+      &:hover {
+        color: var(--microlc-primary-color);
       }
     }
 

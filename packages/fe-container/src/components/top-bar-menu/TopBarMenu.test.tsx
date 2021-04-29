@@ -16,21 +16,21 @@
 import React from 'react'
 import {screen} from '@testing-library/react'
 import {Plugin} from '@mia-platform/core'
+import userEvent from '@testing-library/user-event'
 
 import RenderWithReactIntl from '../../__tests__/utils'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {TopBarMenu} from '@components/top-bar-menu/TopBarMenu'
-import {expect} from '@playwright/test'
+import {registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
 
 describe('TopBarMenu tests', () => {
   const plugin: Plugin = {
     id: 'plugin-test-3',
-    label: 'Qiankun entry',
+    label: 'Href entry',
     icon: 'clipboard',
     order: 3,
-    integrationMode: 'qiankun',
-    pluginRoute: '/qiankunTest',
-    pluginUrl: 'http://localhost:8764'
+    integrationMode: 'href',
+    externalLink: {sameWindow: false, url: 'https://google.it'}
   }
 
   const configurationsBuilder = (menuLocation: 'sideBar' | 'topBar' | undefined, plugins: Plugin[] | undefined) => ({
@@ -94,6 +94,19 @@ describe('TopBarMenu tests', () => {
         <TopBarMenu/>
       </ConfigurationProvider>
     )
-    expect(screen.getByText('Qiankun entry')).toBeTruthy()
+    expect(screen.getByText('Href entry')).toBeTruthy()
+  })
+
+  it('Click correctly route to iframe', () => {
+    window.open = jest.fn()
+    const configuration = configurationsBuilder('topBar', [plugin])
+    registerPlugin(plugin)
+    RenderWithReactIntl(
+      <ConfigurationProvider value={configuration}>
+        <TopBarMenu/>
+      </ConfigurationProvider>
+    )
+    userEvent.click(screen.getByText('Href entry'))
+    expect(window.open).toBeCalledWith('https://google.it')
   })
 })
