@@ -97,7 +97,7 @@ describe('TopBarMenu tests', () => {
     expect(screen.getByText('Href entry')).toBeTruthy()
   })
 
-  it('Click correctly route to iframe', () => {
+  it('Click correctly route to new tab', () => {
     window.open = jest.fn()
     const configuration = configurationsBuilder('topBar', [plugin])
     registerPlugin(plugin)
