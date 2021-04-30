@@ -96,7 +96,7 @@ describe('Test useAppData hook', () => {
 
     const theming = {
       header: {
-        pageTitle: 'Mia Care',
+        pageTitle: 'My Company',
         favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
       },
       variables: {
@@ -125,7 +125,7 @@ describe('Test useAppData hook', () => {
     const {result, waitForNextUpdate} = renderHook(() => useAppData())
     const expectedState = {isLoading: false, user, configuration: {theming, plugins: [plugin1, plugin2, plugin3]}}
     await waitForNextUpdate()
-    expect(document.title).toBe('Mia Care')
+    expect(document.title).toBe('My Company')
     // @ts-ignore
     expect(registerPlugin.mock.calls[0][0]).toMatchObject(plugin1)
     // @ts-ignore
