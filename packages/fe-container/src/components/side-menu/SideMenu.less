@@ -55,7 +55,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 11px 11px 11px 0;
+    padding: @menu-entry-padding @menu-entry-padding @menu-entry-padding 0;
 
     .sideMenu_label {
       color: var(--microlc-menu-label-color);
@@ -76,7 +76,7 @@
 
   &.active {
     background: var(--microlc-primary-color-tint-89);
-    box-shadow: inset 3px 0 0 0 var(--microlc-primary-color);
+    box-shadow: inset @menu-entry-active-border 0 0 0 var(--microlc-primary-color);
 
     .sideMenu_label {
       color: var(--microlc-primary-color);

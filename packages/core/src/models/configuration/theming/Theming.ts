@@ -25,6 +25,11 @@ export const themingSchema = {
     header: headerSchema,
     logo: logoSchema,
     variables: variablesSchema,
+    menuLocation: {
+      type: 'string',
+      enum: ['sideBar', 'topBar'],
+      default: 'sideBar',
+    },
   },
   required: ['logo', 'variables'],
   additionalProperties: false,

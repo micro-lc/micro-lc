@@ -28,6 +28,7 @@ import {LoadingAnimation} from '@components/loading-animation/LoadingAnimation'
 import {FooterBar} from '@components/footer-bar/FooterBar'
 
 import './Launcher.less'
+import {MENU_LOCATION} from '@constants'
 
 export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) => {
   return (
@@ -44,6 +45,8 @@ export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) =
 type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 
 const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) => {
+  const showSideBar = !configuration.theming || [undefined, MENU_LOCATION.sideBar].includes(configuration.theming.menuLocation)
+
   return (
     <AppProvider configuration={configuration} user={user}>
       <Layout>
@@ -51,7 +54,7 @@ const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) =>
           <TopBar/>
         </Layout.Header>
         <Layout.Content className='launcher_content_container'>
-          <SideMenu plugins={configuration.plugins}/>
+          { showSideBar && <SideMenu plugins={configuration.plugins}/> }
           <LayoutContent/>
         </Layout.Content>
         <Layout.Footer className='launcher_footer'>

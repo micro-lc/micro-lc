@@ -18,20 +18,29 @@ import React, {useContext} from 'react'
 import {MenuOpenedContext} from '@contexts/MenuOpened.context'
 
 import './BurgerIcon.less'
+import {ConfigurationContext} from '@contexts/Configuration.context'
+import {MENU_LOCATION} from '@constants'
 
 export const BurgerIcon: React.FC = () => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
+  const configuration = useContext(ConfigurationContext)
+  const showSideBar = !configuration.theming || [undefined, MENU_LOCATION.sideBar].includes(configuration.theming.menuLocation)
+  const showBurgerIcon = (configuration?.plugins || []).length > 1 && showSideBar
 
   const manageToggle = () => {
     setMenuOpened(!isMenuOpened)
   }
 
   return (
-    <label className='burgerIcon_container' htmlFor='check' onClick={manageToggle}>
-      <input checked={isMenuOpened} data-testid='top-bar-side-menu-toggle' readOnly={true} type='checkbox'/>
-      <span/>
-      <span/>
-      <span/>
-    </label>
+    <>
+      {showBurgerIcon &&
+      <label className='burgerIcon_container' htmlFor='check' onClick={manageToggle}>
+        <input checked={isMenuOpened} data-testid='top-bar-side-menu-toggle' readOnly={true} type='checkbox'/>
+        <span/>
+        <span/>
+        <span/>
+      </label>
+      }
+    </>
   )
 }
