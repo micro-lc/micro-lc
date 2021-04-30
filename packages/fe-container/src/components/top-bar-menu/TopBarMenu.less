@@ -2,7 +2,6 @@
 
 .topBarMenu_container  {
   display: flex;
-  flex-direction: row;
   flex-grow: 1;
   justify-content: space-around;
   max-height: @top-bar-height;
@@ -13,8 +12,8 @@
     justify-content: space-between;
     overflow: hidden;
     cursor: pointer;
-    padding-left: 11px;
-    padding-right: 11px;
+    padding-left: @menu-entry-padding;
+    padding-right: @menu-entry-padding;
 
     &.active {
       background: var(--microlc-primary-color-tint-89);
