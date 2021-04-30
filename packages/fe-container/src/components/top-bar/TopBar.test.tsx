@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react'
-import {screen} from '@testing-library/react'
+import {cleanup, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import {TopBar} from './TopBar'
@@ -28,15 +28,20 @@ jest.mock('@utils/theme/ThemeManager', () => ({
 }))
 
 describe('TopBar tests', function () {
+  afterEach(cleanup)
+  const URL_LIGHT_IMAGE = 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png'
+  const URL_DARK_IMAGE = 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png'
+
   const theming = {
     header: {
-      pageTitle: 'Mia Care',
+      pageTitle: 'My Company',
       favicon: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png'
     },
     logo: {
-      alt: 'Mia Care',
-      url_light: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
-      url_dark: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png'
+      alt: 'My Company',
+      url_light_image: URL_LIGHT_IMAGE,
+      url_dark_image: URL_DARK_IMAGE,
+      navigation_url: 'https://www.google.com'
     },
     variables: {
       primaryColor: 'red'
@@ -94,7 +99,7 @@ describe('TopBar tests', function () {
     )
     const image = screen.getAllByTestId('company-logo')[0]
     await userEvent.click(screen.getByTestId('dark-theme-toggle'))
-    expect(image).toHaveAttribute('src', 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png')
+    expect(image).toHaveAttribute('src', URL_DARK_IMAGE)
   })
 
   it('Closed TopBar is opening', () => {
@@ -139,5 +144,16 @@ describe('TopBar tests', function () {
     const toggle = screen.getByTestId('top-bar-side-menu-toggle')
     userEvent.click(toggle)
     expect(mockBurgerClick.mock.calls[0][0]).not.toBeTruthy()
+  })
+
+  it('Logo on click open new window with the url in the same page', async () => {
+    window.open = jest.fn()
+    RenderWithReactIntl(
+    <ConfigurationProvider value={{theming}}>
+      <TopBar/>
+    </ConfigurationProvider>)
+    const toggle = screen.getByTestId('company-logo')
+    await userEvent.click(toggle)
+    expect(window.open).toBeCalledWith(theming.logo.navigation_url, '_self')
   })
 })
