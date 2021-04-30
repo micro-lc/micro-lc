@@ -46,7 +46,7 @@ describe('TopBarMenu tests', () => {
     plugins
   })
 
-  it('Doesn\'t render for missing menuLocation', () => {
+  it('doesn\'t render for missing menuLocation', () => {
     const configuration = configurationsBuilder(undefined, undefined)
     RenderWithReactIntl(
       <ConfigurationProvider value={configuration}>
