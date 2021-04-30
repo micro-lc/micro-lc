@@ -146,7 +146,7 @@ describe('TopBar tests', function () {
     expect(mockBurgerClick.mock.calls[0][0]).not.toBeTruthy()
   })
 
-  it('Logo on click Open new window with the url', async () => {
+  it('Logo on click open new window with the url in the same page', async () => {
     window.open = jest.fn()
     RenderWithReactIntl(
     <ConfigurationProvider value={{theming}}>
