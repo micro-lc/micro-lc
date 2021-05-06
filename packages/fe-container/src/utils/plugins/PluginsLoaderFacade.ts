@@ -69,7 +69,7 @@ export const finish = (user: Partial<User>) => {
       name: plugin.id,
       entry: plugin.pluginUrl || '',
       container: `#${MICROLC_QIANKUN_CONTAINER}`,
-      activeRule: (location) => plugin.pluginRoute !== undefined && location.pathname.startsWith(plugin.pluginRoute),
+      activeRule: `${plugin.pluginRoute || ''}`,
       props: {
         ...plugin.props,
         basePath,
