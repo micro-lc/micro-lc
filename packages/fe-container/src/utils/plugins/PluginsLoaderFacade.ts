@@ -37,7 +37,7 @@ export const retrievePluginStrategy = (plugin: Plugin) => {
 }
 
 export const isPluginLoaded = (plugin: Plugin) =>
-  plugin.pluginRoute ? window.location.pathname.endsWith(plugin.pluginRoute) : false
+  plugin.pluginRoute ? window.location.pathname.startsWith(plugin.pluginRoute) : false
 
 export const findCurrentPlugin = () => {
   return registeredPlugins.find(isPluginLoaded)
@@ -69,7 +69,7 @@ export const finish = (user: Partial<User>) => {
       name: plugin.id,
       entry: plugin.pluginUrl || '',
       container: `#${MICROLC_QIANKUN_CONTAINER}`,
-      activeRule: `${basePath}${plugin.pluginRoute || ''}`,
+      activeRule: (location) => plugin.pluginRoute !== undefined && location.pathname.startsWith(plugin.pluginRoute),
       props: {
         ...plugin.props,
         basePath,
@@ -84,11 +84,7 @@ export const finish = (user: Partial<User>) => {
 const DOUBLE_SLASH = /\/\//g
 
 const retrieveBasePath = () => {
-  let basePath = `${window.location.pathname || ''}`
-  const currentPlugin = findCurrentPlugin()
-  if (currentPlugin?.pluginRoute) {
-    basePath = window.location.pathname.replace(currentPlugin.pluginRoute, '')
-  }
+  let basePath = findCurrentPlugin() ? '/' : `${window.location.pathname}`
   basePath = basePath.replace(new RegExp(ERROR_PATH.INTERNAL_ERROR, 'g'), '')
     .replace(new RegExp(ERROR_PATH.UNAUTHORIZED, 'g'), '')
     .replace(DOUBLE_SLASH, '/')

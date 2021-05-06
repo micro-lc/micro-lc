@@ -132,16 +132,18 @@ describe('Test plugin loading', () => {
     finish({})
     expect(start).toHaveBeenCalled()
     expect(addErrorHandler).toHaveBeenCalled()
-    expect(registerMicroApps).toHaveBeenCalledWith([{
+    // @ts-ignore
+    // eslint-disable-next-line
+    const {activeRule, ...rest} = registerMicroApps.mock.calls[0][0][0]
+    expect(rest).toMatchObject({
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
       container: '#microlc-qiankun-contaier',
-      activeRule: '/qiankunTest',
       props: {
         basePath: '',
         currentUser: {}
       }
-    }])
+    })
   })
 
   it('test undefined plugin route: empty fallback', () => {
