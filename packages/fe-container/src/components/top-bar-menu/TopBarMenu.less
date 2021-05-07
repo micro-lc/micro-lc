@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '../../styles/_variables';
+@import "../../styles/_variables";
 
-.topBarMenu_container  {
+.topBarMenu_container {
   display: flex;
   flex-grow: 1;
-  justify-content: space-between;
+  justify-content: left;
   margin-left: @footer-margin;
   max-height: @top-bar-height;
+  border-bottom: 1px #515153;
 
   & .topBarMenu_entry {
     display: flex;
@@ -32,11 +33,14 @@
     padding-right: @menu-entry-padding;
 
     &.active {
-      background: var(--microlc-primary-color-tint-89);
       margin-bottom: @menu-entry-active-border;
       box-shadow: 0 @menu-entry-active-border var(--microlc-primary-color);
 
       .topBarMenuEntry_text {
+        color: var(--microlc-primary-color);
+      }
+
+      i {
         color: var(--microlc-primary-color);
       }
     }
@@ -44,7 +48,7 @@
     & .topBarMenuEntry_icon {
       height: @top-bar-height;
       font-size: @top-bar-icon-size;
-      color: var(--microlc-primary-color);
+      color: var(--microlc-menu-label-color);
       display: none;
       justify-content: center;
       flex-direction: column;
@@ -66,6 +70,5 @@
         color: var(--microlc-primary-color);
       }
     }
-
   }
 }
