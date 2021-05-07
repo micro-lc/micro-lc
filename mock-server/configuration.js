@@ -55,9 +55,6 @@ const plugins = [
     integrationMode: 'qiankun',
     pluginRoute: '/qiankun',
     pluginUrl: '//localhost:8764',
-    props: {
-      openApiSpecUrl : 'http://petstore.swagger.io/v2/swagger.json'
-    }
   },
   {
     id: 'qiankun-test-2',
