@@ -63,22 +63,27 @@ const strategyBuilder = (plugin: Plugin) => {
 export const finish = (user: Partial<User>) => {
   const basePath = retrieveBasePath()
   history = createBrowserHistory({basename: basePath})
+  const pluginMapper = pluginToQiankunMapper(user, basePath)
   const quiankunConfig = registeredPlugins
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
-    .map<RegistrableApp<any>>(plugin => ({
-      name: plugin.id,
-      entry: plugin.pluginUrl || '',
-      container: `#${MICROLC_QIANKUN_CONTAINER}`,
-      activeRule: `${plugin.pluginRoute || ''}`,
-      props: {
-        ...plugin.props,
-        basePath,
-        currentUser: user
-      }
-    }))
+    .map<RegistrableApp<any>>(pluginMapper)
   registerMicroApps(quiankunConfig)
   addErrorHandler(_ => history.push(ERROR_PATH.INTERNAL_ERROR))
   start()
+}
+
+const pluginToQiankunMapper = (user: Partial<User>, basePath: string) => {
+  return (plugin: Plugin) => ({
+    name: plugin.id,
+    entry: plugin.pluginUrl || '',
+    container: `#${MICROLC_QIANKUN_CONTAINER}`,
+    activeRule: `${basePath}${plugin.pluginRoute || ''}`,
+    props: {
+      ...plugin.props,
+      basePath,
+      currentUser: user
+    }
+  })
 }
 
 const DOUBLE_SLASH = /\/\//g
