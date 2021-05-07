@@ -55,6 +55,7 @@ export const pluginSchema = {
     props: {
       type: 'object',
       description: 'Data passed to the plugin',
+      additionalProperties: true,
     },
     externalLink: externalLinkSchema,
   },
