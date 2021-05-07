@@ -51,19 +51,25 @@ const plugins = [
     id: 'qiankun-test',
     label: 'Qiankun plugin 1',
     icon: 'fab fa-react',
+    label: 'Redoc',
+    icon: 'fab fa-link',
     order: 3,
     integrationMode: 'qiankun',
     pluginRoute: '/qiankun',
-    pluginUrl: '//localhost:8764'
+    pluginUrl: '//localhost:8764',
   },
   {
     id: 'qiankun-test-2',
     label: 'Qiankun plugin 2',
     icon: 'fab fa-react',
     order: 3,
+    id: 'plugin-test-1',
+    label: 'Docusaurus',
+    icon: 'fas fa-book',
+    order: 1,
     integrationMode: 'qiankun',
     pluginRoute: '/qiankun2',
-    pluginUrl: '//localhost:8764'
+    pluginUrl: '//localhost:8767'
   },
   {
     id: 'qiankun-as-iframe',
@@ -73,7 +79,8 @@ const plugins = [
     integrationMode: 'iframe',
     pluginRoute: '/qiankunIframe',
     pluginUrl: '//localhost:8764'
-  }
+  },
+
 ]
 
 const analytics = {
