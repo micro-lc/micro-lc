@@ -139,6 +139,7 @@ describe('Test plugin loading', () => {
       activeRule: '/qiankunTest',
       props: {
         basePath: '',
+        activeRule: '/qiankunTest',
         currentUser: {}
       }
     }])
