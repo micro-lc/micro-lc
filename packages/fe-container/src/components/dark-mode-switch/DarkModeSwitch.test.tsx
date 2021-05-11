@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 
 import {DarkModeSwitch} from '@components/dark-mode-switch/DarkModeSwitch'
 import {switchTheme} from '@utils/theme/ThemeManager'
-import {retrieveDarkModeSettings} from '@utils/settings/dark-mode/DarkModeSettings'
+import {isDarkModeSet} from '@utils/settings/dark-mode/DarkModeSettings'
 
 import RenderWithReactIntl from '../../__tests__/utils'
 
@@ -20,10 +20,10 @@ describe('DarkModeSwitch tests', () => {
   })
 
   it('Toggle calls the switchTheme', async () => {
-    expect(retrieveDarkModeSettings()).toBeFalsy()
+    expect(isDarkModeSet()).toBeFalsy()
     RenderWithReactIntl(<DarkModeSwitch/>)
     await userEvent.click(screen.getByTestId('dark-theme-toggle'))
     expect(switchTheme).toHaveBeenCalled()
-    expect(retrieveDarkModeSettings()).toBeTruthy()
+    expect(isDarkModeSet()).toBeTruthy()
   })
 })

@@ -13,31 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {retrieveDarkModeSettings, toggleDarkModeSettings} from '@utils/settings/dark-mode/DarkModeSettings'
+import {isDarkModeSet, toggleDarkModeSettings} from '@utils/settings/dark-mode/DarkModeSettings'
 import {STORAGE_KEY} from '@constants'
 
 describe('Analytics Settings Manager tests', () => {
   afterEach(() => window.localStorage.clear())
 
   it('Dark mode not enabled', () => {
-    expect(retrieveDarkModeSettings()).toBeFalsy()
+    expect(isDarkModeSet()).toBeFalsy()
   })
 
   it('Dark mode toggled', () => {
-    expect(retrieveDarkModeSettings()).toBeFalsy()
+    expect(isDarkModeSet()).toBeFalsy()
     toggleDarkModeSettings()
-    expect(retrieveDarkModeSettings()).toBeTruthy()
+    expect(isDarkModeSet()).toBeTruthy()
     toggleDarkModeSettings()
-    expect(retrieveDarkModeSettings()).toBeFalsy()
+    expect(isDarkModeSet()).toBeFalsy()
   })
 
   it('Dark mode enabled', () => {
-    window.localStorage.setItem(STORAGE_KEY.CURRENT_THEME, 'true')
-    expect(retrieveDarkModeSettings()).toBeTruthy()
+    window.localStorage.setItem(STORAGE_KEY.CURRENT_THEME, 'dark')
+    expect(isDarkModeSet()).toBeTruthy()
   })
 
   it('Dark mode disabled', () => {
-    window.localStorage.setItem(STORAGE_KEY.CURRENT_THEME, 'false')
-    expect(retrieveDarkModeSettings()).toBeFalsy()
+    window.localStorage.setItem(STORAGE_KEY.CURRENT_THEME, 'light')
+    expect(isDarkModeSet()).toBeFalsy()
   })
 })

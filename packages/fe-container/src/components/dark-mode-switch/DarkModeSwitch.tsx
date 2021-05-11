@@ -3,7 +3,7 @@ import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 import {switchTheme} from '@utils/theme/ThemeManager'
-import {retrieveDarkModeSettings, toggleDarkModeSettings} from '@utils/settings/dark-mode/DarkModeSettings'
+import {isDarkModeSet, toggleDarkModeSettings} from '@utils/settings/dark-mode/DarkModeSettings'
 
 import './DarkModeSwitch.less'
 
@@ -23,7 +23,7 @@ export const DarkModeSwitch: React.FC<SwitchProps> = ({toggleCallback}) => {
 }
 
 const Switch: React.FC<SwitchProps> = ({toggleCallback}) => {
-  const [toggleChecked, isToggleChecked] = useState(retrieveDarkModeSettings())
+  const [toggleChecked, isToggleChecked] = useState(isDarkModeSet())
 
   const themeHandler = useCallback(() => {
     toggleCallback?.()
