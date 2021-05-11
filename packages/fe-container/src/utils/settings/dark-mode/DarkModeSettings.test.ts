@@ -17,12 +17,12 @@ describe('Analytics Settings Manager tests', () => {
   })
 
   it('Dark mode enabled', () => {
-    window.localStorage.setItem(STORAGE_KEY.DARK_MODE, 'true')
+    window.localStorage.setItem(STORAGE_KEY.CURRENT_THEME, 'true')
     expect(retrieveDarkModeSettings()).toBeTruthy()
   })
 
   it('Dark mode disabled', () => {
-    window.localStorage.setItem(STORAGE_KEY.DARK_MODE, 'false')
+    window.localStorage.setItem(STORAGE_KEY.CURRENT_THEME, 'false')
     expect(retrieveDarkModeSettings()).not.toBeTruthy()
   })
 })

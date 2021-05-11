@@ -54,7 +54,7 @@ export const DARK_THEME_ATTRIBUTE = 'dark-theme'
 
 export const STORAGE_KEY = {
   ANALYTICS: 'gtmAccepted',
-  DARK_MODE: 'darkModeStatus'
+  CURRENT_THEME: 'currentTheme'
 }
 
 export const MENU_LOCATION = {
