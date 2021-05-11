@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {finish, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
 import {addErrorHandler, registerMicroApps, start} from 'qiankun'
+import {RESERVED_PATH} from '@constants'
+
+import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
 
 jest.mock('qiankun', () => ({
   start: jest.fn(),
@@ -163,5 +165,18 @@ describe('Test plugin loading', () => {
     expect(start).toHaveBeenCalled()
     expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalled()
+  })
+
+  it('isCurrentPluginLoaded true for reserved path', () => {
+    window.location.pathname = RESERVED_PATH.LOADING
+    expect(isCurrentPluginLoaded()).toBeTruthy()
+    window.location.pathname = RESERVED_PATH.UNAUTHORIZED
+    expect(isCurrentPluginLoaded()).toBeTruthy()
+    window.location.pathname = RESERVED_PATH.PAGE_NOT_FOUND
+    expect(isCurrentPluginLoaded()).not.toBeTruthy()
+    window.location.pathname = RESERVED_PATH.INTERNAL_ERROR
+    expect(isCurrentPluginLoaded()).toBeTruthy()
+    expect(RESERVED_PATH.getMicrolcPaths())
+      .toMatchObject([RESERVED_PATH.INTERNAL_ERROR, RESERVED_PATH.UNAUTHORIZED, RESERVED_PATH.LOADING])
   })
 })

@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 import {Plugin} from '@mia-platform/core'
+
 import {history} from '@utils/plugins/PluginsLoaderFacade'
 import {PluginStrategy} from './PluginStrategy'
+import {RESERVED_PATH} from '@constants'
 
 export function routeStrategy (plugin: Plugin): PluginStrategy {
   return {
     handlePluginLoad: () => {
-      history.push('')
+      history.push(RESERVED_PATH.LOADING)
       setTimeout(() => {
         history.push(plugin?.pluginRoute || '')
       })

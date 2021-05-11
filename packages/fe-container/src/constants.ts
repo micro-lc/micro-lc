@@ -38,10 +38,16 @@ export const COLORS = {
 
 export const MICROLC_QIANKUN_CONTAINER = 'microlc-qiankun-contaier'
 
-export const ERROR_PATH = {
+export const RESERVED_PATH = {
   INTERNAL_ERROR: '/microlc_internal_error',
   PAGE_NOT_FOUND: '*',
-  UNAUTHORIZED: '/microlc_unauthorized'
+  UNAUTHORIZED: '/microlc_unauthorized',
+  LOADING: '/microlc_loading',
+  getMicrolcPaths: function (): string[] {
+    return Object.values(this)
+      .map(value => value.toString())
+      .filter(value => value.startsWith('/microlc_'))
+  }
 }
 
 export const DARK_THEME_ATTRIBUTE = 'dark-theme'

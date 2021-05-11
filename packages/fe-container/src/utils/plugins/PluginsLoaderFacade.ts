@@ -17,7 +17,7 @@ import {createBrowserHistory} from 'history'
 import {addErrorHandler, registerMicroApps, RegistrableApp, start} from 'qiankun'
 import {Plugin, User} from '@mia-platform/core'
 
-import {ERROR_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
+import {INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER, RESERVED_PATH} from '@constants'
 import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
 import {hrefStrategy} from '@utils/plugins/strategies/HrefStrategy'
 import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
@@ -44,8 +44,13 @@ export const findCurrentPlugin = () => {
 }
 
 export const isCurrentPluginLoaded = () => {
-  const isErrorPage = window.location.pathname.endsWith(ERROR_PATH.INTERNAL_ERROR) || window.location.pathname.endsWith(ERROR_PATH.UNAUTHORIZED)
-  return isErrorPage || findCurrentPlugin() !== undefined
+  return isReservedPage() || findCurrentPlugin() !== undefined
+}
+
+const isReservedPage = () => {
+  return RESERVED_PATH.getMicrolcPaths()
+    .reduce((previousValue, currentValue) =>
+      previousValue || window.location.pathname.endsWith(currentValue), false)
 }
 
 const strategyBuilder = (plugin: Plugin) => {
@@ -68,7 +73,7 @@ export const finish = (user: Partial<User>) => {
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(pluginMapper)
   registerMicroApps(quiankunConfig)
-  addErrorHandler(_ => history.push(ERROR_PATH.INTERNAL_ERROR))
+  addErrorHandler(_ => history.push(RESERVED_PATH.INTERNAL_ERROR))
   start()
 }
 
@@ -89,11 +94,15 @@ const pluginToQiankunMapper = (user: Partial<User>, basePath: string) => {
 
 const DOUBLE_SLASH = /\/\//g
 
+const cleanReservedPath = (basePath: string) => {
+  return RESERVED_PATH.getMicrolcPaths()
+    .reduce((previousValue: string, currentValue: string) =>
+      previousValue.replace(new RegExp(currentValue, 'g'), ''), basePath)
+}
+
 const retrieveBasePath = () => {
   let basePath = findCurrentPlugin() ? '/' : `${window.location.pathname}`
-  basePath = basePath.replace(new RegExp(ERROR_PATH.INTERNAL_ERROR, 'g'), '')
-    .replace(new RegExp(ERROR_PATH.UNAUTHORIZED, 'g'), '')
-    .replace(DOUBLE_SLASH, '/')
+  basePath = cleanReservedPath(basePath).replace(DOUBLE_SLASH, '/')
   return basePath.endsWith('/') ? basePath.slice(0, -1) : basePath
 }
 
