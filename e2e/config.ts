@@ -20,6 +20,7 @@ import path from 'path'
 
 setConfig({
   testDir: path.join(__dirname, '__tests__'),
+  workers: 1,
   timeout: 10000,
 })
 
