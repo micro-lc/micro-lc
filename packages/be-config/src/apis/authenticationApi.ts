@@ -34,6 +34,7 @@ export const authenticationApiHandlerBuilder: (fastifyInstance: DecoratedFastify
 }
 
 export const authenticationApiSchema = {
+  summary: 'Expose the authentication configuration for microlc',
   response: {
     200: authenticationSchema,
   },

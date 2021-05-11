@@ -47,6 +47,7 @@ export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify)
 }
 
 export const configurationApiSchema = {
+  summary: 'Expose the configurations of microlc',
   response: {
     200: configurationSchema,
   },
