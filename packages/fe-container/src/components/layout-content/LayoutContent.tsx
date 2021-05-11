@@ -25,9 +25,9 @@ import {RESERVED_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@co
 import {ErrorPage500} from '@components/error-page-500/ErrorPage500'
 import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
 import {ErrorPage404} from '@components/error-page-404/ErrorPage404'
+import {LoadingAnimation} from '@components/loading-animation/LoadingAnimation'
 
 import './LayoutContent.less'
-import {LoadingAnimation} from '@components/loading-animation/LoadingAnimation'
 
 export const LayoutContent: React.FC = () => {
   return (
