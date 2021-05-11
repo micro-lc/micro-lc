@@ -1,8 +1,9 @@
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 import {switchTheme} from '@utils/theme/ThemeManager'
+import {isDarkModeSet, toggleDarkModeSettings} from '@utils/settings/dark-mode/DarkModeSettings'
 
 import './DarkModeSwitch.less'
 
@@ -22,12 +23,23 @@ export const DarkModeSwitch: React.FC<SwitchProps> = ({toggleCallback}) => {
 }
 
 const Switch: React.FC<SwitchProps> = ({toggleCallback}) => {
-  const [toggleChecked, isToggleChecked] = useState(false)
-  const toggleHandler = useCallback(() => {
-    isToggleChecked((oldValue) => !oldValue)
+  const [toggleChecked, isToggleChecked] = useState(isDarkModeSet())
+
+  const themeHandler = useCallback(() => {
     toggleCallback?.()
     switchTheme()
   }, [toggleCallback])
+
+  const toggleHandler = useCallback(() => {
+    isToggleChecked((oldValue) => !oldValue)
+    toggleDarkModeSettings()
+    themeHandler()
+  }, [themeHandler])
+
+  useEffect(() => {
+    if (toggleChecked) themeHandler()
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <label className="darkModeSwitch">

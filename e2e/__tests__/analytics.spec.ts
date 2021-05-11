@@ -37,7 +37,7 @@ test('Analytics footer disappear for accepted answer', async ({page}) => {
   await waitMicrolcLoaded(page)
   await page.click('"Accept"')
   const isAcceptedVisible = await page.$('"Accept"')
-  expect(isAcceptedVisible).not.toBeTruthy()
+  expect(isAcceptedVisible).toBeFalsy()
 })
 
 test('Analytics footer stay disappeared even after refresh for accepted answer', async ({page}) => {
@@ -45,14 +45,14 @@ test('Analytics footer stay disappeared even after refresh for accepted answer',
   await page.click('"Accept"')
   await waitMicrolcLoaded(page)
   const isAcceptedVisible = await page.$('"Accept"')
-  expect(isAcceptedVisible).not.toBeTruthy()
+  expect(isAcceptedVisible).toBeFalsy()
 })
 
 test('Analytics footer disappear for declined answer', async ({page}) => {
   await waitMicrolcLoaded(page)
   await page.click('"Decline"')
   const isAcceptedVisible = await page.$('"Decline"')
-  expect(isAcceptedVisible).not.toBeTruthy()
+  expect(isAcceptedVisible).toBeFalsy()
 })
 
 test('Analytics footer stay disappeared even after refresh for declined answer', async ({page}) => {
@@ -60,5 +60,5 @@ test('Analytics footer stay disappeared even after refresh for declined answer',
   await page.click('"Decline"')
   await waitMicrolcLoaded(page)
   const isAcceptedVisible = await page.$('"Decline"')
-  expect(isAcceptedVisible).not.toBeTruthy()
+  expect(isAcceptedVisible).toBeFalsy()
 })

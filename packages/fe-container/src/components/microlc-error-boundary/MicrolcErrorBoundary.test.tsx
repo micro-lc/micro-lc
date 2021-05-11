@@ -37,7 +37,7 @@ describe('MicrolcErrorBoundary tests', () => {
       </MicrolcErrorBoundary>
     )
     expect(screen.getByText('Everything is ok')).toBeTruthy()
-    expect(screen.queryByText('Oops! Something went wrong.')).not.toBeTruthy()
+    expect(screen.queryByText('Oops! Something went wrong.')).toBeFalsy()
   })
 
   it('Handle correctly errors without errorStatusCode as 500', () => {
@@ -47,7 +47,7 @@ describe('MicrolcErrorBoundary tests', () => {
         <ThrowableComponent/>
       </MicrolcErrorBoundary>
     )
-    expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
+    expect(screen.queryByText('Everything is ok')).toBeFalsy()
     expect(screen.getByText('Oops! Something went wrong.')).toBeTruthy()
     expect(screen.getByText('Our team has been informed and is working to fix the problem.')).toBeTruthy()
   })
@@ -59,7 +59,7 @@ describe('MicrolcErrorBoundary tests', () => {
         <ThrowableWithErrorComponent errorStatusCode={403}/>
       </MicrolcErrorBoundary>
     )
-    expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
+    expect(screen.queryByText('Everything is ok')).toBeFalsy()
     expect(screen.getByText('Oops! Something went wrong.')).toBeTruthy()
     expect(screen.getByText('Our team has been informed and is working to fix the problem.')).toBeTruthy()
   })
@@ -71,7 +71,7 @@ describe('MicrolcErrorBoundary tests', () => {
         <ThrowableWithErrorComponent errorStatusCode={404}/>
       </MicrolcErrorBoundary>
     )
-    expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
+    expect(screen.queryByText('Everything is ok')).toBeFalsy()
     expect(screen.getByText('Oh No! Something is missing.')).toBeTruthy()
     expect(screen.getByText('PAGE NOT FOUND')).toBeTruthy()
   })
@@ -83,7 +83,7 @@ describe('MicrolcErrorBoundary tests', () => {
         <ThrowableWithErrorComponent errorStatusCode={401}/>
       </MicrolcErrorBoundary>
     )
-    expect(screen.queryByText('Everything is ok')).not.toBeTruthy()
+    expect(screen.queryByText('Everything is ok')).toBeFalsy()
     expect(screen.getByText('Unauthorized access')).toBeTruthy()
     expect(screen.getByText('It would seem that you don\'t have permission to access this page, but don\'t')).toBeTruthy()
   })

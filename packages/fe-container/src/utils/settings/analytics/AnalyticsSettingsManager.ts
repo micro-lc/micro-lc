@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-import {expect, test} from '@playwright/test'
+import {STORAGE_KEY} from '@constants'
 
-import {userMenuSelector} from '../utils/constants'
-import {waitMicrolcLoaded} from '../utils/utils'
+export interface AnalyticsSettings {
+  hasUserResponded: boolean,
+  hasUserAccepted: boolean
+}
 
-test('User menu is not in page', async ({page}) => {
-  await waitMicrolcLoaded(page)
-  const userMenu = await page.$(userMenuSelector)
-  expect(userMenu).toBeFalsy()
-})
+export const retrieveAnalyticsSettings: () => AnalyticsSettings = () => {
+  const storageContent = localStorage.getItem(STORAGE_KEY.ANALYTICS)
+  return {
+    hasUserResponded: Boolean(storageContent),
+    hasUserAccepted: storageContent === 'true'
+  }
+}
+
+export const saveSettings = (analyticsSettings: AnalyticsSettings) => {
+  const savedValue = analyticsSettings.hasUserAccepted.toString()
+  localStorage.setItem(STORAGE_KEY.ANALYTICS, savedValue)
+}

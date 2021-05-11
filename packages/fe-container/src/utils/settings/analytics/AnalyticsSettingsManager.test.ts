@@ -15,10 +15,10 @@
  */
 import {AnalyticsSettings, retrieveAnalyticsSettings, saveSettings} from './AnalyticsSettingsManager'
 
-import {ANALYTICS_STORAGE_KEY} from '@constants'
+import {STORAGE_KEY} from '@constants'
 
 describe('Analytics Settings Manager tests', () => {
-  const settings:AnalyticsSettings = {
+  const settings: AnalyticsSettings = {
     hasUserAccepted: true,
     hasUserResponded: true
   }
@@ -26,7 +26,7 @@ describe('Analytics Settings Manager tests', () => {
   it('Settings saved in local storage', () => {
     saveSettings(settings)
     const storageContent = retrieveAnalyticsSettings()
-    expect(window.localStorage.getItem(ANALYTICS_STORAGE_KEY)).toBe('true')
+    expect(window.localStorage.getItem(STORAGE_KEY.ANALYTICS)).toBe('true')
     expect(storageContent.hasUserAccepted).toBe(true)
   })
 })

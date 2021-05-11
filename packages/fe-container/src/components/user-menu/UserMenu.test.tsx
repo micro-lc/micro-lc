@@ -42,7 +42,7 @@ describe('UserMenu tests', () => {
     RenderWithReactIntl(<UserMenu {...user}/>)
 
     expect(screen.getByText('Mocked User')).toBeTruthy()
-    expect(screen.queryByText('mocked.user')).not.toBeTruthy()
+    expect(screen.queryByText('mocked.user')).toBeFalsy()
     // @ts-ignore
     const avatarSrc = document.getElementsByClassName('userMenu_avatar')[0].attributes.getNamedItem('src').value
     expect(avatarSrc).toBe('https://i2.wp.com/cdn.auth0.com/avatars/md.png?ssl=1')
@@ -58,7 +58,7 @@ describe('UserMenu tests', () => {
     RenderWithReactIntl(<UserMenu {...user}/>)
 
     expect(screen.getByText('Mocked User 2')).toBeTruthy()
-    expect(screen.queryByText('mocked.user2')).not.toBeTruthy()
+    expect(screen.queryByText('mocked.user2')).toBeFalsy()
     // @ts-ignore
     const avatarSrc = document.getElementsByClassName('userMenu_avatar')[0].attributes.getNamedItem('src').value
     expect(avatarSrc).toBe('https://eu.ui-avatars.com/api/?name=Mocked User 2&size=24x24')
@@ -66,7 +66,7 @@ describe('UserMenu tests', () => {
 
   it('Dropdown toggle on click', () => {
     RenderWithReactIntl(<UserMenu/>)
-    expect(screen.queryByText('Log Out')).not.toBeTruthy()
+    expect(screen.queryByText('Log Out')).toBeFalsy()
     userEvent.click(screen.getByTestId('userMenu_container'))
     expect(screen.queryByText('Log Out')).toBeTruthy()
   })

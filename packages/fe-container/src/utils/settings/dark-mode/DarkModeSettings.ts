@@ -13,23 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {STORAGE_KEY} from '@constants'
 
-import {ANALYTICS_STORAGE_KEY} from '@constants'
-
-export interface AnalyticsSettings {
-  hasUserResponded: boolean,
-  hasUserAccepted: boolean
+export const isDarkModeSet = () => {
+  return localStorage.getItem(STORAGE_KEY.CURRENT_THEME) === 'dark'
 }
 
-export const retrieveAnalyticsSettings: () => AnalyticsSettings = () => {
-  const storageContent = localStorage.getItem(ANALYTICS_STORAGE_KEY)
-  return {
-    hasUserResponded: Boolean(storageContent),
-    hasUserAccepted: storageContent === 'true'
-  }
-}
-
-export const saveSettings = (analyticsSettings: AnalyticsSettings) => {
-  const savedValue = analyticsSettings.hasUserAccepted.toString()
-  localStorage.setItem(ANALYTICS_STORAGE_KEY, savedValue)
+export const toggleDarkModeSettings = () => {
+  localStorage.setItem(STORAGE_KEY.CURRENT_THEME, isDarkModeSet() ? 'light' : 'dark')
 }
