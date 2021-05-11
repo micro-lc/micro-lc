@@ -21,12 +21,13 @@ import PropTypes from 'prop-types'
 
 import {findCurrentPlugin, history} from '@utils/plugins/PluginsLoaderFacade'
 import {ConfigurationContext} from '@contexts/Configuration.context'
-import {ERROR_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
+import {RESERVED_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
 import {ErrorPage500} from '@components/error-page-500/ErrorPage500'
 import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
 import {ErrorPage404} from '@components/error-page-404/ErrorPage404'
 
 import './LayoutContent.less'
+import {LoadingAnimation} from '@components/loading-animation/LoadingAnimation'
 
 export const LayoutContent: React.FC = () => {
   return (
@@ -60,9 +61,10 @@ const LayoutCenter: React.FC = () => {
               <div className='layoutContent_plugin' id={MICROLC_QIANKUN_CONTAINER}/>
             </div>
           </Route>
-          <Route component={ErrorPage500} path={ERROR_PATH.INTERNAL_ERROR}/>
-          <Route component={ErrorPage401} path={ERROR_PATH.UNAUTHORIZED}/>
-          <Route component={ErrorPage404} path={ERROR_PATH.PAGE_NOT_FOUND}/>
+          <Route component={ErrorPage500} path={RESERVED_PATH.INTERNAL_ERROR}/>
+          <Route component={ErrorPage401} path={RESERVED_PATH.UNAUTHORIZED}/>
+          <Route component={LoadingAnimation} path={RESERVED_PATH.LOADING}/>
+          <Route component={ErrorPage404} path={RESERVED_PATH.PAGE_NOT_FOUND}/>
         </Switch>
       </Router>
     </Layout.Content>
