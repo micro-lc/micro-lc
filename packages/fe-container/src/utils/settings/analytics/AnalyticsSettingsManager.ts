@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {ANALYTICS_STORAGE_KEY} from '@constants'
+import {STORAGE_KEY} from '@constants'
 
 export interface AnalyticsSettings {
   hasUserResponded: boolean,
@@ -22,7 +22,7 @@ export interface AnalyticsSettings {
 }
 
 export const retrieveAnalyticsSettings: () => AnalyticsSettings = () => {
-  const storageContent = localStorage.getItem(ANALYTICS_STORAGE_KEY)
+  const storageContent = localStorage.getItem(STORAGE_KEY.ANALYTICS)
   return {
     hasUserResponded: Boolean(storageContent),
     hasUserAccepted: storageContent === 'true'
@@ -31,5 +31,5 @@ export const retrieveAnalyticsSettings: () => AnalyticsSettings = () => {
 
 export const saveSettings = (analyticsSettings: AnalyticsSettings) => {
   const savedValue = analyticsSettings.hasUserAccepted.toString()
-  localStorage.setItem(ANALYTICS_STORAGE_KEY, savedValue)
+  localStorage.setItem(STORAGE_KEY.ANALYTICS, savedValue)
 }

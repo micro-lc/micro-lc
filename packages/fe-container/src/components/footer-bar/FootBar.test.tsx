@@ -21,7 +21,7 @@ import userEvent from '@testing-library/user-event'
 import {FooterBar} from './FooterBar'
 import RenderWithReactIntl from '../../__tests__/utils'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
-import {ANALYTICS_STORAGE_KEY} from '@constants'
+import {STORAGE_KEY} from '@constants'
 
 describe('FooterBar tests', function () {
   afterEach(() => window.localStorage.clear())
@@ -47,7 +47,7 @@ describe('FooterBar tests', function () {
       </ConfigurationProvider>)
     const toggle = screen.getByText('Decline')
     userEvent.click(toggle)
-    expect(window.localStorage.getItem(ANALYTICS_STORAGE_KEY)).toBe('false')
+    expect(window.localStorage.getItem(STORAGE_KEY.ANALYTICS)).toBe('false')
     expect(screen.queryByText('Accept')).not.toBeTruthy()
   })
 
@@ -58,12 +58,12 @@ describe('FooterBar tests', function () {
       </ConfigurationProvider>)
     const toggle = screen.getByText('Accept')
     userEvent.click(toggle)
-    expect(window.localStorage.getItem(ANALYTICS_STORAGE_KEY)).toBe('true')
+    expect(window.localStorage.getItem(STORAGE_KEY.ANALYTICS)).toBe('true')
     expect(screen.queryByText('Accept')).not.toBeTruthy()
   })
 
   it('FooterBar is not showing when cookies already accepted', function () {
-    window.localStorage.setItem(ANALYTICS_STORAGE_KEY, 'false')
+    window.localStorage.setItem(STORAGE_KEY.ANALYTICS, 'false')
     RenderWithReactIntl(
       <ConfigurationProvider value={{
         analytics

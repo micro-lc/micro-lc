@@ -52,7 +52,10 @@ export const RESERVED_PATH = {
 
 export const DARK_THEME_ATTRIBUTE = 'dark-theme'
 
-export const ANALYTICS_STORAGE_KEY = 'gtmAccepted'
+export const STORAGE_KEY = {
+  ANALYTICS: 'gtmAccepted',
+  DARK_MODE: 'darkModeStatus'
+}
 
 export const MENU_LOCATION = {
   sideBar: 'sideBar',
