@@ -143,7 +143,7 @@ describe('TopBar tests', function () {
     )
     const toggle = screen.getByTestId('top-bar-side-menu-toggle')
     userEvent.click(toggle)
-    expect(mockBurgerClick.mock.calls[0][0]).not.toBeTruthy()
+    expect(mockBurgerClick.mock.calls[0][0]).toBeFalsy()
   })
 
   it('Logo on click open new window with the url in the same page', async () => {

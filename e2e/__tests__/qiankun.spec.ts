@@ -25,7 +25,7 @@ test('Correctly load qiankun plugin', async ({page}) => {
   const changePluginButtonBackground = await page.$eval('"Go to other qiankun plugin"', (e) => getComputedStyle(e).backgroundColor)
   expect(changePluginButtonBackground).toBe('rgb(255, 0, 0)')
   const arrivedHere = await page.$('"You arrived here from:"')
-  expect(arrivedHere).not.toBeTruthy()
+  expect(arrivedHere).toBeFalsy()
 });
 
 test('Correctly load another qiankun plugin', async ({page}) => {

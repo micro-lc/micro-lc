@@ -5,15 +5,15 @@ describe('Analytics Settings Manager tests', () => {
   afterEach(() => window.localStorage.clear())
 
   it('Dark mode not enabled', () => {
-    expect(retrieveDarkModeSettings()).not.toBeTruthy()
+    expect(retrieveDarkModeSettings()).toBeFalsy()
   })
 
   it('Dark mode toggled', () => {
-    expect(retrieveDarkModeSettings()).not.toBeTruthy()
+    expect(retrieveDarkModeSettings()).toBeFalsy()
     toggleDarkModeSettings()
     expect(retrieveDarkModeSettings()).toBeTruthy()
     toggleDarkModeSettings()
-    expect(retrieveDarkModeSettings()).not.toBeTruthy()
+    expect(retrieveDarkModeSettings()).toBeFalsy()
   })
 
   it('Dark mode enabled', () => {
@@ -23,6 +23,6 @@ describe('Analytics Settings Manager tests', () => {
 
   it('Dark mode disabled', () => {
     window.localStorage.setItem(STORAGE_KEY.CURRENT_THEME, 'false')
-    expect(retrieveDarkModeSettings()).not.toBeTruthy()
+    expect(retrieveDarkModeSettings()).toBeFalsy()
   })
 })

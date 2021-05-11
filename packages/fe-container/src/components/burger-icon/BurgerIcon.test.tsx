@@ -52,7 +52,7 @@ describe('Burger icon tests', () => {
         <BurgerIcon/>
       </ConfigurationProvider>
     )
-    expect(screen.queryByTestId('top-bar-side-menu-toggle')).not.toBeTruthy()
+    expect(screen.queryByTestId('top-bar-side-menu-toggle')).toBeFalsy()
   })
 
   it('Burger icon doesn\'t shows with only 1 plugin', () => {
@@ -62,7 +62,7 @@ describe('Burger icon tests', () => {
         <BurgerIcon/>
       </ConfigurationProvider>
     )
-    expect(screen.queryByTestId('top-bar-side-menu-toggle')).not.toBeTruthy()
+    expect(screen.queryByTestId('top-bar-side-menu-toggle')).toBeFalsy()
   })
 
   it('Burger icon shows with more than 1', () => {
@@ -82,6 +82,6 @@ describe('Burger icon tests', () => {
         <BurgerIcon/>
       </ConfigurationProvider>
     )
-    expect(screen.queryByTestId('top-bar-side-menu-toggle')).not.toBeTruthy()
+    expect(screen.queryByTestId('top-bar-side-menu-toggle')).toBeFalsy()
   })
 })

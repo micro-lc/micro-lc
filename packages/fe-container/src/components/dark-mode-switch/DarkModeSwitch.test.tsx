@@ -20,7 +20,7 @@ describe('DarkModeSwitch tests', () => {
   })
 
   it('Toggle calls the switchTheme', async () => {
-    expect(retrieveDarkModeSettings()).not.toBeTruthy()
+    expect(retrieveDarkModeSettings()).toBeFalsy()
     RenderWithReactIntl(<DarkModeSwitch/>)
     await userEvent.click(screen.getByTestId('dark-theme-toggle'))
     expect(switchTheme).toHaveBeenCalled()

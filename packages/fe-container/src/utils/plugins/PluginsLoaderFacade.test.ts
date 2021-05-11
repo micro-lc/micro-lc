@@ -173,7 +173,7 @@ describe('Test plugin loading', () => {
     window.location.pathname = RESERVED_PATH.UNAUTHORIZED
     expect(isCurrentPluginLoaded()).toBeTruthy()
     window.location.pathname = RESERVED_PATH.PAGE_NOT_FOUND
-    expect(isCurrentPluginLoaded()).not.toBeTruthy()
+    expect(isCurrentPluginLoaded()).toBeFalsy()
     window.location.pathname = RESERVED_PATH.INTERNAL_ERROR
     expect(isCurrentPluginLoaded()).toBeTruthy()
     expect(RESERVED_PATH.getMicrolcPaths())
