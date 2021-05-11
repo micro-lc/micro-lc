@@ -12,6 +12,8 @@ describe('Analytics Settings Manager tests', () => {
     expect(retrieveDarkModeSettings()).not.toBeTruthy()
     toggleDarkModeSettings()
     expect(retrieveDarkModeSettings()).toBeTruthy()
+    toggleDarkModeSettings()
+    expect(retrieveDarkModeSettings()).not.toBeTruthy()
   })
 
   it('Dark mode enabled', () => {
