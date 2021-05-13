@@ -28,7 +28,6 @@ export default {
     commonjs(),
     postcss({
       sourceMap: true,
-      extract: true,
       minimize: true
     }),
     svgr(),

@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 import React from 'react'
+import {Page401} from '@mia-platform/ui-components'
 
-import {ErrorPageContainer} from '../../containers/error-page/ErrorPageContainer'
-import {ReactComponent as Error401Logo} from './assets/ErrorImage401.svg'
+import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
+
+const errorProps: ErrorProps = {
+  descriptionKeys: ['401_description', '401_description_1'],
+  titleKey: '401_title'
+}
 
 export const ErrorPage401: React.FC = () => {
   return (
-    <ErrorPageContainer descriptionKeys={['401_description', '401_description_1']} titleKey='401_title'>
-      <Error401Logo/>
+    <ErrorPageContainer {...errorProps}>
+      <Page401/>
     </ErrorPageContainer>
   )
 }

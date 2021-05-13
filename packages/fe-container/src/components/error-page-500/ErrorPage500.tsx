@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 import React from 'react'
+import {Page500} from '@mia-platform/ui-components'
 
-import {ErrorPageContainer} from '../../containers/error-page/ErrorPageContainer'
-import {ReactComponent as Error500Logo} from './assets/ErrorImage500.svg'
+import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
+
+const errorProps: ErrorProps = {
+  descriptionKeys: ['500_description', '500_description_1'],
+  titleKey: '500_title'
+}
 
 export const ErrorPage500: React.FC = () => {
   return (
-    <ErrorPageContainer descriptionKeys={['500_description', '500_description_1']} titleKey='500_title'>
-      <Error500Logo/>
+    <ErrorPageContainer {...errorProps}>
+      <Page500/>
     </ErrorPageContainer>
   )
 }

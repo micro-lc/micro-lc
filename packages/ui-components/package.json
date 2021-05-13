@@ -21,7 +21,8 @@
     "react-dom": "^17.0.1"
   },
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "lint": "eslint src --ext .ts"
   },
   "eslintConfig": {
     "extends": [

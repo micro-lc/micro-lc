@@ -18,7 +18,6 @@ import {screen} from '@testing-library/react'
 
 import {ErrorPageContainer} from './ErrorPageContainer'
 import RenderWithReactIntl from '../../__tests__/utils'
-import {ReactComponent as Error404Logo} from '@components/error-page-404/assets/ErrorImage404.svg'
 
 describe('ErrorPageContainer tests', () => {
   it('Test ErrorPage 404 renders', () => {
@@ -27,7 +26,7 @@ describe('ErrorPageContainer tests', () => {
 descriptionKeys={['404_description', '404_description_1', '404_description_2']}
                           titleKey='404_title'
       >
-        <Error404Logo/>
+        <div/>
       </ErrorPageContainer>
     )
     expect(screen.getByText('PAGE NOT FOUND')).toBeTruthy()
