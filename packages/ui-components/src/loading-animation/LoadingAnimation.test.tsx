@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import React from 'react'
+import {render, screen} from '@testing-library/react'
 
-import {ReactComponent as SvgAnimation} from './assets/LoadingAnimation.svg'
-import './LoadingAnimation.less'
+import LoadingAnimation from './LoadingAnimation'
 
-export const LoadingAnimation: React.FC = () => {
-  return (
-    <div className='loadingAnimation_svg_container' data-testid="svgContainer">
-      <SvgAnimation />
-    </div>
-  )
-}
+describe('Loading Page tests', () => {
+  it('Test LoadingPage renders', () => {
+    render(<LoadingAnimation />)
+    expect(screen.getAllByTestId('svgContainer')).toBeTruthy()
+  })
+})
