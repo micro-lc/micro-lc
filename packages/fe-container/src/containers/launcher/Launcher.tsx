@@ -16,6 +16,7 @@
 import React, {useState} from 'react'
 import {Layout} from 'antd'
 import PropTypes from 'prop-types'
+import {LoadingAnimation} from '@mia-platform/ui-components'
 
 import {TopBar} from '@components/top-bar/TopBar'
 import {LayoutContent} from '@components/layout-content/LayoutContent'
@@ -24,7 +25,6 @@ import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {AppState} from '@hooks/useAppData/useAppData'
 import {SideMenu} from '@components/side-menu/SideMenu'
 import {UserContextProvider} from '@contexts/User.context'
-import {LoadingAnimation} from '@components/loading-animation/LoadingAnimation'
 import {FooterBar} from '@components/footer-bar/FooterBar'
 
 import './Launcher.less'

@@ -2,8 +2,9 @@ import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import typescript from 'rollup-plugin-typescript2'
-import css from 'rollup-plugin-import-css'
 import svgr from '@svgr/rollup'
+import postcss from 'rollup-plugin-postcss'
+import terser from 'rollup-plugin-terser-default'
 
 import packageJson from './package.json'
 
@@ -25,8 +26,13 @@ export default {
     peerDepsExternal(),
     resolve(),
     commonjs(),
+    postcss({
+      sourceMap: true,
+      extract: true,
+      minimize: true
+    }),
     svgr(),
-    css(),
-    typescript()
+    typescript(),
+    terser()
   ]
 }
