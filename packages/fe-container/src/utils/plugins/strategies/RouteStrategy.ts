@@ -24,7 +24,7 @@ export function routeStrategy (plugin: Plugin): PluginStrategy {
     handlePluginLoad: () => {
       history.push(RESERVED_PATH.LOADING)
       setTimeout(() => {
-        history.push(plugin?.pluginRoute || '')
+        history.replace(plugin?.pluginRoute || '')
       })
     }
   }

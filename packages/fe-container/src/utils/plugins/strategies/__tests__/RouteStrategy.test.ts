@@ -20,7 +20,8 @@ import {RESERVED_PATH} from '@constants'
 
 jest.mock('history', () => ({
   createBrowserHistory: jest.fn((params) => ({
-    push: jest.fn()
+    push: jest.fn(),
+    replace: jest.fn()
   }))
 }))
 
@@ -36,12 +37,12 @@ describe('RouteStrategy tests', () => {
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith(RESERVED_PATH.LOADING)
-    await waitFor(() => expect(history.push).toHaveBeenCalledWith('/iframeTest'))
+    await waitFor(() => expect(history.replace).toHaveBeenCalledWith('/iframeTest'))
   })
 
   it('Handle invalid plugin', async () => {
     routeStrategy({id: '', label: '', integrationMode: 'iframe'}).handlePluginLoad()
     expect(history.push).toHaveBeenCalledWith(RESERVED_PATH.LOADING)
-    await waitFor(() => expect(history.push).toHaveBeenCalledWith(''))
+    await waitFor(() => expect(history.replace).toHaveBeenCalledWith(''))
   })
 })
