@@ -8,6 +8,7 @@ import terser from 'rollup-plugin-terser-default'
 
 import packageJson from './package.json'
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   input: './src/index.ts',
   output: [

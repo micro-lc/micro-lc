@@ -1,8 +1,10 @@
 import React from 'react'
 
+import '../styles/errorPages.css'
+
 const Page500: React.FC = () => {
   return (
-    <svg fill="none" height="346" viewBox="0 0 769 346" width="769" xmlns="http://www.w3.org/2000/svg">
+    <svg data-testid="svgContainer" fill="none" height="346" viewBox="0 0 769 346" width="769" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M499.462 298.03L367.943 339.442L310.438 296.088L432.94 265.15L499.462 298.03Z" fill="white"
         stroke="#0E0E0E"

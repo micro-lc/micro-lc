@@ -1,8 +1,11 @@
 import React from 'react'
 
+import '../styles/_colors.css'
+import '../styles/errorPages.css'
+
 const Page401: React.FC = () => {
   return (
-    <svg fill="none" height="349" viewBox="0 0 670 349" width="670" xmlns="http://www.w3.org/2000/svg">
+    <svg data-testid="svgContainer" fill="none" height="349" viewBox="0 0 670 349" width="670" xmlns="http://www.w3.org/2000/svg">
       <path
         className="svg_primaryColor"
         d="M200.726 294.775V234.688H238.171V180.261H200.726V4.35414H115.385L0 185.922V234.688H138.897V294.775H200.726ZM138.897 180.261H60.5225L138.897 59.2163V180.261Z"
