@@ -28,6 +28,7 @@ export default {
     resolve(),
     commonjs(),
     postcss({
+      extensions: ['.css'],
       sourceMap: true,
       minimize: true
     }),

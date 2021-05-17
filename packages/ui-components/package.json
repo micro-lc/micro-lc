@@ -10,8 +10,7 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-scripts": "4.0.3"
   },
   "peerDependencies": {
     "react": "^17.0.1",
@@ -20,7 +19,7 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint src --ext .ts",
-    "test": "craco test --runInBand",
+    "test": "react-scripts test --watchAll=false",
     "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts"
   },
   "eslintConfig": {
@@ -43,7 +42,6 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.13.15",
-    "@craco/craco": "^6.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",

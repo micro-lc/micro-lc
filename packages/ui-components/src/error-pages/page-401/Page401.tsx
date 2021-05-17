@@ -1,7 +1,7 @@
 import React from 'react'
 
-import '../styles/_colors.css'
-import '../styles/errorPages.css'
+import '../../styles/_colors.css'
+import '../../styles/errorPages.css'
 
 const Page401: React.FC = () => {
   return (

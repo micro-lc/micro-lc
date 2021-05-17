@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react'
-import {Page401} from '@mia-platform/ui-components'
+import {PlaceholdersPage} from '@mia-platform/ui-components'
 
 import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
 
@@ -23,10 +23,12 @@ const errorProps: ErrorProps = {
   titleKey: '401_title'
 }
 
+const ErrorImage401 = PlaceholdersPage.Error401
+
 export const ErrorPage401: React.FC = () => {
   return (
     <ErrorPageContainer {...errorProps}>
-      <Page401/>
+      <ErrorImage401/>
     </ErrorPageContainer>
   )
 }

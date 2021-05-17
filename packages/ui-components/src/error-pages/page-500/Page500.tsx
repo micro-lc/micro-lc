@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../styles/errorPages.css'
+import '../../styles/errorPages.css'
 
 const Page500: React.FC = () => {
   return (

@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 import React from 'react'
-import {Page404} from '@mia-platform/ui-components'
+import {PlaceholdersPage} from '@mia-platform/ui-components'
 
 import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
 
 const errorProps: ErrorProps = {
-  descriptionKeys: ['404_description', '404_description_1', '404_description_2'],
+  descriptionKeys: ['404_description', '404_description_1'],
   titleKey: '404_title'
 }
+
+const ErrorImage404 = PlaceholdersPage.Error404
 
 export const ErrorPage404: React.FC = () => {
   return (
     <ErrorPageContainer {...errorProps}>
-      <Page404/>
+      <ErrorImage404/>
     </ErrorPageContainer>
   )
 }

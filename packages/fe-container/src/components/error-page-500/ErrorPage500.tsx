@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react'
-import {Page500} from '@mia-platform/ui-components'
+import {PlaceholdersPage} from '@mia-platform/ui-components'
 
 import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
 
@@ -23,10 +23,12 @@ const errorProps: ErrorProps = {
   titleKey: '500_title'
 }
 
+const ErrorImage500 = PlaceholdersPage.Error500
+
 export const ErrorPage500: React.FC = () => {
   return (
     <ErrorPageContainer {...errorProps}>
-      <Page500/>
+      <ErrorImage500/>
     </ErrorPageContainer>
   )
 }
