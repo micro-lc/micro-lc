@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react'
-import {PlaceholdersPage} from '@mia-platform/ui-components'
+import {PlaceholdersPage} from '@mia-platform/microlc-ui-components'
 
 import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
 

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 import React from 'react'
-import {render, screen} from '@testing-library/react'
+import renderer from 'react-test-renderer'
 
 import Page404 from './Page404'
 
 describe('Error Page 404 tests', () => {
   it('Test LoadingPage renders', () => {
-    render(<Page404/>)
-    expect(screen.getAllByTestId('svgContainer')).toBeTruthy()
+    const errorPage = renderer.create(<Page404 />).toJSON
+    expect(errorPage).toMatchSnapshot()
   })
 })

@@ -16,7 +16,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {Layout} from 'antd'
 import {Configuration, Plugin} from '@mia-platform/core'
-import {LoadingAnimation} from '@mia-platform/ui-components'
+import {LoadingAnimation} from '@mia-platform/microlc-ui-components'
 import {Route, Router, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 

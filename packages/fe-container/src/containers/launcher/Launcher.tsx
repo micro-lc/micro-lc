@@ -16,7 +16,7 @@
 import React, {useState} from 'react'
 import {Layout} from 'antd'
 import PropTypes from 'prop-types'
-import {LoadingAnimation} from '@mia-platform/ui-components'
+import {LoadingAnimation} from '@mia-platform/microlc-ui-components'
 
 import {TopBar} from '@components/top-bar/TopBar'
 import {LayoutContent} from '@components/layout-content/LayoutContent'

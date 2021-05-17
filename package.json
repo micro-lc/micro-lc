@@ -11,7 +11,7 @@
     "fe-container": "yarn workspace @mia-platform/fe-website",
     "core": "yarn workspace @mia-platform/core",
     "be-config": "yarn workspace @mia-platform/be-config",
-    "ui-components": "yarn workspace @mia-platform/ui-components",
+    "ui-components": "yarn workspace @mia-platform/microlc-ui-components",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
     "dev:fe-container": "yarn fe-container dev",
     "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register",

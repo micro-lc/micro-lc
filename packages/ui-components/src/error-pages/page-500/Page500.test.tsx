@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 import React from 'react'
-import {render, screen} from '@testing-library/react'
+import renderer from 'react-test-renderer'
 
 import Page500 from './Page500'
 
 describe('Error Page 500 tests', () => {
   it('Test LoadingPage renders', () => {
-    render(<Page500/>)
-    expect(screen.getAllByTestId('svgContainer')).toBeTruthy()
+    const errorPage = renderer.create(<Page500 />).toJSON
+    expect(errorPage).toMatchSnapshot()
   })
 })
