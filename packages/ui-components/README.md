@@ -2,7 +2,7 @@
 
 This package contains the React components to be shared.
 
-The components at the moment shared are:
+At the moment, the shared components are:
 
 - `Loading animation page`: a custom loader
 - `Error Page 401 Svg`: svg image as a component for the error page 401
