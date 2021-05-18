@@ -20,7 +20,7 @@ import Page500 from './Page500'
 
 describe('Error Page 500 tests', () => {
   it('Test LoadingPage renders', () => {
-    const errorPage = renderer.create(<Page500 />).toJSON
+    const errorPage = renderer.create(<Page500 />).toJSON()
     expect(errorPage).toMatchSnapshot()
   })
 })

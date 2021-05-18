@@ -20,7 +20,7 @@ import Page401 from './Page401'
 
 describe('Error Page 401 tests', () => {
   it('Test LoadingPage renders', () => {
-    const errorPage = renderer.create(<Page401 />).toJSON
+    const errorPage = renderer.create(<Page401 />).toJSON()
     expect(errorPage).toMatchSnapshot()
   })
 })

@@ -20,7 +20,7 @@ import Page404 from './Page404'
 
 describe('Error Page 404 tests', () => {
   it('Test LoadingPage renders', () => {
-    const errorPage = renderer.create(<Page404 />).toJSON
+    const errorPage = renderer.create(<Page404 />).toJSON()
     expect(errorPage).toMatchSnapshot()
   })
 })
