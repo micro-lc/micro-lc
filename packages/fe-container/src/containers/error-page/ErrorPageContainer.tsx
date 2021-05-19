@@ -26,7 +26,7 @@ const errorProps = {
   titleKey: PropTypes.string.isRequired
 }
 
-type ErrorProps = PropTypes.InferProps<typeof errorProps>
+export type ErrorProps = PropTypes.InferProps<typeof errorProps>
 
 export const ErrorPageContainer: React.FC<ErrorProps> = ({children, titleKey, descriptionKeys}) => {
   const descriptionMapper = useCallback((descriptionKey: string) => {

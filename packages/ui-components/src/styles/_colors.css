@@ -13,22 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from 'react'
-import {PlaceholdersPage} from '@mia-platform/microlc-ui-components'
 
-import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
-
-const errorProps: ErrorProps = {
-  descriptionKeys: ['500_description', '500_description_1'],
-  titleKey: '500_title'
-}
-
-const ErrorImage500 = PlaceholdersPage.Error500
-
-export const ErrorPage500: React.FC = () => {
-  return (
-    <ErrorPageContainer {...errorProps}>
-      <ErrorImage500/>
-    </ErrorPageContainer>
-  )
+:root {
+  --ui-components-primary-color: #1890ff;
+  --ui-components-primary-color-tint-89: #e6f3ff;
 }

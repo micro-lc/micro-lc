@@ -17,18 +17,63 @@ const theming = {
 
 const plugins = [
   {
+    id: 'plugin-test-2',
+    label: 'Href same window',
+    icon: 'far fa-window-maximize',
+    order: 2,
+    integrationMode: 'href',
+    externalLink: {
+      url: 'https://google.it',
+      sameWindow: true
+    }
+  },
+  {
+    id: 'plugin-test-1',
+    label: 'Href different window',
+    icon: 'far fa-window-restore',
+    order: 1,
+    integrationMode: 'href',
+    externalLink: {
+      url: 'https://google.it',
+      sameWindow: false
+    }
+  },
+  {
+    id: 'plugin-test-3',
+    label: 'IFrame',
+    icon: 'fab fa-google',
+    order: 4,
+    integrationMode: 'iframe',
+    pluginRoute: '/iframe',
+    pluginUrl: 'https://www.google.com/webhp?igu=1'
+  },
+  {
+    id: 'qiankun-test',
+    label: 'Qiankun plugin 1',
+    icon: 'fab fa-react',
+    order: 3,
+    integrationMode: 'qiankun',
+    pluginRoute: '/qiankun',
+    pluginUrl: '//localhost:8764'
+  },
+  {
+    id: 'qiankun-test-2',
+    label: 'Qiankun plugin 2',
+    icon: 'fab fa-react',
+    order: 3,
+    integrationMode: 'qiankun',
+    pluginRoute: '/qiankun2',
+    pluginUrl: '//localhost:8764'
+  },
+  {
     id: 'qiankun-as-iframe',
     label: 'Qiankun as iframe',
     icon: 'fab fa-reacteurope',
     order: 5,
-    integrationMode: 'qiankun',
+    integrationMode: 'iframe',
     pluginRoute: '/qiankunIframe',
-    pluginUrl: '//127.0.0.1:8765/',
-    props: {
-      openApiSpecUrl: 'https://petstore.swagger.io/v2/swagger.json'
-    }
-  },
-
+    pluginUrl: '//localhost:8764'
+  }
 ]
 
 const analytics = {

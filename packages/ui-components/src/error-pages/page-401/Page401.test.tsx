@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 import React from 'react'
-import {screen} from '@testing-library/react'
+import renderer from 'react-test-renderer'
 
-import {LoadingAnimation} from './LoadingAnimation'
-import RenderWithReactIntl from '../../__tests__/utils'
+import Page401 from './Page401'
 
-describe('Loading Page tests', () => {
+describe('Error Page 401 tests', () => {
   it('Test LoadingPage renders', () => {
-    RenderWithReactIntl(
-    <LoadingAnimation />
-    )
-    expect(screen.getAllByTestId('svgContainer')).toBeTruthy()
+    const errorPage = renderer.create(<Page401 />).toJSON()
+    expect(errorPage).toMatchSnapshot()
   })
 })

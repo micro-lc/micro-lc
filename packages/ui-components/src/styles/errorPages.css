@@ -1,0 +1,5 @@
+@import "./_colors";
+
+.svg_primaryColor {
+  fill: var(--ui-components-primary-color-tint-89);
+}

@@ -1,0 +1,34 @@
+name: Node.js ui-components CI
+
+env:
+  context: ./packages/ui-components/
+
+on:
+  push:
+    branches: [main]
+    tags: "*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: yarn ui-components install --frozen-lockfile
+      - run: yarn ui-components coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: "${{ env.context }}coverage/lcov.info"
+          base-path: "${{ env.context }}"
+
+      - name: Compile file and build
+        run: yarn ui-components build
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,65 @@
+{
+  "name": "@mia-platform/microlc-ui-components",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "source": "src/index.ts",
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.3"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint src --ext .ts",
+    "test": "react-scripts test --watchAll=false",
+    "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/index.tsx --collectCoverageFrom=!src/react-app-env*.ts"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.13.15",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@svgr/rollup": "^5.5.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.2.15",
+    "react-test-renderer": "^17.0.1",
+    "rollup": "^2.47.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^3.0.1",
+    "rollup-plugin-import-css": "^2.0.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-svg-import": "^1.5.1",
+    "rollup-plugin-terser-default": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0"
+  }
+}

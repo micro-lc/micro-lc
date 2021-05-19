@@ -11,6 +11,7 @@
     "fe-container": "yarn workspace @mia-platform/fe-website",
     "core": "yarn workspace @mia-platform/core",
     "be-config": "yarn workspace @mia-platform/be-config",
+    "ui-components": "yarn workspace @mia-platform/microlc-ui-components",
     "mock-server": "mock-server --delay 200 --watch --require @babel/register",
     "dev:fe-container": "yarn fe-container dev",
     "dev:mock-server": "mock-server --delay 200 --watch --require @babel/register",
@@ -20,7 +21,7 @@
     "build": "yarn fe-container build",
     "coverage": "lerna run coverage",
     "e2e": "BASE_URL='http://localhost' npx folio --config=e2e/config.ts",
-    "postinstall": "yarn core build"
+    "postinstall": "npm-run-all 'core build' 'ui-components build'"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

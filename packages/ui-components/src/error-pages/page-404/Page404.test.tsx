@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 import React from 'react'
-import {PlaceholdersPage} from '@mia-platform/microlc-ui-components'
+import renderer from 'react-test-renderer'
 
-import {ErrorPageContainer, ErrorProps} from '../../containers/error-page/ErrorPageContainer'
+import Page404 from './Page404'
 
-const errorProps: ErrorProps = {
-  descriptionKeys: ['500_description', '500_description_1'],
-  titleKey: '500_title'
-}
-
-const ErrorImage500 = PlaceholdersPage.Error500
-
-export const ErrorPage500: React.FC = () => {
-  return (
-    <ErrorPageContainer {...errorProps}>
-      <ErrorImage500/>
-    </ErrorPageContainer>
-  )
-}
+describe('Error Page 404 tests', () => {
+  it('Test LoadingPage renders', () => {
+    const errorPage = renderer.create(<Page404 />).toJSON()
+    expect(errorPage).toMatchSnapshot()
+  })
+})
