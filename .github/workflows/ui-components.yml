@@ -31,4 +31,5 @@ jobs:
         run: yarn ui-components build
       - uses: JS-DevTools/npm-publish@v1
         with:
+          package: './packages/ui-components/package.json'
           token: ${{ secrets.NPM_TOKEN }}
