@@ -15,6 +15,7 @@
  */
 
 :root {
-  --ui-components-primary-color: #1890ff;
-  --ui-components-primary-color-tint-89: #e6f3ff;
+  --microlc-ui-components-error-color: #1890ff;
+  --microlc-ui-components-loading-active-color: #1890ff;
+  --microlc-ui-components-loading-inactive-color: #e6f3ff;
 }
