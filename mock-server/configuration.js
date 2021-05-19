@@ -5,8 +5,8 @@ const theming = {
   },
   logo: {
     alt: 'My Company',
-    url_light_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo.png',
-    url_dark_image: 'https://raw.githubusercontent.com/lauragift21/giftegwuenu.dev/master/src/assets/img/logo-light.png',
+    url_light_image: 'https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png',
+    
     navigation_url: 'https://www.google.com'
   },
   variables: {
@@ -18,7 +18,7 @@ const theming = {
 const plugins = [
   {
     id: 'qiankun-as-iframe',
-    label: 'Qiankun as iframe',
+    label: 'Rapidoc',
     icon: 'fab fa-reacteurope',
     order: 5,
     integrationMode: 'qiankun',
@@ -28,7 +28,19 @@ const plugins = [
       openApiSpecUrl: 'https://petstore.swagger.io/v2/swagger.json'
     }
   },
-
+    {
+      id: 'plugin-test-1',
+      label: 'Docusaurus',
+      icon: 'fas fa-book',
+      order: 1,
+      integrationMode: 'qiankun',
+      "pluginRoute": "/docusaurus/",
+      "pluginUrl": "//localhost:8764",
+      "props": {
+        "docusaurusBaseUrl": "/docusaurus/",
+        "docusaurusUrl": "http://localhost:8767"
+      }
+    }
 ]
 
 const analytics = {
