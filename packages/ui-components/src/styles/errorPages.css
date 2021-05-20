@@ -1,5 +1,3 @@
-@import "./_colors";
-
-.svg_primaryColor {
-  fill: var(--ui-components-primary-color-tint-89);
+.microlc_error_color {
+  fill: var(--microlc-ui-components-error-color);
 }

@@ -7,6 +7,9 @@
   "module": "dist/index.es.js",
   "source": "src/index.ts",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

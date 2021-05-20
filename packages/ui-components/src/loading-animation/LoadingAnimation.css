@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@import "./../styles/_colors";
-
 .loadingAnimation_svg_container {
   height: 100%;
   width: 100%;
@@ -27,97 +25,97 @@
 
 #hexagon_left {
   animation: hexagon_left_animation 2200ms linear infinite normal forwards;
-  fill: var(--ui-components-primary-color-tint-89);
+  fill: var(--microlc-ui-components-loading-inactive-color);
 }
 
 @keyframes hexagon_left_animation {
   0% {
     transform: translate(44px, 150px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   10%,
   15% {
     transform: translate(44px, 210px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   25%,
   30% {
     transform: translate(150px, 210px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   40%,
   45% {
     transform: translate(150px, 150px);
-    fill: var(--ui-components-primary-color-tint-89);
+    fill: var(--microlc-ui-components-loading-inactive-color);
   }
   55%,
   60% {
     transform: translate(150px, 210px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   70%,
   75% {
     transform: translate(256px, 210px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   85%,
   100% {
     transform: translate(256px, 150px);
-    fill: var(--ui-components-primary-color-tint-89);
+    fill: var(--microlc-ui-components-loading-inactive-color);
   }
 }
 
 #hexagon_center {
   animation: hexagon_center_animation 2200ms linear infinite normal forwards;
-  fill: var(--ui-components-primary-color-tint-89);
+  fill: var(--microlc-ui-components-loading-inactive-color);
 }
 
 @keyframes hexagon_center_animation {
   0% {
     transform: translate(150px, 150px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   10%,
   15% {
     transform: translate(150px, 90px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   25%,
   30% {
     transform: translate(44px, 90px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   40%,
   100% {
     transform: translate(44px, 150px);
-    fill: var(--ui-components-primary-color-tint-89);
+    fill: var(--microlc-ui-components-loading-inactive-color);
   }
 }
 
 #hexagon_right {
   animation: hexagon_right_animation 2200ms linear infinite normal forwards;
-  fill: var(--ui-components-primary-color-tint-89);
+  fill: var(--microlc-ui-components-loading-inactive-color);
 }
 
 @keyframes hexagon_right_animation {
   0%,
   45% {
     transform: translate(256px, 150px);
-    fill: var(--ui-components-primary-color-tint-89);
+    fill: var(--microlc-ui-components-loading-inactive-color);
   }
   55%,
   60% {
     transform: translate(256px, 90px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   70%,
   75% {
     transform: translate(150px, 90px);
-    fill: var(--ui-components-primary-color);
+    fill: var(--microlc-ui-components-loading-active-color);
   }
   85%,
   100% {
     transform: translate(150px, 150px);
-    fill: var(--ui-components-primary-color-tint-89);
+    fill: var(--microlc-ui-components-loading-inactive-color);
   }
 }
