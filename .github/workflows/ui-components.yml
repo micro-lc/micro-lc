@@ -30,9 +30,8 @@ jobs:
       - name: Get tagged version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      - name: Update ui-components version
-        run: yarn ui-components version --no-git-tag-version --no-commit-hooks --new-version "${{ steps.get_version.outputs.VERSION }}"
       - uses: JS-DevTools/npm-publish@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           package: './packages/ui-components/package.json'
           access: 'public'
