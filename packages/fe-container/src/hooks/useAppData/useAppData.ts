@@ -54,17 +54,12 @@ export const useAppData = () => {
         configuration.plugins = configuration.plugins?.sort(pluginsSorter)
         registerPlugins(configuration, user)
         setAppState({isLoading: false, configuration, user})
+        navigateToFirstPlugin(configuration)
       }, (err) => setAppState(() => {
         throw err
       }))
     return () => configurationSubscription.unsubscribe()
   }, [])
-
-  useEffect(() => {
-    if (!appState.isLoading) {
-      navigateToFirstPlugin(appState.configuration)
-    }
-  }, [appState])
 
   return appState
 }
