@@ -1,4 +1,4 @@
-FROM nginx:1.17.2-alpine as build
+FROM nginx:1.20.0-alpine as build
 
 LABEL name="mia-microlc-website" \
       description="The Mia-Platform micro fontend solution" \
