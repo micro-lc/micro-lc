@@ -49,7 +49,6 @@ jobs:
     name: Build docker
     needs: test
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Checkout code
@@ -65,6 +64,8 @@ jobs:
             VERSION=$(echo ${VERSION} | sed s/^v//)
           elif [[ $GITHUB_REF == refs/heads/main ]]; then
             VERSION=latest
+          else
+            VERSION=$GITHUB_SHA
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
           echo ::set-output name=tags::${TAGS}
