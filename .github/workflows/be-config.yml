@@ -72,7 +72,7 @@ jobs:
           elif [[ $GITHUB_REF == refs/heads/main ]]; then
             VERSION=latest
           else
-            VERSION=${GITHUB_SHA#refs}
+            VERSION=${GITHUB_REF##*/}
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
           echo ::set-output name=tags::${TAGS}
