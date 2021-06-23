@@ -87,7 +87,8 @@ const pluginToQiankunMapper = (user: Partial<User>, basePath: string) => {
       ...plugin.props,
       basePath,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,
-      currentUser: user
+      currentUser: user,
+      globalWindow: window
     }
   })
 }
