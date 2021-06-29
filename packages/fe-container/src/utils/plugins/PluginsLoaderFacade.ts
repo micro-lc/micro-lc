@@ -74,7 +74,7 @@ export const finish = (user: Partial<User>) => {
     .map<RegistrableApp<any>>(pluginMapper)
   registerMicroApps(quiankunConfig)
   addErrorHandler(_ => history.push(RESERVED_PATH.INTERNAL_ERROR))
-  start()
+  start({sandbox: false})
 }
 
 const pluginToQiankunMapper = (user: Partial<User>, basePath: string) => {
@@ -87,8 +87,7 @@ const pluginToQiankunMapper = (user: Partial<User>, basePath: string) => {
       ...plugin.props,
       basePath,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,
-      currentUser: user,
-      globalWindow: window
+      currentUser: user
     }
   })
 }

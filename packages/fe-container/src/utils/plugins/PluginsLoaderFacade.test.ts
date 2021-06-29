@@ -142,8 +142,7 @@ describe('Test plugin loading', () => {
       props: {
         basePath: '',
         activeRule: '/qiankunTest',
-        currentUser: {},
-        globalWindow: window
+        currentUser: {}
       }
     }])
   })
