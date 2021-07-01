@@ -46,6 +46,15 @@ export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFast
 
 export const configurationFileApiSchema = {
   summary: 'Expose a configuration file',
+  params: {
+    type: 'object',
+    properties: {
+      [CONFIGURATION_NAME]: {
+        type: 'string',
+      },
+    },
+    required: [CONFIGURATION_NAME],
+  },
   response: {
     200: {
       additionalProperties: false,
