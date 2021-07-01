@@ -16,7 +16,7 @@
 
 import customService, {DecoratedFastify} from '@mia-platform/custom-plugin-lib'
 
-import {AUTHENTICATION_ENDPOINT, CONFIGURATION_ENDPOINT} from './constants'
+import {AUTHENTICATION_ENDPOINT, CONFIGURATION_ENDPOINT, CONFIGURATION_FILE_ENDPOINT} from './constants'
 import {authenticationApiHandlerBuilder, authenticationApiSchema} from './apis/authenticationApi'
 import {configurationApiHandlerBuilder, configurationApiSchema} from './apis/configurationApi'
 import {environmentVariablesSchema} from './schemas/environmentVariablesSchema'
@@ -29,5 +29,8 @@ module.exports = customService(environmentVariablesSchema)(async function index(
   )
   service.addRawCustomPlugin(
     CONFIGURATION_ENDPOINT.METHOD, CONFIGURATION_ENDPOINT.PATH, configurationApiHandler, configurationApiSchema
+  )
+  service.addRawCustomPlugin(
+    CONFIGURATION_FILE_ENDPOINT.METHOD, CONFIGURATION_FILE_ENDPOINT.PATH, configurationApiHandler, configurationApiSchema
   )
 })
