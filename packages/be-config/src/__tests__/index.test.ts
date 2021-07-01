@@ -63,8 +63,13 @@ describe('mia_template_service_name_placeholder', () => {
       method: CONFIGURATION_ENDPOINT.METHOD,
       url: CONFIGURATION_ENDPOINT.PATH,
     })
+    const configurationFileContent = await fastify.inject({
+      method: CONFIGURATION_FILE_ENDPOINT.METHOD,
+      url: '/configuration/validMicrolcConfig',
+    })
     expect(JSON.parse(authenticationContent.body)).toMatchObject(validAuthenticationConfig)
     expect(JSON.parse(configurationContent.body)).toMatchObject(validMicrolcConfig)
+    expect(configurationFileContent.statusCode).toBe(404)
   })
 
   test('Fastify fail for bad auth config path', async() => {
