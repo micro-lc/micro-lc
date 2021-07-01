@@ -19,7 +19,7 @@ import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {readValidateConfiguration} from '../utils/configurationManager'
 import {GROUPS_CONFIGURATION} from '../constants'
-import {pluginsFilter} from '../utils/pluginsFilter'
+import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
 
 const readPluginConfiguration = async(fastifyInstance: DecoratedFastify) => {
   // @ts-ignore
@@ -40,7 +40,7 @@ export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify)
   return (request, reply) => {
     // @ts-ignore
     const userGroups = request.headers[fastifyInstance.config.GROUPS_HEADER_KEY]?.split(GROUPS_CONFIGURATION.header.separator) || []
-    const allowedPlugins = pluginsFilter(configuration.plugins || [], userGroups)
+    const allowedPlugins = aclExpressionEvaluator(configuration.plugins || [], userGroups)
     const configurationForUser = buildNewConfiguration(configuration, allowedPlugins)
     reply.send(configurationForUser)
   }

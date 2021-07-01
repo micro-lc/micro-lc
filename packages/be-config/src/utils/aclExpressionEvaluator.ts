@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import {Plugin} from '@mia-platform/core'
-
 import {GROUPS_CONFIGURATION} from '../constants'
+
+const mutateJson = require('mutant-json')
+
+const OBJECT_STRING_RAPRESENTATION = Object.prototype.toString()
 
 type UserGroupsObject = {
   [key: string]: boolean
+}
+
+type FilterableObject = {
+  aclExpression: string
 }
 
 const userGroupsObjectBuilder = (userGroups: string[]) => {
@@ -30,23 +35,31 @@ const userGroupsObjectBuilder = (userGroups: string[]) => {
   return userGroupsObject
 }
 
-const buildPluginFunction = (plugin: Plugin) => {
+const buildPluginFunction = (plugin: FilterableObject) => {
   // eslint-disable-next-line no-new-func
   return new Function(GROUPS_CONFIGURATION.function.key, `return !!(${plugin.aclExpression})`)
 }
 
 const evaluatePluginExpression = (userGroupsObject: UserGroupsObject) => {
-  return (plugin: Plugin) => {
+  return (plugin: FilterableObject) => {
     const expressionEvaluationFunction = buildPluginFunction(plugin)
     return expressionEvaluationFunction(userGroupsObject)
   }
 }
 
-export const pluginsFilter = (plugins: Plugin[], userGroups: string[]) => {
+export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[]) => {
   const userGroupsObject = userGroupsObjectBuilder(userGroups)
-  const pluginsWithoutExpression = plugins.filter(plugin => !plugin.aclExpression)
-  const pluginsWithAclExpression = plugins
-    .filter(plugin => plugin.aclExpression)
-    .filter(evaluatePluginExpression(userGroupsObject))
-  return [...pluginsWithoutExpression, ...pluginsWithAclExpression]
+  const expressionEvaluator = evaluatePluginExpression(userGroupsObject)
+  return mutateJson(jsonToFilter, (mutate: Function, value: any) => {
+    if (!expressionEvaluator(value)) {
+      mutate({
+        op: 'remove',
+        value,
+      })
+    }
+  }, {
+    nested: true,
+    test: ([, value]: any[]) => Object.prototype.toString.call(value) === OBJECT_STRING_RAPRESENTATION && value.aclExpression,
+    promises: false,
+  })
 }
