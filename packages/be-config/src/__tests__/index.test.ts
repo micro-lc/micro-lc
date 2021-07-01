@@ -16,6 +16,7 @@
 
 import {FastifyInstance} from 'fastify'
 import path from 'path'
+
 import validAuthenticationConfig from './configurationMocks/validAuthenticationConfig.json'
 import validMicrolcConfig from './configurationMocks/validMicrolcConfig.json'
 import {AUTHENTICATION_ENDPOINT, CONFIGURATION_ENDPOINT, CONFIGURATION_FILE_ENDPOINT} from '../constants'
@@ -95,7 +96,7 @@ describe('mia_template_service_name_placeholder', () => {
     expect(fastify).not.toBeNull()
     const configurationFileContent = await fastify.inject({
       method: CONFIGURATION_FILE_ENDPOINT.METHOD,
-      url: CONFIGURATION_FILE_ENDPOINT.PATH,
+      url: '/configuration/validMicrolcConfig',
     })
     expect(JSON.parse(configurationFileContent.body)).toMatchObject(validMicrolcConfig)
   })

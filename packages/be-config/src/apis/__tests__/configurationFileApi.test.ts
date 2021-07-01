@@ -18,6 +18,7 @@ import path from 'path'
 import fastify from 'fastify'
 import http from 'http'
 import {DecoratedFastify} from '@mia-platform/custom-plugin-lib'
+
 import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcConfig.json'
 
 import {configurationFileApiHandlerBuilder} from '../configurationFileApi'

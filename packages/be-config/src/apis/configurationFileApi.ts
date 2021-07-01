@@ -20,13 +20,6 @@ import {GROUPS_CONFIGURATION, CONFIGURATION_NAME} from '../constants'
 import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
 import {readConfigurationFile} from '../utils/configurationManager'
 
-const checkConfigurationsPath = (fastifyInstance: DecoratedFastify) => {
-  // @ts-ignore
-  if (!fastifyInstance.config.CONFIGURATIONS_PATH) {
-    throw new Error('You must set configurations path')
-  }
-}
-
 const retrieveConfigurationFile = async(fastifyInstance: DecoratedFastify, configurationName: string) => {
   // @ts-ignore
   const configurationPath = `${fastifyInstance.config.CONFIGURATIONS_PATH}/${configurationName}.json`
@@ -35,12 +28,16 @@ const retrieveConfigurationFile = async(fastifyInstance: DecoratedFastify, confi
 
 export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler = (fastifyInstance) => {
   return async(request, reply) => {
-    checkConfigurationsPath(fastifyInstance)
     // @ts-ignore
-    const userGroups = request.headers[fastifyInstance.config.GROUPS_HEADER_KEY]?.split(GROUPS_CONFIGURATION.header.separator) || []
-    const configurationContent = await retrieveConfigurationFile(fastifyInstance, request.params[CONFIGURATION_NAME])
-    const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
-    reply.send(configurationContentFiltered)
+    if (fastifyInstance.config.CONFIGURATIONS_PATH) {
+      // @ts-ignore
+      const userGroups = request.headers[fastifyInstance.config.GROUPS_HEADER_KEY]?.split(GROUPS_CONFIGURATION.header.separator) || []
+      const configurationContent = await retrieveConfigurationFile(fastifyInstance, request.params[CONFIGURATION_NAME])
+      const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
+      reply.send(configurationContentFiltered)
+    } else {
+      reply.status(404).send()
+    }
   }
 }
 
@@ -54,10 +51,5 @@ export const configurationFileApiSchema = {
       },
     },
     required: [CONFIGURATION_NAME],
-  },
-  response: {
-    200: {
-      additionalProperties: false,
-    },
   },
 } as const
