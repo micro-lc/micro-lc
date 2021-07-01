@@ -47,19 +47,23 @@ const evaluatePluginExpression = (userGroupsObject: UserGroupsObject) => {
   }
 }
 
+const mutantProcess = (expressionEvaluator: Function) => (mutate: Function, value: any) => {
+  if (!expressionEvaluator(value)) {
+    mutate({
+      op: 'remove',
+      value,
+    })
+  }
+}
+
+const mutantOptions = {
+  nested: true,
+  test: ([, value]: any[]) => Object.prototype.toString.call(value) === OBJECT_STRING_RAPRESENTATION && value.aclExpression,
+  promises: false,
+}
+
 export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[]) => {
   const userGroupsObject = userGroupsObjectBuilder(userGroups)
   const expressionEvaluator = evaluatePluginExpression(userGroupsObject)
-  return mutateJson(jsonToFilter, (mutate: Function, value: any) => {
-    if (!expressionEvaluator(value)) {
-      mutate({
-        op: 'remove',
-        value,
-      })
-    }
-  }, {
-    nested: true,
-    test: ([, value]: any[]) => Object.prototype.toString.call(value) === OBJECT_STRING_RAPRESENTATION && value.aclExpression,
-    promises: false,
-  })
+  return mutateJson(jsonToFilter, mutantProcess(expressionEvaluator), mutantOptions)
 }
