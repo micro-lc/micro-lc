@@ -19,6 +19,7 @@ import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 import {GROUPS_CONFIGURATION, CONFIGURATION_NAME} from '../constants'
 import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
 import {readConfigurationFile} from '../utils/configurationManager'
+import {referencesReplacer} from '../utils/referencesReplacer'
 
 const retrieveConfigurationFile = async(fastifyInstance: DecoratedFastify, configurationName: string) => {
   // @ts-ignore
@@ -34,7 +35,7 @@ export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFast
       const userGroups = request.headers[fastifyInstance.config.GROUPS_HEADER_KEY]?.split(GROUPS_CONFIGURATION.header.separator) || []
       const configurationContent = await retrieveConfigurationFile(fastifyInstance, request.params[CONFIGURATION_NAME])
       const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
-      reply.send(configurationContentFiltered)
+      reply.send(referencesReplacer(configurationContentFiltered))
     } else {
       reply.status(404).send()
     }
