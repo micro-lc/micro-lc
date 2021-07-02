@@ -103,4 +103,22 @@ describe('References replacer tests', () => {
     }
     expect(referencesReplacer(initialConfiguration)).toMatchObject(expectedResult)
   })
+
+  it('correctly remove not existent $ref', () => {
+    const initialConfiguration = {
+      $ref: {
+        test: {
+          replaced: true,
+        },
+      },
+      content: {
+        shouldKeep: true,
+        $ref: 'invalid',
+      },
+    }
+    const expectedResult = {
+      shouldKeep: true,
+    }
+    expect(referencesReplacer(initialConfiguration)).toMatchObject(expectedResult)
+  })
 })
