@@ -59,5 +59,6 @@ export const STORAGE_KEY = {
 
 export const MENU_LOCATION = {
   sideBar: 'sideBar',
-  topBar: 'topBar'
+  topBar: 'topBar',
+  fixedSideBar: 'fixedSideBar'
 }
