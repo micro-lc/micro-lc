@@ -138,4 +138,13 @@ describe('AntSideMenu test', () => {
     expect(screen.getByText('IFrame')).toBeTruthy()
     expect(screen.getByText('Qiankun')).toBeTruthy()
   })
+
+  it('toggle collapse correctly hide and show labels', () => {
+    RenderWithReactIntl(<AntSideMenu configuration={{}}/>)
+    expect(screen.getByText('Collapse')).toBeTruthy()
+    userEvent.click(screen.getByText('Collapse'))
+    expect(document.getElementsByClassName('ant-menu-inline-collapsed').length).toBe(1)
+    userEvent.click(screen.getByText('Collapse'))
+    expect(document.getElementsByClassName('ant-menu-inline-collapsed').length).toBe(0)
+  })
 })
