@@ -29,6 +29,13 @@ export const CONFIGURATION_ENDPOINT: EndpointConfiguration = {
   PATH: `/configuration`,
 }
 
+export const CONFIGURATION_NAME = 'configurationName'
+
+export const CONFIGURATION_FILE_ENDPOINT: EndpointConfiguration = {
+  METHOD: 'GET',
+  PATH: `/configuration/:${CONFIGURATION_NAME}`,
+}
+
 export const GROUPS_CONFIGURATION = {
   header: {
     separator: ',',

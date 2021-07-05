@@ -15,13 +15,13 @@
  */
 import {Plugin} from '@mia-platform/core'
 
-import {pluginsFilter} from '../pluginsFilter'
+import {aclExpressionEvaluator} from '../aclExpressionEvaluator'
 import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcConfig.json'
 
 describe('Plugins filter tests', () => {
   it('Return all the plugins without expression', () => {
     const plugins = validMicrolcConfig.plugins as Plugin[]
-    const pluginsFiltered = pluginsFilter(plugins, [])
+    const pluginsFiltered = aclExpressionEvaluator(plugins, [])
     expect(pluginsFiltered.length).toBe(plugins.length)
     expect(pluginsFiltered).toMatchObject(plugins)
   })
@@ -39,7 +39,7 @@ describe('Plugins filter tests', () => {
       label: 'Plugin 2',
       aclExpression: '!groups.developer',
     }]
-    const pluginsFiltered = pluginsFilter(plugins, ['ceo', 'admin', 'developer'])
+    const pluginsFiltered = aclExpressionEvaluator(plugins, ['ceo', 'admin', 'developer'])
     expect(pluginsFiltered.length).toBe(1)
     expect(pluginsFiltered[0]).toBe(allowedPlugin)
   })
@@ -61,18 +61,74 @@ describe('Plugins filter tests', () => {
       label: 'Plugin 1',
       aclExpression: 'groups.admin && groups.ceo',
     }]
-    const pluginsFiltered = pluginsFilter(plugins, ['po', 'reviewer'])
+    const pluginsFiltered = aclExpressionEvaluator(plugins, ['po', 'reviewer'])
     expect(pluginsFiltered.length).toBe(2)
     expect(pluginsFiltered).toMatchObject(allowedPlugins)
   })
 
   it('Everything is fine with empty plugins list', () => {
-    const pluginsFiltered = pluginsFilter([], ['po', 'reviewer'])
+    const pluginsFiltered = aclExpressionEvaluator([], ['po', 'reviewer'])
     expect(pluginsFiltered).toMatchObject([])
   })
 
   it('Everything is fine with empty plugins and groups list', () => {
-    const pluginsFiltered = pluginsFilter([], [])
+    const pluginsFiltered = aclExpressionEvaluator([], [])
     expect(pluginsFiltered).toMatchObject([])
+  })
+
+  it('general object and no groups', () => {
+    const allConfiguration = {
+      test: {
+        nested: {
+          object: {},
+        },
+      },
+    }
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [])
+    expect(pluginsFiltered).toMatchObject(allConfiguration)
+  })
+
+  it('general acl object and no groups', () => {
+    const allConfiguration = {
+      test: {
+        nested: {
+          aclExpression: 'groups.admin && groups.ceo',
+          object: {},
+        },
+      },
+    }
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [])
+    expect(pluginsFiltered).toMatchObject({test: {}})
+  })
+
+  it('general acl object and groups', () => {
+    const allConfiguration = {
+      test: {
+        nested: {
+          aclExpression: 'groups.admin && groups.ceo',
+          object: {},
+        },
+      },
+    }
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, ['ceo', 'admin'])
+    expect(pluginsFiltered).toMatchObject(allConfiguration)
+  })
+
+  it('general acl object and invalid groups', () => {
+    const allConfiguration = {
+      test: {
+        nested: {
+          aclExpression: 'groups.admin && groups.ceo',
+          object: {},
+        },
+      },
+    }
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, ['po', 'admin'])
+    expect(pluginsFiltered).toMatchObject({test: {}})
+  })
+
+  it('not object value', () => {
+    const pluginsFiltered = aclExpressionEvaluator(true, ['po', 'admin'])
+    expect(pluginsFiltered).toBe(true)
   })
 })

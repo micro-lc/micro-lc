@@ -16,9 +16,10 @@
 
 import {FastifyInstance} from 'fastify'
 import path from 'path'
+
 import validAuthenticationConfig from './configurationMocks/validAuthenticationConfig.json'
 import validMicrolcConfig from './configurationMocks/validMicrolcConfig.json'
-import {AUTHENTICATION_ENDPOINT, CONFIGURATION_ENDPOINT} from '../constants'
+import {AUTHENTICATION_ENDPOINT, CONFIGURATION_ENDPOINT, CONFIGURATION_FILE_ENDPOINT} from '../constants'
 
 export interface ProcessEnv {
   [key: string]: string | undefined
@@ -55,15 +56,20 @@ describe('mia_template_service_name_placeholder', () => {
     })
     expect(fastify).not.toBeNull()
     const authenticationContent = await fastify.inject({
-      method: 'GET',
+      method: AUTHENTICATION_ENDPOINT.METHOD,
       url: AUTHENTICATION_ENDPOINT.PATH,
     })
     const configurationContent = await fastify.inject({
-      method: 'GET',
+      method: CONFIGURATION_ENDPOINT.METHOD,
       url: CONFIGURATION_ENDPOINT.PATH,
+    })
+    const configurationFileContent = await fastify.inject({
+      method: CONFIGURATION_FILE_ENDPOINT.METHOD,
+      url: '/configuration/validMicrolcConfig',
     })
     expect(JSON.parse(authenticationContent.body)).toMatchObject(validAuthenticationConfig)
     expect(JSON.parse(configurationContent.body)).toMatchObject(validMicrolcConfig)
+    expect(configurationFileContent.statusCode).toBe(404)
   })
 
   test('Fastify fail for bad auth config path', async() => {
@@ -84,5 +90,19 @@ describe('mia_template_service_name_placeholder', () => {
       })
     }
     await expect(fastifySetup()).rejects.toThrow()
+  })
+
+  test('Fastify correctly return configuration file', async() => {
+    await setupFastify({
+      AUTHENTICATION_CONFIGURATION_PATH: path.join(__dirname, '/configurationMocks/validAuthenticationConfig.json'),
+      MICROLC_CONFIGURATION_PATH: path.join(__dirname, '/configurationMocks/validMicrolcConfig.json'),
+      CONFIGURATIONS_PATH: path.join(__dirname, '/configurationMocks'),
+    })
+    expect(fastify).not.toBeNull()
+    const configurationFileContent = await fastify.inject({
+      method: CONFIGURATION_FILE_ENDPOINT.METHOD,
+      url: '/configuration/validMicrolcConfig',
+    })
+    expect(JSON.parse(configurationFileContent.body)).toMatchObject(validMicrolcConfig)
   })
 })
