@@ -28,14 +28,14 @@ const sideMenuProps = {
   plugins: PropTypes.array
 }
 
+const entriesMapper = (plugin: Plugin) => <SideMenuEntry key={plugin.id} {...plugin}/>
+
 type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
 
 export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
 
   const closeMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
-
-  const entriesMapper = useCallback((plugin: Plugin) => <SideMenuEntry key={plugin.id} {...plugin}/>, [])
 
   const sideMenuClasses = classNames('sideMenu', {opened: isMenuOpened})
   const sideMenuOverlayClasses = classNames('sideMenu_overlay', {sideMenu_visible: isMenuOpened})
