@@ -27,7 +27,7 @@ type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 
 export const SideBarLayout: React.FC<LoadedLauncherProps> = ({configuration, user}) => {
   return (
-    <Layout>
+    <Layout data-testid='side-bar'>
       <Layout.Header className='launcher_header'>
         <TopBar/>
       </Layout.Header>

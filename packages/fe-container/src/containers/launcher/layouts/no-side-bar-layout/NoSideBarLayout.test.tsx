@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {SelectInfo} from 'rc-menu/lib/interface'
+import React from 'react'
 
-export const onSelectHandler = (unselectableKeys: string[]) => {
-  return ({selectedKeys = []}: SelectInfo) => {
-    const selectableKeys = selectedKeys
-      .filter(key => !unselectableKeys.includes(key.toString()))
-    selectedKeys.splice(0, selectedKeys.length)
-    Object.assign(selectedKeys, selectableKeys)
-  }
-}
+import RenderWithReactIntl from '../../../../__tests__/utils'
+import {NoSideBarLayout} from './NoSideBarLayout'
+
+describe('NoSideBarLayout test', () => {
+  it('match snapshot', () => {
+    const {asFragment} = RenderWithReactIntl(<NoSideBarLayout/>)
+    expect(asFragment()).toMatchSnapshot()
+  })
+})

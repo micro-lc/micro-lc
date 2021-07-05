@@ -22,7 +22,7 @@ import {FooterBar} from '@components/footer-bar/FooterBar'
 
 export const NoSideBarLayout: React.FC = () => {
   return (
-    <Layout>
+    <Layout data-testid='no-side-bar'>
       <Layout.Header className='launcher_header'>
         <TopBar/>
       </Layout.Header>
