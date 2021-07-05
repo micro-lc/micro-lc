@@ -15,12 +15,27 @@
  */
 import React from 'react'
 
+import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
+
 import RenderWithReactIntl from '../../../../__tests__/utils'
 import {FixedSideBarLayout} from './FixedSideBarLayout'
 
 describe('FixedSideBarLayout test', () => {
   it('match snapshot', () => {
     const {asFragment} = RenderWithReactIntl(<FixedSideBarLayout configuration={{}} user={{}}/>)
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it('match snapshot opened', () => {
+    const menuProviderConf = {
+      isMenuOpened: true,
+      setMenuOpened: jest.fn()
+    }
+    const {asFragment} = RenderWithReactIntl(
+      <MenuOpenedProvider value={menuProviderConf}>
+        <FixedSideBarLayout configuration={{}} user={{}}/>
+      </MenuOpenedProvider>
+    )
     expect(asFragment()).toMatchSnapshot()
   })
 })
