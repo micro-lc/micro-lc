@@ -24,6 +24,8 @@ import {AppState} from '@hooks/useAppData/useAppData'
 import {MenuOpenedContext} from '@contexts/MenuOpened.context'
 import {AntSideMenu} from '@components/ant-side-menu/AntSideMenu'
 
+import './FixedSideBar.less'
+
 type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 
 export const FixedSideBarLayout: React.FC<LoadedLauncherProps> = ({configuration}) => {
@@ -34,7 +36,7 @@ export const FixedSideBarLayout: React.FC<LoadedLauncherProps> = ({configuration
       <Layout.Header className='launcher_header'>
         <TopBar/>
       </Layout.Header>
-      <Layout>
+      <Layout className='fixedSideBar_layout_content'>
         {
           isMenuOpened && <AntSideMenu configuration={configuration}/>
         }
