@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react'
-import {Divider, Layout, Menu} from 'antd'
+import {Layout, Menu} from 'antd'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 import {Configuration, Plugin} from '@mia-platform/core'
@@ -51,7 +51,7 @@ export const AntSideMenu: React.FC<LoadedLauncherProps> = ({configuration}) => {
         >
           <CollapseItem/>
         </Menu.Item>
-        <Divider className='divider'/>
+        <Menu.Divider className='divider'/>
         {configuration.plugins?.map(menuItemMapper)}
       </Menu>
     </Layout.Sider>

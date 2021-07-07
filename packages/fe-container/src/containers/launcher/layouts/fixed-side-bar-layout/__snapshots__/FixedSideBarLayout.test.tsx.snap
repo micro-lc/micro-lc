@@ -376,24 +376,8 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
                 </div>
               </span>
             </li>
-            <div
-              builtinplacements="[object Object]"
-              class="ant-divider ant-divider-horizontal divider"
-              eventkey="item_1"
-              index="1"
-              inlineindent="24"
-              level="1"
-              mode="vertical"
-              motion="[object Object]"
-              openkeys=""
-              parentmenu="[object Object]"
-              role="separator"
-              rootprefixcls="ant-menu"
-              selectedkeys=""
-              submenuclosedelay="0.1"
-              submenukey="0-menu-"
-              submenuopendelay="0.1"
-              triggersubmenuaction="hover"
+            <li
+              class="divider ant-menu-item-divider"
             />
           </ul>
         </div>
