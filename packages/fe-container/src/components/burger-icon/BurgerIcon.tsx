@@ -21,10 +21,12 @@ import './BurgerIcon.less'
 import {ConfigurationContext} from '@contexts/Configuration.context'
 import {MENU_LOCATION} from '@constants'
 
+const SIDEBAR_VALID_LOCATIONS = [undefined, MENU_LOCATION.sideBar, MENU_LOCATION.fixedSideBar]
+
 export const BurgerIcon: React.FC = () => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
   const configuration = useContext(ConfigurationContext)
-  const showSideBar = !configuration.theming || [undefined, MENU_LOCATION.sideBar].includes(configuration.theming.menuLocation)
+  const showSideBar = !configuration.theming || SIDEBAR_VALID_LOCATIONS.includes(configuration.theming.menuLocation)
   const showBurgerIcon = (configuration?.plugins || []).length > 1 && showSideBar
 
   const manageToggle = () => {

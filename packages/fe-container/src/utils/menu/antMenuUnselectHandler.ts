@@ -13,20 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.launcher_content_container {
-  min-height: 100%;
-  height: 100%;
-}
+import {SelectInfo} from 'rc-menu/lib/interface'
 
-.launcher_header {
-  z-index: 1000;
-  padding: 0 24px !important;
-  border-bottom: 1px solid var(--microlc-layout-header-border-color);
-  background: var(--microlc-layout-header-background) !important;
-}
-
-.launcher_footer {
-  z-index: 1000;
-  padding: 0 0 !important;
-  border-top: 1px solid var(--microlc-footer-background);
+export const onSelectHandler = (unselectableKeys: string[]) => {
+  return ({selectedKeys = []}: SelectInfo) => {
+    const selectableKeys = selectedKeys
+      .filter(key => !unselectableKeys.includes(key.toString()))
+    selectedKeys.splice(0, selectedKeys.length)
+    Object.assign(selectedKeys, selectableKeys)
+  }
 }

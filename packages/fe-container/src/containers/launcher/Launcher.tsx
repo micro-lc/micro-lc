@@ -13,54 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useState} from 'react'
-import {Layout} from 'antd'
+import React, {useMemo, useState} from 'react'
 import PropTypes from 'prop-types'
 import {LoadingAnimation} from '@mia-platform/microlc-ui-components'
 
-import {TopBar} from '@components/top-bar/TopBar'
-import {LayoutContent} from '@components/layout-content/LayoutContent'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {AppState} from '@hooks/useAppData/useAppData'
-import {SideMenu} from '@components/side-menu/SideMenu'
 import {UserContextProvider} from '@contexts/User.context'
-import {FooterBar} from '@components/footer-bar/FooterBar'
+import {MENU_LOCATION} from '@constants'
+import {Configuration} from '@mia-platform/core'
+
+import {SideBarLayout} from './layouts/side-bar-layout/SideBarLayout'
+import {FixedSideBarLayout} from './layouts/fixed-side-bar-layout/FixedSideBarLayout'
+import {NoSideBarLayout} from './layouts/no-side-bar-layout/NoSideBarLayout'
 
 import './Launcher.less'
-import {MENU_LOCATION} from '@constants'
 
 export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) => {
-  return (
-    <>
-      {
-        isLoading ?
-            <LoadingAnimation /> :
-          <LoadedLauncher configuration={configuration} user={user}/>
-      }
-    </>
-  )
+  return isLoading ? <LoadingAnimation/> : <LoadedLauncher configuration={configuration} user={user}/>
 }
 
 type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 
-const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) => {
+const retrieveLayout = (configuration: Configuration) => {
   const showSideBar = !configuration.theming || [undefined, MENU_LOCATION.sideBar].includes(configuration.theming.menuLocation)
+  const showFixedSideBar = configuration.theming?.menuLocation === MENU_LOCATION.fixedSideBar
+
+  let componentToRender: React.FC<LoadedLauncherProps> = NoSideBarLayout
+  if (showSideBar) {
+    componentToRender = SideBarLayout
+  } else if (showFixedSideBar) {
+    componentToRender = FixedSideBarLayout
+  }
+  return componentToRender
+}
+
+const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) => {
+  const layout = useMemo(() => retrieveLayout(configuration), [configuration])
 
   return (
     <AppProvider configuration={configuration} user={user}>
-      <Layout>
-        <Layout.Header className='launcher_header'>
-          <TopBar/>
-        </Layout.Header>
-        <Layout.Content className='launcher_content_container'>
-          { showSideBar && <SideMenu plugins={configuration.plugins}/> }
-          <LayoutContent/>
-        </Layout.Content>
-        <Layout.Footer className='launcher_footer'>
-          <FooterBar />
-        </Layout.Footer>
-      </Layout>
+      {React.createElement(layout, {configuration, user})}
     </AppProvider>
   )
 }

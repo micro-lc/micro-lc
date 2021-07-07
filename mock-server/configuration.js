@@ -12,7 +12,7 @@ const theming = {
   variables: {
     primaryColor: 'red'
   },
-  menuLocation: 'topBar'
+  menuLocation: 'fixedSideBar'
 }
 
 const plugins = [

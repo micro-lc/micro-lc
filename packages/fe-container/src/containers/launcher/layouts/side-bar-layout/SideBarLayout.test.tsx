@@ -13,20 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.launcher_content_container {
-  min-height: 100%;
-  height: 100%;
-}
+import React from 'react'
 
-.launcher_header {
-  z-index: 1000;
-  padding: 0 24px !important;
-  border-bottom: 1px solid var(--microlc-layout-header-border-color);
-  background: var(--microlc-layout-header-background) !important;
-}
+import RenderWithReactIntl from '../../../../__tests__/utils'
+import {SideBarLayout} from './SideBarLayout'
 
-.launcher_footer {
-  z-index: 1000;
-  padding: 0 0 !important;
-  border-top: 1px solid var(--microlc-footer-background);
-}
+describe('SideBarLayout test', () => {
+  it('match snapshot', () => {
+    const {asFragment} = RenderWithReactIntl(<SideBarLayout configuration={{}} user={{}}/>)
+    expect(asFragment()).toMatchSnapshot()
+  })
+})

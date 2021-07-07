@@ -27,7 +27,7 @@ export const themingSchema = {
     variables: variablesSchema,
     menuLocation: {
       type: 'string',
-      enum: ['sideBar', 'topBar'],
+      enum: ['sideBar', 'topBar', 'fixedSideBar'],
       default: 'sideBar',
     },
   },
