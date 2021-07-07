@@ -96,7 +96,7 @@ describe('mia_template_service_name_placeholder', () => {
     await setupFastify({
       AUTHENTICATION_CONFIGURATION_PATH: path.join(__dirname, '/configurationMocks/validAuthenticationConfig.json'),
       MICROLC_CONFIGURATION_PATH: path.join(__dirname, '/configurationMocks/validMicrolcConfig.json'),
-      CONFIGURATIONS_PATH: path.join(__dirname, '/configurationMocks'),
+      PLUGINS_CONFIGURATIONS_PATH: path.join(__dirname, '/configurationMocks'),
     })
     expect(fastify).not.toBeNull()
     const configurationFileContent = await fastify.inject({

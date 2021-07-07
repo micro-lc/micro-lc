@@ -23,14 +23,14 @@ import {referencesReplacer} from '../utils/referencesReplacer'
 
 const retrieveConfigurationFile = async(fastifyInstance: DecoratedFastify, configurationName: string) => {
   // @ts-ignore
-  const configurationPath = `${fastifyInstance.config.CONFIGURATIONS_PATH}/${configurationName}.json`
+  const configurationPath = `${fastifyInstance.config.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}.json`
   return readConfigurationFile(configurationPath)
 }
 
 export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler = (fastifyInstance) => {
   return async(request, reply) => {
     // @ts-ignore
-    if (fastifyInstance.config.CONFIGURATIONS_PATH) {
+    if (fastifyInstance.config.PLUGINS_CONFIGURATIONS_PATH) {
       // @ts-ignore
       const userGroups = request.headers[fastifyInstance.config.GROUPS_HEADER_KEY]?.split(GROUPS_CONFIGURATION.header.separator) || []
       const configurationContent = await retrieveConfigurationFile(fastifyInstance, request.params[CONFIGURATION_NAME])

@@ -28,7 +28,7 @@ describe('Configuration api tests', () => {
     // @ts-ignore
     return {
       config: {
-        CONFIGURATIONS_PATH: path.join(__dirname, '../../__tests__/configurationMocks'),
+        PLUGINS_CONFIGURATIONS_PATH: path.join(__dirname, '../../__tests__/configurationMocks'),
         GROUPS_HEADER_KEY: 'groups',
       },
     } as DecoratedFastify

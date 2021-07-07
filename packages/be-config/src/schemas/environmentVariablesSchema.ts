@@ -26,7 +26,7 @@ export const environmentVariablesSchema = {
       type: 'string',
       description: 'The path of the microlc configuration file',
     },
-    CONFIGURATIONS_PATH: {
+    PLUGINS_CONFIGURATIONS_PATH: {
       type: 'string',
       description: 'The path of the configurations file',
     },
