@@ -71,7 +71,7 @@ describe('AntSideMenu test', () => {
     }
     // @ts-ignore
     RenderWithReactIntl(<AntSideMenu configuration={configuration}/>)
-    expect(document.getElementsByClassName('fixedSideMenu_icon')).toHaveLength(2)
+    expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(2)
   })
 
   it('show external link icon', () => {
@@ -83,7 +83,7 @@ describe('AntSideMenu test', () => {
     }
     // @ts-ignore
     RenderWithReactIntl(<AntSideMenu configuration={configuration}/>)
-    expect(document.getElementsByClassName('fixedSideMenu_icon')).toHaveLength(3)
+    expect(document.getElementsByClassName('sideMenu_icon')).toHaveLength(3)
     expect(document.getElementsByClassName('sideMenu_externalLink')).toHaveLength(1)
   })
 

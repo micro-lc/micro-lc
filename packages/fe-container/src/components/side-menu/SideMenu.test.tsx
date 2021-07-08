@@ -143,9 +143,9 @@ describe('SideMenu tests', () => {
       </MenuOpenedProvider>
     )
     expect(setMenuOpened).not.toHaveBeenCalled()
-    expect(document.getElementsByClassName('opened').length).toBe(1)
-    expect(document.getElementsByClassName('sideMenu_visible').length).toBe(1)
-    userEvent.click(screen.getByTestId('layout-content-overlay'))
+    expect(document.getElementsByClassName('ant-drawer-open').length).toBe(1)
+    expect(document.getElementsByClassName('ant-drawer-content').length).toBe(1)
+    userEvent.click(document.getElementsByClassName('ant-drawer-mask')[0])
     expect(setMenuOpened).toHaveBeenCalledWith(false)
   })
 })

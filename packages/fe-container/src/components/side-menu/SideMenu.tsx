@@ -15,13 +15,13 @@
  */
 import React, {useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
-import {Drawer, Menu} from 'antd'
+import {Drawer, DrawerProps, Menu} from 'antd'
 
 import {Plugin} from '@mia-platform/core'
 
 import {MenuOpenedContext} from '@contexts/MenuOpened.context'
-import {retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
 import {onSelectHandler} from '@utils/menu/antMenuUnselectHandler'
+import {menuItemMapper} from '@utils/menu/menuItemMapper'
 
 import './SideMenu.less'
 
@@ -33,21 +33,14 @@ const sideMenuProps = {
 
 type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
 
-const menuItemMapper = (plugin: Plugin) => {
-  const pluginStrategy = retrievePluginStrategy(plugin)
-  return (
-    <Menu.Item
-      className='fixedSideMenu_voice'
-      icon={<i className={'fixedSideMenu_icon ' + (plugin.icon || '')}/>}
-      key={plugin.id}
-      onClick={pluginStrategy.handlePluginLoad}
-    >
-      <div className='fixedSideMenu_entry'>
-        <span className='fixedSideMenu_label'>{plugin.label}</span>
-        {plugin.integrationMode === 'href' && <i className='fas fa-external-link-alt sideMenu_externalLink'/>}
-      </div>
-    </Menu.Item>
-  )
+const isHref = (plugin: Plugin) => plugin.integrationMode === 'href'
+const idExtractor = (plugin: Plugin) => plugin.id
+const drawerProps: DrawerProps = {
+  className: 'sideMenu_drawer',
+  closable: false,
+  getContainer: false,
+  placement: 'left',
+  style: {position: 'absolute'}
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
@@ -55,21 +48,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
 
   const closeMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
 
-  const hrefPlugins = plugins
-    ?.filter((plugin: Plugin) => plugin.integrationMode === 'href')
-    .map((plugin: Plugin) => plugin.id) || []
+  const hrefPlugins = plugins?.filter(isHref).map(idExtractor) || []
   const unselectableKeys = [COLLAPSE_KEY, ...hrefPlugins]
 
   return (
-    <Drawer
-      className='sideMenu_drawer'
-      closable={false}
-      getContainer={false}
-      onClose={closeMenu}
-      placement='left'
-      style={{position: 'absolute'}}
-      visible={isMenuOpened}
-    >
+    <Drawer {...drawerProps} onClose={closeMenu} visible={isMenuOpened}>
       <Menu className='fixedSideBar' onSelect={onSelectHandler(unselectableKeys)}>
         {plugins?.map(menuItemMapper)}
       </Menu>
@@ -78,24 +61,3 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
 }
 
 SideMenu.propTypes = sideMenuProps
-
-// const SideMenuEntry: React.FC<Plugin> = (plugin) => {
-//   const [isActive, setIsActive] = useState<boolean>(isPluginLoaded(plugin))
-//   const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
-//
-//   useEffect(() => {
-//     return history.listen(() => setIsActive(isPluginLoaded(plugin)))
-//   }, [plugin])
-//
-//   const sideMenuVoiceClasses = classNames('sideMenu_voice', {active: isActive})
-//
-//   return (
-//     <div className={sideMenuVoiceClasses} onClick={pluginStrategy.handlePluginLoad}>
-//       <i className={'sideMenu_icon ' + (plugin.icon || '')}/>
-//       <div className='sideMenu_entry'>
-//         <span className='sideMenu_label'>{plugin.label}</span>
-//         {plugin.integrationMode === 'href' && <i className='fas fa-external-link-alt sideMenu_externalLink'/>}
-//       </div>
-//     </div>
-//   )
-// }

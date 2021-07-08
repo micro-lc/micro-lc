@@ -362,15 +362,15 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
             role="menu"
           >
             <li
-              class="ant-menu-item fixedSideMenu_voice"
+              class="ant-menu-item sideMenu_voice"
               role="menuitem"
             >
               <i
-                class="fixedSideMenu_icon fas fa-compress-alt ant-menu-item-icon"
+                class="sideMenu_icon fas fa-compress-alt ant-menu-item-icon"
               />
               <span>
                 <div
-                  class="fixedSideMenu_entry"
+                  class="sideMenu_entry"
                 >
                   Collapse
                 </div>
