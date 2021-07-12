@@ -16,7 +16,7 @@
 import {isDarkModeSet, toggleDarkModeSettings} from '@utils/settings/dark-mode/DarkModeSettings'
 import {STORAGE_KEY} from '@constants'
 
-describe('Dark Mode Settings Manger tests', () => {
+describe('Dark Mode Settings Manager tests', () => {
   afterEach(() => window.localStorage.clear())
 
   it('Dark mode not enabled', () => {
