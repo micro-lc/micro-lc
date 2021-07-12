@@ -17,9 +17,10 @@ import {Configuration} from '@mia-platform/core'
 
 import {isSideBarToShow, isFixedSideBarToShow, isFixedSidebarCollapsed, toggleFixedSidebarState} from '@utils/settings/side-bar/SideBarSettings'
 import {STORAGE_KEY} from '@constants'
+import {MenuLocation} from '../../../__tests__/utils'
 
 describe('Side Bar Settings Manager tests', () => {
-  const configurationsBuilder = (menuLocation: 'sideBar' | 'topBar' | 'fixedSideBar' | undefined): Configuration => ({
+  const configurationsBuilder = (menuLocation: MenuLocation): Configuration => ({
     theming: {
       logo: {url_light_image: '', alt: ''},
       menuLocation,

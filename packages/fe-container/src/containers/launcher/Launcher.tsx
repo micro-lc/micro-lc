@@ -36,16 +36,14 @@ export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) =
 
 type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 
-const retrieveLayout = (configuration: Configuration): React.FC<LoadedLauncherProps> => {
+const retrieveLayout = (configuration: Configuration) => {
+  let componentToRender: React.FC<LoadedLauncherProps> = NoSideBarLayout
   if (isSideBarToShow(configuration)) {
-    return SideBarLayout
+    componentToRender = SideBarLayout
+  } else if (isFixedSideBarToShow(configuration)) {
+    componentToRender = FixedSideBarLayout
   }
-
-  if (isFixedSideBarToShow(configuration)) {
-    return FixedSideBarLayout
-  }
-
-  return NoSideBarLayout
+  return componentToRender
 }
 
 const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) => {

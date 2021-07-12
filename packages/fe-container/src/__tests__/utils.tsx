@@ -20,6 +20,8 @@ import {IntlProvider} from 'react-intl'
 
 import strings from '../strings/locales/en.json'
 
+export type MenuLocation = 'sideBar' | 'topBar' | 'fixedSideBar' | undefined
+
 const RenderWithReactIntl = (component: JSX.Element) => {
   return {
     ...render(<IntlProvider locale={'en'} messages={strings}>{component}</IntlProvider>)

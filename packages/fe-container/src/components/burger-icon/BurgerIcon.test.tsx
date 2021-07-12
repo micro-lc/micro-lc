@@ -17,7 +17,7 @@ import React from 'react'
 import {screen} from '@testing-library/react'
 import {Plugin} from '@mia-platform/core'
 
-import RenderWithReactIntl from '../../__tests__/utils'
+import RenderWithReactIntl, {MenuLocation} from '../../__tests__/utils'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {BurgerIcon} from '@components/burger-icon/BurgerIcon'
 
@@ -32,7 +32,7 @@ describe('Burger icon tests', () => {
     pluginUrl: 'http://localhost:8764'
   }
 
-  const configurationsBuilder = (menuLocation: 'sideBar' | 'topBar' | 'fixedSideBar' | undefined, plugins: Plugin[] | undefined) => ({
+  const configurationsBuilder = (menuLocation: MenuLocation, plugins: Plugin[] | undefined) => ({
     theming: {
       header: {},
       logo: {
