@@ -16,5 +16,6 @@
   "accept_button": "Accept",
   "decline_button": "Decline",
   "privacyPolicy": "Privacy Policy",
-  "collapse": "Collapse"
+  "collapse": "Collapse",
+  "expand": "Expand"
 }

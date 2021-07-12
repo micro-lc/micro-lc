@@ -14,77 +14,7 @@
  * limitations under the License.
  */
 
-@import "../../styles/_variables";
-
-@side-menu-width: 256px;
-
-.sideMenu {
-  height: 100%;
-  width: 256px;
-  position: fixed;
-  z-index: 999;
-  top: @top-bar-height;
-  left: -@side-menu-width;
-  background-color: var(--microlc-side-menu-background);
-  overflow-x: hidden;
-  overflow-y: auto;
-  transition: left 0.2s linear;
-  padding-top: 24px;
-  box-shadow: none;
-}
-
-.sideMenu_voice {
-  cursor: pointer;
-  display: flex !important;
-  align-items: center;
-  padding-left: 24px;
-  color: var(--microlc-primary-color);
-  margin-top: 8px !important;
-
-  & span {
-    width: 100%;
-  }
-
-  .sideMenu_icon {
-    font-size: 16px !important;
-    margin-right: 12px !important;
-  }
-
-  .sideMenu_entry {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: @menu-entry-padding @menu-entry-padding @menu-entry-padding 0;
-    width: 100%;
-
-    .sideMenu_label {
-      color: var(--microlc-menu-label-color);
-      min-width: 160px;
-    }
-
-    .sideMenu_externalLink {
-      margin-left: 4px;
-    }
-  }
-
-  &:hover .sideMenu_label {
-    color: var(--microlc-primary-color);
-    [dark-theme] & {
-      color: var(--microlc-primary-color-tint-89);
-    }
-  }
-
-  &.ant-menu-item-selected, &.ant-menu-item-active {
-    background: var(--microlc-primary-color-tint-89) !important;
-    box-shadow: inset @menu-entry-active-border 0 0 0 var(--microlc-primary-color) !important;
-    color: var(--microlc-primary-color) !important;
-
-    & .sideMenu_label {
-      color: var(--microlc-primary-color);
-    }
-  }
-}
+@import "../../styles/_menuVoice";
 
 .sideMenu_drawer .ant-drawer-body {
   padding: 0;

@@ -16,13 +16,13 @@
 import React, {useMemo, useState} from 'react'
 import PropTypes from 'prop-types'
 import {LoadingAnimation} from '@mia-platform/microlc-ui-components'
+import {Configuration} from '@mia-platform/core'
 
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {AppState} from '@hooks/useAppData/useAppData'
 import {UserContextProvider} from '@contexts/User.context'
-import {MENU_LOCATION} from '@constants'
-import {Configuration} from '@mia-platform/core'
+import {isFixedSideBarToShow, isSideBarToShow} from '@utils/settings/side-bar/SideBarSettings'
 
 import {SideBarLayout} from './layouts/side-bar-layout/SideBarLayout'
 import {FixedSideBarLayout} from './layouts/fixed-side-bar-layout/FixedSideBarLayout'
@@ -36,17 +36,16 @@ export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) =
 
 type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 
-const retrieveLayout = (configuration: Configuration) => {
-  const showSideBar = !configuration.theming || [undefined, MENU_LOCATION.sideBar].includes(configuration.theming.menuLocation)
-  const showFixedSideBar = configuration.theming?.menuLocation === MENU_LOCATION.fixedSideBar
-
-  let componentToRender: React.FC<LoadedLauncherProps> = NoSideBarLayout
-  if (showSideBar) {
-    componentToRender = SideBarLayout
-  } else if (showFixedSideBar) {
-    componentToRender = FixedSideBarLayout
+const retrieveLayout = (configuration: Configuration): React.FC<LoadedLauncherProps> => {
+  if (isSideBarToShow(configuration)) {
+    return SideBarLayout
   }
-  return componentToRender
+
+  if (isFixedSideBarToShow(configuration)) {
+    return FixedSideBarLayout
+  }
+
+  return NoSideBarLayout
 }
 
 const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) => {

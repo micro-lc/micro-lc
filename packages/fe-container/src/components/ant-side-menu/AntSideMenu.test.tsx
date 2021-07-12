@@ -21,8 +21,11 @@ import {Plugin} from '@mia-platform/core'
 import {AntSideMenu} from './AntSideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
 import {registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
+import {isFixedSidebarCollapsed} from '@utils/settings/side-bar/SideBarSettings'
 
 describe('AntSideMenu test', () => {
+  afterEach(() => window.localStorage.clear())
+
   it('side menu show entries', () => {
     const entriesHref = {integrationMode: 'href', externalLink: {sameWindow: false, url: ''}}
     const configuration = {
@@ -141,10 +144,15 @@ describe('AntSideMenu test', () => {
 
   it('toggle collapse correctly hide and show labels', () => {
     RenderWithReactIntl(<AntSideMenu configuration={{}}/>)
+    expect(isFixedSidebarCollapsed()).toBeFalsy()
     expect(screen.getByText('Collapse')).toBeTruthy()
+
     userEvent.click(screen.getByText('Collapse'))
+    expect(isFixedSidebarCollapsed()).toBeTruthy()
     expect(document.getElementsByClassName('ant-menu-inline-collapsed').length).toBe(1)
+
     userEvent.click(screen.getByText('Collapse'))
+    expect(isFixedSidebarCollapsed()).toBeFalsy()
     expect(document.getElementsByClassName('ant-menu-inline-collapsed').length).toBe(0)
   })
 })

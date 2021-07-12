@@ -41,8 +41,40 @@ exports[`FixedSideBarLayout test match snapshot 1`] = `
       </div>
     </header>
     <section
-      class="ant-layout fixedSideBar_layout_content"
+      class="ant-layout ant-layout-has-sider fixedSideBar_layout_content"
     >
+      <aside
+        class="ant-layout-sider ant-layout-sider-dark"
+        style="flex: 0 0 200px; max-width: 200px; min-width: 200px; width: 200px;"
+      >
+        <div
+          class="ant-layout-sider-children"
+        >
+          <ul
+            class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-vertical"
+            role="menu"
+          >
+            <li
+              class="ant-menu-item sideMenu_voice"
+              role="menuitem"
+            >
+              <i
+                class="sideMenu_icon fas fa-chevron-left ant-menu-item-icon"
+              />
+              <span>
+                <div
+                  class="sideMenu_entry"
+                >
+                  Collapse
+                </div>
+              </span>
+            </li>
+            <li
+              class="divider ant-menu-item-divider"
+            />
+          </ul>
+        </div>
+      </aside>
       <main
         class="ant-layout-content launcher_content_container"
       >
@@ -366,7 +398,7 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
               role="menuitem"
             >
               <i
-                class="sideMenu_icon fas fa-compress-alt ant-menu-item-icon"
+                class="sideMenu_icon fas fa-chevron-left ant-menu-item-icon"
               />
               <span>
                 <div

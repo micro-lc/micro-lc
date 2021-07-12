@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 @import "../../styles/_variables";
+@import "../../styles/_menuVoice";
 
 .fixedSideBar {
   height: 100%;
+  width: 256px;
   background-color: var(--microlc-side-menu-background);
   overflow-x: hidden;
   overflow-y: auto;
@@ -28,11 +30,6 @@
   }
 }
 
-.fixedSideBar_layout_content {
-  aside {
-    max-width: min-content !important;
-    min-width: min-content !important;
-    width: min-content !important;
-    flex: none !important;
-  }
+.ant-menu-inline-collapsed-tooltip i {
+  margin-left: 12px;
 }
