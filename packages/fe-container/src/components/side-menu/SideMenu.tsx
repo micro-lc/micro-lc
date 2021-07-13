@@ -13,64 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useCallback, useContext, useEffect, useState} from 'react'
+import React, {useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
+import {Drawer, DrawerProps, Menu} from 'antd'
+
 import {Plugin} from '@mia-platform/core'
-import classNames from 'classnames'
 
 import {MenuOpenedContext} from '@contexts/MenuOpened.context'
-import {history, isPluginLoaded, retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
-import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
+import {onSelectHandler} from '@utils/menu/antMenuUnselectHandler'
+import {menuItemMapper} from '@utils/menu/menuItemMapper'
 
 import './SideMenu.less'
+
+const COLLAPSE_KEY = 'collapse'
 
 const sideMenuProps = {
   plugins: PropTypes.array
 }
 
-const entriesMapper = (plugin: Plugin) => <SideMenuEntry key={plugin.id} {...plugin}/>
-
 type SideMenuProps = PropTypes.InferProps<typeof sideMenuProps>
+
+const isHref = (plugin: Plugin) => plugin.integrationMode === 'href'
+const idExtractor = (plugin: Plugin) => plugin.id
+const drawerProps: DrawerProps = {
+  className: 'sideMenu_drawer',
+  closable: false,
+  getContainer: false,
+  placement: 'left',
+  style: {position: 'absolute'}
+}
 
 export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
 
   const closeMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
 
-  const sideMenuClasses = classNames('sideMenu', {opened: isMenuOpened})
-  const sideMenuOverlayClasses = classNames('sideMenu_overlay', {sideMenu_visible: isMenuOpened})
+  const hrefPlugins = plugins?.filter(isHref).map(idExtractor) || []
+  const unselectableKeys = [COLLAPSE_KEY, ...hrefPlugins]
 
   return (
-    <>
-      <div className={sideMenuClasses}>
-        <div onClick={closeMenu}>
-          {plugins?.map(entriesMapper)}
-        </div>
-      </div>
-      <div className={sideMenuOverlayClasses} data-testid="layout-content-overlay" onClick={closeMenu}/>
-    </>
+    <Drawer {...drawerProps} onClose={closeMenu} visible={isMenuOpened}>
+      <Menu className='fixedSideBar' onSelect={onSelectHandler(unselectableKeys)}>
+        {plugins?.map(menuItemMapper)}
+      </Menu>
+    </Drawer>
   )
 }
 
 SideMenu.propTypes = sideMenuProps
-
-const SideMenuEntry: React.FC<Plugin> = (plugin) => {
-  const [isActive, setIsActive] = useState<boolean>(isPluginLoaded(plugin))
-  const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
-
-  useEffect(() => {
-    return history.listen(() => setIsActive(isPluginLoaded(plugin)))
-  }, [plugin])
-
-  const sideMenuVoiceClasses = classNames('sideMenu_voice', {active: isActive})
-
-  return (
-    <div className={sideMenuVoiceClasses} onClick={pluginStrategy.handlePluginLoad}>
-      <i className={'sideMenu_icon ' + (plugin.icon || '')}/>
-      <div className='sideMenu_entry'>
-        <span className='sideMenu_label'>{plugin.label}</span>
-        {plugin.integrationMode === 'href' && <i className='fas fa-external-link-alt sideMenu_externalLink'/>}
-      </div>
-    </div>
-  )
-}

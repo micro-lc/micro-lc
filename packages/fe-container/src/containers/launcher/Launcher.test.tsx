@@ -2,12 +2,12 @@ import React from 'react'
 import {Configuration} from '@mia-platform/core'
 import {screen} from '@testing-library/react'
 
-import RenderWithReactIntl from '../../__tests__/utils'
+import RenderWithReactIntl, {MenuLocation} from '../../__tests__/utils'
 import {Launcher} from './Launcher'
 import {expect} from '@playwright/test'
 
 describe('Launcher tests', () => {
-  const launcherConfigBuilder = (menuLocation?: 'sideBar' | 'topBar' | 'fixedSideBar'): Configuration => ({
+  const launcherConfigBuilder = (menuLocation: MenuLocation): Configuration => ({
     theming: {
       header: {
         pageTitle: 'My Company',
@@ -47,7 +47,7 @@ describe('Launcher tests', () => {
   })
 
   it('render SideBarLayout as default', () => {
-    RenderWithReactIntl(<Launcher configuration={launcherConfigBuilder()} isLoading={false} user={{}}/>)
+    RenderWithReactIntl(<Launcher configuration={launcherConfigBuilder(undefined)} isLoading={false} user={{}}/>)
     expect(screen.getByTestId('side-bar')).toBeTruthy()
   })
 

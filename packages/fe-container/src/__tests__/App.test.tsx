@@ -103,22 +103,21 @@ describe('App test', () => {
   })
 
   it('toggle is working', async () => {
-    const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
+    const getDrawerLength = () => document.getElementsByClassName('ant-drawer-open').length
 
-    // @ts-ignore
-    const retrieveEntryClasses = () => screen.getByText('Href entry').parentElement.parentElement.parentElement.parentElement.classList
+    const toggle = await screen.findByTestId('top-bar-side-menu-toggle')
 
     expect(global.window.document.title).toEqual('My Company')
 
-    expect(retrieveEntryClasses()).not.toContain('opened')
+    expect(getDrawerLength()).toBe(0)
 
     userEvent.click(toggle)
 
-    expect(retrieveEntryClasses()).toContain('opened')
+    expect(getDrawerLength()).toBe(1)
 
     userEvent.click(toggle)
 
-    expect(retrieveEntryClasses()).not.toContain('opened')
+    expect(getDrawerLength()).toBe(0)
   })
 
   it('navigate to first not href plugin', async () => {

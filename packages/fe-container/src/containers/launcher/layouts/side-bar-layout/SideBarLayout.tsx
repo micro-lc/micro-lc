@@ -15,13 +15,15 @@
  */
 import {Layout} from 'antd'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import {TopBar} from '@components/top-bar/TopBar'
 import {SideMenu} from '@components/side-menu/SideMenu'
 import {LayoutContent} from '@components/layout-content/LayoutContent'
 import {FooterBar} from '@components/footer-bar/FooterBar'
 import {AppState} from '@hooks/useAppData/useAppData'
-import PropTypes from 'prop-types'
+
+import './SideBarLayout.less'
 
 type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 

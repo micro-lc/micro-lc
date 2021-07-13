@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 import {Layout} from 'antd'
-import React, {useContext} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import {TopBar} from '@components/top-bar/TopBar'
 import {LayoutContent} from '@components/layout-content/LayoutContent'
 import {FooterBar} from '@components/footer-bar/FooterBar'
 import {AppState} from '@hooks/useAppData/useAppData'
-import {MenuOpenedContext} from '@contexts/MenuOpened.context'
 import {AntSideMenu} from '@components/ant-side-menu/AntSideMenu'
 
 import './FixedSideBar.less'
@@ -29,17 +28,13 @@ import './FixedSideBar.less'
 type LoadedLauncherProps = Omit<AppState, 'isLoading'>
 
 export const FixedSideBarLayout: React.FC<LoadedLauncherProps> = ({configuration}) => {
-  const {isMenuOpened} = useContext(MenuOpenedContext)
-
   return (
     <Layout data-testid='fixed-side-bar'>
       <Layout.Header className='launcher_header'>
         <TopBar/>
       </Layout.Header>
       <Layout className='fixedSideBar_layout_content'>
-        {
-          isMenuOpened && <AntSideMenu configuration={configuration}/>
-        }
+        <AntSideMenu configuration={configuration}/>
         <Layout.Content className='launcher_content_container'>
           <LayoutContent/>
         </Layout.Content>

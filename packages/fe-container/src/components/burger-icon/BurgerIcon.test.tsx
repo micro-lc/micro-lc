@@ -17,7 +17,7 @@ import React from 'react'
 import {screen} from '@testing-library/react'
 import {Plugin} from '@mia-platform/core'
 
-import RenderWithReactIntl from '../../__tests__/utils'
+import RenderWithReactIntl, {MenuLocation} from '../../__tests__/utils'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {BurgerIcon} from '@components/burger-icon/BurgerIcon'
 
@@ -32,11 +32,11 @@ describe('Burger icon tests', () => {
     pluginUrl: 'http://localhost:8764'
   }
 
-  const configurationsBuilder = (menuLocation: 'sideBar' | 'topBar' | undefined, plugins: Plugin[] | undefined) => ({
+  const configurationsBuilder = (menuLocation: MenuLocation, plugins: Plugin[] | undefined) => ({
     theming: {
       header: {},
       logo: {
-        url_light: '',
+        url_light_image: '',
         alt: ''
       },
       menuLocation,
@@ -73,6 +73,16 @@ describe('Burger icon tests', () => {
       </ConfigurationProvider>
     )
     expect(screen.getByTestId('top-bar-side-menu-toggle')).toBeTruthy()
+  })
+
+  it('Burger icon doesn\'t shows for menuLocation fixedSideBar even with more than 1 plugins', () => {
+    const configuration = configurationsBuilder('fixedSideBar', [plugin, plugin])
+    RenderWithReactIntl(
+      <ConfigurationProvider value={configuration}>
+        <BurgerIcon/>
+      </ConfigurationProvider>
+    )
+    expect(screen.queryByTestId('top-bar-side-menu-toggle')).toBeFalsy()
   })
 
   it('Burger icon doesn\'t shows for menuLocation topBar even with more than 1 plugins', () => {

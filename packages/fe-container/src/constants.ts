@@ -53,8 +53,9 @@ export const RESERVED_PATH = {
 export const DARK_THEME_ATTRIBUTE = 'dark-theme'
 
 export const STORAGE_KEY = {
-  ANALYTICS: 'gtmAccepted',
-  CURRENT_THEME: 'currentTheme'
+  ANALYTICS: '@microlc:gtmAccepted',
+  CURRENT_THEME: '@microlc:currentTheme',
+  FIXED_SIDEBAR_STATE: '@microlc:fixedSidebarState'
 }
 
 export const MENU_LOCATION = {

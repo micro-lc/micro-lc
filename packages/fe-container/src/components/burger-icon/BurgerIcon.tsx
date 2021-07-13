@@ -19,15 +19,14 @@ import {MenuOpenedContext} from '@contexts/MenuOpened.context'
 
 import './BurgerIcon.less'
 import {ConfigurationContext} from '@contexts/Configuration.context'
-import {MENU_LOCATION} from '@constants'
-
-const SIDEBAR_VALID_LOCATIONS = [undefined, MENU_LOCATION.sideBar, MENU_LOCATION.fixedSideBar]
+import {isFixedSideBarToShow, isSideBarToShow} from '@utils/settings/side-bar/SideBarSettings'
 
 export const BurgerIcon: React.FC = () => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
   const configuration = useContext(ConfigurationContext)
-  const showSideBar = !configuration.theming || SIDEBAR_VALID_LOCATIONS.includes(configuration.theming.menuLocation)
-  const showBurgerIcon = (configuration?.plugins || []).length > 1 && showSideBar
+
+  const iconVisibilitySideBarCondition = isSideBarToShow(configuration) && !isFixedSideBarToShow(configuration)
+  const showBurgerIcon = (configuration?.plugins || []).length > 1 && iconVisibilitySideBarCondition
 
   const manageToggle = () => {
     setMenuOpened(!isMenuOpened)

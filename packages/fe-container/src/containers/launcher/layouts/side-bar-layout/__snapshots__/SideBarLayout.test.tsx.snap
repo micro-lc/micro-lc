@@ -44,14 +44,39 @@ exports[`SideBarLayout test match snapshot 1`] = `
       class="ant-layout-content launcher_content_container"
     >
       <div
-        class="sideMenu"
+        class=""
       >
-        <div />
+        <div
+          class="ant-drawer ant-drawer-left sideMenu_drawer"
+          style="position: absolute;"
+          tabindex="-1"
+        >
+          <div
+            class="ant-drawer-mask"
+          />
+          <div
+            class="ant-drawer-content-wrapper"
+            style="transform: translateX(-100%); width: 256px;"
+          >
+            <div
+              class="ant-drawer-content"
+            >
+              <div
+                class="ant-drawer-wrapper-body"
+              >
+                <div
+                  class="ant-drawer-body"
+                >
+                  <ul
+                    class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-vertical"
+                    role="menu"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        class="sideMenu_overlay"
-        data-testid="layout-content-overlay"
-      />
       <section
         class="ant-layout"
       >
