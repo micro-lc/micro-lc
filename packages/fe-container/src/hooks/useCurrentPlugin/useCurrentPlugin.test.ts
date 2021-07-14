@@ -19,27 +19,47 @@ import {useCurrentPlugin} from '@hooks/useCurrentPlugin/useCurrentPlugin'
 import {renderHook} from '@testing-library/react-hooks'
 
 describe('useCurrentPlugin tests', () => {
+  const currentPlugin: Plugin = {
+    id: 'plugin-1',
+    label: 'Plugin 1',
+    integrationMode: 'iframe',
+    pluginRoute: '/qiankunTest',
+    pluginUrl: 'https://www.google.com/webhp?igu=1'
+  }
+  const otherPlugin: Plugin = {
+    id: 'plugin-2',
+    label: 'Plugin 2',
+    integrationMode: 'iframe',
+    pluginRoute: '/qiankunTest1',
+    pluginUrl: 'https://www.google.com/webhp?igu=1'
+  }
+
+  it('does not retrieve a correct plugin without registration', async () => {
+    const {result} = renderHook(() => useCurrentPlugin())
+
+    expect(result.current).not.toBe(currentPlugin)
+    expect(result.current).not.toBe(otherPlugin)
+    expect(result.current).toBeUndefined()
+  })
+
+  it('does not retrieve a correct plugin', async () => {
+    registerPlugin(currentPlugin)
+    registerPlugin(otherPlugin)
+
+    const {result} = renderHook(() => useCurrentPlugin())
+
+    expect(result.current).not.toBe(currentPlugin)
+    expect(result.current).not.toBe(otherPlugin)
+    expect(result.current).toBeUndefined()
+  })
+
   it('retrieve correct plugin', async () => {
-    const currentPlugin: Plugin = {
-      id: 'plugin-1',
-      label: 'Plugin 1',
-      integrationMode: 'iframe',
-      pluginRoute: '/qiankunTest',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }
-    const otherPlugin: Plugin = {
-      id: 'plugin-2',
-      label: 'Plugin 2',
-      integrationMode: 'iframe',
-      pluginRoute: '/qiankunTest1',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }
     registerPlugin(currentPlugin)
     registerPlugin(otherPlugin)
 
     Object.defineProperty(window, 'location', {
       value: {
-        pathname: `http://localhost:3000/${currentPlugin.pluginRoute}`
+        pathname: currentPlugin.pluginRoute
       },
       writable: true
     })
