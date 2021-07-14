@@ -77,7 +77,7 @@ To run the e2e tests you should first of all run inside the `fe-container` direc
 docker build -t miaplatform/microlc .
 ```
 
-to build the docker container for the frontend and than inside the `main` directory
+to build the docker container for the frontend, and then inside the `root` directory
 
 ```shell
 docker build -f packages/be-config/Dockerfile -t miaplatform/microlc-config-manager .
