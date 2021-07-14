@@ -48,9 +48,19 @@ describe('SideMenu tests', () => {
       externalLink: {sameWindow: false, url: 'https://google.it'}
     }
     registerPlugin(plugin)
-    RenderWithReactIntl(<SideMenu plugins={[plugin]}/>)
+    const setMenuOpened = jest.fn()
+    const menuOpenedConfig = {
+      isMenuOpened: true,
+      setMenuOpened
+    }
+    RenderWithReactIntl(
+      <MenuOpenedProvider value={menuOpenedConfig}>
+        <SideMenu plugins={[plugin]}/>
+      </MenuOpenedProvider>
+    )
     userEvent.click(await screen.findByText('entry_1'))
     expect(window.open).toBeCalledWith('https://google.it')
+    expect(setMenuOpened).toHaveBeenCalledWith(false)
   })
 
   it('display the icon', () => {
