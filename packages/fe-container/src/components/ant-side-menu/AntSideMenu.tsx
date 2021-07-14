@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useMemo, useState} from 'react'
 import {Layout, Menu} from 'antd'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
@@ -23,6 +23,7 @@ import {Configuration, Plugin} from '@mia-platform/core'
 import {onSelectHandler} from '@utils/menu/antMenuUnselectHandler'
 import {menuItemMapper} from '@utils/menu/menuItemMapper'
 import {isFixedSidebarCollapsed, toggleFixedSidebarState} from '@utils/settings/side-bar/SideBarSettings'
+import {useCurrentPlugin} from '@hooks/useCurrentPlugin/useCurrentPlugin'
 
 import './AntSideMenu.less'
 
@@ -32,6 +33,10 @@ type LoadedLauncherProps = { configuration: Configuration }
 
 export const AntSideMenu: React.FC<LoadedLauncherProps> = ({configuration}) => {
   const [isCollapsed, setIsCollapsed] = useState(isFixedSidebarCollapsed())
+
+  const currentPlugin = useCurrentPlugin()
+
+  const menuItems = useMemo(() => configuration.plugins?.map(menuItemMapper), [configuration.plugins])
 
   const collapseToggle = useCallback(() => {
     setIsCollapsed(prev => !prev)
@@ -50,7 +55,7 @@ export const AntSideMenu: React.FC<LoadedLauncherProps> = ({configuration}) => {
 
   return (
     <Layout.Sider collapsed={isCollapsed} collapsible trigger={null}>
-      <Menu className='fixedSideBar' onSelect={onSelectHandler(unselectableKeys)}>
+      <Menu className='fixedSideBar' onSelect={onSelectHandler(unselectableKeys)} selectedKeys={[currentPlugin?.id || '']}>
         <Menu.Item
           className='sideMenu_voice'
           icon={<i className={collapseIconClassnames}/>}
@@ -61,7 +66,7 @@ export const AntSideMenu: React.FC<LoadedLauncherProps> = ({configuration}) => {
           <CollapseItem/>
         </Menu.Item>
         <Menu.Divider className='divider'/>
-        {configuration.plugins?.map(menuItemMapper)}
+        {menuItems}
       </Menu>
     </Layout.Sider>
   )
