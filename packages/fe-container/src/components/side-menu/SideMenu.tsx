@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useCallback, useContext} from 'react'
+import React, {useCallback, useContext, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import {Drawer, DrawerProps, Menu} from 'antd'
 
@@ -24,6 +24,7 @@ import {onSelectHandler} from '@utils/menu/antMenuUnselectHandler'
 import {menuItemMapper} from '@utils/menu/menuItemMapper'
 
 import './SideMenu.less'
+import {useCurrentPlugin} from '@hooks/useCurrentPlugin/useCurrentPlugin'
 
 const COLLAPSE_KEY = 'collapse'
 
@@ -46,6 +47,10 @@ const drawerProps: DrawerProps = {
 export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
   const {isMenuOpened, setMenuOpened} = useContext(MenuOpenedContext)
 
+  const currentPlugin = useCurrentPlugin()
+
+  const menuItems = useMemo(() => plugins?.map(menuItemMapper), [plugins])
+
   const closeMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
 
   const hrefPlugins = plugins?.filter(isHref).map(idExtractor) || []
@@ -53,8 +58,8 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
 
   return (
     <Drawer {...drawerProps} onClose={closeMenu} visible={isMenuOpened}>
-      <Menu className='fixedSideBar' onSelect={onSelectHandler(unselectableKeys)}>
-        {plugins?.map(menuItemMapper)}
+      <Menu className='fixedSideBar' onSelect={onSelectHandler(unselectableKeys)} selectedKeys={[currentPlugin?.id || '']}>
+        {menuItems}
       </Menu>
     </Drawer>
   )
