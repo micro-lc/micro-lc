@@ -71,25 +71,35 @@ yarn fe-container test
 
 ### Run tests e2e
 
-To run the e2e tests you should first of all run inside the `fe-container` directory the command
+To run the e2e tests on your local code, you should first build the front-end and back-end images: otherwise you can use the images uploaded on Docker Hub.
+
+#### Build `fe-container` image
+
+Run inside the `fe-container` directory the commands
 
 ```shell
+yarn build
 docker build -t miaplatform/microlc .
 ```
 
-to build the docker container for the frontend, and then inside the `root` directory
+#### Build `be-config` image
+
+Run inside the `root` directory
 
 ```shell
+yarn be-config build
 docker build -f packages/be-config/Dockerfile -t miaplatform/microlc-config-manager .
 ```
 
-Once done it you will be able to run inside the `e2e` directory the
+#### Run e2e tests
+
+Run inside the `e2e` directory the command
 
 ```shell
 docker-compose up
 ```
 
-command that let you luch without problems
+to spin-up the `e2e` environment, and then
 
 ```shell
 yarn e2e
