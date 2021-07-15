@@ -155,4 +155,36 @@ describe('AntSideMenu test', () => {
     expect(isFixedSidebarCollapsed()).toBeFalsy()
     expect(document.getElementsByClassName('ant-menu-inline-collapsed').length).toBe(0)
   })
+
+  it('render sub menu', () => {
+    const plugins = [
+      {
+        id: 'plugin-test-2',
+        label: 'Container entry',
+        icon: 'home',
+        order: 2,
+        content: [{
+          id: 'plugin-test-1',
+          label: 'Content entry',
+          icon: 'clipboard',
+          order: 1,
+          integrationMode: 'href',
+          externalLink: {
+            url: 'https://google.it',
+            sameWindow: false
+          }
+        }]
+      }
+    ]
+    // @ts-ignore
+    RenderWithReactIntl(<AntSideMenu configuration={{plugins}}/>)
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeFalsy()
+
+    userEvent.click(screen.getByText('Container entry'))
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeTruthy()
+  })
 })

@@ -22,6 +22,7 @@ import {SideMenu} from './SideMenu'
 import RenderWithReactIntl from '../../__tests__/utils'
 import {registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
+import {AntSideMenu} from '@components/ant-side-menu/AntSideMenu'
 
 describe('SideMenu tests', () => {
   afterAll(() => {
@@ -157,5 +158,37 @@ describe('SideMenu tests', () => {
     expect(document.getElementsByClassName('ant-drawer-content').length).toBe(1)
     userEvent.click(document.getElementsByClassName('ant-drawer-mask')[0])
     expect(setMenuOpened).toHaveBeenCalledWith(false)
+  })
+
+  it('render sub menu', () => {
+    const plugins = [
+      {
+        id: 'plugin-test-2',
+        label: 'Container entry',
+        icon: 'home',
+        order: 2,
+        content: [{
+          id: 'plugin-test-1',
+          label: 'Content entry',
+          icon: 'clipboard',
+          order: 1,
+          integrationMode: 'href',
+          externalLink: {
+            url: 'https://google.it',
+            sameWindow: false
+          }
+        }]
+      }
+    ]
+    // @ts-ignore
+    RenderWithReactIntl(<AntSideMenu configuration={{plugins}}/>)
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeFalsy()
+
+    userEvent.click(screen.getByText('Container entry'))
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeTruthy()
   })
 })
