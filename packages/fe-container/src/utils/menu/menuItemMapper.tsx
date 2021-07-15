@@ -18,7 +18,7 @@ import {retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
 import {Menu} from 'antd'
 import React from 'react'
 
-export const menuItemMapper = (plugin: Plugin) => {
+const menuEntry = (plugin: Plugin) => {
   const pluginStrategy = retrievePluginStrategy(plugin)
   return (
     <Menu.Item
@@ -33,4 +33,23 @@ export const menuItemMapper = (plugin: Plugin) => {
       </div>
     </Menu.Item>
   )
+}
+
+const menuContainer = (plugin: Plugin) => {
+  const pluginContent = plugin.content || []
+  return (
+    <Menu.SubMenu
+      className='sideMenu_voice_container'
+      icon={<i className={'sideMenu_icon ' + (plugin.icon || '')}/>}
+      key={plugin.id}
+      title={plugin.label}
+    >
+      {(pluginContent).map(menuEntry)}
+    </Menu.SubMenu>
+  )
+}
+
+export const menuItemMapper = (plugin: Plugin) => {
+  const isContainer = plugin.content !== undefined
+  return isContainer ? menuContainer(plugin) : menuEntry(plugin)
 }

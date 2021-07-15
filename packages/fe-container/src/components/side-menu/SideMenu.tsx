@@ -58,7 +58,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({plugins}) => {
 
   return (
     <Drawer {...drawerProps} onClose={closeMenu} visible={isMenuOpened}>
-      <Menu className='fixedSideBar' onClick={closeMenu} onSelect={onSelectHandler(unselectableKeys)} selectedKeys={[currentPlugin?.id || '']}>
+      <Menu className='fixedSideBar' mode='inline' onClick={closeMenu} onSelect={onSelectHandler(unselectableKeys)} selectedKeys={[currentPlugin?.id || '']}>
         {menuItems}
       </Menu>
     </Drawer>

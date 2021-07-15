@@ -39,6 +39,10 @@ export const pluginSchema = {
       type: 'integer',
       description: 'Position of the plugin in the side menu',
     },
+    content: {
+      type: 'array',
+      items: this,
+    },
     integrationMode: {
       type: 'string',
       enum: ['href', 'qiankun', 'iframe'],

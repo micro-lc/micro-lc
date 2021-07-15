@@ -73,6 +73,21 @@ const plugins = [
     integrationMode: 'iframe',
     pluginRoute: '/qiankunIframe',
     pluginUrl: '//localhost:8764'
+  },
+  {
+    id: 'menu-google-container',
+    label: 'Container',
+    icon: 'fas fa-box-open',
+    order: 6,
+    content: [{
+      id: 'plugin-test-content-google',
+      label: 'IFrame',
+      icon: 'fab fa-google',
+      order: 4,
+      integrationMode: 'iframe',
+      pluginRoute: '/iframe',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }]
   }
 ]
 

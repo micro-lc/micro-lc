@@ -51,12 +51,13 @@ exports[`FixedSideBarLayout test match snapshot 1`] = `
           class="ant-layout-sider-children"
         >
           <ul
-            class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-vertical"
+            class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-inline"
             role="menu"
           >
             <li
               class="ant-menu-item sideMenu_voice"
               role="menuitem"
+              style="padding-left: 24px;"
             >
               <i
                 class="sideMenu_icon fas fa-chevron-left ant-menu-item-icon"
@@ -390,12 +391,13 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
           class="ant-layout-sider-children"
         >
           <ul
-            class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-vertical"
+            class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-inline"
             role="menu"
           >
             <li
               class="ant-menu-item sideMenu_voice"
               role="menuitem"
+              style="padding-left: 24px;"
             >
               <i
                 class="sideMenu_icon fas fa-chevron-left ant-menu-item-icon"
