@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 import {addErrorHandler, registerMicroApps, start} from 'qiankun'
+import {Plugin} from '@mia-platform/core'
+
 import {RESERVED_PATH} from '@constants'
 
 import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
@@ -178,5 +180,53 @@ describe('Test plugin loading', () => {
     expect(isCurrentPluginLoaded()).toBeTruthy()
     expect(RESERVED_PATH.getMicrolcPaths())
       .toMatchObject([RESERVED_PATH.INTERNAL_ERROR, RESERVED_PATH.UNAUTHORIZED, RESERVED_PATH.LOADING])
+  })
+
+  it('test content register', () => {
+    const integrationMode: 'qiankun' = 'qiankun'
+    window.open = jest.fn()
+
+    const pluginToRegister: Plugin = {
+      id: 'plugin-1',
+      label: 'Plugin 1',
+      integrationMode,
+      pluginRoute: '/qiankunTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      // @ts-ignore
+      content: [{
+        id: 'plugin-2',
+        label: 'Plugin 2',
+        integrationMode,
+        pluginRoute: '/qiankunTest1',
+        pluginUrl: 'https://www.google.com/webhp?igu=1'
+      }]
+    }
+    registerPlugin(pluginToRegister)
+    retrievePluginStrategy(pluginToRegister).handlePluginLoad()
+    finish({})
+    expect(start).toHaveBeenCalled()
+    expect(addErrorHandler).toHaveBeenCalled()
+    expect(registerMicroApps.mock.calls[0][0]).toContainEqual({
+      name: 'plugin-2',
+      entry: 'https://www.google.com/webhp?igu=1',
+      container: '#microlc-qiankun-contaier',
+      activeRule: '/qiankunTest1',
+      props: {
+        basePath: '',
+        activeRule: '/qiankunTest1',
+        currentUser: {}
+      }
+    })
+    expect(registerMicroApps.mock.calls[0][0]).toContainEqual({
+      name: 'plugin-1',
+      entry: 'https://www.google.com/webhp?igu=1',
+      container: '#microlc-qiankun-contaier',
+      activeRule: '/qiankunTest',
+      props: {
+        basePath: '',
+        activeRule: '/qiankunTest',
+        currentUser: {}
+      }
+    })
   })
 })

@@ -27,6 +27,7 @@ const registeredPluginsStrategies = new Map<string, PluginStrategy>()
 const registeredPlugins: Plugin[] = []
 
 export const registerPlugin = (plugin: Plugin) => {
+  (plugin.content || []).forEach(registerPlugin)
   const pluginStrategy: PluginStrategy = strategyBuilder(plugin)
   registeredPlugins.push(plugin)
   registeredPluginsStrategies.set(plugin.id, pluginStrategy)
