@@ -72,7 +72,7 @@ const TopBarMenuEntry: React.FC<Plugin> = (plugin) => {
 const categoriesMapper = ([category, plugins]: [string, Plugin[]]) =>
   <TopBarSubCategoryMenu category={category} key={category} plugins={plugins}/>
 
-const subMenuMapper = (plugin: Plugin) => <TopBarSubMenu key={plugin.id} {...plugin}/>
+const subMenuMapper = (plugin: Plugin) => <TopBarSubMenuEntry key={plugin.id} {...plugin}/>
 
 const TopBarSuBMenuOverlay: React.FC<Plugin> = (plugin) => {
   const {withoutCategories, categoriesDivision} = retrieveCategorizedPlugins(plugin)
@@ -108,9 +108,10 @@ TopBarSubCategoryMenu.propTypes = {
   plugins: PropTypes.array.isRequired
 }
 
-const TopBarSubMenu: React.FC<Plugin> = (plugin) => {
+const TopBarSubMenuEntry: React.FC<Plugin> = (plugin) => {
+  const pluginStrategy = retrievePluginStrategy(plugin)
   return (
-    <div className='overlay_item'>
+    <div className='overlay_item' onClick={pluginStrategy.handlePluginLoad}>
       <span>{plugin.label}</span>
     </div>
   )
