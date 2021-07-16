@@ -84,11 +84,10 @@
       background-color: var(--microlc-body-background);
       left: 0;
       position: absolute;
-      padding-top: @spacing;
       margin-left: -100vw;
-      padding-left: 100vw;
       margin-right: -100vw;
-      padding-right: 100vw;
+      padding: @spacing 100vw;
+      border-bottom: 1px solid var(--microlc-layout-header-border-color);
 
       & .overlay_title {
         line-height: @spacing;
@@ -114,6 +113,7 @@
           & .overlay_title {
             margin-left: @spacing;
             margin-right: @spacing;
+            margin-bottom: @spacing/2;
           }
         }
 

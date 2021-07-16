@@ -95,7 +95,7 @@ type TopBarSubCategoryMenuProps = { category: string, plugins: Plugin[] }
 const TopBarSubCategoryMenu: React.FC<TopBarSubCategoryMenuProps> = ({category, plugins}) => {
   return (
     <div className='subgroup_title'>
-      <span className='overlay_title'>{category}</span>
+      <div className='overlay_title'>{category}</div>
       {plugins.map(subMenuMapper)}
     </div>
   )
