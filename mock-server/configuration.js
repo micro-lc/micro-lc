@@ -12,7 +12,7 @@ const theming = {
   variables: {
     primaryColor: 'red'
   },
-  menuLocation: 'fixedSideBar'
+  menuLocation: 'topBar'
 }
 
 const plugins = [
@@ -80,7 +80,7 @@ const plugins = [
     icon: 'fas fa-box-open',
     order: 6,
     content: [{
-      id: 'plugin-test-content-google',
+      id: 'plugin-test-content-google-1',
       label: 'IFrame 1',
       icon: 'fab fa-google',
       order: 4,
@@ -89,7 +89,7 @@ const plugins = [
       pluginUrl: 'https://www.google.com/webhp?igu=1',
       category: 'A'
     }, {
-      id: 'plugin-test-content-google',
+      id: 'plugin-test-content-google-2',
       label: 'IFrame 2',
       icon: 'fab fa-google',
       order: 4,
@@ -97,7 +97,7 @@ const plugins = [
       pluginRoute: '/iframe',
       pluginUrl: 'https://www.google.com/webhp?igu=1',
     }, {
-      id: 'plugin-test-content-google',
+      id: 'plugin-test-content-google-3',
       label: 'IFrame 2',
       icon: 'fab fa-google',
       order: 4,
@@ -106,7 +106,7 @@ const plugins = [
       pluginUrl: 'https://www.google.com/webhp?igu=1',
       category: 'B'
     }, {
-      id: 'plugin-test-content-google',
+      id: 'plugin-test-content-google-4',
       label: 'IFrame 3',
       icon: 'fab fa-google',
       order: 4,

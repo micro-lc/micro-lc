@@ -46,15 +46,7 @@ const menuCategory = ([categoryName, plugins]: [string, Plugin[]]) => {
 type Categories = { [key: string]: Plugin[] }
 
 const menuContainer = (plugin: Plugin) => {
-  const pluginContent: Plugin[] = plugin.content || []
-  const withoutCategories = pluginContent.filter(plugin => !plugin.category)
-  const categoriesDivision: Categories = pluginContent.filter(plugin => plugin.category)
-    .reduce((previous: any, plugin) => {
-      // @ts-ignore
-      previous[plugin.category] = [...previous[plugin.category] || [], plugin]
-      return previous
-    }, {})
-
+  const {withoutCategories, categoriesDivision} = retrieveCategorizedPlugins(plugin)
   return (
     <Menu.SubMenu
       className='sideMenu_voice_container'
@@ -71,4 +63,16 @@ const menuContainer = (plugin: Plugin) => {
 export const menuItemMapper = (plugin: Plugin) => {
   const isContainer = plugin.content !== undefined
   return isContainer ? menuContainer(plugin) : menuEntry(plugin)
+}
+
+export const retrieveCategorizedPlugins = (plugin: Plugin) => {
+  const pluginContent: Plugin[] = plugin.content || []
+  const withoutCategories = pluginContent.filter(plugin => !plugin.category)
+  const categoriesDivision: Categories = pluginContent.filter(plugin => plugin.category)
+    .reduce((previous: any, plugin) => {
+      // @ts-ignore
+      previous[plugin.category] = [...previous[plugin.category] || [], plugin]
+      return previous
+    }, {})
+  return {withoutCategories, categoriesDivision}
 }
