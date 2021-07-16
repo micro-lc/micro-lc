@@ -12,7 +12,7 @@ const theming = {
   variables: {
     primaryColor: 'red'
   },
-  menuLocation: 'topBar'
+  menuLocation: 'fixedSideBar'
 }
 
 const plugins = [
@@ -86,7 +86,8 @@ const plugins = [
       order: 4,
       integrationMode: 'iframe',
       pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      category: 'A'
     }, {
       id: 'plugin-test-content-google',
       label: 'IFrame 2',
@@ -94,223 +95,16 @@ const plugins = [
       order: 4,
       integrationMode: 'iframe',
       pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
     }, {
       id: 'plugin-test-content-google',
-      label: 'IFrame 3',
+      label: 'IFrame 2',
       icon: 'fab fa-google',
       order: 4,
       integrationMode: 'iframe',
       pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
-    }, {
-      id: 'plugin-test-content-google',
-      label: 'IFrame 3',
-      icon: 'fab fa-google',
-      order: 4,
-      integrationMode: 'iframe',
-      pluginRoute: '/iframe',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      category: 'B'
     }, {
       id: 'plugin-test-content-google',
       label: 'IFrame 3',

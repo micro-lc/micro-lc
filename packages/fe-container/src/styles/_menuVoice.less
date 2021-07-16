@@ -17,6 +17,14 @@
 
 .sideMenu_voice {
   display: flex !important;
+
+  &::after {
+    border-right: none !important;
+  }
+}
+
+.sideMenu_voice_container > :not(.ant-menu-item-group) > .sideMenu_voice  {
+  padding-left: 28px !important;
 }
 
 .sideMenu_voice, .sideMenu_voice_container {
@@ -31,6 +39,14 @@
 
   & span {
     width: 100%;
+  }
+
+  & .ant-menu-submenu-title span, & .ant-menu-submenu-title .ant-menu-submenu-arrow {
+    color: var(--microlc-menu-label-color);
+  }
+
+  & .ant-menu-submenu-title span {
+    min-width: 160px;
   }
 
   & .sideMenu_icon {

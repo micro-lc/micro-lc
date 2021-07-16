@@ -35,8 +35,26 @@ const menuEntry = (plugin: Plugin) => {
   )
 }
 
+const menuCategory = ([categoryName, plugins]: [string, Plugin[]]) => {
+  return (
+    <Menu.ItemGroup key={categoryName} title={categoryName}>
+      {(plugins).map(menuEntry)}
+    </Menu.ItemGroup>
+  )
+}
+
+type Categories = { [key: string]: Plugin[] }
+
 const menuContainer = (plugin: Plugin) => {
-  const pluginContent = plugin.content || []
+  const pluginContent: Plugin[] = plugin.content || []
+  const withoutCategories = pluginContent.filter(plugin => !plugin.category)
+  const categoriesDivision: Categories = pluginContent.filter(plugin => plugin.category)
+    .reduce((previous: any, plugin) => {
+      // @ts-ignore
+      previous[plugin.category] = [...previous[plugin.category] || [], plugin]
+      return previous
+    }, {})
+
   return (
     <Menu.SubMenu
       className='sideMenu_voice_container'
@@ -44,7 +62,8 @@ const menuContainer = (plugin: Plugin) => {
       key={plugin.id}
       title={plugin.label}
     >
-      {(pluginContent).map(menuEntry)}
+      {Object.entries(categoriesDivision).map(menuCategory)}
+      {withoutCategories.map(menuEntry)}
     </Menu.SubMenu>
   )
 }
