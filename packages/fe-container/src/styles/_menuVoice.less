@@ -25,6 +25,10 @@
   color: var(--microlc-primary-color);
   margin-top: 8px !important;
 
+  &::after {
+    border-right: none;
+  }
+
   & span {
     width: 100%;
   }
@@ -52,7 +56,7 @@
     }
   }
 
-  &:hover .sideMenu_label, & .ant-menu-submenu-arrow, & .ant-menu-submenu-title {
+  &:hover .sideMenu_label, &:hover .ant-menu-submenu-arrow, &:hover .ant-menu-submenu-title {
     color: var(--microlc-primary-color) !important;
   }
 
