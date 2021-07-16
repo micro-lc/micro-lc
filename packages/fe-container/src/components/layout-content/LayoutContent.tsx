@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Layout} from 'antd'
-import {Configuration, Plugin} from '@mia-platform/core'
+import {Plugin} from '@mia-platform/core'
 import {LoadingAnimation} from '@mia-platform/microlc-ui-components'
 import {Route, Router, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import {findCurrentPlugin, history} from '@utils/plugins/PluginsLoaderFacade'
-import {ConfigurationContext} from '@contexts/Configuration.context'
-import {RESERVED_PATH, INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER} from '@constants'
+import {findCurrentPlugin, history, registeredPlugins} from '@utils/plugins/PluginsLoaderFacade'
+import {INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER, RESERVED_PATH} from '@constants'
 import {ErrorPage500} from '@components/error-page-500/ErrorPage500'
 import {ErrorPage401} from '@components/error-page-401/ErrorPage401'
 import {ErrorPage404} from '@components/error-page-404/ErrorPage404'
@@ -38,15 +37,14 @@ export const LayoutContent: React.FC = () => {
 }
 
 // @ts-ignore
-const findPluginRoutes: (configuration: Configuration) => string[] = (configuration: Configuration) => {
-  return (configuration.plugins || [])
+const findPluginRoutes: () => string[] = () => {
+  return registeredPlugins
     .filter(plugin => plugin.pluginRoute !== undefined)
     .map(plugin => plugin.pluginRoute)
 }
 
 const LayoutCenter: React.FC = () => {
   const [currentPlugin, setCurrentPlugin] = useState<Plugin | undefined>(findCurrentPlugin())
-  const pluginsRoute = findPluginRoutes(useContext(ConfigurationContext))
   useEffect(() => {
     return history.listen(() => setCurrentPlugin(findCurrentPlugin()))
   })
@@ -55,7 +53,7 @@ const LayoutCenter: React.FC = () => {
     <Layout.Content className='layoutContent_container' data-testid='layout-content'>
       <Router history={history}>
         <Switch>
-          <Route path={pluginsRoute}>
+          <Route path={findPluginRoutes()}>
             <div className='layoutContent_plugin_container'>
               <PluginIframe plugin={currentPlugin}/>
               <div className='layoutContent_plugin' id={MICROLC_QIANKUN_CONTAINER}/>
