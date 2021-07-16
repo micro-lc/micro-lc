@@ -25,6 +25,7 @@
   margin-left: @custom-margin;
   max-height: @top-bar-height;
   border-bottom: 1px #515153;
+  position: relative;
 
   & .topBarMenu_entry {
     display: flex;
@@ -35,7 +36,7 @@
     padding-left: @menu-entry-padding;
     padding-right: @menu-entry-padding;
 
-    &.active {
+    &.active, &:hover {
       margin-bottom: @menu-entry-active-border;
       box-shadow: 0 @menu-entry-active-border var(--microlc-primary-color);
 
@@ -79,14 +80,15 @@
     .topBar_overlay {
       display: none;
       cursor: initial;
-      position: fixed;
       top: @top-bar-height;
       z-index: 998;
       background-color: var(--microlc-body-background);
-      padding-left: 100%;
-      margin-left: -100%;
-      padding-right: 100%;
-      margin-right: -100%;
+      left: 0;
+      position: absolute;
+      margin-left: -100vw;
+      padding-left: 100vw;
+      margin-right: -100vw;
+      padding-right: 100vw;
 
       & .ant-divider-vertical {
         height: auto;

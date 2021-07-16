@@ -39,6 +39,10 @@ export const pluginSchema = {
       type: 'integer',
       description: 'Position of the plugin in the side menu',
     },
+    category: {
+      type: 'string',
+      description: 'Sub-menu category in which insert the plugin',
+    },
     content: {
       type: 'array',
       items: this,
