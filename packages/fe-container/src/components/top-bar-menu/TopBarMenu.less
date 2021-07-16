@@ -35,7 +35,7 @@
     cursor: pointer;
     margin-right: @menu-entry-padding;
 
-    &.active, &:hover, .overlay_item.active, .overlay_item:hover {
+    &.active, &:hover {
       margin-bottom: @menu-entry-active-border;
       box-shadow: 0 @menu-entry-active-border var(--microlc-primary-color);
 
@@ -125,7 +125,7 @@
           margin-right: @spacing;
           color: var(--microlc-menu-label-color);
 
-          &:hover {
+          &:hover, &.active {
             color: var(--microlc-primary-color);
           }
         }
