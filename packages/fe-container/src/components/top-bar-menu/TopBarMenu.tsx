@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useCallback, useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Plugin} from '@mia-platform/core'
 import classNames from 'classnames'
 
@@ -23,12 +23,14 @@ import {history, isPluginLoaded, retrievePluginStrategy} from '@utils/plugins/Pl
 import {MENU_LOCATION} from '@constants'
 
 import './TopBarMenu.less'
+import {Divider} from 'antd'
+
+const entriesMapper = (plugin: Plugin) => <TopBarMenuEntry key={plugin.id} {...plugin}/>
 
 export const TopBarMenu: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
   const hasPlugins = (configuration.plugins || []).length > 0
   const shouldRender = configuration.theming?.menuLocation === MENU_LOCATION.topBar && hasPlugins
-  const entriesMapper = useCallback((plugin: Plugin) => <TopBarMenuEntry key={plugin.id} {...plugin}/>, [])
 
   return (
     <>
@@ -44,6 +46,7 @@ export const TopBarMenu: React.FC = () => {
 const TopBarMenuEntry: React.FC<Plugin> = (plugin) => {
   const [isActive, setIsActive] = useState<boolean>(isPluginLoaded(plugin))
   const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
+  const hasSubMenu = (plugin.content || []).length > 0
 
   const topBarMenuContainerClasses = classNames('topBarMenu_entry', {active: isActive})
 
@@ -52,9 +55,36 @@ const TopBarMenuEntry: React.FC<Plugin> = (plugin) => {
   }, [plugin])
 
   return (
-    <div className={topBarMenuContainerClasses} onClick={pluginStrategy.handlePluginLoad}>
-      <i className={'topBarMenuEntry_icon ' + (plugin.icon || '')}/>
-      <span className='topBarMenuEntry_text'>{plugin.label}</span>
+    <>
+      <div className={topBarMenuContainerClasses} onClick={pluginStrategy.handlePluginLoad}>
+        <i className={'topBarMenuEntry_icon ' + (plugin.icon || '')}/>
+        <span className='topBarMenuEntry_text'>{plugin.label}</span>
+        {
+          hasSubMenu && <TopBarSuMenuOverlay {...plugin}/>
+        }
+      </div>
+    </>
+  )
+}
+
+const TopBarSuMenuOverlay: React.FC<Plugin> = (plugin) => {
+  return (
+    <div className='topBar_overlay'>
+      <span>{plugin.label}</span>
+      <Divider type='vertical'/>
+      <div className='overlay_item_content'>
+        {
+          (plugin.content || []).map((plugin: Plugin) => <TopBarSubMenu key={plugin.id} {...plugin}/>)
+        }
+      </div>
+    </div>
+  )
+}
+
+const TopBarSubMenu: React.FC<Plugin> = (plugin) => {
+  return (
+    <div className='overlay_item'>
+      <span>{plugin.label}</span>
     </div>
   )
 }

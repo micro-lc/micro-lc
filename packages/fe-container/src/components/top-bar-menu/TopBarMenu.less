@@ -15,6 +15,8 @@
  */
 @import "../../styles/_variables";
 
+@spacing: 24px;
+
 .topBarMenu_container {
   display: flex;
   flex-grow: 1;
@@ -66,6 +68,46 @@
 
       &:hover {
         color: var(--microlc-primary-color);
+      }
+    }
+
+    &:hover .topBar_overlay {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .topBar_overlay {
+      display: none;
+      cursor: initial;
+      position: fixed;
+      top: @top-bar-height;
+      z-index: 998;
+      background-color: var(--microlc-body-background);
+
+      & .ant-divider-vertical {
+        height: auto;
+        margin-top: @spacing;
+        margin-bottom: @spacing;
+      }
+
+      & .overlay_item_content {
+        cursor: pointer;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-content: flex-start;
+
+        & .overlay_item {
+          flex: 0 0 auto;
+          margin-left: @spacing;
+          margin-right: @spacing;
+          color: var(--microlc-menu-label-color);
+
+          &:hover {
+            color: var(--microlc-primary-color);
+          }
+        }
       }
     }
   }
