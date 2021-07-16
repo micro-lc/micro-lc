@@ -109,4 +109,20 @@ describe('TopBarMenu tests', () => {
     userEvent.click(screen.getByText('Href entry'))
     expect(window.open).toBeCalledWith('https://google.it')
   })
+
+  it('correctly show sub menu', () => {
+    window.open = jest.fn()
+    const containerPlugin = {...plugin}
+    // @ts-ignore
+    containerPlugin.content = [{...plugin, label: 'Href entry sub menu'}]
+    const configuration = configurationsBuilder('topBar', [containerPlugin])
+    registerPlugin(plugin)
+    RenderWithReactIntl(
+      <ConfigurationProvider value={configuration}>
+        <TopBarMenu/>
+      </ConfigurationProvider>
+    )
+    expect(screen.getAllByText('Href entry')).toHaveLength(2)
+    expect(screen.getAllByText('Href entry sub menu')).toHaveLength(1)
+  })
 })

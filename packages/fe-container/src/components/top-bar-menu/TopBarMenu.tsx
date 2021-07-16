@@ -70,7 +70,7 @@ const TopBarMenuEntry: React.FC<Plugin> = (plugin) => {
 const TopBarSuMenuOverlay: React.FC<Plugin> = (plugin) => {
   return (
     <div className='topBar_overlay'>
-      <span>{plugin.label}</span>
+      <span className='overlay_title'>{plugin.label}</span>
       <Divider type='vertical'/>
       <div className='overlay_item_content'>
         {

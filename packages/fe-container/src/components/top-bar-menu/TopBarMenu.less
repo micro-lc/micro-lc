@@ -33,8 +33,7 @@
     justify-content: space-between;
     overflow: hidden;
     cursor: pointer;
-    padding-left: @menu-entry-padding;
-    padding-right: @menu-entry-padding;
+    margin-right: @menu-entry-padding;
 
     &.active, &:hover {
       margin-bottom: @menu-entry-active-border;
@@ -85,15 +84,20 @@
       background-color: var(--microlc-body-background);
       left: 0;
       position: absolute;
+      padding-top: @spacing;
       margin-left: -100vw;
       padding-left: 100vw;
       margin-right: -100vw;
       padding-right: 100vw;
 
+      & .overlay_title {
+        line-height: @spacing;
+        color: var(--microlc-sub-menu-title-color);
+        font-weight: bold;
+      }
+
       & .ant-divider-vertical {
         height: auto;
-        margin-top: @spacing;
-        margin-bottom: @spacing;
       }
 
       & .overlay_item_content {
@@ -106,6 +110,8 @@
 
         & .overlay_item {
           flex: 0 0 auto;
+          line-height: @spacing;
+          padding-bottom: @spacing/2;
           margin-left: @spacing;
           margin-right: @spacing;
           color: var(--microlc-menu-label-color);
