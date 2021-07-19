@@ -90,7 +90,8 @@
       border-bottom: 1px solid var(--microlc-layout-header-border-color);
 
       & .overlay_title {
-        line-height: @spacing;
+        line-height: 26px;
+        font-size: 18px;
         color: var(--microlc-sub-menu-title-color);
         font-weight: bold;
       }
@@ -108,9 +109,9 @@
         align-content: flex-start;
 
         & .subgroup_title {
-          line-height: @spacing;
-
           & .overlay_title {
+            font-size: 14px;
+            line-height: 22px;
             margin-left: @spacing;
             margin-right: @spacing;
             margin-bottom: @spacing/2;
@@ -124,6 +125,7 @@
           margin-left: @spacing;
           margin-right: @spacing;
           color: var(--microlc-menu-label-color);
+          font-size: 16px;
 
           &:hover, &.active {
             color: var(--microlc-primary-color);
