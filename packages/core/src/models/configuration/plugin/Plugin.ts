@@ -46,7 +46,7 @@ export const pluginSchema = {
     },
     content: {
       type: 'array',
-      items: {$ref: '#'},
+      items: this,
     },
     integrationMode: {
       type: 'string',
