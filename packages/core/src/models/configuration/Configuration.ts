@@ -17,7 +17,7 @@ import {FromSchema} from 'json-schema-to-ts'
 
 import {analyticsSchema} from './analytics/Analytics'
 import {helpMenuSchema} from './helpMenu/HelpMenu'
-import {pluginSchema} from './plugin/Plugin'
+import {pluginRecursiveSchema, pluginSchema} from './plugin/Plugin'
 import {themingSchema} from './theming/Theming'
 
 export const configurationSchema = {
@@ -27,6 +27,19 @@ export const configurationSchema = {
     plugins: {
       type: 'array',
       items: pluginSchema,
+    },
+    analytics: analyticsSchema,
+    helpMenu: helpMenuSchema,
+  },
+} as const
+
+export const configurationRecursiveSchema = {
+  type: 'object',
+  properties: {
+    theming: themingSchema,
+    plugins: {
+      type: 'array',
+      items: pluginRecursiveSchema,
     },
     analytics: analyticsSchema,
     helpMenu: helpMenuSchema,

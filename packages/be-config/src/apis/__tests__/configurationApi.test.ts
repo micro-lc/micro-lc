@@ -21,6 +21,7 @@ import {DecoratedFastify} from '@mia-platform/custom-plugin-lib'
 
 import {configurationApiHandlerBuilder} from '../configurationApi'
 import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcConfig.json'
+import validMicrolcRecursiveConfig from '../../__tests__/configurationMocks/validMicrolcRecursiveConfig.json'
 
 describe('Configuration api tests', () => {
   const fastifyInstanceBuilder = (configFile = 'validMicrolcConfig') => {
@@ -66,5 +67,12 @@ describe('Configuration api tests', () => {
     // @ts-ignore
     handler({headers: {}}, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
+  })
+
+  it('Correctly create handler with recursive plugin', async() => {
+    const handler = await configurationApiHandlerBuilder(fastifyInstanceBuilder('validMicrolcRecursiveConfig'))
+    // @ts-ignore
+    handler({headers: {}}, replyMock)
+    expect(replySendMock).toHaveBeenCalledWith(validMicrolcRecursiveConfig)
   })
 })
