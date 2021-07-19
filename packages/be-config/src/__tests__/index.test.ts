@@ -25,7 +25,7 @@ export interface ProcessEnv {
   [key: string]: string | undefined
 }
 
-describe('mia_template_service_name_placeholder', () => {
+describe('index tests', () => {
   // eslint-disable-next-line global-require
   const lc39 = require('@mia-platform/lc39')
 
