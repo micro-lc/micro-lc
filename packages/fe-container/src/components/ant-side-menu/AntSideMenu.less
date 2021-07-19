@@ -18,7 +18,7 @@
 
 .fixedSideBar {
   height: 100%;
-  width: 256px !important;
+  width: 256px;
   background-color: var(--microlc-side-menu-background);
   overflow-x: hidden;
   overflow-y: auto;
@@ -28,6 +28,15 @@
   & .divider {
     margin: 8px 0;
   }
+}
+
+.ant-menu-inline-collapsed span {
+  display: none;
+}
+
+.ant-layout-sider {
+  background: transparent !important;
+  transition: none !important;
 }
 
 .ant-menu-inline-collapsed-tooltip i {
