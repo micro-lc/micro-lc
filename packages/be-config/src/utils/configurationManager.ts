@@ -16,7 +16,7 @@
 
 import util from 'util'
 import fs from 'fs'
-import Ajv from 'ajv'
+import Ajv from 'ajv/dist/2019'
 
 const readFileAsync = util.promisify(fs.readFile)
 

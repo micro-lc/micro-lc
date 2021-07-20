@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import {FromSchema} from 'json-schema-to-ts'
+
 import {externalLinkSchema} from './ExternalLink'
 
 export const pluginSchema = {
@@ -38,6 +39,70 @@ export const pluginSchema = {
     order: {
       type: 'integer',
       description: 'Position of the plugin in the side menu',
+    },
+    category: {
+      type: 'string',
+      description: 'Sub-menu category in which insert the plugin',
+    },
+    content: {
+      type: 'array',
+      items: this,
+    },
+    integrationMode: {
+      type: 'string',
+      enum: ['href', 'qiankun', 'iframe'],
+      description: 'Way in which the plugin is integrated.',
+    },
+    pluginRoute: {
+      type: 'string',
+      description: 'Path on which the plugin will be rendered',
+    },
+    pluginUrl: {
+      type: 'string',
+      description: 'Entry of the plugin',
+    },
+    props: {
+      type: 'object',
+      description: 'Data passed to the plugin',
+      additionalProperties: true,
+    },
+    externalLink: externalLinkSchema,
+  },
+  required: ['id', 'label', 'integrationMode'],
+  additionalProperties: false,
+} as const
+
+export const pluginRecursiveSchema = {
+  type: 'object',
+  $recursiveAnchor: true,
+  properties: {
+    id: {
+      type: 'string',
+      description: 'Unique identifier of the plugin',
+    },
+    aclExpression: {
+      type: 'string',
+      description: 'Expression to evaluate the users that can access the plugin',
+    },
+    label: {
+      type: 'string',
+      description: 'Label visualized in the side menu',
+    },
+    icon: {
+      type: 'string',
+      description: 'Icon visualized in the side menu',
+    },
+    order: {
+      type: 'integer',
+      description: 'Position of the plugin in the side menu',
+    },
+    category: {
+      type: 'string',
+      description: 'Sub-menu category in which insert the plugin',
+    },
+    content: {
+      type: 'array',
+      items: {$recursiveRef: '#'},
     },
     integrationMode: {
       type: 'string',

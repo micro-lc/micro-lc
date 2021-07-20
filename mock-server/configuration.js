@@ -73,6 +73,47 @@ const plugins = [
     integrationMode: 'iframe',
     pluginRoute: '/qiankunIframe',
     pluginUrl: '//localhost:8764'
+  },
+  {
+    id: 'menu-google-container',
+    label: 'Container',
+    icon: 'fas fa-box-open',
+    order: 6,
+    content: [{
+      id: 'plugin-test-content-google-1',
+      label: 'IFrame 1',
+      icon: 'fab fa-google',
+      order: 4,
+      integrationMode: 'iframe',
+      pluginRoute: '/frame1',
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      category: 'A'
+    }, {
+      id: 'plugin-test-content-google-2',
+      label: 'IFrame 2',
+      icon: 'fab fa-google',
+      order: 4,
+      integrationMode: 'iframe',
+      pluginRoute: '/frame2',
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+    }, {
+      id: 'plugin-test-content-google-3',
+      label: 'IFrame 3',
+      icon: 'fab fa-google',
+      order: 4,
+      integrationMode: 'iframe',
+      pluginRoute: '/frame3',
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      category: 'B'
+    }, {
+      id: 'plugin-test-content-google-4',
+      label: 'IFrame 4',
+      icon: 'fab fa-google',
+      order: 4,
+      integrationMode: 'iframe',
+      pluginRoute: '/frame4',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }]
   }
 ]
 

@@ -24,9 +24,10 @@ import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
 import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
 
 const registeredPluginsStrategies = new Map<string, PluginStrategy>()
-const registeredPlugins: Plugin[] = []
+export const registeredPlugins: Plugin[] = []
 
 export const registerPlugin = (plugin: Plugin) => {
+  (plugin.content || []).forEach(registerPlugin)
   const pluginStrategy: PluginStrategy = strategyBuilder(plugin)
   registeredPlugins.push(plugin)
   registeredPluginsStrategies.set(plugin.id, pluginStrategy)

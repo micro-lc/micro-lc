@@ -68,7 +68,7 @@ exports[`SideBarLayout test match snapshot 1`] = `
                   class="ant-drawer-body"
                 >
                   <ul
-                    class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-vertical"
+                    class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-inline"
                     role="menu"
                   />
                 </div>

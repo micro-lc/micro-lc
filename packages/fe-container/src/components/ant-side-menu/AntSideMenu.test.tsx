@@ -155,4 +155,83 @@ describe('AntSideMenu test', () => {
     expect(isFixedSidebarCollapsed()).toBeFalsy()
     expect(document.getElementsByClassName('ant-menu-inline-collapsed').length).toBe(0)
   })
+
+  it('render sub menu', () => {
+    const plugins = [
+      {
+        id: 'plugin-test-2',
+        label: 'Container entry',
+        icon: 'home',
+        order: 2,
+        content: [{
+          id: 'plugin-test-1',
+          label: 'Content entry',
+          icon: 'clipboard',
+          order: 1,
+          integrationMode: 'href',
+          externalLink: {
+            url: 'https://google.it',
+            sameWindow: false
+          }
+        }]
+      }
+    ]
+    // @ts-ignore
+    RenderWithReactIntl(<AntSideMenu configuration={{plugins}}/>)
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeFalsy()
+
+    userEvent.click(screen.getByText('Container entry'))
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeTruthy()
+  })
+
+  it('render sub menu with categories', () => {
+    const plugins = [
+      {
+        id: 'plugin-test-2',
+        label: 'Container entry',
+        icon: 'home',
+        order: 2,
+        content: [{
+          id: 'plugin-test-1',
+          label: 'Content entry',
+          icon: 'clipboard',
+          order: 1,
+          integrationMode: 'href',
+          externalLink: {
+            url: 'https://google.it',
+            sameWindow: false
+          }
+        }, {
+          id: 'plugin-test-1',
+          label: 'Content entry in category',
+          icon: 'clipboard',
+          order: 1,
+          category: 'Cat 1',
+          integrationMode: 'href',
+          externalLink: {
+            url: 'https://google.it',
+            sameWindow: false
+          }
+        }]
+      }
+    ]
+    // @ts-ignore
+    RenderWithReactIntl(<AntSideMenu configuration={{plugins}}/>)
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeFalsy()
+    expect(screen.queryByText('Content entry in category')).toBeFalsy()
+    expect(screen.queryByText('Cat 1')).toBeFalsy()
+
+    userEvent.click(screen.getByText('Container entry'))
+
+    expect(screen.getByText('Container entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry')).toBeTruthy()
+    expect(screen.queryByText('Content entry in category')).toBeTruthy()
+    expect(screen.queryByText('Cat 1')).toBeTruthy()
+  })
 })

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Configuration, configurationSchema, Plugin} from '@mia-platform/core'
+import {Configuration, configurationRecursiveSchema, Plugin} from '@mia-platform/core'
 import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {readValidateConfiguration} from '../utils/configurationManager'
@@ -24,7 +24,7 @@ import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
 const readPluginConfiguration = async(fastifyInstance: DecoratedFastify) => {
   // @ts-ignore
   const configurationPath = fastifyInstance.config.MICROLC_CONFIGURATION_PATH
-  const validateConfiguration = await readValidateConfiguration(configurationPath, configurationSchema)
+  const validateConfiguration = await readValidateConfiguration(configurationPath, configurationRecursiveSchema)
   return validateConfiguration as Configuration
 }
 
@@ -46,9 +46,8 @@ export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify)
   }
 }
 
+// Removed response schema due to https://github.com/fastify/fast-json-stringify/issues/181
 export const configurationApiSchema = {
   summary: 'Expose the configurations of microlc',
-  response: {
-    200: configurationSchema,
-  },
+  response: {},
 } as const

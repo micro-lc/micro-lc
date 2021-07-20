@@ -18,7 +18,7 @@ import {retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
 import {Menu} from 'antd'
 import React from 'react'
 
-export const menuItemMapper = (plugin: Plugin) => {
+const menuEntry = (plugin: Plugin) => {
   const pluginStrategy = retrievePluginStrategy(plugin)
   return (
     <Menu.Item
@@ -33,4 +33,46 @@ export const menuItemMapper = (plugin: Plugin) => {
       </div>
     </Menu.Item>
   )
+}
+
+const menuCategory = ([categoryName, plugins]: [string, Plugin[]]) => {
+  return (
+    <Menu.ItemGroup key={categoryName} title={categoryName}>
+      {(plugins).map(menuEntry)}
+    </Menu.ItemGroup>
+  )
+}
+
+type Categories = { [key: string]: Plugin[] }
+
+const menuContainer = (plugin: Plugin) => {
+  const {withoutCategories, categoriesDivision} = retrieveCategorizedPlugins(plugin)
+  return (
+    <Menu.SubMenu
+      className='sideMenu_voice_container'
+      icon={<i className={'sideMenu_icon ' + (plugin.icon || '')}/>}
+      key={plugin.id}
+      title={plugin.label}
+    >
+      {Object.entries(categoriesDivision).map(menuCategory)}
+      {withoutCategories.map(menuEntry)}
+    </Menu.SubMenu>
+  )
+}
+
+export const menuItemMapper = (plugin: Plugin) => {
+  const isContainer = plugin.content !== undefined
+  return isContainer ? menuContainer(plugin) : menuEntry(plugin)
+}
+
+export const retrieveCategorizedPlugins = (plugin: Plugin) => {
+  const pluginContent: Plugin[] = plugin.content || []
+  const withoutCategories = pluginContent.filter(plugin => !plugin.category)
+  const categoriesDivision: Categories = pluginContent.filter(plugin => plugin.category)
+    .reduce((previous: any, plugin) => {
+      // @ts-ignore
+      previous[plugin.category] = [...previous[plugin.category] || [], plugin]
+      return previous
+    }, {})
+  return {withoutCategories, categoriesDivision}
 }
