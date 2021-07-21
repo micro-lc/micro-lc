@@ -17,7 +17,13 @@ import {useEffect, useState} from 'react'
 import {Configuration, Plugin, User} from '@mia-platform/core'
 
 import {retrieveAppData} from '@services/microlc/microlc.service'
-import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
+import {
+  finish,
+  isCurrentPluginLoaded,
+  registeredPlugins,
+  registerPlugin,
+  retrievePluginStrategy
+} from '@utils/plugins/PluginsLoaderFacade'
 import {INTEGRATION_METHODS} from '@constants'
 import {manageTheming} from '@utils/theme/ThemeManager'
 
@@ -29,19 +35,24 @@ export interface AppState {
 
 const pluginsSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
 
-const notHref = (plugin: Plugin) => plugin.integrationMode !== INTEGRATION_METHODS.HREF
+const notHref = (plugin: Plugin) => plugin.integrationMode && plugin.integrationMode !== INTEGRATION_METHODS.HREF
 
 const registerPlugins = (configuration: Configuration, user: Partial<User>) => {
   configuration.plugins?.forEach(registerPlugin)
   finish(user)
 }
 
-const navigateToFirstPlugin = (configuration: Configuration) => {
-  const firstValidPlugin: Plugin | undefined = configuration.plugins?.find(notHref)
+const navigateToFirstPlugin = () => {
+  const firstValidPlugin: Plugin | undefined = registeredPlugins.find(notHref)
   if (firstValidPlugin && !isCurrentPluginLoaded()) {
     const pluginStrategy = retrievePluginStrategy(firstValidPlugin)
     pluginStrategy && pluginStrategy.handlePluginLoad()
   }
+}
+
+const contentSorter = (plugin: Plugin) => {
+  // @ts-ignore
+  plugin.content = plugin.content?.sort(pluginsSorter)
 }
 
 export const useAppData = () => {
@@ -51,10 +62,11 @@ export const useAppData = () => {
     const configurationSubscription = retrieveAppData()
       .subscribe(({configuration, user}) => {
         manageTheming(configuration)
-        configuration.plugins = configuration.plugins?.sort(pluginsSorter)
+        configuration.plugins = configuration.plugins?.sort(pluginsSorter) || []
+        configuration.plugins.forEach(contentSorter)
         registerPlugins(configuration, user)
         setAppState({isLoading: false, configuration, user})
-        navigateToFirstPlugin(configuration)
+        navigateToFirstPlugin()
       }, (err) => setAppState(() => {
         throw err
       }))

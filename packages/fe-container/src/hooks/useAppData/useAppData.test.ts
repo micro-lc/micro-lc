@@ -15,7 +15,7 @@
  */
 import nock from 'nock'
 
-import {finish, isCurrentPluginLoaded, registerPlugin} from '@utils/plugins/PluginsLoaderFacade'
+import {finish, isCurrentPluginLoaded, registerPlugin, registeredPlugins} from '@utils/plugins/PluginsLoaderFacade'
 import {CONFIGURATION_SERVICE, USER_CONFIGURATION_SERVICE} from '@constants'
 import {renderHook} from '@testing-library/react-hooks'
 import {useAppData} from '@hooks/useAppData/useAppData'
@@ -31,13 +31,19 @@ jest.mock('@utils/plugins/PluginsLoaderFacade', () => ({
   retrievePluginStrategy: jest.fn((param) => ({
     handlePluginLoad: () => {
     }
-  }))
+  })),
+  registeredPlugins: []
 }))
 
 describe('Test useAppData hook', () => {
   const configurationUrl = `${CONFIGURATION_SERVICE.BASE_URL}${CONFIGURATION_SERVICE.ENDPOINT}`
   const authUrl = `${USER_CONFIGURATION_SERVICE.BASE_URL}${USER_CONFIGURATION_SERVICE.ENDPOINT}`
   const userUrl = '/api/v1/microlc/user'
+
+  beforeEach(() => {
+    registeredPlugins.splice(0, registeredPlugins.length)
+    jest.clearAllMocks()
+  })
 
   it('Rethrow the error', async () => {
     nock('http://localhost')
@@ -123,6 +129,8 @@ describe('Test useAppData hook', () => {
       .get(userUrl)
       .reply(200, user)
     const {result, waitForNextUpdate} = renderHook(() => useAppData())
+    // @ts-ignore
+    registeredPlugins.push(plugin1, plugin2, plugin3)
     const expectedState = {isLoading: false, user, configuration: {theming, plugins: [plugin1, plugin2, plugin3]}}
     await waitForNextUpdate()
     expect(document.title).toBe('My Company')

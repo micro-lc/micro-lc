@@ -68,7 +68,7 @@ export const pluginSchema = {
     },
     externalLink: externalLinkSchema,
   },
-  required: ['id', 'label', 'integrationMode'],
+  required: ['id', 'label'],
   additionalProperties: false,
 } as const
 
@@ -124,7 +124,7 @@ export const pluginRecursiveSchema = {
     },
     externalLink: externalLinkSchema,
   },
-  required: ['id', 'label', 'integrationMode'],
+  required: ['id', 'label'],
   additionalProperties: false,
 } as const
 
