@@ -25,7 +25,7 @@ describe('User service tests', () => {
 
   Object.defineProperty(window, 'location', {
     value: {
-      href: ''
+      href: 'http://localhost'
     },
     writable: true
   })
@@ -64,7 +64,7 @@ describe('User service tests', () => {
   it('return empty user logout response for http ok', () => {
     logOutUserBuilder(logOutUrl)
     logOutUser()
-    expect(window.location.href).toBe(logOutUrl)
+    expect(window.location.href).toBe(`${logOutUrl}?returnTo=http://localhost`)
   })
 
   it('Empty observable for invalid url', (done) => {

@@ -28,7 +28,7 @@ describe('UserMenuOverlay tests', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'location', {
       value: {
-        href: ''
+        href: 'http://localhost'
       },
       writable: true
     })
@@ -43,6 +43,6 @@ describe('UserMenuOverlay tests', () => {
     logOutUserBuilder(logoutUrl)
     RenderWithReactIntl(<UserMenuOverlay/>)
     userEvent.click(screen.getByText('Log Out'))
-    expect(window.location.href).toBe(logoutUrl)
+    expect(window.location.href).toBe(`${logoutUrl}?returnTo=http://localhost`)
   })
 })
