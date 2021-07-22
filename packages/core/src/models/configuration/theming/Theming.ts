@@ -30,6 +30,10 @@ export const themingSchema = {
       enum: ['sideBar', 'topBar', 'fixedSideBar'],
       default: 'sideBar',
     },
+    enableDarkMode: {
+      type: 'boolean',
+      default: false,
+    },
   },
   required: ['logo', 'variables'],
   additionalProperties: false,

@@ -66,6 +66,7 @@ describe('TopBar tests', function () {
     pluginRoute: '/qiankun',
     pluginUrl: '//localhost:8764'
   }]
+
   const helpMenu = {
     helpLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
   }
@@ -85,14 +86,10 @@ describe('TopBar tests', function () {
   })
 
   it('TopBar logo changes with theme', async () => {
+    const enabledDarkMode = {...theming, enableDarkMode: true}
     RenderWithReactIntl(
-      <ConfigurationProvider value={{theming}}>
-        <MenuOpenedProvider value={{
-          isMenuOpened: false,
-          setMenuOpened: () => {
-          }
-        }}
-        >
+      <ConfigurationProvider value={{theming: enabledDarkMode}}>
+        <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: () => {}}}>
           <TopBar/>
         </MenuOpenedProvider>
       </ConfigurationProvider>
@@ -107,13 +104,7 @@ describe('TopBar tests', function () {
     })
 
     RenderWithReactIntl(
-
-      <ConfigurationProvider value={{
-        theming,
-        plugins,
-        helpMenu
-      }}
-      >
+      <ConfigurationProvider value={{theming, plugins, helpMenu}}>
         <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: mockBurgerClick}}>
           <TopBar/>
         </MenuOpenedProvider>
@@ -129,13 +120,7 @@ describe('TopBar tests', function () {
     })
 
     RenderWithReactIntl(
-
-      <ConfigurationProvider value={{
-        theming,
-        plugins,
-        helpMenu
-      }}
-      >
+      <ConfigurationProvider value={{theming, plugins, helpMenu}}>
         <MenuOpenedProvider value={{isMenuOpened: true, setMenuOpened: mockBurgerClick}}>
           <TopBar/>
         </MenuOpenedProvider>
@@ -149,11 +134,22 @@ describe('TopBar tests', function () {
   it('Logo on click open new window with the url in the same page', async () => {
     window.open = jest.fn()
     RenderWithReactIntl(
-    <ConfigurationProvider value={{theming}}>
-      <TopBar/>
-    </ConfigurationProvider>)
+      <ConfigurationProvider value={{theming}}>
+        <TopBar/>
+      </ConfigurationProvider>
+    )
     const toggle = screen.getByTestId('company-logo')
     await userEvent.click(toggle)
     expect(window.open).toBeCalledWith(theming.logo.navigation_url, '_self')
+  })
+
+  it('by default dark mode toggle is not visible', async () => {
+    RenderWithReactIntl(
+      <ConfigurationProvider value={{theming}}>
+        <TopBar/>
+      </ConfigurationProvider>
+    )
+    expect(screen.queryByText('Light')).toBeFalsy()
+    expect(screen.queryByText('Dark')).toBeFalsy()
   })
 })

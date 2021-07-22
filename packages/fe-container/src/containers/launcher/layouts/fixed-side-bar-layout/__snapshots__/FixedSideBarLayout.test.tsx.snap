@@ -19,25 +19,7 @@ exports[`FixedSideBarLayout test match snapshot 1`] = `
         />
         <div
           class="topBar_rightSide"
-        >
-          <div
-            class="ant-divider ant-divider-vertical topBar_divider"
-            role="separator"
-          />
-          Light
-          <label
-            class="darkModeSwitch"
-          >
-            <input
-              data-testid="dark-theme-toggle"
-              type="checkbox"
-            />
-            <span
-              class="slider round"
-            />
-          </label>
-          Dark
-        </div>
+        />
       </div>
     </header>
     <section
@@ -359,25 +341,7 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
         />
         <div
           class="topBar_rightSide"
-        >
-          <div
-            class="ant-divider ant-divider-vertical topBar_divider"
-            role="separator"
-          />
-          Light
-          <label
-            class="darkModeSwitch"
-          >
-            <input
-              data-testid="dark-theme-toggle"
-              type="checkbox"
-            />
-            <span
-              class="slider round"
-            />
-          </label>
-          Dark
-        </div>
+        />
       </div>
     </header>
     <section

@@ -30,6 +30,9 @@ export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
   const user = useContext(UserContext)
   const logo = configuration.theming?.logo
+  const showDivider = user.name || configuration?.theming?.enableDarkMode
+  // eslint-disable-next-line
+  console.log(configuration)
   const [logoDarkTheme, setLogoDarkTheme] = useState(false)
 
   const logoClickHandler = useCallback(() => {
@@ -53,8 +56,8 @@ export const TopBar: React.FC = () => {
       <TopBarMenu/>
       <div className='topBar_rightSide'>
         <HelpIcon/>
-        <Divider className='topBar_divider' type="vertical"/>
-        <DarkModeSwitch toggleCallback= {switchLogo}/>
+        {showDivider && <Divider className='topBar_divider' type="vertical"/>}
+        {configuration?.theming?.enableDarkMode && <DarkModeSwitch toggleCallback= {switchLogo}/>}
         {
           user.name &&
           <div className='topBar_userMenu'>
