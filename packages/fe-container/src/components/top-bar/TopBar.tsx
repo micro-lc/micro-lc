@@ -31,8 +31,6 @@ export const TopBar: React.FC = () => {
   const user = useContext(UserContext)
   const logo = configuration.theming?.logo
   const showDivider = user.name || configuration?.theming?.enableDarkMode
-  // eslint-disable-next-line
-  console.log(configuration)
   const [logoDarkTheme, setLogoDarkTheme] = useState(false)
 
   const logoClickHandler = useCallback(() => {

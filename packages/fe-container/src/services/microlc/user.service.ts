@@ -26,7 +26,7 @@ export const retrieveUser = (authenticationUrl: string | undefined) => {
 export let logOutUser = () => of(false)
 
 export const logOutUserBuilder = (logoutUserUrl: string = '') => {
-  logOutUser = () => from(axiosInstance.post(logoutUserUrl)).pipe(
+  logOutUser = () => from(axiosInstance.get(logoutUserUrl)).pipe(
     switchMap(() => of(true)),
     catchError(() => of(false))
   )

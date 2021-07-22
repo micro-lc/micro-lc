@@ -54,7 +54,7 @@ describe('User service tests', () => {
   })
 
   it('return empty user logout response for http errors', (done) => {
-    const mockedResponse = nock('http://localhost').post(logOutUrl).reply(500)
+    const mockedResponse = nock('http://localhost').get(logOutUrl).reply(500)
     logOutUserBuilder(logOutUrl)
     logOutUser()
       .subscribe((response) => {
@@ -65,7 +65,7 @@ describe('User service tests', () => {
   })
 
   it('return empty user logout response for http ok', (done) => {
-    const mockedResponse = nock('http://localhost').post(logOutUrl).reply(200)
+    const mockedResponse = nock('http://localhost').get(logOutUrl).reply(200)
     logOutUserBuilder(logOutUrl)
     logOutUser()
       .subscribe((response) => {
