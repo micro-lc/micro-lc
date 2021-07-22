@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {from, of} from 'rxjs'
-import {catchError, switchMap} from 'rxjs/operators'
+import {of} from 'rxjs'
 import {User} from '@mia-platform/core'
 
-import axiosInstance, {extractDataFromGet} from '@services/microlc/axios'
+import {extractDataFromGet} from '@services/microlc/axios'
 
 export const retrieveUser = (authenticationUrl: string | undefined) => {
   return authenticationUrl ? extractDataFromGet<User>(authenticationUrl) : of({})
 }
 
-export let logOutUser = () => of(false)
+export let logOutUser = () => {
+}
 
 export const logOutUserBuilder = (logoutUserUrl: string = '') => {
-  logOutUser = () => from(axiosInstance.get(logoutUserUrl)).pipe(
-    switchMap(() => of(true)),
-    catchError(() => of(false))
-  )
+  logOutUser = () => {
+    window.location.href = logoutUserUrl
+  }
 }

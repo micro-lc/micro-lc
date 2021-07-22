@@ -17,10 +17,18 @@ import nock from 'nock'
 
 import {logOutUser, logOutUserBuilder, retrieveUser} from '@services/microlc/user.service'
 import {User} from '@mia-platform/core'
+import {expect} from '@playwright/test'
 
 describe('User service tests', () => {
   const userUrl = '/api/v1/microlc/user'
   const logOutUrl = '/api/v1/microlc/user/logout'
+
+  Object.defineProperty(window, 'location', {
+    value: {
+      href: ''
+    },
+    writable: true
+  })
 
   beforeAll(() => {
     nock.cleanAll()
@@ -53,26 +61,10 @@ describe('User service tests', () => {
       })
   })
 
-  it('return empty user logout response for http errors', (done) => {
-    const mockedResponse = nock('http://localhost').get(logOutUrl).reply(500)
+  it('return empty user logout response for http ok', () => {
     logOutUserBuilder(logOutUrl)
     logOutUser()
-      .subscribe((response) => {
-        expect(response).toStrictEqual(false)
-        mockedResponse.done()
-        done()
-      })
-  })
-
-  it('return empty user logout response for http ok', (done) => {
-    const mockedResponse = nock('http://localhost').get(logOutUrl).reply(200)
-    logOutUserBuilder(logOutUrl)
-    logOutUser()
-      .subscribe((response) => {
-        expect(response).toStrictEqual(true)
-        mockedResponse.done()
-        done()
-      })
+    expect(window.location.href).toBe(logOutUrl)
   })
 
   it('Empty observable for invalid url', (done) => {

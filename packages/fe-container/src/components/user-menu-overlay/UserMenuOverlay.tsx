@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, {useCallback} from 'react'
+import React from 'react'
 import {Menu} from 'antd'
 import {FormattedMessage} from 'react-intl'
 
@@ -22,13 +22,9 @@ import {logOutUser} from '@services/microlc/user.service'
 import './UserMenuOverlay.less'
 
 export const UserMenuOverlay: React.FC = () => {
-  const logOut = useCallback(() => {
-    logOutUser().subscribe(() => window.location.reload())
-  }, [])
-
   return (
     <Menu className='userMenuOverlay_body'>
-      <Menu.Item className='userMenuOverlay_entry' onClick={logOut}>
+      <Menu.Item className='userMenuOverlay_entry' onClick={logOutUser}>
         <span className='userMenuOverlay_logout'>
           <FormattedMessage id='logout'/>
         </span>

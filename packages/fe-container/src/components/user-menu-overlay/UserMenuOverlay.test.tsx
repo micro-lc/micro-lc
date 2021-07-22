@@ -15,13 +15,34 @@
  */
 import React from 'react'
 import {screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import {UserMenuOverlay} from '@components/user-menu-overlay/UserMenuOverlay'
+import {logOutUserBuilder} from '@services/microlc/user.service'
 
 import RenderWithReactIntl from '../../__tests__/utils'
-import {UserMenuOverlay} from '@components/user-menu-overlay/UserMenuOverlay'
 
 describe('UserMenuOverlay tests', () => {
+  const logoutUrl = '/api/v1/microlc/user/logout'
+
+  beforeEach(() => {
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: ''
+      },
+      writable: true
+    })
+  })
+
   it('Shows always log out entry', () => {
     RenderWithReactIntl(<UserMenuOverlay/>)
     expect(screen.findByText('Log Out')).toBeTruthy()
+  })
+
+  it('Correctly log out', () => {
+    logOutUserBuilder(logoutUrl)
+    RenderWithReactIntl(<UserMenuOverlay/>)
+    userEvent.click(screen.getByText('Log Out'))
+    expect(window.location.href).toBe(logoutUrl)
   })
 })

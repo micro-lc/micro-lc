@@ -24,8 +24,6 @@ import {UserMenu} from '@components/user-menu/UserMenu'
 nock.disableNetConnect()
 
 describe('UserMenu tests', () => {
-  const logoutUrl = '/api/v1/microlc/user/logout'
-
   it('Render without crash', () => {
     RenderWithReactIntl(<UserMenu/>)
     expect(screen.findByTestId('userMenu_container')).toBeTruthy()
@@ -69,26 +67,5 @@ describe('UserMenu tests', () => {
     expect(screen.queryByText('Log Out')).toBeFalsy()
     userEvent.click(screen.getByTestId('userMenu_container'))
     expect(screen.queryByText('Log Out')).toBeTruthy()
-  })
-
-  it('Correctly log out', (done) => {
-    nock('http://localhost')
-      .persist()
-      .post(logoutUrl)
-      .reply(200)
-    // eslint-disable-next-line
-    window = Object.create(window)
-    Object.defineProperty(window, 'location', {
-      value: {
-        reload: jest.fn()
-      }
-    })
-    RenderWithReactIntl(<UserMenu/>)
-    userEvent.click(screen.getByTestId('userMenu_container'))
-    userEvent.click(screen.getByText('Log Out'))
-    setTimeout(() => {
-      expect(window.location.reload).toHaveBeenCalled()
-      done()
-    }, 3000)
   })
 })
