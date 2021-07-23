@@ -26,4 +26,4 @@ RUN yarn be-config install --frozen-lockfile --ignore-scripts
 
 USER node
 
-CMD lc39 ./packages/be-config/dist/index.js --port "$HTTP_PORT" --log-level "$LOG_LEVEL" --prefix="$SERVICE_PREFIX" --address 0.0.0.0
+CMD lc39 ./packages/be-config/dist/index.js --port "$HTTP_PORT" --log-level "$LOG_LEVEL" --prefix="$SERVICE_PREFIX"
