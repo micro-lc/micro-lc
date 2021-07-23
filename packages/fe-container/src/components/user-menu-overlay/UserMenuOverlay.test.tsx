@@ -36,7 +36,7 @@ describe('UserMenuOverlay tests', () => {
 
   it('Shows always log out entry', () => {
     RenderWithReactIntl(<UserMenuOverlay/>)
-    expect(screen.findByText('Log Out')).toBeTruthy()
+    expect(screen.getByText('Log Out')).toBeTruthy()
   })
 
   it('Correctly log out', () => {
