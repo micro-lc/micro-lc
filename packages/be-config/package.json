@@ -19,7 +19,7 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@mia-platform/custom-plugin-lib": "^2.3.0",
+    "@mia-platform/custom-plugin-lib": "^3.0.0",
     "ajv": "^8.1.0",
     "fastify": "^2.15.1",
     "mutant-json": "^0.6.3"
