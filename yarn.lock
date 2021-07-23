@@ -12794,9 +12794,9 @@ no-case@^3.0.4:
     tslib "^2.0.3"
 
 nock@^13.0.11:
-  version "13.0.11"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-13.0.11.tgz#ba733252e720897ca50033205c39db0c7470f331"
-  integrity sha512-sKZltNkkWblkqqPAsjYW0bm3s9DcHRPiMOyKO/PkfJ+ANHZ2+LA2PLe22r4lLrKgXaiSaDQwW3qGsJFtIpQIeQ==
+  version "13.1.1"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-13.1.1.tgz#3c830129d4560957f59b6f480a41ddbaf9cf57af"
+  integrity sha512-YKTR9MjfK3kS9/l4nuTxyYm30cgOExRHzkLNhL8nhEUyU4f8Za/dRxOqjhVT1vGs0svWo3dDnJTUX1qxYeWy5w==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
