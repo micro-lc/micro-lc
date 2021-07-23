@@ -17,7 +17,7 @@
 import path from 'path'
 import fastify from 'fastify'
 import http from 'http'
-import {DecoratedFastify} from '@mia-platform/custom-plugin-lib'
+import {DecoratedFastify, DecoratedRequest} from '@mia-platform/custom-plugin-lib'
 
 import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcConfig.json'
 
@@ -37,13 +37,14 @@ describe('Configuration api tests', () => {
   const replySendMock = jest.fn()
 
   // @ts-ignore
-  const requestBuilderMock: fastify.FastifyRequest = (fileName) => ({
+  const requestBuilderMock = (fileName): DecoratedRequest => ({
     headers: {
       groups: 'admin,developer',
     },
     params: {
       configurationName: fileName,
     },
+    getGroups: () => ['admin', 'developer'],
   })
 
   // @ts-ignore
@@ -61,7 +62,7 @@ describe('Configuration api tests', () => {
   it('Correctly create handler with empty header', async() => {
     const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder())
     // @ts-ignore
-    await handler({headers: {}, params: {configurationName: 'validMicrolcConfig'}}, replyMock)
+    await handler({headers: {}, params: {configurationName: 'validMicrolcConfig'}, getGroups: () => []}, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
   })
 

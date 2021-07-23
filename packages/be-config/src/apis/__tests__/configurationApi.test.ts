@@ -17,7 +17,7 @@
 import path from 'path'
 import fastify from 'fastify'
 import http from 'http'
-import {DecoratedFastify} from '@mia-platform/custom-plugin-lib'
+import {DecoratedFastify, DecoratedRequest} from '@mia-platform/custom-plugin-lib'
 
 import {configurationApiHandlerBuilder} from '../configurationApi'
 import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcConfig.json'
@@ -37,10 +37,17 @@ describe('Configuration api tests', () => {
   const replySendMock = jest.fn()
 
   // @ts-ignore
-  const requestMock: fastify.FastifyRequest = {
+  const requestMock: DecoratedRequest = {
     headers: {
       groups: 'admin,developer',
     },
+    getGroups: () => ['admin', 'developer'],
+  }
+
+  // @ts-ignore
+  const noHeaderRequest: DecoratedRequest = {
+    headers: {},
+    getGroups: () => [],
   }
 
   // @ts-ignore
@@ -58,21 +65,21 @@ describe('Configuration api tests', () => {
   it('Correctly create handler with empty header', async() => {
     const handler = await configurationApiHandlerBuilder(fastifyInstanceBuilder())
     // @ts-ignore
-    handler({headers: {}}, replyMock)
+    handler(noHeaderRequest, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
   })
 
   it('Correctly create handler with empty header and empty plugins', async() => {
     const handler = await configurationApiHandlerBuilder(fastifyInstanceBuilder('validMicrolcConfigNoPlugins'))
     // @ts-ignore
-    handler({headers: {}}, replyMock)
+    handler(noHeaderRequest, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
   })
 
   it('Correctly create handler with recursive plugin', async() => {
     const handler = await configurationApiHandlerBuilder(fastifyInstanceBuilder('validMicrolcRecursiveConfig'))
     // @ts-ignore
-    handler({headers: {}}, replyMock)
+    handler(noHeaderRequest, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcRecursiveConfig)
   })
 })
