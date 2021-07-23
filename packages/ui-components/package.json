@@ -58,7 +58,7 @@
     "rollup": "^2.53.3",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-dts": "^3.0.2",
-    "rollup-plugin-import-css": "^2.0.1",
+    "rollup-plugin-import-css": "^3.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-svg-import": "^1.5.1",
