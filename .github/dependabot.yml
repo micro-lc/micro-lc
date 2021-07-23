@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/packages/ui-components"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/packages/fe-container"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/packages/core"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/packages/be-config"
+    schedule:
+      interval: "daily"
