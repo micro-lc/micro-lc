@@ -33,18 +33,24 @@ exports[`FixedSideBarLayout test match snapshot 1`] = `
           class="ant-layout-sider-children"
         >
           <ul
-            class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-inline"
+            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light fixedSideBar"
+            data-menu-list="true"
             role="menu"
+            tabindex="0"
           >
             <li
               class="ant-menu-item sideMenu_voice"
+              data-menu-id="rc-menu-uuid-test-collapse"
               role="menuitem"
               style="padding-left: 24px;"
+              tabindex="-1"
             >
               <i
                 class="sideMenu_icon fas fa-chevron-left ant-menu-item-icon"
               />
-              <span>
+              <span
+                class="ant-menu-title-content"
+              >
                 <div
                   class="sideMenu_entry"
                 >
@@ -53,9 +59,13 @@ exports[`FixedSideBarLayout test match snapshot 1`] = `
               </span>
             </li>
             <li
-              class="divider ant-menu-item-divider"
+              class="ant-menu-item-divider divider"
             />
           </ul>
+          <div
+            aria-hidden="true"
+            style="display: none;"
+          />
         </div>
       </aside>
       <main
@@ -355,18 +365,24 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
           class="ant-layout-sider-children"
         >
           <ul
-            class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-inline"
+            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light fixedSideBar"
+            data-menu-list="true"
             role="menu"
+            tabindex="0"
           >
             <li
               class="ant-menu-item sideMenu_voice"
+              data-menu-id="rc-menu-uuid-test-collapse"
               role="menuitem"
               style="padding-left: 24px;"
+              tabindex="-1"
             >
               <i
                 class="sideMenu_icon fas fa-chevron-left ant-menu-item-icon"
               />
-              <span>
+              <span
+                class="ant-menu-title-content"
+              >
                 <div
                   class="sideMenu_entry"
                 >
@@ -375,9 +391,13 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
               </span>
             </li>
             <li
-              class="divider ant-menu-item-divider"
+              class="ant-menu-item-divider divider"
             />
           </ul>
+          <div
+            aria-hidden="true"
+            style="display: none;"
+          />
         </div>
       </aside>
       <main

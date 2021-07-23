@@ -50,8 +50,14 @@ exports[`SideBarLayout test match snapshot 1`] = `
                   class="ant-drawer-body"
                 >
                   <ul
-                    class="ant-menu ant-menu-light fixedSideBar ant-menu-root ant-menu-inline"
+                    class="ant-menu ant-menu-root ant-menu-inline ant-menu-light fixedSideBar"
+                    data-menu-list="true"
                     role="menu"
+                    tabindex="0"
+                  />
+                  <div
+                    aria-hidden="true"
+                    style="display: none;"
                   />
                 </div>
               </div>

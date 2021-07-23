@@ -7,7 +7,7 @@
     "@craco/craco": "^6.1.1",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@types/tinycolor2": "^1.4.2",
-    "antd": "^4.14.0",
+    "antd": "^4.16.8",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "craco-less": "^1.17.1",

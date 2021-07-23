@@ -22,6 +22,7 @@ import RenderWithReactIntl from '../../__tests__/utils'
 import {MenuOpenedProvider} from '@contexts/MenuOpened.context'
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {Plugin} from '@mia-platform/core'
+import {UserContextProvider} from '@contexts/User.context'
 
 jest.mock('@utils/theme/ThemeManager', () => ({
   switchTheme: jest.fn()
@@ -89,7 +90,12 @@ describe('TopBar tests', function () {
     const enabledDarkMode = {...theming, enableDarkMode: true}
     RenderWithReactIntl(
       <ConfigurationProvider value={{theming: enabledDarkMode}}>
-        <MenuOpenedProvider value={{isMenuOpened: false, setMenuOpened: () => {}}}>
+        <MenuOpenedProvider value={{
+          isMenuOpened: false,
+          setMenuOpened: () => {
+          }
+        }}
+        >
           <TopBar/>
         </MenuOpenedProvider>
       </ConfigurationProvider>
@@ -151,5 +157,22 @@ describe('TopBar tests', function () {
     )
     expect(screen.queryByText('Light')).toBeFalsy()
     expect(screen.queryByText('Dark')).toBeFalsy()
+  })
+
+  it('Dropdown toggle on click', () => {
+    const user = {
+      email: 'mocked.user@mia-platform.eu',
+      name: 'Mocked User 2',
+      nickname: 'mocked.user2',
+      phone: '+393333333333'
+    }
+    RenderWithReactIntl(
+      <UserContextProvider value={user}>
+        <TopBar/>
+      </UserContextProvider>
+    )
+    expect(screen.queryByText('Log Out')).toBeFalsy()
+    userEvent.click(screen.getByTestId('userMenu_container'))
+    expect(screen.queryByText('Log Out')).toBeTruthy()
   })
 })

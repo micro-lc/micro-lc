@@ -61,11 +61,4 @@ describe('UserMenu tests', () => {
     const avatarSrc = document.getElementsByClassName('userMenu_avatar')[0].attributes.getNamedItem('src').value
     expect(avatarSrc).toBe('https://eu.ui-avatars.com/api/?name=Mocked User 2&size=24x24')
   })
-
-  it('Dropdown toggle on click', () => {
-    RenderWithReactIntl(<UserMenu/>)
-    expect(screen.queryByText('Log Out')).toBeFalsy()
-    userEvent.click(screen.getByTestId('userMenu_container'))
-    expect(screen.queryByText('Log Out')).toBeTruthy()
-  })
 })
