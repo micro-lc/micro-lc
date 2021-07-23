@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 import axios, {AxiosRequestConfig} from 'axios'
-import {Observable} from 'rxjs'
-import {fromPromise} from 'rxjs/internal-compatibility'
+import {from, Observable} from 'rxjs'
 import {map} from 'rxjs/operators'
 
 const microlcAxiosConfig: AxiosRequestConfig = {
@@ -32,7 +31,7 @@ axiosInstance.interceptors.response.use(
   })
 
 export const extractDataFromGet: <T>(url: string) => Observable<T> = (url) => {
-  return fromPromise(axiosInstance.get(url))
+  return from(axiosInstance.get(url))
     .pipe(
       map(response => response.data)
     )
