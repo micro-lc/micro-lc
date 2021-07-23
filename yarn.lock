@@ -14855,14 +14855,14 @@ q@^1.1.2, q@^1.5.1:
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
 qiankun@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.4.0.tgz#e0c847fcee1e79c167899bfcb7441a23590c5430"
-  integrity sha512-O9xfVQ1yP1tp7dL1EvK3BicD3z2NURAyF0BjxdJ9TYny40VFfWvw7H9j5ONZiihiE7owcwCpXex+FsqEU7fuew==
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.4.4.tgz#e98a1930af66fef9aa5a7573b789959cd742e65d"
+  integrity sha512-n7yrKge4po9SB6ykqyoX8JbNuDpo4G9C5V9agRy6IPWruPnyh4vxLb5UhTKVd1/CsVScP7V9gTMyy55EJFpzlA==
   dependencies:
     "@babel/runtime" "^7.10.5"
     import-html-entry "^1.9.0"
     lodash "^4.17.11"
-    single-spa "5.8.1"
+    single-spa "^5.9.2"
     tslib "^1.10.0"
 
 qs@6.7.0:
@@ -16598,10 +16598,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-single-spa@5.8.1:
-  version "5.8.1"
-  resolved "https://registry.yarnpkg.com/single-spa/-/single-spa-5.8.1.tgz#86c2575e297e31d8f06945944ec97e31851a59ae"
-  integrity sha512-RlyLZ1IDIPdzI6mQPzCQnlgTt9jmbAXBZODmifoDut840wksPDSPhcSS8jXMpuUlqOidQiX2YuLVQSR9DEgsXw==
+single-spa@^5.9.2:
+  version "5.9.3"
+  resolved "https://registry.yarnpkg.com/single-spa/-/single-spa-5.9.3.tgz#2d151cbb3b273629a5b27b30a3b8ca847dcba4c5"
+  integrity sha512-qMGraRzIBsodV6569Fob4cQ4/yQNrcZ5Achh3SAQDljmqUtjAZ7BAA7GAyO/l5eizb7GtTmVq9Di7ORyKw82CQ==
 
 sisteransi@^1.0.5:
   version "1.0.5"
