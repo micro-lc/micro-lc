@@ -50,7 +50,7 @@
     "@rollup/plugin-typescript": "^8.2.3",
     "@svgr/rollup": "^5.5.0",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.6",
+    "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.3.6",
