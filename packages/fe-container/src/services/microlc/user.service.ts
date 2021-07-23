@@ -27,6 +27,6 @@ export let logOutUser = () => {
 
 export const logOutUserBuilder = (logoutUserUrl: string = '') => {
   logOutUser = () => {
-    window.location.href = `${logoutUserUrl}?returnTo=${window.location.href}`
+    window.location.href = logoutUserUrl
   }
 }

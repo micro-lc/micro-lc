@@ -64,7 +64,7 @@ describe('User service tests', () => {
   it('return empty user logout response for http ok', () => {
     logOutUserBuilder(logOutUrl)
     logOutUser()
-    expect(window.location.href).toBe(`${logOutUrl}?returnTo=http://localhost`)
+    expect(window.location.href).toBe(logOutUrl)
   })
 
   it('Empty observable for invalid url', (done) => {

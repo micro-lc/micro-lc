@@ -43,6 +43,6 @@ describe('UserMenuOverlay tests', () => {
     logOutUserBuilder(logoutUrl)
     RenderWithReactIntl(<UserMenuOverlay/>)
     userEvent.click(screen.getByText('Log Out'))
-    expect(window.location.href).toBe(`${logoutUrl}?returnTo=http://localhost`)
+    expect(window.location.href).toBe(logoutUrl)
   })
 })
