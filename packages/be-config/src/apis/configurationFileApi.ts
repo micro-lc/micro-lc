@@ -21,19 +21,19 @@ import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
 import {readConfigurationFile} from '../utils/configurationManager'
 import {referencesReplacer} from '../utils/referencesReplacer'
 
-const retrieveConfigurationFile = async(fastifyInstance: DecoratedFastify, configurationName: string) => {
-  // @ts-ignore
-  const configurationPath = `${fastifyInstance.config.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}.json`
+const retrieveConfigurationFile = async(instanceConfig: any, configurationName: string) => {
+  const configurationPath = `${instanceConfig.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}.json`
   return readConfigurationFile(configurationPath)
 }
 
 export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler = (fastifyInstance) => {
   return async(request, reply) => {
     // @ts-ignore
-    if (fastifyInstance.config.PLUGINS_CONFIGURATIONS_PATH) {
+    const instanceConfig: any = fastifyInstance.config
+    if (instanceConfig.PLUGINS_CONFIGURATIONS_PATH) {
+      const userGroups = request.getGroups()
       // @ts-ignore
-      const userGroups = request.headers[fastifyInstance.config.GROUPS_HEADER_KEY]?.split(GROUPS_CONFIGURATION.header.separator) || []
-      const configurationContent = await retrieveConfigurationFile(fastifyInstance, request.params[CONFIGURATION_NAME])
+      const configurationContent = await retrieveConfigurationFile(instanceConfig, request.params[CONFIGURATION_NAME])
       const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
       reply.send(referencesReplacer(configurationContentFiltered))
     } else {

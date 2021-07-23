@@ -37,9 +37,6 @@ export const CONFIGURATION_FILE_ENDPOINT: EndpointConfiguration = {
 }
 
 export const GROUPS_CONFIGURATION = {
-  header: {
-    separator: ',',
-  },
   function: {
     key: 'groups',
   },
