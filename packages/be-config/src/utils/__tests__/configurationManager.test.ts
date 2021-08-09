@@ -52,7 +52,7 @@ describe('Configuration loader tests', () => {
     expect(validation).toThrow(Error)
   })
 
-  it('Correctly read and valida file', async() => {
+  it('Correctly read and validate file', async() => {
     const configContent = await readValidateConfiguration(configurationPath, authenticationSchema)
     expect(configContent.isAuthNecessary).toBeTruthy()
     expect(configContent.userInfoUrl).toBe('/api/v1/microlc/user')
