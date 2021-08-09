@@ -45,7 +45,7 @@ describe('index tests', () => {
     })
   }
 
-  afterAll(async() => {
+  afterEach(async() => {
     await fastify.close()
   })
 
