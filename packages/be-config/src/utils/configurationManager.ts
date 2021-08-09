@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-import util from 'util'
 import fs from 'fs'
 import Ajv from 'ajv/dist/2019'
 
-const readFileAsync = util.promisify(fs.readFile)
-
 export const readConfigurationFile = async(configurationPath: string) => {
-  const fileContent = await readFileAsync(configurationPath)
+  const fileContent = await fs.promises.readFile(configurationPath)
   return JSON.parse(fileContent.toString('utf-8'))
 }
 
