@@ -131,4 +131,22 @@ describe('Plugins filter tests', () => {
     const pluginsFiltered = aclExpressionEvaluator(true, ['po', 'admin'])
     expect(pluginsFiltered).toBe(true)
   })
+
+  it('works for array', () => {
+    const toFilter = {
+      plugins: [
+        {
+          aclExpression: 'groups.superadmin || groups.admin || groups.secretary',
+        },
+        {
+          aclExpression: 'groups.superadmin || groups.admin || groups.doctor',
+        },
+        {
+          aclExpression: 'groups.superadmin || groups.admin',
+        },
+      ],
+    }
+    const filtered = aclExpressionEvaluator(toFilter, ['doctor'])
+    expect(filtered.plugins.length).toBe(1)
+  })
 })
