@@ -50,26 +50,27 @@ const navigateToFirstPlugin = () => {
   }
 }
 
-const contentSorter = (plugin: Plugin) => {
-  // @ts-ignore
-  plugin.content = plugin.content?.sort(pluginsSorter)
-}
+// @ts-ignore
+const contentSorter = (plugin: Plugin) => plugin.content?.sort(pluginsSorter)
 
 export const useAppData = () => {
   const [appState, setAppState] = useState<AppState>({isLoading: true, configuration: {}, user: {}})
 
   useEffect(() => {
     const configurationSubscription = retrieveAppData()
-      .subscribe(({configuration, user}) => {
-        manageTheming(configuration)
-        configuration.plugins = configuration.plugins?.sort(pluginsSorter) || []
-        configuration.plugins.forEach(contentSorter)
-        registerPlugins(configuration, user)
-        setAppState({isLoading: false, configuration, user})
-        navigateToFirstPlugin()
-      }, (err) => setAppState(() => {
-        throw err
-      }))
+      .subscribe({
+        next: ({configuration, user}) => {
+          manageTheming(configuration)
+          configuration.plugins = configuration.plugins?.sort(pluginsSorter) || []
+          configuration.plugins.forEach(contentSorter)
+          registerPlugins(configuration, user)
+          setAppState({isLoading: false, configuration, user})
+          navigateToFirstPlugin()
+        },
+        error: (err) => setAppState(() => {
+          throw err
+        })
+      })
     return () => configurationSubscription.unsubscribe()
   }, [])
 
