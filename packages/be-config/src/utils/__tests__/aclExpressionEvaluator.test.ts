@@ -132,7 +132,7 @@ describe('Plugins filter tests', () => {
     expect(pluginsFiltered).toBe(true)
   })
 
-  it('works for array', () => {
+  it('remove at least 2 entry', () => {
     const toFilter = {
       plugins: [
         {
