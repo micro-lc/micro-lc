@@ -17,16 +17,16 @@ import React, {useContext} from 'react'
 import {Plugin} from '@mia-platform/core'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import {Divider} from 'antd'
 
 import {ConfigurationContext} from '@contexts/Configuration.context'
 import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
 import {retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
 import {MENU_LOCATION} from '@constants'
-
-import './TopBarMenu.less'
-import {Divider} from 'antd'
 import {retrieveCategorizedPlugins} from '@utils/menu/menuItemMapper'
 import {useCurrentPlugin} from '@hooks/useCurrentPlugin/useCurrentPlugin'
+
+import './TopBarMenu.less'
 
 const entriesMapper = (plugin: Plugin) => <TopBarMenuEntry key={plugin.id} {...plugin}/>
 
@@ -48,7 +48,7 @@ export const TopBarMenu: React.FC = () => {
 
 const TopBarMenuEntry: React.FC<Plugin> = (plugin) => {
   const currentPlugin = useCurrentPlugin()
-  const isActive = currentPlugin ? [plugin, ...plugin.content || []].includes(currentPlugin) : false
+  const isActive = currentPlugin ? [plugin, ...plugin.content || []].find(plugin => plugin.id === currentPlugin.id) : false
   const pluginStrategy: PluginStrategy = retrievePluginStrategy(plugin)
   const hasSubMenu = (plugin.content || []).length > 0
 
