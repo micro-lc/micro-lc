@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Plugin} from '@mia-platform/core'
+import {InternalPlugin, Plugin} from '@mia-platform/core'
 
 import {history} from '@utils/plugins/PluginsLoaderFacade'
 import {PluginStrategy} from './PluginStrategy'
 import {RESERVED_PATH} from '@constants'
 
-export function routeStrategy (plugin: Plugin): PluginStrategy {
+export function routeStrategy (plugin: Plugin | InternalPlugin): PluginStrategy {
   return {
     handlePluginLoad: () => {
       history.push(RESERVED_PATH.LOADING)

@@ -16,6 +16,7 @@
 export * from './Configuration'
 export * from './plugin/ExternalLink'
 export * from './plugin/Plugin'
+export * from './plugin/InternalPlugin'
 export * from './theming/Header'
 export * from './helpMenu/HelpMenu'
 export * from './theming/Logo'

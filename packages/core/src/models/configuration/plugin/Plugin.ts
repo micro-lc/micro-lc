@@ -15,19 +15,12 @@
  */
 import {FromSchema} from 'json-schema-to-ts'
 
-import {externalLinkSchema} from './ExternalLink'
+import {internalPluginSchema} from './InternalPlugin'
 
 export const pluginSchema = {
   type: 'object',
   properties: {
-    id: {
-      type: 'string',
-      description: 'Unique identifier of the plugin',
-    },
-    aclExpression: {
-      type: 'string',
-      description: 'Expression to evaluate the users that can access the plugin',
-    },
+    ...internalPluginSchema.properties,
     label: {
       type: 'string',
       description: 'Label visualized in the side menu',
@@ -48,25 +41,6 @@ export const pluginSchema = {
       type: 'array',
       items: this,
     },
-    integrationMode: {
-      type: 'string',
-      enum: ['href', 'qiankun', 'iframe'],
-      description: 'Way in which the plugin is integrated.',
-    },
-    pluginRoute: {
-      type: 'string',
-      description: 'Path on which the plugin will be rendered',
-    },
-    pluginUrl: {
-      type: 'string',
-      description: 'Entry of the plugin',
-    },
-    props: {
-      type: 'object',
-      description: 'Data passed to the plugin',
-      additionalProperties: true,
-    },
-    externalLink: externalLinkSchema,
   },
   required: ['id', 'label'],
   additionalProperties: false,
@@ -76,14 +50,7 @@ export const pluginRecursiveSchema = {
   type: 'object',
   $recursiveAnchor: true,
   properties: {
-    id: {
-      type: 'string',
-      description: 'Unique identifier of the plugin',
-    },
-    aclExpression: {
-      type: 'string',
-      description: 'Expression to evaluate the users that can access the plugin',
-    },
+    ...internalPluginSchema.properties,
     label: {
       type: 'string',
       description: 'Label visualized in the side menu',
@@ -104,25 +71,6 @@ export const pluginRecursiveSchema = {
       type: 'array',
       items: {$recursiveRef: '#'},
     },
-    integrationMode: {
-      type: 'string',
-      enum: ['href', 'qiankun', 'iframe'],
-      description: 'Way in which the plugin is integrated.',
-    },
-    pluginRoute: {
-      type: 'string',
-      description: 'Path on which the plugin will be rendered',
-    },
-    pluginUrl: {
-      type: 'string',
-      description: 'Entry of the plugin',
-    },
-    props: {
-      type: 'object',
-      description: 'Data passed to the plugin',
-      additionalProperties: true,
-    },
-    externalLink: externalLinkSchema,
   },
   required: ['id', 'label'],
   additionalProperties: false,
