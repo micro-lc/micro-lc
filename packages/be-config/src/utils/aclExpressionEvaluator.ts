@@ -47,15 +47,14 @@ const evaluatePluginExpression = (userGroupsObject: UserGroupsObject) => {
 }
 
 const jsonPathCallback = (valuesToAvoid: string[], expressionEvaluator: Function) => (payload: any, payloadType: any, fullPayload: any) => {
-  if (!expressionEvaluator({aclExpression: fullPayload.value})) {
+  if (!expressionEvaluator(fullPayload.value)) {
     valuesToAvoid.push(payload)
   }
 }
 
 const patchCreator = (valueToAvoid: string): Operation => ({
   op: 'remove',
-  path: valueToAvoid.split('/').slice(0, -1)
-    .join('/'),
+  path: valueToAvoid,
 })
 
 export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[]) => {
@@ -65,7 +64,7 @@ export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[]) 
   const pathCallback = jsonPathCallback(valuesToAvoid, expressionEvaluator)
   do {
     valuesToAvoid.splice(0)
-    JSONPath({path: '$..aclExpression', json: jsonToFilter, resultType: 'pointer', callback: pathCallback})
+    JSONPath({path: '$..aclExpression^', json: jsonToFilter, resultType: 'pointer', callback: pathCallback})
     const [patchToApply] = valuesToAvoid
     patchToApply && applyOperation(jsonToFilter, patchCreator(patchToApply))
   } while (valuesToAvoid.length !== 0)
