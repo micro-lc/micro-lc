@@ -15,13 +15,13 @@
  */
 import {JSONPath} from 'jsonpath-plus'
 
-const mutateCallback = ($ref: any) => (payload: any, payloadType: any, fullPayload: any) => {
-  Object.assign(fullPayload.value, $ref[fullPayload.value.$ref])
-  delete fullPayload.value.$ref
+const mutateCallback = ($ref: any) => (payload: any) => {
+  Object.assign(payload, $ref[payload.$ref])
+  delete payload.$ref
 }
 
 const replace = ({$ref, content}: any) => {
-  JSONPath({path: '$..$ref^', json: content, resultType: 'pointer', callback: mutateCallback($ref)})
+  JSONPath({path: '$..$ref^', json: content, callback: mutateCallback($ref)})
   return content
 }
 
