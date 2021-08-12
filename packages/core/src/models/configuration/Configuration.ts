@@ -19,6 +19,7 @@ import {analyticsSchema} from './analytics/Analytics'
 import {helpMenuSchema} from './helpMenu/HelpMenu'
 import {pluginRecursiveSchema, pluginSchema} from './plugin/Plugin'
 import {themingSchema} from './theming/Theming'
+import {internalPluginSchema} from './plugin/InternalPlugin'
 
 export const configurationSchema = {
   type: 'object',
@@ -27,6 +28,10 @@ export const configurationSchema = {
     plugins: {
       type: 'array',
       items: pluginSchema,
+    },
+    internalPlugins: {
+      type: 'array',
+      items: internalPluginSchema,
     },
     analytics: analyticsSchema,
     helpMenu: helpMenuSchema,
@@ -40,6 +45,10 @@ export const configurationRecursiveSchema = {
     plugins: {
       type: 'array',
       items: pluginRecursiveSchema,
+    },
+    internalPlugins: {
+      type: 'array',
+      items: internalPluginSchema,
     },
     analytics: analyticsSchema,
     helpMenu: helpMenuSchema,

@@ -15,7 +15,7 @@
  */
 import {createBrowserHistory} from 'history'
 import {addErrorHandler, registerMicroApps, RegistrableApp, start} from 'qiankun'
-import {Plugin, User} from '@mia-platform/core'
+import {InternalPlugin, Plugin, User} from '@mia-platform/core'
 
 import {INTEGRATION_METHODS, MICROLC_QIANKUN_CONTAINER, RESERVED_PATH} from '@constants'
 import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
@@ -24,20 +24,20 @@ import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
 import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
 
 const registeredPluginsStrategies = new Map<string, PluginStrategy>()
-export const registeredPlugins: Plugin[] = []
+export const registeredPlugins: InternalPlugin[] = []
 
-export const registerPlugin = (plugin: Plugin) => {
+export const registerPlugin = (plugin: Omit<Plugin, 'label'>) => {
   (plugin.content || []).forEach(registerPlugin)
   const pluginStrategy: PluginStrategy = strategyBuilder(plugin)
   registeredPlugins.push(plugin)
   registeredPluginsStrategies.set(plugin.id, pluginStrategy)
 }
 
-export const retrievePluginStrategy = (plugin: Plugin) => {
+export const retrievePluginStrategy = (plugin: InternalPlugin) => {
   return registeredPluginsStrategies.get(plugin.id) || noOpStrategy()
 }
 
-export const isPluginLoaded = (plugin: Plugin) =>
+export const isPluginLoaded = (plugin: InternalPlugin) =>
   plugin.pluginRoute ? window.location.pathname.startsWith(plugin.pluginRoute) : false
 
 export const findCurrentPlugin = () => {
@@ -54,7 +54,7 @@ const isReservedPage = () => {
       previousValue || window.location.pathname.endsWith(currentValue), false)
 }
 
-const strategyBuilder = (plugin: Plugin) => {
+const strategyBuilder = (plugin: InternalPlugin) => {
   switch (plugin.integrationMode) {
     case INTEGRATION_METHODS.HREF:
       return hrefStrategy(plugin.externalLink)
@@ -79,7 +79,7 @@ export const finish = (user: Partial<User>) => {
 }
 
 const pluginToQiankunMapper = (user: Partial<User>, basePath: string) => {
-  return (plugin: Plugin) => ({
+  return (plugin: InternalPlugin) => ({
     name: plugin.id,
     entry: plugin.pluginUrl || '',
     container: `#${MICROLC_QIANKUN_CONTAINER}`,

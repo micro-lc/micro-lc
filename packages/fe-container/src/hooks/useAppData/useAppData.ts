@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {useEffect, useState} from 'react'
-import {Configuration, Plugin, User} from '@mia-platform/core'
+import {Configuration, InternalPlugin, Plugin, User} from '@mia-platform/core'
 
 import {retrieveAppData} from '@services/microlc/microlc.service'
 import {
@@ -35,15 +35,16 @@ export interface AppState {
 
 const pluginsSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
 
-const notHref = (plugin: Plugin) => plugin.integrationMode && plugin.integrationMode !== INTEGRATION_METHODS.HREF
+const notHref = (plugin: InternalPlugin) => plugin.integrationMode && plugin.integrationMode !== INTEGRATION_METHODS.HREF
 
 const registerPlugins = (configuration: Configuration, user: Partial<User>) => {
   configuration.plugins?.forEach(registerPlugin)
+  configuration.internalPlugins?.forEach(registerPlugin)
   finish(user)
 }
 
 const navigateToFirstPlugin = () => {
-  const firstValidPlugin: Plugin | undefined = registeredPlugins.find(notHref)
+  const firstValidPlugin: InternalPlugin | undefined = registeredPlugins.find(notHref)
   if (firstValidPlugin && !isCurrentPluginLoaded()) {
     const pluginStrategy = retrievePluginStrategy(firstValidPlugin)
     pluginStrategy && pluginStrategy.handlePluginLoad()

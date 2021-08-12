@@ -15,7 +15,7 @@
  */
 import React, {useEffect, useState} from 'react'
 import {Layout} from 'antd'
-import {Plugin} from '@mia-platform/core'
+import {InternalPlugin} from '@mia-platform/core'
 import {LoadingAnimation} from '@mia-platform/microlc-ui-components'
 import {Route, Router, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -44,7 +44,7 @@ const findPluginRoutes: () => string[] = () => {
 }
 
 const LayoutCenter: React.FC = () => {
-  const [currentPlugin, setCurrentPlugin] = useState<Plugin | undefined>(findCurrentPlugin())
+  const [currentPlugin, setCurrentPlugin] = useState<InternalPlugin | undefined>(findCurrentPlugin())
   useEffect(() => {
     return history.listen(() => setCurrentPlugin(findCurrentPlugin()))
   })
@@ -70,7 +70,7 @@ const LayoutCenter: React.FC = () => {
 }
 
 type PluginIframeProps = {
-  plugin: Plugin | undefined
+  plugin: InternalPlugin | undefined
 }
 
 const PluginIframe: React.FC<PluginIframeProps> = ({plugin}) => {

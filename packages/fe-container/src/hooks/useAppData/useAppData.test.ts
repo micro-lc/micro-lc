@@ -100,6 +100,14 @@ describe('Test useAppData hook', () => {
       pluginUrl: 'https://www.google.com/webhp?igu=1'
     }
 
+    const pluginInternal1 = {
+      id: 'plugin-internal-1',
+      label: 'IFrame',
+      integrationMode: 'iframe',
+      pluginRoute: '/iframeTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }
+
     const theming = {
       header: {
         pageTitle: 'My Company',
@@ -123,7 +131,8 @@ describe('Test useAppData hook', () => {
       .get(configurationUrl)
       .reply(200, {
         theming,
-        plugins: [plugin2, plugin1, plugin3]
+        plugins: [plugin2, plugin1, plugin3],
+        internalPlugins: [pluginInternal1]
       })
     nock('http://localhost')
       .get(userUrl)
@@ -140,7 +149,9 @@ describe('Test useAppData hook', () => {
     expect(registerPlugin.mock.calls[1][0]).toMatchObject(plugin2)
     // @ts-ignore
     expect(registerPlugin.mock.calls[2][0]).toMatchObject(plugin3)
-    expect(registerPlugin).toHaveBeenCalledTimes(3)
+    // @ts-ignore
+    expect(registerPlugin.mock.calls[3][0]).toMatchObject(pluginInternal1)
+    expect(registerPlugin).toHaveBeenCalledTimes(4)
     expect(finish).toHaveBeenCalledWith(user)
     expect(isCurrentPluginLoaded).toHaveBeenCalled()
     expect(result.current).toMatchObject(expectedState)
