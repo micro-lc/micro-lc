@@ -13,37 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {JSONPath} from 'jsonpath-plus'
 
-const mutateJson = require('mutant-json')
-
-const retrieveParentObject = (path: string, originalObject: any) => {
-  let parentObject = originalObject
-  path
-    .split('/')
-    .slice(1, -1)
-    .forEach((key: string) => {
-      parentObject = parentObject[key]
-    })
-  return parentObject
-}
-
-const mutantProcess = ($ref: any) => (mutate: Function, value: any, path: string, originalObject: any) => {
-  const parentObject = retrieveParentObject(path, originalObject)
-  Object.assign(parentObject, $ref[value])
-  mutate({
-    op: 'remove',
-    value,
-  })
-}
-
-const mutantOptions = {
-  nested: true,
-  test: /\$ref/,
-  promises: false,
+const mutateCallback = ($ref: any) => (payload: any, payloadType: any, fullPayload: any) => {
+  Object.assign(fullPayload.value, $ref[fullPayload.value.$ref])
+  delete fullPayload.value.$ref
 }
 
 const replace = ({$ref, content}: any) => {
-  return mutateJson(content, mutantProcess($ref), mutantOptions)
+  JSONPath({path: '$..$ref^', json: content, resultType: 'pointer', callback: mutateCallback($ref)})
+  return content
 }
 
 export const referencesReplacer = (configuration: any) => {
