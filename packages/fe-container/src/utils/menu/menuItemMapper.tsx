@@ -28,8 +28,10 @@ const menuEntry = (plugin: Plugin) => {
       onClick={pluginStrategy.handlePluginLoad}
     >
       <div className='sideMenu_entry'>
-        <span className='sideMenu_label'>{plugin.label}</span>
-        {plugin.integrationMode === 'href' && <i className='fas fa-external-link-alt sideMenu_externalLink'/>}
+        <span className='sideMenu_label'>
+          {plugin.label}
+          {plugin.integrationMode === 'href' && <i className='fas fa-external-link-alt sideMenu_externalLink'/>}
+        </span>
       </div>
     </Menu.Item>
   )
