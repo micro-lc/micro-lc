@@ -33,13 +33,12 @@ export interface AppState {
   user: Partial<User>
 }
 
-const pluginsSorter = (pluginA: Plugin, pluginB: Plugin) => (pluginA.order || 0) - (pluginB.order || 0)
+const pluginsSorter = (pluginA: InternalPlugin, pluginB: InternalPlugin) => (pluginA.order || 0) - (pluginB.order || 0)
 
 const notHref = (plugin: InternalPlugin) => plugin.integrationMode && plugin.integrationMode !== INTEGRATION_METHODS.HREF
 
 const registerPlugins = (configuration: Configuration, user: Partial<User>) => {
-  configuration.plugins?.forEach(registerPlugin)
-  configuration.internalPlugins?.forEach(registerPlugin)
+  [...configuration.plugins || [], ...configuration.internalPlugins || []].sort(pluginsSorter).forEach(registerPlugin)
   finish(user)
 }
 

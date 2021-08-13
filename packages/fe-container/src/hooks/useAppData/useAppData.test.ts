@@ -105,7 +105,8 @@ describe('Test useAppData hook', () => {
       label: 'IFrame',
       integrationMode: 'iframe',
       pluginRoute: '/iframeTest',
-      pluginUrl: 'https://www.google.com/webhp?igu=1'
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      order: 4
     }
 
     const theming = {
