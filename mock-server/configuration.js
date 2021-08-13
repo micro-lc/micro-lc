@@ -117,6 +117,14 @@ const plugins = [
   }
 ]
 
+const internalPlugins = [{
+  id: 'plugin-internal-test-4',
+  order: 5,
+  integrationMode: 'iframe',
+  pluginRoute: '/internalPlugin1',
+  pluginUrl: 'https://www.google.com/webhp?igu=1'
+}]
+
 const analytics = {
   privacyLink: 'https://www.mia-platform.eu/img/Privacy_Policy_Website_EN.pdf',
   disclaimer: 'Questo sito utilizza cookie proprietari e di terze parti per assicurarti la migliore esperienza di navigazione. Per ulteriori informazioni, leggi la ',
@@ -126,4 +134,5 @@ const analytics = {
 const helpMenu = {
   helpLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
 }
-module.exports = {theming, plugins, analytics, helpMenu}
+
+module.exports = {theming, plugins, analytics, helpMenu, internalPlugins}
