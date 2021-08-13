@@ -59,10 +59,6 @@ export const pluginRecursiveSchema = {
       type: 'string',
       description: 'Icon visualized in the side menu',
     },
-    order: {
-      type: 'integer',
-      description: 'Position of the plugin in the side menu',
-    },
     category: {
       type: 'string',
       description: 'Sub-menu category in which insert the plugin',

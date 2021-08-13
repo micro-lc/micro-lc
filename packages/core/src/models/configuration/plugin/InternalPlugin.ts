@@ -13,6 +13,10 @@ export const internalPluginSchema = {
       type: 'string',
       description: 'Expression to evaluate the users that can access the plugin',
     },
+    order: {
+      type: 'integer',
+      description: 'Plugin registration order',
+    },
     integrationMode: {
       type: 'string',
       enum: ['href', 'qiankun', 'iframe'],
