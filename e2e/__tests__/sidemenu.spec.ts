@@ -46,5 +46,6 @@ test('Correctly change url for iframe plugin', async ({page}) => {
     page.waitForNavigation(),
     page.click('"IFrame"'),
   ])
+  await page.waitForNavigation()
   expect(page.url()).toBe(`${baseUrl}/iframe`)
 });
