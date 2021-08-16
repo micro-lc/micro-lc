@@ -42,10 +42,7 @@ test('Correctly stay on previous page for href different window', async ({page})
 
 test('Correctly change url for iframe plugin', async ({page}) => {
   await toggleSideMenu(page)
-  await Promise.all([
-    page.waitForNavigation(),
-    page.click('"IFrame"'),
-  ])
-  await page.waitForNavigation()
+  await page.click('"IFrame"')
+  await new Promise(resolve => setTimeout(resolve, 5000))
   expect(page.url()).toBe(`${baseUrl}/iframe`)
 });
