@@ -43,6 +43,5 @@ test('Correctly stay on previous page for href different window', async ({page})
 test('Correctly change url for iframe plugin', async ({page}) => {
   await toggleSideMenu(page)
   await page.click('"IFrame"')
-  await page.waitForNavigation()
   expect(page.url()).toBe(`${baseUrl}/iframe`)
 });
