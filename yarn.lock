@@ -2594,9 +2594,9 @@
     write-file-atomic "^3.0.3"
 
 "@mia-platform/custom-plugin-lib@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@mia-platform/custom-plugin-lib/-/custom-plugin-lib-3.0.0.tgz#81ff25cb6398f90518e55a749b10becfa3b09703"
-  integrity sha512-n4PJRupCfvHpklqzN4HFxNvEP0cZ2Dh1YoRHjvWqvw0g5evvXM8cF9pISY3kcFzCPBpNW6mlz20cIpgUtfmcUg==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@mia-platform/custom-plugin-lib/-/custom-plugin-lib-3.1.1.tgz#888ee507cc518691a17ebd1cc9477ac83b2f83ae"
+  integrity sha512-SPoEb9puEVmBX/z3HujiySVgmIsTmf+RQ4rzrzRDR/ebxg3Eh5eNC44EPACf9Eq6XDMTi+5Cl1vRimO+Atgmmg==
   dependencies:
     "@mia-platform/lc39" "^4.0.0"
     "@types/node" "^15.12.0"
