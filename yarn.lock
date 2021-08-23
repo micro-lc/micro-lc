@@ -3460,9 +3460,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@>=16.9.0", "@types/react@^17.0.0":
-  version "17.0.18"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.18.tgz#4109cbbd901be9582e5e39e3d77acd7b66bb7fbe"
-  integrity sha512-YTLgu7oS5zvSqq49X5Iue5oAbVGhgPc5Au29SJC4VeE17V6gASoOxVkUDy9pXFMRFxCWCD9fLeweNFizo3UzOg==
+  version "17.0.19"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.19.tgz#8f2a85e8180a43b57966b237d26a29481dacc991"
+  integrity sha512-sX1HisdB1/ZESixMTGnMxH9TDe8Sk709734fEQZzCV/4lSu9kJCPbo2PbTRoZM+53Pp0P10hYVyReUueGwUi4A==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -12916,9 +12916,9 @@ pkg-up@^2.0.0:
     find-up "^2.1.0"
 
 playwright@^1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.13.0.tgz#aadb3b992763253ef40f29ae887df8d67a142fc5"
-  integrity sha512-GA5OyEeKx1v/pRcANmYncCT67Y7Y4N5zLRU5E690dn/Id10sooR5hQZmCDYsjXlutZb/1q0R3sITALnvhEjCjg==
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.14.0.tgz#18301b11f5278a446d36b5cf96f67db36ce2cd20"
+  integrity sha512-aR5oZ1iVsjQkGfYCjgYAmyMAVu0MQ0i8MgdnfdqDu9EVLfbnpuuFmTv/Rb7/Yjno1kOrDUP9+RyNC+zfG3wozA==
   dependencies:
     commander "^6.1.0"
     debug "^4.1.1"
