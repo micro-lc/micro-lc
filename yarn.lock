@@ -6036,9 +6036,9 @@ craco-alias@^3.0.1:
   integrity sha512-N+Qaf/Gr/f3o5ZH2TQjMu5NhR9PnT1ZYsfejpNvZPpB0ujdrhsSr4Ct6GVjnV5ostCVquhTKJpIVBKyL9qDQYA==
 
 craco-less@^1.17.1:
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/craco-less/-/craco-less-1.18.0.tgz#6952adc93ea597c37ef2b6977593e0ac66a4069f"
-  integrity sha512-Q11HHh5rh2u2Ujub/FgkjLzRtrnEOQIt/kMxyflIGW1xJTm/5FFkM2+RRZ77Vo2ma7MDcEFhvU/vp6oA7FKY8w==
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/craco-less/-/craco-less-1.19.0.tgz#9e0f01380f94d9bf1a7ae255004de21b5e6c27e5"
+  integrity sha512-yq4eroMK6V6dg7ETYoN5JbfErxPv/z7vRZS2kYUSs+TFqPwBC0Ym0gUcRYjUh9PW9+Ozub8QXVpVoYOBQGV9Pw==
   dependencies:
     less "^4.1.1"
     less-loader "^7.3.0"
