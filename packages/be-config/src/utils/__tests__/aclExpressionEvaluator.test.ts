@@ -41,7 +41,7 @@ describe('Plugins filter tests', () => {
     }]
     const pluginsFiltered = aclExpressionEvaluator(plugins, ['ceo', 'admin', 'developer'])
     expect(pluginsFiltered.length).toBe(1)
-    expect(pluginsFiltered[0]).toBe(allowedPlugin)
+    expect(pluginsFiltered[0]).toMatchObject(allowedPlugin)
   })
 
   it('Return a mix of plugins with expression and without expression', () => {
