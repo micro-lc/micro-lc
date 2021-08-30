@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {JSONPath} from 'jsonpath-plus'
-import {applyOperation, Operation} from 'fast-json-patch'
+import {applyOperation, Operation, deepClone} from 'fast-json-patch'
 
 import {GROUPS_CONFIGURATION} from '../constants'
 
@@ -58,6 +58,7 @@ const patchCreator = (valueToAvoid: string): Operation => ({
 })
 
 export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[]) => {
+  jsonToFilter = deepClone(jsonToFilter)
   const userGroupsObject = userGroupsObjectBuilder(userGroups)
   const expressionEvaluator = evaluatePluginExpression(userGroupsObject)
   const valuesToAvoid: string[] = []
