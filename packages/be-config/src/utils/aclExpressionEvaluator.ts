@@ -58,16 +58,16 @@ const patchCreator = (valueToAvoid: string): Operation => ({
 })
 
 export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[]) => {
-  jsonToFilter = deepClone(jsonToFilter)
+  const clonedJsonToFilter = deepClone(jsonToFilter)
   const userGroupsObject = userGroupsObjectBuilder(userGroups)
   const expressionEvaluator = evaluatePluginExpression(userGroupsObject)
   const valuesToAvoid: string[] = []
   const pathCallback = jsonPathCallback(valuesToAvoid, expressionEvaluator)
   do {
     valuesToAvoid.splice(0)
-    JSONPath({path: '$..aclExpression^', json: jsonToFilter, resultType: 'pointer', callback: pathCallback})
+    JSONPath({path: '$..aclExpression^', json: clonedJsonToFilter, resultType: 'pointer', callback: pathCallback})
     const [patchToApply] = valuesToAvoid
-    patchToApply && applyOperation(jsonToFilter, patchCreator(patchToApply))
+    patchToApply && applyOperation(clonedJsonToFilter, patchCreator(patchToApply))
   } while (valuesToAvoid.length !== 0)
-  return jsonToFilter
+  return clonedJsonToFilter
 }
