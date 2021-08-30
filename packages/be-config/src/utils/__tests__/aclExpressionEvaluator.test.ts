@@ -148,5 +148,7 @@ describe('Plugins filter tests', () => {
     }
     const filtered = aclExpressionEvaluator(toFilter, ['doctor'])
     expect(filtered.plugins.length).toBe(1)
+    expect(filtered.plugins.length).not.toBe(toFilter.plugins.length)
+    expect(filtered).not.toBe(toFilter)
   })
 })
