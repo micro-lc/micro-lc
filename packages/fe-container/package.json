@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Launcher of microlc",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "@fortawesome/fontawesome-free": "^5.15.3",
