@@ -19,7 +19,7 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@mia-platform/custom-plugin-lib": "^3.0.0",
+    "@mia-platform/custom-plugin-lib": "^4.0.0",
     "ajv": "^8.1.0",
     "fast-json-patch": "^3.0.0-1",
     "jsonpath-plus": "^6.0.1"
