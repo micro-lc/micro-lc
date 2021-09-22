@@ -1,6 +1,6 @@
 <div align="center">
 
-# Micro Launch Complex
+# micro-lc
 
 [![Build Status][github-actions-svg]][github-actions]
 [![javascript style guide][standard-mia-svg]][standard-mia]
@@ -12,12 +12,14 @@
 
 **The Mia-Platform micro frontend solution**
 
-**Microlc** enables you to create modular applications composed by multiple, independent [micro frontends][micro-frontends]
-called _plugins_ integrated at runtime. Microlc consists of a core interface that loads, embeds, and orchestrates plugins, while
+**micro-lc** enables you to create modular applications composed by multiple, independent [micro frontends][micro-frontends]
+called _plugins_ integrated at runtime. `micro-lc` consists of a core interface that loads, embeds, and orchestrates plugins, while
 providing configuration options and useful out-of-the-box features.
 
-The core components are written in Typescript and React, microlc is technology-agnostic, which means that it integrates
+The core components are written in Typescript and React, `micro-lc` is technology-agnostic, which means that it integrates
 seamlessly with your favourite toolkit, being it Angular, React, Vue, or anything else you like.
+
+You can consult [here](micro-lc-doc) the full documentation
 
 # Getting Started
 
@@ -48,7 +50,7 @@ workspace.
 
 ### Start the project
 
-In order to try `microlc` on your machine with mocked configurations, you have to execute only the `dev` script, using the following command:
+In order to try `micro-lc` on your machine with mocked configurations, you have to execute only the `dev` script, using the following command:
 
 ```shell
 yarn dev
@@ -122,3 +124,4 @@ to run your tests
 [docker-backend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc-config-manager?label=Backend%20pulls
 [github-actions]: https://github.com/mia-platform/microlc/actions
 [github-actions-svg]: https://img.shields.io/github/workflow/status/mia-platform/microlc/Node.js%20fe-container%20CI
+[micro-lc-doc]: https://docs.mia-platform.eu/docs/business_suite/microlc/overview
