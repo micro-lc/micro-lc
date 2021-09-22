@@ -19,7 +19,7 @@ providing configuration options and useful out-of-the-box features.
 The core components are written in Typescript and React, `micro-lc` is technology-agnostic, which means that it integrates
 seamlessly with your favourite toolkit, being it Angular, React, Vue, or anything else you like.
 
-You can consult [here](micro-lc-doc) the full documentation
+You can consult [here](micro-lc-doc) the full documentation.
 
 # Getting Started
 
