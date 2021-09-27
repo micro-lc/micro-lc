@@ -186,6 +186,43 @@ describe('Test plugin loading', () => {
     expect(registeredPlugins).toHaveLength(1)
   })
 
+  it('test qiankun with both shared and plugin props => plugin props must override shared', () => {
+    const integrationMode: 'qiankun' = 'qiankun'
+    window.open = jest.fn()
+    const pluginToRegister = {
+      id: 'plugin-1',
+      label: 'Plugin 1',
+      integrationMode,
+      pluginRoute: '/qiankunTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      props: {
+        headers: {
+          'custom-header': 'from-plugin'
+        }
+      }
+    }
+    expect(registeredPlugins).toHaveLength(0)
+    registerPlugin(pluginToRegister)
+    retrievePluginStrategy(pluginToRegister).handlePluginLoad()
+    finish({email: 'email'}, {props: {headers: {'custom-haeder': 'from-qiankun'}}})
+    expect(start).toHaveBeenCalled()
+    expect(addErrorHandler).toHaveBeenCalled()
+    expect(registerMicroApps).toHaveBeenCalledTimes(1)
+    expect(registerMicroApps).toHaveBeenCalledWith([{
+      name: 'plugin-1',
+      entry: 'https://www.google.com/webhp?igu=1',
+      container: '#microlc-qiankun-contaier',
+      activeRule: '/qiankunTest',
+      props: {
+        basePath: '',
+        activeRule: '/qiankunTest',
+        currentUser: {email: 'email'},
+        headers: {'custom-header': 'from-plugin'}
+      }
+    }])
+    expect(registeredPlugins).toHaveLength(1)
+  })
+
   it('test undefined plugin route: empty fallback', () => {
     // @ts-ignore
     const pluginRoute: string = undefined
