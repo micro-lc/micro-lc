@@ -67,7 +67,7 @@ const strategyBuilder = (plugin: InternalPlugin) => {
   }
 }
 
-export const finish = (user: Partial<User>, shared: Shared) => {
+export const finish = (user: Partial<User>, shared: Shared = {}) => {
   const basePath = retrieveBasePath()
   history = createBrowserHistory({basename: basePath})
   const pluginMapper = pluginToQiankunMapper(user, basePath, shared)
@@ -86,7 +86,7 @@ const pluginToQiankunMapper = (user: Partial<User>, basePath: string, shared: Sh
     container: `#${MICROLC_QIANKUN_CONTAINER}`,
     activeRule: `${basePath}${plugin.pluginRoute || ''}`,
     props: {
-      ...(shared.props || {}),
+      ...shared?.props,
       ...plugin.props,
       basePath,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,

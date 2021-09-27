@@ -20,7 +20,6 @@ export const sharedSchema = {
   properties: {
     props: {
       type: 'object',
-      additionalProperties: true,
     },
   },
 } as const

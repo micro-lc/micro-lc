@@ -39,7 +39,7 @@ const notHref = (plugin: InternalPlugin) => plugin.integrationMode && plugin.int
 
 const registerPlugins = (configuration: Configuration, user: Partial<User>) => {
   [...configuration.plugins || [], ...configuration.internalPlugins || []].sort(pluginsSorter).forEach(registerPlugin)
-  finish(user, configuration.shared || {})
+  finish(user, configuration?.shared)
 }
 
 const navigateToFirstPlugin = () => {

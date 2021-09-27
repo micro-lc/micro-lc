@@ -120,7 +120,7 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    finish({}, {})
+    finish({})
     expect(start).toHaveBeenCalled()
     expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([])
@@ -138,7 +138,7 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    finish({}, {})
+    finish({})
     expect(start).toHaveBeenCalled()
     expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalledWith([{
@@ -200,7 +200,7 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    finish({}, {})
+    finish({})
     expect(start).toHaveBeenCalled()
     expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps).toHaveBeenCalled()
@@ -240,7 +240,7 @@ describe('Test plugin loading', () => {
     }
     registerPlugin(pluginToRegister)
     retrievePluginStrategy(pluginToRegister).handlePluginLoad()
-    finish({}, {})
+    finish({})
     expect(start).toHaveBeenCalled()
     expect(addErrorHandler).toHaveBeenCalled()
     expect(registerMicroApps.mock.calls[0][0]).toContainEqual({

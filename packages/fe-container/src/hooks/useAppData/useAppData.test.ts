@@ -153,7 +153,7 @@ describe('Test useAppData hook', () => {
     // @ts-ignore
     expect(registerPlugin.mock.calls[3][0]).toMatchObject(pluginInternal1)
     expect(registerPlugin).toHaveBeenCalledTimes(4)
-    expect(finish).toHaveBeenCalledWith(user, {})
+    expect(finish).toHaveBeenCalledWith(user, undefined)
     expect(isCurrentPluginLoaded).toHaveBeenCalled()
     expect(result.current).toMatchObject(expectedState)
   })
