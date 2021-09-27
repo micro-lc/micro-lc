@@ -18,7 +18,7 @@ import {Plugin} from '@mia-platform/core'
 
 import {RESERVED_PATH} from '@constants'
 
-import {finish, isCurrentPluginLoaded, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
+import {finish, isCurrentPluginLoaded, registeredPlugins, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
 
 jest.mock('qiankun', () => ({
   start: jest.fn(),
@@ -27,6 +27,11 @@ jest.mock('qiankun', () => ({
 }))
 
 describe('Test plugin loading', () => {
+  beforeEach(() => {
+    jest.resetAllMocks()
+    registeredPlugins.splice(0, registeredPlugins.length)
+  })
+
   it('test href same window', () => {
     // eslint-disable-next-line
     window = Object.create(window)
@@ -147,6 +152,75 @@ describe('Test plugin loading', () => {
         currentUser: {}
       }
     }])
+  })
+
+  it('test qiankun with shared props', () => {
+    const integrationMode: 'qiankun' = 'qiankun'
+    window.open = jest.fn()
+    const pluginToRegister = {
+      id: 'plugin-1',
+      label: 'Plugin 1',
+      integrationMode,
+      pluginRoute: '/qiankunTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1'
+    }
+    expect(registeredPlugins).toHaveLength(0)
+    registerPlugin(pluginToRegister)
+    retrievePluginStrategy(pluginToRegister).handlePluginLoad()
+    finish({email: 'email'}, {props: {headers: 'any'}})
+    expect(start).toHaveBeenCalled()
+    expect(addErrorHandler).toHaveBeenCalled()
+    expect(registerMicroApps).toHaveBeenCalledTimes(1)
+    expect(registerMicroApps).toHaveBeenCalledWith([{
+      name: 'plugin-1',
+      entry: 'https://www.google.com/webhp?igu=1',
+      container: '#microlc-qiankun-contaier',
+      activeRule: '/qiankunTest',
+      props: {
+        basePath: '',
+        activeRule: '/qiankunTest',
+        currentUser: {email: 'email'},
+        headers: 'any'
+      }
+    }])
+    expect(registeredPlugins).toHaveLength(1)
+  })
+
+  it('test qiankun with both shared and plugin props => plugin props must override shared', () => {
+    const integrationMode: 'qiankun' = 'qiankun'
+    window.open = jest.fn()
+    const pluginToRegister = {
+      id: 'plugin-1',
+      label: 'Plugin 1',
+      integrationMode,
+      pluginRoute: '/qiankunTest',
+      pluginUrl: 'https://www.google.com/webhp?igu=1',
+      props: {
+        headers: {
+          'custom-header': 'from-plugin'
+        }
+      }
+    }
+    expect(registeredPlugins).toHaveLength(0)
+    registerPlugin(pluginToRegister)
+    retrievePluginStrategy(pluginToRegister).handlePluginLoad()
+    finish({email: 'email'}, {props: {headers: {'custom-haeder': 'from-qiankun'}}})
+    expect(start).toHaveBeenCalled()
+    expect(addErrorHandler).toHaveBeenCalled()
+    expect(registerMicroApps).toHaveBeenCalledTimes(1)
+    expect(registerMicroApps).toHaveBeenCalledWith([{
+      name: 'plugin-1',
+      entry: 'https://www.google.com/webhp?igu=1',
+      container: '#microlc-qiankun-contaier',
+      activeRule: '/qiankunTest',
+      props: {
+        basePath: '',
+        activeRule: '/qiankunTest',
+        currentUser: {email: 'email'},
+        headers: {'custom-header': 'from-plugin'}
+      }
+    }])
+    expect(registeredPlugins).toHaveLength(1)
   })
 
   it('test undefined plugin route: empty fallback', () => {

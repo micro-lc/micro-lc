@@ -17,14 +17,16 @@ import {FromSchema} from 'json-schema-to-ts'
 
 import {analyticsSchema} from './analytics/Analytics'
 import {helpMenuSchema} from './helpMenu/HelpMenu'
-import {pluginRecursiveSchema, pluginSchema} from './plugin/Plugin'
-import {themingSchema} from './theming/Theming'
 import {internalPluginSchema} from './plugin/InternalPlugin'
+import {pluginRecursiveSchema, pluginSchema} from './plugin/Plugin'
+import {sharedSchema} from './shared/Shared'
+import {themingSchema} from './theming/Theming'
 
 export const configurationSchema = {
   type: 'object',
   properties: {
     theming: themingSchema,
+    shared: sharedSchema,
     plugins: {
       type: 'array',
       items: pluginSchema,
@@ -42,6 +44,7 @@ export const configurationRecursiveSchema = {
   type: 'object',
   properties: {
     theming: themingSchema,
+    shared: sharedSchema,
     plugins: {
       type: 'array',
       items: pluginRecursiveSchema,

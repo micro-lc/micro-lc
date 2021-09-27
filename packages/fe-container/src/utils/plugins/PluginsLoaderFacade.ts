@@ -22,6 +22,7 @@ import {noOpStrategy} from '@utils/plugins/strategies/NoOpStrategy'
 import {hrefStrategy} from '@utils/plugins/strategies/HrefStrategy'
 import {routeStrategy} from '@utils/plugins/strategies/RouteStrategy'
 import {PluginStrategy} from '@utils/plugins/strategies/PluginStrategy'
+import {Shared} from '@mia-platform/core/src/models/configuration'
 
 const registeredPluginsStrategies = new Map<string, PluginStrategy>()
 export const registeredPlugins: InternalPlugin[] = []
@@ -66,10 +67,10 @@ const strategyBuilder = (plugin: InternalPlugin) => {
   }
 }
 
-export const finish = (user: Partial<User>) => {
+export const finish = (user: Partial<User>, shared: Shared = {}) => {
   const basePath = retrieveBasePath()
   history = createBrowserHistory({basename: basePath})
-  const pluginMapper = pluginToQiankunMapper(user, basePath)
+  const pluginMapper = pluginToQiankunMapper(user, basePath, shared)
   const quiankunConfig = registeredPlugins
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(pluginMapper)
@@ -78,13 +79,14 @@ export const finish = (user: Partial<User>) => {
   start()
 }
 
-const pluginToQiankunMapper = (user: Partial<User>, basePath: string) => {
+const pluginToQiankunMapper = (user: Partial<User>, basePath: string, shared: Shared) => {
   return (plugin: InternalPlugin) => ({
     name: plugin.id,
     entry: plugin.pluginUrl || '',
     container: `#${MICROLC_QIANKUN_CONTAINER}`,
     activeRule: `${basePath}${plugin.pluginRoute || ''}`,
     props: {
+      ...shared?.props,
       ...plugin.props,
       basePath,
       activeRule: `${basePath}${plugin.pluginRoute || ''}`,
