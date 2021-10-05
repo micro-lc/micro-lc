@@ -8,7 +8,10 @@ module.exports = {
       options: {
         lessLoaderOptions: {
           lessOptions: {
-            javascriptEnabled: true
+            javascriptEnabled: true,
+            modifyVars: {
+              '@ant-prefix': 'micro-lc'
+            }
           }
         }
       }

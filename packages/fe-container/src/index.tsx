@@ -16,6 +16,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {IntlProvider} from 'react-intl'
+import {ConfigProvider} from 'antd'
 
 import {MicrolcErrorBoundary} from '@components/microlc-error-boundary/MicrolcErrorBoundary'
 import App from './App'
@@ -30,7 +31,9 @@ const language = messages[navigatorLanguage] ? navigatorLanguage : 'en'
 const rootComponent = (
   <IntlProvider locale={language} messages={messages[language]}>
     <MicrolcErrorBoundary>
-      <App/>
+      <ConfigProvider prefixCls='micro-lc'>
+        <App/>
+      </ConfigProvider>
     </MicrolcErrorBoundary>
   </IntlProvider>
 )

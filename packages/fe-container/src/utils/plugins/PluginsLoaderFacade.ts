@@ -67,6 +67,8 @@ const strategyBuilder = (plugin: InternalPlugin) => {
   }
 }
 
+const FRAMEWORK_CONFIGURATION = {sandbox: {experimentalStyleIsolation: true}}
+
 export const finish = (user: Partial<User>, shared: Shared = {}) => {
   const basePath = retrieveBasePath()
   history = createBrowserHistory({basename: basePath})
@@ -76,7 +78,7 @@ export const finish = (user: Partial<User>, shared: Shared = {}) => {
     .map<RegistrableApp<any>>(pluginMapper)
   registerMicroApps(quiankunConfig)
   addErrorHandler(_ => history.push(RESERVED_PATH.INTERNAL_ERROR))
-  start()
+  start(FRAMEWORK_CONFIGURATION)
 }
 
 const pluginToQiankunMapper = (user: Partial<User>, basePath: string, shared: Shared) => {
