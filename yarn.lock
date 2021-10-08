@@ -2940,9 +2940,9 @@
     "@octokit/openapi-types" "^9.4.0"
 
 "@playwright/test@^1.13.0":
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.15.1.tgz#a51a5fe954c8b1139eb300de0d826207c12def9c"
-  integrity sha512-Hh0X3hH0utWTU1X5c8ldWWSIjJEiZeK4uub7byQTyJ6jVFEjWBtLL2hhw6Ko72DlFlpBTYZ4beqbTdZog+avgQ==
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.15.2.tgz#5c8b378336ad34ea492b303c2d23f832d6df58d2"
+  integrity sha512-pDEydzpVdABAySMCUXD4h81nqAN0UjpNZeeheuZaG1AH6ElV9g5vOaj1pfFlRi5Io6gjbVbcdNOrAE4mCb/EZw==
   dependencies:
     "@babel/code-frame" "^7.14.5"
     "@babel/core" "^7.14.8"
@@ -3504,9 +3504,9 @@
   integrity sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==
 
 "@types/node@*", "@types/node@^16.4.1":
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.10.2.tgz#5764ca9aa94470adb4e1185fe2e9f19458992b2e"
-  integrity sha512-zCclL4/rx+W5SQTzFs9wyvvyCwoK9QtBpratqz2IYJ3O8Umrn0m3nsTv0wQBk9sRGpvUe9CwPDrQFB10f1FIjQ==
+  version "16.10.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.10.3.tgz#7a8f2838603ea314d1d22bb3171d899e15c57bd5"
+  integrity sha512-ho3Ruq+fFnBrZhUYI46n/bV2GjwzSkwuT4dTf0GkuNFmnb8nq4ny2z9JEVemFi6bdEJanHLlYfy9c6FN9B9McQ==
 
 "@types/node@^15.12.0":
   version "15.14.2"
@@ -3556,9 +3556,9 @@
   integrity sha512-T/DN9gAbCYk5wJ1nxf4pSwmXz4d1iVjM++OoG+mwMfz9STMAotGjSb65gJHOS5bPvl6vLSsJnuC+y/43OQrltg==
 
 "@types/react-router-dom@^5.1.7":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.3.0.tgz#8c4e0aa0ccaf638ba965829ad29a10ac3cbe2212"
-  integrity sha512-svUzpEpKDwK8nmfV2vpZNSsiijFNKY8+gUqGqvGGOVrXvX58k1JIJubZa5igkwacbq/0umphO5SsQn/BQsnKpw==
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.3.1.tgz#76700ccce6529413ec723024b71f01fc77a4a980"
+  integrity sha512-UvyRy73318QI83haXlaMwmklHHzV9hjl3u71MmM6wYNu0hOVk9NLTa0vGukf8zXUqnwz4O06ig876YSPpeK28A==
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
@@ -13239,9 +13239,9 @@ pkg-up@^2.0.0:
     find-up "^2.1.0"
 
 playwright@^1.13.0:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.15.1.tgz#f53dae5fbbe9c7b1eca06e2638af8196e0deec96"
-  integrity sha512-MQaKii1mhfoZF0+HXE4h5s2CwZNJmcASlmI097yosoZ9Fo5RW9RkLN5VMCbSw9xTyoqo6vdE6Df0OFpupYjBow==
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.15.2.tgz#b350056d1fffbe5de5b1bdaca6ab73e35758baad"
+  integrity sha512-+Z+7ckihyxR6rK5q8DWC6eUbKARfXpyxpjNcoJfgwSr64lAOzjhyFQiPC/JkdIqhsLgZjxpWfl1S7fLb+wPkgA==
   dependencies:
     commander "^6.1.0"
     debug "^4.1.1"
