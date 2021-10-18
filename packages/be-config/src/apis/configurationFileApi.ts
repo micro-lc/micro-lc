@@ -26,7 +26,7 @@ const retrieveConfigurationFile = async(instanceConfig: any, configurationName: 
   return readConfigurationFile(configurationPath)
 }
 
-export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler = (fastifyInstance) => {
+export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler<any> = (fastifyInstance) => {
   return async(request, reply) => {
     // @ts-ignore
     const instanceConfig: any = fastifyInstance.config

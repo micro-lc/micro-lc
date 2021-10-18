@@ -21,8 +21,7 @@ import {readValidateConfiguration} from '../utils/configurationManager'
 import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
 
 const readPluginConfiguration = async(fastifyInstance: DecoratedFastify) => {
-  // @ts-ignore
-  const configurationPath = fastifyInstance.config.MICROLC_CONFIGURATION_PATH
+  const configurationPath = fastifyInstance.config.MICROLC_CONFIGURATION_PATH as string
   const validateConfiguration = await readValidateConfiguration(configurationPath, configurationRecursiveSchema)
   return validateConfiguration as Configuration
 }
@@ -34,7 +33,7 @@ const buildNewConfiguration = (oldConfiguration: Configuration, allowedPlugins: 
   }
 }
 
-export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Promise<Handler> = async(fastifyInstance) => {
+export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Promise<Handler<Configuration>> = async(fastifyInstance) => {
   const configuration: Configuration = await readPluginConfiguration(fastifyInstance)
   return (request, reply) => {
     const userGroups = request.getGroups()
