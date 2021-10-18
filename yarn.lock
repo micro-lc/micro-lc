@@ -14517,9 +14517,9 @@ q@^1.1.2, q@^1.5.1:
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
 qiankun@^2.4.0:
-  version "2.4.10"
-  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.4.10.tgz#ff13530deac68df0dd4f229a7a7665b066ccf594"
-  integrity sha512-l3J7oHbYjYFOH3dvATsOrF2rcNO5Pf1Ba8BM+CHASoZANP6YBUHrivYuenvZZt2kOYVIjcW6t1dHzLVlFOPJqw==
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.5.1.tgz#1b840f370c8d175ffa032adc70b00ba5d2d0f4fb"
+  integrity sha512-daLecW4OEZg83djpgxwfUPz9InTrr3pIgyReDmrFoFAEUxBButCGtWSqvSaQ4e4WJE07pXcckXpXByqn/Rk1fA==
   dependencies:
     "@babel/runtime" "^7.10.5"
     import-html-entry "^1.9.0"
