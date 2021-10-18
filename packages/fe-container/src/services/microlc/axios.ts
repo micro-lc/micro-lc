@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
   })
 
 export const extractDataFromGet: <T>(url: string) => Observable<T> = (url) => {
-  return from(axiosInstance.get(url))
+  return from(axiosInstance.get<never>(url))
     .pipe(
       map(response => response.data)
     )
