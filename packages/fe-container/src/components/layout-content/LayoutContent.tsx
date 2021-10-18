@@ -56,7 +56,10 @@ const LayoutCenter: React.FC = () => {
           <Route path={findPluginRoutes()}>
             <div className='layoutContent_plugin_container'>
               <PluginIframe plugin={currentPlugin}/>
-              <div className='layoutContent_plugin' id={MICROLC_QIANKUN_CONTAINER}/>
+              {
+                currentPlugin?.integrationMode === INTEGRATION_METHODS.QIANKUN &&
+                <div className='layoutContent_plugin' id={MICROLC_QIANKUN_CONTAINER}/>
+              }
             </div>
           </Route>
           <Route component={ErrorPage500} path={RESERVED_PATH.INTERNAL_ERROR}/>
