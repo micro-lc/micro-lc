@@ -3,7 +3,7 @@ FROM node:fermium-alpine
 LABEL name="mia-microlc-config-manager" \
       description="The Mia-Platform micro fontend solution configuration manager" \
       eu.mia-platform.url="https://www.mia-platform.eu" \
-      eu.mia-platform.version="0.1.0"
+      eu.mia-platform.version="0.3.1"
 
 ENV LOG_LEVEL=info
 ENV SERVICE_PREFIX=/

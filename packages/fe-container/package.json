@@ -1,6 +1,6 @@
 {
   "name": "@mia-platform/fe-website",
-  "version": "0.1.0",
+  "version": "0.3.1",
   "description": "Launcher of microlc",
   "private": true,
   "homepage": "./",
@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@babel/register": "^7.13.8",
-    "@mia-platform/core": "0.1.0",
+    "@mia-platform/core": "0.3.1",
     "@mia-platform/microlc-ui-components": "0.1.0",
     "@staticdeploy/mock-server": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.9",
