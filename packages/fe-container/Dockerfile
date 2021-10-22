@@ -3,7 +3,7 @@ FROM nginx:1.20.0-alpine as build
 LABEL name="mia-microlc-website" \
       description="The Mia-Platform micro fontend solution" \
       eu.mia-platform.url="https://www.mia-platform.eu" \
-      eu.mia-platform.version="0.3.1"
+      eu.mia-platform.version="0.4.0"
 
 COPY nginx /etc/nginx
 
