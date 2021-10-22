@@ -33,7 +33,7 @@ exports[`FixedSideBarLayout test match snapshot 1`] = `
           class="ant-layout-sider-children"
         >
           <ul
-            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light fixedSideBar"
+            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light sideBar sideBarFixed"
             data-menu-list="true"
             role="menu"
             tabindex="0"
@@ -365,7 +365,7 @@ exports[`FixedSideBarLayout test match snapshot opened 1`] = `
           class="ant-layout-sider-children"
         >
           <ul
-            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light fixedSideBar"
+            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light sideBar sideBarFixed"
             data-menu-list="true"
             role="menu"
             tabindex="0"

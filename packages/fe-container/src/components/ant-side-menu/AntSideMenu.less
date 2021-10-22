@@ -16,7 +16,7 @@
 @import "../../styles/_variables";
 @import "../../styles/_menuVoice";
 
-.fixedSideBar {
+.sideBar {
   height: 100%;
   width: 256px;
   background-color: var(--microlc-side-menu-background);
@@ -24,6 +24,10 @@
   overflow-y: auto;
   transition: left 0.2s linear;
   box-shadow: none;
+
+  &.sideBarFixed {
+    height: calc(100% - @top-bar-height);
+  }
 
   & .divider {
     margin: 8px 0;

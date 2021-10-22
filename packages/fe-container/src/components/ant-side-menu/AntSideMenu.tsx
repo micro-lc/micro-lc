@@ -56,7 +56,7 @@ export const AntSideMenu: React.FC<LoadedLauncherProps> = ({configuration}) => {
   return (
     <Layout.Sider collapsed={isCollapsed} collapsible trigger={null}>
       <Menu
-        className='fixedSideBar'
+        className='sideBar sideBarFixed'
         mode='inline'
         onSelect={onSelectHandler(unselectableKeys)}
         selectedKeys={[currentPlugin?.id || '']}
