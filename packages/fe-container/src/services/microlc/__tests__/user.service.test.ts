@@ -17,7 +17,6 @@ import nock from 'nock'
 
 import {logOutUser, logOutUserBuilder, retrieveUser} from '@services/microlc/user.service'
 import {User} from '@mia-platform/core'
-import {expect} from '@playwright/test'
 
 describe('User service tests', () => {
   const userUrl = '/api/v1/microlc/user'

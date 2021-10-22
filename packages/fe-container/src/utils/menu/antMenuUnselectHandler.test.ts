@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {onSelectHandler} from '@utils/menu/antMenuUnselectHandler'
 import {SelectInfo} from 'rc-menu/lib/interface'
-import {expect} from '@playwright/test'
+import {onSelectHandler} from '@utils/menu/antMenuUnselectHandler'
 
 describe('Ant menu unselect handler', () => {
   it('correctly handle empty array', () => {

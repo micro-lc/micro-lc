@@ -4,7 +4,6 @@ import {screen} from '@testing-library/react'
 
 import RenderWithReactIntl, {MenuLocation} from '../../__tests__/utils'
 import {Launcher} from './Launcher'
-import {expect} from '@playwright/test'
 
 describe('Launcher tests', () => {
   const launcherConfigBuilder = (menuLocation: MenuLocation): Configuration => ({

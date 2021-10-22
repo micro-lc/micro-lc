@@ -28,7 +28,7 @@
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-typescript": "^7.14.5",
     "@babel/register": "^7.14.5",
-    "@playwright/test": "^1.13.0",
+    "@playwright/test": "^1.16.0",
     "@staticdeploy/mock-server": "^2.0.0",
     "coveralls": "^3.1.1",
     "faker": "^5.5.3",

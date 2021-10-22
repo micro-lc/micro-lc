@@ -2936,10 +2936,10 @@
   dependencies:
     "@octokit/openapi-types" "^9.4.0"
 
-"@playwright/test@^1.13.0":
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.15.2.tgz#5c8b378336ad34ea492b303c2d23f832d6df58d2"
-  integrity sha512-pDEydzpVdABAySMCUXD4h81nqAN0UjpNZeeheuZaG1AH6ElV9g5vOaj1pfFlRi5Io6gjbVbcdNOrAE4mCb/EZw==
+"@playwright/test@^1.16.0":
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.16.0.tgz#bf5ed25b2366ae945c5af6073c21970cc513fbe3"
+  integrity sha512-vFgBENdvElOXw7UhBI1jsAKUyTSQu5HBMJZPPNq/i1WNZz26qKAQ7Xn9NPF9oFys/DJsxCLbJSgGBhDBEL4lwQ==
   dependencies:
     "@babel/code-frame" "^7.14.5"
     "@babel/core" "^7.14.8"
@@ -2959,27 +2959,21 @@
     "@babel/plugin-transform-modules-commonjs" "^7.14.5"
     "@babel/preset-typescript" "^7.14.5"
     colors "^1.4.0"
-    commander "^6.1.0"
+    commander "^8.2.0"
     debug "^4.1.1"
-    expect "^26.4.2"
-    extract-zip "^2.0.1"
-    https-proxy-agent "^5.0.0"
+    expect "^27.2.5"
+    jest-matcher-utils "^27.2.5"
     jpeg-js "^0.4.2"
-    mime "^2.4.6"
     minimatch "^3.0.3"
     ms "^2.1.2"
-    open "^8.2.1"
+    open "^8.3.0"
     pirates "^4.0.1"
     pixelmatch "^5.2.1"
+    playwright-core "=1.16.0"
     pngjs "^5.0.0"
-    progress "^2.0.3"
-    proper-lockfile "^4.1.1"
-    proxy-from-env "^1.1.0"
     rimraf "^3.0.2"
     source-map-support "^0.4.18"
     stack-utils "^2.0.3"
-    ws "^7.4.6"
-    yazl "^2.5.1"
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
@@ -5670,11 +5664,6 @@ commander@^4.1.1:
   resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
-commander@^6.1.0:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
-  integrity sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
-
 commander@^7.1.0, commander@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
@@ -7861,7 +7850,7 @@ expand-brackets@^2.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-expect@^26.4.2, expect@^26.6.0, expect@^26.6.2:
+expect@^26.6.0, expect@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/expect/-/expect-26.6.2.tgz#c6b996bf26bf3fe18b67b2d0f51fc981ba934417"
   integrity sha512-9/hlOBkQl2l/PLHJx6JjoDF6xPKcJEsUlWKb23rKE7KzeDqUZKXKNMW27KIue5JMdBV9HgmoJPcc8HtO85t9IA==
@@ -7873,7 +7862,7 @@ expect@^26.4.2, expect@^26.6.0, expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-expect@^27.3.1:
+expect@^27.2.5, expect@^27.3.1:
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/expect/-/expect-27.3.1.tgz#d0f170b1f5c8a2009bab0beffd4bb94f043e38e7"
   integrity sha512-MrNXV2sL9iDRebWPGOGFdPQRl2eDQNu/uhxIMShjjx74T6kC6jFIkmQ6OqXDtevjGUkyB2IT56RzDBqXf/QPCg==
@@ -10474,7 +10463,7 @@ jest-matcher-utils@^26.6.0, jest-matcher-utils@^26.6.2:
     jest-get-type "^26.3.0"
     pretty-format "^26.6.2"
 
-jest-matcher-utils@^27.3.1:
+jest-matcher-utils@^27.2.5, jest-matcher-utils@^27.3.1:
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-27.3.1.tgz#257ad61e54a6d4044e080d85dbdc4a08811e9c1c"
   integrity sha512-hX8N7zXS4k+8bC1Aj0OWpGb7D3gIXxYvPNK1inP5xvE4ztbz3rc4AkI6jGVaerepBnfWB17FL5lWFJT3s7qo8w==
@@ -12717,10 +12706,10 @@ open@^7.0.2:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
 
-open@^8.2.1:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/open/-/open-8.2.1.tgz#82de42da0ccbf429bc12d099dad2e0975e14e8af"
-  integrity sha512-rXILpcQlkF/QuFez2BJDf3GsqpjGKbkUUToAIGo9A0Q6ZkoSGogZJulrUdwRkrAsoQvoZsrjCYt8+zblOk7JQQ==
+open@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/open/-/open-8.3.0.tgz#fdef1cdfe405e60dec8ebd18889e7e812f39c59f"
+  integrity sha512-7INcPWb1UcOwSQxAXTnBJ+FxVV4MPs/X++FWWBtgY69/J5lc+tCteMt/oFK1MnkyHC4VILLa9ntmwKTwDR4Q9w==
   dependencies:
     define-lazy-prop "^2.0.0"
     is-docker "^2.1.1"
