@@ -39,7 +39,7 @@ export const retrievePluginStrategy = (plugin: InternalPlugin) => {
 }
 
 export const isPluginLoaded = (plugin: InternalPlugin) =>
-  plugin.pluginRoute ? window.location.pathname.startsWith(plugin.pluginRoute) : false
+  plugin.pluginRoute ? window.location.pathname.startsWith(buildActiveRule(plugin)) : false
 
 export const findCurrentPlugin = () => {
   return registeredPlugins.find(isPluginLoaded)
@@ -68,9 +68,9 @@ const strategyBuilder = (plugin: InternalPlugin) => {
 }
 
 export const finish = (user: Partial<User>, shared: Shared = {}) => {
-  const basePath = retrieveBasePath()
+  basePath = retrieveBasePath()
   history = createBrowserHistory({basename: basePath})
-  const pluginMapper = pluginToQiankunMapper(user, basePath, shared)
+  const pluginMapper = pluginToQiankunMapper(user, shared)
   const quiankunConfig = registeredPlugins
     .filter(plugin => plugin.integrationMode === INTEGRATION_METHODS.QIANKUN)
     .map<RegistrableApp<any>>(pluginMapper)
@@ -79,21 +79,23 @@ export const finish = (user: Partial<User>, shared: Shared = {}) => {
   start()
 }
 
-const pluginToQiankunMapper = (user: Partial<User>, basePath: string, shared: Shared) => {
+const pluginToQiankunMapper = (user: Partial<User>, shared: Shared) => {
   return (plugin: InternalPlugin) => ({
     name: plugin.id,
     entry: plugin.pluginUrl || '',
     container: `#${MICROLC_QIANKUN_CONTAINER}`,
-    activeRule: `${basePath}${plugin.pluginRoute || ''}`,
+    activeRule: buildActiveRule(plugin),
     props: {
       ...shared?.props,
       ...plugin.props,
       basePath,
-      activeRule: `${basePath}${plugin.pluginRoute || ''}`,
+      activeRule: buildActiveRule(plugin),
       currentUser: user
     }
   })
 }
+
+const buildActiveRule = (plugin: InternalPlugin) => `${basePath}${plugin.pluginRoute || ''}`
 
 const DOUBLE_SLASH = /\/\//g
 
@@ -104,9 +106,12 @@ const cleanReservedPath = (basePath: string) => {
 }
 
 const retrieveBasePath = () => {
-  let basePath = findCurrentPlugin() ? '/' : `${window.location.pathname}`
+  const currentPlugin = findCurrentPlugin()
+  let basePath = currentPlugin ? window.location.pathname.replace(currentPlugin.pluginRoute || '', '') : window.location.pathname
   basePath = cleanReservedPath(basePath).replace(DOUBLE_SLASH, '/')
   return basePath.endsWith('/') ? basePath.slice(0, -1) : basePath
 }
 
-export let history = createBrowserHistory({basename: window.location.pathname})
+let basePath = window.location.pathname
+
+export let history = createBrowserHistory({basename: basePath})
