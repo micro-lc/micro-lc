@@ -18,7 +18,7 @@ import {from, Observable} from 'rxjs'
 import {map} from 'rxjs/operators'
 
 const microlcAxiosConfig: AxiosRequestConfig = {
-  baseURL: '/',
+  baseURL: './',
   responseType: 'json'
 }
 
