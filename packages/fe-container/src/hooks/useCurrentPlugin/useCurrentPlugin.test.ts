@@ -59,7 +59,7 @@ describe('useCurrentPlugin tests', () => {
 
     Object.defineProperty(window, 'location', {
       value: {
-        pathname: `/${currentPlugin.pluginRoute}`
+        pathname: currentPlugin.pluginRoute
       },
       writable: true
     })

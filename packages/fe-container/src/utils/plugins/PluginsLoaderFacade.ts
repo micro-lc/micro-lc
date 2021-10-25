@@ -39,7 +39,7 @@ export const retrievePluginStrategy = (plugin: InternalPlugin) => {
 }
 
 export const isPluginLoaded = (plugin: InternalPlugin) =>
-  plugin.pluginRoute ? window.location.pathname.startsWith(buildActiveRule(plugin)) : false
+  plugin.pluginRoute ? window.location.pathname.includes(plugin.pluginRoute) : false
 
 export const findCurrentPlugin = () => {
   return registeredPlugins.find(isPluginLoaded)
