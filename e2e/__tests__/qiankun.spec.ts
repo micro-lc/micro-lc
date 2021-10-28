@@ -21,8 +21,8 @@ import {toggleSideMenu} from '../utils/utils'
 test('Correctly load qiankun plugin', async ({page}) => {
   await toggleSideMenu(page)
   await page.click('"Qiankun plugin 1"')
-  await page.textContent('"Go to other qiankun plugin"')
-  const changePluginButtonBackground = await page.$eval('"Go to other qiankun plugin"', (e) => getComputedStyle(e).backgroundColor)
+  await page.textContent('"Go to other react plugin"')
+  const changePluginButtonBackground = await page.$eval('"Go to other react plugin"', (e) => getComputedStyle(e).backgroundColor)
   expect(changePluginButtonBackground).toBe('rgb(255, 0, 0)')
   const arrivedHere = await page.$('"You arrived here from:"')
   expect(arrivedHere).toBeFalsy()
@@ -31,27 +31,27 @@ test('Correctly load qiankun plugin', async ({page}) => {
 test('Correctly load another qiankun plugin', async ({page}) => {
   await toggleSideMenu(page)
   await page.click('"Qiankun plugin 1"')
-  await page.click('"Go to other qiankun plugin"')
+  await page.click('"Go to other react plugin"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun1"')
 });
 
-test('Correctly go to another qiankun plugin', async ({page}) => {
+test('Correctly go to another react plugin', async ({page}) => {
   await toggleSideMenu(page)
   await page.click('"Qiankun plugin 2"')
-  await page.click('"Go to other qiankun plugin"')
+  await page.click('"Go to other react plugin"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun2"')
 });
 
-test('Correctly switch from and to another qiankun plugin', async ({page}) => {
+test('Correctly switch from and to another react plugin', async ({page}) => {
   await toggleSideMenu(page)
   await page.click('"Qiankun plugin 2"')
-  await page.click('"Go to other qiankun plugin"')
+  await page.click('"Go to other react plugin"')
   await page.click('"Accept"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun2"')
-  await page.click('"Go to other qiankun plugin"')
+  await page.click('"Go to other react plugin"')
   await page.textContent('"You arrived here from:"')
   await page.textContent('"qiankun1"')
 });

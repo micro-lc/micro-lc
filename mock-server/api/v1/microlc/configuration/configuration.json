@@ -53,7 +53,7 @@
       "icon": "fab fa-react",
       "order": 3,
       "integrationMode": "qiankun",
-      "pluginRoute": "/react-initial",
+      "pluginRoute": "/react-app-1",
       "pluginUrl": "//localhost:8764"
     },
     {

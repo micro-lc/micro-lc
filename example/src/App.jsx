@@ -24,7 +24,7 @@ function App () {
   let searchParams = new URLSearchParams(window.location.search);
 
   const goToPlugin = () => {
-    const [pluginRoute, from] = window.location.pathname.endsWith('qiankun1') ? ['qiankun2', 'qiankun1'] : ['qiankun1', 'qiankun2']
+    const [pluginRoute, from] = window.location.pathname.endsWith('react-app-1') ? ['react-app-2', 'react-app-1'] : ['react-app-1', 'react-app-2']
     window.history.pushState({}, `/${pluginRoute}`, `/${pluginRoute}?from=${from}`)
     searchParams = new URLSearchParams(window.location.search);
   }
