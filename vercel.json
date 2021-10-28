@@ -1,3 +1,5 @@
 {
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+  "routes": [
+    { "src": "^((?!api).)*$", "dest": "/", "status": 200 }
+  ]
 }
