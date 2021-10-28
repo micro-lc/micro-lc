@@ -56,7 +56,7 @@
       "icon": "fab fa-react",
       "order": 5,
       "integrationMode": "qiankun",
-      "pluginRoute": "/qiankun1",
+      "pluginRoute": "/react-app-1",
       "pluginUrl": "//127.0.0.1/"
     },
     {
@@ -65,7 +65,7 @@
       "icon": "fab fa-react",
       "order": 6,
       "integrationMode": "qiankun",
-      "pluginRoute": "/qiankun2",
+      "pluginRoute": "/react-app-2",
       "pluginUrl": "//127.0.0.1/"
     }
   ]
