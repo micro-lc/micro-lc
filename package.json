@@ -19,6 +19,7 @@
     "dev": "npm-run-all -p dev:**",
     "lint": "lerna run lint",
     "build": "yarn fe-container build",
+    "build:static": "sh ./build_static_example.sh",
     "coverage": "lerna run coverage",
     "e2e": "BASE_URL='http://localhost' npx playwright test --browser=all e2e/",
     "postinstall": "npm-run-all 'core build' 'ui-components build'"
