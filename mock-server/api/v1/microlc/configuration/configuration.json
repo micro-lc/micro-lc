@@ -11,7 +11,7 @@
       "navigation_url": "https://www.google.com"
     },
     "variables": {
-      "primaryColor": "red"
+      "primaryColor": "#4568B5"
     },
     "menuLocation": "fixedSideBar"
   },
@@ -53,7 +53,7 @@
       "icon": "fab fa-react",
       "order": 3,
       "integrationMode": "qiankun",
-      "pluginRoute": "/react",
+      "pluginRoute": "/react-initial",
       "pluginUrl": "//localhost:8764"
     },
     {
@@ -62,7 +62,7 @@
       "icon": "fab fa-react",
       "order": 3,
       "integrationMode": "qiankun",
-      "pluginRoute": "/react2",
+      "pluginRoute": "/react-app-2",
       "pluginUrl": "//localhost:8764"
     },
     {
@@ -71,7 +71,7 @@
       "icon": "fab fa-reacteurope",
       "order": 5,
       "integrationMode": "iframe",
-      "pluginRoute": "/reactIframe",
+      "pluginRoute": "/react-iframe",
       "pluginUrl": "//localhost:8764"
     },
     {
