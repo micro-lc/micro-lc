@@ -7,7 +7,7 @@ yarn fe-container build
 yarn --cwd example build
 
 cp -r ./packages/fe-container/build ./build
-rsync -a ./example/build/static ./build
+cp -r ./example/build/static ./build
 cp -r ./example/build ./build/react-app
 
 mkdir -p ./build/api/v1/microlc/
