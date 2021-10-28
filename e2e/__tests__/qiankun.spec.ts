@@ -33,7 +33,7 @@ test('Correctly load another qiankun plugin', async ({page}) => {
   await page.click('"Qiankun plugin 1"')
   await page.click('"Go to other react plugin"')
   await page.textContent('"You arrived here from:"')
-  await page.textContent('"qiankun1"')
+  await page.textContent('"react-app-1"')
 });
 
 test('Correctly go to another react plugin', async ({page}) => {
@@ -41,7 +41,7 @@ test('Correctly go to another react plugin', async ({page}) => {
   await page.click('"Qiankun plugin 2"')
   await page.click('"Go to other react plugin"')
   await page.textContent('"You arrived here from:"')
-  await page.textContent('"qiankun2"')
+  await page.textContent('"react-app-2"')
 });
 
 test('Correctly switch from and to another react plugin', async ({page}) => {
@@ -50,8 +50,8 @@ test('Correctly switch from and to another react plugin', async ({page}) => {
   await page.click('"Go to other react plugin"')
   await page.click('"Accept"')
   await page.textContent('"You arrived here from:"')
-  await page.textContent('"qiankun2"')
+  await page.textContent('"react-app-2"')
   await page.click('"Go to other react plugin"')
   await page.textContent('"You arrived here from:"')
-  await page.textContent('"qiankun1"')
+  await page.textContent('"react-app-1"')
 });
