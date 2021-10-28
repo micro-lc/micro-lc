@@ -1,5 +1,12 @@
 {
   "routes": [
-    { "src": "^((?!api).)*$", "dest": "/", "status": 200 }
+    { "src": "/react-app-1", "dest": "/", "status": 200 },
+    { "src": "/react-app-2", "dest": "/", "status": 200 },
+    { "src": "/iframe", "dest": "/", "status": 200 },
+    { "src": "/react-iframe", "dest": "/", "status": 200 },
+    { "src": "/frame1", "dest": "/", "status": 200 },
+    { "src": "/frame3", "dest": "/", "status": 200 },
+    { "src": "/frame2", "dest": "/", "status": 200 },
+    { "src": "/frame4", "dest": "/", "status": 200 }
   ]
 }
