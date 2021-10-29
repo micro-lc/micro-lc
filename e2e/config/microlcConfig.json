@@ -44,7 +44,7 @@
     {
       "id": "plugin-test-3",
       "label": "IFrame",
-      "icon": "fab fa-hexagon",
+      "icon": "fab fa-chess-bishop",
       "order": 4,
       "integrationMode": "iframe",
       "pluginRoute": "/iframe",
