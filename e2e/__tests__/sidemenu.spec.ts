@@ -31,7 +31,7 @@ test('Sidemenu has loaded plugins correctly', async ({page}) => {
 test('Correctly change page for href same window', async ({page}) => {
   await toggleSideMenu(page)
   await page.click('"Href same window"')
-  expect(page.url()).toBe('https://www.google.it/')
+  expect(page.url()).toBe('https://github.com/micro-lc')
 });
 
 test('Correctly stay on previous page for href different window', async ({page}) => {
