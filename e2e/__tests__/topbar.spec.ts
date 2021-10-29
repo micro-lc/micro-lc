@@ -28,5 +28,5 @@ test('Logo is loaded correctly', async ({page}) => {
 test('Logo when clicked opens a new page', async({page})=>{
   await waitMicrolcLoaded(page)
   await page.click(logoSelector)
-  expect(page.url()).toBe('https://www.google.com/')
+  expect(page.url()).toBe('https://github.com/micro-lc')
 })
