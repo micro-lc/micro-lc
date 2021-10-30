@@ -41,7 +41,7 @@
     {
       "id": "plugin-test-3",
       "label": "IFrame",
-      "icon": "fab fa-chess-bishop",
+      "icon": "fas fa-asterisk",
       "order": 4,
       "integrationMode": "iframe",
       "pluginRoute": "/iframe",
@@ -83,7 +83,7 @@
         {
           "id": "plugin-test-content-1",
           "label": "IFrame 1",
-          "icon": "fab fa-chess-bishop",
+          "icon": "fas fa-asterisk",
           "order": 4,
           "integrationMode": "iframe",
           "pluginRoute": "/frame1",
@@ -93,7 +93,7 @@
         {
           "id": "plugin-test-content-2",
           "label": "IFrame 2",
-          "icon": "fab fa-chess-bishop",
+          "icon": "fas fa-asterisk",
           "order": 4,
           "integrationMode": "iframe",
           "pluginRoute": "/frame2",
@@ -102,7 +102,7 @@
         {
           "id": "plugin-test-content-3",
           "label": "IFrame 3",
-          "icon": "fab fa-chess-bishop",
+          "icon": "fas fa-asterisk",
           "order": 4,
           "integrationMode": "iframe",
           "pluginRoute": "/frame3",
@@ -112,7 +112,7 @@
         {
           "id": "plugin-test-content-4",
           "label": "IFrame 4",
-          "icon": "fab fa-chess-bishop",
+          "icon": "fas fa-asterisk",
           "order": 4,
           "integrationMode": "iframe",
           "pluginRoute": "/frame4",
