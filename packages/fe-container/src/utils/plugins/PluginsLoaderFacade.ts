@@ -112,6 +112,6 @@ const retrieveBasePath = () => {
   return basePath.endsWith('/') ? basePath.slice(0, -1) : basePath
 }
 
-let basePath = window.location.pathname
+export let basePath = window.location.pathname
 
 export let history = createBrowserHistory({basename: basePath})

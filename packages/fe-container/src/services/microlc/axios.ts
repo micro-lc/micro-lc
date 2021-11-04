@@ -13,28 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import axios, {AxiosRequestConfig} from 'axios'
+import axios from 'axios'
 import {from, Observable} from 'rxjs'
 import {map} from 'rxjs/operators'
 
-const microlcAxiosConfig: AxiosRequestConfig = {
-  baseURL: './',
-  responseType: 'json'
-}
-
-const axiosInstance = axios.create(microlcAxiosConfig)
-axiosInstance.interceptors.response.use(
-  undefined,
-  (error) => {
-    // eslint-disable-next-line
-    throw {errorStatusCode: error.response.status}
-  })
+import {basePath} from '@utils/plugins/PluginsLoaderFacade'
 
 export const extractDataFromGet: <T>(url: string) => Observable<T> = (url) => {
-  return from(axiosInstance.get<never>(url))
+  return from(axios({baseURL: basePath, method: 'GET', url}))
     .pipe(
       map(response => response.data)
     )
 }
-
-export default axiosInstance
