@@ -107,7 +107,7 @@ const cleanReservedPath = (basePath: string) => {
 
 const retrieveBasePath = () => {
   const currentPlugin = findCurrentPlugin()
-  let basePath = currentPlugin ? window.location.pathname.replace(currentPlugin.pluginRoute || '', '') : window.location.pathname
+  let basePath = currentPlugin ? window.location.pathname.split(currentPlugin.pluginRoute || '')[0] : window.location.pathname
   basePath = cleanReservedPath(basePath).replace(DOUBLE_SLASH, '/')
   return basePath.endsWith('/') ? basePath.slice(0, -1) : basePath
 }
