@@ -65,7 +65,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=miaplatform/microlc-config-manager
+          DOCKER_IMAGE=microlc/micro-lc-config-manager
           VERSION=latest
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}

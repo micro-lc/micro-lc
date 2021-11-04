@@ -9,12 +9,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   fe-container:
-    image: miaplatform/microlc
+    image: microlc/micro-lc
     labels:
       - "traefik.http.routers.fecontainer.rule=Host(`localhost`)"
       - "traefik.http.services.fecontainer.loadbalancer.server.port=8080"
   be-config:
-    image: miaplatform/microlc-config-manager
+    image: microlc/micro-lc-config-manager
     environment:
       SERVICE_PREFIX: /api/v1/microlc/
       AUTHENTICATION_CONFIGURATION_PATH: /microlc/auth.json
