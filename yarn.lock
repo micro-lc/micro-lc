@@ -2935,7 +2935,7 @@
     "@rollup/pluginutils" "^3.1.0"
     resolve "^1.17.0"
 
-"@rollup/pluginutils@^3.0.10", "@rollup/pluginutils@^3.0.8", "@rollup/pluginutils@^3.1.0":
+"@rollup/pluginutils@^3.0.8", "@rollup/pluginutils@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-3.1.0.tgz#706b4524ee6dc8b103b3c995533e5ad680c02b9b"
   integrity sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==
@@ -15677,11 +15677,11 @@ rollup-plugin-postcss@^4.0.0:
     style-inject "^0.3.0"
 
 rollup-plugin-svg-import@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-svg-import/-/rollup-plugin-svg-import-1.5.1.tgz#8476635f408f568de1ebb2ee3077fd600b1bbebb"
-  integrity sha512-8Oex1WmSU5EV/n09SZq269pUDPs+YsF6nmJ7XnjgcT9psFpBi+e9Q+DSPxtVzN3HdCD9rSihZ/Ksw8UkkQqtFg==
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-svg-import/-/rollup-plugin-svg-import-1.6.0.tgz#2e55c5d52c430a1228cddfac6f4f0cfbf305627b"
+  integrity sha512-WYFJ4DMSiC3TTUwTjrTklmXjwWp6GWLIWf7fbmR1pER/7c6vWNjx3WjsQrbOE3+9HmUWW3hWIgH2vrItWfdG1g==
   dependencies:
-    "@rollup/pluginutils" "^3.0.10"
+    "@rollup/pluginutils" "^4.1.1"
 
 rollup-plugin-terser-default@^7.0.2:
   version "7.0.2"
