@@ -7,6 +7,7 @@
 [![Coverage Status][coverall-svg]][coverall-io]
 [![Docker fe pull][docker-frontend-pull-svg]][docker-frontend-pull]
 [![Docker be pull][docker-backend-pull-svg]][docker-backend-pull]
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0a523c94-cd60-4851-ae60-14e8fa79d0c8/deploy-status)](https://app.netlify.com/sites/micro-lc/deploys)
 
 </div>
 
