@@ -63,6 +63,6 @@
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-svg-import": "^1.5.1",
     "rollup-plugin-terser-default": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.30.0"
+    "rollup-plugin-typescript2": "^0.31.0"
   }
 }
