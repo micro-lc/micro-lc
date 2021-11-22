@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Configuration, configurationRecursiveSchema, Plugin} from '@mia-platform/core'
+import {Configuration, configurationRecursiveSchema, Plugin, pluginSchema} from '@mia-platform/core'
 import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {readValidateConfiguration} from '../utils/configurationManager'
@@ -46,7 +46,4 @@ export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify)
 // Removed response schema due to https://github.com/fastify/fast-json-stringify/issues/181
 export const configurationApiSchema = {
   summary: 'Expose the configurations of microlc',
-  response: {
-    200: configurationRecursiveSchema,
-  },
 } as const
