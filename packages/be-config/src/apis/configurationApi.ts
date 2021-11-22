@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Configuration, configurationRecursiveSchema, Plugin, pluginSchema} from '@mia-platform/core'
+import {Configuration, configurationRecursiveSchema, Plugin} from '@mia-platform/core'
 import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {readValidateConfiguration} from '../utils/configurationManager'
