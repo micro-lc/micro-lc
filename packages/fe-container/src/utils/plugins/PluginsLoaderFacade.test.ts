@@ -18,7 +18,7 @@ import {Plugin} from '@mia-platform/core'
 
 import {RESERVED_PATH} from '@constants'
 
-import {finish, isCurrentPluginLoaded, registeredPlugins, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
+import {findCurrentPlugin, finish, isCurrentPluginLoaded, registeredPlugins, registerPlugin, retrievePluginStrategy} from './PluginsLoaderFacade'
 
 jest.mock('qiankun', () => ({
   start: jest.fn(),
@@ -145,7 +145,7 @@ describe('Test plugin loading', () => {
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
       container: '#microlc-qiankun-contaier',
-      activeRule: '/qiankunTest',
+      activeRule: expect.any(Function),
       props: {
         basePath: '',
         activeRule: '/qiankunTest',
@@ -175,7 +175,7 @@ describe('Test plugin loading', () => {
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
       container: '#microlc-qiankun-contaier',
-      activeRule: '/qiankunTest',
+      activeRule: expect.any(Function),
       props: {
         basePath: '',
         activeRule: '/qiankunTest',
@@ -212,7 +212,7 @@ describe('Test plugin loading', () => {
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
       container: '#microlc-qiankun-contaier',
-      activeRule: '/qiankunTest',
+      activeRule: expect.any(Function),
       props: {
         basePath: '',
         activeRule: '/qiankunTest',
@@ -284,7 +284,7 @@ describe('Test plugin loading', () => {
       name: 'plugin-2',
       entry: 'https://www.google.com/webhp?igu=1',
       container: '#microlc-qiankun-contaier',
-      activeRule: '/qiankunTest1',
+      activeRule: expect.any(Function),
       props: {
         basePath: '',
         activeRule: '/qiankunTest1',
@@ -295,12 +295,33 @@ describe('Test plugin loading', () => {
       name: 'plugin-1',
       entry: 'https://www.google.com/webhp?igu=1',
       container: '#microlc-qiankun-contaier',
-      activeRule: '/qiankunTest',
+      activeRule: expect.any(Function),
       props: {
         basePath: '',
         activeRule: '/qiankunTest',
         currentUser: {}
       }
     })
+  })
+
+  it('find correct plugin even with overlap in active rule', () => {
+    registerPlugin({
+      id: 'docusaurus-content',
+      icon: 'fab fa-react',
+      order: 3,
+      integrationMode: 'qiankun',
+      pluginRoute: '/react-app-1/docs/',
+      pluginUrl: '//localhost:8764'
+    })
+    registerPlugin({
+      id: 'docusaurus-home',
+      icon: 'fab fa-react',
+      order: 3,
+      integrationMode: 'qiankun',
+      pluginRoute: '/react-app-1/',
+      pluginUrl: '//localhost:8764'
+    })
+    window.location.pathname = '/react-app-1/docs/intro/getting-started'
+    expect(findCurrentPlugin().id).toEqual('docusaurus-content')
   })
 })

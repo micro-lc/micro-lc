@@ -38,15 +38,16 @@ export const retrievePluginStrategy = (plugin: InternalPlugin) => {
   return registeredPluginsStrategies.get(plugin.id) || noOpStrategy()
 }
 
-export const isPluginLoaded = (plugin: InternalPlugin) =>
-  plugin.pluginRoute ? window.location.pathname.includes(plugin.pluginRoute) : false
+const isPluginLoaded = (pathName: string) => (plugin: InternalPlugin) => plugin.pluginRoute && pathName.includes(plugin.pluginRoute)
 
 const pluginSortByRoute = (plugin1: InternalPlugin, plugin2: InternalPlugin) => (plugin2.pluginRoute?.length || 0) - (plugin1.pluginRoute?.length || 0)
 
-export const findCurrentPlugin = () => {
-  const matchingPlugins = registeredPlugins.filter(isPluginLoaded).sort(pluginSortByRoute) || []
+const findWantedPlugin = (pathName: string) => {
+  const matchingPlugins = registeredPlugins.filter(isPluginLoaded(pathName)).sort(pluginSortByRoute) || []
   return matchingPlugins[0]
 }
+
+export const findCurrentPlugin = () => findWantedPlugin(window.location.pathname)
 
 export const isCurrentPluginLoaded = () => {
   return isReservedPage() || findCurrentPlugin() !== undefined
@@ -87,7 +88,10 @@ const pluginToQiankunMapper = (user: Partial<User>, shared: Shared) => {
     name: plugin.id,
     entry: plugin.pluginUrl || '',
     container: `#${MICROLC_QIANKUN_CONTAINER}`,
-    activeRule: buildActiveRule(plugin),
+    activeRule: (location: Location) => {
+      const wantedPlugin = findWantedPlugin(location.pathname)
+      return wantedPlugin?.id === plugin.id
+    },
     props: {
       ...shared?.props,
       ...plugin.props,
