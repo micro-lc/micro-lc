@@ -41,8 +41,11 @@ export const retrievePluginStrategy = (plugin: InternalPlugin) => {
 export const isPluginLoaded = (plugin: InternalPlugin) =>
   plugin.pluginRoute ? window.location.pathname.includes(plugin.pluginRoute) : false
 
+const pluginSortByRoute = (plugin1: InternalPlugin, plugin2: InternalPlugin) => (plugin2.pluginRoute?.length || 0) - (plugin1.pluginRoute?.length || 0)
+
 export const findCurrentPlugin = () => {
-  return registeredPlugins.find(isPluginLoaded)
+  const matchingPlugins = registeredPlugins.filter(isPluginLoaded).sort(pluginSortByRoute) || []
+  return matchingPlugins[0]
 }
 
 export const isCurrentPluginLoaded = () => {
