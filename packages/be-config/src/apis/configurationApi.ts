@@ -45,5 +45,13 @@ export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify)
 
 // Removed response schema due to https://github.com/fastify/fast-json-stringify/issues/181
 export const configurationApiSchema = {
-  summary: 'Expose the configurations of microlc',
+  summary: 'Expose the configurations of micro-lc',
+  response: {
+    200: {
+      description: 'Configuration of micro-lc',
+      type: 'object',
+      properties: {},
+      additionalProperties: true,
+    },
+  },
 } as const
