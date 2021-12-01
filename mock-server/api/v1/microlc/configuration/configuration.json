@@ -13,7 +13,7 @@
     "variables": {
       "primaryColor": "#4568B5"
     },
-    "menuLocation": "fixedSideBar"
+    "menuLocation": "topBar"
   },
   "plugins": [
     {
