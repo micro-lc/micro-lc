@@ -61,8 +61,9 @@
 
     & .topBarMenuEntry_text {
       color: var(--microlc-menu-label-color);
-      font-size: 16px;
+      font-size: @menu-entry-size;
       display: none;
+      font-family: @font-family !important;
 
       @media (min-width: 1280px) {
         display: initial;
@@ -127,7 +128,7 @@
           margin-left: @spacing;
           margin-right: @spacing;
           color: var(--microlc-menu-label-color);
-          font-size: 16px;
+          font-size: @menu-entry-size;
 
           &:hover, &.active {
             color: var(--microlc-primary-color);
