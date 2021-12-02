@@ -49,7 +49,7 @@
     },
     {
       "id": "react-plugin",
-      "label": "THIS IS A VERY VERY VERY VERY VERY LONG LABEL",
+      "label": "React plugin 1",
       "icon": "fab fa-react",
       "order": 3,
       "integrationMode": "qiankun",
