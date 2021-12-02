@@ -129,6 +129,16 @@
   "helpMenu": {
     "helpLink": "https://docs.mia-platform.eu/docs/business_suite/microlc/overview"
   },
+  "rightMenu": [{
+    "entry": "https://...",
+    "tag": "bla",
+    "attributes": [{
+      "id": "abc"
+    }],
+    "properties": [{
+      "propA": true
+    }]
+  }],
   "internalPlugins": [
     {
       "id": "plugin-internal-test-4",
