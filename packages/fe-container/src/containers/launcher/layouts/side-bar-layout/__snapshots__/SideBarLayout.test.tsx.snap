@@ -38,7 +38,7 @@ exports[`SideBarLayout test match snapshot 1`] = `
           />
           <div
             class="ant-drawer-content-wrapper"
-            style="transform: translateX(-100%); width: 256px;"
+            style="transform: translateX(-100%); width: 378px;"
           >
             <div
               class="ant-drawer-content"

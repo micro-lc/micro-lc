@@ -258,4 +258,12 @@ describe('SideMenu tests', () => {
     expect(screen.queryByText('Content entry in category')).toBeTruthy()
     expect(screen.queryByText('Cat 1')).toBeTruthy()
   })
+
+  it('match snapshot', () => {
+    const entriesHref = {integrationMode: 'href', externalLink: {sameWindow: false, url: ''}}
+    const {asFragment} = RenderWithReactIntl(
+      <SideMenu plugins={[{label: 'entry_1', id: '1', ...entriesHref}, {label: 'entry_2', id: '2', ...entriesHref}]}/>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
 })
