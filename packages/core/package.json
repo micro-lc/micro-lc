@@ -19,10 +19,10 @@
   },
   "devDependencies": {
     "@mia-platform/eslint-config-mia": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "json-schema-to-ts": "^1.6.0",
-    "typescript": "^4.2.3"
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "json-schema-to-ts": "^1.6.4",
+    "typescript": "^4.5.2"
   },
   "license": "SEE LICENSE IN LICENSE"
 }
