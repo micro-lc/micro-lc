@@ -15,7 +15,7 @@
  */
 import {ConfigurationProvider} from '@contexts/Configuration.context'
 import {RightMenu} from '@mia-platform/core'
-import {render, screen} from '@testing-library/react'
+import {render} from '@testing-library/react'
 import React from 'react'
 
 import {TopRightSection} from './TopRightSection'
@@ -42,7 +42,7 @@ describe('RightMenu tests', () => {
     rightMenu
   })
 
-  it('WebComponents are instantiated', () => {
+  it('web-components are instantiated', () => {
     const configuration = configurationsBuilder([{
       entry: 'http://127.0.0.1:8080/wc-entry.esm.js',
       tag: 'wc-tag'
@@ -61,7 +61,7 @@ describe('RightMenu tests', () => {
     expect(document.querySelector('wc-tag-1')).not.toBeNull()
   })
 
-  it('WebComponent attributes configured', () => {
+  it('web-component attributes configured', () => {
     const configuration = configurationsBuilder([{
       entry: 'http://127.0.0.1:8080/wc-entry.esm.js',
       tag: 'wc-tag',

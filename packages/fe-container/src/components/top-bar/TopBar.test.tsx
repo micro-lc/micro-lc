@@ -105,7 +105,7 @@ describe('TopBar tests', function () {
     expect(image).toHaveAttribute('src', URL_DARK_IMAGE)
   })
 
-  it('Closed TopBar is opening', () => {
+  it('closed TopBar is opening', () => {
     const mockBurgerClick = jest.fn(isToggled => {
     })
 
@@ -121,7 +121,7 @@ describe('TopBar tests', function () {
     expect(mockBurgerClick.mock.calls[0][0]).toBeTruthy()
   })
 
-  it('Open TopBar is closing', () => {
+  it('open TopBar is closing', () => {
     const mockBurgerClick = jest.fn(isToggled => {
     })
 
@@ -137,7 +137,7 @@ describe('TopBar tests', function () {
     expect(mockBurgerClick.mock.calls[0][0]).toBeFalsy()
   })
 
-  it('Logo on click open new window with the url in the same page', async () => {
+  it('logo on click open new window with the url in the same page', async () => {
     window.open = jest.fn()
     RenderWithReactIntl(
       <ConfigurationProvider value={{theming}}>
@@ -159,7 +159,7 @@ describe('TopBar tests', function () {
     expect(screen.queryByText('Dark')).toBeFalsy()
   })
 
-  it('Dropdown toggle on click', () => {
+  it('dropdown toggle on click', () => {
     const user = {
       email: 'mocked.user@mia-platform.eu',
       name: 'Mocked User 2',
@@ -174,5 +174,23 @@ describe('TopBar tests', function () {
     expect(screen.queryByText('Log Out')).toBeFalsy()
     userEvent.click(screen.getByTestId('userMenu_container'))
     expect(screen.queryByText('Log Out')).toBeTruthy()
+  })
+
+  it('renders top right section', async () => {
+    const rightMenu = [{
+      entry: 'http://127.0.0.1:8080/wc-entry.esm.js',
+      tag: 'wc-tag',
+      attributes: {
+        id: 'your-wc-tag'
+      }
+    }]
+    RenderWithReactIntl(
+      <ConfigurationProvider value={{rightMenu}}>
+        <TopBar/>
+      </ConfigurationProvider>
+    )
+
+    expect(document.querySelector('wc-tag')).not.toBeNull()
+    expect(document.getElementById('your-wc-tag')).not.toBeNull()
   })
 })
