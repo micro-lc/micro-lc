@@ -79,10 +79,11 @@
   }
 
   & .micro-lc-menu-submenu-title span, & .micro-lc-menu-submenu-title .micro-lc-menu-submenu-arrow {
-    color: var(--microlc-menu-label-color);
+    color: var(--microlc-primary-color);
   }
 
   & .micro-lc-menu-submenu-title span {
+    color: var(--microlc-menu-label-color);
     min-width: 160px;
   }
 
@@ -107,7 +108,9 @@
     width: 100%;
 
     & .sideMenu_label {
-      color: var(--microlc-menu-label-color);
+      & span {
+        color: var(--microlc-menu-label-color);
+      }
       min-width: 160px;
       display: flex;
       justify-content: space-between;
