@@ -17,11 +17,8 @@
 import {FromSchema} from 'json-schema-to-ts'
 
 const webComponentConfigSchema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    additionalProperties: true,
-  } as const,
+  type: 'object',
+  additionalProperties: true,
 } as const
 
 export const rightMenuItemSchema = {
