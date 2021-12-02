@@ -13,7 +13,7 @@
     "variables": {
       "primaryColor": "#4568B5"
     },
-    "menuLocation": "topBar"
+    "menuLocation": "sideBar"
   },
   "plugins": [
     {
@@ -49,7 +49,7 @@
     },
     {
       "id": "react-plugin",
-      "label": "React plugin 1",
+      "label": "THIS IS A VERY VERY VERY VERY VERY LONG LABEL",
       "icon": "fab fa-react",
       "order": 3,
       "integrationMode": "qiankun",

@@ -15,7 +15,7 @@
  */
 import {Plugin} from '@mia-platform/core'
 import {retrievePluginStrategy} from '@utils/plugins/PluginsLoaderFacade'
-import {Menu} from 'antd'
+import {Menu, Typography} from 'antd'
 import React from 'react'
 
 const menuEntry = (plugin: Plugin) => {
@@ -29,7 +29,9 @@ const menuEntry = (plugin: Plugin) => {
     >
       <div className='sideMenu_entry'>
         <span className='sideMenu_label'>
-          {plugin.label}
+          <Typography.Text ellipsis>
+            {plugin.label}
+          </Typography.Text>
           {plugin.integrationMode === 'href' && <i className='fas fa-external-link-alt sideMenu_externalLink'/>}
         </span>
       </div>

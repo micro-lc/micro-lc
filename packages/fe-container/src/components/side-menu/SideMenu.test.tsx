@@ -142,6 +142,26 @@ describe('SideMenu tests', () => {
     expect(screen.getByText('Qiankun')).toBeTruthy()
   })
 
+  it('Render ellipsis for long labels', () => {
+    const plugins = [
+      {
+        id: 'plugin-test-2',
+        label: 'THIS IS A VERY VERY VERY VERY VERY LONG LABEL',
+        icon: 'home',
+        order: 2,
+        integrationMode: 'href',
+        externalLink: {
+          url: 'https://google.it',
+          sameWindow: true
+        }
+      }
+    ]
+    RenderWithReactIntl(<SideMenu plugins={plugins}/>)
+
+    expect(screen.getByText(/THIS IS A VERY/)).toBeTruthy()
+    expect(screen.getByText(/.../)).toBeTruthy()
+  })
+
   it('Overlay close menu correctly', () => {
     const setMenuOpened = jest.fn()
     const menuOpenedConfig = {
