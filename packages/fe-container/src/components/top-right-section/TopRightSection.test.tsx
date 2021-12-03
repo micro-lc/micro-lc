@@ -20,7 +20,7 @@ import React from 'react'
 
 import {TopRightSection} from './TopRightSection'
 describe('RightMenu tests', () => {
-  const configurationsBuilder = (rightMenu: RightMenu) => ({
+  const configurationsBuilder = (rightMenu: RightMenu, shared: any = {}) => ({
     theming: {
       header: {},
       logo: {
@@ -30,6 +30,7 @@ describe('RightMenu tests', () => {
       menuLocation: 'sideBar',
       variables: {}
     },
+    shared,
     plugins: [{
       id: 'plugin-test-3',
       label: 'Qiankun entry',
@@ -75,6 +76,26 @@ describe('RightMenu tests', () => {
         id: 'your-wc-tag'
       }
     }])
+    render(
+      // @ts-ignore
+      <ConfigurationProvider value={configuration}>
+        <TopRightSection />
+      </ConfigurationProvider>
+    )
+
+    expect(document.querySelector('wc-tag')).not.toBeNull()
+    expect(document.getElementById('your-wc-tag')).not.toBeNull()
+  })
+
+  it('shared props are injected', () => {
+    const configuration = configurationsBuilder([{
+      entry: 'http://127.0.0.1:8080/wc-entry.esm.js',
+      tag: 'wc-tag'
+    }], {
+      props: {
+        id: 'your-wc-tag'
+      }
+    })
     render(
       // @ts-ignore
       <ConfigurationProvider value={configuration}>

@@ -53,7 +53,7 @@ const RightMenuItemComponent: React.FC<RightMenuItem & RightMenuItemAdditionalPr
     const domNode = ref && document.querySelector(tag)
     if (domNode) {
       const domNodeEnricher = enrichNode(domNode)
-      Object.entries(shared).forEach(domNodeEnricher)
+      Object.entries(shared.props || {}).forEach(domNodeEnricher)
       Object.entries(properties).forEach(domNodeEnricher)
     }
   }, [properties, tag, shared])
