@@ -25,6 +25,7 @@ import {UserContext} from '@contexts/User.context'
 import './TopBar.less'
 import {DarkModeSwitch} from '../dark-mode-switch/DarkModeSwitch'
 import {TopBarMenu} from '@components/top-bar-menu/TopBarMenu'
+import {TopRightSection} from '@components/top-right-section/TopRightSection'
 
 export const TopBar: React.FC = () => {
   const configuration = useContext(ConfigurationContext)
@@ -53,6 +54,7 @@ export const TopBar: React.FC = () => {
       />
       <TopBarMenu/>
       <div className='topBar_rightSide'>
+        <TopRightSection/>
         <HelpIcon/>
         {showDivider && <Divider className='topBar_divider' type="vertical"/>}
         {configuration?.theming?.enableDarkMode && <DarkModeSwitch toggleCallback= {switchLogo}/>}

@@ -129,6 +129,13 @@
   "helpMenu": {
     "helpLink": "https://docs.mia-platform.eu/docs/business_suite/microlc/overview"
   },
+  "rightMenu": [{
+    "entry": "http://127.0.0.1:8080/wc-entry.esm.js",
+    "tag": "wc-tag",
+    "attributes": {
+      "id": "your-wc-tag"
+    }
+  }],
   "internalPlugins": [
     {
       "id": "plugin-internal-test-4",

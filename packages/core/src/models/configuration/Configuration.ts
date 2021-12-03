@@ -19,6 +19,7 @@ import {analyticsSchema} from './analytics/Analytics'
 import {helpMenuSchema} from './helpMenu/HelpMenu'
 import {internalPluginSchema} from './plugin/InternalPlugin'
 import {pluginRecursiveSchema, pluginSchema} from './plugin/Plugin'
+import {rightMenuSchema} from './rightMenu/RightMenu'
 import {sharedSchema} from './shared/Shared'
 import {themingSchema} from './theming/Theming'
 
@@ -37,6 +38,7 @@ export const configurationSchema = {
     },
     analytics: analyticsSchema,
     helpMenu: helpMenuSchema,
+    rightMenu: rightMenuSchema,
   },
 } as const
 
@@ -55,6 +57,7 @@ export const configurationRecursiveSchema = {
     },
     analytics: analyticsSchema,
     helpMenu: helpMenuSchema,
+    rightMenu: rightMenuSchema,
   },
 } as const
 
