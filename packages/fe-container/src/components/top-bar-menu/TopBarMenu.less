@@ -45,10 +45,14 @@
       }
     }
 
+    & svg.topBarMenuEntry_icon {
+      max-width: @top-bar-icon-size;
+    }
+
     & .topBarMenuEntry_icon {
       height: @top-bar-height;
       font-size: @top-bar-icon-size !important;
-      max-width: @top-bar-icon-size;
+      max-width: min-content;
       color: var(--microlc-menu-label-color);
       display: none;
       justify-content: center;
