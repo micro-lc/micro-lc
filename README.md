@@ -22,6 +22,9 @@ seamlessly with your favourite toolkit, being it Angular, React, Vue, or anythin
 
 You can consult [here][micro-lc-doc] the full documentation.
 
+An introduction about micro frontend and how micro-lc works:
+[![micro-lc introduction](https://img.youtube.com/vi/QumadjC2krU/0.jpg)](https://www.youtube.com/watch?v=QumadjC2krU)
+
 # Getting Started
 
 The project is a monorepo built with [yarn workspaces][workspaces] and [lerna][lerna]. All workspaces can be found under
@@ -126,3 +129,4 @@ to run your tests
 [github-actions]: https://github.com/mia-platform/microlc/actions
 [github-actions-svg]: https://img.shields.io/github/workflow/status/mia-platform/microlc/Node.js%20fe-container%20CI
 [micro-lc-doc]: https://docs.mia-platform.eu/docs/business_suite/microlc/overview
+
