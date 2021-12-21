@@ -291,6 +291,11 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.14.5.tgz#5ac822ce97eec46741ab70a517971e443a70c5a9"
   integrity sha512-/37qQCE3K0vvZKwoK4XU/irIJQdIfCJuhU5eKnNxpFDsOkgFaUAwbv+RYw6eYgsC0E4hS7r5KqGULUogqui0fQ==
 
+"@babel/helper-plugin-utils@^7.16.5":
+  version "7.16.5"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.16.5.tgz#afe37a45f39fce44a3d50a7958129ea5b1a5c074"
+  integrity sha512-59KHWHXxVA9K4HNF4sbHCf+eJeFe0Te/ZFGqBT4OjXhrwvA04sGfaEGsVTdsjoszq0YTP49RC9UKe5g8uN2RwQ==
+
 "@babel/helper-remap-async-to-generator@^7.16.0":
   version "7.16.0"
   resolved "https://registry.yarnpkg.com/@babel/helper-remap-async-to-generator/-/helper-remap-async-to-generator-7.16.0.tgz#d5aa3b086e13a5fe05238ff40c3a5a0c2dab3ead"
@@ -1106,7 +1111,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-"@babel/plugin-transform-typescript@^7.12.1", "@babel/plugin-transform-typescript@^7.16.0":
+"@babel/plugin-transform-typescript@^7.12.1", "@babel/plugin-transform-typescript@^7.16.1":
   version "7.16.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.16.1.tgz#cc0670b2822b0338355bc1b3d2246a42b8166409"
   integrity sha512-NO4XoryBng06jjw/qWEU2LhcLJr1tWkhpMam/H4eas/CDKMX/b2/Ylb6EI256Y7+FVPCawwSM1rrJNOpDiz+Lg==
@@ -1326,14 +1331,14 @@
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/plugin-transform-typescript" "^7.12.1"
 
-"@babel/preset-typescript@^7.14.5":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.16.0.tgz#b0b4f105b855fb3d631ec036cdc9d1ffd1fa5eac"
-  integrity sha512-txegdrZYgO9DlPbv+9QOVpMnKbOtezsLHWsnsRF4AjbSIsVaujrq1qg8HK0mxQpWv0jnejt0yEoW1uWpvbrDTg==
+"@babel/preset-typescript@^7.14.5", "@babel/preset-typescript@^7.16.0":
+  version "7.16.5"
+  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.16.5.tgz#b86a5b0ae739ba741347d2f58c52f52e63cf1ba1"
+  integrity sha512-lmAWRoJ9iOSvs3DqOndQpj8XqXkzaiQs50VG/zESiI9D3eoZhGriU675xNCr0UwvsuXrhMAGvyk1w+EVWF3u8Q==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.14.5"
+    "@babel/helper-plugin-utils" "^7.16.5"
     "@babel/helper-validator-option" "^7.14.5"
-    "@babel/plugin-transform-typescript" "^7.16.0"
+    "@babel/plugin-transform-typescript" "^7.16.1"
 
 "@babel/register@^7.14.5", "@babel/register@^7.16.0":
   version "7.16.0"
@@ -3207,12 +3212,12 @@
     camelcase "^6.2.0"
     cosmiconfig "^7.0.0"
 
-"@svgr/core@^6.1.1":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@svgr/core/-/core-6.1.1.tgz#04a7c0ce9fab2f8671ab1d99199778cc869091b6"
-  integrity sha512-/NP+24cQmcEdJYptoFWO34SHkNx2x4KOGAMcnTpzOPQifvb1ecupWNEPeHBDY18utd0OMpl2kWf0ZnyN5VsVlg==
+"@svgr/core@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@svgr/core/-/core-6.1.2.tgz#17db14b8d559cb9dc4afa459aa487c00bf6cab80"
+  integrity sha512-G1UVZcPS5R+HfBG5QC7n2ibkax8RXki2sbKHySTTnajeNXbzriBJcpF4GpYzWptfvD2gmqTDY9XaX+x08TUyGQ==
   dependencies:
-    "@svgr/plugin-jsx" "^6.1.0"
+    "@svgr/plugin-jsx" "^6.1.2"
     camelcase "^6.2.0"
     cosmiconfig "^7.0.1"
 
@@ -3241,10 +3246,10 @@
     "@svgr/hast-util-to-babel-ast" "^5.5.0"
     svg-parser "^2.0.2"
 
-"@svgr/plugin-jsx@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@svgr/plugin-jsx/-/plugin-jsx-6.1.0.tgz#2ba2d3cbb02d4f6e988fdfe5615baa04b8d0524b"
-  integrity sha512-grAeVnwjr4eyzzscX6d5dK202nQcKGt5STry3BrCNuw8RZkMVFYumjH/qLnInO2ugc0ESSo8eCkb+30vXVxSTg==
+"@svgr/plugin-jsx@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@svgr/plugin-jsx/-/plugin-jsx-6.1.2.tgz#8a2815aaa46cc3d5cffa963e92b06bd0c33e7748"
+  integrity sha512-K/w16g3BznTjVjLyUyV0fE7LLl1HSq5KJjvczFVVvx9QG0+3xtU7RX6gvoVnTvYlrNo8QxxqLWVAU3HQm68Eew==
   dependencies:
     "@babel/core" "^7.15.5"
     "@svgr/babel-preset" "^6.1.0"
@@ -3260,27 +3265,28 @@
     deepmerge "^4.2.2"
     svgo "^1.2.2"
 
-"@svgr/plugin-svgo@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@svgr/plugin-svgo/-/plugin-svgo-6.1.0.tgz#30af6b64326a2c104c493de7c9b3ddda266c4e2e"
-  integrity sha512-NQtYlvPg6yk3wxm1EeeI3kNh/NoSxwW/Zjkvy3vf4CJJHKryB3TnkLsY8Z5hDOERT3Hadksh9RyZnSszEG7q5w==
+"@svgr/plugin-svgo@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@svgr/plugin-svgo/-/plugin-svgo-6.1.2.tgz#4fe7a2defe237f0493dee947dde6fa5cea57e6c1"
+  integrity sha512-UHVSRZV3RdaggDT60OMIEmhskN736DOF6PuBcCaql6jBDA9+SZkA5ZMEw73ZLAlwdOAmw+0Gi4vx/xvAfnmerw==
   dependencies:
     cosmiconfig "^7.0.1"
     deepmerge "^4.2.2"
     svgo "^2.5.0"
 
 "@svgr/rollup@^6.1.0":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@svgr/rollup/-/rollup-6.1.1.tgz#b991d26f34fb9fd6b5ce096c3baa8b90d873f8c5"
-  integrity sha512-8rcoAYAfIocej3nCtuZognrF914GAetvwTQ4zAQDHYyQPLQYYXYoctSKicgc4tbi2OakXZigEXNcP31LI9h5tA==
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@svgr/rollup/-/rollup-6.1.2.tgz#4112df6548c8cce8b66dbffaf0960d08c63ed4b4"
+  integrity sha512-iadqFF1Cp5TV5rGsRt2Tkqsomf2GRcUeUYeSYXD2XDm6ZBpuYtdPjkf00AAM4rPUy44qY4grhkwL20XQYzVPNg==
   dependencies:
     "@babel/core" "^7.15.5"
     "@babel/plugin-transform-react-constant-elements" "^7.14.5"
     "@babel/preset-env" "^7.15.6"
     "@babel/preset-react" "^7.14.5"
-    "@svgr/core" "^6.1.1"
-    "@svgr/plugin-jsx" "^6.1.0"
-    "@svgr/plugin-svgo" "^6.1.0"
+    "@babel/preset-typescript" "^7.16.0"
+    "@svgr/core" "^6.1.2"
+    "@svgr/plugin-jsx" "^6.1.2"
+    "@svgr/plugin-svgo" "^6.1.2"
     rollup-pluginutils "^2.8.2"
 
 "@svgr/webpack@5.5.0":
@@ -3569,10 +3575,15 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.1.tgz#283f669ff76d7b8260df8ab7a4262cc83d988256"
   integrity sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==
 
-"@types/node@*", "@types/node@^16.11.11", "@types/node@^16.7.1":
+"@types/node@*", "@types/node@^16.7.1":
   version "16.11.12"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.12.tgz#ac7fb693ac587ee182c3780c26eb65546a1a3c10"
   integrity sha512-+2Iggwg7PxoO5Kyhvsq9VarmPbIelXP070HMImEpbtGCoyWNINQj4wzjbQCXzdHTRXnqufutJb5KAURZANNBAw==
+
+"@types/node@^17.0.1":
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.2.tgz#a4c07d47ff737e8ee7e586fe636ff0e1ddff070a"
+  integrity sha512-JepeIUPFDARgIs0zD/SKPgFsJEAF0X5/qO80llx59gOxFTboS9Amv3S+QfB7lqBId5sFXJ99BN0J6zFRvL9dDA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -7762,10 +7773,10 @@ eslint-plugin-node@^11.1.0:
     resolve "^1.10.1"
     semver "^6.1.0"
 
-eslint-plugin-promise@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-5.2.0.tgz#a596acc32981627eb36d9d75f9666ac1a4564971"
-  integrity sha512-SftLb1pUG01QYq2A/hGAWfDRXqYD82zE7j7TopDOyNdU+7SvvoXREls/+PRTY17vUXzXnZA/zfnyKgRH6x4JJw==
+eslint-plugin-promise@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-6.0.0.tgz#017652c07c9816413a41e11c30adc42c3d55ff18"
+  integrity sha512-7GPezalm5Bfi/E22PnQxDWH2iW9GTvAlUNTztemeHb6c1BniSyoeTrM87JkC0wYdi6aQrZX9p2qEiAno8aTcbw==
 
 eslint-plugin-react-hooks@^4.2.0:
   version "4.2.0"
