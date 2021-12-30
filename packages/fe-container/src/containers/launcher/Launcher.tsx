@@ -29,6 +29,7 @@ import {FixedSideBarLayout} from './layouts/fixed-side-bar-layout/FixedSideBarLa
 import {NoSideBarLayout} from './layouts/no-side-bar-layout/NoSideBarLayout'
 
 import './Launcher.less'
+import {Helmet} from 'react-helmet'
 
 export const Launcher: React.FC<AppState> = ({configuration, isLoading, user}) => {
   return isLoading ? <LoadingAnimation/> : <LoadedLauncher configuration={configuration} user={user}/>
@@ -48,9 +49,16 @@ const retrieveLayout = (configuration: Configuration) => {
 
 const LoadedLauncher: React.FC<LoadedLauncherProps> = ({configuration, user}) => {
   const layout = useMemo(() => retrieveLayout(configuration), [configuration])
+  const headerConfig = configuration.theming?.header
 
   return (
     <AppProvider configuration={configuration} user={user}>
+      {
+        headerConfig &&
+        <Helmet>
+          <link href={headerConfig.favicon} rel="icon" type="image/png"/>
+        </Helmet>
+      }
       {React.createElement(layout, {configuration, user})}
     </AppProvider>
   )
