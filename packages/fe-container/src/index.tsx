@@ -38,4 +38,4 @@ const rootComponent = (
   </IntlProvider>
 )
 
-ReactDOM.render(rootComponent, document.getElementById('root'))
+ReactDOM.render(rootComponent, document.getElementById('micro-lc-root'))
