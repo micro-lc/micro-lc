@@ -66,6 +66,15 @@
       "pluginUrl": "//localhost:4200"
     },
     {
+      "id": "vue-plugin",
+      "label": "Vue3 plugin",
+      "icon": "fab fa-vuejs",
+      "order": 3,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/vue3-app",
+      "pluginUrl": "//localhost:8765"
+    },
+    {
       "id": "react-as-iframe",
       "label": "React as iframe",
       "icon": "fab fa-reacteurope",
