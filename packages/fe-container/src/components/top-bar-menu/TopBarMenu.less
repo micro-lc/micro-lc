@@ -21,7 +21,7 @@
   display: flex;
   flex-grow: 1;
   margin-right: @custom-margin;
-  justify-content: left;
+  justify-content: space-between;
   margin-left: @custom-margin;
   max-height: @top-bar-height;
   border-bottom: 1px #515153;
@@ -33,10 +33,8 @@
     justify-content: space-between;
     overflow: hidden;
     cursor: pointer;
-    margin-right: @menu-entry-padding;
 
     &.active, &:hover {
-      border-bottom: 3px solid var(--microlc-primary-color);
 
       .topBarMenuEntry_text,
       i {
@@ -67,6 +65,7 @@
       font-size: @menu-entry-size;
       display: none;
       font-family: @font-family !important;
+      font-weight: 500;
 
       @media (min-width: 1280px) {
         display: initial;
