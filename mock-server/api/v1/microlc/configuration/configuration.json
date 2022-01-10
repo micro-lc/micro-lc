@@ -75,6 +75,15 @@
       "pluginUrl": "//localhost:8765"
     },
     {
+      "id": "svelte-plugin",
+      "label": "Svelte plugin",
+      "icon": "fas fa-broom",
+      "order": 3,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/svelte-app",
+      "pluginUrl": "//localhost:8080"
+    },
+    {
       "id": "react-as-iframe",
       "label": "React as iframe",
       "icon": "fab fa-reacteurope",
