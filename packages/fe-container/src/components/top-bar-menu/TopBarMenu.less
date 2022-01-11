@@ -17,11 +17,33 @@
 
 @spacing: 24px;
 
+.media-child-visibility-mixin(@maxWidth, @childNumber) {
+  @media (max-width: @maxWidth) {
+    &:nth-last-child(n+@{childNumber}) {
+      & .topBarMenuEntry_icon {
+        display: flex;
+      }
+
+      &  .topBarMenuEntry_text {
+        display: none;
+      }
+    }
+  }
+}
+
+.visibility-mixin() {
+  .media-child-visibility-mixin(1280px, 5);
+  .media-child-visibility-mixin(1150px, 4);
+  .media-child-visibility-mixin(850px, 3);
+  .media-child-visibility-mixin(650px, 2);
+  .media-child-visibility-mixin(500px, 1);
+}
+
 .topBarMenu_container {
   display: flex;
   flex-grow: 1;
   margin-right: @custom-margin;
-  justify-content: left;
+  justify-content: space-between;
   margin-left: @custom-margin;
   max-height: @top-bar-height;
   border-bottom: 1px #515153;
@@ -33,11 +55,11 @@
     justify-content: space-between;
     overflow: hidden;
     cursor: pointer;
-    margin-right: @menu-entry-padding;
 
-    &.active, &:hover {
-      border-bottom: 3px solid var(--microlc-primary-color);
+    .visibility-mixin();
 
+    &.active,
+    &:hover {
       .topBarMenuEntry_text,
       i {
         color: var(--microlc-primary-color);
@@ -56,21 +78,13 @@
       display: none;
       justify-content: center;
       flex-direction: column;
-
-      @media (max-width: 1280px) {
-        display: flex;
-      }
     }
 
     & .topBarMenuEntry_text {
       color: var(--microlc-menu-label-color);
       font-size: @menu-entry-size;
-      display: none;
       font-family: @font-family !important;
-
-      @media (min-width: 1280px) {
-        display: initial;
-      }
+      font-weight: 500;
 
       &:hover {
         color: var(--microlc-primary-color);
@@ -120,20 +134,21 @@
             line-height: 22px;
             margin-left: @spacing;
             margin-right: @spacing;
-            margin-bottom: @spacing/2;
+            margin-bottom: @spacing / 2;
           }
         }
 
         & .overlay_item {
           flex: 0 0 auto;
           line-height: @spacing;
-          padding-bottom: @spacing/2;
+          padding-bottom: @spacing / 2;
           margin-left: @spacing;
           margin-right: @spacing;
           color: var(--microlc-menu-label-color);
           font-size: @menu-entry-size;
 
-          &:hover, &.active {
+          &:hover,
+          &.active {
             color: var(--microlc-primary-color);
           }
         }
