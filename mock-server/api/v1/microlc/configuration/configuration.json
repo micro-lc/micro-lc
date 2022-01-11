@@ -26,6 +26,117 @@
         "url": "https://example.com/same-window",
         "sameWindow": true
       }
+    },
+    {
+      "id": "plugin-test-1",
+      "label": "Href different window",
+      "icon": "far fa-window-restore",
+      "order": 1,
+      "integrationMode": "href",
+      "externalLink": {
+        "url": "https://example.com/new-window",
+        "sameWindow": false
+      }
+    },
+    {
+      "id": "plugin-test-3",
+      "label": "IFrame",
+      "icon": "fas fa-asterisk",
+      "order": 4,
+      "integrationMode": "iframe",
+      "pluginRoute": "/iframe",
+      "pluginUrl": "https://example.com/iframe"
+    },
+    {
+      "id": "react-plugin",
+      "label": "React plugin",
+      "icon": "fab fa-react",
+      "order": 3,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/react-app",
+      "pluginUrl": "//localhost:8764"
+    },
+    {
+      "id": "angular-plugin",
+      "label": "Angular plugin",
+      "icon": "fab fa-angular",
+      "order": 3,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/angular-app",
+      "pluginUrl": "//localhost:4200"
+    },
+    {
+      "id": "vue-plugin",
+      "label": "Vue3 plugin",
+      "icon": "fab fa-vuejs",
+      "order": 3,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/vue3-app",
+      "pluginUrl": "//localhost:8765"
+    },
+    {
+      "id": "svelte-plugin",
+      "label": "Svelte plugin",
+      "icon": "fas fa-broom",
+      "order": 3,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/svelte-app",
+      "pluginUrl": "//localhost:8080"
+    },
+    {
+      "id": "react-as-iframe",
+      "label": "React as iframe",
+      "icon": "fab fa-reacteurope",
+      "order": 5,
+      "integrationMode": "iframe",
+      "pluginRoute": "/react-iframe",
+      "pluginUrl": "//localhost:8764"
+    },
+    {
+      "id": "menu-container",
+      "label": "Container",
+      "icon": "fas fa-box-open",
+      "order": 6,
+      "content": [
+        {
+          "id": "plugin-test-content-1",
+          "label": "IFrame 1",
+          "icon": "fas fa-asterisk",
+          "order": 4,
+          "integrationMode": "iframe",
+          "pluginRoute": "/frame1",
+          "pluginUrl": "https://example.com",
+          "category": "A"
+        },
+        {
+          "id": "plugin-test-content-2",
+          "label": "IFrame 2",
+          "icon": "fas fa-asterisk",
+          "order": 4,
+          "integrationMode": "iframe",
+          "pluginRoute": "/frame2",
+          "pluginUrl": "https://example.com"
+        },
+        {
+          "id": "plugin-test-content-3",
+          "label": "IFrame 3",
+          "icon": "fas fa-asterisk",
+          "order": 4,
+          "integrationMode": "iframe",
+          "pluginRoute": "/frame3",
+          "pluginUrl": "https://example.com",
+          "category": "B"
+        },
+        {
+          "id": "plugin-test-content-4",
+          "label": "IFrame 4",
+          "icon": "fas fa-asterisk",
+          "order": 4,
+          "integrationMode": "iframe",
+          "pluginRoute": "/frame4",
+          "pluginUrl": "https://example.com"
+        }
+      ]
     }
   ],
   "analytics": {
