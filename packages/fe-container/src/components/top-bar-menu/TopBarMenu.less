@@ -19,7 +19,9 @@
 
 .media-child-visibility-mixin(@maxWidth, @childNumber) {
   @media (max-width: @maxWidth) {
-    &:nth-last-child(n+@{childNumber}) {
+    &:nth-last-child(n+@{childNumber}):first-child,
+    &:nth-last-child(n+@{childNumber}):first-child ~ .topBarMenu_entry {
+
       & .topBarMenuEntry_icon {
         display: flex;
       }
@@ -43,7 +45,7 @@
   display: flex;
   flex-grow: 1;
   margin-right: @custom-margin;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-left: @custom-margin;
   max-height: @top-bar-height;
   border-bottom: 1px #515153;
