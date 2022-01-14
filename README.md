@@ -26,6 +26,11 @@ An introduction about micro frontend and how micro-lc works:
 
 [![micro-lc introduction][micro-lc-youtube-snap]][micro-lc-youtube-video]
 
+## Horizontal micro-frontend
+Are you interested in horizontal split micro-frontends?
+
+Take also a look at [micro-lc-element-omposer][micro-lc-element-composer]!
+
 # Getting Started
 
 The project is a monorepo built with [yarn workspaces][workspaces] and [lerna][lerna]. All workspaces can be found under
@@ -132,4 +137,5 @@ to run your tests
 [micro-lc-doc]: https://docs.mia-platform.eu/docs/business_suite/microlc/overview
 [micro-lc-youtube-snap]: https://img.youtube.com/vi/QumadjC2krU/0.jpg
 [micro-lc-youtube-video]: https://www.youtube.com/watch?v=QumadjC2krU
+[micro-lc-element-composer]: https://github.com/micro-lc/micro-lc-element-composer
 
