@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import './zone-env'
 import 'zone.js'
 import {createBrowserHistory} from 'history'
 import {addErrorHandler, registerMicroApps, RegistrableApp, start} from 'qiankun'
