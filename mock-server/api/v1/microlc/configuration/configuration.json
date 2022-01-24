@@ -145,7 +145,7 @@
     "gtmId": "GTM-000000"
   },
   "helpMenu": {
-    "helpLink": "https://docs.mia-platform.eu/docs/business_suite/microlc/overview"
+    "helpLink": "https://microlc.io/documentation/"
   },
   "rightMenu": [{
     "entry": "http://127.0.0.1:8080/wc-entry.esm.js",

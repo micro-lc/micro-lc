@@ -24,7 +24,7 @@ import RenderWithReactIntl from '../../__tests__/utils'
 
 describe('Help icon tests', () => {
   const helpMenu = {
-    helpLink: 'https://docs.mia-platform.eu/docs/business_suite/microlc/overview'
+    helpLink: 'https://microlc.io/documentation/'
   }
 
   it('Render without crash', () => {
@@ -43,6 +43,6 @@ describe('Help icon tests', () => {
     </ConfigurationProvider>)
     const toggle = screen.getByTestId('help_button_test')
     userEvent.click(toggle)
-    expect(window.open).toBeCalledWith('https://docs.mia-platform.eu/docs/business_suite/microlc/overview')
+    expect(window.open).toBeCalledWith('https://microlc.io/documentation/')
   })
 })
