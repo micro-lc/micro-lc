@@ -7,7 +7,7 @@
 [![Coverage Status][coverall-svg]][coverall-io]
 [![Docker fe pull][docker-frontend-pull-svg]][docker-frontend-pull]
 [![Docker be pull][docker-backend-pull-svg]][docker-backend-pull]
-[![Netlify Status](https://api.netlify.com/api/v1/badges/0a523c94-cd60-4851-ae60-14e8fa79d0c8/deploy-status)](https://app.netlify.com/sites/micro-lc/deploys)
+[![Mia-Platform](https://img.shields.io/badge/Supported%20by-Mia--Platform-green?style=for-the-badge&link=https://mia-platform.eu/&color=DE0D92&labelColor=214147)](https://mia-platform.eu/?utm_source=referral&utm_medium=github&utm_campaign=micro-lc)
 
 </div>
 
