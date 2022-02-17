@@ -15,8 +15,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: 'Install dependencies'
         run: yarn install --frozen-lockfile
+      - name: 'Install Playwright'
+        run: npx playwright install
       - name: 'Install Playwright dependencies'
-        run: npx playwright install && npx playwright install-deps
+        run: npx playwright install-deps
       - name: 'Wait for status checks'
         id: waitforstatuschecks
         uses: "WyriHaximus/github-action-wait-for-status@v1"
