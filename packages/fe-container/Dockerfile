@@ -7,9 +7,13 @@ LABEL name="mia-microlc-website" \
 
 COPY nginx /etc/nginx
 
+COPY ./start-scripts/* /docker-entrypoint.d/
+
 RUN touch ./off \
   && chmod o+rw ./off \
-  && echo "mia-microlc: $COMMIT_SHA" >> /etc/nginx/commit.sha
+  && echo "mia-microlc: $COMMIT_SHA" >> /etc/nginx/commit.sha \
+  && chmod +x ./docker-entrypoint.d/*.sh \
+  && chown nginx /etc/nginx/conf.d
 
 WORKDIR /usr/static
 
