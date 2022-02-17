@@ -13,9 +13,10 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v2
-      - uses: microsoft/playwright-github-action@v1
       - name: 'Install dependencies'
         run: yarn install --frozen-lockfile
+      - name: 'Install Playwright dependencies'
+        run: npx playwright install-deps
       - name: 'Wait for status checks'
         id: waitforstatuschecks
         uses: "WyriHaximus/github-action-wait-for-status@v1"
