@@ -4743,12 +4743,12 @@ axe-core@^4.3.5:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.5.tgz#78d6911ba317a8262bfee292aeafcc1e04b49cc5"
   integrity sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==
 
-axios@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
-  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
+axios@^0.26.0:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
+  integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
   dependencies:
-    follow-redirects "^1.14.7"
+    follow-redirects "^1.14.8"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -8696,10 +8696,10 @@ follow-redirects@^1.0.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
   integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
 
-follow-redirects@^1.14.7:
-  version "1.14.7"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
-  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
+follow-redirects@^1.14.8:
+  version "1.14.9"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.9.tgz#dd4ea157de7bfaf9ea9b3fbd85aa16951f78d8d7"
+  integrity sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -14959,9 +14959,9 @@ q@^1.1.2, q@^1.5.1:
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
 qiankun@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.5.1.tgz#1b840f370c8d175ffa032adc70b00ba5d2d0f4fb"
-  integrity sha512-daLecW4OEZg83djpgxwfUPz9InTrr3pIgyReDmrFoFAEUxBButCGtWSqvSaQ4e4WJE07pXcckXpXByqn/Rk1fA==
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.7.0.tgz#2054e1be05ddfbf1eb7658125075bc9f04afd37e"
+  integrity sha512-MvsRNsu/2dql9un6qWRz/uNsyrFKa2b21Yxpb6UQpNu1pAl16xFozLDufBqiv/RbaGLI+f37VMwofi8n6WpP3w==
   dependencies:
     "@babel/runtime" "^7.10.5"
     import-html-entry "^1.9.0"
