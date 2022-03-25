@@ -1,4 +1,4 @@
-FROM node:fermium-alpine
+FROM node:gallium-alpine
 
 LABEL name="mia-microlc-config-manager" \
       description="The Mia-Platform micro fontend solution configuration manager" \
