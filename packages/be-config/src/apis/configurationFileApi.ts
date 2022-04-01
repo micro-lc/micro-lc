@@ -28,7 +28,6 @@ const retrieveConfigurationFile = async(instanceConfig: any, configurationName: 
 
 export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler<any> = (fastifyInstance) => {
   return async(request, reply) => {
-    // @ts-ignore
     const instanceConfig: any = fastifyInstance.config
     if (instanceConfig.PLUGINS_CONFIGURATIONS_PATH) {
       const userGroups = request.getGroups()
