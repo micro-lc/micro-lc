@@ -17,9 +17,14 @@
 import fs from 'fs'
 import Ajv from 'ajv/dist/2019'
 
-export const readConfigurationFile = async(configurationPath: string) => {
+export const readRawFile = async(configurationPath: string) => {
   const fileContent = await fs.promises.readFile(configurationPath)
-  return JSON.parse(fileContent.toString('utf-8'))
+  return fileContent.toString('utf-8')
+}
+
+export const readJsonConfigurationFile = async(configurationPath: string) => {
+  const fileContent = await readRawFile(configurationPath)
+  return JSON.parse(fileContent)
 }
 
 export const validateConfigurationContent = (configurationContent: any, configurationSchema: any) => {
@@ -31,7 +36,7 @@ export const validateConfigurationContent = (configurationContent: any, configur
 }
 
 export const readValidateConfiguration = async(configurationPath: string, configurationSchema: any) => {
-  const configurationContent = await readConfigurationFile(configurationPath)
+  const configurationContent = await readJsonConfigurationFile(configurationPath)
   validateConfigurationContent(configurationContent, configurationSchema)
   return configurationContent
 }

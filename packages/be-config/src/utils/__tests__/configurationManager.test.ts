@@ -17,7 +17,7 @@
 import path from 'path'
 import {authenticationSchema} from '@mia-platform/core'
 
-import {readConfigurationFile, readValidateConfiguration, validateConfigurationContent} from '../configurationManager'
+import {readJsonConfigurationFile, readValidateConfiguration, validateConfigurationContent} from '../configurationManager'
 
 describe('Configuration loader tests', () => {
   const configurationPath = path.join(__dirname, '../../__tests__/configurationMocks/validAuthenticationConfig.json')
@@ -31,13 +31,13 @@ describe('Configuration loader tests', () => {
   }
 
   it('Correctly load configuration', async() => {
-    const configContent = await readConfigurationFile(configurationPath)
+    const configContent = await readJsonConfigurationFile(configurationPath)
     expect(configContent.isAuthNecessary).toBeTruthy()
     expect(configContent.userInfoUrl).toBe('/api/v1/microlc/user')
   })
 
   it('Has validated file content', async() => {
-    const configContent = await readConfigurationFile(configurationPath)
+    const configContent = await readJsonConfigurationFile(configurationPath)
     const validation = () => {
       validateConfigurationContent(configContent, authenticationSchema)
     }
@@ -45,7 +45,7 @@ describe('Configuration loader tests', () => {
   })
 
   it('Validation fail', async() => {
-    const configContent = await readConfigurationFile(configurationPath)
+    const configContent = await readJsonConfigurationFile(configurationPath)
     const validation = () => {
       validateConfigurationContent(configContent, invalidSchema)
     }

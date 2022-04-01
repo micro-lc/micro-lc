@@ -18,23 +18,32 @@ import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {CONFIGURATION_NAME} from '../constants'
 import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
-import {readConfigurationFile} from '../utils/configurationManager'
+import {readJsonConfigurationFile, readRawFile} from '../utils/configurationManager'
 import {referencesReplacer} from '../utils/referencesReplacer'
 
-const retrieveConfigurationFile = async(instanceConfig: any, configurationName: string) => {
+const retrieveJsonConfiguration = async(instanceConfig: any, configurationName: string, userGroups: string[]) => {
   const configurationPath = `${instanceConfig.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}.json`
-  return readConfigurationFile(configurationPath)
+  const configurationContent = await readJsonConfigurationFile(configurationPath)
+  const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
+  return referencesReplacer(configurationContentFiltered)
+}
+
+const retrieveRawConfiguration = async(instanceConfig: any, configurationName: string) => {
+  const configurationPath = `${instanceConfig.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}`
+  return readRawFile(configurationPath)
 }
 
 export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler<any> = (fastifyInstance) => {
+  const instanceConfig: any = fastifyInstance.config
   return async(request, reply) => {
-    const instanceConfig: any = fastifyInstance.config
     if (instanceConfig.PLUGINS_CONFIGURATIONS_PATH) {
-      const userGroups = request.getGroups()
       // @ts-ignore
-      const configurationContent = await retrieveConfigurationFile(instanceConfig, request.params[CONFIGURATION_NAME])
-      const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
-      reply.send(referencesReplacer(configurationContentFiltered))
+      const configurationName: string = request.params[CONFIGURATION_NAME]
+      const fileContent = await Promise.any([
+        retrieveJsonConfiguration(instanceConfig, configurationName, request.getGroups()),
+        retrieveRawConfiguration(instanceConfig, configurationName),
+      ])
+      reply.send(fileContent)
     } else {
       reply.status(404).send()
     }

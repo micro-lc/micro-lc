@@ -3,7 +3,7 @@
     "target": "ES6",
     "module": "commonjs",
     "lib": [
-      "ES6"
+      "es2021"
     ],
     "allowJs": true,
     "skipLibCheck": true,
