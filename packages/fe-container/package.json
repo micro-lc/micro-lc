@@ -19,7 +19,7 @@
     "react-error-boundary": "^3.1.4",
     "react-helmet": "^6.1.0",
     "react-intl": "^5.23.0",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "4.0.3",
     "rxjs": "^7.4.0",
     "values.js": "^2.0.0",
