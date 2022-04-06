@@ -56,14 +56,14 @@ describe('Configuration api tests', () => {
   it('Correctly handle valid json', async() => {
     const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder())
     // @ts-ignore
-    await handler(requestBuilderMock('validMicrolcConfig'), replyMock)
+    await handler(requestBuilderMock('validMicrolcConfig.json'), replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
   })
 
   it('Correctly handle valid json with empty header', async() => {
     const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder())
     // @ts-ignore
-    await handler({headers: {}, params: {configurationName: 'validMicrolcConfig'}, getGroups: () => []}, replyMock)
+    await handler({headers: {}, params: {configurationName: 'validMicrolcConfig.json'}, getGroups: () => []}, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
   })
 

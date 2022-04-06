@@ -22,7 +22,7 @@ import {readJsonConfigurationFile, readRawFile} from '../utils/configurationMana
 import {referencesReplacer} from '../utils/referencesReplacer'
 
 const retrieveJsonConfiguration = async(instanceConfig: any, configurationName: string, userGroups: string[]) => {
-  const configurationPath = `${instanceConfig.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}.json`
+  const configurationPath = `${instanceConfig.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}`
   const configurationContent = await readJsonConfigurationFile(configurationPath)
   const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
   return referencesReplacer(configurationContentFiltered)
@@ -39,10 +39,8 @@ export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFast
     if (instanceConfig.PLUGINS_CONFIGURATIONS_PATH) {
       // @ts-ignore
       const configurationName: string = request.params[CONFIGURATION_NAME]
-      const fileContent = await Promise.any([
-        retrieveJsonConfiguration(instanceConfig, configurationName, request.getGroups()),
-        retrieveRawConfiguration(instanceConfig, configurationName),
-      ])
+      const retrieveFunction = configurationName.endsWith('.json') ? retrieveJsonConfiguration : retrieveRawConfiguration
+      const fileContent = await retrieveFunction(instanceConfig, configurationName, request.getGroups())
       reply.send(fileContent)
     } else {
       reply.status(404).send()
