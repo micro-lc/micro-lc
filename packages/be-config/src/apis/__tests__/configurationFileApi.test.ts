@@ -16,6 +16,7 @@
 
 import path from 'path'
 import fastify from 'fastify'
+import fs from 'fs'
 import http from 'http'
 import {DecoratedFastify, DecoratedRequest} from '@mia-platform/custom-plugin-lib'
 
@@ -24,11 +25,11 @@ import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcC
 import {configurationFileApiHandlerBuilder} from '../configurationFileApi'
 
 describe('Configuration api tests', () => {
-  const fastifyInstanceBuilder = () => {
+  const fastifyInstanceBuilder = (pathSuffix = '') => {
     // @ts-ignore
     return {
       config: {
-        PLUGINS_CONFIGURATIONS_PATH: path.join(__dirname, '../../__tests__/configurationMocks'),
+        PLUGINS_CONFIGURATIONS_PATH: path.join(__dirname, `../../__tests__/configurationMocks${pathSuffix}`),
         GROUPS_HEADER_KEY: 'groups',
       },
     } as DecoratedFastify
@@ -52,18 +53,27 @@ describe('Configuration api tests', () => {
     send: replySendMock,
   }
 
-  it('Correctly create handler', async() => {
+  it('Correctly handle valid json', async() => {
     const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder())
     // @ts-ignore
-    await handler(requestBuilderMock('validMicrolcConfig'), replyMock)
+    await handler(requestBuilderMock('validMicrolcConfig.json'), replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
   })
 
-  it('Correctly create handler with empty header', async() => {
+  it('Correctly handle valid json with empty header', async() => {
     const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder())
     // @ts-ignore
-    await handler({headers: {}, params: {configurationName: 'validMicrolcConfig'}, getGroups: () => []}, replyMock)
+    await handler({headers: {}, params: {configurationName: 'validMicrolcConfig.json'}, getGroups: () => []}, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
+  })
+
+  it('Correctly create handler for non json file', async() => {
+    const desiredFile = 'index.test.ts'
+    const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder('/../'))
+    // @ts-ignore
+    await handler(requestBuilderMock(desiredFile), replyMock)
+    const testFileContent = (await fs.promises.readFile(path.join(__dirname, `../../__tests__/${desiredFile}`))).toString('utf-8')
+    expect(replySendMock).toHaveBeenCalledWith(testFileContent)
   })
 
   it('Correctly handle not existent file', async() => {

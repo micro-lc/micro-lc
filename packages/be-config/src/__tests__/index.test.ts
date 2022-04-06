@@ -101,7 +101,7 @@ describe('index tests', () => {
     expect(fastify).not.toBeNull()
     const configurationFileContent = await fastify.inject({
       method: CONFIGURATION_FILE_ENDPOINT.METHOD,
-      url: '/configuration/validMicrolcConfig',
+      url: '/configuration/validMicrolcConfig.json',
     })
     expect(JSON.parse(configurationFileContent.body)).toMatchObject(validMicrolcConfig)
   })
