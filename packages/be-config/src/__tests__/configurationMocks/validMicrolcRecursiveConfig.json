@@ -12,6 +12,7 @@
       "primaryColor": "red"
     }
   },
+  "internalPlugins": [],
   "plugins": [
     {
       "id": "plugin-test-2",

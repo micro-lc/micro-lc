@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Configuration, configurationRecursiveSchema, Plugin} from '@mia-platform/core'
+import {Configuration, configurationRecursiveSchema, InternalPlugin, Plugin} from '@mia-platform/core'
 import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {readValidateConfiguration} from '../utils/configurationManager'
@@ -26,10 +26,11 @@ const readPluginConfiguration = async(fastifyInstance: DecoratedFastify) => {
   return validateConfiguration as Configuration
 }
 
-const buildNewConfiguration = (oldConfiguration: Configuration, allowedPlugins: Plugin[]) => {
+const buildNewConfiguration = (oldConfiguration: Configuration, allowedPlugins: Plugin[], allowedInternalPlugins: InternalPlugin[]): Configuration => {
   return {
     ...oldConfiguration,
     plugins: allowedPlugins,
+    internalPlugins: allowedInternalPlugins,
   }
 }
 
@@ -38,7 +39,8 @@ export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify)
   return (request, reply) => {
     const userGroups = request.getGroups()
     const allowedPlugins = aclExpressionEvaluator(configuration.plugins || [], userGroups)
-    const configurationForUser = buildNewConfiguration(configuration, allowedPlugins)
+    const allowedInternalPlugins = aclExpressionEvaluator(configuration.internalPlugins || [], userGroups)
+    const configurationForUser = buildNewConfiguration(configuration, allowedPlugins, allowedInternalPlugins)
     reply.send(configurationForUser)
   }
 }
