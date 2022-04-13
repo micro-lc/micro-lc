@@ -77,7 +77,7 @@
     "@types/react-helmet": "^6.1.4",
     "@types/react-router-dom": "^5.3.2",
     "craco-alias": "^3.0.1",
-    "eslint-config-react-app": "^6.0.0",
+    "eslint-config-react-app": "^7.0.1",
     "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-react": "^11.0.1",
     "eslint-plugin-flowtype": "^8.0.3",
