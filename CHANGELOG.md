@@ -7,10 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 0.8.0
+
 ### Added
 
 - base html tag in index.html
+- dynamic configuration script in index.html
+
+### Changed
+
+- now micro-lc can be exposed on a different path then /
+
+### BREAKING CHANGES
+
 - config file API now is able to return something that is not a JSON
+
 
 ## 0.7.0
 
