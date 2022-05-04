@@ -64,7 +64,7 @@
     "@babel/register": "^7.16.0",
     "@mia-platform/core": "0.8.0",
     "@mia-platform/microlc-ui-components": "0.1.0",
-    "@staticdeploy/mock-server": "^2.0.0",
+    "@staticdeploy/mock-server": "^3.0.0",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
