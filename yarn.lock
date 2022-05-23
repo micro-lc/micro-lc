@@ -15312,9 +15312,9 @@ q@^1.1.2, q@^1.5.1:
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
 qiankun@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.5.1.tgz#1b840f370c8d175ffa032adc70b00ba5d2d0f4fb"
-  integrity sha512-daLecW4OEZg83djpgxwfUPz9InTrr3pIgyReDmrFoFAEUxBButCGtWSqvSaQ4e4WJE07pXcckXpXByqn/Rk1fA==
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.7.1.tgz#f86ebb91271beb556302fcaa6dd0b24bea53d028"
+  integrity sha512-Udccw2NR7aIXrMijvFASEfqiI01vHsTekdkcwFHtgEkRvnkfpDn3SacIqVKqEf9yAnMWwNTrV1XxL0g0eM/0tw==
   dependencies:
     "@babel/runtime" "^7.10.5"
     import-html-entry "^1.9.0"
