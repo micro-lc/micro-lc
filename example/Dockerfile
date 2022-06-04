@@ -5,7 +5,7 @@ RUN yarn install && yarn build
 
 ########################################################################################################################
 
-FROM nginx:1.21.6-alpine as build
+FROM nginx:1.22.0-alpine as build
 
 LABEL name="mia_template_service_name_placeholder" \
       description="%CUSTOM_PLUGIN_SERVICE_DESCRIPTION%" \
