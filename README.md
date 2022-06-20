@@ -29,7 +29,7 @@ An introduction about micro frontend and how micro-lc works:
 ## Horizontal micro-frontend
 Are you interested in horizontal split micro-frontends?
 
-Take also a look at [micro-lc-element-omposer][micro-lc-element-composer]!
+Take also a look at [micro-lc-element-composer][micro-lc-element-composer]!
 
 # Getting Started
 
