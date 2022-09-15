@@ -1,4 +1,7 @@
 {
   "name": "@micro-lc/orchestrator",
-  "version": "2.0.0-rc0"
+  "version": "2.0.0-rc0",
+  "devDependencies": {
+    "@micro-lc/interfaces": "workspace:*"
+  }
 }

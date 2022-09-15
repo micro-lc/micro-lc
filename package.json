@@ -1,13 +1,31 @@
 {
   "name": "micro-lc",
-  "version": "2.0.0-rc0",
   "description": "The micro frontend solution by Mia-Platform",
   "license": "SEE LICENSE IN LICENSE",
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "i": "yarn workspace @micro-lc/interfaces",
+    "l": "yarn workspace @micro-lc/layout",
+    "o": "yarn workspace @micro-lc/orchestrator",
+    "lint": "eslint . --ext .mjs,.js,.jsx,.ts,.tsx --resolve-plugins-relative-to .",
+    "postinstall": "husky install",
+    "prepublish": "pinst --disable"
+  },
   "engines": {
     "node": ">=16.17.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^8.23.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "husky": "^8.0.1",
+    "pinst": "^3.0.0",
+    "typescript": "^4.8.3"
   },
   "packageManager": "yarn@3.2.3"
 }
