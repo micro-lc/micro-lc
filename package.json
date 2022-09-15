@@ -1,0 +1,19 @@
+{
+  "name": "mia-microlc",
+  "version": "2.0.0-rc0",
+  "description": "The Mia-Platform micro frontend solution",
+  "license": "SEE LICENSE IN LICENSE",
+  "packageManager": "yarn@3.2.3",
+  "scripts": {
+
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
