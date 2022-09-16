@@ -5,10 +5,13 @@
     "cleanup": "yarn run -T rimraf ./dist stats.html",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
+    "build": "yarn run -T run-s cleanup build:dev build:prod",
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha src/**/test/**/*.test.ts",
     "test:chromium": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers chromium",
     "test:firefox": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers firefox",
-    "test:safari": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers webkit"
+    "test:safari": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers webkit",
+    "test": "yarn run -T run-p test:firefox",
+    "serve:bundle": "cd dist && python3 -m http.server"
   },
   "devDependencies": {
     "@micro-lc/interfaces": "workspace:*",
@@ -34,6 +37,7 @@
   },
   "dependencies": {
     "es-module-shims": "^1.5.18",
+    "lit-html": "^2.3.1",
     "qiankun": "^2.7.5"
   },
   "engines": {

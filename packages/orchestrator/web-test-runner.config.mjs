@@ -18,7 +18,7 @@ export default {
       ts: true,
     }),
     replace({
-      'process.env.NODE_ENV': JSON.stringify('development'),
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }, { preventAssignment: true }),
   ],
 }

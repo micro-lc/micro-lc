@@ -62,7 +62,7 @@ const tsConfigs = {
         singleline: { delimiter: 'semi', requireLast: false },
       },
     ],
-    '@typescript-eslint/no-shadow': 'error',
+    '@typescript-eslint/no-shadow': ['error', { hoist: 'functions' }],
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
