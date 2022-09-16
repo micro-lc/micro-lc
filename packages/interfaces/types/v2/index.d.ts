@@ -7,46 +7,73 @@
 
 export type Application =
   | {
+      /**
+       * Unique identifier of the application
+       */
       id: string
+      /**
+       * Type of the application: hyperlink to another page
+       */
       integrationMode: "href"
+      /**
+       * Link's destination
+       */
       href: string
+      /**
+       * Specifies where to open the linked document
+       */
       target?: "_blank" | "_self" | "_parent" | "_top"
     }
   | {
+      /**
+       * Unique identifier of the application
+       */
       id: string
+      /**
+       * Type of the application: nested browsing context
+       */
       integrationMode: "iframe"
       /**
        * iFrame src attribute value
        */
-      src?: string
+      src: string
       /**
        * Path on which the iFrame will be rendered
        */
       route: string
+      /**
+       * Valid attributes of iframe HTML element
+       */
       attributes?: {
-        allow?: unknown
-        allowfullscreen?: unknown
-        allowpaymentrequest?: unknown
-        csp?: unknown
-        fetchpriority?: unknown
         [k: string]: unknown
       }
     }
   | {
+      /**
+       * Unique identifier of the application
+       */
       id: string
+      /**
+       * Type of the application: composition of HTML tags
+       */
       integrationMode: "compose"
-      config:
-        | {
-            [k: string]: unknown
-          }
-        | string
+      /**
+       * Composer configuration. It can be an url or an in-line configuration
+       */
+      config: PluginConfiguration | string
       /**
        * Path on which the plugin will be rendered
        */
       route: string
     }
   | {
+      /**
+       * Unique identifier of the application
+       */
       id: string
+      /**
+       * Type of the application: micro front-end loaded using qiankun
+       */
       integrationMode: "qiankun"
       /**
        * Entry of the plugin
@@ -66,7 +93,7 @@ export type Application =
               }
           )
       /**
-       * Qiankun activeRule
+       * qiankun activeRule
        */
       route: string
       container?: {
@@ -80,11 +107,146 @@ export type Application =
       }
     }
 /**
- * bar
+ * Content of the plugin
  */
 export type Content = ArrayContent | Component | (number | string)
 /**
- * an html array node
+ * HTML5 tag name
+ */
+export type HTMLTag =
+  | "a"
+  | "abbr"
+  | "acronym"
+  | "address"
+  | "applet"
+  | "area"
+  | "article"
+  | "aside"
+  | "audio"
+  | "base"
+  | "basefont"
+  | "bdo"
+  | "bgsound"
+  | "blink"
+  | "blockquote"
+  | "body"
+  | "br"
+  | "button"
+  | "canvas"
+  | "caption"
+  | "center"
+  | "col"
+  | "colgroup"
+  | "command"
+  | "comment"
+  | "datalist"
+  | "dd"
+  | "del"
+  | "details"
+  | "dir"
+  | "div"
+  | "dl"
+  | "dt"
+  | "embed"
+  | "fieldset"
+  | "figure"
+  | "b"
+  | "big"
+  | "i"
+  | "small"
+  | "tt"
+  | "font"
+  | "footer"
+  | "form"
+  | "frame"
+  | "frameset"
+  | "head"
+  | "header"
+  | "hgroup"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "hr"
+  | "html"
+  | "isindex"
+  | "iframe"
+  | "ilayer"
+  | "img"
+  | "input"
+  | "ins"
+  | "keygen"
+  | "label"
+  | "layer"
+  | "legend"
+  | "li"
+  | "link"
+  | "map"
+  | "mark"
+  | "marquee"
+  | "menu"
+  | "meta"
+  | "meter"
+  | "multicol"
+  | "nav"
+  | "nobr"
+  | "noembed"
+  | "noframes"
+  | "noscript"
+  | "object"
+  | "ol"
+  | "optgroup"
+  | "option"
+  | "output"
+  | "p"
+  | "param"
+  | "cite"
+  | "code"
+  | "dfn"
+  | "em"
+  | "kbd"
+  | "samp"
+  | "strong"
+  | "var"
+  | "plaintext"
+  | "pre"
+  | "progress"
+  | "q"
+  | "ruby"
+  | "script"
+  | "section"
+  | "select"
+  | "spacer"
+  | "span"
+  | "s"
+  | "slot"
+  | "strike"
+  | "style"
+  | "sub"
+  | "sup"
+  | "table"
+  | "tbody"
+  | "td"
+  | "textarea"
+  | "tfoot"
+  | "th"
+  | "thead"
+  | "time"
+  | "title"
+  | "tr"
+  | "u"
+  | "ul"
+  | "video"
+  | "wbr"
+  | "xmp"
+/**
+ * HTML node children
+ */
+export type Content1 = ArrayContent | Component | (number | string)
+/**
+ * An HTML array node
  */
 export type ArrayContent = (Component | (number | string))[]
 
@@ -96,9 +258,12 @@ export interface Config {
   version: 2
   settings?: Settings
   css?: CSSConfig
-  importmap?: GlobalImportmap
+  "import-map"?: GlobalImportMap
+  /**
+   * List of mounted applications
+   */
   applications?: Application[]
-  layout?: PluginConfiguration
+  layout?: PluginConfiguration1
 }
 /**
  * Global micro-lc settings
@@ -108,33 +273,47 @@ export interface Settings {
    * Query selector to plugins mounting DOM element
    */
   pluginMountPointSelector?: string
+  /**
+   * Landing URL
+   */
   defaultUrl?: string
 }
 /**
- * TODO
+ * CSS-related configuration
  */
 export interface CSSConfig {
+  /**
+   * A map matching CSS selectors to rules
+   */
   nodes?: {
     /**
+     * A valid CSS selector
+     *
      * This interface was referenced by `undefined`'s JSON-Schema definition
      * via the `patternProperty` ".*".
      */
     [k: string]: {
+      /**
+       * A valid CSS property
+       *
+       * This interface was referenced by `undefined`'s JSON-Schema definition
+       * via the `patternProperty` ".*".
+       */
       [k: string]: string | number
     }
   }
+  /**
+   * Standard CSS variables globally available scoped with prefix '--micro-lc-'
+   */
   global?: {
-    /**
-     * Becomes --micro-lc-primary-color
-     */
     "primary-color"?: string
     "font-family"?: string
   }
 }
 /**
- * Import maps settings
+ * Global import map
  */
-export interface GlobalImportmap {
+export interface GlobalImportMap {
   imports?: Imports
   scopes?: Scopes
 }
@@ -152,172 +331,59 @@ export interface Scopes {
     [k: string]: string
   }
 }
-/**
- * Orchestrator main page layout DOM configuration
- */
 export interface PluginConfiguration {
+  /**
+   * Global sources
+   */
   sources?:
     | string
     | string[]
     | {
+        /**
+         * A single source uri or a list of source uris
+         */
         uris: string | string[]
-        importmap?: Importmap
+        "import-map"?: ImportMap
       }
   content: Content
-  [k: string]: unknown
 }
-export interface Importmap {
+/**
+ * Specific import map for the component
+ */
+export interface ImportMap {
   imports?: Imports
   scopes?: Scopes
 }
 /**
- * an html element node
+ * An HTML node
  */
 export interface Component {
+  /**
+   * Sources of custom HTML node
+   */
   sources?:
     | string
     | string[]
     | {
+        /**
+         * A single source uri or a list of source uris
+         */
         uris: string | string[]
-        importmap?: Importmap
+        "import-map"?: ImportMap
       }
-  tag:
-    | string
-    | (
-        | "a"
-        | "abbr"
-        | "acronym"
-        | "address"
-        | "applet"
-        | "area"
-        | "article"
-        | "aside"
-        | "audio"
-        | "base"
-        | "basefont"
-        | "bdo"
-        | "bgsound"
-        | "blink"
-        | "blockquote"
-        | "body"
-        | "br"
-        | "button"
-        | "canvas"
-        | "caption"
-        | "center"
-        | "col"
-        | "colgroup"
-        | "command"
-        | "comment"
-        | "datalist"
-        | "dd"
-        | "del"
-        | "details"
-        | "dir"
-        | "div"
-        | "dl"
-        | "dt"
-        | "embed"
-        | "fieldset"
-        | "figure"
-        | "b"
-        | "big"
-        | "i"
-        | "small"
-        | "tt"
-        | "font"
-        | "footer"
-        | "form"
-        | "frame"
-        | "frameset"
-        | "head"
-        | "header"
-        | "hgroup"
-        | "h1"
-        | "h2"
-        | "h3"
-        | "h4"
-        | "h5"
-        | "h6"
-        | "hr"
-        | "html"
-        | "isindex"
-        | "iframe"
-        | "ilayer"
-        | "img"
-        | "input"
-        | "ins"
-        | "keygen"
-        | "label"
-        | "layer"
-        | "legend"
-        | "li"
-        | "link"
-        | "map"
-        | "mark"
-        | "marquee"
-        | "menu"
-        | "meta"
-        | "meter"
-        | "multicol"
-        | "nav"
-        | "nobr"
-        | "noembed"
-        | "noframes"
-        | "noscript"
-        | "object"
-        | "ol"
-        | "optgroup"
-        | "option"
-        | "output"
-        | "p"
-        | "param"
-        | "cite"
-        | "code"
-        | "dfn"
-        | "em"
-        | "kbd"
-        | "samp"
-        | "strong"
-        | "var"
-        | "plaintext"
-        | "pre"
-        | "progress"
-        | "q"
-        | "ruby"
-        | "script"
-        | "section"
-        | "select"
-        | "spacer"
-        | "span"
-        | "s"
-        | "slot"
-        | "strike"
-        | "style"
-        | "sub"
-        | "sup"
-        | "table"
-        | "tbody"
-        | "td"
-        | "textarea"
-        | "tfoot"
-        | "th"
-        | "thead"
-        | "time"
-        | "title"
-        | "tr"
-        | "u"
-        | "ul"
-        | "video"
-        | "wbr"
-        | "xmp"
-      )
   /**
-   * html5 attribute applied using setAttribute API
+   * HTML node tag name
+   */
+  tag: string | HTMLTag
+  /**
+   * HTML5 attribute applied using setAttribute API
    */
   attributes?: {
     [k: string]: string
   }
+  /**
+   * HTML5 boolean attribute applied using setAttribute API
+   */
   booleanAttributes?: string[]
   /**
    * DOM element property applied as object property after creating an element
@@ -325,5 +391,24 @@ export interface Component {
   properties?: {
     [k: string]: unknown
   }
-  content?: Content
+  content?: Content1
+}
+/**
+ * Orchestrator main page layout DOM configuration
+ */
+export interface PluginConfiguration1 {
+  /**
+   * Global sources
+   */
+  sources?:
+    | string
+    | string[]
+    | {
+        /**
+         * A single source uri or a list of source uris
+         */
+        uris: string | string[]
+        "import-map"?: ImportMap
+      }
+  content: Content
 }

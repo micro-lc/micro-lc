@@ -3,8 +3,8 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "title": "PluginConfiguration",
   "definitions": {
-    "importmap": {
-      "title": "Importmap",
+    "import-map": {
+      "title": "ImportMap",
       "type": "object",
       "examples": [
         {
@@ -40,7 +40,6 @@
               "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.development.min.js"
             }
           ],
-          "properties": {},
           "additionalProperties": {
             "type": "string",
             "format": "uri-reference"
@@ -60,10 +59,8 @@
               }
             }
           ],
-          "properties": {},
           "additionalProperties": {
             "type": "object",
-            "properties": {},
             "additionalProperties": {
               "type": "string",
               "format": "uri-reference"
@@ -75,6 +72,40 @@
     },
 
     "sources": {
+      "examples": [
+        "https://my-web-components-source",
+        [
+          "https://my-web-components-source-1",
+          "https://my-web-components-source-2"
+        ],
+        {
+          "uris": "https://my-web-components-source"
+        },
+        {
+          "uris": [
+            "https://my-web-components-source-1",
+            "https://my-web-components-source-2"
+          ]
+        },
+        {
+          "uris": "https://my-web-components-source",
+          "import-map": {
+            "imports": {
+              "a": "/a-1.mjs",
+              "b": "/b-1.mjs",
+              "c": "/c-1.mjs"
+            },
+            "scopes": {
+              "/scope2/": {
+                "a": "/a-2.mjs"
+              },
+              "/scope2/scope3/": {
+                "b": "/b-3.mjs"
+              }
+            }
+          }
+        }
+      ],
       "oneOf": [
         {
           "type": "string",
@@ -91,6 +122,7 @@
           "type": "object",
           "properties": {
             "uris": {
+              "description": "A single source uri or a list of source uris",
               "oneOf": [
                 {
                   "type": "string",
@@ -105,8 +137,9 @@
                 }
               ]
             },
-            "importmap": {
-              "$ref": "#/definitions/importmap"
+            "import-map": {
+              "$ref": "#/definitions/import-map",
+              "description": "Specific import map for the component"
             }
           },
           "additionalProperties": false,
@@ -118,7 +151,7 @@
     },
 
     "text-content": {
-      "description": "an html number or text content node",
+      "description": "An HTML number or text content node",
       "oneOf": [
         {
           "type": "number"
@@ -131,6 +164,7 @@
 
     "component": {
       "title": "Component",
+      "description": "An HTML node",
       "type": "object",
       "examples": [
         {
@@ -158,29 +192,32 @@
           "booleanAttributes": ["disabled"]
         },
         {
+          "sources": "https://my-web-components-source",
           "tag": "my-custom-button"
         }
       ],
       "properties": {
         "sources": {
-          "$ref": "#/definitions/sources"
+          "$ref": "#/definitions/sources",
+          "description": "Sources of custom HTML node"
         },
 
         "tag": {
+          "description": "HTML node tag name",
           "oneOf": [
             {
-              "description": "custom element tag name",
+              "description": "Custom tag name",
               "type": "string",
               "pattern": "^[^-](([a-z]+)-)+([a-z]+)$"
             },
             {
-              "$ref": "html-tags.schema.json#/definitions/html-tag"
+              "$ref": "html-tag.schema.json#/definitions/html-tag"
             }
           ]
         },
 
         "attributes": {
-          "description": "html5 attribute applied using setAttribute API",
+          "description": "HTML5 attribute applied using setAttribute API",
           "type": "object",
           "properties": {},
           "additionalProperties": {
@@ -189,6 +226,7 @@
         },
 
         "booleanAttributes": {
+          "description": "HTML5 boolean attribute applied using setAttribute API",
           "type": "array",
           "items": {
             "type": "string"
@@ -201,7 +239,8 @@
         },
 
         "content": {
-          "$ref": "#/definitions/content"
+          "$ref": "#/definitions/content",
+          "description": "HTML node children"
         }
       },
       "additionalProperties": false,
@@ -210,18 +249,13 @@
       ]
     },
 
-    "single-node": {
-      "$ref": "#/definitions/component",
-      "description": "an html element node"
-    },
-
     "array-content": {
-      "description": "an html array node",
+      "description": "An HTML array node",
       "type": "array",
       "items": {
         "oneOf": [
           {
-            "$ref": "#/definitions/single-node"
+            "$ref": "#/definitions/component"
           },
           {
             "$ref": "#/definitions/text-content"
@@ -232,13 +266,12 @@
 
     "content": {
       "title": "Content",
-      "description": "bar",
       "oneOf": [
         {
           "$ref": "#/definitions/array-content"
         },
         {
-          "$ref": "#/definitions/single-node"
+          "$ref": "#/definitions/component"
         },
         {
           "$ref": "#/definitions/text-content"
@@ -249,13 +282,16 @@
   "type": "object",
   "properties": {
     "sources": {
-      "$ref": "#/definitions/sources"
+      "$ref": "#/definitions/sources",
+      "description": "Global sources"
     },
 
     "content": {
-      "$ref": "#/definitions/content"
+      "$ref": "#/definitions/content",
+      "description": "Content of the plugin"
     }
   },
+  "additionalProperties": false,
   "required": [
     "content"
   ]

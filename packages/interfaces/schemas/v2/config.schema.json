@@ -18,29 +18,97 @@
           ]
         },
         "defaultUrl": {
+          "description": "Landing URL",
           "type": "string",
           "default": "/",
+          "examples": [
+            "/my-awesome-plugin"
+          ],
           "format": "uri-reference"
         }
       },
       "additionalProperties": false
     },
 
+    "css": {
+      "title": "CSSConfig",
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "description": "A map matching CSS selectors to rules",
+          "type": "object",
+          "examples": [
+            {
+              ":host": {
+                "width": "100%"
+              }
+            }
+          ],
+          "patternProperties": {
+            ".*": {
+              "description": "A valid CSS selector",
+              "type": "object",
+              "patternProperties": {
+                ".*": {
+                  "description": "A valid CSS property",
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "global": {
+          "description": "Standard CSS variables globally available scoped with prefix '--micro-lc-'",
+          "type": "object",
+          "properties": {
+            "primary-color": {
+              "type": "string"
+            },
+            "font-family": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
     "application": {
+      "title": "Application",
       "oneOf": [
         {
           "type": "object",
+          "examples": [
+            {
+              "id": "my-awesome-href",
+              "integrationMode": "href",
+              "href": "www.google.com",
+              "target": "_self"
+            }
+          ],
           "properties": {
             "id": {
+              "description": "Unique identifier of the application",
               "type": "string"
             },
             "integrationMode": {
+              "description": "Type of the application: hyperlink to another page",
               "const": "href"
             },
             "href": {
+              "description": "Link's destination",
               "type": "string"
             },
             "target": {
+              "description": "Specifies where to open the linked document",
               "default": "_blank",
               "enum": ["_blank", "_self", "_parent", "_top"]
             }
@@ -54,11 +122,24 @@
         },
         {
           "type": "object",
+          "examples": [
+            {
+              "id": "my-awesome-iframe",
+              "integrationMode": "iframe",
+              "src": "www.google.com",
+              "route": "/embedded-google-page",
+              "attributes": {
+                "allow": "fullscreen"
+              }
+            }
+          ],
           "properties": {
             "id": {
+              "description": "Unique identifier of the application",
               "type": "string"
             },
             "integrationMode": {
+              "description": "Type of the application: nested browsing context",
               "const": "iframe"
             },
             "src": {
@@ -70,38 +151,53 @@
               "type": "string"
             },
             "attributes": {
-              "$comment": "TODO: finish properties",
-              "type": "object",
-              "properties": {
-                "allow": {},
-                "allowfullscreen": {},
-                "allowpaymentrequest": {},
-                "csp": {},
-                "fetchpriority": {}
-              }
+              "$comment": "TODO: should we list all possible properties?",
+              "description": "Valid attributes of iframe HTML element",
+              "type": "object"
             }
           },
           "additionalProperties": false,
           "required": [
             "id",
             "integrationMode",
-            "entry",
+            "src",
             "route"
           ]
         },
         {
           "type": "object",
+          "examples": [
+            {
+              "id": "my-awesome-composition",
+              "integrationMode": "compose",
+              "config": "./page-configuration.json",
+              "route": "/composed-page"
+            },
+            {
+              "id": "my-awesome-composition",
+              "integrationMode": "compose",
+              "config": {
+                "content": {
+                  "tag": "div"
+                }
+              },
+              "route": "/composed-page"
+            }
+          ],
           "properties": {
             "id": {
+              "description": "Unique identifier of the application",
               "type": "string"
             },
             "integrationMode": {
+              "description": "Type of the application: composition of HTML tags",
               "const": "compose"
             },
             "config": {
+              "description": "Composer configuration. It can be an url or an in-line configuration",
               "oneOf": [
                 {
-                  "$comment": "TODO: ref to element composer config schema"
+                  "$ref": "plugin.schema.json"
                 },
                 {
                   "type": "string",
@@ -124,14 +220,28 @@
         },
         {
           "type": "object",
+          "examples": [
+            {
+              "id": "my-awesome-qiankun-plugin",
+              "integrationMode": "qiankun",
+              "route": "/qiankun-plugin",
+              "entry": "https://my-micro-frontend.com",
+              "properties": {
+                "foo": "bar"
+              }
+            }
+          ],
           "properties": {
             "id": {
+              "description": "Unique identifier of the application",
               "type": "string"
             },
             "integrationMode": {
+              "description": "Type of the application: micro front-end loaded using qiankun",
               "const": "qiankun"
             },
             "entry": {
+              "$comment": "TODO: complete the description",
               "description": "Entry of the plugin",
               "oneOf": [
                 {
@@ -231,7 +341,7 @@
               ]
             },
             "route": {
-              "description": "Qiankun activeRule",
+              "description": "qiankun activeRule",
               "type": "string"
             },
             "container": {
@@ -251,53 +361,6 @@
           ]
         }
       ]
-    },
-
-    "css": {
-      "title": "CSSConfig",
-      "description": "TODO",
-      "type": "object",
-      "properties": {
-        "nodes": {
-          "type": "object",
-          "examples": [
-            {
-              ":host": {
-                "width": "100%"
-              }
-            }
-          ],
-          "patternProperties": {
-            ".*": {
-              "type": "object",
-              "additionalProperties": {
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "global": {
-          "type": "object",
-          "properties": {
-            "primary-color": {
-              "description": "Becomes --micro-lc-primary-color",
-              "type": "string"
-            },
-            "font-family": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        }
-      },
-      "additionalProperties": false
     }
   },
   "type": "object",
@@ -316,16 +379,18 @@
     },
 
     "css": {
-      "$ref": "#/definitions/css"
+      "$ref": "#/definitions/css",
+      "description": "CSS-related configuration"
     },
 
-    "importmap": {
-      "$ref": "plugin.schema.json#/definitions/importmap",
-      "title": "GlobalImportmap",
-      "description": "Import maps settings"
+    "import-map": {
+      "$ref": "plugin.schema.json#/definitions/import-map",
+      "title": "GlobalImportMap",
+      "description": "Global import map"
     },
 
     "applications": {
+      "description": "List of mounted applications",
       "type": "array",
       "items": {
         "$ref": "#/definitions/application"
@@ -335,7 +400,6 @@
     "layout": {
       "$ref": "plugin.schema.json",
       "description": "Orchestrator main page layout DOM configuration",
-      "type": "object",
       "default": {
         "tag": "div",
         "attributes": {
