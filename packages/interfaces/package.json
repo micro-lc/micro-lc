@@ -1,4 +1,34 @@
 {
   "name": "@micro-lc/interfaces",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "types": "./types/v2/index.d.ts",
+  "scripts": {
+    "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha test/**/*.test.ts",
+    "test": "yarn test:unit",
+    "make-types": "node ./scripts/make-types.mjs"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "commander": "^9.4.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.3",
+    "@types/eslint": "^8.4.6",
+    "@types/glob": "^8.0.0",
+    "@types/mkdirp": "^1.0.2",
+    "@types/mocha": "^9.1.1",
+    "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
+    "chai": "^4.3.6",
+    "eslint": "^8.23.1",
+    "glob": "^8.0.3",
+    "json-schema-to-typescript": "^11.0.2",
+    "mkdirp": "^1.0.4",
+    "mocha": "^10.0.0",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.1"
+  },
+  "engines": {
+    "node": ">=16.17.0"
+  }
 }

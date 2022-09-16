@@ -1,3 +1,5 @@
+const path = require('path')
+
 const moduleConfig = require('eslint-plugin-n/lib/configs/recommended-module')
 const scriptConfig = require('eslint-plugin-n/lib/configs/recommended-script')
 const getPackageJson = require('eslint-plugin-n/lib/util/get-package-json')
@@ -44,7 +46,10 @@ const tsConfigs = {
   files: ['*.ts', '*.tsx', '*.mts', '*.cts'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['./packages/orchestrator/tsconfig.json'],
+    project: [
+      path.resolve(__dirname, './packages/orchestrator/tsconfig.json'),
+      path.resolve(__dirname, './packages/interfaces/tsconfig.json'),
+    ],
   },
   plugins: ['@typescript-eslint', 'typescript-sort-keys'],
   rules: {

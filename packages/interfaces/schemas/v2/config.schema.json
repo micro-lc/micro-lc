@@ -1,0 +1,379 @@
+{
+  "$id": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/config.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Config",
+  "description": "Version 2 of micro-lc configuration",
+  "definitions": {
+    "settings": {
+      "title": "Settings",
+      "type": "object",
+      "properties": {
+        "pluginMountPointSelector": {
+          "description": "Query selector to plugins mounting DOM element",
+          "type": "string",
+          "default": "#__MICRO_LC_MOUNT_POINT",
+          "examples": [
+            "#my-plugin-container",
+            "body micro-lc custom-layout div#plugin-container"
+          ]
+        },
+        "defaultUrl": {
+          "type": "string",
+          "default": "/",
+          "format": "uri-reference"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "application": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "integrationMode": {
+              "const": "href"
+            },
+            "href": {
+              "type": "string"
+            },
+            "target": {
+              "default": "_blank",
+              "enum": ["_blank", "_self", "_parent", "_top"]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "integrationMode",
+            "href"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "integrationMode": {
+              "const": "iframe"
+            },
+            "src": {
+              "description": "iFrame src attribute value",
+              "type": "string"
+            },
+            "route": {
+              "description": "Path on which the iFrame will be rendered",
+              "type": "string"
+            },
+            "attributes": {
+              "$comment": "TODO: finish properties",
+              "type": "object",
+              "properties": {
+                "allow": {},
+                "allowfullscreen": {},
+                "allowpaymentrequest": {},
+                "csp": {},
+                "fetchpriority": {}
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "integrationMode",
+            "entry",
+            "route"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "integrationMode": {
+              "const": "compose"
+            },
+            "config": {
+              "oneOf": [
+                {
+                  "$comment": "TODO: ref to element composer config schema"
+                },
+                {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              ]
+            },
+            "route": {
+              "description": "Path on which the plugin will be rendered",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "integrationMode",
+            "config",
+            "route"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "integrationMode": {
+              "const": "qiankun"
+            },
+            "entry": {
+              "description": "Entry of the plugin",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "scripts": {
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "format": "uri-reference"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "format": "uri-reference"
+                              },
+                              "minItems": 1
+                            }
+                          ]
+                        },
+                        "styles": {
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "format": "uri-reference"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "format": "uri-reference"
+                              }
+                            }
+                          ]
+                        },
+                        "html": {
+                          "type": "string",
+                          "format": "uri-reference"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "scripts"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "scripts": {
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "format": "uri-reference"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "format": "uri-reference"
+                              }
+                            }
+                          ]
+                        },
+                        "styles": {
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "format": "uri-reference"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "format": "uri-reference"
+                              }
+                            }
+                          ]
+                        },
+                        "html": {
+                          "type": "string",
+                          "format": "uri-reference"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "html"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "route": {
+              "description": "Qiankun activeRule",
+              "type": "string"
+            },
+            "container": {
+              "$comment": "TODO: do we need this?"
+            },
+            "properties": {
+              "description": "Data passed to the plugin",
+              "type": "object"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "integrationMode",
+            "entry",
+            "route"
+          ]
+        }
+      ]
+    },
+
+    "css": {
+      "title": "CSSConfig",
+      "description": "TODO",
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "object",
+          "examples": [
+            {
+              ":host": {
+                "width": "100%"
+              }
+            }
+          ],
+          "patternProperties": {
+            ".*": {
+              "type": "object",
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "global": {
+          "type": "object",
+          "properties": {
+            "primary-color": {
+              "description": "Becomes --micro-lc-primary-color",
+              "type": "string"
+            },
+            "font-family": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+
+    "version": {
+      "const": 2
+    },
+
+    "settings": {
+      "$ref": "#/definitions/settings",
+      "description": "Global micro-lc settings"
+    },
+
+    "css": {
+      "$ref": "#/definitions/css"
+    },
+
+    "importmap": {
+      "$ref": "plugin.schema.json#/definitions/importmap",
+      "title": "GlobalImportmap",
+      "description": "Import maps settings"
+    },
+
+    "applications": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/application"
+      }
+    },
+
+    "layout": {
+      "$ref": "plugin.schema.json",
+      "description": "Orchestrator main page layout DOM configuration",
+      "type": "object",
+      "default": {
+        "tag": "div",
+        "attributes": {
+          "id": "__MICRO_LC_MOUNT_POINT"
+        }
+      },
+      "examples": [
+        {
+          "content": {
+            "tag": "div",
+            "attributes": {
+              "id": "my-plugin-container"
+            }
+          }
+        },
+        {
+          "sources": "./my-static.js",
+          "content": [
+            {
+              "tag": "my-custom-menu"
+            },
+            {
+              "tag": "div",
+              "attributes": {
+                "id": "__MICRO_LC_MOUNT_POINT"
+              }
+            },
+            {
+              "sources": "./my-footer.js",
+              "tag": "my-custom-footer"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "version"
+  ]
+}

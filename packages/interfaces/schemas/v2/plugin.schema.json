@@ -1,0 +1,262 @@
+{
+  "$id": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/plugin.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "PluginConfiguration",
+  "definitions": {
+    "importmap": {
+      "title": "Importmap",
+      "type": "object",
+      "examples": [
+        {
+          "imports": {
+            "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.development.min.js",
+            "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.development.min.js"
+          }
+        },
+        {
+          "imports": {
+            "a": "/a-1.mjs",
+            "b": "/b-1.mjs",
+            "c": "/c-1.mjs"
+          },
+          "scopes": {
+            "/scope2/": {
+              "a": "/a-2.mjs"
+            },
+            "/scope2/scope3/": {
+              "b": "/b-3.mjs"
+            }
+          }
+        }
+      ],
+      "properties": {
+        "imports": {
+          "title": "Imports",
+          "description": "Allows control over what URLs get fetched by JavaScript import statements and import() expressions.",
+          "type": "object",
+          "examples": [
+            {
+              "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.development.min.js",
+              "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.development.min.js"
+            }
+          ],
+          "properties": {},
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri-reference"
+          }
+        },
+        "scopes": {
+          "title": "Scopes",
+          "description": "It is often the case that you want to use the same import specifier to refer to multiple versions of a single library, depending on who is importing them. This encapsulates the versions of each dependency in use, and avoids dependency hell. We support this use case in import maps by allowing you to change the meaning of a specifier within a given scope.",
+          "type": "object",
+          "examples": [
+            {
+              "/scope2/": {
+                "a": "/a-2.mjs"
+              },
+              "/scope2/scope3/": {
+                "b": "/b-3.mjs"
+              }
+            }
+          ],
+          "properties": {},
+          "additionalProperties": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": {
+              "type": "string",
+              "format": "uri-reference"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "sources": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri-reference"
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "uris": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "uri-reference"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri-reference"
+                  }
+                }
+              ]
+            },
+            "importmap": {
+              "$ref": "#/definitions/importmap"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "uris"
+          ]
+        }
+      ]
+    },
+
+    "text-content": {
+      "description": "an html number or text content node",
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+
+    "component": {
+      "title": "Component",
+      "type": "object",
+      "examples": [
+        {
+          "tag": "div",
+          "content": "hello!"
+        },
+        {
+          "tag": "span",
+          "attributes": {
+            "style": "padding: 8px;"
+          },
+          "content": [
+            {
+              "tag": "p",
+              "content": "hello"
+            },
+            " world!"
+          ]
+        },
+        {
+          "tag": "button",
+          "properties": {
+            "textContent": "Don't click me!"
+          },
+          "booleanAttributes": ["disabled"]
+        },
+        {
+          "tag": "my-custom-button"
+        }
+      ],
+      "properties": {
+        "sources": {
+          "$ref": "#/definitions/sources"
+        },
+
+        "tag": {
+          "oneOf": [
+            {
+              "description": "custom element tag name",
+              "type": "string",
+              "pattern": "^[^-](([a-z]+)-)+([a-z]+)$"
+            },
+            {
+              "$ref": "html-tags.schema.json#/definitions/html-tag"
+            }
+          ]
+        },
+
+        "attributes": {
+          "description": "html5 attribute applied using setAttribute API",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+
+        "booleanAttributes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "properties": {
+          "description": "DOM element property applied as object property after creating an element",
+          "type": "object"
+        },
+
+        "content": {
+          "$ref": "#/definitions/content"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "tag"
+      ]
+    },
+
+    "single-node": {
+      "$ref": "#/definitions/component",
+      "description": "an html element node"
+    },
+
+    "array-content": {
+      "description": "an html array node",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/single-node"
+          },
+          {
+            "$ref": "#/definitions/text-content"
+          }
+        ]
+      }
+    },
+
+    "content": {
+      "title": "Content",
+      "description": "bar",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/array-content"
+        },
+        {
+          "$ref": "#/definitions/single-node"
+        },
+        {
+          "$ref": "#/definitions/text-content"
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "sources": {
+      "$ref": "#/definitions/sources"
+    },
+
+    "content": {
+      "$ref": "#/definitions/content"
+    }
+  },
+  "required": [
+    "content"
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "theming": {
+    "header": {
+      "pageTitle": "Demo Mia-Backoffice",
+      "favicon": "https://www.mia-platform.eu/static/img/favicon/apple-icon-60x60.png"
+    },
+    "logo": {
+      "alt": "Logo",
+      "url_light_image": "/public-assets/download/b90e5c79-50b9-4c30-a2fe-00f44233ef55.png"
+    },
+    "variables": { "primaryColor": "#294C9D" },
+    "menuLocation": "fixedSideBar"
+  },
+  "shared": {
+    "props": { "headers": { "client-key": "sYj1FQsWMH1S0wRzvhEpRQ0TuwMnujMj" } }
+  },
+  "rightMenu": [
+    {
+      "entry": "/micro-lc-notification-center/micro-lc-notification-center.esm.js",
+      "tag": "micro-lc-notification-center",
+      "properties": {
+        "clickStrategy": "push",
+        "limit": 7,
+        "mode": "polling",
+        "pollingFrequency": 5000,
+        "locales": {
+          "title": { "it": "Notifiche", "en": "Notifications" },
+          "dateFormat": { "it": "DD MMM YYYY", "en": "MMM DD YYYY" },
+          "loadingButton": { "it": "Carica altro", "en": "Load more" },
+          "errorMessage": {
+            "it": "Si è verificato un errore, riprovare",
+            "en": "An error occurred, try again"
+          },
+          "noNotification": {
+            "it": "Nessuna notifica da visualizzare",
+            "en": "No notifications to show"
+          },
+          "readAll": {
+            "it": "Segna tutte come lette",
+            "en": "Mark all as read"
+          },
+          "reload": { "it": "Ricarica", "en": "Reload" },
+          "backOnTop": { "it": "Torna all'inizio", "en": "Back on top" }
+        }
+      }
+    }
+  ],
+  "plugins": [
+    {
+      "id": "dashboards-analytics",
+      "label": "Analytics",
+      "icon": "fas fa-chart-bar",
+      "integrationMode": "iframe",
+      "pluginRoute": "/bo-analytics",
+      "pluginUrl": "/data-visualization/#/revenueAndOrdersByDays",
+      "props": {}
+    },
+    {
+      "id": "ordersList",
+      "label": "Orders",
+      "icon": "fas fa-paper-plane",
+      "integrationMode": "qiankun",
+      "pluginRoute": "/bo-orders-list",
+      "pluginUrl": "/element-composer/",
+      "props": { "configurationName": "orders-list" }
+    },
+    {
+      "id": "usersCategory",
+      "label": "Users",
+      "icon": "fas fa-users",
+      "content": [
+        {
+          "id": "ridersList",
+          "label": "Riders",
+          "icon": "fas fa-biking",
+          "integrationMode": "qiankun",
+          "pluginRoute": "/bo-riders-list",
+          "pluginUrl": "/element-composer/",
+          "props": { "configurationName": "riders-list" }
+        },
+        {
+          "id": "ridersShifts",
+          "label": "Riders shifts",
+          "icon": "fas fa-clipboard-list",
+          "integrationMode": "qiankun",
+          "pluginRoute": "/bo-riders-shifts",
+          "pluginUrl": "/element-composer/",
+          "props": { "configurationName": "riders-shift" }
+        },
+        {
+          "id": "customersList",
+          "label": "Customers",
+          "icon": "fas fa-user-tag",
+          "integrationMode": "qiankun",
+          "pluginRoute": "/bo-customers-list",
+          "pluginUrl": "/element-composer/",
+          "props": { "configurationName": "customers-list" }
+        }
+      ]
+    },
+    {
+      "id": "menuCategory",
+      "label": "Menu",
+      "icon": "fas fa-book-open",
+      "content": [
+        {
+          "id": "dishesList",
+          "label": "Dishes",
+          "icon": "fas fa-utensils",
+          "integrationMode": "qiankun",
+          "pluginRoute": "/bo-dishes-list",
+          "pluginUrl": "/element-composer/",
+          "props": { "configurationName": "dishes-list" }
+        },
+        {
+          "id": "ingredientsList",
+          "label": "Ingredients",
+          "icon": "fas fa-fish",
+          "integrationMode": "qiankun",
+          "pluginRoute": "/bo-ingredients-list",
+          "pluginUrl": "/element-composer/",
+          "props": { "configurationName": "ingredients-list" }
+        }
+      ]
+    },
+    {
+      "id": "restaurantsList",
+      "label": "Restaurants",
+      "icon": "fas fa-store",
+      "integrationMode": "qiankun",
+      "pluginRoute": "/bo-restaurants-list",
+      "pluginUrl": "/element-composer/",
+      "props": { "configurationName": "restaurants-list" }
+    },
+    {
+      "id": "user-collections",
+      "label": "User Collections",
+      "icon": "fas fa-user",
+      "integrationMode": "qiankun",
+      "pluginRoute": "/bo-users-collections",
+      "pluginUrl": "/element-composer/",
+      "props": { "configurationName": "user-collections" }
+    }
+  ],
+  "internalPlugins": [
+    {
+      "id": "restaurant-details",
+      "order": 0,
+      "integrationMode": "qiankun",
+      "pluginRoute": "/bo-restaurant-details",
+      "pluginUrl": "/element-composer/",
+      "props": { "configurationName": "restaurant-details" }
+    }
+  ]
+}
