@@ -44,11 +44,11 @@ const tsConfigs = {
   files: ['*.ts', '*.tsx', '*.mts', '*.cts'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['./tsconfig.json'],
-    tsconfigRootDir: __dirname,
+    project: ['./packages/orchestrator/tsconfig.json'],
   },
   plugins: ['@typescript-eslint', 'typescript-sort-keys'],
   rules: {
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/member-delimiter-style': [
       2,
       {
@@ -68,6 +68,7 @@ const tsConfigs = {
     ],
     'n/no-missing-import': 'off',
     'n/no-unpublished-import': 'off',
+    'no-duplicate-imports': 'off',
     'no-shadow': 'off',
     'sort-imports': 'off',
     'typescript-sort-keys/interface': 'error',
@@ -156,7 +157,7 @@ module.exports = {
   extends: ['eslint:recommended'],
   overrides: [...jsConfigs, tsConfigs, jsonConfigs, testFilesConfigs],
   parserOptions: { ecmaVersion: 12 },
-  plugins: ['import', 'sort-keys-fix'],
+  plugins: ['import', 'sort-keys-fix', 'mocha'],
   reportUnusedDisableDirectives: true,
   root: true,
   rules: {
@@ -325,7 +326,7 @@ module.exports = {
     'sort-imports': 0,
     'sort-keys-fix/sort-keys-fix': ['error', 'asc'],
     'space-before-blocks': 'error',
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': ['error', { anonymous: 'always', named: 'never' }],
     'space-in-parens': 'error',
     'space-infix-ops': 'error',
     'space-unary-ops': 'error',
