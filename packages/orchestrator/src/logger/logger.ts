@@ -9,8 +9,14 @@ export function error(message: ErrorCodes | string, ...args: string[]) {
         : console.error(...args)
     }).catch((err: TypeError) => {
       console.error(
-        `[micro-lc]: Dynamic import error - ${err.message}`
+        `[micro-lc]: Dynamic import error while importing "./errors" - ${err.message}`
       )
     })
+  }
+}
+
+export function dynamicImportError(name: string): (err: TypeError) => void {
+  return (err: TypeError) => {
+    error('0' as ErrorCodes.DynamicImportError, name, err.message)
   }
 }

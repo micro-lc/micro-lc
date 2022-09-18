@@ -5,80 +5,7 @@
  * and run `yarn make-types` to regenerate this file.
  */
 
-export type Application =
-  | {
-      id: string
-      integrationMode: "href"
-      href: string
-      target?: "_blank" | "_self" | "_parent" | "_top"
-    }
-  | {
-      id: string
-      integrationMode: "iframe"
-      /**
-       * iFrame src attribute value
-       */
-      src?: string
-      /**
-       * Path on which the iFrame will be rendered
-       */
-      route: string
-      attributes?: {
-        allow?: unknown
-        allowfullscreen?: unknown
-        allowpaymentrequest?: unknown
-        csp?: unknown
-        fetchpriority?: unknown
-        [k: string]: unknown
-      }
-    }
-  | {
-      id: string
-      integrationMode: "compose"
-      config:
-        | {
-            [k: string]: unknown
-          }
-        | string
-      /**
-       * Path on which the plugin will be rendered
-       */
-      route: string
-    }
-  | {
-      id: string
-      integrationMode: "qiankun"
-      /**
-       * Entry of the plugin
-       */
-      entry:
-        | string
-        | (
-            | {
-                scripts: string | [string, ...string[]]
-                styles?: string | string[]
-                html?: string
-              }
-            | {
-                scripts?: string | string[]
-                styles?: string | string[]
-                html: string
-              }
-          )
-      /**
-       * Qiankun activeRule
-       */
-      route: string
-      container?: {
-        [k: string]: unknown
-      }
-      /**
-       * Data passed to the plugin
-       */
-      properties?: {
-        [k: string]: unknown
-      }
-    }
+export type Application = IFrameApplication | ComposableApplication | QiankunApplication
 /**
  * bar
  */
@@ -150,6 +77,73 @@ export interface Imports {
 export interface Scopes {
   [k: string]: {
     [k: string]: string
+  }
+}
+export interface IFrameApplication {
+  id: string
+  integrationMode: "iframe"
+  /**
+   * iFrame src attribute value
+   */
+  src?: string
+  /**
+   * Path on which the iFrame will be rendered
+   */
+  route: string
+  attributes?: {
+    allow?: unknown
+    allowfullscreen?: unknown
+    allowpaymentrequest?: unknown
+    csp?: unknown
+    fetchpriority?: unknown
+    [k: string]: unknown
+  }
+}
+export interface ComposableApplication {
+  id: string
+  integrationMode: "compose"
+  config:
+    | {
+        [k: string]: unknown
+      }
+    | string
+  /**
+   * Path on which the plugin will be rendered
+   */
+  route: string
+}
+export interface QiankunApplication {
+  id: string
+  integrationMode: "qiankun"
+  /**
+   * Entry of the plugin
+   */
+  entry:
+    | string
+    | (
+        | {
+            scripts: string | [string, ...string[]]
+            styles?: string | string[]
+            html?: string
+          }
+        | {
+            scripts?: string | string[]
+            styles?: string | string[]
+            html: string
+          }
+      )
+  /**
+   * Qiankun activeRule
+   */
+  route: string
+  container?: {
+    [k: string]: unknown
+  }
+  /**
+   * Data passed to the plugin
+   */
+  properties?: {
+    [k: string]: unknown
   }
 }
 /**
@@ -318,7 +312,7 @@ export interface Component {
   attributes?: {
     [k: string]: string
   }
-  booleanAttributes?: string[]
+  booleanAttributes?: string | string[]
   /**
    * DOM element property applied as object property after creating an element
    */

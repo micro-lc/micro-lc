@@ -110,9 +110,7 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "uris"
-          ]
+          "required": ["uris"]
         }
       ]
     },
@@ -189,10 +187,17 @@
         },
 
         "booleanAttributes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
         },
 
         "properties": {
@@ -205,9 +210,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "tag"
-      ]
+      "required": ["tag"]
     },
 
     "single-node": {
@@ -256,7 +259,5 @@
       "$ref": "#/definitions/content"
     }
   },
-  "required": [
-    "content"
-  ]
+  "required": ["content"]
 }

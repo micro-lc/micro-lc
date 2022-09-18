@@ -5,7 +5,8 @@
   "scripts": {
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha test/**/*.test.ts",
     "test": "yarn test:unit",
-    "make-types": "node ./scripts/make-types.mjs"
+    "make-types": "node ./scripts/make-types.mjs",
+    "build": "yarn make-types"
   },
   "dependencies": {
     "axios": "^0.27.2",

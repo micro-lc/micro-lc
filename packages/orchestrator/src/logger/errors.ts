@@ -1,3 +1,4 @@
+/* eslint-disable typescript-sort-keys/string-enum */
 export enum ErrorCodes {
   // in browser
   DynamicImportError = '0',
@@ -7,7 +8,10 @@ export enum ErrorCodes {
   JSONSchemaError = '22',
   JSONValidationError = '21',
   // web-component
-  LifecycleSubscriptionError = '30'
+  LifecycleSubscriptionError = '30',
+  // composer
+  DigestError = '40',
+  LexerAnalysisEndedInNormalMode = '41'
 }
 
 export type ErrorHandler = (...args: string[]) => string
@@ -15,12 +19,14 @@ export type ErrorHandler = (...args: string[]) => string
 const MICRO_LC = '[micro-lc]'
 
 const errorMap: Record<ErrorCodes, ErrorHandler> = {
-  0: (err: string) => `${MICRO_LC}: Dynamic import error - ${err}`,
+  0: (name: string, err: string) => `${MICRO_LC}: Dynamic import error while importing ${name} - ${err}`,
   1: (err: string) => `${MICRO_LC}: Fetch/URL error - ${err}`,
   20: (file: string) => `${MICRO_LC}: Provided JSON is invalid - ${file}`,
   21: (file: string, err: string) => `${MICRO_LC}: JSON Validation failed for ${file} - ${err}`,
   22: (file: string, err: string) => `${MICRO_LC}: JSON Schema for ${file} is not valid - ${err}`,
   30: (err: string) => `${MICRO_LC}: Something went wrong while updating a subscription - ${err}`,
+  40: (content: string, err: string) => `${MICRO_LC}: Something went wrong while hashing content ${content} - ${err}`,
+  41: (content: string, index: string) => `${MICRO_LC}: Lexer could not parse content ${content} due to unexpected char "}" at position ${index}`,
 }
 
 export default errorMap

@@ -224,6 +224,7 @@ __metadata:
     "@open-wc/testing": ^3.1.6
     "@rollup/plugin-replace": ^4.0.0
     "@types/chai": ^4.3.3
+    "@types/chai-string": ^1.4.2
     "@types/mocha": ^9.1.1
     "@types/node": ^18.7.18
     "@types/sinon": ^10.0.13
@@ -233,6 +234,7 @@ __metadata:
     "@web/test-runner-playwright": ^0.8.10
     ajv: ^8.11.0
     chai: ^4.3.6
+    chai-string: ^1.5.0
     es-module-shims: ^1.5.18
     lit-html: ^2.3.1
     mocha: ^10.0.0
@@ -242,7 +244,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^4.8.3
-    vite: ^3.1.1
+    vite: ^3.1.2
   languageName: unknown
   linkType: soft
 
@@ -508,6 +510,15 @@ __metadata:
   dependencies:
     "@types/chai": "*"
   checksum: 60bc19ca03bfc49026690c2d5d8d3153ea50d909b757301da1a81733d8a4e6171b2af3eeaef5208efe4b8804de314f4660ea6f992f636e12c8aae02a87074b44
+  languageName: node
+  linkType: hard
+
+"@types/chai-string@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@types/chai-string@npm:1.4.2"
+  dependencies:
+    "@types/chai": "*"
+  checksum: 7b5da7dfe5958e12e3d4570a0e53e9d71c0e156316a9f4f9066de663cd2323f757bef7fc9c74c765468af933315ff287f1ae10a47caad4f114cd634a6ad6b1e6
   languageName: node
   linkType: hard
 
@@ -1741,6 +1752,15 @@ __metadata:
   dependencies:
     axe-core: ^4.3.3
   checksum: 5e42287236f6e1aa0bdcf31fbdcc3730bf8697484f9f9fd162e4c490cf131b04718788eb2655a7ae6f836cb4537eac0a7ac3ba5a614dbcb505ba222087152f84
+  languageName: node
+  linkType: hard
+
+"chai-string@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "chai-string@npm:1.5.0"
+  peerDependencies:
+    chai: ^4.1.2
+  checksum: d443bb416f6d4dd3395442f459af197aff93f2546dcb5bce6313badf505aa828615117f0eadc99e97ec518b7d2df387b538c81c647e6daf5c386d5bafa212e8f
   languageName: node
   linkType: hard
 
@@ -6689,9 +6709,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "vite@npm:3.1.1"
+"vite@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "vite@npm:3.1.2"
   dependencies:
     esbuild: ^0.15.6
     fsevents: ~2.3.2
@@ -6717,7 +6737,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: a7f402e1b07d62dc46254d3b38b24b0174e77318900fb72a9623d38b58217ab93f79a3b10594368d64f08d1e080e50e0f07b171202c6141de8b1be1144ada011
+  checksum: 90f645853f53efaddfa216eaf42ed93afe6b43f849889a7716ef9c04623b9ae244f391ed17ed0c41189422060cad5e78eb17583ac5a3759988f54b7412e18cb7
   languageName: node
   linkType: hard
 

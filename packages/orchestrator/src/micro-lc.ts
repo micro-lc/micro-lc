@@ -1,57 +1,78 @@
+import type { Config } from '@micro-lc/interfaces'
+
+import { setup } from './apis'
+import type { CompleteConfig } from './config'
+import { defaultConfig, mergeConfig } from './config'
 import { invalidJsonCatcher, jsonFetcher, jsonToObject, jsonToObjectCatcher } from './utils/json'
 import Subscription from './utils/subscription'
 
-type Config = Record<string, any>
-
 const MICRO_LC_CONFIG = '"micro-lc config"'
-
-const defaultConfig: Config = {}
 
 export default class MicroLC extends HTMLElement {
   static get observedAttributes() { return ['config-src'] }
 
+  #updateCompleted = true
+
   /** @state */
-  private _config: Config = {}
+  #config: CompleteConfig = defaultConfig
 
-  private _configSrc?: string
+  #configSrc?: string
 
-  private _subscription = new Subscription()
+  #subscription = new Subscription()
 
-  private _handleConfigSrcChange(url: string): void {
-    this._subscription.add(async () => {
-      const config = await jsonFetcher(url)
-        .then((json) => {
-          this._configSrc = url
-          return json
-        })
-        .catch((err: TypeError) => invalidJsonCatcher(err, defaultConfig, MICRO_LC_CONFIG))
-      this._handleConfigChange(config)
-    })
+  private _handleConfigSrcChange(url: string | undefined): void {
+    typeof url === 'string'
+      && this.#configSrc !== url
+      && this.#subscription.add(async () => {
+        const config = await jsonFetcher(url)
+          .then((json) => {
+            this.#configSrc = url
+            return json
+          })
+          .catch((err: TypeError) =>
+            invalidJsonCatcher<Config>(err, defaultConfig, MICRO_LC_CONFIG)
+          )
+        this._handleConfigChange(config)
+      })
   }
 
   private _handleConfigChange(json: unknown): void {
-    this._subscription.add(async () => {
+    this.#subscription.add(async () => {
       const config = await jsonToObject<Config>(json)
-        .catch((err: TypeError) => jsonToObjectCatcher(err, defaultConfig, MICRO_LC_CONFIG))
-      Object.assign(this, { _config: config })
+        .catch((err: TypeError) =>
+          jsonToObjectCatcher<Config>(err, defaultConfig, MICRO_LC_CONFIG)
+        )
+      const completeConfig = mergeConfig(config)
+      this.#config = completeConfig
+
+      // SETUP & START
+      await setup.call(this, this.#config).finally(() => {
+        this.#updateCompleted = true
+      })
     })
   }
 
+  get updateCompleted(): boolean {
+    return this.#updateCompleted
+  }
+
   set config(json: unknown) {
+    this.#updateCompleted = false
     this._handleConfigChange(json)
     this.removeAttribute('config-src')
   }
 
-  get config(): Config {
-    return this._config
+  get config(): CompleteConfig {
+    return this.#config
   }
 
   set configSrc(configSrc: string | undefined) {
-    this._configSrc = configSrc
+    this.#updateCompleted = false
+    this._handleConfigSrcChange(configSrc)
   }
 
   get configSrc(): string | undefined {
-    return this._configSrc
+    return this.#configSrc
   }
 
   get renderRoot(): this | ShadowRoot {
@@ -64,16 +85,15 @@ export default class MicroLC extends HTMLElement {
     }
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+  attributeChangedCallback(name: string, _: string | null, newValue: string | null): void {
     if (name === 'config-src') {
-      typeof newValue === 'string'
-        && oldValue !== newValue
-        && this._handleConfigSrcChange(newValue)
+      this.#updateCompleted = false
+      this._handleConfigSrcChange(newValue ?? undefined)
     }
   }
 
   disconnectedCallback() {
-    this._subscription.unsubscribe()
+    this.#subscription.unsubscribe()
   }
 }
 

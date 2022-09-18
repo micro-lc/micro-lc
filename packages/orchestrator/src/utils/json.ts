@@ -3,7 +3,7 @@ import type { ErrorObject } from 'ajv'
 import type { ErrorCodes } from '../logger'
 import logger from '../logger'
 
-export function invalidJsonCatcher<T extends Record<string, unknown>>(err: TypeError | unknown, data: T, file?: string): T {
+export function invalidJsonCatcher<T>(err: TypeError | unknown, data: T, file?: string): T {
   if (process.env.NODE_ENV === 'development' && err instanceof TypeError) {
     if (err.message === '20' as ErrorCodes.InvalidJSONError) {
       logger.error(err.message, file ?? '"unknown"')
@@ -33,7 +33,7 @@ export async function jsonFetcher(url: string): Promise<unknown> {
     // .catch((err: TypeError) => noJSONConfigCatcher(err, defaultConfig))
 }
 
-export async function jsonToObject<T extends Record<string, unknown>>(input: unknown): Promise<T> {
+export async function jsonToObject<T>(input: unknown): Promise<T> {
   if (process.env.NODE_ENV === 'development') {
     return import('ajv').then(({ default: Ajv }) => {
       try {
@@ -54,7 +54,7 @@ export async function jsonToObject<T extends Record<string, unknown>>(input: unk
   return Promise.resolve(input as T)
 }
 
-export function jsonToObjectCatcher<T extends Record<string, unknown>>(err: TypeError | undefined, data: T, file?: string): T {
+export function jsonToObjectCatcher<T>(err: TypeError | undefined, data: T, file?: string): T {
   if (process.env.NODE_ENV === 'development' && err instanceof TypeError) {
     const handledCodes = ['21', '22'] as [ErrorCodes.JSONValidationError, ErrorCodes.JSONSchemaError]
     if ((handledCodes as string[]).includes(err.message)) {
