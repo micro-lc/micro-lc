@@ -10,7 +10,7 @@
     "i": "yarn workspace @micro-lc/interfaces",
     "l": "yarn workspace @micro-lc/layout",
     "o": "yarn workspace @micro-lc/orchestrator",
-    "lint": "eslint . --ext .mjs,.js,.jsx,.ts,.tsx,.shcema.json --resolve-plugins-relative-to .",
+    "lint": "eslint . --ext .mjs,.js,.jsx,.ts,.tsx,.schema.json --resolve-plugins-relative-to .",
     "test": "yarn workspaces foreach --parallel --all run test",
     "postinstall": "husky install",
     "prepublish": "pinst --disable"
