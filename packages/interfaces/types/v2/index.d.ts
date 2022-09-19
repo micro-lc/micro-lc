@@ -272,6 +272,9 @@ export interface ComposableApplication {
    */
   route: string
 }
+/**
+ * Composer configuration. It can be an url or an in-line configuration
+ */
 export interface PluginConfiguration {
   /**
    * Global sources
@@ -374,6 +377,9 @@ export interface QiankunApplication {
     [k: string]: unknown
   }
 }
+/**
+ * Orchestrator main page layout DOM configuration
+ */
 export interface PluginConfiguration1 {
   /**
    * Global sources
