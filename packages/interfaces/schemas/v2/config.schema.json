@@ -10,20 +10,35 @@
       "properties": {
         "pluginMountPointSelector": {
           "description": "Query selector to plugins mounting DOM element",
-          "type": "string",
           "default": "#__MICRO_LC_MOUNT_POINT",
           "examples": [
             "#my-plugin-container",
-            "body micro-lc custom-layout div#plugin-container"
+            "body micro-lc custom-layout div#plugin-container",
+            {
+              "id": "#__MICRO_LC_MOUNT_POINT",
+              "slot": "container"
+            }
+          ],
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "slot": { "type": "string" }
+              },
+              "additionalProperties": false,
+              "required": ["id"]
+            }
           ]
         },
         "defaultUrl": {
           "description": "Landing URL",
           "type": "string",
           "default": "/",
-          "examples": [
-            "/my-awesome-plugin"
-          ],
+          "examples": ["/my-awesome-plugin"],
           "format": "uri-reference"
         }
       },
@@ -85,42 +100,7 @@
       "title": "Application",
       "oneOf": [
         {
-          "type": "object",
-          "examples": [
-            {
-              "id": "my-awesome-href",
-              "integrationMode": "href",
-              "href": "www.google.com",
-              "target": "_self"
-            }
-          ],
-          "properties": {
-            "id": {
-              "description": "Unique identifier of the application",
-              "type": "string"
-            },
-            "integrationMode": {
-              "description": "Type of the application: hyperlink to another page",
-              "const": "href"
-            },
-            "href": {
-              "description": "Link's destination",
-              "type": "string"
-            },
-            "target": {
-              "description": "Specifies where to open the linked document",
-              "default": "_blank",
-              "enum": ["_blank", "_self", "_parent", "_top"]
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "id",
-            "integrationMode",
-            "href"
-          ]
-        },
-        {
+          "title": "IFrameApplication",
           "type": "object",
           "examples": [
             {
@@ -157,14 +137,10 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "id",
-            "integrationMode",
-            "src",
-            "route"
-          ]
+          "required": ["id", "integrationMode", "src", "route"]
         },
         {
+          "title": "ComposableApplication",
           "type": "object",
           "examples": [
             {
@@ -194,10 +170,10 @@
               "const": "compose"
             },
             "config": {
-              "description": "Composer configuration. It can be an url or an in-line configuration",
               "oneOf": [
                 {
-                  "$ref": "plugin.schema.json"
+                  "$ref": "./plugin.schema.json#",
+                  "description": "Composer configuration. It can be an url or an in-line configuration"
                 },
                 {
                   "type": "string",
@@ -211,14 +187,10 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "id",
-            "integrationMode",
-            "config",
-            "route"
-          ]
+          "required": ["id", "integrationMode", "config", "route"]
         },
         {
+          "title": "QiankunApplication",
           "type": "object",
           "examples": [
             {
@@ -289,9 +261,7 @@
                         }
                       },
                       "additionalProperties": false,
-                      "required": [
-                        "scripts"
-                      ]
+                      "required": ["scripts"]
                     },
                     {
                       "type": "object",
@@ -332,9 +302,7 @@
                         }
                       },
                       "additionalProperties": false,
-                      "required": [
-                        "html"
-                      ]
+                      "required": ["html"]
                     }
                   ]
                 }
@@ -353,12 +321,7 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "id",
-            "integrationMode",
-            "entry",
-            "route"
-          ]
+          "required": ["id", "integrationMode", "entry", "route"]
         }
       ]
     }
@@ -398,12 +361,14 @@
     },
 
     "layout": {
-      "$ref": "plugin.schema.json",
+      "$ref": "./plugin.schema.json#",
       "description": "Orchestrator main page layout DOM configuration",
       "default": {
-        "tag": "div",
-        "attributes": {
-          "id": "__MICRO_LC_MOUNT_POINT"
+        "content": {
+          "tag": "div",
+          "attributes": {
+            "id": "__MICRO_LC_MOUNT_POINT"
+          }
         }
       },
       "examples": [
@@ -437,7 +402,5 @@
     }
   },
   "additionalProperties": false,
-  "required": [
-    "version"
-  ]
+  "required": ["version"]
 }

@@ -143,9 +143,7 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "uris"
-          ]
+          "required": ["uris"]
         }
       ]
     },
@@ -227,10 +225,17 @@
 
         "booleanAttributes": {
           "description": "HTML5 boolean attribute applied using setAttribute API",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
         },
 
         "properties": {
@@ -244,9 +249,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "tag"
-      ]
+      "required": ["tag"]
     },
 
     "array-content": {
@@ -287,8 +290,7 @@
     },
 
     "content": {
-      "$ref": "#/definitions/content",
-      "description": "Content of the plugin"
+      "$ref": "#/definitions/content"
     }
   },
   "additionalProperties": false,

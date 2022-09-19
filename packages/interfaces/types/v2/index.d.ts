@@ -5,110 +5,7 @@
  * and run `yarn make-types` to regenerate this file.
  */
 
-export type Application =
-  | {
-      /**
-       * Unique identifier of the application
-       */
-      id: string
-      /**
-       * Type of the application: hyperlink to another page
-       */
-      integrationMode: "href"
-      /**
-       * Link's destination
-       */
-      href: string
-      /**
-       * Specifies where to open the linked document
-       */
-      target?: "_blank" | "_self" | "_parent" | "_top"
-    }
-  | {
-      /**
-       * Unique identifier of the application
-       */
-      id: string
-      /**
-       * Type of the application: nested browsing context
-       */
-      integrationMode: "iframe"
-      /**
-       * iFrame src attribute value
-       */
-      src: string
-      /**
-       * Path on which the iFrame will be rendered
-       */
-      route: string
-      /**
-       * Valid attributes of iframe HTML element
-       */
-      attributes?: {
-        [k: string]: unknown
-      }
-    }
-  | {
-      /**
-       * Unique identifier of the application
-       */
-      id: string
-      /**
-       * Type of the application: composition of HTML tags
-       */
-      integrationMode: "compose"
-      /**
-       * Composer configuration. It can be an url or an in-line configuration
-       */
-      config: PluginConfiguration | string
-      /**
-       * Path on which the plugin will be rendered
-       */
-      route: string
-    }
-  | {
-      /**
-       * Unique identifier of the application
-       */
-      id: string
-      /**
-       * Type of the application: micro front-end loaded using qiankun
-       */
-      integrationMode: "qiankun"
-      /**
-       * Entry of the plugin
-       */
-      entry:
-        | string
-        | (
-            | {
-                scripts: string | [string, ...string[]]
-                styles?: string | string[]
-                html?: string
-              }
-            | {
-                scripts?: string | string[]
-                styles?: string | string[]
-                html: string
-              }
-          )
-      /**
-       * qiankun activeRule
-       */
-      route: string
-      container?: {
-        [k: string]: unknown
-      }
-      /**
-       * Data passed to the plugin
-       */
-      properties?: {
-        [k: string]: unknown
-      }
-    }
-/**
- * Content of the plugin
- */
+export type Application = IFrameApplication | ComposableApplication | QiankunApplication
 export type Content = ArrayContent | Component | (number | string)
 /**
  * HTML5 tag name
@@ -272,7 +169,12 @@ export interface Settings {
   /**
    * Query selector to plugins mounting DOM element
    */
-  pluginMountPointSelector?: string
+  pluginMountPointSelector?:
+    | string
+    | {
+        id: string
+        slot?: string
+      }
   /**
    * Landing URL
    */
@@ -331,6 +233,48 @@ export interface Scopes {
     [k: string]: string
   }
 }
+export interface IFrameApplication {
+  /**
+   * Unique identifier of the application
+   */
+  id: string
+  /**
+   * Type of the application: nested browsing context
+   */
+  integrationMode: "iframe"
+  /**
+   * iFrame src attribute value
+   */
+  src: string
+  /**
+   * Path on which the iFrame will be rendered
+   */
+  route: string
+  /**
+   * Valid attributes of iframe HTML element
+   */
+  attributes?: {
+    [k: string]: unknown
+  }
+}
+export interface ComposableApplication {
+  /**
+   * Unique identifier of the application
+   */
+  id: string
+  /**
+   * Type of the application: composition of HTML tags
+   */
+  integrationMode: "compose"
+  config: PluginConfiguration | string
+  /**
+   * Path on which the plugin will be rendered
+   */
+  route: string
+}
+/**
+ * Composer configuration. It can be an url or an in-line configuration
+ */
 export interface PluginConfiguration {
   /**
    * Global sources
@@ -384,7 +328,7 @@ export interface Component {
   /**
    * HTML5 boolean attribute applied using setAttribute API
    */
-  booleanAttributes?: string[]
+  booleanAttributes?: string | string[]
   /**
    * DOM element property applied as object property after creating an element
    */
@@ -392,6 +336,46 @@ export interface Component {
     [k: string]: unknown
   }
   content?: Content1
+}
+export interface QiankunApplication {
+  /**
+   * Unique identifier of the application
+   */
+  id: string
+  /**
+   * Type of the application: micro front-end loaded using qiankun
+   */
+  integrationMode: "qiankun"
+  /**
+   * Entry of the plugin
+   */
+  entry:
+    | string
+    | (
+        | {
+            scripts: string | [string, ...string[]]
+            styles?: string | string[]
+            html?: string
+          }
+        | {
+            scripts?: string | string[]
+            styles?: string | string[]
+            html: string
+          }
+      )
+  /**
+   * qiankun activeRule
+   */
+  route: string
+  container?: {
+    [k: string]: unknown
+  }
+  /**
+   * Data passed to the plugin
+   */
+  properties?: {
+    [k: string]: unknown
+  }
 }
 /**
  * Orchestrator main page layout DOM configuration
