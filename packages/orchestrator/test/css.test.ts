@@ -28,13 +28,26 @@ describe('micro-lc config tests', () => {
           },
         },
       },
+      layout: {
+        content: {
+          attributes: {
+            class: 'my-css-class',
+          },
+          content: [
+            'Hello, World!',
+            {
+              tag: 'slot',
+            },
+          ],
+          tag: 'div',
+        },
+      },
       version: 2,
     }
 
     // TEST
     // 1. append micro-lc
     const microlc = document.createElement('micro-lc') as MicroLC
-    microlc.setAttribute('shadow-dom', '')
     document.body.appendChild(
       Object.assign(microlc, { config })
     )
@@ -44,32 +57,26 @@ describe('micro-lc config tests', () => {
 
     // 3. check whether css is properly mounted
     const [nodes, global] = microlc.shadowRoot?.querySelectorAll('style') ?? []
-    expect(nodes).dom.to.equal(`
+    expect(nodes.outerHTML.replace(/\s/g, '')).to.eql(`
       <style>
         .my-css-class {
           color: var(--micro-lc-primary-color);
           font-family: var(--micro-lc-font-family);
         }
       </style>
-    `)
-    expect(global).dom.to.equal(`
+    `.replace(/\s/g, ''))
+    expect(global.outerHTML.replace(/\s/g, '')).to.eql(`
       <style>
         :host {
           --micro-lc-font-family: Arial, Helvetica, sans-serif;
           --micro-lc-primary-color: #873232;
         }
       </style>
-    `)
+    `.replace(/\s/g, ''))
 
-    // 4. test whether css is properly applied
-    const div = document.createElement('div')
-    div.setAttribute('class', 'my-css-class')
-    microlc.shadowRoot?.appendChild(
-      Object.assign(
-        div, { textContent: 'Hello, World!' }
-      )
-    )
-    const computedStyle = window.getComputedStyle(div)
+    // SAFETY: must have been created by layout config parsing
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const computedStyle = window.getComputedStyle(microlc.renderRoot.querySelector('div')!)
     expect(computedStyle).to.have.property('color', 'rgb(135, 50, 50)')
     expect(computedStyle).to.have.property('fontFamily', 'Arial, Helvetica, sans-serif')
     //
@@ -89,6 +96,7 @@ describe('micro-lc config tests', () => {
     // TEST
     // 1. append micro-lc
     const microlc = document.createElement('micro-lc') as MicroLC
+    microlc.setAttribute('disable-shadow-dom', '')
     document.body.appendChild(
       Object.assign(microlc, { config })
     )
@@ -96,17 +104,17 @@ describe('micro-lc config tests', () => {
     await waitUntil(() => microlc.updateCompleted)
 
     // 2. check whether css is properly mounted
-    const [nodes] = document.head.querySelectorAll('style')
-    expect(nodes).dom.to.equal(`
+    const [global] = document.head.querySelectorAll('style')
+    expect(global.outerHTML.replace(/\s/g, '')).to.equal(`
       <style>
-        .my-css-class {
-          color: var(--micro-lc-primary-color);
-          font-family: var(--micro-lc-font-family);
+        :root {
+          --micro-lc-font-family: Arial, Helvetica, sans-serif;
+          --micro-lc-primary-color: #873232;
         }
       </style>
-    `)
+    `.replace(/\s/g, ''))
 
     // CLEANUP
-    nodes.remove()
+    global.remove()
   })
 })

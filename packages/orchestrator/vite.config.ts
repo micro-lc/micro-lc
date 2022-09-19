@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     rollupOptions: {
       input: {
+        composer: 'src/composer/index.ts',
         'micro-lc': 'src/index.ts',
       },
       output: {

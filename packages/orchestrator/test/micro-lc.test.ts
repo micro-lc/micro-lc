@@ -23,7 +23,7 @@ describe('micro-lc config tests', () => {
     sandbox.restore()
   })
 
-  it('should receive attribute input and merge config', async () => {
+  it.only('should receive attribute input and merge config', async () => {
     const config = { $schema: 'my-schema' }
     const fetch = sandbox.stub(window, 'fetch').callsFake(() => Promise.resolve(new Response(
       JSON.stringify(config),
@@ -37,7 +37,6 @@ describe('micro-lc config tests', () => {
     // 1. append micro-lc
     const microlc = document.createElement('micro-lc') as MicroLC
     microlc.setAttribute('config-src', './config.json')
-    microlc.setAttribute('shadow-dom', '')
     document.body.appendChild(microlc)
 
     // 2. await for config fetch
@@ -51,10 +50,15 @@ describe('micro-lc config tests', () => {
     expect(microlc).dom.equal(`
       <micro-lc
         config-src="./config.json"
-        shadow-dom=""
-      ></micro-lc>
+      >
+        <div id="__MICRO_LC_MOUNT_POINT"></div>
+      </micro-lc>
     `)
     expect(microlc.renderRoot).instanceOf(ShadowRoot)
+    const slot: HTMLSlotElement | null = microlc.shadowRoot?.querySelector('slot') ?? null
+    expect(slot).not.to.be.undefined
+    slot && expect(slot.assignedElements()).to.have.lengthOf(1)
+    slot && expect(slot.assignedElements()[0]).to.have.attribute('id', '__MICRO_LC_MOUNT_POINT')
 
     // 4. when update is done, config must be available
     await waitUntil(() => microlc.updateCompleted)
@@ -77,6 +81,7 @@ describe('micro-lc config tests', () => {
     // 1. append micro-lc
     const microlc = document.createElement('micro-lc') as MicroLC
     microlc.setAttribute('config-src', './config.json')
+    microlc.setAttribute('disable-shadow-dom', '')
     document.body.appendChild(microlc)
 
     // 2. fetch fails
@@ -86,7 +91,15 @@ describe('micro-lc config tests', () => {
 
     // 3. default config is used instead
     await waitUntil(() => microlc.updateCompleted)
-    expect(microlc.config).to.eql(defaultConfig)
+    expect(microlc.config).to.eql(defaultConfig(false))
+    expect(microlc).dom.equal(`
+      <micro-lc
+        config-src="./config.json"
+        disable-shadow-dom=""
+      >
+        <div id="__MICRO_LC_MOUNT_POINT"></div>
+      </micro-lc>
+    `)
   })
 
   it('should load config from property setting', async () => {

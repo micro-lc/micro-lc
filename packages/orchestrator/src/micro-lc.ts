@@ -14,7 +14,7 @@ export default class MicroLC extends HTMLElement {
   #updateCompleted = true
 
   /** @state */
-  #config: CompleteConfig = defaultConfig
+  #config!: CompleteConfig
 
   #configSrc?: string
 
@@ -30,7 +30,11 @@ export default class MicroLC extends HTMLElement {
             return json
           })
           .catch((err: TypeError) =>
-            invalidJsonCatcher<Config>(err, defaultConfig, MICRO_LC_CONFIG)
+            invalidJsonCatcher<Config>(
+              err,
+              defaultConfig(this.isShadowDom()),
+              MICRO_LC_CONFIG
+            )
           )
         this._handleConfigChange(config)
       })
@@ -40,9 +44,11 @@ export default class MicroLC extends HTMLElement {
     this.#subscription.add(async () => {
       const config = await jsonToObject<Config>(json)
         .catch((err: TypeError) =>
-          jsonToObjectCatcher<Config>(err, defaultConfig, MICRO_LC_CONFIG)
+          jsonToObjectCatcher<Config>(
+            err, defaultConfig(this.isShadowDom()), MICRO_LC_CONFIG
+          )
         )
-      const completeConfig = mergeConfig(config)
+      const completeConfig = mergeConfig.call(this, config)
       this.#config = completeConfig
 
       // SETUP & START
@@ -79,10 +85,17 @@ export default class MicroLC extends HTMLElement {
     return this.shadowRoot ?? this
   }
 
+  isShadowDom() {
+    return this.renderRoot instanceof ShadowRoot
+  }
+
   connectedCallback() {
-    if (this.getAttribute('shadow-dom') !== null) {
+    const enableShadowDom = this.getAttribute('disable-shadow-dom') === null
+    if (enableShadowDom) {
       this.attachShadow({ mode: 'open' })
     }
+
+    this.#config = defaultConfig(enableShadowDom)
   }
 
   attributeChangedCallback(name: string, _: string | null, newValue: string | null): void {

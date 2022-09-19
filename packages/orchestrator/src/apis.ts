@@ -1,5 +1,10 @@
-import type { GlobalImportmap, Importmap } from '@micro-lc/interfaces'
+import type { GlobalImportmap, Importmap, Settings } from '@micro-lc/interfaces'
+import { html, render } from 'lit-html'
 
+import { compose } from './composer'
+import { interpolate } from './composer/compiler'
+import { jsonToHtml } from './composer/json'
+import { lexer } from './composer/lexer'
 import type { CompleteConfig } from './config'
 import logger from './logger'
 import type MicroLC from './micro-lc'
@@ -40,7 +45,11 @@ function composeCSSNodeText(selector: string, rules: CSSRules, prefix?: string) 
 
 function composeStyleSheet(node: CSSNode, prefix?: string): string {
   return Object.entries(node).reduce((stylesheet, [selector, rules]) => {
-    return stylesheet.concat(`${composeCSSNodeText(selector, rules, prefix)}\n`)
+    return stylesheet.concat(`${composeCSSNodeText(
+      selector,
+      rules,
+      prefix
+    )}\n`)
   }, '')
 }
 
@@ -82,6 +91,17 @@ function appendImportMap(
 function createSandbox(windowObject: Window = window) {
 }
 
+function appendMountPoint(
+  this: MicroLC,
+  { id, slot }: Exclude<Settings['pluginMountPointSelector'], string | undefined>
+) {
+  const mountPoint = this.ownerDocument.createElement('div')
+  mountPoint.setAttribute('id', id)
+  slot && mountPoint.setAttribute('slot', slot)
+
+  this.appendChild(mountPoint)
+}
+
 export async function setup(this: MicroLC, config: CompleteConfig): Promise<void> {
   const {
     css: {
@@ -89,17 +109,28 @@ export async function setup(this: MicroLC, config: CompleteConfig): Promise<void
       nodes,
     },
     importmap,
+    layout,
+    settings: {
+      pluginMountPointSelector,
+    },
   } = config
 
   // createSandbox()
 
+  // mount-point
+  if (this.isShadowDom()) {
+    const mountPointAttributes = typeof pluginMountPointSelector === 'object'
+      ? pluginMountPointSelector
+      : { id: pluginMountPointSelector, slot: undefined }
+    appendMountPoint.call(this, mountPointAttributes)
+  }
+
   // css handling
-  const isShadowRoot = this.renderRoot instanceof ShadowRoot
-  const container = isShadowRoot ? this.renderRoot as ShadowRoot : this.ownerDocument.head
+  const container = this.isShadowDom() ? this.renderRoot : this.ownerDocument.head
   const appendOptions = { container, doc: this.ownerDocument }
   nodes && appendStyle(composeStyleSheet(nodes), appendOptions)
   global && appendStyle(
-    composeCSSNodeText(isShadowRoot ? ':host' : ':root', global, MICRO_LC_CSS_PREFIX),
+    composeCSSNodeText(this.isShadowDom() ? ':host' : ':root', global, MICRO_LC_CSS_PREFIX),
     appendOptions
   )
 
@@ -148,4 +179,5 @@ export async function setup(this: MicroLC, config: CompleteConfig): Promise<void
 
   // TODO: layout
   // layout
+  compose(layout.content, this.renderRoot)
 }

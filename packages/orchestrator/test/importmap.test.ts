@@ -73,7 +73,6 @@ describe('micro-lc config tests', () => {
     // TEST
     // 1. append micro-lc
     const microlc = document.createElement('micro-lc') as MicroLC
-    microlc.setAttribute('shadow-dom', '')
     document.body.appendChild(
       Object.assign(microlc, { config })
     )

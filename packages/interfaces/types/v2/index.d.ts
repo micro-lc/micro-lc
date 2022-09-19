@@ -31,11 +31,16 @@ export interface Config {
  * Global micro-lc settings
  */
 export interface Settings {
+  defaultUrl?: string
   /**
    * Query selector to plugins mounting DOM element
    */
-  pluginMountPointSelector?: string
-  defaultUrl?: string
+  pluginMountPointSelector?:
+    | string
+    | {
+        id: string
+        slot?: string
+      }
 }
 /**
  * TODO

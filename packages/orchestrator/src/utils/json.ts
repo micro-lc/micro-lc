@@ -15,22 +15,31 @@ export function invalidJsonCatcher<T>(err: TypeError | unknown, data: T, file?: 
   return data
 }
 
+const acceptedTypes = [
+  'application/json',
+  'text/x-json',
+]
+
 export async function jsonFetcher(url: string): Promise<unknown> {
   return fetch(
     new URL(url, window.location.origin),
     {
       headers: {
-        Accept: 'application/json',
+        Accept: acceptedTypes.join(', '),
       },
     })
     .then((res) => {
-      if (res.ok && res.headers.get('Content-Type')?.includes('application/json')) {
+      const contentType = res.headers.get('Content-Type') ?? ''
+      const isJson = acceptedTypes.reduce(
+        (accepted, str) => contentType.includes(str) || accepted, false
+      )
+
+      if (res.ok && isJson) {
         return res.json() as Promise<unknown>
       }
 
       return Promise.reject(new TypeError('20' as ErrorCodes.InvalidJSONError))
     })
-    // .catch((err: TypeError) => noJSONConfigCatcher(err, defaultConfig))
 }
 
 export async function jsonToObject<T>(input: unknown): Promise<T> {

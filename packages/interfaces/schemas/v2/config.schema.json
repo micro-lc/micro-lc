@@ -8,19 +8,36 @@
       "title": "Settings",
       "type": "object",
       "properties": {
-        "pluginMountPointSelector": {
-          "description": "Query selector to plugins mounting DOM element",
-          "type": "string",
-          "default": "#__MICRO_LC_MOUNT_POINT",
-          "examples": [
-            "#my-plugin-container",
-            "body micro-lc custom-layout div#plugin-container"
-          ]
-        },
         "defaultUrl": {
           "type": "string",
           "default": "/",
           "format": "uri-reference"
+        },
+        "pluginMountPointSelector": {
+          "description": "Query selector to plugins mounting DOM element",
+          "default": "#__MICRO_LC_MOUNT_POINT",
+          "examples": [
+            "#my-plugin-container",
+            "body micro-lc custom-layout div#plugin-container",
+            {
+              "id": "#__MICRO_LC_MOUNT_POINT",
+              "slot": "container"
+            }
+          ],
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {"type": "string"},
+                "slot": {"type": "string"}
+              },
+              "additionalProperties": false,
+              "required": ["id"]
+            }
+          ]
         }
       },
       "additionalProperties": false
