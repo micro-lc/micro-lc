@@ -113,8 +113,5 @@ describe('micro-lc config tests', () => {
         }
       </style>
     `.replace(/\s/g, ''))
-
-    // CLEANUP
-    global.remove()
   })
 })

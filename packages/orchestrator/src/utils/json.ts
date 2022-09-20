@@ -1,4 +1,5 @@
-import type { ErrorObject } from 'ajv'
+import type { Config } from '@micro-lc/interfaces'
+import type { ErrorObject, JSONSchemaType, ValidateFunction } from 'ajv'
 
 import type { ErrorCodes } from '../logger'
 import logger from '../logger'
@@ -44,10 +45,17 @@ export async function jsonFetcher(url: string): Promise<unknown> {
 
 export async function jsonToObject<T>(input: unknown): Promise<T> {
   if (process.env.NODE_ENV === 'development') {
-    return import('ajv').then(({ default: Ajv }) => {
+    return Promise.all([
+      import('ajv'),
+      import('./schemas'),
+    ]).then(([{ default: Ajv }, { configSchema, pluginSchema, htmlTagSchema }]) => {
+      console.log(Ajv)
       try {
-        const validate = new Ajv().compile({})
+        const ajv = new Ajv({ schemas: [configSchema, pluginSchema, htmlTagSchema] })
+        const validate = ajv.getSchema(configSchema.$id) as ValidateFunction<JSONSchemaType<Config>>
+
         validate(input)
+
         const { errors: cause } = validate
 
         if (cause) {

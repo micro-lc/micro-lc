@@ -3,7 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "title": "PluginConfiguration",
   "definitions": {
-    "import-map": {
+    "importmap": {
       "title": "ImportMap",
       "type": "object",
       "examples": [
@@ -89,7 +89,7 @@
         },
         {
           "uris": "https://my-web-components-source",
-          "import-map": {
+          "importmap": {
             "imports": {
               "a": "/a-1.mjs",
               "b": "/b-1.mjs",
@@ -137,8 +137,8 @@
                 }
               ]
             },
-            "import-map": {
-              "$ref": "#/definitions/import-map",
+            "importmap": {
+              "$ref": "#/definitions/importmap",
               "description": "Specific import map for the component"
             }
           },

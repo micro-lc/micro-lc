@@ -1,0 +1,11 @@
+{
+  "include": [
+    "src/composer"
+  ],
+  "report-dir": "./coverage/unit",
+  "reporter": ["text", "cobertura", "lcov"],
+  "lines": 80,
+  "statements": 80,
+  "functions": 70,
+  "branches": 80
+}

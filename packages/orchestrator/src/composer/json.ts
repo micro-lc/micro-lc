@@ -6,7 +6,7 @@ function contentToArrayOfNodes(rawContent: ArrayContent | Component): ArrayConte
   return Array.isArray(rawContent) ? rawContent : [rawContent]
 }
 
-function parseContent(content: Content, buffer: string[]): void {
+function parseContent(buffer: string[], content: Content, extraProperties: string[]): void {
   if (typeof content !== 'object') {
     buffer.push(`${content}`)
     return
@@ -35,8 +35,24 @@ function parseContent(content: Content, buffer: string[]): void {
         return acc
       }, [])
     const initialTagBooleanAttributes = toArray(booleanAttributes)
-    const initialTagProperties = Object
+
+    // separate extra properties for override
+    const { override, props } = Object
       .entries(properties)
+      .reduce<{override: Record<string, string | undefined>; props: Record<string, unknown>}>((acc, [key, value]) => {
+        extraProperties.includes(key)
+          ? (typeof value === 'string' && (acc.override[key] = value))
+          : acc.props[key] = value
+        return acc
+      }, { override: {}, props: {} })
+
+    // override if available
+    const initialTagExtraProperties = extraProperties
+      .map((prop) => `.${prop}=\${${override[prop] ?? prop}}`)
+
+    // set regular props
+    const initialTagProperties = Object
+      .entries(props)
       .reduce<string[]>((acc, [name, value]) => {
         switch (typeof value) {
         case 'object':
@@ -58,21 +74,22 @@ function parseContent(content: Content, buffer: string[]): void {
       initialTagOpen,
       initialTagAttributes.join(' '),
       initialTagBooleanAttributes.join(' '),
+      initialTagExtraProperties.join(' '),
       initialTagProperties.join(' '),
       initialTagClose,
     ].join(' '))
 
     if (nextContent) {
-      parseContent(nextContent, buffer)
+      parseContent(buffer, nextContent, extraProperties)
     }
 
     buffer.push(finalTag)
   })
 }
 
-export function jsonToHtml(content: Content): string {
+export function jsonToHtml(content: Content, extraProperties: string[] = []): string {
   const buffer: string[] = []
-  parseContent(content, buffer)
+  parseContent(buffer, content, extraProperties)
 
   return buffer.join(' ')
 }

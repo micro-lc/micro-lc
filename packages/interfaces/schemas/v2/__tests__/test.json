@@ -1,7 +1,7 @@
 {
   "$schema": "../config.schema.json",
   "version": 2,
-  "import-map": {
+  "importmap": {
     "imports": {
       "a": "/a-1.mjs",
       "b": "/b-1.mjs",

@@ -155,7 +155,10 @@ export interface Config {
   version: 2
   settings?: Settings
   css?: CSSConfig
-  "import-map"?: GlobalImportMap
+  shared?: {
+    [k: string]: unknown
+  }
+  importmap?: GlobalImportMap
   /**
    * List of mounted applications
    */

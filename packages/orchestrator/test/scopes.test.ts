@@ -1,6 +1,6 @@
 import type { Config } from '@micro-lc/interfaces'
 import { expect, waitUntil } from '@open-wc/testing'
-import { createSandbox, match } from 'sinon'
+import { createSandbox } from 'sinon'
 
 import MicroLC from '../src/micro-lc'
 
@@ -15,28 +15,46 @@ describe('micro-lc config tests', () => {
     }
   })
 
-  it(`should install importmap using shims,
-      then 2 module script must use the dependency,
-      the second request will not be executed due to caching`, async () => {
+  it('should install importmap using shims and scoping by url', async () => {
     const sandbox = createSandbox()
     const fetch = sandbox.stub(window, 'fetch').callsFake(
       (input: RequestInfo | URL) => {
         const { pathname } = new URL(input as string)
-        if (pathname === '/write-test.js') {
+        if (pathname === '/read-test.js') {
           return Promise.resolve(new Response(
             `export default function () {
               Object.defineProperty(
                 window,
-                '__write_test',
+                '__read_test',
                 {
-                  value: '__write_test',
+                  value: '__read_test',
                   writable: true,
                   configurable: true
                 }
               )
             }
             export function remove () {
-              delete window.__write_test
+              delete window.__read_test
+            }`,
+            {
+              headers: { 'Content-Type': 'application/javascript' },
+              status: 200,
+            }
+          ))
+        }
+
+        if (pathname === '/another-test.js') {
+          return Promise.resolve(new Response(
+            `export default function () {
+              Object.defineProperty(
+                window,
+                '__another_test',
+                {
+                  value: '__another_test',
+                  writable: true,
+                  configurable: true
+                }
+              )
             }`,
             {
               headers: { 'Content-Type': 'application/javascript' },
@@ -53,11 +71,15 @@ describe('micro-lc config tests', () => {
           }
         ))
       })
-
     const config: Config = {
       importmap: {
         imports: {
-          'write-test': './write-test.js',
+          'read-test': './read-test.js',
+        },
+        scopes: {
+          './': {
+            'another-test': './another-test.js',
+          },
         },
       },
       version: 2,
@@ -77,28 +99,18 @@ describe('micro-lc config tests', () => {
     document.body.appendChild(
       Object.assign(document.createElement('script'), {
         textContent: `
-          import writeTest from 'write-test'
-          writeTest()
+          import readTest from 'read-test'
+          import anotherTest from 'another-test'
+          readTest()
+          anotherTest()
         `,
         type: 'module-shim',
       })
     )
-    await waitUntil(() => Object.prototype.hasOwnProperty.call(window, '__write_test'))
-    expect(fetch).to.be.calledOnceWith(match((val: string) => val.match(/\/write-test.js/)))
-
-    // 4. inject module script that should use caching
-    document.body.appendChild(
-      Object.assign(document.createElement('script'), {
-        textContent: `
-          import {remove} from 'write-test'
-          remove()
-        `,
-        type: 'module-shim',
-      })
-    )
-    await waitUntil(() => !Object.prototype.hasOwnProperty.call(window, '__write_test'))
-    // 5. es-module-shims caching
-    expect(fetch).to.be.calledOnce
+    await waitUntil(() => Object.prototype.hasOwnProperty.call(window, '__read_test'))
+    await waitUntil(() => Object.prototype.hasOwnProperty.call(window, '__another_test'))
+    expect(fetch).to.be.calledTwice
     sandbox.restore()
+    // (match((val: string) => val.match(/\/read-test.js/)))
   })
 })

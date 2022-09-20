@@ -219,7 +219,7 @@ module.exports = {
     'keyword-spacing': 'error',
     'line-comment-position': 'error',
     'linebreak-style': ['error', 'unix'],
-    'lines-around-comment': 'error',
+    'lines-around-comment': 'off',
     'max-depth': ['error', 4],
     'max-lines': [
       'error',

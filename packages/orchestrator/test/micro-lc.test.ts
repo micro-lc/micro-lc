@@ -23,8 +23,8 @@ describe('micro-lc config tests', () => {
     sandbox.restore()
   })
 
-  it.only('should receive attribute input and merge config', async () => {
-    const config = { $schema: 'my-schema' }
+  it('should receive attribute input and merge config', async () => {
+    const config = { layout: { content: 'my-content' } }
     const fetch = sandbox.stub(window, 'fetch').callsFake(() => Promise.resolve(new Response(
       JSON.stringify(config),
       {
@@ -62,7 +62,7 @@ describe('micro-lc config tests', () => {
 
     // 4. when update is done, config must be available
     await waitUntil(() => microlc.updateCompleted)
-    expect(microlc.config).to.have.property('$schema', 'my-schema')
+    expect(microlc.config.layout).to.have.property('content', 'my-content')
     //
   })
 
@@ -105,7 +105,7 @@ describe('micro-lc config tests', () => {
   it('should load config from property setting', async () => {
     // TEST
     // 1. append micro-lc
-    const config = { $schema: 'my-schema' }
+    const config = { layout: { content: 'my-content' } }
     const microlc = document.createElement('micro-lc') as MicroLC
     document.body.appendChild(
       Object.assign(microlc, { config })
@@ -113,7 +113,7 @@ describe('micro-lc config tests', () => {
 
     // 2. check config
     await waitUntil(() => microlc.updateCompleted)
-    expect(microlc.config).to.have.property('$schema', 'my-schema')
+    expect(microlc.config.layout).to.have.property('content', 'my-content')
     //
   })
 })

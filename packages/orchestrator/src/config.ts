@@ -1,18 +1,17 @@
-import type { Config, Content, PluginConfiguration, Settings } from '@micro-lc/interfaces'
+import type { Config, Content, GlobalImportMap, PluginConfiguration, Settings } from '@micro-lc/interfaces'
 
 const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
-export type CompleteConfig = Required<Omit<Config, 'settings'>> & {
+export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'layout'>> & {
   layout: PluginConfiguration & {content: Content}
   settings: Required<Omit<Settings, 'pluginMountPointSelector'>>
     & {pluginMountPointSelector: {id: string; slot?: string}}
 }
 
 export const defaultConfig = (shadow = true): CompleteConfig => ({
-  $schema: 'https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/config.schema.json',
   applications: [],
   css: {},
-  importmap: {},
+  importmap: {} as GlobalImportMap,
   layout: shadow
     ? {
       content: {
@@ -31,6 +30,7 @@ export const defaultConfig = (shadow = true): CompleteConfig => ({
     defaultUrl: '/',
     pluginMountPointSelector: { id: MICRO_LC_MOUNT_POINT },
   },
+  shared: {},
   version: 2,
 })
 
@@ -42,7 +42,6 @@ export function mergeConfig(input: Config, shadow = true): CompleteConfig {
     ? mountPointMergedConfig
     : { id: mountPointMergedConfig }
   return {
-    $schema: input.$schema ?? def.$schema,
     applications: input.applications ?? def.applications,
     css: input.css ?? def.css,
     importmap: input.importmap ?? def.importmap,
@@ -54,6 +53,7 @@ export function mergeConfig(input: Config, shadow = true): CompleteConfig {
       defaultUrl: input.settings?.defaultUrl ?? def.settings.defaultUrl,
       pluginMountPointSelector,
     },
+    shared: input.shared ?? def.shared,
     version: 2,
   }
 }

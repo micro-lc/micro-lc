@@ -2,7 +2,7 @@
   "name": "@micro-lc/orchestrator",
   "version": "2.0.0-rc0",
   "scripts": {
-    "cleanup": "yarn run -T rimraf ./dist stats.html",
+    "cleanup": "yarn run -T rimraf ./dist ./src/bundles stats.html",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
     "build": "yarn run -T run-s cleanup build:dev build:prod",
@@ -10,7 +10,12 @@
     "test:chromium": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers chromium",
     "test:firefox": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers firefox",
     "test:safari": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers webkit",
-    "test": "yarn run -T run-p test:firefox",
+    "test": "yarn run -T run-s test:unit test:chromium",
+    "coverage:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' nyc ts-mocha src/**/test/**/*.test.ts",
+    "coverage:browser": "yarn test:chromium --coverage",
+    "coverage:cobertura:merge": "cobertura-merge -o coverage/cobertura-coverage.xml package1=coverage/unit/cobertura-coverage.xml package2=coverage/browser/cobertura-coverage.xml",
+    "coverage:lcov:merge": "lcov-result-merger 'coverage/*/lcov.info' coverage/lcov.info",
+    "coverage": "yarn run -T run-s coverage:unit coverage:browser coverage:cobertura:merge coverage:lcov:merge",
     "serve:bundle": "cd dist && python3 -m http.server"
   },
   "devDependencies": {
@@ -29,18 +34,21 @@
     "ajv": "^8.11.0",
     "chai": "^4.3.6",
     "chai-string": "^1.5.0",
+    "cobertura-merge": "^1.0.3",
+    "lcov-result-merger": "^3.3.0",
     "mocha": "^10.0.0",
+    "nyc": "^15.1.0",
     "rollup-plugin-visualizer": "^5.8.1",
     "sinon": "^14.0.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3",
-    "vite": "^3.1.2"
+    "vite": "^3.1.3"
   },
   "dependencies": {
     "es-module-shims": "^1.5.18",
     "lit-html": "^2.3.1",
-    "qiankun": "^2.7.5"
+    "qiankun": "^2.8.0"
   },
   "engines": {
     "node": ">=16.17.0"

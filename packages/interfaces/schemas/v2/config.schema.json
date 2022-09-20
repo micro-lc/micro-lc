@@ -346,8 +346,12 @@
       "description": "CSS-related configuration"
     },
 
-    "import-map": {
-      "$ref": "plugin.schema.json#/definitions/import-map",
+    "shared": {
+      "type": "object"
+    },
+
+    "importmap": {
+      "$ref": "./plugin.schema.json#/definitions/importmap",
       "title": "GlobalImportMap",
       "description": "Global import map"
     },
