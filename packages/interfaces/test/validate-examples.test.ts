@@ -16,7 +16,7 @@ interface TestCase {
 }
 
 const extractTestCases = (currSchemaNode: unknown, acc: TestCase[], path: string[] = []) => {
-  if (currSchemaNode == null || typeof currSchemaNode !== 'object') { return }
+  if (currSchemaNode === null || typeof currSchemaNode !== 'object') { return }
 
   if (Array.isArray(currSchemaNode)) {
     currSchemaNode.forEach((currSchemaNodeElement, idx) => extractTestCases(currSchemaNodeElement, acc, [...path, idx.toString()]))

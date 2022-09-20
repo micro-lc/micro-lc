@@ -26,10 +26,12 @@ const schemaUrls: Record<Version, string | string[]> = {
 
 const setup = (versions: Version[]): Map<Version, Promise<Schema[]>> => {
   return versions.reduce((map, version) => {
+    // SAFETY: versions are certainly available here
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const getFromCachePromise = Promise.resolve(cache.get(version)!)
 
     const getFromUrlPromise = Promise
-      .all(toArray(schemaUrls[version] ?? []).map(url => client.get(url).then(({ data }) => data as Schema)))
+      .all(toArray(schemaUrls[version]).map(url => client.get(url).then(({ data }) => data as Schema)))
       .then((schemas) => schemas)
 
     map.set(version, cache.has(version) ? getFromCachePromise : getFromUrlPromise)
@@ -59,6 +61,8 @@ export async function intake(input: string | Buffer, path: string, opts: IntakeO
   if (inputVersion === to) { return { version, ...json } }
 
   const schemas = setup([inputVersion, to])
+  // SAFETY: versions are certainly available here
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const schema = await schemas.get(inputVersion)!
 
   const [main, ...rest] = schema

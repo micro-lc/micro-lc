@@ -1,3 +1,7 @@
+/**
+ * SAFETY: this is inherited by `qiankun`
+ */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare type ActivityFn = (location: Location) => boolean
 declare type Activity = ActivityFn | string | (ActivityFn | string)[]
 declare type ObjectType = Record<string, any>
