@@ -47,11 +47,18 @@ export async function jsonToObject<T>(input: unknown): Promise<T> {
   if (process.env.NODE_ENV === 'development') {
     return Promise.all([
       import('ajv'),
+      import('ajv-formats'),
       import('./schemas'),
-    ]).then(([{ default: Ajv }, { configSchema, pluginSchema, htmlTagSchema }]) => {
+    ]).then(([
+      { default: Ajv },
+      { default: addFormats },
+      { configSchema, pluginSchema, htmlTagSchema },
+    ]) => {
       console.log(Ajv)
       try {
         const ajv = new Ajv({ schemas: [configSchema, pluginSchema, htmlTagSchema] })
+        addFormats(ajv)
+
         const validate = ajv.getSchema(configSchema.$id) as ValidateFunction<JSONSchemaType<Config>>
 
         validate(input)

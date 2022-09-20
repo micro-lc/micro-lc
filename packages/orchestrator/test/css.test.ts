@@ -56,8 +56,27 @@ describe('micro-lc config tests', () => {
     await waitUntil(() => microlc.updateCompleted)
 
     // 3. check whether css is properly mounted
-    const [nodes, global] = microlc.shadowRoot?.querySelectorAll('style') ?? []
-    expect(nodes.outerHTML.replace(/\s/g, '')).to.eql(`
+    if ('adoptedStyleSheets' in document) {
+      const [nodes, global] = microlc.shadowRoot?.adoptedStyleSheets ?? []
+      expect(nodes.cssRules.item(0)?.cssText.replace(/\s/g, '')).to.equal(`
+        .my-css-class {
+          color: var(--micro-lc-primary-color);
+          font-family: var(--micro-lc-font-family);
+        }
+      `.replace(/\s/g, ''))
+      expect(global.cssRules.item(0)?.cssText.replace(/\s/g, '')).to.equal(`
+        :host {
+          --micro-lc-font-family: Arial, Helvetica, sans-serif;
+          --micro-lc-primary-color: #873232;
+        }
+      `.replace(/\s/g, ''))
+    } else {
+      /**
+       * SAFARI does not support `adoptedStyleSheets`
+       * @link {https://caniuse.com/?search=adoptedStyleSheets}
+       */
+      const [nodes, global] = microlc.shadowRoot?.querySelectorAll('style') ?? []
+      expect(nodes.outerHTML.replace(/\s/g, '')).to.eql(`
       <style>
         .my-css-class {
           color: var(--micro-lc-primary-color);
@@ -65,7 +84,7 @@ describe('micro-lc config tests', () => {
         }
       </style>
     `.replace(/\s/g, ''))
-    expect(global.outerHTML.replace(/\s/g, '')).to.eql(`
+      expect(global.outerHTML.replace(/\s/g, '')).to.eql(`
       <style>
         :host {
           --micro-lc-font-family: Arial, Helvetica, sans-serif;
@@ -73,7 +92,7 @@ describe('micro-lc config tests', () => {
         }
       </style>
     `.replace(/\s/g, ''))
-
+    }
     // SAFETY: must have been created by layout config parsing
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const computedStyle = window.getComputedStyle(microlc.renderRoot.querySelector('div')!)

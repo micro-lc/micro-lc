@@ -10,11 +10,13 @@ export function appendMountPoint(
     const { id, slot } = typeof pluginMountPointSelector === 'object'
       ? pluginMountPointSelector
       : { id: pluginMountPointSelector, slot: undefined }
-    mountPoint = this.ownerDocument.createElement('div')
+    mountPoint = this.mountPoint instanceof HTMLElement
+      ? this.mountPoint
+      : this.ownerDocument.createElement('div')
     mountPoint.setAttribute('id', id)
     slot && mountPoint.setAttribute('slot', slot)
 
-    this.appendChild(mountPoint)
+    !mountPoint.isConnected && this.appendChild(mountPoint)
   }
 
   return mountPoint

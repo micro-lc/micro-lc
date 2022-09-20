@@ -26,7 +26,9 @@ export function addGlobalImports(this: MicroLC, globalImportMap: GlobalImportMap
 }
 
 export function appendImportMapTag(this: MicroLC): void {
-  this.importmap && this.ownerDocument.head.appendChild(this.importmap)
+  this.importmap
+    && !this.importmap.isConnected
+    && this.ownerDocument.head.appendChild(this.importmap)
 }
 
 export function setImportMap(

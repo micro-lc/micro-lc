@@ -1,11 +1,10 @@
 import { MicrolcApiInstance } from './api'
 import { createComposerContext } from './composer'
-import type { CompleteConfig } from './config'
 import { addGlobalImports, appendCSS, appendImportMapTag, appendMountPoint, createImportMapTag } from './dom'
 import logger from './logger'
 import type MicroLC from './micro-lc'
 
-export async function run(this: MicroLC, config: CompleteConfig): Promise<void> {
+export async function run(this: MicroLC): Promise<void> {
   const {
     applications,
     css,
@@ -15,13 +14,12 @@ export async function run(this: MicroLC, config: CompleteConfig): Promise<void> 
       // defaultUrl,
       pluginMountPointSelector,
     },
-    shared,
-  } = config
+  } = this.config
 
   // TODO: createSandbox()
 
   // Instantiate api
-  this.api = new MicrolcApiInstance({}, { applications, shared })
+  this.api = new MicrolcApiInstance(this, {})
 
   // Append mount point or set query selector to reach it
   this.mountPoint = appendMountPoint.call(this, pluginMountPointSelector)
@@ -30,7 +28,7 @@ export async function run(this: MicroLC, config: CompleteConfig): Promise<void> 
   this.styleTags = appendCSS.call(this, css)
 
   // Append importmap
-  this.importmap = createImportMapTag.call(this)
+  this.importmap = this.importmap ?? createImportMapTag.call(this)
   addGlobalImports.call(this, importmap)
   appendImportMapTag.call(this)
 

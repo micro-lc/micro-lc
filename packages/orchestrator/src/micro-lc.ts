@@ -58,13 +58,13 @@ export default class MicroLC<T extends Obj = Obj> extends HTMLElement {
       this._config = completeConfig
 
       // SETUP & START
-      await run.call(this, this._config).finally(() => {
+      await run.call(this).finally(() => {
         this._updateCompleted = true
       })
     })
   }
 
-  protected mountPoint?: string | HTMLElement
+  protected mountPoint: string | HTMLElement | null = null
 
   protected styleTags: HTMLStyleElement[] = []
 

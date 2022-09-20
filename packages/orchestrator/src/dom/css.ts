@@ -17,7 +17,7 @@ function composeCSSRuleText(rules: CSSRules, prefix?: string): string {
   }, '')
 }
 
-function composeCSSNodeText(selector: string, rules: CSSRules, prefix?: string) {
+function composeCSSNodeText(selector: string, rules: CSSRules, prefix?: string): string {
   return `
     ${selector} {
       ${composeCSSRuleText(rules, prefix)}
@@ -25,7 +25,7 @@ function composeCSSNodeText(selector: string, rules: CSSRules, prefix?: string) 
   `
 }
 
-function composeStyleSheet(node: CSSNode, prefix?: string): string {
+function composeTextStyleSheet(node: CSSNode, prefix?: string): string {
   return Object.entries(node).reduce((stylesheet, [selector, rules]) => {
     return stylesheet.concat(`${composeCSSNodeText(
       selector,
@@ -35,12 +35,24 @@ function composeStyleSheet(node: CSSNode, prefix?: string): string {
   }, '')
 }
 
+function composeStyleSheet(node: CSSNode, prefix?: string): CSSStyleSheet {
+  return Object.entries(node).reduce((stylesheet, [selector, rules]) => {
+    stylesheet.insertRule(`${composeCSSNodeText(
+      selector,
+      rules,
+      prefix
+    )}\n`)
+    return stylesheet
+  }, new CSSStyleSheet())
+}
+
 export function appendStyleTag(
   this: MicroLC,
   tag: HTMLStyleElement,
 ): HTMLStyleElement {
-  const container = this.isShadowDom() ? this.renderRoot : this.ownerDocument.head
-  return container.appendChild(tag)
+  return this.isShadowDom()
+    ? this.renderRoot.insertBefore(tag, this.renderRoot.firstChild)
+    : this.ownerDocument.head.appendChild(tag)
 }
 
 function appendStyle(
@@ -48,17 +60,27 @@ function appendStyle(
   textContent: string,
 ): HTMLStyleElement {
   const style = this.ownerDocument.createElement('style')
-
   return appendStyleTag.call(this, Object.assign(style, { textContent }))
 }
 
 export function appendCSS(this: MicroLC, { global, nodes }: CompleteConfig['css']): HTMLStyleElement[] {
   const styleTags: HTMLStyleElement[] = []
-  nodes && styleTags.push(appendStyle.call(this, composeStyleSheet(nodes)))
-  global && styleTags.push(appendStyle.call(
-    this,
-    composeCSSNodeText(this.isShadowDom() ? ':host' : ':root', global, MICRO_LC_CSS_PREFIX))
-  )
+  const shadow = this.isShadowDom()
+  const selector = shadow ? ':host' : ':root'
+  const globalNode = { [selector]: global } as CSSNode
+
+  if (shadow && 'adoptedStyleSheets' in this.ownerDocument) {
+    const stylesheets: CSSStyleSheet[] = []
+    nodes && stylesheets.push(composeStyleSheet(nodes))
+    global && stylesheets.push(composeStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
+    ;((this.renderRoot as ShadowRoot).adoptedStyleSheets = [...stylesheets])
+  } else {
+    this.styleTags.forEach((style) => { style.remove() })
+    global && styleTags.push(appendStyle.call(
+      this, composeTextStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
+    )
+    nodes && styleTags.push(appendStyle.call(this, composeTextStyleSheet(nodes)))
+  }
 
   return styleTags
 }
