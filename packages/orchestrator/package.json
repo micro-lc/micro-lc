@@ -1,11 +1,13 @@
 {
   "name": "@micro-lc/orchestrator",
   "version": "2.0.0-rc0",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "cleanup": "yarn run -T rimraf ./dist ./src/bundles stats.html",
+    "build:types": "tsc",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
-    "build": "yarn run -T run-s cleanup build:dev build:prod",
+    "build": "yarn run -T run-s cleanup build:types build:dev build:prod",
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ts-mocha src/**/test/**/*.test.ts",
     "test:chromium": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers chromium",
     "test:firefox": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers firefox",
