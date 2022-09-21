@@ -2,8 +2,6 @@
 import type { ErrorCodes } from '../logger'
 import logger from '../logger'
 
-// import { compile } from './handlebars'
-
 enum LexerMode {
   String,
   Normal,
@@ -60,10 +58,6 @@ class Lexer {
   }
 
   private _nx(): void {
-    if (this._d) {
-      return
-    }
-
     const current = this._s.charAt(this._i)
 
     switch (this._m) {
@@ -77,8 +71,6 @@ class Lexer {
       } else if (current === '}' && this._n > 0) {
         this._st.push(current)
         this._n -= 1
-      } else if (current === '}') {
-        throw new TypeError('41' as ErrorCodes.LexerAnalysisEndedInNormalMode, { cause: `${this._i}` })
       } else {
         this._st.push(current)
       }
@@ -111,7 +103,7 @@ class Lexer {
       if (this._m === LexerMode.PossiblyNormal) {
         this._sw(LexerMode.String)
       } else if (this._m === LexerMode.Normal) {
-        throw new TypeError('Unexpected end of input')
+        throw new TypeError('41' as ErrorCodes.LexerAnalysisEndedInNormalMode, { cause: `${this._i}` })
       }
 
       this._fs()
@@ -136,61 +128,7 @@ class Lexer {
 
     return this._c()
   }
-
-  isDone() {
-    return this._d
-  }
 }
-
-
-// function setOptions<T extends Record<string, any>>(
-//   opts: Partial<T> | undefined,
-//   def: Required<T>
-// ): Required<T> {
-//   const r = { ...def }
-//   if (opts) {
-//     Object.entries(opts).forEach(([k, v]) => {
-//       r[k as keyof Required<T>] = v
-//     })
-//   }
-
-//   return r
-// }
-
-// const isString = (v: string): boolean => {
-//   const i = v.charAt(0)
-
-//   if (i !== v.charAt(v.length - 1) || (i !== '\'' && i !== '"')) {
-//     return false
-//   }
-
-//   return true
-// }
-
-// export function interpolate(variables: string[], extra: Record<string, any> = {}): unknown[] {
-//   return variables.reduce<unknown[]>((acc, v, i) => {
-//     const trimmed = v.trim()
-//     const ni = Number.parseInt(trimmed)
-//     const nf = Number.parseFloat(trimmed)
-//     if (trimmed === '') {
-//       acc[i] = trimmed
-//     } else if (isString(trimmed)) {
-//       acc[i] = trimmed.slice(1, -1)
-//     } else if (['true', 'false'].includes(trimmed)) {
-//       acc[i] = trimmed === 'true'
-//     } else if (!Number.isNaN(ni) && ni.toString() === trimmed) {
-//       acc[i] = ni
-//     } else if (!Number.isNaN(nf) && nf.toString() === trimmed) {
-//       acc[i] = nf
-//     } else if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
-//       acc[i] = JSON.parse(trimmed)
-//     } else {
-//       acc[i] = compile<Record<string, any>>(trimmed)(extra)
-//     }
-
-//     return acc
-//   }, [])
-// }
 
 const digest = async (input: string, algorithm: AlgorithmIdentifier = 'SHA-1') =>
   window.crypto.subtle.digest(

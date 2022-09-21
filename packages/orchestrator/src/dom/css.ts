@@ -1,3 +1,4 @@
+import type { PartialObject } from '../apis'
 import type { CompleteConfig } from '../config'
 import type MicroLC from '../micro-lc'
 
@@ -46,8 +47,8 @@ function composeStyleSheet(node: CSSNode, prefix?: string): CSSStyleSheet {
   }, new CSSStyleSheet())
 }
 
-export function appendStyleTag(
-  this: MicroLC,
+export function appendStyleTag<T extends PartialObject>(
+  this: MicroLC<T>,
   tag: HTMLStyleElement,
 ): HTMLStyleElement {
   return this.isShadowDom()
@@ -55,15 +56,20 @@ export function appendStyleTag(
     : this.ownerDocument.head.appendChild(tag)
 }
 
-function appendStyle(
-  this: MicroLC,
+function appendStyle<T extends PartialObject>(
+  this: MicroLC<T>,
   textContent: string,
 ): HTMLStyleElement {
   const style = this.ownerDocument.createElement('style')
-  return appendStyleTag.call(this, Object.assign(style, { textContent }))
+  return appendStyleTag
+    .call<MicroLC<T>, [HTMLStyleElement], HTMLStyleElement>(
+      this, Object.assign(style, { textContent })
+    )
 }
 
-export function appendCSS(this: MicroLC, { global, nodes }: CompleteConfig['css']): HTMLStyleElement[] {
+export function appendCSS<T extends PartialObject>(
+  this: MicroLC<T>, { global, nodes }: CompleteConfig['css']
+): HTMLStyleElement[] {
   const styleTags: HTMLStyleElement[] = []
   const shadow = this.isShadowDom()
   const selector = shadow ? ':host' : ':root'
@@ -76,10 +82,16 @@ export function appendCSS(this: MicroLC, { global, nodes }: CompleteConfig['css'
     ;((this.renderRoot as ShadowRoot).adoptedStyleSheets = [...stylesheets])
   } else {
     this.styleTags.forEach((style) => { style.remove() })
-    global && styleTags.push(appendStyle.call(
-      this, composeTextStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
+    global && styleTags.push(appendStyle
+      .call<MicroLC<T>, [string], HTMLStyleElement>(
+        this, composeTextStyleSheet(globalNode, MICRO_LC_CSS_PREFIX)
+      )
     )
-    nodes && styleTags.push(appendStyle.call(this, composeTextStyleSheet(nodes)))
+    nodes && styleTags.push(appendStyle
+      .call<MicroLC<T>, [string], HTMLStyleElement>(
+        this, composeTextStyleSheet(nodes)
+      )
+    )
   }
 
   return styleTags

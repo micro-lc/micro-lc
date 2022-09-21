@@ -1,18 +1,19 @@
 import type { Config } from '@micro-lc/interfaces'
 
-import type { MicrolcApiInstance } from './api'
+import type { MicrolcApi, PartialObject, QiankunApi } from './apis'
+import { createMicrolcApiInstance, createQiankunInstance } from './apis'
 import type { CompleteConfig } from './config'
 import { defaultConfig, mergeConfig } from './config'
 import { appendImportMapTag, appendStyleTag } from './dom'
-import { run } from './run'
+import { update } from './update'
 import { invalidJsonCatcher, jsonFetcher, jsonToObject, jsonToObjectCatcher } from './utils/json'
 import Subscription from './utils/subscription'
 
 const MICRO_LC_CONFIG = '"micro-lc config"'
 
-type Obj = Record<string, never>
-
-export default class MicroLC<T extends Obj = Obj> extends HTMLElement {
+export default class MicroLC<
+  Extensions extends PartialObject = PartialObject,
+> extends HTMLElement {
   static get observedAttributes() { return ['config-src'] }
 
   private _wasDisconnected = false
@@ -58,7 +59,7 @@ export default class MicroLC<T extends Obj = Obj> extends HTMLElement {
       this._config = completeConfig
 
       // SETUP & START
-      await run.call(this).finally(() => {
+      await update.call<MicroLC<Extensions>, [], Promise<void>>(this).finally(() => {
         this._updateCompleted = true
       })
     })
@@ -70,7 +71,13 @@ export default class MicroLC<T extends Obj = Obj> extends HTMLElement {
 
   protected importmap: HTMLScriptElement | null = null
 
-  protected api?: MicrolcApiInstance<T>
+  protected extensions: Extensions = {} as Extensions
+
+  protected qiankun: QiankunApi = createQiankunInstance
+    .call<MicroLC<Extensions>, [], QiankunApi>(this)
+
+  protected getApi: () => MicrolcApi<Extensions> = createMicrolcApiInstance
+    .call<MicroLC<Extensions>, [], () => MicrolcApi<Extensions>>(this)
 
   get updateCompleted(): boolean {
     return this._updateCompleted
@@ -120,9 +127,14 @@ export default class MicroLC<T extends Obj = Obj> extends HTMLElement {
 
     // reconnect checks
     if (this._wasDisconnected) {
-      appendImportMapTag.call(this)
+      appendImportMapTag.call<MicroLC<Extensions>, [], void>(this)
       this.styleTags.length > 0
-        && this.styleTags.forEach((style) => { appendStyleTag.call(this, style) })
+        && this.styleTags.forEach((style) => {
+          appendStyleTag.call<MicroLC<Extensions>, [HTMLStyleElement], HTMLStyleElement>(
+            this,
+            style
+          )
+        })
     }
 
     this._wasDisconnected = false

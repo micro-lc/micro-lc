@@ -1,5 +1,6 @@
 import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces'
 
+import type { PartialObject } from '../apis'
 import type MicroLC from '../micro-lc'
 
 export interface ImportmapState {
@@ -11,7 +12,9 @@ const importmap: ImportmapState = {
   map: new Map(),
 }
 
-export function createImportMapTag(this: MicroLC, useShims = true): HTMLScriptElement {
+export function createImportMapTag<T extends PartialObject>(
+  this: MicroLC<T>, useShims = true
+): HTMLScriptElement {
   return Object.assign(
     this.ownerDocument.createElement('script'),
     {
@@ -20,12 +23,14 @@ export function createImportMapTag(this: MicroLC, useShims = true): HTMLScriptEl
   )
 }
 
-export function addGlobalImports(this: MicroLC, globalImportMap: GlobalImportMap): void {
+export function addGlobalImports<T extends PartialObject>(
+  this: MicroLC<T>, globalImportMap: GlobalImportMap
+): void {
   importmap.global = globalImportMap
   this.importmap && (this.importmap.textContent = JSON.stringify(globalImportMap))
 }
 
-export function appendImportMapTag(this: MicroLC): void {
+export function appendImportMapTag<T extends PartialObject>(this: MicroLC<T>): void {
   this.importmap
     && !this.importmap.isConnected
     && this.ownerDocument.head.appendChild(this.importmap)
@@ -33,12 +38,14 @@ export function appendImportMapTag(this: MicroLC): void {
 
 export function setImportMap(
   id: string,
-  nextImportmap: GlobalImportMap,
-) {
+  nextImportmap: ImportMap,
+): void {
   importmap.map.set(id, nextImportmap)
 }
 
-export function applyImportMap(this: MicroLC, id: string) {
+export function applyImportMap<T extends PartialObject>(
+  this: MicroLC<T>, id: string
+): void {
   const appImportMap = importmap.map.get(id) ?? {}
   if (this.importmap) {
     this.importmap.textContent = JSON.stringify({

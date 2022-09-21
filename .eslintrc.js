@@ -62,6 +62,7 @@ const tsConfigs = {
         singleline: { delimiter: 'semi', requireLast: false },
       },
     ],
+    '@typescript-eslint/no-invalid-void-type': 'off',
     '@typescript-eslint/no-shadow': ['error', { hoist: 'functions' }],
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -190,7 +191,7 @@ module.exports = {
     'default-case': ['error', { commentPattern: '^skip\\sdefault' }],
     'eol-last': 'error',
     eqeqeq: ['error', 'smart'],
-    'func-call-spacing': 'error',
+    'func-call-spacing': 'off',
     'func-name-matching': 'error',
     'func-names': ['error', 'as-needed'],
     'func-style': ['error', 'declaration', { allowArrowFunctions: true }],

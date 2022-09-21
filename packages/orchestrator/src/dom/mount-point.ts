@@ -1,8 +1,9 @@
+import type { PartialObject } from '../apis'
 import type { CompleteConfig } from '../config'
 import type MicroLC from '../micro-lc'
 
-export function appendMountPoint(
-  this: MicroLC,
+export function appendMountPoint<T extends PartialObject>(
+  this: MicroLC<T>,
   pluginMountPointSelector: CompleteConfig['settings']['pluginMountPointSelector']
 ): string | HTMLElement {
   let mountPoint: string | HTMLElement = pluginMountPointSelector.id

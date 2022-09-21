@@ -72,6 +72,7 @@
     },
 
     "sources": {
+      "description": "Global sources",
       "examples": [
         "https://my-web-components-source",
         [
@@ -284,9 +285,12 @@
   },
   "type": "object",
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
+
     "sources": {
-      "$ref": "#/definitions/sources",
-      "description": "Global sources"
+      "$ref": "#/definitions/sources"
     },
 
     "content": {

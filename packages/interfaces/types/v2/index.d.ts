@@ -279,6 +279,7 @@ export interface ComposableApplication {
  * Composer configuration. It can be an url or an in-line configuration
  */
 export interface PluginConfiguration {
+  $schema?: string
   /**
    * Global sources
    */
@@ -290,7 +291,7 @@ export interface PluginConfiguration {
          * A single source uri or a list of source uris
          */
         uris: string | string[]
-        "import-map"?: ImportMap
+        importmap?: ImportMap
       }
   content: Content
 }
@@ -316,7 +317,7 @@ export interface Component {
          * A single source uri or a list of source uris
          */
         uris: string | string[]
-        "import-map"?: ImportMap
+        importmap?: ImportMap
       }
   /**
    * HTML node tag name
@@ -384,6 +385,7 @@ export interface QiankunApplication {
  * Orchestrator main page layout DOM configuration
  */
 export interface PluginConfiguration1 {
+  $schema?: string
   /**
    * Global sources
    */
@@ -395,7 +397,7 @@ export interface PluginConfiguration1 {
          * A single source uri or a list of source uris
          */
         uris: string | string[]
-        "import-map"?: ImportMap
+        importmap?: ImportMap
       }
   content: Content
 }

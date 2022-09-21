@@ -1,3 +1,6 @@
-import MicroLC from './micro-lc'
-
-customElements.define('micro-lc', MicroLC)
+export default new Promise<void>((resolve) => {
+  import('./micro-lc').then(({ default: MicroLC }) => {
+    customElements.define('micro-lc', MicroLC)
+    resolve()
+  }).catch(console.error)
+})

@@ -14,6 +14,11 @@ export default defineConfig(({ mode }) => ({
       },
       output: {
         entryFileNames: ({ name }) => `${name}.${mode}.js`,
+        manualChunks: (id) => {
+          if (id.match(/qiankun/)) {
+            return 'qiankun'
+          }
+        },
       },
       plugins: [visualizer()],
     },
@@ -27,6 +32,7 @@ export default defineConfig(({ mode }) => ({
       'firefox67',
       'node16',
       'safari11.1',
+      'opera51',
     ],
   },
   resolve: {

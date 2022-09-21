@@ -43,7 +43,7 @@ export async function jsonFetcher(url: string): Promise<unknown> {
     })
 }
 
-export async function jsonToObject<T>(input: unknown): Promise<T> {
+export async function jsonToObject<T>(input: unknown, type: 'schema' | 'plugin' = 'schema'): Promise<T> {
   if (process.env.NODE_ENV === 'development') {
     return Promise.all([
       import('ajv'),
@@ -59,7 +59,9 @@ export async function jsonToObject<T>(input: unknown): Promise<T> {
         const ajv = new Ajv({ schemas: [configSchema, pluginSchema, htmlTagSchema] })
         addFormats(ajv)
 
-        const validate = ajv.getSchema(configSchema.$id) as ValidateFunction<JSONSchemaType<Config>>
+        const validate = ajv.getSchema(
+          type === 'schema' ? configSchema.$id : pluginSchema.$id
+        ) as ValidateFunction<JSONSchemaType<Config>>
 
         validate(input)
 

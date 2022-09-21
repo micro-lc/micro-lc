@@ -122,3 +122,30 @@ describe('json2html parser recursive tests', () => {
     `)
   })
 })
+
+describe('extraProps injection', () => {
+  it('should parse a div and add extra-properties', () => {
+    expect(jsonToHtml({
+      attributes: { role: 'button' },
+      content: 'Hello',
+      tag: 'div',
+    }, ['extra'])).to.equalIgnoreSpaces(`
+      <div role="button" .extra=\${extra}>
+        Hello
+      </div>
+    `)
+  })
+
+  it('should parse a div and add extra-properties keeping user input', () => {
+    expect(jsonToHtml({
+      attributes: { role: 'button' },
+      content: 'Hello',
+      properties: { extra: 'userInput' },
+      tag: 'div',
+    }, ['extra'])).to.equalIgnoreSpaces(`
+      <div role="button" .extra=\${userInput}>
+        Hello
+      </div>
+    `)
+  })
+})

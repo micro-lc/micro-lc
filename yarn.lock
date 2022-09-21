@@ -496,6 +496,7 @@ __metadata:
     "@types/mocha": ^9.1.1
     "@types/node": ^18.7.18
     "@types/sinon": ^10.0.13
+    "@types/sinon-chai": ^3.2.8
     "@web/dev-server-esbuild": ^0.3.2
     "@web/dev-server-rollup": ^0.3.19
     "@web/test-runner": ^0.14.0
@@ -513,6 +514,7 @@ __metadata:
     qiankun: ^2.8.0
     rollup-plugin-visualizer: ^5.8.1
     sinon: ^14.0.0
+    sinon-chai: ^3.7.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^4.8.3
@@ -1120,7 +1122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon-chai@npm:^3.2.3":
+"@types/sinon-chai@npm:^3.2.3, @types/sinon-chai@npm:^3.2.8":
   version: 3.2.8
   resolution: "@types/sinon-chai@npm:3.2.8"
   dependencies:
@@ -7099,6 +7101,16 @@ __metadata:
   version: 5.9.4
   resolution: "single-spa@npm:5.9.4"
   checksum: 8547b5db3d1c6788f44833b1bf7a89697a72a4ca4b801c3f9ddbf4e2949a40bc1d9e9a24650460c7a16f5a668d4e332fc237acacb84f329031815c19578a5907
+  languageName: node
+  linkType: hard
+
+"sinon-chai@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "sinon-chai@npm:3.7.0"
+  peerDependencies:
+    chai: ^4.0.0
+    sinon: ">=4.0.0"
+  checksum: 49a353d8eb66cc6db35ac452f6965c72778aa090d1f036dd1e54ba88594b1c3f314b1a403eaff22a4e314f94dc92d9c7d03cbb88c21d89e814293bf5b299964d
   languageName: node
   linkType: hard
 
