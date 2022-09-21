@@ -1,1 +1,5 @@
-export type PartialObject = Record<string, unknown>
+type HTTPClient = Record<string, unknown>
+
+export type BaseExtension = Record<string, unknown> & {
+  httpClient: HTTPClient
+}

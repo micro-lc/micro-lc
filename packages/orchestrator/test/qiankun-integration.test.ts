@@ -12,10 +12,8 @@ describe('qiankun integration tests', () => {
     const sandbox = createSandbox()
     const fetch = sandbox.stub(window, 'fetch').callsFake(
       (input: RequestInfo | URL) => {
-        console.log(input)
         const { pathname } = new URL(input as string)
         if (pathname === '/composer.development.js') {
-          console.log('here')
           return Promise.resolve(new Response(
             `(o=>{
                 o.purehtml={

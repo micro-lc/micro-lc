@@ -1,4 +1,4 @@
-import type { PartialObject } from '../apis'
+import type { BaseExtension } from '../apis'
 import type { CompleteConfig } from '../config'
 import type MicroLC from '../micro-lc'
 
@@ -47,7 +47,7 @@ function composeStyleSheet(node: CSSNode, prefix?: string): CSSStyleSheet {
   }, new CSSStyleSheet())
 }
 
-export function appendStyleTag<T extends PartialObject>(
+export function appendStyleTag<T extends BaseExtension>(
   this: MicroLC<T>,
   tag: HTMLStyleElement,
 ): HTMLStyleElement {
@@ -56,7 +56,7 @@ export function appendStyleTag<T extends PartialObject>(
     : this.ownerDocument.head.appendChild(tag)
 }
 
-function appendStyle<T extends PartialObject>(
+function appendStyle<T extends BaseExtension>(
   this: MicroLC<T>,
   textContent: string,
 ): HTMLStyleElement {
@@ -67,7 +67,7 @@ function appendStyle<T extends PartialObject>(
     )
 }
 
-export function appendCSS<T extends PartialObject>(
+export function appendCSS<T extends BaseExtension>(
   this: MicroLC<T>, { global, nodes }: CompleteConfig['css']
 ): HTMLStyleElement[] {
   const styleTags: HTMLStyleElement[] = []

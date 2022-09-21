@@ -2,11 +2,11 @@ import type { Config } from '@micro-lc/interfaces'
 import { expect, waitUntil } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 
-import type { MicrolcApi } from '../src/api'
+import type { MicrolcApi, BaseExtension } from '../src/apis'
 import type { ExtendedHTMLElement } from '../src/composer'
 import MicroLC from '../src/micro-lc'
 
-type MicrolcApiExtended = ExtendedHTMLElement<{microlcApi: MicrolcApi}>
+type MicrolcApiExtended = ExtendedHTMLElement<{microlcApi: MicrolcApi<BaseExtension>}>
 
 describe('micro-lc config tests', () => {
   before(() => {

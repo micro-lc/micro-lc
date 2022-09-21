@@ -1,8 +1,8 @@
-import type { PartialObject } from '../apis'
+import type { BaseExtension } from '../apis'
 import type { CompleteConfig } from '../config'
 import type MicroLC from '../micro-lc'
 
-export function appendMountPoint<T extends PartialObject>(
+export function appendMountPoint<T extends BaseExtension>(
   this: MicroLC<T>,
   pluginMountPointSelector: CompleteConfig['settings']['pluginMountPointSelector']
 ): string | HTMLElement {

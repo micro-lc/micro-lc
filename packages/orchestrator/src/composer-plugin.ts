@@ -1,6 +1,7 @@
 import type { Content, ImportMap, PluginConfiguration } from '@micro-lc/interfaces'
 
-import type { MicrolcApi, PartialObject } from './apis'
+import type { MicrolcApi, BaseExtension } from './apis'
+import type * as composer from './composer'
 import type * as json from './utils/json'
 
 export {}
@@ -8,9 +9,9 @@ export {}
 type ComposerModule = Partial<Record<string, (...args: unknown[]) => Promise<null>>>
 
 interface ComposerProperties {
-  composerApi: {json: typeof json}
+  composerApi: {composer: typeof composer; json: typeof json}
   config: string | PluginConfiguration
-  microlcApi: MicrolcApi<PartialObject>
+  microlcApi: MicrolcApi<BaseExtension>
   name: string
 }
 
@@ -29,7 +30,6 @@ declare global {
 }
 
 function fn(exports: ComposerModule, _: Window) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let composerConfig: ResolvedConfig | undefined
 
   function toArray<T>(input: T | T[]): T[] {
@@ -51,10 +51,8 @@ function fn(exports: ComposerModule, _: Window) {
       composerApi: {
         json: { jsonFetcher, jsonToObject, jsonToObjectCatcher },
       },
-      microlcApi: { setImportMap },
-      ...rest
+      microlcApi: { applyImportMap },
     }: ComposerProperties) {
-      console.log(rest)
       let resolvedConfig = config as PluginConfiguration | undefined
       if (typeof config === 'string') {
         resolvedConfig = await jsonFetcher(config)
@@ -66,6 +64,7 @@ function fn(exports: ComposerModule, _: Window) {
 
       let uris: string[] = []
       let importmap: ImportMap | undefined
+      let done = Promise.resolve(null)
 
       if (resolvedConfig?.sources) {
         const { sources } = resolvedConfig
@@ -76,20 +75,12 @@ function fn(exports: ComposerModule, _: Window) {
           : undefined
 
         if (importmap) {
-          setImportMap(name, importmap)
+          applyImportMap(name, importmap)
         }
 
         if (uris.length > 0) {
-          // uris.forEach((uri) => {
-          //   document.head.appendChild(Object.assign(
-          //     document.createElement('script'),
-          //     {
-          //       src: uri,
-          //       type: 'module-shim',
-          //     }
-          //   ))
-          // })
-          uris.map((uri) => importShim(uri).catch(console.error))
+          done = Promise.all(uris.map((uri) => importShim(uri).catch(console.error)))
+            .then(() => null)
         }
       }
 
@@ -97,17 +88,30 @@ function fn(exports: ComposerModule, _: Window) {
         content: resolvedConfig.content,
         sources: { importmap, uris },
       }
-      return Promise.resolve(null)
+
+      return done
     },
 
-    async mount({ name, microlcApi: { applyImportMap }, ...rest }: ComposerProperties) {
-      console.log(rest)
-      applyImportMap(name)
-      return Promise.resolve(null)
+    async mount({ microlcApi, composerApi: { composer }, container }: ComposerProperties & {container: HTMLElement | null}) {
+      let done = Promise.resolve(null)
+
+      if (composerConfig && container) {
+        const appenderPromise = composer
+          .createComposerContext(
+            composerConfig.content,
+            { context: { microlcApi }, extraProperties: ['microlcApi'] }
+          )
+
+        done = appenderPromise.then((appender) => {
+          appender(container)
+          return null
+        })
+      }
+
+      return done
     },
 
     async unmount() {
-      console.log('purehtml unmount')
       return Promise.resolve(null)
     },
   })

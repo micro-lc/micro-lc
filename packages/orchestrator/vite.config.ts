@@ -1,6 +1,8 @@
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 
+import target from './scripts/target'
+
 export default defineConfig(({ mode }) => ({
   base: './',
   build: {
@@ -25,15 +27,7 @@ export default defineConfig(({ mode }) => ({
   },
   esbuild: {
     format: 'esm',
-    target: [
-      'es2020',
-      'chrome64',
-      'edge79',
-      'firefox67',
-      'node16',
-      'safari11.1',
-      'opera51',
-    ],
+    target,
   },
   resolve: {
     alias: [
@@ -41,6 +35,14 @@ export default defineConfig(({ mode }) => ({
         find: /process\.env\.NODE_ENV/,
         replacement: JSON.stringify(mode),
       },
+      { find: /^.+\/lodash\/cloneDeep.js/, replacement: require.resolve('lodash-es/cloneDeep.js') },
+      { find: /^.+\/lodash\/concat.js/, replacement: require.resolve('lodash-es/concat.js') },
+      { find: /^.+\/lodash\/forEach.js/, replacement: require.resolve('lodash-es/forEach.js') },
+      { find: /^.+\/lodash\/isFunction.js/, replacement: require.resolve('lodash-es/isFunction.js') },
+      { find: /^.+\/lodash\/mergeWith.js/, replacement: require.resolve('lodash-es/mergeWith.js') },
+      { find: /^.+\/lodash\/noop.js/, replacement: require.resolve('lodash-es/noop.js') },
+      { find: /^.+\/lodash\/once.js/, replacement: require.resolve('lodash-es/once.js') },
+      { find: /^.+\/lodash\/snakeCase.js/, replacement: require.resolve('lodash-es/snakeCase.js') },
     ],
   },
 }))

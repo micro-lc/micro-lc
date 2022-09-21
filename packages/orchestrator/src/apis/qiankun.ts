@@ -2,7 +2,7 @@ import { registerMicroApps, start, setDefaultMountApp } from 'qiankun'
 
 import type MicroLC from '../micro-lc'
 
-import type { PartialObject } from './types'
+import type { BaseExtension } from './types'
 
 export interface QiankunApi {
   registerMicroApps: typeof registerMicroApps
@@ -10,7 +10,7 @@ export interface QiankunApi {
   start: typeof start
 }
 
-export function createQiankunInstance<T extends PartialObject>(
+export function createQiankunInstance<T extends BaseExtension>(
   this: MicroLC<T>
 ): QiankunApi {
   return {

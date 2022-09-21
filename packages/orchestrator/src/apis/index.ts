@@ -1,17 +1,14 @@
-export * from './qiankun'
-
 import type { ImportMap } from '@micro-lc/interfaces'
 
 import type { CompleteConfig } from '../config'
-import { applyImportMap, setImportMap } from '../dom'
 import type MicroLC from '../micro-lc'
 
-import type { PartialObject } from './types'
+import type { BaseExtension } from './types'
 
-export type { PartialObject }
+export * from './qiankun'
 
-export interface MicrolcApi<T extends PartialObject> {
-  readonly applyImportMap: (id: string) => void
+export interface MicrolcApi<T extends BaseExtension> {
+  readonly applyImportMap: (id: string, importmap: ImportMap) => void
   readonly extensions: Readonly<Partial<T>>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
@@ -20,16 +17,14 @@ export interface MicrolcApi<T extends PartialObject> {
   }
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
   readonly setExtension: (key: keyof T, value: T[keyof T]) => Readonly<Partial<T>>
-  readonly setImportMap: (id: string, nextImportmap: ImportMap) => void
   readonly shared: Readonly<Record<string, unknown>>
 }
 
-export function createMicrolcApiInstance<Extensions extends PartialObject>(
+export function createMicrolcApiInstance<Extensions extends BaseExtension>(
   this: MicroLC<Extensions>
 ): () => MicrolcApi<Extensions> {
   return () => Object.freeze({
-    applyImportMap: (id: string) => applyImportMap
-      .call<MicroLC<Extensions>, [string], void>(this, id),
+    applyImportMap: (id: string, importmap: ImportMap) => { this.applicationsImportMaps.set(id, importmap) },
     extensions: Object.freeze({ ...this.extensions }),
     getApplications: () => Object.freeze([...this.config.applications]),
     getCurrentConfig: () => Object.freeze({ ...this.config }),
@@ -47,7 +42,8 @@ export function createMicrolcApiInstance<Extensions extends PartialObject>(
       this.extensions[key] = value
       return Object.freeze({ ...this.extensions })
     },
-    setImportMap,
     shared: Object.freeze({ ...this.config.shared }),
   })
 }
+
+export type { BaseExtension }

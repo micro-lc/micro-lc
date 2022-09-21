@@ -12,19 +12,13 @@ const alias = fromRollup(rollupAlias)
 const json = fromRollup(rollupJson)
 const replace = fromRollup(rollupReplace)
 
-/** @type {import('@web/test-runner').TestRunnerConfig} */
+/** @type {import('@web/dev-server').DevServerConfig} */
 export default {
-  coverageConfig: {
-    include: ['./src/**/*.ts'],
-    report: true,
-    reportDir: 'coverage/browser',
-    reporters: ['cobertura', 'lcovonly', 'text'],
-  },
   middleware: [
     function rewriteIndex(ctx, next) {
-      const directPaths = /^\/(\?wtr|dist|.dev|src|__|node_modules|wds|test)/
+      const directPaths = /^\/(dist|.dev|src|__|node_modules)/
       if (!ctx.url.match(directPaths)) {
-        ctx.url = '/'
+        ctx.url = '/index.html'
       }
 
       return next()
@@ -56,7 +50,7 @@ export default {
     }),
     json(),
     replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.NODE_ENV': JSON.stringify('development'),
     }, { preventAssignment: true }),
   ],
 }

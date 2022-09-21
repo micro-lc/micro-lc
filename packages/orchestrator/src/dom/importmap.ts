@@ -1,18 +1,48 @@
 import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces'
 
-import type { PartialObject } from '../apis'
+import type { BaseExtension } from '../apis'
 import type MicroLC from '../micro-lc'
 
-export interface ImportmapState {
-  global?: GlobalImportMap
-  map: Map<string, ImportMap>
+// export interface ImportmapState {
+//   global?: GlobalImportMap
+//   map: SideEffectMap
+//   tags: Map<string, HTMLScriptElement>
+// }
+
+// const importmap: ImportmapState = {
+//   map: new SideEffectMap(),
+//   tags: new Map(),
+// }
+
+export class SideEffectMap<T extends BaseExtension> extends Map<string, ImportMap | GlobalImportMap> {
+  static idx = new Set<string>()
+
+  private _microlc: MicroLC<T>
+  constructor(microlc: MicroLC<T>) {
+    super()
+    this._microlc = microlc
+  }
+
+  set(id: string, importmap: ImportMap | GlobalImportMap): this {
+    if (!SideEffectMap.idx.has(id)) {
+      const tag = assignContent(createImportMapTag
+        .call<MicroLC<T>, [], HTMLScriptElement>(this._microlc), importmap)
+      appendImportMapTag
+        .call<MicroLC<T>, [HTMLScriptElement], void>(this._microlc, tag)
+
+      SideEffectMap.idx.add(id)
+      super.set(id, importmap)
+    }
+
+    return this
+  }
 }
 
-const importmap: ImportmapState = {
-  map: new Map(),
+export function assignContent(tag: HTMLScriptElement, importmap: ImportMap | GlobalImportMap): HTMLScriptElement {
+  return Object.assign(tag, { textContent: JSON.stringify(importmap) })
 }
 
-export function createImportMapTag<T extends PartialObject>(
+export function createImportMapTag<T extends BaseExtension>(
   this: MicroLC<T>, useShims = true
 ): HTMLScriptElement {
   return Object.assign(
@@ -23,40 +53,6 @@ export function createImportMapTag<T extends PartialObject>(
   )
 }
 
-export function addGlobalImports<T extends PartialObject>(
-  this: MicroLC<T>, globalImportMap: GlobalImportMap
-): void {
-  importmap.global = globalImportMap
-  this.importmap && (this.importmap.textContent = JSON.stringify(globalImportMap))
-}
-
-export function appendImportMapTag<T extends PartialObject>(this: MicroLC<T>): void {
-  this.importmap
-    && !this.importmap.isConnected
-    && this.ownerDocument.head.appendChild(this.importmap)
-}
-
-export function setImportMap(
-  id: string,
-  nextImportmap: ImportMap,
-): void {
-  importmap.map.set(id, nextImportmap)
-}
-
-export function applyImportMap<T extends PartialObject>(
-  this: MicroLC<T>, id: string
-): void {
-  const appImportMap = importmap.map.get(id) ?? {}
-  if (this.importmap) {
-    this.importmap.textContent = JSON.stringify({
-      imports: {
-        ...appImportMap.imports,
-        ...importmap.global?.imports,
-      },
-      scopes: {
-        ...appImportMap.scopes,
-        ...importmap.global?.scopes,
-      },
-    } as ImportMap)
-  }
+export function appendImportMapTag<T extends BaseExtension>(this: MicroLC<T>, tag: HTMLScriptElement | null = this.importmap): void {
+  tag && this.ownerDocument.head.appendChild(tag)
 }

@@ -1,10 +1,10 @@
 import type { Config } from '@micro-lc/interfaces'
 
-import type { MicrolcApi, PartialObject, QiankunApi } from './apis'
+import type { MicrolcApi, BaseExtension, QiankunApi } from './apis'
 import { createMicrolcApiInstance, createQiankunInstance } from './apis'
 import type { CompleteConfig } from './config'
 import { defaultConfig, mergeConfig } from './config'
-import { appendImportMapTag, appendStyleTag } from './dom'
+import { appendImportMapTag, appendStyleTag, SideEffectMap } from './dom'
 import { update } from './update'
 import { invalidJsonCatcher, jsonFetcher, jsonToObject, jsonToObjectCatcher } from './utils/json'
 import Subscription from './utils/subscription'
@@ -12,7 +12,7 @@ import Subscription from './utils/subscription'
 const MICRO_LC_CONFIG = '"micro-lc config"'
 
 export default class MicroLC<
-  Extensions extends PartialObject = PartialObject,
+  Extensions extends BaseExtension = BaseExtension,
 > extends HTMLElement {
   static get observedAttributes() { return ['config-src'] }
 
@@ -70,6 +70,8 @@ export default class MicroLC<
   protected styleTags: HTMLStyleElement[] = []
 
   protected importmap: HTMLScriptElement | null = null
+
+  protected applicationsImportMaps = new SideEffectMap<Extensions>(this)
 
   protected extensions: Extensions = {} as Extensions
 

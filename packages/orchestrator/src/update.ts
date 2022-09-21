@@ -1,13 +1,14 @@
-import type { CSSConfig, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces'
+import type { CSSConfig, PluginConfiguration } from '@micro-lc/interfaces'
 
-import type { PartialObject } from './apis'
+import type { BaseExtension } from './apis'
 import { createComposerContext } from './composer'
-import { addGlobalImports, appendCSS, appendImportMapTag, appendMountPoint, createImportMapTag } from './dom'
+import * as composer from './composer'
+import { appendCSS, appendImportMapTag, appendMountPoint, assignContent, createImportMapTag } from './dom'
 import logger from './logger'
 import type MicroLC from './micro-lc'
 import * as json from './utils/json'
 
-export async function update<T extends PartialObject>(this: MicroLC<T>): Promise<void> {
+export async function update<T extends BaseExtension>(this: MicroLC<T>): Promise<void> {
   const {
     applications,
     css,
@@ -32,10 +33,9 @@ export async function update<T extends PartialObject>(this: MicroLC<T>): Promise
     .call<MicroLC<T>, [CSSConfig], HTMLStyleElement[]>(this, css)
 
   // Append importmap
-  this.importmap = this.importmap ?? createImportMapTag
-    .call<MicroLC<T>, [], HTMLScriptElement>(this)
-  addGlobalImports
-    .call<MicroLC<T>, [GlobalImportMap], void>(this, importmap)
+  this.importmap = assignContent(createImportMapTag
+    .call<MicroLC<T>, [], HTMLScriptElement>(this), importmap
+  )
   appendImportMapTag
     .call<MicroLC<T>, [], void>(this)
 
@@ -67,6 +67,10 @@ export async function update<T extends PartialObject>(this: MicroLC<T>): Promise
         config = {
           content: {
             attributes: {
+              style: `width: 100%;
+                      height: 100%;
+                      position: fixed;
+                      border: none;`,
               ...app.attributes,
               src: app.src,
             },
@@ -84,7 +88,7 @@ export async function update<T extends PartialObject>(this: MicroLC<T>): Promise
         entry: { scripts: [composerUrl] },
         name: id,
         props: {
-          composerApi: { json },
+          composerApi: { composer, json },
           config,
           microlcApi: this.getApi(),
         },
