@@ -1,6 +1,6 @@
 import type { BaseExtension } from '../apis'
+import type MicroLC from '../apis'
 import type { CompleteConfig } from '../config'
-import type MicroLC from '../micro-lc'
 
 type CSSRules = Record<string, string | number | undefined>
 

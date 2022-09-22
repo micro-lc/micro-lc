@@ -8,7 +8,6 @@
   },
   "include": ["../src", "../typings"],
   "exclude": [
-    "../src/**/*.stories.ts",
     "../src/**/*.test.ts"
   ]
 }

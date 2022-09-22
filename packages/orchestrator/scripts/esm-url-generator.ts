@@ -1,7 +1,5 @@
-import { accessSync } from 'fs'
+import { readFileSync } from 'fs'
 import { resolve } from 'path'
-
-import { build } from 'esbuild'
 
 type Mode = '64' | 'utf8'
 
@@ -34,12 +32,11 @@ const esm = (mode: Mode) => (lit: TemplateStringsArray, ...vars: string[]): stri
     throw new TypeError('must input either a string or a valid file path')
   }
   try {
-    const entryPoint = resolve(__dirname, input)
-    accessSync(entryPoint)
-    const { outputFiles = [] } = await build({ entryPoints: [entryPoint], format: 'esm', logLevel: 'silent', target: 'es2015' })
-    const [{ text }] = outputFiles
+    const entryPoint = resolve(input)
+    const text = readFileSync(entryPoint).toString()
     template = text
   } catch (_) {
+    console.error(_)
     template = input
   }
 

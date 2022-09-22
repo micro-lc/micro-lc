@@ -1,18 +1,7 @@
 import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces'
 
 import type { BaseExtension } from '../apis'
-import type MicroLC from '../micro-lc'
-
-// export interface ImportmapState {
-//   global?: GlobalImportMap
-//   map: SideEffectMap
-//   tags: Map<string, HTMLScriptElement>
-// }
-
-// const importmap: ImportmapState = {
-//   map: new SideEffectMap(),
-//   tags: new Map(),
-// }
+import type MicroLC from '../apis'
 
 export class SideEffectMap<T extends BaseExtension> extends Map<string, ImportMap | GlobalImportMap> {
   static idx = new Set<string>()

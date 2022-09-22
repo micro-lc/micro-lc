@@ -1,12 +1,14 @@
 import type { CSSConfig, PluginConfiguration } from '@micro-lc/interfaces'
 
-import type { BaseExtension } from './apis'
-import { createComposerContext } from './composer'
-import * as composer from './composer'
-import { appendCSS, appendImportMapTag, appendMountPoint, assignContent, createImportMapTag } from './dom'
-import logger from './logger'
+import { createComposerContext } from '../composer'
+import * as composer from '../composer'
+import { appendCSS, appendImportMapTag, appendMountPoint, assignContent, createImportMapTag } from '../dom'
+import logger from '../logger'
+import * as json from '../utils/json'
+import type { SchemaOptions } from '../utils/json'
+
+import type { BaseExtension } from './extensions'
 import type MicroLC from './micro-lc'
-import * as json from './utils/json'
 
 export async function update<T extends BaseExtension>(this: MicroLC<T>): Promise<void> {
   const {
@@ -50,7 +52,14 @@ export async function update<T extends BaseExtension>(this: MicroLC<T>): Promise
 
   // TODO: qiankun
   // setup composer before qiankun injects proxies
-  const composerUrl = `./composer.${process.env.NODE_ENV}.js`
+  let schema: SchemaOptions | undefined
+  if (process.env.NODE_ENV === 'development') {
+    schema = await import('../utils/schemas').then<SchemaOptions>((schemas) => ({
+      id: schemas.pluginSchema.$id,
+      parts: schemas,
+    }))
+  }
+  const composerUrl = `./composer-plugin.${process.env.NODE_ENV}.js`
 
   if (applications.length >= 0) {
     for (const app of applications) {
@@ -91,6 +100,7 @@ export async function update<T extends BaseExtension>(this: MicroLC<T>): Promise
           composerApi: { composer, json },
           config,
           microlcApi: this.getApi(),
+          schema,
         },
       }])
     }

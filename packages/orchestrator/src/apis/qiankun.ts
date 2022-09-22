@@ -1,11 +1,13 @@
 import { registerMicroApps, start, setDefaultMountApp } from 'qiankun'
 
-import type MicroLC from '../micro-lc'
+import type { SchemaOptions } from '../utils/json'
 
-import type { BaseExtension } from './types'
+import type { BaseExtension } from './extensions'
+import type MicroLC from './micro-lc'
 
 export interface QiankunApi {
   registerMicroApps: typeof registerMicroApps
+  schema?: SchemaOptions
   setDefaultMountApp: typeof setDefaultMountApp
   start: typeof start
 }

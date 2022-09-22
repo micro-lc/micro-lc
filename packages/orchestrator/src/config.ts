@@ -1,6 +1,6 @@
 import type { Config, Content, GlobalImportMap, PluginConfiguration, Settings } from '@micro-lc/interfaces'
 
-const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
+export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
 export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'layout'>> & {
   layout: PluginConfiguration & {content: Content}

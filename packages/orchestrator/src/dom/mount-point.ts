@@ -1,6 +1,6 @@
 import type { BaseExtension } from '../apis'
+import type MicroLC from '../apis'
 import type { CompleteConfig } from '../config'
-import type MicroLC from '../micro-lc'
 
 export function appendMountPoint<T extends BaseExtension>(
   this: MicroLC<T>,

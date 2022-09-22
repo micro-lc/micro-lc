@@ -13,6 +13,7 @@ interface ComposerProperties {
   config: string | PluginConfiguration
   microlcApi: MicrolcApi<BaseExtension>
   name: string
+  schema: json.SchemaOptions
 }
 
 interface ResolvedConfig {
@@ -51,15 +52,13 @@ function fn(exports: ComposerModule, _: Window) {
       composerApi: {
         json: { jsonFetcher, jsonToObject, jsonToObjectCatcher },
       },
-      microlcApi: { applyImportMap },
+      microlcApi: { applyImportMap, extensions: { jsonValidator } },
+      schema,
     }: ComposerProperties) {
       let resolvedConfig = config as PluginConfiguration | undefined
       if (typeof config === 'string') {
-        resolvedConfig = await jsonFetcher(config)
-          .then((json) => jsonToObject<PluginConfiguration>(json, 'plugin'))
-          .catch((err: TypeError) =>
-            jsonToObjectCatcher<PluginConfiguration | undefined>(err, undefined, '"composer config"')
-          )
+        console.log(config)
+        resolvedConfig = await jsonValidator<PluginConfiguration>(config, schema, { defaultValue: config as unknown as PluginConfiguration })
       }
 
       let uris: string[] = []

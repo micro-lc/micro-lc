@@ -8,11 +8,12 @@ export default defineConfig(({ mode }) => ({
   build: {
     emptyOutDir: false,
     manifest: true,
+    minify: mode === 'production',
     outDir: 'dist',
     rollupOptions: {
       input: {
-        composer: 'src/composer-plugin.ts',
-        'micro-lc': 'src/index.ts',
+        'composer-plugin': 'src/composer-plugin.ts',
+        'micro-lc': 'src/micro-lc.ts',
       },
       output: {
         entryFileNames: ({ name }) => `${name}.${mode}.js`,

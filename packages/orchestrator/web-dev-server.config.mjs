@@ -12,6 +12,12 @@ const alias = fromRollup(rollupAlias)
 const json = fromRollup(rollupJson)
 const replace = fromRollup(rollupReplace)
 
+console.log(`
+
+Did you run \`yarn o postinstall\`?
+
+`)
+
 /** @type {import('@web/dev-server').DevServerConfig} */
 export default {
   middleware: [
