@@ -2,11 +2,15 @@
   "name": "@micro-lc/interfaces",
   "version": "0.1.0",
   "types": "./types/v2/index.d.ts",
+  "bin": "./dist/cli/index.js",
   "scripts": {
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha test/**/*.test.ts",
     "test": "yarn test:unit",
+    "cli": "yarn ts-node ./cli",
     "make-types": "node ./scripts/make-types.mjs",
-    "build": "yarn make-types"
+    "build:types": "yarn make-types",
+    "build:cli": "node ./scripts/build-cli.mjs",
+    "build": "yarn run -T run-p build:types build:cli"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -22,6 +26,7 @@
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "chai": "^4.3.6",
+    "esbuild": "^0.15.8",
     "eslint": "^8.23.1",
     "glob": "^8.0.3",
     "json-schema-to-typescript": "^11.0.2",

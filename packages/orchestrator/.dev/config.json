@@ -49,7 +49,10 @@
       "config": {
         "content": { "tag": "custom-component" },
         "sources": {
-          "uris": "data:text/javascript;base64,CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKaW1wb3J0IFJlYWN0RE9NIGZyb20gJ3JlYWN0LWRvbScKCmNsYXNzIEN1c3RvbUNvbXBvbmVudCBleHRlbmRzIEhUTUxFbGVtZW50IHsKICBjb21wb25lbnQgPSBSZWFjdC5jcmVhdGVFbGVtZW50KCdkaXYnLCB1bmRlZmluZWQsICJDaWFvIikKCiAgY29ubmVjdGVkQ2FsbGJhY2soKSB7CiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKQogICAgdGhpcy5hcHBlbmRDaGlsZChjb250YWluZXIpCiAgICBSZWFjdERPTS5yZW5kZXIodGhpcy5jb21wb25lbnQsIGNvbnRhaW5lcikKICB9Cn0KCmN1c3RvbUVsZW1lbnRzLmRlZmluZSgnY3VzdG9tLWNvbXBvbmVudCcsIEN1c3RvbUNvbXBvbmVudCkK",
+          "uris": [
+            "data:text/javascript;base64,CmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCcKaW1wb3J0IFJlYWN0RE9NIGZyb20gJ3JlYWN0LWRvbScKCmNsYXNzIEN1c3RvbUNvbXBvbmVudCBleHRlbmRzIEhUTUxFbGVtZW50IHsKICBjb21wb25lbnQgPSBSZWFjdC5jcmVhdGVFbGVtZW50KCdkaXYnLCB1bmRlZmluZWQsICJDaWFvIikKCiAgY29ubmVjdGVkQ2FsbGJhY2soKSB7CiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKQogICAgdGhpcy5hcHBlbmRDaGlsZChjb250YWluZXIpCiAgICBSZWFjdERPTS5yZW5kZXIodGhpcy5jb21wb25lbnQsIGNvbnRhaW5lcikKICB9Cn0KCmN1c3RvbUVsZW1lbnRzLmRlZmluZSgnY3VzdG9tLWNvbXBvbmVudCcsIEN1c3RvbUNvbXBvbmVudCkK",
+            "data:text/javascript;utf8,import%20React%20from%20%22react%22%3B%20console.log(%22here%22%2C%20React)"
+          ],
           "importmap": {
             "imports": {
               "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.development.min.js",

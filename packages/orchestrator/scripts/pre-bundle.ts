@@ -25,19 +25,30 @@ build({
   define: { 'process.env.NODE_ENV': 'development' },
   entryPoints: depsEntryPoints,
   outdir: resolve(__dirname, '../node_modules'),
-}).catch(console.error)
+}).then(() => {
+  console.log('\x1b[32m%s\x1b[0m', `✔ [development] compiled successfully ${depsEntryPoints.join(', ')}`)
+}).catch((err) => {
+  console.log('\x1b[31m%s\x1b[0m', `✖ [development] failed compiling ${depsEntryPoints.join(', ')}`)
+  console.error(err)
+})
 
 //
 
 // external dependency
 
 const modes = ['development', 'production']
+const composerEntryPoints = ['../src/composer-plugin.ts'].map((path) => resolve(__dirname, path))
 Promise.all(modes.map(async (mode) => {
   return build({
     ...config,
     define: { 'process.env.NODE_ENV': JSON.stringify(mode) },
-    entryPoints: ['./src/composer-plugin.ts'],
+    entryPoints: composerEntryPoints,
     outfile: resolve(__dirname, `../dist/composer.${mode}.js`),
+  }).then(() => {
+    console.log('\x1b[32m%s\x1b[0m', `✔ [${mode}] compiled successfully ${composerEntryPoints.join(', ')}`)
+  }).catch((err) => {
+    console.log('\x1b[31m%s\x1b[0m', `✖ [${mode}] failed compiling ${composerEntryPoints.join(', ')}`)
+    console.error(err)
   })
 })).catch(console.error)
 

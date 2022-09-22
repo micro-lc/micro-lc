@@ -317,7 +317,18 @@ module.exports = {
     'padded-blocks': ['error', 'never'],
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
     'prefer-const': 'error',
-    'prefer-destructuring': 'error',
+    'prefer-destructuring': ['error', {
+      AssignmentExpression: {
+        array: false,
+        object: false,
+      },
+      VariableDeclarator: {
+        array: true,
+        object: true,
+      },
+    }, {
+      enforceForRenamedProperties: false,
+    }],
     'prefer-object-spread': 'warn',
     'prefer-promise-reject-errors': 'error',
     'prefer-rest-params': 'error',
@@ -339,7 +350,7 @@ module.exports = {
     'spaced-comment': 'error',
     'symbol-description': 'error',
     'template-curly-spacing': 'error',
-    'template-tag-spacing': ['error', 'always'],
+    'template-tag-spacing': 'error',
     'valid-jsdoc': 'error',
     'valid-typeof': ['error', { requireStringLiterals: true }],
     'vars-on-top': 'error',
