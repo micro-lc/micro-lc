@@ -22,9 +22,13 @@ Did you run \`yarn o postinstall\`?
 export default {
   middleware: [
     function rewriteIndex(ctx, next) {
-      const directPaths = /^\/(dist|.dev|src|__|node_modules)/
+      const directPaths = /^\/(dist|.dev|src|__|node_modules|back-kit)/
       if (!ctx.url.match(directPaths)) {
         ctx.url = '/index.html'
+      }
+
+      if (ctx.url.match(/back-kit\/unstable\/bk-web-components.esm.js/)) {
+        ctx.url = '/.dev/bk-web-components.esm.js'
       }
 
       return next()
@@ -51,7 +55,6 @@ export default {
       ],
     }),
     esbuildPlugin({
-      target: 'es2020',
       ts: true,
     }),
     json(),

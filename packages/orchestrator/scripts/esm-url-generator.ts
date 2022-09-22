@@ -17,35 +17,30 @@ const esm = (mode: Mode) => (lit: TemplateStringsArray, ...vars: string[]): stri
   return output(code)
 }
 
-(async () => {
-  const argv = process.argv.slice(2)
-  const [flag] = argv
-  let [input] = argv
-  let mode: Mode = '64'
-  if (['--64', '--utf8'].includes(flag)) {
-    input = argv[1]
-    mode = flag.slice(2) as Mode
-  }
+const argv = process.argv.slice(2)
+const [flag] = argv
+let [input] = argv
+let mode: Mode = '64'
+if (['--64', '--utf8'].includes(flag)) {
+  input = argv[1]
+  mode = flag.slice(2) as Mode
+}
 
-  let template: string
-  if ((input as string | undefined) === undefined) {
-    throw new TypeError('must input either a string or a valid file path')
-  }
-  try {
-    const entryPoint = resolve(input)
-    const text = readFileSync(entryPoint).toString()
-    template = text
-  } catch (_) {
-    console.error(_)
-    template = input
-  }
+let template: string
+if ((input as string | undefined) === undefined) {
+  throw new TypeError('must input either a string or a valid file path')
+}
+try {
+  const entryPoint = resolve(input)
+  const text = readFileSync(entryPoint).toString()
+  template = text
+} catch (_) {
+  console.error(_)
+  template = input
+}
 
-  const esmmode = esm(mode)
-  return esmmode`${template}`
-})()
-  .then((output) => {
-    console.log('\n👇 find the result here\n')
-    console.log(output)
-    console.log('\n 👋 Bye!\n')
-  })
-  .catch(console.error)
+const esmmode = esm(mode)
+const output = esmmode`${template}`
+console.log('\n👇 find the result here\n')
+console.log(output)
+console.log('\n 👋 Bye!\n')

@@ -1,19 +1,18 @@
-import type { Content, ImportMap, PluginConfiguration } from '@micro-lc/interfaces'
+import type { Component, Content, ImportMap, PluginConfiguration } from '@micro-lc/interfaces'
 
-import type { MicrolcApi, BaseExtension } from './apis'
-import type * as composer from './composer'
-import type * as json from './utils/json'
+import type { MicrolcApi, BaseExtension, ComposerApi } from './apis'
+import type { SchemaOptions } from './utils/json'
 
 export {}
 
 type ComposerModule = Partial<Record<string, (...args: unknown[]) => Promise<null>>>
 
 interface ComposerProperties {
-  composerApi: {composer: typeof composer; json: typeof json}
+  composerApi: ComposerApi
   config: string | PluginConfiguration
   microlcApi: MicrolcApi<BaseExtension>
   name: string
-  schema: json.SchemaOptions
+  schema: SchemaOptions
 }
 
 interface ResolvedConfig {
@@ -30,12 +29,80 @@ declare global {
   }
 }
 
-function fn(exports: ComposerModule, _: Window) {
-  let composerConfig: ResolvedConfig | undefined
+/**
+ * @deprecated will be removed on 1.0.0
+ */
+type V1Component = Record<string, unknown> & {
+  type: 'element' | 'row' | 'column'
+}
 
-  function toArray<T>(input: T | T[]): T[] {
-    return Array.isArray(input) ? input : [input]
+/**
+ * @deprecated will be removed on 1.0.0
+ */
+type V1Content = V1Component | V1Component[]
+
+/**
+ * this function can be removed since it is idempotent on v2 configs
+ * @param {V1Content} input raw json
+ * @param {string[]} sources the uri list of assets to download
+ * @returns {Component} the v2 plugin component
+ * @deprecated will be removed on 1.0.0
+ */
+function v1Adapter(input: V1Content | Content, sources: string[]): Content {
+  // compatibility
+  if (process.env.NODE_ENV === 'development') {
+    if (typeof input === 'string' || typeof input === 'number') {
+      return input
+    }
+
+    if (Array.isArray(input)) {
+      return input.map((content) => v1Adapter(content as V1Component, sources) as Component)
+    }
+
+    const { tag, type, url, attributes: inAttributes, content: inContent, properties } = input as V1Component
+    console.log(type)
+    typeof url === 'string' && sources.push(url)
+    const attributes = (inAttributes ?? {}) as Record<string, string>
+    const content = (inContent as V1Content | undefined) && v1Adapter(inContent as V1Content, sources)
+    const extra: Partial<Component> = {}
+    properties && (extra.properties = properties as Component['properties'])
+    extra.tag = 'div'
+    switch (type) {
+    case 'row':
+      extra.attributes = {
+        ...attributes,
+        style: `display: flex; flex-direction: column; ${attributes.style}`,
+      }
+      break
+    case 'column':
+      extra.attributes = {
+        ...attributes,
+        style: `display: flex; flex-direction: row; ${attributes.style}`,
+      }
+      break
+    default:
+      extra.tag = tag as string
+      extra.attributes = attributes
+      break
+    }
+    return {
+      content,
+      ...(extra as Component),
+    }
   }
+
+  return input as Content
+}
+
+/**
+ * this function can be removed since it is idempotent on v2 configs
+ * @param {PluginConfiguration} config incoming v2 config
+ * @param {string[]} extraSources assets uri to add
+ * @return {ResolvedConfig} the plugin config including adapted sources
+ * @deprecated will be removed on 1.0.0
+ */
+function v1AddSources(config: PluginConfiguration, extraSources: string[]): PluginConfiguration {
+  function toArray<T>(input: T | T[]): T[] { return Array.isArray(input) ? input : [input] }
 
   function parseSources(sources: Exclude<PluginConfiguration['sources'], undefined>): string[] {
     const arrayOrObject:
@@ -45,61 +112,90 @@ function fn(exports: ComposerModule, _: Window) {
     return Array.isArray(arrayOrObject) ? arrayOrObject : toArray(arrayOrObject.uris)
   }
 
+  if (process.env.NODE_ENV === 'development') {
+    let uris: string[] = []
+    let importmap: ImportMap | undefined
+
+
+    if (config.sources) {
+      const { sources } = config
+
+      uris = parseSources(sources)
+      importmap = (!Array.isArray(sources) && typeof sources !== 'string')
+        ? sources.importmap
+        : undefined
+    }
+
+    return {
+      content: config.content,
+      sources: { importmap, uris: [...uris, ...extraSources] },
+    }
+  }
+
+  return config
+}
+
+function fn(exports: ComposerModule, _: Window) {
+  let composerConfig: ResolvedConfig | undefined
+
+  /**
+   * @deprecated will be removed on 1.0.0
+   */
+  const v1AdapterUris: string[] = []
+
+  const logger = (name: string, ...args: string[]) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.info(`
+      [micro-lc][composer]: ${name} => ${args.join(' ')}
+    `)
+    }
+  }
+
   Object.assign(exports, {
     async bootstrap({
       name,
       config,
-      composerApi: {
-        json: { jsonFetcher, jsonToObject, jsonToObjectCatcher },
-      },
-      microlcApi: { applyImportMap, extensions: { jsonValidator } },
+      composerApi: { premount },
+      microlcApi: { extensions: { json: { validator, fetcher } } },
       schema,
     }: ComposerProperties) {
+      logger(name, 'starting bootstrap...')
       let resolvedConfig = config as PluginConfiguration | undefined
       if (typeof config === 'string') {
-        console.log(config)
-        resolvedConfig = await jsonValidator<PluginConfiguration>(config, schema, { defaultValue: config as unknown as PluginConfiguration })
+        const json = await fetcher(config)
+        resolvedConfig = await validator<PluginConfiguration>(
+          json,
+          schema,
+          {
+            defaultValue: { content: v1Adapter(json as V1Content, v1AdapterUris) },
+            file: `plugin config -> ${name}`,
+          }
+        )
+        console.log(resolvedConfig)
       }
 
-      let uris: string[] = []
-      let importmap: ImportMap | undefined
-      let done = Promise.resolve(null)
-
-      if (resolvedConfig?.sources) {
-        const { sources } = resolvedConfig
-
-        uris = parseSources(sources)
-        importmap = (!Array.isArray(sources) && typeof sources !== 'string')
-          ? sources.importmap
-          : undefined
-
-        if (importmap) {
-          applyImportMap(name, importmap)
-        }
-
-        if (uris.length > 0) {
-          done = Promise.all(uris.map((uri) => importShim(uri).catch(console.error)))
-            .then(() => null)
-        }
+      // 🗑️ no need for this on config v2
+      if (resolvedConfig) {
+        resolvedConfig = v1AddSources(resolvedConfig, v1AdapterUris)
       }
 
-      composerConfig = resolvedConfig && {
-        content: resolvedConfig.content,
-        sources: { importmap, uris },
+      if (resolvedConfig) {
+        composerConfig = await premount(name, resolvedConfig)
       }
 
-      return done
+      logger(name, 'bootstrap has finished...')
+      return Promise.resolve(null)
     },
 
-    async mount({ microlcApi, composerApi: { composer }, container }: ComposerProperties & {container: HTMLElement | null}) {
+    async mount({ name, microlcApi, composerApi: { createComposerContext }, container }: ComposerProperties & {container: HTMLElement | null}) {
+      logger(name, 'starting mounting...')
       let done = Promise.resolve(null)
 
       if (composerConfig && container) {
-        const appenderPromise = composer
-          .createComposerContext(
-            composerConfig.content,
-            { context: { microlcApi }, extraProperties: ['microlcApi'] }
-          )
+        const appenderPromise = createComposerContext(
+          composerConfig.content,
+          { context: { microlcApi }, extraProperties: ['microlcApi'] }
+        )
 
         done = appenderPromise.then((appender) => {
           appender(container)
@@ -107,10 +203,12 @@ function fn(exports: ComposerModule, _: Window) {
         })
       }
 
+      logger(name, 'mount has finished...')
       return done
     },
 
-    async unmount() {
+    async unmount({ name }: ComposerProperties) {
+      logger(name, 'unmounting...')
       return Promise.resolve(null)
     },
   })

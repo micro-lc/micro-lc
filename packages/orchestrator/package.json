@@ -54,7 +54,7 @@
     "chai-string": "^1.5.0",
     "cobertura-merge": "^1.0.3",
     "es-module-shims": "^1.5.18",
-    "esbuild": "^0.15.8",
+    "esbuild": "^0.15.9",
     "glob": "^8.0.3",
     "lodash-es": "^4.17.21",
     "mocha": "^10.0.0",

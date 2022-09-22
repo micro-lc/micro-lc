@@ -1,0 +1,1417 @@
+{
+  "type": "row",
+  "attributes": { "style": "height: calc(100vh - 64px);" },
+  "content": [
+    {
+      "type": "element",
+      "tag": "bk-microlc-theme-manager",
+      "url": "/back-kit/unstable/bk-web-components.esm.js",
+      "properties": { "rootElementSelectors": "microlc-element-composer" }
+    },
+    {
+      "type": "column",
+      "attributes": {
+        "style": "justify-content: space-between; padding: 10px 24px 0px 24px; align-items: center;"
+      },
+      "content": [
+        {
+          "type": "column",
+          "attributes": { "style": "align-items: center;" },
+          "content": [
+            {
+              "type": "element",
+              "tag": "bk-title",
+              "attributes": { "style": "margin: 0 1vw 0 0;" },
+              "properties": { "content": { "en": "Orders", "it": "Ordini" } }
+            },
+            { "type": "element", "tag": "bk-refresh-button" }
+          ]
+        },
+        {
+          "type": "column",
+          "attributes": { "style": "align-items: center;" },
+          "content": [
+            {
+              "type": "element",
+              "tag": "bk-search-bar",
+              "attributes": { "style": "margin-right: 10px;" },
+              "properties": {
+                "placeholder": { "en": "Search...", "it": "Cerca..." },
+                "searchLookups": true
+              }
+            },
+            {
+              "type": "element",
+              "tag": "bk-generic-button",
+              "attributes": { "style": "margin-right: 10px;" },
+              "properties": {
+                "iconId": "DownloadOutlined",
+                "content": { "en": "Export", "it": "Esporta" },
+                "clickConfig": {
+                  "type": "event",
+                  "actionConfig": { "label": "export-data", "payload": {} }
+                }
+              }
+            },
+            {
+              "type": "element",
+              "tag": "bk-add-new-button",
+              "attributes": { "style": "margin-right: 10px;" }
+            },
+            {
+              "type": "element",
+              "tag": "bk-button",
+              "properties": {
+                "content": "",
+                "clickConfig": {
+                  "type": "event",
+                  "actionConfig": { "label": "filter", "payload": {} }
+                },
+                "type": "outlined",
+                "iconId": "FunnelPlotOutlined"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "column",
+      "attributes": {
+        "style": "padding: 0 24px; align-items: center; justify-content: space-between; border-bottom: 1px solid #CDCDCE; min-height: 50px;"
+      },
+      "content": [
+        {
+          "type": "element",
+          "tag": "bk-tabs",
+          "attributes": { "style": "margin-right: 2vw; width: 500px;" },
+          "properties": {
+            "tabs": [
+              {
+                "key": "pending",
+                "title": { "en": "Pending", "it": "In attesa" },
+                "filters": [
+                  {
+                    "property": "status",
+                    "operator": "equal",
+                    "value": "Pending"
+                  }
+                ]
+              },
+              {
+                "key": "preparing",
+                "title": { "en": "Preparing", "it": "In preparazione" },
+                "filters": [
+                  {
+                    "property": "status",
+                    "operator": "equal",
+                    "value": "Preparing"
+                  }
+                ]
+              },
+              {
+                "key": "delivered",
+                "title": { "en": "Delivered", "it": "In consegna" },
+                "filters": [
+                  {
+                    "property": "status",
+                    "operator": "equal",
+                    "value": "Delivered"
+                  }
+                ]
+              },
+              {
+                "key": "aborted",
+                "title": { "en": "Aborted", "it": "Annullati" },
+                "filters": [
+                  {
+                    "property": "status",
+                    "operator": "equal",
+                    "value": "Aborted"
+                  }
+                ]
+              },
+              {
+                "key": "future",
+                "title": { "en": "Pre Ordered", "it": "Pre ordinati" },
+                "filters": [
+                  {
+                    "property": "orderedAt",
+                    "operator": "greaterEqual",
+                    "value": "$today"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "element",
+          "tag": "bk-filters-manager",
+          "properties": {
+            "dataSchema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "label": "_id",
+                  "type": "string",
+                  "visualizationOptions": { "hidden": true },
+                  "formOptions": { "hidden": true }
+                },
+                "__STATE__": {
+                  "type": "string",
+                  "default": "PUBLIC",
+                  "visualizationOptions": { "hidden": true },
+                  "formOptions": { "hidden": true },
+                  "filtersOptions": { "hidden": true }
+                },
+                "status": {
+                  "label": { "en": "Order status", "it": "Stato ordine" },
+                  "type": "string",
+                  "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+                  "default": "Pending",
+                  "excludeFromSearch": true,
+                  "visualizationOptions": {
+                    "iconMap": {
+                      "Pending": {
+                        "shape": "roundedSquare",
+                        "color": "#03a9f4"
+                      },
+                      "Preparing": {
+                        "shape": "roundedSquare",
+                        "color": "#ff9800"
+                      },
+                      "Delivered": {
+                        "shape": "roundedSquare",
+                        "color": "#4caf50"
+                      },
+                      "Aborted": {
+                        "shape": "roundedSquare",
+                        "color": "#ef5350"
+                      }
+                    }
+                  },
+                  "filtersOptions": { "hidden": true }
+                },
+                "dishes": {
+                  "label": { "it": "Piatti", "en": "Dishes" },
+                  "type": "array",
+                  "format": "multilookup",
+                  "excludeFromSearch": false,
+                  "visualizationOptions": { "joinDelimiter": "; " },
+                  "lookupOptions": {
+                    "lookupDataSource": "dishes",
+                    "lookupValue": "_id",
+                    "lookupFields": ["name"]
+                  }
+                },
+                "totalPrice": {
+                  "label": { "it": "Prezzo", "en": "Price" },
+                  "type": "number",
+                  "min": 0,
+                  "visualizationOptions": { "hidden": true }
+                },
+                "orderedAt": {
+                  "label": { "it": "Data di ordinazione", "en": "Ordered at" },
+                  "type": "string",
+                  "format": "date-time",
+                  "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+                },
+                "formTitle_delivery": {
+                  "type": "form-addon",
+                  "format": "title",
+                  "label": {
+                    "it": "Informazioni sulla consegna",
+                    "en": "Delivery information"
+                  }
+                },
+                "riderId": {
+                  "label": "Rider",
+                  "type": "string",
+                  "format": "lookup",
+                  "excludeFromSearch": false,
+                  "lookupOptions": {
+                    "lookupDataSource": "riders",
+                    "lookupValue": "_id",
+                    "lookupFields": ["name", "surname"],
+                    "lookupDelimiter": " "
+                  }
+                },
+                "restaurantId": {
+                  "label": "Restaurant",
+                  "type": "string",
+                  "format": "lookup",
+                  "excludeFromSearch": false,
+                  "lookupOptions": {
+                    "lookupDataSource": "restaurants",
+                    "lookupValue": "_id",
+                    "lookupFields": ["name"],
+                    "lookupDelimiter": " "
+                  }
+                },
+                "customerId": {
+                  "label": { "it": "Cliente", "en": "Customer" },
+                  "type": "string",
+                  "format": "lookup",
+                  "excludeFromSearch": false,
+                  "lookupOptions": {
+                    "lookupDataSource": "customers",
+                    "lookupValue": "_id",
+                    "lookupFields": ["name", "surname"],
+                    "lookupDelimiter": " "
+                  }
+                },
+                "address": {
+                  "label": { "it": "Indirizzo", "en": "Address" },
+                  "type": "string"
+                },
+                "coordinates": {
+                  "label": { "it": "Coordinate", "en": "Coordinates" },
+                  "excludeFromSearch": true,
+                  "type": "array",
+                  "format": "geopoint",
+                  "visualizationOptions": { "hidden": "true" }
+                }
+              },
+              "required": [
+                "status",
+                "dishes",
+                "totalPrice",
+                "orderedAt",
+                "customerId",
+                "address"
+              ]
+            },
+            "filters": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "attributes": { "style": "flex-grow: 1; position:relative; bottom: 0;" },
+      "content": [
+        {
+          "type": "row",
+          "attributes": {
+            "style": "background-color: #f0f2f5; padding: 24px 24px; flex-grow: 1; position:relative; overflow:hidden;"
+          },
+          "content": [
+            {
+              "type": "element",
+              "tag": "bk-table",
+              "properties": {
+                "customMessageOnAbsentLookup": {
+                  "en": "⚠ Not found",
+                  "it": "⚠ Non trovato"
+                },
+                "dataSchema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "label": "_id",
+                      "type": "string",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true }
+                    },
+                    "__STATE__": {
+                      "type": "string",
+                      "default": "PUBLIC",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "status": {
+                      "label": { "en": "Order status", "it": "Stato ordine" },
+                      "type": "string",
+                      "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+                      "default": "Pending",
+                      "excludeFromSearch": true,
+                      "visualizationOptions": {
+                        "iconMap": {
+                          "Pending": {
+                            "shape": "roundedSquare",
+                            "color": "#03a9f4"
+                          },
+                          "Preparing": {
+                            "shape": "roundedSquare",
+                            "color": "#ff9800"
+                          },
+                          "Delivered": {
+                            "shape": "roundedSquare",
+                            "color": "#4caf50"
+                          },
+                          "Aborted": {
+                            "shape": "roundedSquare",
+                            "color": "#ef5350"
+                          }
+                        }
+                      },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "dishes": {
+                      "label": { "it": "Piatti", "en": "Dishes" },
+                      "type": "array",
+                      "format": "multilookup",
+                      "excludeFromSearch": false,
+                      "visualizationOptions": { "joinDelimiter": "; " },
+                      "lookupOptions": {
+                        "lookupDataSource": "dishes",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"]
+                      }
+                    },
+                    "totalPrice": {
+                      "label": { "it": "Prezzo", "en": "Price" },
+                      "type": "number",
+                      "min": 0,
+                      "visualizationOptions": { "hidden": true }
+                    },
+                    "orderedAt": {
+                      "label": {
+                        "it": "Data di ordinazione",
+                        "en": "Ordered at"
+                      },
+                      "type": "string",
+                      "format": "date-time",
+                      "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+                    },
+                    "formTitle_delivery": {
+                      "type": "form-addon",
+                      "format": "title",
+                      "label": {
+                        "it": "Informazioni sulla consegna",
+                        "en": "Delivery information"
+                      }
+                    },
+                    "riderId": {
+                      "label": "Rider",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "riders",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "restaurantId": {
+                      "label": "Restaurant",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "restaurants",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "customerId": {
+                      "label": { "it": "Cliente", "en": "Customer" },
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "customers",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "address": {
+                      "label": { "it": "Indirizzo", "en": "Address" },
+                      "type": "string"
+                    },
+                    "coordinates": {
+                      "label": { "it": "Coordinate", "en": "Coordinates" },
+                      "excludeFromSearch": true,
+                      "type": "array",
+                      "format": "geopoint",
+                      "visualizationOptions": { "hidden": "true" }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "dishes",
+                    "totalPrice",
+                    "orderedAt",
+                    "customerId",
+                    "address"
+                  ]
+                },
+                "rowActions": {
+                  "kind": "cta",
+                  "actions": [
+                    {
+                      "label": { "it": "Annulla", "en": "Abort" },
+                      "icon": "fas fa-times",
+                      "kind": "httpPost",
+                      "content": "/lambdas/abort",
+                      "requireConfirm": {
+                        "cancelText": { "en": "Cancel", "it": "Annulla" },
+                        "content": {
+                          "en": "You are about to abort the selected order.",
+                          "it": "Procedendo con questa operazione, annullerai l'ordine selezionato."
+                        },
+                        "okText": { "en": "Confirm", "it": "Conferma" },
+                        "title": {
+                          "en": "Are you sure you want to abort the order?",
+                          "it": "Sei sicuro di voler annullare l'ordine?"
+                        }
+                      },
+                      "meta": { "actionId": "abort-order" }
+                    }
+                  ]
+                },
+                "initialSortDirection": "descend",
+                "initialSortProperty": "orderedAt",
+                "maxLines": 8
+              }
+            },
+            {
+              "type": "element",
+              "tag": "bk-form-drawer",
+              "properties": {
+                "customMessageOnAbsentLookup": {
+                  "en": "⚠ Not found",
+                  "it": "⚠ Non trovato"
+                },
+                "allowNavigation": false,
+                "requireConfirm": { "onClose": true, "onSave": true },
+                "width": "560",
+                "dataSchema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "label": "_id",
+                      "type": "string",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true }
+                    },
+                    "__STATE__": {
+                      "type": "string",
+                      "default": "PUBLIC",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "status": {
+                      "label": { "en": "Order status", "it": "Stato ordine" },
+                      "type": "string",
+                      "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+                      "default": "Pending",
+                      "excludeFromSearch": true,
+                      "visualizationOptions": {
+                        "iconMap": {
+                          "Pending": {
+                            "shape": "roundedSquare",
+                            "color": "#03a9f4"
+                          },
+                          "Preparing": {
+                            "shape": "roundedSquare",
+                            "color": "#ff9800"
+                          },
+                          "Delivered": {
+                            "shape": "roundedSquare",
+                            "color": "#4caf50"
+                          },
+                          "Aborted": {
+                            "shape": "roundedSquare",
+                            "color": "#ef5350"
+                          }
+                        }
+                      },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "dishes": {
+                      "label": { "it": "Piatti", "en": "Dishes" },
+                      "type": "array",
+                      "format": "multilookup",
+                      "excludeFromSearch": false,
+                      "visualizationOptions": { "joinDelimiter": "; " },
+                      "lookupOptions": {
+                        "lookupDataSource": "dishes",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"]
+                      }
+                    },
+                    "totalPrice": {
+                      "label": { "it": "Prezzo", "en": "Price" },
+                      "type": "number",
+                      "min": 0,
+                      "visualizationOptions": { "hidden": true }
+                    },
+                    "orderedAt": {
+                      "label": {
+                        "it": "Data di ordinazione",
+                        "en": "Ordered at"
+                      },
+                      "type": "string",
+                      "format": "date-time",
+                      "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+                    },
+                    "formTitle_delivery": {
+                      "type": "form-addon",
+                      "format": "title",
+                      "label": {
+                        "it": "Informazioni sulla consegna",
+                        "en": "Delivery information"
+                      }
+                    },
+                    "riderId": {
+                      "label": "Rider",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "riders",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "restaurantId": {
+                      "label": "Restaurant",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "restaurants",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "customerId": {
+                      "label": { "it": "Cliente", "en": "Customer" },
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "customers",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "address": {
+                      "label": { "it": "Indirizzo", "en": "Address" },
+                      "type": "string"
+                    },
+                    "coordinates": {
+                      "label": { "it": "Coordinate", "en": "Coordinates" },
+                      "excludeFromSearch": true,
+                      "type": "array",
+                      "format": "geopoint",
+                      "visualizationOptions": { "hidden": "true" }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "dishes",
+                    "totalPrice",
+                    "orderedAt",
+                    "customerId",
+                    "address"
+                  ]
+                },
+                "customLabels": {
+                  "create": {
+                    "title": { "en": "Add new", "it": "Aggiungi nuovo" },
+                    "ctaLabel": { "en": "Add", "it": "Aggiungi" }
+                  },
+                  "update": {
+                    "title": { "en": "Order detail", "it": "Dettaglio ordine" },
+                    "ctaLabel": { "en": "Save", "it": "Salva" }
+                  }
+                }
+              }
+            },
+            {
+              "type": "element",
+              "tag": "bk-filter-drawer",
+              "properties": {
+                "dataSchema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "label": "_id",
+                      "type": "string",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true }
+                    },
+                    "__STATE__": {
+                      "type": "string",
+                      "default": "PUBLIC",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "status": {
+                      "label": { "en": "Order status", "it": "Stato ordine" },
+                      "type": "string",
+                      "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+                      "default": "Pending",
+                      "excludeFromSearch": true,
+                      "visualizationOptions": {
+                        "iconMap": {
+                          "Pending": {
+                            "shape": "roundedSquare",
+                            "color": "#03a9f4"
+                          },
+                          "Preparing": {
+                            "shape": "roundedSquare",
+                            "color": "#ff9800"
+                          },
+                          "Delivered": {
+                            "shape": "roundedSquare",
+                            "color": "#4caf50"
+                          },
+                          "Aborted": {
+                            "shape": "roundedSquare",
+                            "color": "#ef5350"
+                          }
+                        }
+                      },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "dishes": {
+                      "label": { "it": "Piatti", "en": "Dishes" },
+                      "type": "array",
+                      "format": "multilookup",
+                      "excludeFromSearch": false,
+                      "visualizationOptions": { "joinDelimiter": "; " },
+                      "lookupOptions": {
+                        "lookupDataSource": "dishes",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"]
+                      }
+                    },
+                    "totalPrice": {
+                      "label": { "it": "Prezzo", "en": "Price" },
+                      "type": "number",
+                      "min": 0,
+                      "visualizationOptions": { "hidden": true }
+                    },
+                    "orderedAt": {
+                      "label": {
+                        "it": "Data di ordinazione",
+                        "en": "Ordered at"
+                      },
+                      "type": "string",
+                      "format": "date-time",
+                      "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+                    },
+                    "formTitle_delivery": {
+                      "type": "form-addon",
+                      "format": "title",
+                      "label": {
+                        "it": "Informazioni sulla consegna",
+                        "en": "Delivery information"
+                      }
+                    },
+                    "riderId": {
+                      "label": "Rider",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "riders",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "restaurantId": {
+                      "label": "Restaurant",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "restaurants",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "customerId": {
+                      "label": { "it": "Cliente", "en": "Customer" },
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "customers",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "address": {
+                      "label": { "it": "Indirizzo", "en": "Address" },
+                      "type": "string"
+                    },
+                    "coordinates": {
+                      "label": { "it": "Coordinate", "en": "Coordinates" },
+                      "excludeFromSearch": true,
+                      "type": "array",
+                      "format": "geopoint",
+                      "visualizationOptions": { "hidden": "true" }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "dishes",
+                    "totalPrice",
+                    "orderedAt",
+                    "customerId",
+                    "address"
+                  ]
+                },
+                "width": "500"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "column",
+      "attributes": {
+        "style": "position: sticky; justify-content: space-between; align-items: center; padding: 12px 24px; background-color: white; z-index: 10; bottom: 0; max-height: 56px;"
+      },
+      "content": [
+        {
+          "type": "column",
+          "attributes": {
+            "style": "justify-content: space-between; padding: 10px 24px 0px 24px; align-items: center;"
+          },
+          "content": [
+            {
+              "type": "element",
+              "tag": "bk-bulk-delete",
+              "attributes": { "style": "margin-right: 10px;" }
+            },
+            {
+              "type": "element",
+              "tag": "bk-bulk-actions",
+              "properties": {
+                "dataSchema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "label": "_id",
+                      "type": "string",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true }
+                    },
+                    "__STATE__": {
+                      "type": "string",
+                      "default": "PUBLIC",
+                      "visualizationOptions": { "hidden": true },
+                      "formOptions": { "hidden": true },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "status": {
+                      "label": { "en": "Order status", "it": "Stato ordine" },
+                      "type": "string",
+                      "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+                      "default": "Pending",
+                      "excludeFromSearch": true,
+                      "visualizationOptions": {
+                        "iconMap": {
+                          "Pending": {
+                            "shape": "roundedSquare",
+                            "color": "#03a9f4"
+                          },
+                          "Preparing": {
+                            "shape": "roundedSquare",
+                            "color": "#ff9800"
+                          },
+                          "Delivered": {
+                            "shape": "roundedSquare",
+                            "color": "#4caf50"
+                          },
+                          "Aborted": {
+                            "shape": "roundedSquare",
+                            "color": "#ef5350"
+                          }
+                        }
+                      },
+                      "filtersOptions": { "hidden": true }
+                    },
+                    "dishes": {
+                      "label": { "it": "Piatti", "en": "Dishes" },
+                      "type": "array",
+                      "format": "multilookup",
+                      "excludeFromSearch": false,
+                      "visualizationOptions": { "joinDelimiter": "; " },
+                      "lookupOptions": {
+                        "lookupDataSource": "dishes",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"]
+                      }
+                    },
+                    "totalPrice": {
+                      "label": { "it": "Prezzo", "en": "Price" },
+                      "type": "number",
+                      "min": 0,
+                      "visualizationOptions": { "hidden": true }
+                    },
+                    "orderedAt": {
+                      "label": {
+                        "it": "Data di ordinazione",
+                        "en": "Ordered at"
+                      },
+                      "type": "string",
+                      "format": "date-time",
+                      "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+                    },
+                    "formTitle_delivery": {
+                      "type": "form-addon",
+                      "format": "title",
+                      "label": {
+                        "it": "Informazioni sulla consegna",
+                        "en": "Delivery information"
+                      }
+                    },
+                    "riderId": {
+                      "label": "Rider",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "riders",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "restaurantId": {
+                      "label": "Restaurant",
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "restaurants",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "customerId": {
+                      "label": { "it": "Cliente", "en": "Customer" },
+                      "type": "string",
+                      "format": "lookup",
+                      "excludeFromSearch": false,
+                      "lookupOptions": {
+                        "lookupDataSource": "customers",
+                        "lookupValue": "_id",
+                        "lookupFields": ["name", "surname"],
+                        "lookupDelimiter": " "
+                      }
+                    },
+                    "address": {
+                      "label": { "it": "Indirizzo", "en": "Address" },
+                      "type": "string"
+                    },
+                    "coordinates": {
+                      "label": { "it": "Coordinate", "en": "Coordinates" },
+                      "excludeFromSearch": true,
+                      "type": "array",
+                      "format": "geopoint",
+                      "visualizationOptions": { "hidden": "true" }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "dishes",
+                    "totalPrice",
+                    "orderedAt",
+                    "customerId",
+                    "address"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "element",
+          "tag": "bk-footer",
+          "properties": { "disableStateChange": true }
+        },
+        { "type": "element", "tag": "bk-pagination" }
+      ]
+    },
+    { "type": "element", "tag": "bk-confirmation-modal" },
+    {
+      "type": "element",
+      "tag": "bk-notifications",
+      "properties": {
+        "rootElementSelectors": "main.micro-lc-layout-content",
+        "successEventMap": {
+          "create-data": {
+            "title": { "en": "Success", "it": "Successo" },
+            "content": {
+              "en": "Order successfully created",
+              "it": "L'ordine è stato creato correttamente"
+            },
+            "type": "success"
+          },
+          "update-data": {
+            "title": { "en": "Success", "it": "Successo" },
+            "content": {
+              "en": "Order successfully updated",
+              "it": "L'ordine è stato aggiornato correttamente"
+            },
+            "type": "success"
+          },
+          "delete-data": {
+            "title": { "en": "Success", "it": "Successo" },
+            "content": {
+              "en": "Order successfully deleted",
+              "it": "L'ordine è stato eliminato correttamente"
+            },
+            "type": "success"
+          },
+          "abort-order": {
+            "title": { "en": "Success", "it": "Successo" },
+            "content": {
+              "en": "Order successfully aborted",
+              "it": "L'ordine è stato cancellato correttamente"
+            },
+            "type": "success"
+          }
+        },
+        "errorEventMap": {
+          "create-data": {
+            "title": { "en": "Error", "it": "Errore" },
+            "content": {
+              "en": "An error occurred during order creation",
+              "it": "C'è stato un errore durante la creazione dell'ordine"
+            },
+            "type": "error"
+          },
+          "update-data": {
+            "title": { "en": "Error", "it": "Errore" },
+            "content": {
+              "en": "An error occurred during order update",
+              "it": "C'è stato un errore durante l'aggiornamento dell'ordine"
+            },
+            "type": "error"
+          },
+          "delete-data": {
+            "title": { "en": "Error", "it": "Errore" },
+            "content": {
+              "en": "An error occurred during order deletion",
+              "it": "C'è stato un errore durante l'eliminazione dell'ordine"
+            },
+            "type": "error"
+          },
+          "abort-order": {
+            "title": { "en": "Error", "it": "Errore" },
+            "content": {
+              "en": "An error occurred during order abort",
+              "it": "C'è stato un errore durante la cancellazione dell'ordine"
+            },
+            "type": "error"
+          }
+        }
+      }
+    },
+    {
+      "type": "element",
+      "tag": "bk-crud-client",
+      "properties": {
+        "basePath": "/v2/orders",
+        "dataSchema": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "label": "_id",
+              "type": "string",
+              "visualizationOptions": { "hidden": true },
+              "formOptions": { "hidden": true }
+            },
+            "__STATE__": {
+              "type": "string",
+              "default": "PUBLIC",
+              "visualizationOptions": { "hidden": true },
+              "formOptions": { "hidden": true },
+              "filtersOptions": { "hidden": true }
+            },
+            "status": {
+              "label": { "en": "Order status", "it": "Stato ordine" },
+              "type": "string",
+              "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+              "default": "Pending",
+              "excludeFromSearch": true,
+              "visualizationOptions": {
+                "iconMap": {
+                  "Pending": { "shape": "roundedSquare", "color": "#03a9f4" },
+                  "Preparing": { "shape": "roundedSquare", "color": "#ff9800" },
+                  "Delivered": { "shape": "roundedSquare", "color": "#4caf50" },
+                  "Aborted": { "shape": "roundedSquare", "color": "#ef5350" }
+                }
+              },
+              "filtersOptions": { "hidden": true }
+            },
+            "dishes": {
+              "label": { "it": "Piatti", "en": "Dishes" },
+              "type": "array",
+              "format": "multilookup",
+              "excludeFromSearch": false,
+              "visualizationOptions": { "joinDelimiter": "; " },
+              "lookupOptions": {
+                "lookupDataSource": "dishes",
+                "lookupValue": "_id",
+                "lookupFields": ["name"]
+              }
+            },
+            "totalPrice": {
+              "label": { "it": "Prezzo", "en": "Price" },
+              "type": "number",
+              "min": 0,
+              "visualizationOptions": { "hidden": true }
+            },
+            "orderedAt": {
+              "label": { "it": "Data di ordinazione", "en": "Ordered at" },
+              "type": "string",
+              "format": "date-time",
+              "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+            },
+            "formTitle_delivery": {
+              "type": "form-addon",
+              "format": "title",
+              "label": {
+                "it": "Informazioni sulla consegna",
+                "en": "Delivery information"
+              }
+            },
+            "riderId": {
+              "label": "Rider",
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "riders",
+                "lookupValue": "_id",
+                "lookupFields": ["name", "surname"],
+                "lookupDelimiter": " "
+              }
+            },
+            "restaurantId": {
+              "label": "Restaurant",
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "restaurants",
+                "lookupValue": "_id",
+                "lookupFields": ["name"],
+                "lookupDelimiter": " "
+              }
+            },
+            "customerId": {
+              "label": { "it": "Cliente", "en": "Customer" },
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "customers",
+                "lookupValue": "_id",
+                "lookupFields": ["name", "surname"],
+                "lookupDelimiter": " "
+              }
+            },
+            "address": {
+              "label": { "it": "Indirizzo", "en": "Address" },
+              "type": "string"
+            },
+            "coordinates": {
+              "label": { "it": "Coordinate", "en": "Coordinates" },
+              "excludeFromSearch": true,
+              "type": "array",
+              "format": "geopoint",
+              "visualizationOptions": { "hidden": "true" }
+            }
+          },
+          "required": [
+            "status",
+            "dishes",
+            "totalPrice",
+            "orderedAt",
+            "customerId",
+            "address"
+          ]
+        }
+      }
+    },
+    {
+      "type": "element",
+      "tag": "bk-crud-lookup-client",
+      "properties": {
+        "basePath": "/v2",
+        "dataSchema": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "label": "_id",
+              "type": "string",
+              "visualizationOptions": { "hidden": true },
+              "formOptions": { "hidden": true }
+            },
+            "__STATE__": {
+              "type": "string",
+              "default": "PUBLIC",
+              "visualizationOptions": { "hidden": true },
+              "formOptions": { "hidden": true },
+              "filtersOptions": { "hidden": true }
+            },
+            "status": {
+              "label": { "en": "Order status", "it": "Stato ordine" },
+              "type": "string",
+              "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+              "default": "Pending",
+              "excludeFromSearch": true,
+              "visualizationOptions": {
+                "iconMap": {
+                  "Pending": { "shape": "roundedSquare", "color": "#03a9f4" },
+                  "Preparing": { "shape": "roundedSquare", "color": "#ff9800" },
+                  "Delivered": { "shape": "roundedSquare", "color": "#4caf50" },
+                  "Aborted": { "shape": "roundedSquare", "color": "#ef5350" }
+                }
+              },
+              "filtersOptions": { "hidden": true }
+            },
+            "dishes": {
+              "label": { "it": "Piatti", "en": "Dishes" },
+              "type": "array",
+              "format": "multilookup",
+              "excludeFromSearch": false,
+              "visualizationOptions": { "joinDelimiter": "; " },
+              "lookupOptions": {
+                "lookupDataSource": "dishes",
+                "lookupValue": "_id",
+                "lookupFields": ["name"]
+              }
+            },
+            "totalPrice": {
+              "label": { "it": "Prezzo", "en": "Price" },
+              "type": "number",
+              "min": 0,
+              "visualizationOptions": { "hidden": true }
+            },
+            "orderedAt": {
+              "label": { "it": "Data di ordinazione", "en": "Ordered at" },
+              "type": "string",
+              "format": "date-time",
+              "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+            },
+            "formTitle_delivery": {
+              "type": "form-addon",
+              "format": "title",
+              "label": {
+                "it": "Informazioni sulla consegna",
+                "en": "Delivery information"
+              }
+            },
+            "riderId": {
+              "label": "Rider",
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "riders",
+                "lookupValue": "_id",
+                "lookupFields": ["name", "surname"],
+                "lookupDelimiter": " "
+              }
+            },
+            "restaurantId": {
+              "label": "Restaurant",
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "restaurants",
+                "lookupValue": "_id",
+                "lookupFields": ["name"],
+                "lookupDelimiter": " "
+              }
+            },
+            "customerId": {
+              "label": { "it": "Cliente", "en": "Customer" },
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "customers",
+                "lookupValue": "_id",
+                "lookupFields": ["name", "surname"],
+                "lookupDelimiter": " "
+              }
+            },
+            "address": {
+              "label": { "it": "Indirizzo", "en": "Address" },
+              "type": "string"
+            },
+            "coordinates": {
+              "label": { "it": "Coordinate", "en": "Coordinates" },
+              "excludeFromSearch": true,
+              "type": "array",
+              "format": "geopoint",
+              "visualizationOptions": { "hidden": "true" }
+            }
+          },
+          "required": [
+            "status",
+            "dishes",
+            "totalPrice",
+            "orderedAt",
+            "customerId",
+            "address"
+          ]
+        }
+      }
+    },
+    {
+      "type": "element",
+      "tag": "bk-state-adapter",
+      "properties": {
+        "configMap": { "micro-lc-notification-center": "add-filter" }
+      }
+    },
+    {
+      "type": "element",
+      "tag": "bk-export",
+      "properties": {
+        "basePath": "/v2/orders/export",
+        "streamSaverIFrameSrc": "/back-kit/unstable/export-service-worker.html",
+        "dataSchema": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "label": "_id",
+              "type": "string",
+              "visualizationOptions": { "hidden": true },
+              "formOptions": { "hidden": true }
+            },
+            "__STATE__": {
+              "type": "string",
+              "default": "PUBLIC",
+              "visualizationOptions": { "hidden": true },
+              "formOptions": { "hidden": true },
+              "filtersOptions": { "hidden": true }
+            },
+            "status": {
+              "label": { "en": "Order status", "it": "Stato ordine" },
+              "type": "string",
+              "enum": ["Pending", "Preparing", "Delivered", "Aborted"],
+              "default": "Pending",
+              "excludeFromSearch": true,
+              "visualizationOptions": {
+                "iconMap": {
+                  "Pending": { "shape": "roundedSquare", "color": "#03a9f4" },
+                  "Preparing": { "shape": "roundedSquare", "color": "#ff9800" },
+                  "Delivered": { "shape": "roundedSquare", "color": "#4caf50" },
+                  "Aborted": { "shape": "roundedSquare", "color": "#ef5350" }
+                }
+              },
+              "filtersOptions": { "hidden": true }
+            },
+            "dishes": {
+              "label": { "it": "Piatti", "en": "Dishes" },
+              "type": "array",
+              "format": "multilookup",
+              "excludeFromSearch": false,
+              "visualizationOptions": { "joinDelimiter": "; " },
+              "lookupOptions": {
+                "lookupDataSource": "dishes",
+                "lookupValue": "_id",
+                "lookupFields": ["name"]
+              }
+            },
+            "totalPrice": {
+              "label": { "it": "Prezzo", "en": "Price" },
+              "type": "number",
+              "min": 0,
+              "visualizationOptions": { "hidden": true }
+            },
+            "orderedAt": {
+              "label": { "it": "Data di ordinazione", "en": "Ordered at" },
+              "type": "string",
+              "format": "date-time",
+              "dateOptions": { "displayFormat": "DD/MM/YYYY HH:mm" }
+            },
+            "formTitle_delivery": {
+              "type": "form-addon",
+              "format": "title",
+              "label": {
+                "it": "Informazioni sulla consegna",
+                "en": "Delivery information"
+              }
+            },
+            "riderId": {
+              "label": "Rider",
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "riders",
+                "lookupValue": "_id",
+                "lookupFields": ["name", "surname"],
+                "lookupDelimiter": " "
+              }
+            },
+            "restaurantId": {
+              "label": "Restaurant",
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "restaurants",
+                "lookupValue": "_id",
+                "lookupFields": ["name"],
+                "lookupDelimiter": " "
+              }
+            },
+            "customerId": {
+              "label": { "it": "Cliente", "en": "Customer" },
+              "type": "string",
+              "format": "lookup",
+              "excludeFromSearch": false,
+              "lookupOptions": {
+                "lookupDataSource": "customers",
+                "lookupValue": "_id",
+                "lookupFields": ["name", "surname"],
+                "lookupDelimiter": " "
+              }
+            },
+            "address": {
+              "label": { "it": "Indirizzo", "en": "Address" },
+              "type": "string"
+            },
+            "coordinates": {
+              "label": { "it": "Coordinate", "en": "Coordinates" },
+              "excludeFromSearch": true,
+              "type": "array",
+              "format": "geopoint",
+              "visualizationOptions": { "hidden": "true" }
+            }
+          },
+          "required": [
+            "status",
+            "dishes",
+            "totalPrice",
+            "orderedAt",
+            "customerId",
+            "address"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,14 +1,22 @@
 import type { CSSConfig, PluginConfiguration } from '@micro-lc/interfaces'
 
-import { createComposerContext } from '../composer'
-import * as composer from '../composer'
+import type { ResolvedConfig } from '../composer'
+import { createComposerContext, premount } from '../composer'
 import { appendCSS, appendImportMapTag, appendMountPoint, assignContent, createImportMapTag } from '../dom'
 import logger from '../logger'
-import * as json from '../utils/json'
 import type { SchemaOptions } from '../utils/json'
 
 import type { BaseExtension } from './extensions'
 import type MicroLC from './micro-lc'
+
+
+type PremountReturnType =
+  (id: string, config: PluginConfiguration) => Promise<ResolvedConfig>
+
+export interface ComposerApi {
+  createComposerContext: typeof createComposerContext
+  premount: PremountReturnType
+}
 
 export async function update<T extends BaseExtension>(this: MicroLC<T>): Promise<void> {
   const {
@@ -45,7 +53,9 @@ export async function update<T extends BaseExtension>(this: MicroLC<T>): Promise
   await import('es-module-shims').catch(logger.dynamicImportError('es-module-shims'))
 
   // layout
-  await createComposerContext(layout.content, {
+  const { content } = await premount
+    .call<MicroLC<T>, [string, PluginConfiguration], Promise<ResolvedConfig>>(this, 'layout', layout)
+  await createComposerContext(content, {
     context: { microlcApi: this.getApi() },
     extraProperties: ['microlcApi'],
   }).then((appender) => { appender(this.renderRoot) })
@@ -97,7 +107,11 @@ export async function update<T extends BaseExtension>(this: MicroLC<T>): Promise
         entry: { scripts: [composerUrl] },
         name: id,
         props: {
-          composerApi: { composer, json },
+          composerApi: {
+            createComposerContext: createComposerContext.bind(this),
+            premount: premount
+              .bind<PremountReturnType>(this),
+          },
           config,
           microlcApi: this.getApi(),
           schema,

@@ -263,6 +263,5 @@
         "required": ["tag", "entry"]
       }
     }
-  },
-  "additionalProperties": false
+  }
 }

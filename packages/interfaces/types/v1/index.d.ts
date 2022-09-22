@@ -85,6 +85,7 @@ export interface Config {
       [k: string]: unknown
     }
   }[]
+  [k: string]: unknown
 }
 export interface Plugin {
   /**
