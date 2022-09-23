@@ -2,7 +2,7 @@ import type { Config } from '@micro-lc/interfaces'
 import { expect, waitUntil } from '@open-wc/testing'
 import { createSandbox, match } from 'sinon'
 
-import MicroLC from '../src/micro-lc'
+import MicroLC from '../src/apis'
 
 describe('micro-lc config tests', () => {
   before(() => {

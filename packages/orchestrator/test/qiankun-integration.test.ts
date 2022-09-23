@@ -1,7 +1,7 @@
 import { expect, waitUntil } from '@open-wc/testing'
 import { match, createSandbox } from 'sinon'
 
-import MicroLC from '../src/micro-lc'
+import MicroLC from '../src/apis'
 
 describe('qiankun integration tests', () => {
   before(() => {

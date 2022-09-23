@@ -3,8 +3,8 @@ import { expect, waitUntil } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 
 import type { MicrolcApi, BaseExtension } from '../src/apis'
+import MicroLC from '../src/apis'
 import type { ExtendedHTMLElement } from '../src/composer'
-import MicroLC from '../src/micro-lc'
 
 type MicrolcApiExtended = ExtendedHTMLElement<{microlcApi: MicrolcApi<BaseExtension>}>
 

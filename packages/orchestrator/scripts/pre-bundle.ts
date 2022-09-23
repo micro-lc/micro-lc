@@ -22,7 +22,7 @@ const depsEntryPoints = [
 
 build({
   ...config,
-  define: { 'process.env.NODE_ENV': 'development' },
+  define: { 'process.env.NODE_ENV': JSON.stringify('development') },
   entryPoints: depsEntryPoints,
   outdir: resolve(__dirname, '../node_modules'),
 }).then(() => {

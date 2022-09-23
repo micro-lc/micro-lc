@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="importmap">
+    {
+      "imports": {
+        "prop-types": "https://esm.sh/prop-types@next",
+        "react": "https://esm.sh/react@next",
+        "react-dom/client": "https://esm.sh/react-dom@next/client"
+      }
+    }
+  </script>
+  <script type="module">
+    import React, {createElement, Suspense} from 'react'
+    import {createRoot} from 'react-dom/client'
+    import {useIcon} from '/src/useIcon.ts'
+    import '/src/mlc-iconic.ts'
+
+    function App() {
+      const AntdIcon = useIcon('AccountBookFilled', '@ant-design/icons-svg', console.error)
+      const FarIcon = useIcon('faAddressBook', {library: '@fortawesome/free-regular-svg-icons', src: '/dist/far'}, console.error)
+      const FasIcon = useIcon('faAdd', {library: '@fortawesome/free-solid-svg-icons', src: '/dist/fas'}, console.error)
+      return createElement(
+        Suspense,
+        {
+          fallback: React.createElement('div', undefined, 'Loading...')
+        },
+        createElement(AntdIcon),
+        createElement(FarIcon),
+        createElement(FasIcon),
+      )
+    }
+
+    const createReactApp = (document) => {
+      const container = document.getElementById('root')
+      const root = createRoot(container)
+      root.render(createElement(App))
+      return container
+    }
+
+    createReactApp(document)
+  </script>
+</head>
+<body style="width: 64px;">
+  <div id="root"></div>
+  <mlc-iconic selector="RightOutlined" library="@ant-design/icons-svg"></mlc-iconic>
+  <mlc-iconic selector="VerticalRightOutlined" library="@ant-design/icons-svg"></mlc-iconic>
+  <mlc-iconic selector="PieChartOutlined" library="@ant-design/icons-svg"></mlc-iconic>
+  <mlc-iconic selector="faUser" library="@fortawesome/free-solid-svg-icons" src="/dist/fas"></mlc-iconic>
+</body>
+</html>

@@ -2,8 +2,8 @@ import { expect, waitUntil } from '@open-wc/testing'
 import type { SinonSandbox } from 'sinon'
 import { createSandbox } from 'sinon'
 
+import MicroLC from '../src/apis'
 import { defaultConfig } from '../src/config'
-import MicroLC from '../src/micro-lc'
 
 describe('micro-lc config tests', () => {
   let sandbox: SinonSandbox

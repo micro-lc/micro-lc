@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "c": "yarn workspace @micro-lc/iconic",
     "i": "yarn workspace @micro-lc/interfaces",
     "l": "yarn workspace @micro-lc/layout",
     "o": "yarn workspace @micro-lc/orchestrator",
