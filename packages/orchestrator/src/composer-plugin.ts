@@ -156,9 +156,10 @@ function fn(exports: ComposerModule, _: Window) {
       name,
       config,
       composerApi: { premount },
-      microlcApi: { extensions: { json: { validator, fetcher } } },
+      microlcApi: { getExtensions },
       schema,
     }: ComposerProperties) {
+      const { json: { validator, fetcher } } = getExtensions()
       logger(name, 'starting bootstrap...')
       let resolvedConfig = config as PluginConfiguration | undefined
       if (typeof config === 'string') {

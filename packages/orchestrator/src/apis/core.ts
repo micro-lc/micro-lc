@@ -7,16 +7,15 @@ import type MicroLC from './micro-lc'
 
 export interface MicrolcApi<T extends BaseExtension> {
   readonly applyImportMap: (id: string, importmap: ImportMap) => void
-  readonly extensions: Readonly<T>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
+  readonly getExtensions: () => Readonly<T>
   readonly router: {
     goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): void
     open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => void
   }
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
   readonly setExtension: (key: keyof T, value: T[keyof T]) => Readonly<T>
-  readonly shared: Readonly<Record<string, unknown>>
 }
 
 export function createMicrolcApiInstance<Extensions extends BaseExtension>(
@@ -24,9 +23,9 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension>(
 ): () => MicrolcApi<Extensions> {
   const getApi = () => Object.freeze({
     applyImportMap: (id: string, importmap: ImportMap) => { this.applicationsImportMaps.set(id, importmap) },
-    extensions: Object.freeze({ ...this.extensions }),
     getApplications: () => Object.freeze([...this.config.applications]),
     getCurrentConfig: () => Object.freeze({ ...this.config }),
+    getExtensions: () => Object.freeze({ ...this.extensions }),
     router: {
       goToApplication: (_id: string, data?: unknown): void => {
         const url = this.config.applications.find(({ id }) => id === _id)?.route
@@ -43,7 +42,6 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension>(
       this.extensions[key] = value
       return Object.freeze({ ...this.extensions })
     },
-    shared: Object.freeze({ ...this.config.shared }),
   })
 
   if (process.env.NODE_ENV === 'development') {

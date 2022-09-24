@@ -71,6 +71,7 @@ export default class MicroLC<
         )
 
       const completeConfig = mergeConfig.call(this, config)
+
       this._config = completeConfig
 
       // SETUP & START
