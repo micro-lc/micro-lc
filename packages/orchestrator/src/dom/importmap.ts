@@ -1,29 +1,52 @@
 import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces'
 
 import type { BaseExtension } from '../apis'
-import type MicroLC from '../apis'
+import type Microlc from '../apis'
 
-export class SideEffectMap<T extends BaseExtension> extends Map<string, ImportMap | GlobalImportMap> {
+export class ImportMapRegistry<T extends BaseExtension> extends Map<string, HTMLScriptElement> {
   static idx = new Set<string>()
 
-  private _microlc: MicroLC<T>
-  constructor(microlc: MicroLC<T>) {
+  private _microlc: Microlc<T>
+  constructor(microlc: Microlc<T>) {
     super()
     this._microlc = microlc
   }
 
-  set(id: string, importmap: ImportMap | GlobalImportMap): this {
-    if (!SideEffectMap.idx.has(id)) {
-      const tag = assignContent(createImportMapTag
-        .call<MicroLC<T>, [], HTMLScriptElement>(this._microlc), importmap)
-      appendImportMapTag
-        .call<MicroLC<T>, [HTMLScriptElement], void>(this._microlc, tag)
+  remove(id: string): void {
+    this.get(id)?.remove()
+    ImportMapRegistry.idx.delete(id)
+  }
 
-      SideEffectMap.idx.add(id)
-      super.set(id, importmap)
+  removeAll(): void {
+    for (const id of ImportMapRegistry.idx.keys()) {
+      this.remove(id)
+    }
+  }
+
+  createSetMount(id: string, importmap: ImportMap | GlobalImportMap): this {
+    let tag: HTMLScriptElement
+
+    if (!ImportMapRegistry.idx.has(id)) {
+      tag = assignContent(createImportMapTag(this._microlc.ownerDocument, this._microlc.disableShims), importmap)
+      console.log('tag', tag)
+      ImportMapRegistry.idx.add(id)
+    } else {
+      tag = this.get(id)!
     }
 
+    tag.textContent = JSON.stringify(importmap)
+    !tag.isConnected && this._microlc.ownerDocument.head.appendChild(tag)
+
+    super.set(id, tag)
+
     return this
+  }
+
+  getImportmap(id: string): ImportMap | undefined {
+    const textContent = this.get(id)?.textContent
+    if (typeof textContent === 'string' && textContent !== '') {
+      return JSON.parse(textContent) as ImportMap
+    }
   }
 }
 
@@ -31,17 +54,13 @@ export function assignContent(tag: HTMLScriptElement, importmap: ImportMap | Glo
   return Object.assign(tag, { textContent: JSON.stringify(importmap) })
 }
 
-export function createImportMapTag<T extends BaseExtension>(
-  this: MicroLC<T>, useShims = true
+export function createImportMapTag(
+  document: Document, disableShims = false
 ): HTMLScriptElement {
   return Object.assign(
-    this.ownerDocument.createElement('script'),
-    {
-      type: `importmap${useShims ? '-shim' : ''}`,
+    document.createElement('script'), {
+      textContent: '{}',
+      type: disableShims ? 'importmap' : 'importmap-shim',
     }
   )
-}
-
-export function appendImportMapTag<T extends BaseExtension>(this: MicroLC<T>, tag: HTMLScriptElement | null = this.importmap): void {
-  tag && this.ownerDocument.head.appendChild(tag)
 }

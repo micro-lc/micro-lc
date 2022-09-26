@@ -38,13 +38,13 @@ describe('micro-lc config tests', () => {
       } as Config })
     )
     // 2. await for config fetch
-    await waitUntil(() => microlc.updateCompleted)
-    expect(microlc.shadowRoot?.innerHTML.replace(/\s/g, '')).to.equal(`
+    await waitUntil(() => microlc.updateComplete)
+    expect(microlc.shadowRoot.innerHTML.replace(/\s/g, '')).to.equal(`
       <!---->
       <div hidden="">Layout</div>
       <slot name="container"></slot>
     `.replace(/\s/g, ''))
-    const [div, slot] = Array.prototype.slice.call(microlc.shadowRoot?.children ?? []) as HTMLElement[]
+    const [div, slot] = Array.prototype.slice.call(microlc.shadowRoot.children ?? []) as HTMLElement[]
 
     // div is properly injected
     expect(div).to.have.property('microlcApi')

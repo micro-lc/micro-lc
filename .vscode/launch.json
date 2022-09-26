@@ -1,6 +1,6 @@
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
     {
       "type": "node",
       "request": "launch",
@@ -9,13 +9,22 @@
         "TS_NODE_COMPILER_OPTIONS": "{\"module\":\"CommonJS\"}"
       },
       "runtimeExecutable": "yarn",
+      "runtimeArgs": ["o", "ts-mocha", "src/**/${fileBasename}"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Firefox Tests",
+      "runtimeExecutable": "yarn",
       "runtimeArgs": [
         "o",
-        "ts-mocha",
-        "src/**/${fileBasename}"
+        "wtr",
+        "--node-resolve",
+        "test/**/${fileBasename}"
       ],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "openOnSessionStart",
     }
   ]
 }

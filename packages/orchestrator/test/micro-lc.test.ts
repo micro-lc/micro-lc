@@ -5,7 +5,7 @@ import { createSandbox } from 'sinon'
 import MicroLC from '../src/apis'
 import { defaultConfig } from '../src/config'
 
-describe('micro-lc config tests', () => {
+describe.skip('micro-lc config tests', () => {
   let sandbox: SinonSandbox
 
   before(() => {
@@ -55,7 +55,7 @@ describe('micro-lc config tests', () => {
       </micro-lc>
     `)
     expect(microlc.renderRoot).instanceOf(ShadowRoot)
-    const slot: HTMLSlotElement | null = microlc.shadowRoot?.querySelector('slot') ?? null
+    const slot: HTMLSlotElement | null = microlc.shadowRoot.querySelector('slot') ?? null
     expect(slot).not.to.be.undefined
     slot && expect(slot.assignedElements()).to.have.lengthOf(1)
     slot && expect(slot.assignedElements()[0]).to.have.attribute('id', '__MICRO_LC_MOUNT_POINT')

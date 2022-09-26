@@ -53,11 +53,11 @@ describe('micro-lc config tests', () => {
     )
 
     // 2. await for config setup
-    await waitUntil(() => microlc.updateCompleted)
+    await waitUntil(() => microlc.updateComplete)
 
     // 3. check whether css is properly mounted
     if ('adoptedStyleSheets' in document) {
-      const [nodes, global] = microlc.shadowRoot?.adoptedStyleSheets ?? []
+      const [nodes, global] = microlc.shadowRoot.adoptedStyleSheets ?? []
       expect(nodes.cssRules.item(0)?.cssText.replace(/\s/g, '')).to.equal(`
         .my-css-class {
           color: var(--micro-lc-primary-color);
@@ -75,7 +75,7 @@ describe('micro-lc config tests', () => {
        * SAFARI does not support `adoptedStyleSheets`
        * @link {https://caniuse.com/?search=adoptedStyleSheets}
        */
-      const [nodes, global] = microlc.shadowRoot?.querySelectorAll('style') ?? []
+      const [nodes, global] = microlc.shadowRoot.querySelectorAll('style') ?? []
       expect(nodes.outerHTML.replace(/\s/g, '')).to.eql(`
       <style>
         .my-css-class {
@@ -120,7 +120,7 @@ describe('micro-lc config tests', () => {
       Object.assign(microlc, { config })
     )
 
-    await waitUntil(() => microlc.updateCompleted)
+    await waitUntil(() => microlc.updateComplete)
 
     // 2. check whether css is properly mounted
     const [global] = document.head.querySelectorAll('style')

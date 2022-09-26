@@ -80,6 +80,18 @@ describe('json2html parser recursive tests', () => {
     `)
   })
 
+  it.only('should parse a number in a div', () => {
+    expect(jsonToHtml({
+      attributes: { role: 'button' },
+      content: 0,
+      tag: 'div',
+    })).to.equalIgnoreSpaces(`
+      <div role="button">
+        0
+      </div>
+    `)
+  })
+
   it('should parse a `ol` list', () => {
     expect(jsonToHtml({
       content: [

@@ -1,19 +1,10 @@
 import type { Component, Content, ImportMap, PluginConfiguration } from '@micro-lc/interfaces'
 
-import type { MicrolcApi, BaseExtension, ComposerApi } from './apis'
-import type { SchemaOptions } from './utils/json'
+import type { ComposableApplicationProperties } from './apis/micro-lc.lib'
 
 export {}
 
 type ComposerModule = Partial<Record<string, (...args: unknown[]) => Promise<null>>>
-
-interface ComposerProperties {
-  composerApi: ComposerApi
-  config: string | PluginConfiguration
-  microlcApi: MicrolcApi<BaseExtension>
-  name: string
-  schema: SchemaOptions
-}
 
 interface ResolvedConfig {
   content: Content
@@ -158,11 +149,12 @@ function fn(exports: ComposerModule, _: Window) {
       composerApi: { premount },
       microlcApi: { getExtensions },
       schema,
-    }: ComposerProperties) {
+    }: ComposableApplicationProperties & {name: string}) {
       const { json: { validator, fetcher } } = getExtensions()
       logger(name, 'starting bootstrap...')
+
       let resolvedConfig = config as PluginConfiguration | undefined
-      if (typeof config === 'string') {
+      if (schema && typeof config === 'string') {
         const json = await fetcher(config)
         resolvedConfig = await validator<PluginConfiguration>(
           json,
@@ -188,7 +180,14 @@ function fn(exports: ComposerModule, _: Window) {
       return Promise.resolve(null)
     },
 
-    async mount({ name, microlcApi, composerApi: { createComposerContext }, container }: ComposerProperties & {container: HTMLElement | null}) {
+    async mount(
+      {
+        name,
+        microlcApi,
+        composerApi: { createComposerContext },
+        container,
+      }: ComposableApplicationProperties & {container: HTMLElement | null; name: string}
+    ): Promise<null> {
       logger(name, 'starting mounting...')
       let done = Promise.resolve(null)
 
@@ -208,8 +207,14 @@ function fn(exports: ComposerModule, _: Window) {
       return done
     },
 
-    async unmount({ name }: ComposerProperties) {
+    async unmount({ name }: {name: string}) {
       logger(name, 'unmounting...')
+      return Promise.resolve(null)
+    },
+
+    async update(props: unknown) {
+      // TODO
+      logger(props.name, 'updating...')
       return Promise.resolve(null)
     },
   })

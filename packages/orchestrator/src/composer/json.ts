@@ -79,7 +79,7 @@ function parseContent(buffer: string[], content: Content, extraProperties: strin
       initialTagClose,
     ].join(' '))
 
-    if (nextContent) {
+    if (nextContent !== undefined) {
       parseContent(buffer, nextContent, extraProperties)
     }
 

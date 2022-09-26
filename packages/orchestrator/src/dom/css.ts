@@ -1,5 +1,3 @@
-import type { BaseExtension } from '../apis'
-import type MicroLC from '../apis'
 import type { CompleteConfig } from '../config'
 
 type CSSRules = Record<string, string | number | undefined>
@@ -47,52 +45,38 @@ function composeStyleSheet(node: CSSNode, prefix?: string): CSSStyleSheet {
   }, new CSSStyleSheet())
 }
 
-export function appendStyleTag<T extends BaseExtension>(
-  this: MicroLC<T>,
-  tag: HTMLStyleElement,
-): HTMLStyleElement {
-  return this.isShadowDom()
-    ? this.renderRoot.insertBefore(tag, this.renderRoot.firstChild)
-    : this.ownerDocument.head.appendChild(tag)
+export function createCSSStyleSheets(
+  { global, nodes }: CompleteConfig['css']
+): CSSStyleSheet[] {
+  const globalNode = { ':host': global } as CSSNode
+
+  const stylesheets: CSSStyleSheet[] = []
+  nodes && stylesheets.push(composeStyleSheet(nodes))
+  global && stylesheets.push(composeStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
+
+  return stylesheets
 }
 
-function appendStyle<T extends BaseExtension>(
-  this: MicroLC<T>,
-  textContent: string,
-): HTMLStyleElement {
-  const style = this.ownerDocument.createElement('style')
-  return appendStyleTag
-    .call<MicroLC<T>, [HTMLStyleElement], HTMLStyleElement>(
-      this, Object.assign(style, { textContent })
-    )
-}
-
-export function appendCSS<T extends BaseExtension>(
-  this: MicroLC<T>, { global, nodes }: CompleteConfig['css']
+export function createStyleElements(
+  { global, nodes }: CompleteConfig['css'],
+  [globalTag, nodesTag]: HTMLStyleElement[],
+  shadow: boolean
 ): HTMLStyleElement[] {
-  const styleTags: HTMLStyleElement[] = []
-  const shadow = this.isShadowDom()
   const selector = shadow ? ':host' : ':root'
   const globalNode = { [selector]: global } as CSSNode
 
-  if (shadow && 'adoptedStyleSheets' in this.ownerDocument) {
-    const stylesheets: CSSStyleSheet[] = []
-    nodes && stylesheets.push(composeStyleSheet(nodes))
-    global && stylesheets.push(composeStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
-    ;((this.renderRoot as ShadowRoot).adoptedStyleSheets = [...stylesheets])
-  } else {
-    this.styleTags.forEach((style) => { style.remove() })
-    global && styleTags.push(appendStyle
-      .call<MicroLC<T>, [string], HTMLStyleElement>(
-        this, composeTextStyleSheet(globalNode, MICRO_LC_CSS_PREFIX)
-      )
-    )
-    nodes && styleTags.push(appendStyle
-      .call<MicroLC<T>, [string], HTMLStyleElement>(
-        this, composeTextStyleSheet(nodes)
-      )
-    )
-  }
+  const elements: HTMLStyleElement[] = []
 
-  return styleTags
+  global && elements.push(Object.assign(
+    globalTag, {
+      textContent: composeTextStyleSheet(globalNode, MICRO_LC_CSS_PREFIX),
+    }
+  ))
+  nodes && elements.push(Object.assign(
+    nodesTag, {
+      textContent: composeTextStyleSheet(nodes),
+    }
+  ))
+
+  return elements
 }

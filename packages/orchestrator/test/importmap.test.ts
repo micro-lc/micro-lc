@@ -2,11 +2,11 @@ import type { Config } from '@micro-lc/interfaces'
 import { expect, waitUntil } from '@open-wc/testing'
 import { createSandbox, match } from 'sinon'
 
-import MicroLC from '../src/apis'
+import Microlc from '../src/apis'
 
 describe('micro-lc config tests', () => {
   before(() => {
-    customElements.define('micro-lc', MicroLC)
+    customElements.define('micro-lc', Microlc)
   })
 
   afterEach(() => {
@@ -65,13 +65,13 @@ describe('micro-lc config tests', () => {
 
     // TEST
     // 1. append micro-lc
-    const microlc = document.createElement('micro-lc') as MicroLC
+    const microlc = document.createElement('micro-lc') as Microlc
     document.body.appendChild(
       Object.assign(microlc, { config })
     )
 
     // 2. await for config fetch
-    await waitUntil(() => microlc.updateCompleted)
+    await waitUntil(() => microlc.updateComplete)
 
     // 3. inject module script using bare modules
     document.body.appendChild(

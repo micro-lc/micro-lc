@@ -1,22 +1,24 @@
-import { registerMicroApps, start, setDefaultMountApp } from 'qiankun'
+import { start, setDefaultMountApp, loadMicroApp } from 'qiankun'
+import type { MicroApp as QiankunMicroApp } from 'qiankun'
 
 import type { SchemaOptions } from '../utils/json'
 
-import type { BaseExtension } from './extensions'
-import type MicroLC from './micro-lc'
+export type { QiankunMicroApp }
+
+export type MicroApp = QiankunMicroApp & {
+  route: string
+}
 
 export interface QiankunApi {
-  registerMicroApps: typeof registerMicroApps
+  loadMicroApp: typeof loadMicroApp
   schema?: SchemaOptions
   setDefaultMountApp: typeof setDefaultMountApp
   start: typeof start
 }
 
-export function createQiankunInstance<T extends BaseExtension>(
-  this: MicroLC<T>
-): QiankunApi {
+export function createQiankunInstance(): QiankunApi {
   return {
-    registerMicroApps,
+    loadMicroApp,
     setDefaultMountApp,
     start,
   }

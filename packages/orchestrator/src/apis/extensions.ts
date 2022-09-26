@@ -1,6 +1,7 @@
-import type MicroLC from '../apis'
 import type { SchemaOptions } from '../utils/json'
 import { jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../utils/json'
+
+import type { Microlc } from './micro-lc'
 
 type HTTPClient = Record<string, unknown>
 
@@ -17,7 +18,7 @@ export type BaseExtension = Record<string, unknown> & {
   }
 }
 
-export function initBaseExtensions<T extends BaseExtension>(this: MicroLC<T>): T {
+export function initBaseExtensions<T extends BaseExtension>(this: Microlc<T>): T {
   return {
     // TODO
     httpClient: {},

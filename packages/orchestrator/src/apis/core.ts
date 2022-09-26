@@ -3,7 +3,7 @@ import type { ImportMap } from '@micro-lc/interfaces'
 import type { CompleteConfig } from '../config'
 
 import type { BaseExtension } from './extensions'
-import type MicroLC from './micro-lc'
+import type { Microlc } from './micro-lc'
 
 export interface MicrolcApi<T extends BaseExtension> {
   readonly applyImportMap: (id: string, importmap: ImportMap) => void
@@ -19,16 +19,16 @@ export interface MicrolcApi<T extends BaseExtension> {
 }
 
 export function createMicrolcApiInstance<Extensions extends BaseExtension>(
-  this: MicroLC<Extensions>
+  this: Microlc<Extensions>
 ): () => MicrolcApi<Extensions> {
   const getApi = () => Object.freeze({
-    applyImportMap: (id: string, importmap: ImportMap) => { this.applicationsImportMaps.set(id, importmap) },
-    getApplications: () => Object.freeze([...this.config.applications]),
-    getCurrentConfig: () => Object.freeze({ ...this.config }),
-    getExtensions: () => Object.freeze({ ...this.extensions }),
+    applyImportMap: (id: string, importmap: ImportMap) => { this._applicationsImportMap.createSetMount(id, importmap) },
+    getApplications: () => Object.freeze([...this._config.applications]),
+    getCurrentConfig: () => Object.freeze({ ...this._config }),
+    getExtensions: () => Object.freeze({ ...this._extensions }),
     router: {
       goToApplication: (_id: string, data?: unknown): void => {
-        const url = this.config.applications.find(({ id }) => id === _id)?.route
+        const url = this._config.applications.find(({ id }) => id === _id)?.route
         if (url) {
           window.history.pushState(data, '', url)
         }
@@ -39,8 +39,8 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension>(
     },
     setCurrentConfig: (newConfig: CompleteConfig) => { this.config = newConfig },
     setExtension: (key: keyof Extensions, value: Extensions[keyof Extensions]) => {
-      this.extensions[key] = value
-      return Object.freeze({ ...this.extensions })
+      this._extensions[key] = value
+      return Object.freeze({ ...this._extensions })
     },
   })
 

@@ -1,6 +1,6 @@
 export * from './core'
-export type { ComposerApi } from './micro-lc.lib'
 export type { BaseExtension } from './extensions'
+export type { QiankunMicroApp } from './qiankun'
 
-import MicroLC from './micro-lc'
-export default MicroLC
+import { Microlc } from './micro-lc'
+export default Microlc

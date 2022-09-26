@@ -22,9 +22,13 @@ export default {
   },
   middleware: [
     function rewriteIndex(ctx, next) {
-      const directPaths = /^\/(\?wtr|dist|.dev|src|__|node_modules|wds|test)/
-      if (!ctx.url.match(directPaths)) {
-        ctx.url = '/'
+      if (ctx.url === '/composer-plugin.test.js') {
+        ctx.url = `/mocks${ctx.url}`
+      } else {
+        const directPaths = /^\/(\?wtr|dist|.dev|src|__|node_modules|wds|test)/
+        if (!ctx.url.match(directPaths)) {
+          ctx.url = '/'
+        }
       }
 
       return next()
@@ -56,7 +60,7 @@ export default {
     }),
     json(),
     replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.NODE_ENV': JSON.stringify('test'),
     }, { preventAssignment: true }),
   ],
 }

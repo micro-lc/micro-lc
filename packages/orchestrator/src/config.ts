@@ -8,34 +8,21 @@ export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'lay
     & {pluginMountPointSelector: {id: string; slot?: string}}
 }
 
-export const defaultConfig = (shadow = true): CompleteConfig => ({
+export const defaultConfig: CompleteConfig = {
   applications: [],
   css: {},
   importmap: {} as GlobalImportMap,
-  layout: shadow
-    ? {
-      content: {
-        tag: 'slot',
-      },
-    }
-    : {
-      content: {
-        attributes: {
-          id: MICRO_LC_MOUNT_POINT,
-        },
-        tag: 'div',
-      },
-    },
+  layout: { content: '' },
   settings: {
     defaultUrl: '/',
     pluginMountPointSelector: { id: MICRO_LC_MOUNT_POINT },
   },
   shared: {},
   version: 2,
-})
+}
 
-export function mergeConfig(input: Config, shadow = true): CompleteConfig {
-  const def = defaultConfig(shadow)
+export function mergeConfig(input: Config): CompleteConfig {
+  const def = defaultConfig
   const mountPointMergedConfig = input.settings?.pluginMountPointSelector
     ?? def.settings.pluginMountPointSelector
   const pluginMountPointSelector = typeof mountPointMergedConfig === 'object'
