@@ -1,13 +1,16 @@
 import type { ImportMap } from '@micro-lc/interfaces'
 
-import type { CompleteConfig } from '../config'
+import type { CompleteConfig } from '../../config'
+import type { Microlc } from '../micro-lc'
 
 import type { BaseExtension } from './extensions'
-import type { Microlc } from './micro-lc'
+import type { QiankunMicroApp } from './qiankun'
+import { getCurrentApplicationId } from './router'
 
 export interface MicrolcApi<T extends BaseExtension> {
   readonly applyImportMap: (id: string, importmap: ImportMap) => void
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
+  readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
   readonly getExtensions: () => Readonly<T>
   readonly router: {
@@ -22,8 +25,9 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension>(
   this: Microlc<Extensions>
 ): () => MicrolcApi<Extensions> {
   const getApi = () => Object.freeze({
-    applyImportMap: (id: string, importmap: ImportMap) => { this._applicationsImportMap.createSetMount(id, importmap) },
+    applyImportMap: (id: string, importmap: ImportMap) => Object.freeze({ ...this._applicationsImportMap.createSetMount(id, importmap) }),
     getApplications: () => Object.freeze([...this._config.applications]),
+    getCurrentApplication: () => Object.freeze({ ...getCurrentApplicationId() }),
     getCurrentConfig: () => Object.freeze({ ...this._config }),
     getExtensions: () => Object.freeze({ ...this._extensions }),
     router: {
@@ -43,10 +47,6 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension>(
       return Object.freeze({ ...this._extensions })
     },
   })
-
-  if (process.env.NODE_ENV === 'development') {
-    Object.defineProperty(window, 'getMicrolcApi', { value: getApi })
-  }
 
   return getApi
 }

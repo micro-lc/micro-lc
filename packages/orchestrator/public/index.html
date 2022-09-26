@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async type="module" src="./micro-lc.development.js"></script>
+  <base href="%%MICRO_LC_BASE_PATH%%" />
+  <title>Microlc :: Development</title>
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <script async type="module" src="./micro-lc.%%MICRO_LC_MODE.js"></script>
 </head>
 <body>
-  <micro-lc shadow-dom></micro-lc>
+  <micro-lc config-src="%%MICRO_LC_CONFIG_SRC%%"></micro-lc>
 </body>
 </html>

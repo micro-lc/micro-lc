@@ -2,10 +2,36 @@
   "$schema": "../../interfaces/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
-    "defaultUrl": "/main"
+    "composerUri": "/dist/composer-plugin.development.js",
+    "defaultUrl": "/main",
+    "4xx": {
+      "404": "/dist/404.html"
+    }
+  },
+  "css": {
+    "nodes": {
+      ".inherit-size": {
+        "width": "inherit",
+        "height": "inherit"
+      }
+    }
   },
   "layout": {
-    "content": { "tag": "div", "content": ["Wrapper", { "tag": "slot" }] },
+    "content": {
+      "tag": "div",
+      "attributes": {
+        "class": "inherit-size"
+      },
+      "content": [
+        "Wrapper",
+        { 
+          "attributes": {
+            "class": "inherit"
+          },
+          "tag": "slot"
+        }
+      ] 
+    },
     "sources": {
       "uris": [],
       "importmap": {

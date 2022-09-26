@@ -22,7 +22,7 @@ export default {
   },
   middleware: [
     function rewriteIndex(ctx, next) {
-      if (ctx.url === '/composer-plugin.test.js') {
+      if (ctx.url === '/composer.test.js') {
         ctx.url = `/mocks${ctx.url}`
       } else {
         const directPaths = /^\/(\?wtr|dist|.dev|src|__|node_modules|wds|test)/

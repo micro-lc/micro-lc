@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import type { Config } from '@micro-lc/interfaces'
 import { expect, waitUntil } from '@open-wc/testing'
+import { html, render } from 'lit-html'
 import type { SinonSandbox } from 'sinon'
 import { createSandbox } from 'sinon'
 
-import MicroLC from '../src/apis'
-import { defaultConfig } from '../src/config'
+import { mergeConfig } from '../src/config'
+import Microlc from '../src/web-component'
 
-describe.skip('micro-lc config tests', () => {
+describe('micro-lc lifecycle tests', () => {
   let sandbox: SinonSandbox
 
   before(() => {
-    customElements.define('micro-lc', MicroLC)
+    customElements.define('micro-lc', Microlc)
   })
 
   beforeEach(() => {
@@ -17,103 +20,192 @@ describe.skip('micro-lc config tests', () => {
   })
 
   afterEach(() => {
-    for (const child of document.body.children) {
-      child.remove()
-    }
     sandbox.restore()
   })
 
-  it('should receive attribute input and merge config', async () => {
-    const config = { layout: { content: 'my-content' } }
-    const fetch = sandbox.stub(window, 'fetch').callsFake(() => Promise.resolve(new Response(
-      JSON.stringify(config),
-      {
-        headers: { 'Content-Type': 'application/json' },
-        status: 200,
-      }
-    )))
+  it('should default attributes/properties', () => {
+    const { body } = document
+    render(html`
+      <micro-lc></micro-lc>
+    `, body)
 
-    // TEST
-    // 1. append micro-lc
-    const microlc = document.createElement('micro-lc') as MicroLC
-    microlc.setAttribute('config-src', './config.json')
-    document.body.appendChild(microlc)
+    const microlc = body.querySelector('micro-lc')!
 
-    // 2. await for config fetch
-    await waitUntil(() =>
-      microlc.configSrc === './config.json', 'configSrc property should be set after successful fetch'
-    )
-    expect(fetch).to.be.calledOnceWith(new URL('./config.json', window.location.origin))
+    expect(microlc).not.to.have.attribute('config-src')
+    expect(microlc).not.to.have.attribute('disable-shadow-dom')
+    expect(microlc).not.to.have.attribute('use-shims')
+    expect(microlc).to.have.property('configSrc', undefined)
+    expect(microlc).to.have.property('disableShadowDom', false)
+    expect(microlc).to.have.property('disableShims', false)
 
-    // 3. state must be reflected on web-component
-    expect(microlc.configSrc).to.equal('./config.json')
-    expect(microlc).dom.equal(`
+    microlc.remove()
+  })
+
+
+  it('should react on boolean attribute change', async () => {
+    const configSrc = window.crypto.randomUUID()
+    const { body } = document
+    render(html`
       <micro-lc
-        config-src="./config.json"
-      >
+        config-src=${configSrc}
+        disable-shadow-dom
+        disable-shims
+      ></micro-lc>
+    `, body)
+
+    const microlc: Microlc = body.querySelector('micro-lc')!
+
+    await waitUntil(() => microlc.updateComplete)
+    expect(microlc).to.have.property('configSrc', configSrc)
+    expect(microlc).to.have.property('disableShadowDom', true)
+    expect(microlc).to.have.property('$$updatesCount', 1)
+    // expect(microlc).to.have.property('useShims', true)
+    microlc.remove()
+  })
+
+  it('should set config without using config-src', async () => {
+    const config: Config = { version: 2 }
+    const { body } = document
+    render(html`
+      <micro-lc config-src="/config.json"></micro-lc>
+    `, body)
+
+    const microlc: Microlc = body.querySelector('micro-lc')!
+    microlc.config = config
+
+    await waitUntil(() => microlc.updateComplete)
+    expect(microlc).not.to.have.attribute('config-src')
+    expect(microlc).to.have.property('$$updatesCount', 1)
+
+    microlc.remove()
+  })
+
+  it('double rooting', async () => {
+    const { body } = document
+    render(html`
+      <micro-lc disable-shadow-dom></micro-lc>
+    `, body)
+
+    const microlc: Microlc = body.querySelector('micro-lc')!
+    microlc.appendChild(document.createElement('div'))
+    microlc.shadowRoot.appendChild(document.createElement('span'))
+
+    await waitUntil(() => microlc.updateComplete)
+    expect(microlc).dom.equal(`
+      <micro-lc disable-shadow-dom=""><div></div></micro-lc>
+    `)
+    expect(microlc).shadowDom.equal(`
+      <span></span>
+    `)
+
+    microlc.remove()
+  })
+
+  it('config injection', async () => {
+    const configSrc = window.crypto.randomUUID()
+    const config: Config = { css: { global: { 'primary-color': '#000000' } }, version: 2 }
+    const fetch = sandbox.stub(window, 'fetch').callsFake((input: RequestInfo | URL) => {
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      const { pathname } = new URL(input.toString(), window.location.origin)
+
+      if (pathname === `/${configSrc}`) {
+        return Promise.resolve(new Response(
+          JSON.stringify(config),
+          {
+            headers: { 'Content-Type': 'application/json' },
+            status: 200,
+          }
+        ))
+      }
+
+      return Promise.resolve(new Response('Not Found', { status: 404 }))
+    })
+
+    const { body } = document
+    render(html`
+      <micro-lc config-src=${configSrc}></micro-lc>
+    `, body)
+
+    const microlc: Microlc = body.querySelector('micro-lc')!
+
+    await waitUntil(() => microlc.updateComplete)
+
+    expect(microlc).dom.to.equal(`
+      <micro-lc config-src=${configSrc}>
         <div id="__MICRO_LC_MOUNT_POINT"></div>
       </micro-lc>
     `)
-    expect(microlc.renderRoot).instanceOf(ShadowRoot)
-    const slot: HTMLSlotElement | null = microlc.shadowRoot.querySelector('slot') ?? null
-    expect(slot).not.to.be.undefined
-    slot && expect(slot.assignedElements()).to.have.lengthOf(1)
-    slot && expect(slot.assignedElements()[0]).to.have.attribute('id', '__MICRO_LC_MOUNT_POINT')
+    expect(microlc).shadowDom.to.equal('')
 
-    // 4. when update is done, config must be available
-    await waitUntil(() => microlc.updateCompleted)
-    expect(microlc.config.layout).to.have.property('content', 'my-content')
-    //
+    expect(document.head.querySelector('script[type=esms-options]')?.textContent).to.equal(JSON.stringify({
+      mapOverride: true,
+      shimMode: true,
+    }))
+
+    expect(microlc).to.have.property('configSrc', configSrc)
+    expect(fetch).to.be.calledOnceWith()
+    expect(microlc.config).to.eql(mergeConfig(config))
+    expect(microlc.$$updatesCount).to.equal(1)
   })
 
-  it(`should remove 'config-src' attribute
-      when config file is fetched with wrong 'Content-Type',
-      default config must be used instead`, async () => {
-    const fetch = sandbox.stub(window, 'fetch').callsFake(() => Promise.resolve(new Response(
-      'my config file',
-      {
-        headers: { 'Content-Type': 'text/plain' },
-        status: 200,
-      }
-    )))
+  it('config injection with qiankun applications', async () => {
+    const config: Config = {
+      applications: [
+        {
+          config: {
+            content: {
+              content: 0,
+              tag: 'div',
+            },
+            sources: {
+              importmap: {
+                imports: {
+                  dep: 'http://example.com',
+                },
+              },
+              uris: 'data:text/javascript;base64,CmltcG9ydCB7UmVwbGF5U3ViamVjdH0gZnJvbSAncnhqcycKCmNvbnNvbGUubG9nKFJlcGxheVN1YmplY3QpCg==',
+            },
+          },
+          id: 'main',
+          integrationMode: 'compose',
+          route: '/',
+        },
+      ],
+      layout: {
+        content: {
+          tag: 'slot',
+        },
+      },
+      version: 2,
+    }
 
-    // TEST
-    // 1. append micro-lc
-    const microlc = document.createElement('micro-lc') as MicroLC
-    microlc.setAttribute('config-src', './config.json')
-    microlc.setAttribute('disable-shadow-dom', '')
-    document.body.appendChild(microlc)
+    const { body } = document
+    render(html`
+      <micro-lc></micro-lc>
+    `, body)
 
-    // 2. fetch fails
-    expect(fetch).to.be.calledOnceWith(new URL('./config.json', window.location.origin))
-    expect(microlc.configSrc).to.be.undefined
-    expect(microlc.renderRoot).instanceOf(MicroLC)
+    const microlc: Microlc = body.querySelector('micro-lc')!
+    microlc.config = config
 
-    // 3. default config is used instead
-    await waitUntil(() => microlc.updateCompleted)
-    expect(microlc.config).to.eql(defaultConfig(false))
-    expect(microlc).dom.equal(`
-      <micro-lc
-        config-src="./config.json"
-        disable-shadow-dom=""
-      >
-        <div id="__MICRO_LC_MOUNT_POINT"></div>
+    await waitUntil(() => microlc.updateComplete)
+
+    expect(microlc).dom.to.equal(`
+      <micro-lc>
+        <div id="__MICRO_LC_MOUNT_POINT">
+          <div
+            data-name="main"
+            data-version="2.8.0"
+            id="__qiankun_microapp_wrapper_for_main__"
+          >
+            <qiankun-head></qiankun-head>
+          </div>
+        </div>
       </micro-lc>
     `)
-  })
+    expect(microlc).shadowDom.to.equal(`
+      <slot></slot>
+    `)
 
-  it('should load config from property setting', async () => {
-    // TEST
-    // 1. append micro-lc
-    const config = { layout: { content: 'my-content' } }
-    const microlc = document.createElement('micro-lc') as MicroLC
-    document.body.appendChild(
-      Object.assign(microlc, { config })
-    )
-
-    // 2. check config
-    await waitUntil(() => microlc.updateCompleted)
-    expect(microlc.config.layout).to.have.property('content', 'my-content')
-    //
+    microlc.remove()
   })
 })

@@ -52,7 +52,7 @@ export function createCSSStyleSheets(
 
   const stylesheets: CSSStyleSheet[] = []
   nodes && stylesheets.push(composeStyleSheet(nodes))
-  global && stylesheets.push(composeStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
+  stylesheets.push(composeStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
 
   return stylesheets
 }
@@ -67,7 +67,7 @@ export function createStyleElements(
 
   const elements: HTMLStyleElement[] = []
 
-  global && elements.push(Object.assign(
+  elements.push(Object.assign(
     globalTag, {
       textContent: composeTextStyleSheet(globalNode, MICRO_LC_CSS_PREFIX),
     }

@@ -8,6 +8,36 @@
       "title": "Settings",
       "type": "object",
       "properties": {
+        "4xx": {
+          "type": "object",
+          "default": {
+            "401": "./401.html",
+            "404": "./404.html"
+          },
+          "patternProperties": {
+            "^4\\d{2}$": {
+              "type": "string",
+              "format": "uri-reference"
+            }
+          }
+        },
+        "5xx": {
+          "type": "object",
+          "default": {
+            "500": "./500.html"
+          },
+          "patternProperties": {
+            "^5\\d{2}$": {
+              "type": "string",
+              "format": "uri-reference"
+            }
+          }
+        },
+        "composerUri": {
+          "description": "The URI where the composer plugin can be found, if needed",
+          "type": "string",
+          "format": "uri-reference"
+        },
         "pluginMountPointSelector": {
           "description": "Query selector to plugins mounting DOM element",
           "default": "#__MICRO_LC_MOUNT_POINT",

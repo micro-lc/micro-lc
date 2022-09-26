@@ -1,7 +1,7 @@
 import type { Config } from '@micro-lc/interfaces'
 import { expect, waitUntil } from '@open-wc/testing'
 
-import MicroLC from '../src/apis'
+import MicroLC from '../src/web-component'
 
 describe('micro-lc config tests', () => {
   before(() => {
@@ -57,7 +57,7 @@ describe('micro-lc config tests', () => {
 
     // 3. check whether css is properly mounted
     if ('adoptedStyleSheets' in document) {
-      const [nodes, global] = microlc.shadowRoot.adoptedStyleSheets ?? []
+      const [nodes, global] = microlc.shadowRoot.adoptedStyleSheets
       expect(nodes.cssRules.item(0)?.cssText.replace(/\s/g, '')).to.equal(`
         .my-css-class {
           color: var(--micro-lc-primary-color);
@@ -75,7 +75,7 @@ describe('micro-lc config tests', () => {
        * SAFARI does not support `adoptedStyleSheets`
        * @link {https://caniuse.com/?search=adoptedStyleSheets}
        */
-      const [nodes, global] = microlc.shadowRoot.querySelectorAll('style') ?? []
+      const [nodes, global] = microlc.shadowRoot.querySelectorAll('style')
       expect(nodes.outerHTML.replace(/\s/g, '')).to.eql(`
       <style>
         .my-css-class {

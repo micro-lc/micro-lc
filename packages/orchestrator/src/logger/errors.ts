@@ -14,6 +14,9 @@ export enum ErrorCodes {
   LexerAnalysisEndedInNormalMode = '41',
   InterpolationContextError = '42',
   InterpolationJSONError = '43',
+  // lifecycle
+  UpdateError = '50',
+  RoutingError = '51'
 }
 
 export type ErrorHandler = (...args: string[]) => string
@@ -32,6 +35,8 @@ const errorMap: Record<ErrorCodes, ErrorHandler> = {
   41: (content: string, index: string) => `${MICRO_LC}: Lexer could not parse content ${content} due to unexpected char "}" at position ${index}`,
   42: (input: string) => `${COMPOSER}: Invalid interpolation sequence of keys on input ${input}`,
   43: (err: string) => `${COMPOSER}: Invalid interpolation sequence while parsing a JSON input - ${err}`,
+  50: (app: string, err: string) => `${MICRO_LC}: The update for application ${app} failed - ${err}`,
+  51: (err: string) => `${MICRO_LC}: Something went wrong while routing - ${err}`,
 }
 
 export default errorMap

@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
+  "exclude": ["dist"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

@@ -1,11 +1,10 @@
 import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces'
 
-import type { BaseExtension } from '../apis'
-import type Microlc from '../apis'
+import type { BaseExtension } from '../web-component'
+import type Microlc from '../web-component'
 
 export class ImportMapRegistry<T extends BaseExtension> extends Map<string, HTMLScriptElement> {
-  static idx = new Set<string>()
-
+  private idx = new Set<string>()
   private _microlc: Microlc<T>
   constructor(microlc: Microlc<T>) {
     super()
@@ -14,11 +13,11 @@ export class ImportMapRegistry<T extends BaseExtension> extends Map<string, HTML
 
   remove(id: string): void {
     this.get(id)?.remove()
-    ImportMapRegistry.idx.delete(id)
+    this.idx.delete(id)
   }
 
   removeAll(): void {
-    for (const id of ImportMapRegistry.idx.keys()) {
+    for (const id of this.idx.keys()) {
       this.remove(id)
     }
   }
@@ -26,11 +25,13 @@ export class ImportMapRegistry<T extends BaseExtension> extends Map<string, HTML
   createSetMount(id: string, importmap: ImportMap | GlobalImportMap): this {
     let tag: HTMLScriptElement
 
-    if (!ImportMapRegistry.idx.has(id)) {
+    if (!this.idx.has(id)) {
       tag = assignContent(createImportMapTag(this._microlc.ownerDocument, this._microlc.disableShims), importmap)
       console.log('tag', tag)
-      ImportMapRegistry.idx.add(id)
+      this.idx.add(id)
     } else {
+      // SAFETY: idx and this are doubly linked due to the super.set below
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       tag = this.get(id)!
     }
 

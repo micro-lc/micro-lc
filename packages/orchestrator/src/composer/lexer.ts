@@ -162,6 +162,7 @@ export async function lexer(input: string): Promise<LexerResult> {
     return result
   }
 
+  // SAFETY: previous if checked that cache has `hash` entry
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return cache.get(hash)!
 }

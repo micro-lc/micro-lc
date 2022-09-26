@@ -13,22 +13,15 @@ interface MultipleSchemas {
 
 export type SchemaOptions = SchemaObject | MultipleSchemas
 
-export function invalidJsonCatcher<T>(err: TypeError | unknown, data: T, file?: string): T {
-  if (process.env.NODE_ENV === 'development' && err instanceof TypeError) {
-    if (err.message === '20' as ErrorCodes.InvalidJSONError) {
-      logger.error(err.message, file ?? '"unknown"')
-    } else {
-      logger.error('1' as ErrorCodes.FetchError, err.message)
-    }
-  }
-
-  return data
-}
-
 const acceptedTypes = [
   'application/json',
   'text/x-json',
 ]
+
+function isSchemaOptions(input: SchemaOptions): input is MultipleSchemas {
+  return Object.prototype.hasOwnProperty.call(input, 'id')
+    && Object.prototype.hasOwnProperty.call(input, 'parts')
+}
 
 export async function jsonFetcher(url: string): Promise<unknown> {
   return fetch(
@@ -50,11 +43,6 @@ export async function jsonFetcher(url: string): Promise<unknown> {
 
       return Promise.reject(new TypeError('20' as ErrorCodes.InvalidJSONError))
     })
-}
-
-function isSchemaOptions(input: SchemaOptions): input is MultipleSchemas {
-  return Object.prototype.hasOwnProperty.call(input, 'id')
-    && Object.prototype.hasOwnProperty.call(input, 'parts')
 }
 
 export async function jsonToObject<T>(input: unknown, schema?: SchemaOptions): Promise<T> {
@@ -102,6 +90,18 @@ export async function jsonToObject<T>(input: unknown, schema?: SchemaOptions): P
   }
 
   return Promise.resolve(input as T)
+}
+
+export function invalidJsonCatcher<T>(err: TypeError | unknown, data: T, file?: string): T {
+  if (process.env.NODE_ENV === 'development' && err instanceof TypeError) {
+    if (err.message === '20' as ErrorCodes.InvalidJSONError) {
+      logger.error(err.message, file ?? '"unknown"')
+    } else {
+      logger.error('1' as ErrorCodes.FetchError, err.message)
+    }
+  }
+
+  return data
 }
 
 export function jsonToObjectCatcher<T>(err: TypeError | undefined, data: T, file?: string): T {

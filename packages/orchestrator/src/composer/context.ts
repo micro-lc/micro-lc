@@ -2,10 +2,10 @@ import type { Content, PluginConfiguration, ImportMap } from '@micro-lc/interfac
 import type { RenderOptions } from 'lit-html'
 import { html, render } from 'lit-html'
 
-import type { BaseExtension } from '../apis'
-import type Microlc from '../apis'
-import { assignContent } from '../dom'
+import { assignContent } from '../dom-manipulation'
 import { toArray } from '../utils/array'
+import type { BaseExtension } from '../web-component'
+import type Microlc from '../web-component'
 
 import { interpolate } from './compiler'
 import { jsonToHtml } from './json'

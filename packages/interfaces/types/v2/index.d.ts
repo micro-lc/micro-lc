@@ -169,6 +169,24 @@ export interface Config {
  * Global micro-lc settings
  */
 export interface Settings {
+  "4xx"?: {
+    /**
+     * This interface was referenced by `undefined`'s JSON-Schema definition
+     * via the `patternProperty` "^4\d{2}$".
+     */
+    [k: string]: string
+  }
+  "5xx"?: {
+    /**
+     * This interface was referenced by `undefined`'s JSON-Schema definition
+     * via the `patternProperty` "^5\d{2}$".
+     */
+    [k: string]: string
+  }
+  /**
+   * The URI where the composer plugin can be found, if needed
+   */
+  composerUri?: string
   /**
    * Query selector to plugins mounting DOM element
    */

@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        'composer-plugin': 'src/composer-plugin.ts',
+        composer: 'src/plugins/composer.ts',
         'micro-lc': 'src/micro-lc.ts',
       },
       output: {

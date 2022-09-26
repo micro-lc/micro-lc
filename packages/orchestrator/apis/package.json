@@ -1,4 +1,0 @@
-{
-  "name": "@micro-lc/orchestator/apis",
-  "types": "../dist/types/apis/index.d.ts"
-}

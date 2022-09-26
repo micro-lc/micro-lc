@@ -1,7 +1,9 @@
 import { start, setDefaultMountApp, loadMicroApp } from 'qiankun'
 import type { MicroApp as QiankunMicroApp } from 'qiankun'
 
-import type { SchemaOptions } from '../utils/json'
+import type { ErrorCodes } from '../../logger'
+import logger from '../../logger'
+import type { SchemaOptions } from '../../utils/json'
 
 export type { QiankunMicroApp }
 
@@ -14,6 +16,10 @@ export interface QiankunApi {
   schema?: SchemaOptions
   setDefaultMountApp: typeof setDefaultMountApp
   start: typeof start
+}
+
+export function updateErrorHandler(app: string, err: TypeError): void {
+  logger.error('50' as ErrorCodes.UpdateError, app, err.message)
 }
 
 export function createQiankunInstance(): QiankunApi {

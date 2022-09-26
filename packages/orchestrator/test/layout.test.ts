@@ -2,9 +2,9 @@ import type { Config } from '@micro-lc/interfaces'
 import { expect, waitUntil } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 
-import type { MicrolcApi, BaseExtension } from '../src/apis'
-import MicroLC from '../src/apis'
 import type { ExtendedHTMLElement } from '../src/composer'
+import type { MicrolcApi, BaseExtension } from '../src/web-component'
+import MicroLC from '../src/web-component'
 
 type MicrolcApiExtended = ExtendedHTMLElement<{microlcApi: MicrolcApi<BaseExtension>}>
 
@@ -44,7 +44,7 @@ describe('micro-lc config tests', () => {
       <div hidden="">Layout</div>
       <slot name="container"></slot>
     `.replace(/\s/g, ''))
-    const [div, slot] = Array.prototype.slice.call(microlc.shadowRoot.children ?? []) as HTMLElement[]
+    const [div, slot] = Array.prototype.slice.call(microlc.shadowRoot.children) as HTMLElement[]
 
     // div is properly injected
     expect(div).to.have.property('microlcApi')

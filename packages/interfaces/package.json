@@ -10,7 +10,8 @@
     "make-types": "node ./scripts/make-types.mjs",
     "build:types": "yarn make-types",
     "build:cli": "node ./scripts/build-cli.mjs",
-    "build": "yarn run -T run-p build:types build:cli"
+    "build": "yarn run -T run-p build:types build:cli",
+    "postinstall": "yarn build:types"
   },
   "dependencies": {
     "axios": "^0.27.2",

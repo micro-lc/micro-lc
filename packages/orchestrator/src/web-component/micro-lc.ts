@@ -7,26 +7,24 @@ import type { ResolvedConfig } from '../composer'
 import { createComposerContext, premount } from '../composer'
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
-import { createImportMapTag, ImportMapRegistry } from '../dom'
-import { createRouter, reroute } from '../router'
-import type { SchemaOptions } from '../utils/json'
-import { invalidJsonCatcher, jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../utils/json'
+import { createImportMapTag, ImportMapRegistry } from '../dom-manipulation'
 
-import { createMicrolcApiInstance } from './core'
-import type { MicrolcApi } from './core'
-import type { BaseExtension } from './extensions'
-import { initBaseExtensions } from './extensions'
-import type {
-  ComposableApplicationProperties } from './micro-lc.lib'
+
+import type { MicrolcApi, ComposableApplicationProperties, BaseExtension } from './lib'
 import {
-  createHistoryProxy,
+  createMicrolcApiInstance,
+  createRouter,
+  removeRouter,
+  reroute,
+  rerouteErrorHandler,
+  fetchConfig,
   handleInitImportMapError,
   initImportMapSupport,
   updateApplications,
   updateCSS,
   updateGlobalImportapMap,
-} from './micro-lc.lib'
-import { createQiankunInstance } from './qiankun'
+  initBaseExtensions } from './lib'
+import { createQiankunInstance } from './lib/qiankun'
 
 type ObservedAttributes =
   | 'config-src'
@@ -54,6 +52,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   private _updateComplete = true
   protected _updateRequests = 0
   protected _$$updatesCount: number | null = null
+  protected _instance = window.crypto.randomUUID()
 
   protected _config: CompleteConfig = defaultConfig
   protected _configSrc: string | null | undefined
@@ -66,9 +65,8 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   protected _globalImportmap = createImportMapTag(this.ownerDocument)
   protected _layoutImportmap = createImportMapTag(this.ownerDocument)
   protected _applicationsImportMap = new ImportMapRegistry<E>(this)
-  protected _loadedApps = new Map<string, [string, LoadableApp<ComposableApplicationProperties<E>>]>()
+  protected _loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties<E>>]>()
   protected _loadedRoutes = new Map<string, string>()
-  protected _router = createRouter.call<Microlc<E>, [], void>(this)
   protected _reroute = reroute.bind<(url?: string | URL) => Promise<void>>(this)
 
   // properties/attributes update
@@ -103,12 +101,11 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     }
 
     // Killer feature 😏
+    // reschedule update to include more subsequent
+    // `setAttribute` calls
     setTimeout(() => {
       this.update()
-        .then(() => {
-          this._qiankun.start()
-          return this._reroute()
-        })
+        .then(() => this._reroute().catch(rerouteErrorHandler))
         .catch(handleUpdateError)
     })
   }
@@ -129,10 +126,12 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     )
   }
 
+  /**
+   * @observedProperty --> mirrored by `config-src`
+   */
   get configSrc(): string | null | undefined {
     return this._configSrc
   }
-
   set configSrc(src: unknown) {
     if (src !== this._configSrc) {
       this._prepareForUpdate()
@@ -145,10 +144,12 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     }
   }
 
+  /**
+   * @observedProperty --> mirrored by `disable-shadow-dom`
+   */
   get disableShadowDom(): boolean {
     return Boolean(this._disableShadowDom)
   }
-
   set disableShadowDom(disable: unknown) {
     if (disable !== this._disableShadowDom) {
       this._prepareForUpdate()
@@ -161,10 +162,12 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     }
   }
 
+  /**
+   * @observedProperty --> mirrored by `disable-shims`
+   */
   get disableShims(): boolean {
     return Boolean(this._disableShims)
   }
-
   set disableShims(shims: unknown) {
     if (shims !== this._disableShims) {
       this._prepareForUpdate()
@@ -187,8 +190,6 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
 
   // 🐝 api
 
-  protected _$$originalHistory!: History
-  protected _history = createHistoryProxy.call<Microlc<E>, [], History>(this)
   protected _qiankun = createQiankunInstance()
   protected _extensions: E = initBaseExtensions.call<Microlc<E>, [], E>(this)
   protected getApi: () => MicrolcApi<E> = createMicrolcApiInstance
@@ -220,8 +221,11 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
       this.ownerDocument.head.appendChild(this._globalImportmap)
       this.ownerDocument.head.appendChild(this._layoutImportmap)
     }
+
     initImportMapSupport
       .call<Microlc<E>, [], Promise<void>>(this).catch(handleInitImportMapError)
+
+    createRouter.call<Microlc<E>, [], void>(this)
 
     this._wasDisconnected = false
   }
@@ -240,7 +244,11 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   }
 
   async update(): Promise<boolean> {
+    // 😏 when multiple updates are scheduled
+    // return a future `false` and decrement the count
     if (this._updateRequests === 1) {
+      // 🧪 while testing, update count is kept on record
+      // to test performances
       if (process.env.NODE_ENV === 'test') {
         if (this._$$updatesCount === null) {
           this._$$updatesCount = 0
@@ -248,52 +256,25 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
         this._$$updatesCount += 1
       }
 
+      // ⛏️ get config file
       if (typeof this._configSrc === 'string') {
-        const config = await jsonFetcher(this._configSrc)
-          .then((json) => {
-            if (process.env.NODE_ENV === 'development') {
-              return Promise.all<[unknown, SchemaOptions]>([
-                Promise.resolve(json),
-                import('../utils/schemas').then<SchemaOptions | undefined>((schemas) => ({
-                  id: schemas.configSchema.$id,
-                  parts: schemas,
-                })),
-              ])
-            }
-            return [json, undefined] as [unknown, SchemaOptions | undefined]
-          })
-          .then(([json, schema]) =>
-            jsonToObject<Config>(json, schema)
-              .catch((err: TypeError) =>
-                jsonToObjectCatcher<Config>(
-                  err, defaultConfig, '"micro-lc config"'
-                )
-              )
-          )
-          .catch((err: TypeError) =>
-            invalidJsonCatcher<Config>(
-              err, defaultConfig, '"micro-lc config"'
-            )
-          )
-
+        const config = await fetchConfig(this._configSrc)
         this._config = mergeConfig(config)
       }
-      // run update
-      // 1 => CSS
+      // 1 => CSS 🆒
       updateCSS.call<Microlc<E>, [], void>(this)
-      // 2 => import-map
+      // 2 => import-map 💹
       updateGlobalImportapMap.call<Microlc<E>, [], void>(this)
 
       // then render to ensure that mount point is in page
       // layout is attached with its own importmap
+      // 3 => render 📝
       await this.render()
 
-      // 3 => qiankun
-      return updateApplications.call<Microlc<E>, [], Promise<void>>(this)
-        .then(() => Promise.resolve(true))
-        .finally(() => {
-          this._completeUpdate()
-        })
+      // 4 => applications 🍎
+      await updateApplications.call<Microlc<E>, [], Promise<void>>(this)
+
+      return Promise.resolve(true).finally(() => this._completeUpdate())
     }
 
     this._updateRequests -= 1
@@ -301,6 +282,10 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   }
 
   async render(): Promise<void> {
+    // render is made of two seperate
+    // areas:
+    //  1. layout (do not depend on `window.location.href`)
+    //  2. application (does depend on `window.location.href`)
     const {
       _config: {
         layout,
@@ -310,6 +295,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
       },
     } = this
 
+    // layout composition and premount ops
     const { content } = await premount
       .call<Microlc<E>, [HTMLScriptElement, PluginConfiguration], Promise<ResolvedConfig>>(this, this._layoutImportmap, layout)
     !this._layoutImportmap.isConnected && this.ownerDocument.head.appendChild(this._layoutImportmap)
@@ -318,12 +304,16 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
       extraProperties: ['microlcApi'],
     })
 
+    // if shadow dom is used
+    // ==> append layout inside
+    // ==> append qiankun as regular child
     if (this._isShadow()) {
       layoutAppender(this._shadowRoot)
       litHtmlRender(
         template(pluginMountPointSelector),
         this
       )
+    // if not append anything as regular child
     } else {
       layoutAppender(this)
     }
@@ -331,18 +321,15 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
 
   disconnectedCallback() {
     // remove all tags related with microlc
-    // but `es-module-shims`
     [...this._styleTags, this._globalImportmap, this._layoutImportmap].forEach((el) => {
       el.remove()
     })
     this._applicationsImportMap.removeAll()
 
-    // restore history
-    Object.defineProperty(window, 'history', {
-      value: this._$$originalHistory,
-      writable: true,
-    })
+    // disconnect event listeners
+    removeRouter.call<Microlc<E>, [], void>(this)
 
+    // notify in case of re-connection
     this._wasDisconnected = true
   }
 }

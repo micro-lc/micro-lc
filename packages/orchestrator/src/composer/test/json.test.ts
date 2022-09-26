@@ -80,7 +80,7 @@ describe('json2html parser recursive tests', () => {
     `)
   })
 
-  it.only('should parse a number in a div', () => {
+  it('should parse a number in a div', () => {
     expect(jsonToHtml({
       attributes: { role: 'button' },
       content: 0,

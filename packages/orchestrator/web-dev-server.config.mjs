@@ -20,10 +20,11 @@ Did you run \`yarn o postinstall\`?
 
 /** @type {import('@web/dev-server').DevServerConfig} */
 export default {
+  injectWebSocket: false,
   middleware: [
     function rewriteIndex(ctx, next) {
       const directPaths = /^\/(dist|.dev|src|__|node_modules|back-kit)/
-      if (!ctx.url.match(directPaths)) {
+      if (!ctx.url.match(directPaths) || ['/dist', '/dist/', '/dist/index.html'].includes(ctx.url)) {
         ctx.url = '/index.html'
       }
 

@@ -1,10 +1,16 @@
-import type { Component, Content, ImportMap, PluginConfiguration } from '@micro-lc/interfaces'
+import type {
+  Component,
+  Content,
+  ImportMap,
+  PluginConfiguration,
+} from '@micro-lc/interfaces'
+import type { MicroApp } from 'qiankun'
 
-import type { ComposableApplicationProperties } from './apis/micro-lc.lib'
+import type { ComposableApplicationProperties } from '../web-component'
 
 export {}
 
-type ComposerModule = Partial<Record<string, (...args: unknown[]) => Promise<null>>>
+type ComposerModule = Partial<MicroApp>
 
 interface ResolvedConfig {
   content: Content
@@ -164,7 +170,6 @@ function fn(exports: ComposerModule, _: Window) {
             file: `plugin config -> ${name}`,
           }
         )
-        console.log(resolvedConfig)
       }
 
       // 🗑️ no need for this on config v2
@@ -194,7 +199,7 @@ function fn(exports: ComposerModule, _: Window) {
       if (composerConfig && container) {
         const appenderPromise = createComposerContext(
           composerConfig.content,
-          { context: { microlcApi }, extraProperties: ['microlcApi'] }
+          { context: { microlcApi }, extraProperties: ['microlcApi', 'currentUser', 'eventBus'] }
         )
 
         done = appenderPromise.then((appender) => {
@@ -212,9 +217,8 @@ function fn(exports: ComposerModule, _: Window) {
       return Promise.resolve(null)
     },
 
-    async update(props: unknown) {
-      // TODO
-      logger(props.name, 'updating...')
+    async update() {
+      logger('update has finished...')
       return Promise.resolve(null)
     },
   })
