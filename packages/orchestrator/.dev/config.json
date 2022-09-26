@@ -2,7 +2,7 @@
   "$schema": "../../interfaces/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
-    "composerUri": "/dist/composer-plugin.development.js",
+    "composerUri": "/dist/composer.development.js",
     "defaultUrl": "/main",
     "4xx": {
       "404": "/dist/404.html"

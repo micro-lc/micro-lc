@@ -5,8 +5,10 @@ import type {
   PluginConfiguration,
 } from '@micro-lc/interfaces'
 import type { MicroApp } from 'qiankun'
+import { ReplaySubject } from 'rxjs'
 
-import type { ComposableApplicationProperties } from '../web-component'
+import type { createComposerContext } from '../composer'
+import type { BaseExtension, ComposableApplicationProperties, MicrolcApi } from '../web-component'
 
 export {}
 
@@ -23,6 +25,12 @@ interface ResolvedConfig {
 declare global {
   interface Window {
     __MICRO_LC_COMPOSER?: ComposerModule
+  }
+}
+
+type ComposerExtensions = BaseExtension & {
+  user?: {
+    getUser?: () => Record<string, unknown> | undefined
   }
 }
 
@@ -132,8 +140,29 @@ function v1AddSources(config: PluginConfiguration, extraSources: string[]): Plug
   return config
 }
 
+async function render(
+  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>): Promise<null> {
+  const appenderPromise = composer(
+    config.content,
+    {
+      context: {
+        ...context,
+        eventBus: new ReplaySubject(),
+      },
+      extraProperties: ['microlcApi', 'currentUser', 'eventBus'],
+    }
+  )
+
+  return appenderPromise.then((appender) => {
+    appender(container)
+    return null
+  })
+}
+
 function fn(exports: ComposerModule, _: Window) {
   let composerConfig: ResolvedConfig | undefined
+  let parent: HTMLElement | null = null
+  let api: {composer: typeof createComposerContext; microlcApi: MicrolcApi<ComposerExtensions>} | undefined
 
   /**
    * @deprecated will be removed on 1.0.0
@@ -191,20 +220,18 @@ function fn(exports: ComposerModule, _: Window) {
         microlcApi,
         composerApi: { createComposerContext },
         container,
-      }: ComposableApplicationProperties & {container: HTMLElement | null; name: string}
+      }: ComposableApplicationProperties<ComposerExtensions> & {container: HTMLElement | null; name: string}
     ): Promise<null> {
       logger(name, 'starting mounting...')
+
+      parent = container
+      api = { composer: createComposerContext, microlcApi }
+
       let done = Promise.resolve(null)
 
       if (composerConfig && container) {
-        const appenderPromise = createComposerContext(
-          composerConfig.content,
-          { context: { microlcApi }, extraProperties: ['microlcApi', 'currentUser', 'eventBus'] }
-        )
-
-        done = appenderPromise.then((appender) => {
-          appender(container)
-          return null
+        done = render(createComposerContext, composerConfig, container, {
+          currentUser: microlcApi.getExtensions().user?.getUser?.(),
         })
       }
 
@@ -218,8 +245,17 @@ function fn(exports: ComposerModule, _: Window) {
     },
 
     async update() {
+      logger('starting update...')
+      let done = Promise.resolve(null)
+
+      if (composerConfig && parent && api) {
+        done = render(api.composer, composerConfig, parent, {
+          currentUser: api.microlcApi.getExtensions().user?.getUser?.(),
+        })
+      }
+
       logger('update has finished...')
-      return Promise.resolve(null)
+      return done
     },
   })
 }
