@@ -13,6 +13,7 @@
     "l": "yarn workspace @micro-lc/layout",
     "o": "yarn workspace @micro-lc/orchestrator",
     "lint": "eslint . --ext .mjs,.js,.jsx,.ts,.tsx,.schema.json --resolve-plugins-relative-to .",
+    "cleanup": "yarn workspaces foreach --all --parallel run cleanup",
     "test": "yarn workspaces foreach --all run test",
     "coverage": "yarn workspaces foreach --all run coverage",
     "build": "yarn workspaces foreach --all run build",
