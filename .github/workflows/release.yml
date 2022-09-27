@@ -193,9 +193,9 @@ jobs:
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - uses: microsoft/playwright-github-action@v1
+      - name: Install Playwright
+        run: npx playwright install --with-deps
 
-      - run: npx playwright install-deps
       - run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
