@@ -5852,6 +5852,7 @@ __metadata:
     husky: ^8.0.1
     jsonc-eslint-parser: ^2.1.0
     npm-run-all: ^4.1.5
+    playwright: ^1.26.0
     rimraf: ^3.0.2
     typescript: ^4.8.3
   languageName: unknown
@@ -6660,6 +6661,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.26.0":
+  version: 1.26.0
+  resolution: "playwright-core@npm:1.26.0"
+  bin:
+    playwright: cli.js
+  checksum: bd1da7baad202d48e51eb4810ff75960e5a61d137059031dd71a55856f4387e5b42086ea0d3e37d9a595cb5f65d19e2db19e0e06b873dd30a2f0d7177d5d7b41
+  languageName: node
+  linkType: hard
+
 "playwright@npm:^1.22.2":
   version: 1.25.2
   resolution: "playwright@npm:1.25.2"
@@ -6668,6 +6678,17 @@ __metadata:
   bin:
     playwright: cli.js
   checksum: e500b45c2961140fdae665331d357ecf1cc308041e0fd8e6765b4da2195600a8a358d3e723bac6215bd9135979f7e7a350cdb1347f6cefa3773e85aa262ce879
+  languageName: node
+  linkType: hard
+
+"playwright@npm:^1.26.0":
+  version: 1.26.0
+  resolution: "playwright@npm:1.26.0"
+  dependencies:
+    playwright-core: 1.26.0
+  bin:
+    playwright: cli.js
+  checksum: 86cab6f54b317445e704ffb52c13105a3a83b38610dc5d85bb69be4e3652f7fdbb2cd4f470cc38a5801e0a38ea1fbd6efe8d67ecba6b9771094544e3f3b2515d
   languageName: node
   linkType: hard
 
