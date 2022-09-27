@@ -199,7 +199,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install-deps
 
-      - run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
+      - name: Prebuild
+        if: ${{ matrix.package != 'interfaces' }}
+        run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
 
