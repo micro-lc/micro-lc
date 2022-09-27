@@ -144,8 +144,6 @@ jobs:
       - run: yarn build
 
   tests:
-    needs:
-      - install
     runs-on: ubuntu-latest
 
     strategy:
@@ -193,9 +191,9 @@ jobs:
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - name: Install Playwright
-        run: yarn dlx playwright install
-
+      - run: yarn install --immutable
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
