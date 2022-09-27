@@ -28,21 +28,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.node-version }}
-          cache: yarn
 
-      # ## Yarn Install State
-      # - name: Yarn Cache
-      #   uses: actions/cache@v3
-      #   id: yarn-cache
-      #   with:
-      #     path: |
-      #       .yarn/cache
-      #       .yarn/unplugged
-      #       .yarn/install-state.gz
-      #       **/.pnp.*
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
+      ## Yarn Install State
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            .yarn/cache
+            .yarn/unplugged
+            .yarn/install-state.gz
+            **/.pnp.*
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Build Cache
         uses: actions/cache@v3
@@ -73,28 +72,28 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.node-version }}
-          cache: yarn
 
-      # ## Yarn Install State
-      # - name: Yarn Cache
-      #   uses: actions/cache@v3
-      #   id: yarn-cache
-      #   with:
-      #     path: |
-      #       .yarn/cache
-      #       .yarn/unplugged
-      #       .yarn/install-state.gz
-      #       **/.pnp.*
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
+      ## Yarn Install State
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            ${{ env.context }}.yarn/cache
+            ${{ env.context }}.yarn/unplugged
+            ${{ env.context }}.yarn/install-state.gz
+            ${{ env.context }}.pnp.*
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
         with:
           path: |
-            ~/packages/interfaces/dist
+            ${{ env.context }}packages/**/dist
+            ${{ env.context }}packages/**/node-modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn lint
@@ -118,26 +117,27 @@ jobs:
           node-version: ${{ env.node-version }}
           cache: yarn
 
-      # ## Yarn Install State
-      # - name: Yarn Cache
-      #   uses: actions/cache@v3
-      #   id: yarn-cache
-      #   with:
-      #     path: |
-      #       .yarn/cache
-      #       .yarn/unplugged
-      #       .yarn/install-state.gz
-      #       **/.pnp.*
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
+      ## Yarn Install State
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            ${{ env.context }}.yarn/cache
+            ${{ env.context }}.yarn/unplugged
+            ${{ env.context }}.yarn/install-state.gz
+            ${{ env.context }}.pnp.*
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
         with:
           path: |
-            ~/packages/interfaces/dist
+            ${{ env.context }}packages/**/dist
+            ${{ env.context }}packages/**/node-modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn build
@@ -169,26 +169,27 @@ jobs:
           node-version: ${{ env.node-version }}
           cache: yarn
 
-      # ## Yarn Install State
-      # - name: Yarn Cache
-      #   uses: actions/cache@v3
-      #   id: yarn-cache
-      #   with:
-      #     path: |
-      #       .yarn/cache
-      #       .yarn/unplugged
-      #       .yarn/install-state.gz
-      #       **/.pnp.*
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
+      ## Yarn Install State
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            ${{ env.context }}.yarn/cache
+            ${{ env.context }}.yarn/unplugged
+            ${{ env.context }}.yarn/install-state.gz
+            ${{ env.context }}.pnp.*
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
         with:
           path: |
-            ~/packages/interfaces/dist
+            ${{ env.context }}packages/**/dist
+            ${{ env.context }}packages/**/node-modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - uses: microsoft/playwright-github-action@v1
