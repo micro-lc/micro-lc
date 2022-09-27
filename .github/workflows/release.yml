@@ -1,7 +1,7 @@
 name: micro-lc main CI
 
 env:
-  context: '.'
+  context: './'
   cache-name: cache-release
   NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   node-version: 16.x
@@ -48,8 +48,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            packages/**/dist
-            packages/**/node_modules
+            ${{ env.context }}packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn install --immutable
@@ -91,8 +90,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            packages/**/dist
-            packages/**/node_modules
+            ${{ env.context }}packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn lint
@@ -134,8 +132,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            packages/**/dist
-            packages/**/node_modules
+            ${{ env.context }}packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn build
@@ -185,8 +182,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            packages/**/dist
-            packages/**/node_modules
+            ${{ env.context }}packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - uses: microsoft/playwright-github-action@v1
