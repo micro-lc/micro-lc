@@ -48,6 +48,7 @@ jobs:
         id: build-cache
         with:
           path: |
+            ${{ env.context }}node_modules
             ${{ env.context }}packages/**/dist
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
@@ -92,6 +93,7 @@ jobs:
         id: build-cache
         with:
           path: |
+            ${{ env.context }}node_modules
             ${{ env.context }}packages/**/dist
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
@@ -123,6 +125,7 @@ jobs:
         id: build-cache
         with:
           path: |
+            ${{ env.context }}node_modules
             ${{ env.context }}packages/**/dist
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
@@ -172,6 +175,7 @@ jobs:
         id: build-cache
         with:
           path: |
+            ${{ env.context }}node_modules
             ${{ env.context }}packages/**/dist
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
@@ -243,6 +247,7 @@ jobs:
         id: build-cache
         with:
           path: |
+            ${{ env.context }}node_modules
             ${{ env.context }}packages/**/dist
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
