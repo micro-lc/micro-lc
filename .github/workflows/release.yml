@@ -195,9 +195,17 @@ jobs:
             ${{ env.context }}packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - uses: microsoft/playwright-github-action@v1
+      - name: Collect coveralls coverage
+        uses: coverallsapp/github-action@master
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          base-path: '${{ env.context }}${{ matrix.package }}'
 
-      - run: yarn workspace @micro-lc/${{ matrix.package }} run test
+      - uses: microsoft/playwright-github-action@v1
+      - run: npx playwright install-deps
+      - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
+      - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
 
   release:
     needs:
