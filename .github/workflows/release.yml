@@ -182,11 +182,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - name: Build Cache
+        uses: actions/cache@v3
+        id: build-cache
+        with:
+          path: |
+            ${{ env.context }}packages/**/dist
+            ${{ env.context }}packages/**/node_modules
+          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
+
       - uses: microsoft/playwright-github-action@v1
 
-      - run: yarn dlx playwright install-deps
-      - run: yarn install --immutable
-      - run: yarn postinstall
+      - run: npx playwright install-deps
+      - run: npx playwright install
       - run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
