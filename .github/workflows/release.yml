@@ -48,7 +48,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}packages/interfaces/dist
+            ~/packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn install --immutable
@@ -90,7 +90,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}packages/interfaces/dist
+            ~/packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn lint
@@ -132,7 +132,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}packages/interfaces/dist
+            ~/packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn build
@@ -182,7 +182,7 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}packages/interfaces/dist
+            ~/packages/interfaces/dist
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - uses: microsoft/playwright-github-action@v1
