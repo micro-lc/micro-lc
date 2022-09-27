@@ -4,15 +4,17 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "cleanup": "yarn run -T rimraf node_modules dist",
+    "check:types": "tsc --project scripts/tsconfig.types.json && echo \"✓ check types\"",
+    "prebuild": "ts-node ./scripts/pre-bundle.ts",
+    "test:browser": "wtr test/**/*.test.ts --node-resolve --playwright --browser chromium firefox webkit",
+    "test:chromium": "wtr test/**/*.test.ts --node-resolve --playwright --browser chromium",
+    "coverage": "yarn test:chromium --coverage",
     "build:icons": "ts-node ./scripts/bundle-icons.ts",
-    "build:types": "tsc --project scripts/tsconfig.types.json && echo \"✓ check types\"",
     "build:es": "ts-node ./scripts/compile.esm.ts",
-    "build": "yarn run -T run-s cleanup build:icons build:types build:es",
+    "build": "yarn run -T run-s build:icons build:es",
+    "cleanup": "yarn run -T rimraf node_modules dist",
     "test": "wtr test/**/*.test.ts --node-resolve",
-    "coverage": "wtr test/**/*.test.ts --node-resolve --coverage --playwright --browser chromium",
-    "serve": "wds --node-resolve --watch",
-    "postinstall": "ts-node ./scripts/pre-bundle.ts"
+    "serve": "wds --node-resolve --watch"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",

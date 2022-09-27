@@ -13,11 +13,13 @@
     "l": "yarn workspace @micro-lc/layout",
     "o": "yarn workspace @micro-lc/orchestrator",
     "lint": "eslint . --ext .mjs,.js,.jsx,.ts,.tsx,.schema.json --resolve-plugins-relative-to .",
+    "postinstall": "husky install && yarn workspaces foreach --all --parallel run postinstall",
+    "check:types": "yarn workspaces foreach --all --parallel run check:types",
+    "prebuild": "yarn workspaces foreach --all --parallel run prebuild",
+    "build": "yarn workspaces foreach --all run build",
     "cleanup": "yarn workspaces foreach --all --parallel run cleanup",
     "test": "yarn workspaces foreach --all run test",
-    "coverage": "yarn workspaces foreach --all run coverage",
-    "build": "yarn workspaces foreach --all run build",
-    "postinstall": "husky install && yarn workspaces foreach --all run postinstall"
+    "coverage": "yarn workspaces foreach --all run coverage"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.6",

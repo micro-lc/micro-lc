@@ -4,13 +4,11 @@
   "types": "./dist/types/v2/index.d.ts",
   "bin": "./dist/cli/index.js",
   "scripts": {
-    "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha test/**/*.test.ts",
-    "test": "yarn test:unit",
-    "cli": "yarn ts-node ./cli",
-    "build:types": "node ./scripts/make-types.mjs",
-    "build:cli": "node ./scripts/build-cli.mjs",
-    "build": "yarn build:cli",
-    "postinstall": "yarn build:types"
+    "postinstall": "node ./scripts/make-types.mjs",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha test/**/*.test.ts",
+    "coverage": "yarn test --coverage",
+    "build": "node ./scripts/build-cli.mjs",
+    "cli": "yarn ts-node ./cli"
   },
   "dependencies": {
     "axios": "^0.27.2",
