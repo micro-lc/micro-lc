@@ -194,7 +194,7 @@ jobs:
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - name: Install Playwright
-        run: npx playwright install --with-deps
+        run: yarn dlx playwright install
 
       - run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
