@@ -54,6 +54,7 @@ jobs:
 
       - run: yarn install --immutable
       - run: yarn postinstall
+      - run: yarn prebuild
 
   checks:
     needs:
