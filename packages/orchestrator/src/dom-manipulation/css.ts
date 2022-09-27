@@ -1,4 +1,4 @@
-type CSSRules = Record<string, string | number | undefined>
+type CSSRules = Record<string, string | number>
 
 type CSSNode = Record<string, CSSRules>
 
@@ -7,13 +7,10 @@ export interface CSSConfig {
   nodes?: Record<string, Record<string, string | number>>
 }
 
-function composeCSSRuleText(rules: CSSRules, prefix?: string): string {
+function composeCSSRuleText(rules: CSSRules): string {
   return Object.keys(rules).reduce((cssText, ruleName) => {
     const ruleValue = rules[ruleName]
-    if (ruleValue !== undefined) {
-      return cssText.concat(`${prefix ? `${prefix}-` : ''}${ruleName}: ${ruleValue};\n`)
-    }
-    return cssText
+    return cssText.concat(`${ruleName}: ${ruleValue};\n`)
   }, '')
 }
 
@@ -54,11 +51,11 @@ export function createCSSStyleSheets(
   return stylesheets
 }
 
-export function createStyleElements(
+export function injectStyleToElements(
   { global, nodes }: CSSConfig,
-  [globalTag, nodesTag]: HTMLStyleElement[],
+  [globalTag, nodesTag]: [HTMLStyleElement, HTMLStyleElement],
   shadow: boolean
-): HTMLStyleElement[] {
+): [HTMLStyleElement, HTMLStyleElement] {
   const selector = shadow ? ':host' : ':root'
   const elements: HTMLStyleElement[] = []
 
@@ -73,5 +70,5 @@ export function createStyleElements(
     }
   ))
 
-  return elements
+  return elements as [HTMLStyleElement, HTMLStyleElement]
 }

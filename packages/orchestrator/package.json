@@ -6,8 +6,8 @@
   "scripts": {
     "check:types": "tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
     "prebuild": "ts-node scripts/pre-bundle.ts",
-    "test:browser": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
-    "test:chromium": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers chromium",
+    "test:browser": "wtr --node-resolve",
+    "test:chromium": "wtr --node-resolve --playwright --browsers chromium",
     "coverage:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha 'src/**/test/**/*.test.ts'",
     "coverage:browser": "yarn test:chromium --coverage",
     "coverage:cobertura:merge": "cobertura-merge -o coverage/cobertura-coverage.xml package1=coverage/unit/cobertura-coverage.xml package2=coverage/browser/cobertura-coverage.xml",
@@ -21,8 +21,8 @@
     "cleanup": "yarn run -T rimraf ./dist ./.nyc_output ./coverage ./node_modules stats.html",
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha 'src/**/test/**/*.test.ts'",
     "test": "yarn run -T run-s test:unit test:chromium",
-    "test:firefox": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers firefox",
-    "test:webkit": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers webkit",
+    "test:firefox": "wtr --node-resolve --playwright --browsers firefox",
+    "test:webkit": "wtr --node-resolve --playwright --browsers webkit",
     "serve": "wds --node-resolve --watch",
     "serve:bundle": "cd dist && python3 -m http.server",
     "esm": "ts-node scripts/esm-url-generator.ts"

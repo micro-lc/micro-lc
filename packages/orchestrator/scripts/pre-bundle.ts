@@ -15,9 +15,10 @@ const config: BuildOptions = {
 // lib dependencies
 
 const depsEntryPoints = [
+  '@babel/runtime/regenerator/index.js',
   'ajv/dist/ajv.js',
   'ajv-formats/dist/index.js',
-  '@babel/runtime/regenerator/index.js',
+  'chai-string/chai-string.js',
 ]
 
 build({

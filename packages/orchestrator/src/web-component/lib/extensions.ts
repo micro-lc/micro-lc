@@ -1,10 +1,10 @@
 import type { CSSConfig } from '../../dom-manipulation'
+import { createCSSStyleSheets, injectStyleToElements } from '../../dom-manipulation'
 import type { SchemaOptions } from '../../utils/json'
 import { jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../../utils/json'
 import type { Microlc } from '../micro-lc'
 
 import { updateErrorHandler } from './qiankun'
-import { updateCSS } from './update'
 
 type HTTPClient = Record<string, unknown>
 
@@ -29,6 +29,30 @@ export type BaseExtension = Record<string, unknown> & {
   language: {
     getLanguage: () => string
     setLanguage: (lang: string) => void
+  }
+}
+
+export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSConfig): void {
+  this._styleTags.forEach((style) => { style.remove() })
+
+  /**
+   * 🍎 webkit does not support `adoptedStyleSheets`
+   * @link {https://caniuse.com/?search=adoptedStyleSheets}
+   */
+  if (this._isShadow() && 'adoptedStyleSheets' in this.ownerDocument) {
+    const stylesheets = createCSSStyleSheets(css)
+    this.shadowRoot.adoptedStyleSheets = stylesheets
+  } else {
+    const styleTags = Array(2).fill(0).map(() =>
+      this.ownerDocument.createElement('style')
+    ) as [HTMLStyleElement, HTMLStyleElement]
+
+    this._styleTags = injectStyleToElements(css, styleTags, this._isShadow())
+    this._styleTags.forEach((el) => {
+      this._isShadow()
+        ? this.shadowRoot.insertBefore(el, this.shadowRoot.firstChild)
+        : this.ownerDocument.head.appendChild(el)
+    })
   }
 }
 

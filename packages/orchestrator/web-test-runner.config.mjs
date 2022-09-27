@@ -5,6 +5,7 @@ import rollupJson from '@rollup/plugin-json'
 import rollupReplace from '@rollup/plugin-replace'
 import { esbuildPlugin } from '@web/dev-server-esbuild'
 import { fromRollup } from '@web/dev-server-rollup'
+import { playwrightLauncher } from '@web/test-runner-playwright'
 
 const require = createRequire(import.meta.url)
 
@@ -20,10 +21,31 @@ export default {
     reportDir: 'coverage/browser',
     reporters: ['cobertura', 'lcovonly', 'text'],
   },
+  groups: [
+    {
+      browsers: [
+        playwrightLauncher({ product: 'chromium' }),
+        playwrightLauncher({ product: 'firefox' }),
+        playwrightLauncher({ product: 'webkit' }),
+      ],
+      files: 'test/all/**/*.test.ts',
+      name: 'browser',
+    },
+    {
+      browsers: [
+        playwrightLauncher({ product: 'chromium' }),
+        playwrightLauncher({ product: 'firefox' }),
+      ],
+      files: 'test/chromium-firefox/**/*.test.ts',
+      name: 'chromium-firefox',
+    },
+  ],
   middleware: [
     function rewriteIndex(ctx, next) {
       if (ctx.url === '/composer.test.js') {
         ctx.url = `/mocks${ctx.url}`
+      } else if (ctx.url.match(/\/[45]\d{2}.html/)) {
+        ctx.url = `/mocks/4xx.html`
       } else {
         const directPaths = /^\/(\?wtr|dist|.dev|src|__|node_modules|wds|test)/
         if (!ctx.url.match(directPaths)) {
@@ -52,6 +74,7 @@ export default {
         { find: /^.+\/@babel\/runtime\/regenerator\/index.js/, replacement: require.resolve('./node_modules/@babel/runtime/regenerator/index.js') },
         { find: /^.+\/ajv\/dist\/ajv.js/, replacement: require.resolve('./node_modules/ajv/dist/ajv.js') },
         { find: /^.+\/ajv-formats\/dist\/index.js/, replacement: require.resolve('./node_modules/ajv-formats/dist/index.js') },
+        { find: /^.+\/chai-string\/chai-string.js/, replacement: require.resolve('./node_modules/chai-string/chai-string.js') },
       ],
     }),
     esbuildPlugin({

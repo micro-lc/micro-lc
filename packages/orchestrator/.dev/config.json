@@ -8,14 +8,6 @@
       "404": "/dist/404.html"
     }
   },
-  "css": {
-    "nodes": {
-      ".inherit-size": {
-        "width": "inherit",
-        "height": "inherit"
-      }
-    }
-  },
   "layout": {
     "content": {
       "tag": "div",

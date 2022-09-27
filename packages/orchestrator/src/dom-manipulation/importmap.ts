@@ -1,14 +1,15 @@
 import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces'
 
-import type { BaseExtension } from '../web-component'
-import type Microlc from '../web-component'
+export interface ImportMapTarget extends HTMLElement {
+  disableShims: boolean
+}
 
-export class ImportMapRegistry<T extends BaseExtension> extends Map<string, HTMLScriptElement> {
+export class ImportMapRegistry extends Map<string, HTMLScriptElement> {
   private idx = new Set<string>()
-  private _microlc: Microlc<T>
-  constructor(microlc: Microlc<T>) {
+  private _target: ImportMapTarget
+  constructor(target: ImportMapTarget) {
     super()
-    this._microlc = microlc
+    this._target = target
   }
 
   remove(id: string): void {
@@ -25,9 +26,13 @@ export class ImportMapRegistry<T extends BaseExtension> extends Map<string, HTML
   createSetMount(id: string, importmap: ImportMap | GlobalImportMap): this {
     let tag: HTMLScriptElement
 
+    const { _target: { ownerDocument, disableShims } } = this
+
     if (!this.idx.has(id)) {
-      tag = assignContent(createImportMapTag(this._microlc.ownerDocument, this._microlc.disableShims), importmap)
-      console.log('tag', tag)
+      tag = assignContent(
+        createImportMapTag(ownerDocument, disableShims), importmap
+      )
+
       this.idx.add(id)
     } else {
       // SAFETY: idx and this are doubly linked due to the super.set below
@@ -35,8 +40,9 @@ export class ImportMapRegistry<T extends BaseExtension> extends Map<string, HTML
       tag = this.get(id)!
     }
 
+    tag.type = disableShims ? 'importmap' : 'importmap-shim'
     tag.textContent = JSON.stringify(importmap)
-    !tag.isConnected && this._microlc.ownerDocument.head.appendChild(tag)
+    !tag.isConnected && ownerDocument.head.appendChild(tag)
 
     super.set(id, tag)
 

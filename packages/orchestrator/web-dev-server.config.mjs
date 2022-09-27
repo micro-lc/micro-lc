@@ -26,6 +26,8 @@ export default {
       const directPaths = /^\/(dist|.dev|src|__|node_modules|back-kit)/
       if (!ctx.url.match(directPaths) || ['/dist', '/dist/', '/dist/index.html'].includes(ctx.url)) {
         ctx.url = '/index.html'
+      } else if (ctx.url.match(/\/[45]\d{2}.html/)) {
+        ctx.url = `/mocks/4xx.html`
       }
 
       if (ctx.url.match(/back-kit\/unstable\/bk-web-components.esm.js/)) {

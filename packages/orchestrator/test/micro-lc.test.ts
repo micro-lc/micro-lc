@@ -101,9 +101,9 @@ describe('micro-lc lifecycle tests', () => {
     microlc.remove()
   })
 
-  it('config injection', async () => {
+  it.only('config injection', async () => {
     const configSrc = window.crypto.randomUUID()
-    const config: Config = { css: { global: { 'primary-color': '#000000' } }, version: 2 }
+    const config: Config = { version: 2 }
     const fetch = sandbox.stub(window, 'fetch').callsFake((input: RequestInfo | URL) => {
       // eslint-disable-next-line @typescript-eslint/no-base-to-string
       const { pathname } = new URL(input.toString(), window.location.origin)
@@ -130,10 +130,15 @@ describe('micro-lc lifecycle tests', () => {
 
     await waitUntil(() => microlc.updateComplete)
 
-    expect(microlc).dom.to.equal(`
-      <micro-lc config-src=${configSrc}>
-        <div id="__MICRO_LC_MOUNT_POINT"></div>
-      </micro-lc>
+    expect(microlc.querySelector('#__MICRO_LC_MOUNT_POINT div')?.parentElement).dom.to.equal(`
+      <qiankun-head>
+        <title>
+          4xx :: Error
+        </title>
+      </qiankun-head>
+      <div>
+        Error
+      </div>
     `)
     expect(microlc).shadowDom.to.equal('')
 

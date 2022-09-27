@@ -1,12 +1,13 @@
-import type { Config, PluginConfiguration } from '@micro-lc/interfaces'
+import type { Config } from '@micro-lc/interfaces'
 import { html, render as litHtmlRender } from 'lit-html'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'
 
-import type { ResolvedConfig } from '../composer'
+import type { PremountableElement } from '../composer'
 import { createComposerContext, premount } from '../composer'
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
+import type { ImportMapTarget } from '../dom-manipulation'
 import { createImportMapTag, ImportMapRegistry } from '../dom-manipulation'
 
 
@@ -44,7 +45,9 @@ const handleUpdateError = (_: TypeError): void => {
 const template = ({ id, slot }: Exclude<CompleteConfig['settings']['pluginMountPointSelector'], string>) =>
   (slot ? html`<div id=${id} slot=${slot}></div>` : html`<div id=${id}></div>`)
 
-export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElement {
+export class Microlc<
+  E extends BaseExtension = BaseExtension
+> extends HTMLElement implements ImportMapTarget, PremountableElement {
   static get observedAttributes() { return ['config-src', 'disable-shadow-dom', 'disable-shims'] }
 
   private _wasDisconnected = false
@@ -63,7 +66,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   protected _styleTags: HTMLStyleElement[] = []
   protected _globalImportmap = createImportMapTag(this.ownerDocument)
   protected _layoutImportmap = createImportMapTag(this.ownerDocument)
-  protected _applicationsImportMap = new ImportMapRegistry<E>(this)
+  protected _applicationsImportMap = new ImportMapRegistry(this)
   protected _loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties<E>>]>()
   protected _loadedRoutes = new Map<string, string>()
   protected _reroute = reroute.bind<(url?: string | URL) => Promise<void>>(this)
@@ -191,7 +194,8 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
 
   protected _qiankun = createQiankunInstance()
   protected _extensions: E = initBaseExtensions.call<Microlc<E>, [], E>(this)
-  protected getApi: () => MicrolcApi<E> = createMicrolcApiInstance
+
+  getApi: () => MicrolcApi<E> = createMicrolcApiInstance
     .call<Microlc<E>, [], () => MicrolcApi<E>>(this)
 
   // 🚲 lifecycle & DOM
@@ -296,8 +300,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     } = this
 
     // layout composition and premount ops
-    const { content } = await premount
-      .call<Microlc<E>, [HTMLScriptElement, PluginConfiguration], Promise<ResolvedConfig>>(this, this._layoutImportmap, layout)
+    const { content } = await premount.call(this, this._layoutImportmap, layout)
     !this._layoutImportmap.isConnected && this.ownerDocument.head.appendChild(this._layoutImportmap)
     const layoutAppender = await createComposerContext(content, {
       context: { microlcApi: this.getApi() },

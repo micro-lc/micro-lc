@@ -13,12 +13,14 @@ const applicationHandlers = new Map<string, QiankunMicroApp>()
 const pending: Promise<null>[] = []
 
 async function flushPendingPromises() {
-  const promisesToAwait = [...pending].reduce<Promise<null>[]>((acc, _1, _2, queue) => {
-    // SAFETY: length is computed before popping
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    acc.push(queue.pop()!)
-    return acc
-  }, [])
+  const promisesToAwait = Array(pending.length)
+    .fill(0)
+    .reduce<Promise<null>[]>((acc) => {
+      // SAFETY: length is computed before popping
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      acc.push(pending.pop()!)
+      return acc
+    }, [])
   return Promise.allSettled(promisesToAwait)
 }
 
@@ -44,10 +46,23 @@ function getCurrentUnmount(): (() => Promise<null>) | undefined {
   return unmount
 }
 
+type MatchingRoute<T extends BaseExtension> = LoadableApp<ComposableApplicationProperties<T>> | undefined
+
 function getNextMatchingRoute<T extends BaseExtension>(
   this: Microlc<T>, pathname: string
-): LoadableApp<ComposableApplicationProperties<T>> | undefined {
-  let nextMatch: LoadableApp<ComposableApplicationProperties<T>> | undefined
+): MatchingRoute<T>[] {
+  const {
+    _config: {
+      settings: {
+        defaultUrl,
+      },
+    },
+  } = this
+
+  const basePath = this.ownerDocument.querySelector('base')?.getAttribute('href') ?? '/'
+
+  let nextMatch: MatchingRoute<T>
+  let defaultMatch: MatchingRoute<T>
   for (const [route, args] of this._loadedApps.values()) {
     if (route === undefined) {
       continue
@@ -55,35 +70,30 @@ function getNextMatchingRoute<T extends BaseExtension>(
     if (pathname.match(new RegExp(route))) {
       nextMatch = args
     }
+    if (defaultUrl.match(new RegExp(route)) && (pathname === basePath || `${pathname}/` === basePath)) {
+      defaultMatch = args
+    }
   }
 
-  return nextMatch
+  return [nextMatch, defaultMatch]
 }
 
 export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | URL) {
   const unmount = getCurrentUnmount()
 
-  const basePath = this.ownerDocument.querySelector('base')?.getAttribute('href') ?? '/'
 
   const { pathname } = url ? new URL(url, window.location.origin) : window.location
-
-  let nextMatch = getNextMatchingRoute
-    .call<Microlc<T>, [string], LoadableApp<ComposableApplicationProperties<T>> | undefined>(this, pathname)
 
   // ⤵️ when no match is found on loaded routes and the pathname
   // matched the base path (i.e., no plugin was mounted on root)
   // router redirects on default route if any
-  if (!nextMatch && (pathname === basePath || `${pathname}/` === basePath)) {
-    const {
-      _config: {
-        settings: {
-          defaultUrl,
-        },
-      },
-    } = this
+  const [exactMatch, defaultMatch] = getNextMatchingRoute
+    .call<Microlc<T>, [string], MatchingRoute<T>[]>(this, pathname)
 
-    this._reroute(defaultUrl).catch(rerouteErrorHandler)
-    return
+  let nextMatch = exactMatch
+
+  if (!exactMatch) {
+    nextMatch = defaultMatch
   }
 
   // ⤵️ if we got here it means we must throw a 404 since no
@@ -97,14 +107,14 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
     return Promise.reject(new TypeError('no 404 page available'))
   }
 
-  // 👌 there's an application to mount hence we ensure that
-  // any previous update operation has ended
-  await flushPendingPromises()
-
   // unmount previous application
   if (unmount) {
     pending.push(unmount().catch(rerouteErrorHandler))
   }
+
+  // 👌 there's an application to mount hence we ensure that
+  // any previous update operation has ended
+  await flushPendingPromises()
 
   // set new application
   currentApplication = nextMatch.name

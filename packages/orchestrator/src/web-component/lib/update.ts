@@ -4,8 +4,7 @@ import type { Entry } from 'qiankun'
 import type { ResolvedConfig } from '../../composer'
 import { createComposerContext, premount } from '../../composer'
 import { defaultConfig } from '../../config'
-import type { CSSConfig } from '../../dom-manipulation'
-import { createStyleElements, createCSSStyleSheets, assignContent } from '../../dom-manipulation'
+import { assignContent } from '../../dom-manipulation'
 import logger from '../../logger'
 import { toArray } from '../../utils/array'
 import type { SchemaOptions } from '../../utils/json'
@@ -81,23 +80,6 @@ export async function fetchConfig(url: string): Promise<Config> {
         err, defaultConfig, '"micro-lc config"'
       )
     )
-}
-
-export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSConfig): void {
-  this._styleTags.forEach((style) => { style.remove() })
-
-  if (this._isShadow() && 'adoptedStyleSheets' in this.ownerDocument) {
-    const stylesheets = createCSSStyleSheets(css)
-    this.shadowRoot.adoptedStyleSheets = stylesheets
-  } else {
-    const styleTags = Array(2).fill(0).map(() => this.ownerDocument.createElement('style'))
-    this._styleTags = createStyleElements(css, styleTags, this._isShadow())
-    this._styleTags.forEach((el) => {
-      this._isShadow()
-        ? this.shadowRoot.insertBefore(el, this.shadowRoot.firstChild)
-        : this.ownerDocument.head.appendChild(el)
-    })
-  }
 }
 
 export function updateGlobalImportapMap<T extends BaseExtension>(this: Microlc<T>) {
