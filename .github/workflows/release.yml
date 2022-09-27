@@ -144,6 +144,8 @@ jobs:
       - run: yarn build
 
   tests:
+    needs:
+      - install
     runs-on: ubuntu-latest
 
     strategy:
