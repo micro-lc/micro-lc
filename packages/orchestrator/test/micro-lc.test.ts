@@ -26,12 +26,12 @@ describe('micro-lc lifecycle tests', () => {
   it('should default attributes/properties', () => {
     const { body } = document
     render(html`
-      <micro-lc></micro-lc>
+      <micro-lc config-src=""></micro-lc>
     `, body)
 
     const microlc = body.querySelector('micro-lc')!
 
-    expect(microlc).not.to.have.attribute('config-src')
+    expect(microlc).to.have.attribute('config-src', '')
     expect(microlc).not.to.have.attribute('disable-shadow-dom')
     expect(microlc).not.to.have.attribute('use-shims')
     expect(microlc).to.have.property('configSrc', undefined)
@@ -194,7 +194,7 @@ describe('micro-lc lifecycle tests', () => {
         <div id="__MICRO_LC_MOUNT_POINT">
           <div
             data-name="main"
-            data-version="2.8.0"
+            data-version="2.8.1"
             id="__qiankun_microapp_wrapper_for_main__"
           >
             <qiankun-head></qiankun-head>

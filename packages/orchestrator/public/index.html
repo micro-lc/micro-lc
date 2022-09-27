@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <base href="%%MICRO_LC_BASE_PATH%%" />
-  <title>Microlc :: Development</title>
+  <base href="**MICRO_LC_BASE_PATH**" />
+  <title>Microlc</title>
   <link rel="icon" type="image/png" href="./favicon.png" />
-  <script async type="module" src="./micro-lc.%%MICRO_LC_MODE.js"></script>
+  <meta
+    http-equiv="Content-Security-Policy" content="
+      default-src 'self' https: http:;
+      script-src 'self' 'unsafe-eval' 'nonce-**CSP_NONCE**' blob:;
+      object-src 'none';
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https: http:;
+      font-src 'self';
+      worker-src 'self' blob:;
+      base-uri 'self';
+      require-trusted-types-for 'script';"
+    />
+  <script async type="module" src="./micro-lc.**MICRO_LC_MODE**.js"></script>
 </head>
 <body>
-  <micro-lc config-src="%%MICRO_LC_CONFIG_SRC%%"></micro-lc>
+  <micro-lc config-src="**MICRO_LC_CONFIG_SRC**"></micro-lc>
 </body>
 </html>

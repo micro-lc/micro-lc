@@ -28,7 +28,7 @@
     "ajv-formats": "^2.1.1",
     "chai": "^4.3.6",
     "esbuild": "^0.15.9",
-    "eslint": "^8.23.1",
+    "eslint": "^8.24.0",
     "glob": "^8.0.3",
     "json-schema-to-typescript": "^11.0.2",
     "mkdirp": "^1.0.4",

@@ -233,10 +233,12 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   attributeChangedCallback(
     name: ObservedAttributes, oldValue: string | null, newValue: unknown
   ) {
-    const nextValue = booleanAttributes.includes(name) && newValue === ''
-      ? true
-      : newValue
-
+    let nextValue: unknown = newValue
+    if (booleanAttributes.includes(name) && newValue === '') {
+      nextValue = true
+    } else if (newValue === '') {
+      nextValue = null
+    }
 
     if (oldValue !== nextValue) {
       Object.assign(this, { [camelCase(name)]: nextValue })
