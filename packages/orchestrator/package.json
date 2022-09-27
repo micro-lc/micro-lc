@@ -22,7 +22,7 @@
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha 'src/**/test/**/*.test.ts'",
     "test": "yarn run -T run-s test:unit test:chromium",
     "test:firefox": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers firefox",
-    "test:safari": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers webkit",
+    "test:webkit": "wtr \"test/**/*.test.ts\" --node-resolve --playwright --browsers webkit",
     "serve": "wds --node-resolve --watch",
     "serve:bundle": "cd dist && python3 -m http.server",
     "esm": "ts-node scripts/esm-url-generator.ts"
