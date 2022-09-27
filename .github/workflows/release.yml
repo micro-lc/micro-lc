@@ -118,20 +118,6 @@ jobs:
           node-version: ${{ env.node-version }}
           cache: yarn
 
-      ## Yarn Install State
-      - name: Yarn Cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: |
-            ${{ env.context }}.yarn/cache
-            ${{ env.context }}.yarn/unplugged
-            ${{ env.context }}.yarn/install-state.gz
-            ${{ env.context }}.pnp.*
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
@@ -166,7 +152,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.node-version }}
-          cache: yarn
 
       ## Yarn Install State
       - name: Yarn Cache
@@ -192,8 +177,11 @@ jobs:
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn install --immutable
+      - run: yarn postinstall
+
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install-deps
+
       - run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
@@ -235,7 +223,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.node-version }}
-          cache: yarn
 
       ## Yarn Install State
       - name: Yarn Cache
