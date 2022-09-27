@@ -5,6 +5,7 @@
   "bin": "./dist/cli/index.js",
   "scripts": {
     "postinstall": "node ./scripts/make-types.mjs",
+    "prebuild": "echo 'PREBUILD'",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha test/**/*.test.ts",
     "coverage": "yarn test --coverage",
     "build": "node ./scripts/build-cli.mjs",
