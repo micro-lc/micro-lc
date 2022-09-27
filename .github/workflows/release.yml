@@ -35,10 +35,10 @@ jobs:
         id: yarn-cache
         with:
           path: |
-            ${{ env.context }}/.yarn/cache
-            ${{ env.context }}/.yarn/unplugged
-            ${{ env.context }}/.yarn/install-state.gz
-            ${{ env.context }}/.pnp.*
+            .yarn/cache
+            .yarn/unplugged
+            .yarn/install-state.gz
+            **/.pnp.*
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
@@ -48,8 +48,8 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}/packages/**/dist
-            ${{ env.context }}/packages/**/node_modules
+            packages/**/dist
+            packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn install --immutable
@@ -78,10 +78,10 @@ jobs:
         id: yarn-cache
         with:
           path: |
-            ${{ env.context }}/.yarn/cache
-            ${{ env.context }}/.yarn/unplugged
-            ${{ env.context }}/.yarn/install-state.gz
-            ${{ env.context }}/.pnp.*
+            .yarn/cache
+            .yarn/unplugged
+            .yarn/install-state.gz
+            **/.pnp.*
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
@@ -91,8 +91,8 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}/packages/**/dist
-            ${{ env.context }}/packages/**/node_modules
+            packages/**/dist
+            packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn lint
@@ -121,10 +121,10 @@ jobs:
         id: yarn-cache
         with:
           path: |
-            ${{ env.context }}/.yarn/cache
-            ${{ env.context }}/.yarn/unplugged
-            ${{ env.context }}/.yarn/install-state.gz
-            ${{ env.context }}/.pnp.*
+            .yarn/cache
+            .yarn/unplugged
+            .yarn/install-state.gz
+            **/.pnp.*
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
@@ -134,8 +134,8 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}/packages/**/dist
-            ${{ env.context }}/packages/**/node_modules
+            packages/**/dist
+            packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn build
@@ -172,10 +172,10 @@ jobs:
         id: yarn-cache
         with:
           path: |
-            ${{ env.context }}/.yarn/cache
-            ${{ env.context }}/.yarn/unplugged
-            ${{ env.context }}/.yarn/install-state.gz
-            ${{ env.context }}/.pnp.*
+            .yarn/cache
+            .yarn/unplugged
+            .yarn/install-state.gz
+            **/.pnp.*
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
@@ -185,8 +185,8 @@ jobs:
         id: build-cache
         with:
           path: |
-            ${{ env.context }}/packages/**/dist
-            ${{ env.context }}/packages/**/node_modules
+            packages/**/dist
+            packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - uses: microsoft/playwright-github-action@v1
