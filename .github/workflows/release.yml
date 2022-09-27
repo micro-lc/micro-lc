@@ -148,7 +148,9 @@ jobs:
     strategy:
       matrix:
         package:
+          - iconic
           - interfaces
+          - layout
           - orchestrator
 
     steps:
