@@ -154,7 +154,6 @@ export interface Config {
   $schema?: string
   version: 2
   settings?: Settings
-  css?: CSSConfig
   shared?: {
     [k: string]: unknown
   }
@@ -200,38 +199,6 @@ export interface Settings {
    * Landing URL
    */
   defaultUrl?: string
-}
-/**
- * CSS-related configuration
- */
-export interface CSSConfig {
-  /**
-   * A map matching CSS selectors to rules
-   */
-  nodes?: {
-    /**
-     * A valid CSS selector
-     *
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` ".*".
-     */
-    [k: string]: {
-      /**
-       * A valid CSS property
-       *
-       * This interface was referenced by `undefined`'s JSON-Schema definition
-       * via the `patternProperty` ".*".
-       */
-      [k: string]: string | number
-    }
-  }
-  /**
-   * Standard CSS variables globally available scoped with prefix '--micro-lc-'
-   */
-  global?: {
-    "primary-color"?: string
-    "font-family"?: string
-  }
 }
 /**
  * Global import map

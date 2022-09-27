@@ -1,10 +1,11 @@
-import type { CompleteConfig } from '../config'
-
 type CSSRules = Record<string, string | number | undefined>
 
 type CSSNode = Record<string, CSSRules>
 
-const MICRO_LC_CSS_PREFIX = '--micro-lc'
+export interface CSSConfig {
+  global?: Record<string, string | number>
+  nodes?: Record<string, Record<string, string | number>>
+}
 
 function composeCSSRuleText(rules: CSSRules, prefix?: string): string {
   return Object.keys(rules).reduce((cssText, ruleName) => {
@@ -16,60 +17,54 @@ function composeCSSRuleText(rules: CSSRules, prefix?: string): string {
   }, '')
 }
 
-function composeCSSNodeText(selector: string, rules: CSSRules, prefix?: string): string {
+function composeCSSNodeText(selector: string, rules: CSSRules): string {
   return `
     ${selector} {
-      ${composeCSSRuleText(rules, prefix)}
+      ${composeCSSRuleText(rules)}
     }
   `
 }
 
-function composeTextStyleSheet(node: CSSNode, prefix?: string): string {
+function composeTextStyleSheet(node: CSSNode): string {
   return Object.entries(node).reduce((stylesheet, [selector, rules]) => {
     return stylesheet.concat(`${composeCSSNodeText(
       selector,
       rules,
-      prefix
     )}\n`)
   }, '')
 }
 
-function composeStyleSheet(node: CSSNode, prefix?: string): CSSStyleSheet {
+function composeStyleSheet(node: CSSNode): CSSStyleSheet {
   return Object.entries(node).reduce((stylesheet, [selector, rules]) => {
     stylesheet.insertRule(`${composeCSSNodeText(
       selector,
       rules,
-      prefix
     )}\n`)
     return stylesheet
   }, new CSSStyleSheet())
 }
 
 export function createCSSStyleSheets(
-  { global, nodes }: CompleteConfig['css']
+  { global, nodes }: CSSConfig
 ): CSSStyleSheet[] {
-  const globalNode = { ':host': global } as CSSNode
-
   const stylesheets: CSSStyleSheet[] = []
   nodes && stylesheets.push(composeStyleSheet(nodes))
-  stylesheets.push(composeStyleSheet(globalNode, MICRO_LC_CSS_PREFIX))
+  global && stylesheets.push(composeStyleSheet({ ':host': global }))
 
   return stylesheets
 }
 
 export function createStyleElements(
-  { global, nodes }: CompleteConfig['css'],
+  { global, nodes }: CSSConfig,
   [globalTag, nodesTag]: HTMLStyleElement[],
   shadow: boolean
 ): HTMLStyleElement[] {
   const selector = shadow ? ':host' : ':root'
-  const globalNode = { [selector]: global } as CSSNode
-
   const elements: HTMLStyleElement[] = []
 
-  elements.push(Object.assign(
+  global && elements.push(Object.assign(
     globalTag, {
-      textContent: composeTextStyleSheet(globalNode, MICRO_LC_CSS_PREFIX),
+      textContent: composeTextStyleSheet({ [selector]: global }),
     }
   ))
   nodes && elements.push(Object.assign(

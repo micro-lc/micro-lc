@@ -4,6 +4,7 @@ import type { Entry } from 'qiankun'
 import type { ResolvedConfig } from '../../composer'
 import { createComposerContext, premount } from '../../composer'
 import { defaultConfig } from '../../config'
+import type { CSSConfig } from '../../dom-manipulation'
 import { createStyleElements, createCSSStyleSheets, assignContent } from '../../dom-manipulation'
 import logger from '../../logger'
 import { toArray } from '../../utils/array'
@@ -82,13 +83,7 @@ export async function fetchConfig(url: string): Promise<Config> {
     )
 }
 
-export function updateCSS<T extends BaseExtension>(this: Microlc<T>): void {
-  const {
-    _config: {
-      css,
-    },
-  } = this
-
+export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSConfig): void {
   this._styleTags.forEach((style) => { style.remove() })
 
   if (this._isShadow() && 'adoptedStyleSheets' in this.ownerDocument) {

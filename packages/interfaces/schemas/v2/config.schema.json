@@ -371,11 +371,6 @@
       "description": "Global micro-lc settings"
     },
 
-    "css": {
-      "$ref": "#/definitions/css",
-      "description": "CSS-related configuration"
-    },
-
     "shared": {
       "type": "object"
     },

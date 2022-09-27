@@ -1,8 +1,10 @@
+import type { CSSConfig } from '../../dom-manipulation'
 import type { SchemaOptions } from '../../utils/json'
 import { jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../../utils/json'
 import type { Microlc } from '../micro-lc'
 
 import { updateErrorHandler } from './qiankun'
+import { updateCSS } from './update'
 
 type HTTPClient = Record<string, unknown>
 
@@ -12,6 +14,9 @@ interface JsonCatcherOptions<S> {
 }
 
 export type BaseExtension = Record<string, unknown> & {
+  css: {
+    setStyle: (styles: CSSConfig) => void
+  }
   head: {
     setIcon: (attrs: Partial<Pick<HTMLLinkElement, 'sizes' | 'href' | 'type'>>) => void
     setTitle: (title: string) => void
@@ -43,6 +48,11 @@ function initLanguageExtension<T extends BaseExtension>(this: Microlc<T>) {
 
 export function initBaseExtensions<T extends BaseExtension>(this: Microlc<T>): T {
   return {
+    css: {
+      setStyle: (css: CSSConfig) => {
+        updateCSS.call<Microlc<T>, [CSSConfig], void>(this, css)
+      },
+    },
     head: {
       setIcon: ({ href, sizes, type }: Partial<Pick<HTMLLinkElement, 'sizes' | 'href' | 'type'>>) => {
         const icon: HTMLLinkElement = this.ownerDocument.head.querySelector('link[rel=icon]') ?? this.ownerDocument.createElement('link')

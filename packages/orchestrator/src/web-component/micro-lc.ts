@@ -21,7 +21,6 @@ import {
   handleInitImportMapError,
   initImportMapSupport,
   updateApplications,
-  updateCSS,
   updateGlobalImportapMap,
   initBaseExtensions } from './lib'
 import { createQiankunInstance } from './lib/qiankun'
@@ -263,17 +262,16 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
         const config = await fetchConfig(this._configSrc)
         this._config = mergeConfig(config)
       }
-      // 1 => CSS 🆒
-      updateCSS.call<Microlc<E>, [], void>(this)
-      // 2 => import-map 💹
+
+      // 1 => import-map 💹
       updateGlobalImportapMap.call<Microlc<E>, [], void>(this)
 
       // then render to ensure that mount point is in page
       // layout is attached with its own importmap
-      // 3 => render 📝
+      // 2 => render 📝
       await this.render()
 
-      // 4 => applications 🍎
+      // 3 => applications 🍎
       await updateApplications.call<Microlc<E>, [], Promise<void>>(this)
 
       return Promise.resolve(true).finally(() => this._completeUpdate())
