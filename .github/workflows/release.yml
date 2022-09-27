@@ -155,7 +155,6 @@ jobs:
         package:
           - iconic
           - interfaces
-          - layout
           - orchestrator
 
     steps:
@@ -196,6 +195,7 @@ jobs:
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - name: Collect coveralls coverage
+        if: ${{ matrix.package != 'interfaces' }}
         uses: coverallsapp/github-action@master
         continue-on-error: true
         with:
@@ -203,7 +203,9 @@ jobs:
           base-path: '${{ env.context }}${{ matrix.package }}'
 
       - uses: microsoft/playwright-github-action@v1
+
       - run: npx playwright install-deps
+      - run: yarn install --immutable
       - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
 
