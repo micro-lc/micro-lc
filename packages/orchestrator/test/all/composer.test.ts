@@ -1,4 +1,4 @@
-import type { PluginConfiguration } from '@micro-lc/interfaces'
+import type { PluginConfiguration } from '@micro-lc/interfaces/v2'
 import { expect } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 

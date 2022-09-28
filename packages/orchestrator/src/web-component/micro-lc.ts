@@ -1,4 +1,4 @@
-import type { Config } from '@micro-lc/interfaces'
+import type { Config } from '@micro-lc/interfaces/v2'
 import { html, render as litHtmlRender } from 'lit-html'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'

@@ -1,4 +1,4 @@
-import type { Config } from '@micro-lc/interfaces'
+import type { Config } from '@micro-lc/interfaces/v2'
 import type { ErrorObject, JSONSchemaType, SchemaObject, ValidateFunction } from 'ajv'
 
 import type { ErrorCodes } from '../logger'

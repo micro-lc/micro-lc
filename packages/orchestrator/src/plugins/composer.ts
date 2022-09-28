@@ -3,7 +3,7 @@ import type {
   Content,
   ImportMap,
   PluginConfiguration,
-} from '@micro-lc/interfaces'
+} from '@micro-lc/interfaces/v2'
 import type { MicroApp } from 'qiankun'
 import { ReplaySubject } from 'rxjs'
 
@@ -90,9 +90,11 @@ function v1Adapter(input: V1Content | Content, sources: string[]): Content {
       extra.attributes = attributes
       break
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     return {
       content,
-      ...(extra as Component),
+      ...(extra),
     }
   }
 
@@ -188,7 +190,7 @@ function fn(exports: ComposerModule, _: Window) {
       const { json: { validator, fetcher } } = getExtensions()
       logger(name, 'starting bootstrap...')
 
-      let resolvedConfig = config as PluginConfiguration | undefined
+      let resolvedConfig = config
       if (schema && typeof config === 'string') {
         const json = await fetcher(config)
         resolvedConfig = await validator<PluginConfiguration>(
@@ -203,11 +205,11 @@ function fn(exports: ComposerModule, _: Window) {
 
       // 🗑️ no need for this on config v2
       if (resolvedConfig) {
-        resolvedConfig = v1AddSources(resolvedConfig, v1AdapterUris)
+        resolvedConfig = v1AddSources(resolvedConfig as PluginConfiguration, v1AdapterUris)
       }
 
       if (resolvedConfig) {
-        composerConfig = await premount(name, resolvedConfig)
+        composerConfig = await premount(name, resolvedConfig as PluginConfiguration)
       }
 
       logger(name, 'bootstrap has finished...')

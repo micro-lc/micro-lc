@@ -1,4 +1,4 @@
-import type { Content, PluginConfiguration, ImportMap } from '@micro-lc/interfaces'
+import type { Content, PluginConfiguration, ImportMap } from '@micro-lc/interfaces/v2'
 import type { RenderOptions } from 'lit-html'
 import { html, render } from 'lit-html'
 

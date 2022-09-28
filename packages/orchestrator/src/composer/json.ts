@@ -1,4 +1,4 @@
-import type { ArrayContent, Component, Content } from '@micro-lc/interfaces'
+import type { ArrayContent, Component, Content } from '@micro-lc/interfaces/v2'
 
 import { toArray } from '../utils/array'
 

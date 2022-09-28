@@ -3,8 +3,8 @@ import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
 import axios from 'axios'
 
-import type { Config as V1 } from '../types/v1/index'
-import type { Config as V2 } from '../types/v2/index'
+import type { Config as V1 } from '../../dist/types/v1/index'
+import type { Config as V2 } from '../../dist/types/v2/index'
 
 import type { IntakeOptions, Latest, Version } from './types'
 import { toArray } from './utils'

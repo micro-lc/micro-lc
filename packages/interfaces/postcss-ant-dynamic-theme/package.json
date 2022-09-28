@@ -1,0 +1,6 @@
+{
+  "name": "@micro-lc/interfaces/postcss-ant-dynamic-theme",
+  "types": "../dist/types/postcss-ant-dynamic-theme.d.ts",
+  "main": "../dist/cjs/postcss-ant-dynamic-theme.js",
+  "module": "../dist/es/postcss-ant-dynamic-theme.js"
+}

@@ -1,4 +1,4 @@
-import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces'
+import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces/v2'
 
 export interface ImportMapTarget extends HTMLElement {
   disableShims: boolean

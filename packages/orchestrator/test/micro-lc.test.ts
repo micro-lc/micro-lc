@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { Config } from '@micro-lc/interfaces'
+import type { Config } from '@micro-lc/interfaces/v2'
 import { expect, waitUntil } from '@open-wc/testing'
 import { html, render } from 'lit-html'
 import type { SinonSandbox } from 'sinon'

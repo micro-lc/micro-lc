@@ -1,4 +1,4 @@
-import type { Config } from '@micro-lc/interfaces'
+import type { Config } from '@micro-lc/interfaces/v2'
 import { expect, waitUntil } from '@open-wc/testing'
 import { createSandbox, match } from 'sinon'
 

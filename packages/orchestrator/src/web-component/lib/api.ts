@@ -1,4 +1,4 @@
-import type { ImportMap } from '@micro-lc/interfaces'
+import type { ImportMap } from '@micro-lc/interfaces/v2'
 
 import type { CompleteConfig } from '../../config'
 import type { Microlc } from '../micro-lc'

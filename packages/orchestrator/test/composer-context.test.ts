@@ -1,4 +1,4 @@
-import type { Content } from '@micro-lc/interfaces'
+import type { Content } from '@micro-lc/interfaces/v2'
 import { expect } from '@open-wc/testing'
 
 import { createComposerContext } from '../src/composer'

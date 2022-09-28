@@ -569,11 +569,14 @@ __metadata:
     json-schema-to-typescript: ^11.0.2
     mkdirp: ^1.0.4
     mocha: ^10.0.0
+    postcss: ^8.4.16
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^4.8.3
+  peerDependencies:
+    postcss: "*"
   bin:
-    interfaces: ./dist/cli/index.js
+    interfaces: ./dist/cjs/cli/index.js
   languageName: unknown
   linkType: soft
 

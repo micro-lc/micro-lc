@@ -4,7 +4,7 @@ import type {
   GlobalImportMap,
   PluginConfiguration,
   Settings,
-} from '@micro-lc/interfaces'
+} from '@micro-lc/interfaces/v2'
 
 export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 

@@ -1,4 +1,4 @@
-import type { Config, PluginConfiguration } from '@micro-lc/interfaces'
+import type { Config, PluginConfiguration } from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
 
 import type { ResolvedConfig } from '../../composer'
