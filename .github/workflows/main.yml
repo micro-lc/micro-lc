@@ -201,6 +201,7 @@ jobs:
         run: npx playwright install-deps
 
       - name: Prebuild
+        if: ${{ matrix.package != 'interfaces' }}
         run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
 

@@ -11,7 +11,7 @@
     "test": "wtr --node-resolve",
     "coverage": "yarn test --coverage",
     "build:es": "ts-node ./scripts/compile.esm.ts",
-    "build": "yarn run -T run-s build:icons build:es",
+    "build": "yarn run -T run-s bundle:icons build:es",
     "cleanup": "yarn run -T rimraf node_modules dist",
     "serve": "wds --node-resolve --watch"
   },
