@@ -1,4 +1,4 @@
-name: tag CI
+name: Tag CI
 
 env:
   context: './'

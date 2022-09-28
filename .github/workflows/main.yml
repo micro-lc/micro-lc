@@ -10,12 +10,6 @@ on:
   push:
     branches:
       - dev
-  workflow_dispatch:
-    inputs:
-      node-version:
-        required: true
-        description: node version to use within the runner
-        default: ${{ env.node-version }}
 
 jobs:
   install:
