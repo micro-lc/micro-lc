@@ -569,6 +569,7 @@ __metadata:
     json-schema-to-typescript: ^11.0.2
     mkdirp: ^1.0.4
     mocha: ^10.0.0
+    nyc: ^15.1.0
     postcss: ^8.4.16
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1

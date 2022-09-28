@@ -10,7 +10,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

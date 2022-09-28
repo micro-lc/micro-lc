@@ -6,8 +6,8 @@
   "types": "./dist/types/index.d.ts",
   "bin": "./dist/cjs/cli/index.js",
   "scripts": {
-    "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha test/**/*.test.ts",
-    "test": "yarn test:unit",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
+    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha",
     "cli": "yarn ts-node ./cli",
     "make-types-from-schemas": "node ./scripts/make-types.mjs",
     "make-types": "yarn tsc --project ./scripts/tsconfig.types.json",
@@ -38,6 +38,7 @@
     "json-schema-to-typescript": "^11.0.2",
     "mkdirp": "^1.0.4",
     "mocha": "^10.0.0",
+    "nyc": "^15.1.0",
     "postcss": "^8.4.16",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",

@@ -1,4 +1,4 @@
-name: Install
+name: Checks
 
 on:
   workflow_call:
@@ -7,13 +7,9 @@ on:
         default: 16.x
         required: false
         type: string
-      context:
-        default: ./
-        required: false
-        type: string
-    
+
 jobs:
-  install:
+  checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,6 +25,7 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
 
+      ## Yarn Install State
       - name: Yarn Cache
         uses: actions/cache@v3
         id: yarn-cache
@@ -51,5 +48,12 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - run: yarn install --immutable
-      - run: yarn postinstall
+      - name: '[no cache] install yarn'
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+      - name: '[no cache] postinstall yarn'
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        run: yarn postinstall
+
+      - run: yarn lint
+      - run: yarn check:types

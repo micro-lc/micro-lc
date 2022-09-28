@@ -3,9 +3,9 @@
 ## ci lifecycle
 
 - install => setup repo and fetch dependencies
+- postinstall => build anything might be needed by other packages
 - lint => (global only) runs linter
 
-- postinstall => build anything might be needed by other packages
 - check:types => run tsc
 - prebuild => build anything needed for testing
 <!-- - test:browser => run tests on all browsers -->

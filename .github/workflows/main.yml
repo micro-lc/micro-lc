@@ -9,119 +9,28 @@ env:
 on:
   push:
     branches:
-      - dev
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   # https://stackoverflow.com/questions/73305126/passing-env-variable-inputs-to-a-reusable-workflow
-  print:
-    runs-on: ubuntu-latest
-    outputs:
-      node_version: ${{ steps.print_env.outputs.node_version }}
-    steps:
-      - name: Print inputs passed to the reusable workflow
-        id: print_env
-        run: |
-          echo "::set-output name=node_version::${{ env.node-version }}"
 
   install:
-    needs:
-      - print
-    uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@dev
-    with:
-      node-version: ${{ needs.print.outputs.node_version }}
+    uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@main
 
   checks:
     needs:
       - install
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
-
-      ## Yarn Install State
-      - name: Yarn Cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: |
-            ${{ env.context }}.yarn/cache
-            ${{ env.context }}.yarn/unplugged
-            ${{ env.context }}.yarn/install-state.gz
-            ${{ env.context }}.pnp.*
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Build Cache
-        uses: actions/cache@v3
-        id: build-cache
-        with:
-          path: |
-            ${{ env.context }}node_modules
-            ${{ env.context }}packages/**/dist
-            ${{ env.context }}packages/**/node_modules
-          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
-
-      - run: yarn lint
-      - run: yarn check:types
+    uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@main
 
   build:
     needs:
       - install
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
-
-      ## Yarn Install State
-      - name: Yarn Cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: |
-            ${{ env.context }}.yarn/cache
-            ${{ env.context }}.yarn/unplugged
-            ${{ env.context }}.yarn/install-state.gz
-            ${{ env.context }}.pnp.*
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Build Cache
-        uses: actions/cache@v3
-        id: build-cache
-        with:
-          path: |
-            ${{ env.context }}node_modules
-            ${{ env.context }}packages/**/dist
-            ${{ env.context }}packages/**/node_modules
-          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
-
-      - run: yarn build
+    uses: micro-lc/micro-lc-2.0/.github/workflows/build.yml@main
 
   tests:
-    runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
       matrix:
@@ -130,62 +39,12 @@ jobs:
           - interfaces
           - orchestrator
 
-    steps:
-      - uses: actions/checkout@v3
+    uses: micro-lc/micro-lc-2.0/.github/workflows/tests.yml@main
+    with:
+      package: ${{ matrix.package }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
-
-      ## Yarn Install State
-      - name: Yarn Cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: |
-            ${{ env.context }}.yarn/cache
-            ${{ env.context }}.yarn/unplugged
-            ${{ env.context }}.yarn/install-state.gz
-            ${{ env.context }}.pnp.*
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Build Cache
-        uses: actions/cache@v3
-        id: build-cache
-        with:
-          path: |
-            ${{ env.context }}node_modules
-            ${{ env.context }}packages/**/dist
-            ${{ env.context }}packages/**/node_modules
-          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
-
-      - run: yarn install --immutable
-      - run: yarn postinstall
-
-      - name: Install Playwright Browsers
-        if: ${{ matrix.package != 'interfaces' }}
-        run: npx playwright install-deps
-
-      - name: Prebuild
-        if: ${{ matrix.package != 'interfaces' }}
-        run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
-      - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
-
-      - name: Collect coveralls coverage
-        if: ${{ matrix.package != 'interfaces' }}
-        uses: coverallsapp/github-action@master
-        continue-on-error: true
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          base-path: '${{ env.context }}${{ matrix.package }}'
 
   release:
     needs:
@@ -223,22 +82,21 @@ jobs:
         id: yarn-cache
         with:
           path: |
-            ${{ env.context }}.yarn/cache
-            ${{ env.context }}.yarn/unplugged
-            ${{ env.context }}.yarn/install-state.gz
-            ${{ env.context }}.pnp.*
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+            ./.yarn/cache
+            ./.yarn/unplugged
+            ./.yarn/install-state.gz
+            ./.pnp.cjs
+            ./.pnp.loader.mjs
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('./package.json') }}
 
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
         with:
           path: |
-            ${{ env.context }}node_modules
-            ${{ env.context }}packages/**/dist
-            ${{ env.context }}packages/**/node_modules
+            ./node_modules
+            ./packages/**/dist
+            ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: cd packages/${{ matrix.package }}
