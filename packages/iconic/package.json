@@ -5,15 +5,14 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "check:types": "tsc --project scripts/tsconfig.types.json && echo \"✓ check types\"",
-    "prebuild": "ts-node ./scripts/pre-bundle.ts",
-    "test:browser": "wtr test/**/*.test.ts --node-resolve --playwright --browser chromium firefox webkit",
-    "test:chromium": "wtr test/**/*.test.ts --node-resolve --playwright --browser chromium",
-    "coverage": "yarn test:chromium --coverage",
-    "build:icons": "ts-node ./scripts/bundle-icons.ts",
+    "bundle:dependencies": "ts-node ./scripts/pre-bundle.ts",
+    "bundle:icons": "ts-node ./scripts/bundle-icons.ts",
+    "prebuild": "yarn run -T run-p bundle:dependencies bundle:icons",
+    "test": "wtr --node-resolve",
+    "coverage": "yarn test --coverage",
     "build:es": "ts-node ./scripts/compile.esm.ts",
     "build": "yarn run -T run-s build:icons build:es",
     "cleanup": "yarn run -T rimraf node_modules dist",
-    "test": "wtr test/**/*.test.ts --node-resolve",
     "serve": "wds --node-resolve --watch"
   },
   "devDependencies": {
@@ -50,9 +49,5 @@
   },
   "engines": {
     "node": ">=16.17.0"
-  },
-  "dependencies": {
-    "browser-cjs": "^1.0.3",
-    "requirejs": "^2.3.6"
   }
 }

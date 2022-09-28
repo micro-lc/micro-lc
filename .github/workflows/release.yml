@@ -197,12 +197,11 @@ jobs:
       - run: yarn postinstall
 
       - name: Install Playwright Browsers
+        if: ${{ matrix.package != 'interfaces' }}
         run: npx playwright install-deps
 
       - name: Prebuild
-        if: ${{ matrix.package != 'interfaces' }}
         run: yarn workspace @micro-lc/${{ matrix.package }} run prebuild
-      - run: yarn workspace @micro-lc/${{ matrix.package }} run test:browser
       - run: yarn workspace @micro-lc/${{ matrix.package }} run coverage
 
       - name: Collect coveralls coverage
@@ -268,5 +267,5 @@ jobs:
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: cd packages/${{ matrix.package }}
-      - run: yarn install --immutable
+      # - run: yarn install --immutable
       # - run: yarn npm publish

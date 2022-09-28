@@ -11,14 +11,8 @@ const require = createRequire(import.meta.url)
 const alias = fromRollup(rollupAlias)
 const replace = fromRollup(rollupReplace)
 
-/** @type {import('@web/test-runner').TestRunnerConfig} */
+/** @type {import('@web/dev-server').DevServerConfig} */
 export default {
-  coverageConfig: {
-    include: ['./src/**/*.ts'],
-    report: true,
-    reportDir: 'coverage/browser',
-    reporters: ['cobertura', 'lcovonly', 'text'],
-  },
   plugins: [
     alias({
       entries: [

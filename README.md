@@ -8,7 +8,7 @@
 - postinstall => build anything might be needed by other packages
 - check:types => run tsc
 - prebuild => build anything needed for testing
-- test:browser => run tests on all browsers
+<!-- - test:browser => run tests on all browsers -->
 - coverage => run overall coverage (browser runs on chromium only)
 - build => create every single artifact that goes into the release
 
@@ -19,4 +19,4 @@
 
 - cleanup => removes dist node_modules coverage and so on
 - test => runs all tests with in-browser on chromium
-- test:[browser] => tests on a given browser
+- test:[browser] => tests on a given browser (if apply)

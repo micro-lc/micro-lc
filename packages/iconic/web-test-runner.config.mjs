@@ -2,6 +2,7 @@ import rollupReplace from '@rollup/plugin-replace'
 import { esbuildPlugin } from '@web/dev-server-esbuild'
 import { importMapsPlugin } from '@web/dev-server-import-maps'
 import { fromRollup } from '@web/dev-server-rollup'
+import { playwrightLauncher } from '@web/test-runner-playwright'
 
 const replace = fromRollup(rollupReplace)
 
@@ -13,6 +14,17 @@ export default {
     reportDir: 'coverage',
     reporters: ['cobertura', 'lcovonly', 'text'],
   },
+  groups: [
+    {
+      browsers: [
+        playwrightLauncher({ product: 'chromium' }),
+        playwrightLauncher({ product: 'firefox' }),
+        playwrightLauncher({ product: 'webkit' }),
+      ],
+      files: 'test/**/*.test.ts',
+      name: 'all',
+    },
+  ],
   plugins: [
     esbuildPlugin({
       target: 'es2020',

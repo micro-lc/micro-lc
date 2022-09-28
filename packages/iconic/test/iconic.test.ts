@@ -38,7 +38,7 @@ const createReactApp = (document: Document, props: Props): [HTMLElement, Root] =
   return [container, root]
 }
 
-describe('iconix react tests', () => {
+describe('iconic react tests', () => {
   after(() => {
     for (const child of document.body.children) {
       child.remove()
@@ -74,24 +74,24 @@ describe('iconix react tests', () => {
   })
 })
 
-describe('iconix web-component tests', () => {
+describe('iconic web-component tests', () => {
   it('should render an antd icon', async () => {
     const container = document.createElement('div')
     document.body.appendChild(container)
 
     render(html`
-      <mlc-iconix
+      <mlc-iconic
         selector="MessageOutlined"
         library="@ant-design/icons-svg"
-      ></mlc-iconix>
+      ></mlc-iconic>
     `, container)
 
-    const mlcIconix: HTMLElement & {
+    const mlciconic: HTMLElement & {
       readonly updateComplete: boolean
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconix')!
+    } = container.querySelector('mlc-iconic')!
 
-    await waitUntil(() => mlcIconix.updateComplete)
+    await waitUntil(() => mlciconic.updateComplete)
 
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')
@@ -102,18 +102,18 @@ describe('iconix web-component tests', () => {
     document.body.appendChild(container)
 
     render(html`
-      <mlc-iconix
+      <mlc-iconic
         selector="MessageOutlined_"
         library="@ant-design/icons-svg"
-      ></mlc-iconix>
+      ></mlc-iconic>
     `, container)
 
-    const mlcIconix: HTMLElement & {
+    const mlciconic: HTMLElement & {
       readonly updateComplete: boolean
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconix')!
+    } = container.querySelector('mlc-iconic')!
 
-    await waitUntil(() => mlcIconix.updateComplete)
+    await waitUntil(() => mlciconic.updateComplete)
 
     expect(container.querySelector('svg')).to.have.property('textContent', '')
   })
@@ -123,19 +123,19 @@ describe('iconix web-component tests', () => {
     document.body.appendChild(container)
 
     render(html`
-      <mlc-iconix
+      <mlc-iconic
         selector="faTrash"
         library="@fortawesome/free-solid-svg-icons"
         src="/dist/fas/"
-      ></mlc-iconix>
+      ></mlc-iconic>
     `, container)
 
-    const mlcIconix: HTMLElement & {
+    const mlciconic: HTMLElement & {
       readonly updateComplete: boolean
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconix')!
+    } = container.querySelector('mlc-iconic')!
 
-    await waitUntil(() => mlcIconix.updateComplete)
+    await waitUntil(() => mlciconic.updateComplete)
 
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')
@@ -146,19 +146,19 @@ describe('iconix web-component tests', () => {
     document.body.appendChild(container)
 
     render(html`
-      <mlc-iconix
+      <mlc-iconic
         selector="faAddressBook"
         library="@fortawesome/free-regular-svg-icons"
         src="/dist/far/"
-      ></mlc-iconix>
+      ></mlc-iconic>
     `, container)
 
-    const mlcIconix: HTMLElement & {
+    const mlciconic: HTMLElement & {
       readonly updateComplete: boolean
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconix')!
+    } = container.querySelector('mlc-iconic')!
 
-    await waitUntil(() => mlcIconix.updateComplete)
+    await waitUntil(() => mlciconic.updateComplete)
 
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')
