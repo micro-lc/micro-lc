@@ -10,12 +10,16 @@ on:
   push:
     branches:
       - dev
+  workflow_dispatch:
+    inputs:
+      node-version:
+        required: true
+        description: node version to use within the runner
+        default: ${{ env.node-version }}
 
 jobs:
   install:
     uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@dev
-    with:
-      node-version: ${{ env.node-version }}
 
   checks:
     needs:
