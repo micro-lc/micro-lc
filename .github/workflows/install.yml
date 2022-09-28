@@ -4,7 +4,6 @@ on:
   workflow_call:
     inputs:
       node-version:
-        default: '16.x'
         required: true
         type: string
     

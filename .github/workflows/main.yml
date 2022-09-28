@@ -12,8 +12,23 @@ on:
       - dev
 
 jobs:
+  # https://stackoverflow.com/questions/73305126/passing-env-variable-inputs-to-a-reusable-workflow
+  print:
+    runs-on: ubuntu-latest
+    outputs:
+      node_version: ${{ steps.print_env.outputs.node_version }}
+    steps:
+      - name: Print inputs passed to the reusable workflow
+        id: print_env
+        run: |
+          echo "::set-output name=node_version::${{ env.node-version }}"
+
   install:
+    needs:
+      - print
     uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@dev
+    with:
+      node-version: ${{ needs.print.outputs.node_version }}
 
   checks:
     needs:
