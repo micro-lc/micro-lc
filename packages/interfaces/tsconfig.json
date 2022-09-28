@@ -3,11 +3,14 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
+    "noEmit": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "strict": true,
     "skipLibCheck": true
   },
+  "include": ["src"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
