@@ -1,4 +1,5 @@
 export * from './api'
+export * from './events'
 export * from './extensions'
 export * from './qiankun'
 export * from './router'

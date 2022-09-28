@@ -6,7 +6,7 @@ import type { Microlc } from '../micro-lc'
 
 import { updateErrorHandler } from './qiankun'
 
-type HTTPClient = Record<string, unknown>
+type HTTPClient = typeof window.fetch
 
 interface JsonCatcherOptions<S> {
   defaultValue?: S

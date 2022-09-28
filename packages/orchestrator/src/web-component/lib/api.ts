@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { ImportMap } from '@micro-lc/interfaces/v2'
 
 import type { CompleteConfig } from '../../config'
@@ -15,6 +16,7 @@ export interface MicrolcApi<T extends BaseExtension> {
   readonly getExtensions: () => Readonly<T>
   readonly router: {
     goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): void
+    goToErrorPage(statusCode: number): void
     open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => void
   }
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
@@ -36,6 +38,11 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension>(
         if (url) {
           window.history.pushState(data, '', url)
         }
+      },
+      goToErrorPage: (statusCode: number): void => {
+        const {
+          _config: { settings: { '4xx': pages4XX, '5xx': pages5XX } },
+        } = this
       },
       open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => {
         window.open(url, target, features)
