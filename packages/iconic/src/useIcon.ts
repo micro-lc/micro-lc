@@ -11,8 +11,8 @@ import type { IconComponent, ResourceObject } from './import-icon'
 
 export type SVGProps = ReactSVGProps<HTMLElement>
 
-function iconCompose({ tag, attrs, children }: IconComponent, props?: SVGProps): DOMElement<SVGProps, HTMLElement> {
-  return createElement(tag, { ...attrs, ...props }, toArray(children).map((el) => el && iconCompose(el)))
+function iconCompose({ tag, attrs, children, key }: IconComponent, props?: SVGProps): DOMElement<SVGProps, HTMLElement> {
+  return createElement(tag, { ...attrs, ...props, key }, toArray(children).map((el, idx) => el && iconCompose({ ...el, key: idx })))
 }
 
 export function useIcon(

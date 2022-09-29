@@ -2222,6 +2222,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@esbuild-plugins/node-modules-polyfill": ^0.1.4
+    "@fortawesome/fontawesome-svg-core": ^6.2.0
     "@micro-lc/iconic": "workspace:*"
     "@micro-lc/interfaces": "workspace:*"
     "@micro-lc/orchestrator": "workspace:*"

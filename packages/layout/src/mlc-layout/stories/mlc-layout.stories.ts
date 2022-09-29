@@ -34,6 +34,7 @@ const menuItems: MlcLayout['menuItems'] = [
   },
   {
     href: 'www.google.com',
+    icon: { library: '@ant-design/icons-svg', selector: 'MessageOutlined' },
     id: 'href_1',
     label: 'Link 1',
     target: '_blank',
@@ -55,6 +56,7 @@ const menuItems: MlcLayout['menuItems'] = [
           },
           {
             href: 'www.google.com',
+            icon: { library: '@ant-design/icons-svg', selector: 'MessageOutlined' },
             id: 'href_2',
             label: 'Link 2',
             target: '_blank',
@@ -78,11 +80,11 @@ const microlcApiExtensions: MicrolcApiExtension = {
     setIcon: attrs => action('extensions.head.setIcon')(attrs),
     setTitle: title => action('extensions.head.setTitle')(title),
   },
-  httpClient: {
-    get: url => {
-      action('extensions.httpClient.get')(url)
-      return Promise.resolve({ fullName: 'Edoardo Pessina' })
-    },
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  httpClient: (url: string) => {
+    action('extensions.httpClient.get')(url)
+    return Promise.resolve({ fullName: 'Edoardo Pessina' })
   },
   language: {
     getLanguage: () => 'en',

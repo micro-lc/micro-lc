@@ -12,6 +12,7 @@ export type Resources = Record<Library, string>;
 export interface IconComponent {
   attrs?: Record<string, unknown>
   children?: IconComponent | IconComponent[]
+  key?: number
   tag: 'svg' | 'path'
 }
 
@@ -55,7 +56,7 @@ export default async function importIcon(
   const url = typeof resource === 'string' ? resources[library] : resource.src
   const uri = `${url.replace(/\/$/, '')}/${selector.replace(/^\//, '').replace(/\.js$/, '')}.js`
   // SAFETY: library check is already enforced
-  // eslint-disable-next-line default-case
+
   switch (library) {
   case '@ant-design/icons-svg':
     return import(uri)
