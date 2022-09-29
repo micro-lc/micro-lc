@@ -36,7 +36,10 @@ jobs:
           path: |
             ./.yarn/cache
             ./.yarn/unplugged
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('./package.json') }}
+            ./.yarn/install-state.gz
+            ./.pnp.cjs
+            ./.pnp.loader.mjs
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Build Cache
         uses: actions/cache@v3
@@ -48,10 +51,12 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - run: yarn install --immutable
-      - run: yarn i check:types
-      - run: yarn c check:types
-      - run: yarn o check:types
-      - run: yarn l check:types
-      - run: yarn prebuild
+      - name: Playwright Cache
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            /home/runner/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
 
+      - run: yarn install --immutable

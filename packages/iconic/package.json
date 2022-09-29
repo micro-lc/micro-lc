@@ -5,7 +5,6 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "check:types": "tsc --project scripts/tsconfig.types.json && echo \"✓ check types\"",
-    "postinstall": "yarn check:types",
     "bundle:dependencies": "ts-node ./scripts/pre-bundle.ts",
     "bundle:icons": "ts-node ./scripts/bundle-icons.ts",
     "prebuild": "yarn run -T run-p bundle:dependencies bundle:icons",

@@ -6,17 +6,16 @@
   "types": "./dist/types/index.d.ts",
   "bin": "./dist/cjs/cli/index.js",
   "scripts": {
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
-    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha",
-    "cli": "yarn ts-node ./cli",
     "make-types-from-schemas": "node ./scripts/make-types.mjs",
     "make-types": "yarn tsc --project ./scripts/tsconfig.types.json",
     "check:types": "yarn run -T run-s make-types-from-schemas make-types",
     "build:es": "ts-node scripts/compile.esm.ts",
     "build:cjs": "ts-node scripts/compile.cjs.ts",
     "build:cli": "node ./scripts/build-cli.mjs",
-    "build": "yarn run -T run-p check:types build:es build:cjs",
-    "postinstall": "yarn make-types-from-schemas"
+    "build": "yarn run -T run-p build:es build:cjs",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
+    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha",
+    "cli": "yarn ts-node ./cli"
   },
   "devDependencies": {
     "@types/chai": "^4.3.3",

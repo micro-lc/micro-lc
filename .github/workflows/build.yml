@@ -33,7 +33,10 @@ jobs:
           path: |
             ./.yarn/cache
             ./.yarn/unplugged
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('./package.json') }}
+            ./.yarn/install-state.gz
+            ./.pnp.cjs
+            ./.pnp.loader.mjs
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Build Cache
         uses: actions/cache@v3
@@ -45,5 +48,9 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - run: yarn install --immutable
-      - run: yarn build
+      - run: yarn workspace @micro-lc/interfaces run build
+      - run: yarn workspace @micro-lc/iconic run build
+      - run: yarn workspace @micro-lc/orchestrator run build
+      - run: yarn workspace @micro-lc/layout run build
+
+

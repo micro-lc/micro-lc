@@ -39,7 +39,10 @@ jobs:
           path: |
             ./.yarn/cache
             ./.yarn/unplugged
-          key: ${{ runner.os }}-test-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('./package.json') }}
+            ./.yarn/install-state.gz
+            ./.pnp.cjs
+            ./.pnp.loader.mjs
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Build Cache
         uses: actions/cache@v3
@@ -49,7 +52,7 @@ jobs:
             ./node_modules
             ./packages/**/dist
             ./packages/**/node_modules
-          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-test-build-${{ github.sha }}
+          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - name: Playwright Cache
         uses: actions/cache@v3
@@ -57,12 +60,13 @@ jobs:
         with:
           path: |
             /home/runner/.cache/ms-playwright
-          key: ${{ runner.os }}-test-playwright-${{ github.sha }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
 
-      - run: yarn install --immutable
+      - name: Reinstall
+        if: ${{ inputs.package != 'interfaces' && steps.playwright-cache.outputs.cache-hit != 'true' }} 
+        run: rm -rf ./.yarn/install-state.gz && yarn install --immutable
 
       - name: 'Install Playwright'
-        if: ${{ inputs.package != 'interfaces' && steps.playwright-cache.outputs.cache-hit != 'true' }} 
         run: npx playwright install-deps
 
       - name: Prebuild
