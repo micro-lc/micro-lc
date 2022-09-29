@@ -90,8 +90,7 @@ export function initBaseExtensions<T extends BaseExtension>(this: Microlc<T>): T
         !title.isConnected && this.ownerDocument.head.appendChild(title)
       },
     },
-    // TODO
-    httpClient: {},
+    httpClient: (input: RequestInfo | URL, init?: RequestInit | undefined) => window.fetch(input, init),
     json: {
       fetcher: jsonFetcher,
       async validator<S>(

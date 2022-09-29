@@ -1,0 +1,94 @@
+{
+  "$schema": "../packages/interfaces/schemas/v2/config.schema.json",
+  "version": 2,
+  "settings": {
+    "defaultUrl": "/main",
+    "composerUri": "/packages/orchestrator/dist/composer.development.js"
+  },
+  "layout": {
+    "sources": {
+      "uris": "/packages/layout/dist/mlc-layout.js",
+      "importmap": {
+        "imports": {
+          "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.production.min.js",
+          "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.production.min.js",
+          "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.0.0/esm/es2015/rxjs.min.js"
+        }
+      }
+    },
+    "content": {
+      "tag": "mlc-layout",
+      "properties": {
+        "userMenu": {
+          "userInfoUrl": "/userinfo"
+        },
+        "logo": {
+          "urlLightImage": "/packages/orchestrator/public/favicon.png"
+        },
+        "mode": "fixedSideBar",
+        "menuItems": [
+          {
+            "icon": {
+              "library": "@ant-design/icons-svg",
+              "selector": "BugOutlined"
+            },
+            "id": "main",
+            "label": { "en": "Application 1", "it": "Applicazione 1" },
+            "type": "application"
+          },
+          {
+            "href": "https://docs.mia-platform.eu",
+            "id": "href_1",
+            "label": "Link 1",
+            "target": "_blank",
+            "type": "href"
+          },
+          {
+            "children": [
+              {
+                "id": "application_2",
+                "label": { "en": "Application 2", "it": "Applicazione 2" },
+                "type": "application"
+              },
+              {
+                "children": [
+                  {
+                    "id": "application_3",
+                    "label": { "en": "Application 1", "it": "Applicazione 1" },
+                    "type": "application"
+                  },
+                  {
+                    "href": "./www.google.com",
+                    "id": "href_2",
+                    "label": "Link 2",
+                    "target": "_blank",
+                    "type": "href"
+                  }
+                ],
+                "id": "group_1",
+                "label": { "en": "Group 1", "it": "Gruppo 1" },
+                "type": "group"
+              }
+            ],
+            "id": "category_1",
+            "label": { "en": "Category 1", "it": "Categoria 1" },
+            "type": "category"
+          }
+        ]
+      }
+    }
+  },
+  "applications": [
+    {
+      "id": "main",
+      "integrationMode": "compose",
+      "route": "/main",
+      "config": {
+        "sources": {
+          "uris": "data:text/javascript;base64,CmltcG9ydCB7UmVwbGF5U3ViamVjdH0gZnJvbSAncnhqcycKCmNvbnNvbGUubG9nKFJlcGxheVN1YmplY3QpCg=="
+        },
+        "content": {"tag": "div", "properties": {"textContent": "Ciao Main"}}
+      }
+    }
+  ]
+}

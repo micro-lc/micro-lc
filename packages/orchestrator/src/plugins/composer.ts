@@ -5,7 +5,6 @@ import type {
   PluginConfiguration,
 } from '@micro-lc/interfaces/v2'
 import type { MicroApp } from 'qiankun'
-import { ReplaySubject } from 'rxjs'
 
 import type { createComposerContext } from '../composer'
 import type { BaseExtension, ComposableApplicationProperties, Observable } from '../web-component'
@@ -147,7 +146,6 @@ async function render(
     {
       context: {
         ...context,
-        eventBus: new ReplaySubject(),
       },
       extraProperties: ['microlcApi', 'currentUser', 'eventBus'],
     }

@@ -5,7 +5,9 @@
     "postinstall": "yarn make-types",
     "make-types": "ts-node ./scripts/make-types.ts",
     "storybook": "start-storybook -p 6007",
-    "build": "vite build --mode production"
+    "build:prod": "vite build --mode production",
+    "build:min": "vite build --mode min",
+    "build": "yarn run -T run-s build:prod build:min"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -19,6 +21,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@micro-lc/orchestrator": "workspace:*",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-backgrounds": "^6.5.10",
@@ -38,6 +42,7 @@
     "@types/glob": "^8.0.0",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
+    "cssnano": "^5.1.13",
     "glob": "^8.0.3",
     "json-schema-to-typescript": "^11.0.2",
     "less": "^4.1.3",

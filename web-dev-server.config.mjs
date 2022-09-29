@@ -5,11 +5,14 @@ export default {
   injectWebSocket: false,
   middleware: [
     function rewriteIndex(ctx, next) {
-      const directPaths = /\/(dist|.dev|src|__|node_modules|back-kit)/
-      if (!ctx.url.match(directPaths)) {
+      const directPaths = /\/(packages|dist|.dev|src|__|node_modules|back-kit)/
+      const match = ctx.url.match(/\/([45]\d{2}).html$/)?.[1]
+      if (match) {
+        ctx.url = `/packages/orchestrator/public/${match}.html`
+      } else if (ctx.url === '/userinfo') {
+        ctx.url = '/.dev/userinfo.json'
+      } else if (!ctx.url.match(directPaths)) {
         ctx.url = '/index.html'
-      } else if (ctx.url.match(/\/[45]\d{2}.html/)) {
-        ctx.url = `/packages/orchestrator/mocks/4xx.html`
       }
 
       return next()

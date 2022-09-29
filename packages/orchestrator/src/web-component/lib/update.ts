@@ -126,6 +126,10 @@ export async function getApplicationSchema(): Promise<SchemaOptions | undefined>
   return schema
 }
 
+function getContainer<T extends BaseExtension>(this: Microlc<T>, id: string): HTMLElement {
+  return this.querySelector<HTMLElement>(`#${id}`)!
+}
+
 export async function updateApplications<T extends BaseExtension>(this: Microlc<T>): Promise<void> {
   const {
     _config: {
@@ -161,8 +165,8 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     // const entry: Entry = uri.endsWith('js') ? { scripts: [uri] } : uri
     this._loadedApps.set(name, [undefined, {
       // SAFETY: has been mounted on update lifecycle
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      container: this.querySelector<HTMLElement>(`#${pluginMountPointSelector.id}`)!,
+
+      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, pluginMountPointSelector.id),
       entry,
       name,
     }])
@@ -211,8 +215,8 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     acc.routes.set(id, route)
     acc.apps.set(id, [route, {
       // SAFETY: has been mounted on update lifecycle
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      container: this.querySelector<HTMLElement>(`#${pluginMountPointSelector.id}`)!,
+
+      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, pluginMountPointSelector.id),
       entry,
       name: id,
       props: {

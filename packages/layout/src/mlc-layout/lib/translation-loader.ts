@@ -1,6 +1,6 @@
 import { dirname, resolve } from 'path'
 
-import type { MicrolcApi } from '@micro-lc/orchestrator/dist/types'
+import type { MicrolcApi } from '@micro-lc/orchestrator'
 
 import type { MicrolcApiExtension } from './types'
 

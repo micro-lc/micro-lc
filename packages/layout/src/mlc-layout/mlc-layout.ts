@@ -48,15 +48,16 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
 
   @query('#micro-lc-layout-container') container!: HTMLDivElement
 
-  // Uncomment to deactivate shadow root
-  // protected createRenderRoot(): this { return this }
-
   protected render(): unknown {
-    return html`<div id="micro-lc-layout-container" style="height: 100%; overflow: hidden"></div>`
+    return html`
+      <div id="micro-lc-layout-container" style="height: 100%; overflow: hidden"></div>
+    `
   }
 
   protected firstUpdated(_changedProperties: Map<PropertyKey, unknown>) {
     super.firstUpdated(_changedProperties)
+
+    this.appendChild(this.ownerDocument.createElement('slot'))
 
     this.head?.title && this.microlcApi?.getExtensions().head.setTitle(this.head.title)
     this.head?.favIconUrl && this.microlcApi?.getExtensions().head.setIcon({ href: this.head.favIconUrl })
@@ -68,14 +69,19 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
       .catch(() => { /* no-op */ })
 
     if (this.userMenu?.userInfoUrl) {
-      this.microlcApi?.getExtensions().httpClient.get(this.userMenu.userInfoUrl)
+      this.microlcApi?.getExtensions().httpClient(this.userMenu.userInfoUrl)
+        .then(res =>
+          (res.ok
+            ? res.json() as Promise<Record<string, unknown>>
+            : Promise.reject(new TypeError('no user')))
+        )
         .then(userInfo => {
           this._user = mapUserFields(userInfo, this.userMenu)
 
-          this.microlcApi?.setExtension('user', userInfo)
+          this.microlcApi?.set({ user: userInfo })
           return this.microlcApi?.getCurrentApplication().handlers?.update?.({})
         })
-        .catch(() => { /* no-op */ })
+        .catch(console.error)
     }
   }
 }
