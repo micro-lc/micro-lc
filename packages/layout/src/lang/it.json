@@ -1,0 +1,9 @@
+{
+  "$schema": "./lang.schema.json",
+  "MLC-LAYOUT": {
+    "collapse": "Collassa",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "logout": "Logout"
+  }
+}
