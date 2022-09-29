@@ -15,7 +15,6 @@
     "lint:code": "eslint . --ext .mjs,.js,.jsx,.ts,.tsx,.schema.json --resolve-plugins-relative-to .",
     "lint:style": "stylelint **/*.{css,less}",
     "lint": "yarn lint:code && yarn lint:style",
-    "postinstall": "husky install && yarn workspaces foreach --all --parallel run postinstall",
     "check:types": "yarn workspaces foreach --all --parallel run check:types",
     "prebuild": "yarn workspaces foreach --all --parallel run prebuild",
     "build": "yarn workspaces foreach --all run build",
