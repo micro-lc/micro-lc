@@ -5,7 +5,6 @@
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "check:types": "tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
-    "postinstall": "yarn check:types",
     "prebuild": "ts-node scripts/pre-bundle.ts",
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
     "test:browser": "wtr --node-resolve",
