@@ -20,3 +20,11 @@
 - cleanup => removes dist node_modules coverage and so on
 - test => runs all tests with in-browser on chromium
 - test:[browser] => tests on a given browser (if apply)
+
+## dependencies
+
+- interfaces => none
+- iconic => none
+- layout => types: interfaces/orchestrator => direct: iconic
+- orchestrator => types: interfaces
+

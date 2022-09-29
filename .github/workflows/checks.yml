@@ -46,5 +46,9 @@ jobs:
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
       - run: yarn install --immutable
+      - run: yarn i check:types
+      - run: yarn c check:types
+      - run: yarn o check:types
+      - run: yarn l check:types
       - run: yarn lint
-      - run: yarn check:types
+

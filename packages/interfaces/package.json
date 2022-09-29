@@ -18,10 +18,6 @@
     "build": "yarn run -T run-p check:types build:es build:cjs",
     "postinstall": "yarn make-types-from-schemas"
   },
-  "dependencies": {
-    "axios": "^0.27.2",
-    "commander": "^9.4.0"
-  },
   "devDependencies": {
     "@types/chai": "^4.3.3",
     "@types/eslint": "^8.4.6",
@@ -31,7 +27,9 @@
     "@types/node": "^18.7.18",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
+    "axios": "^0.27.2",
     "chai": "^4.3.6",
+    "commander": "^9.4.0",
     "esbuild": "^0.15.9",
     "eslint": "^8.24.0",
     "glob": "^8.0.3",
