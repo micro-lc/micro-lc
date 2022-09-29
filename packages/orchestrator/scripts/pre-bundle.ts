@@ -44,6 +44,7 @@ Promise.all(modes.map(async (mode) => {
     ...config,
     define: { 'process.env.NODE_ENV': JSON.stringify(mode) },
     entryPoints: composerEntryPoints,
+    format: 'iife',
     outfile: resolve(__dirname, `../dist/composer.${mode}.js`),
   }).then(() => {
     console.log('\x1b[32m%s\x1b[0m', `✔ [${mode}] compiled successfully ${composerEntryPoints.join(', ')}`)

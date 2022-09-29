@@ -82,7 +82,7 @@ export async function fetchConfig(url: string): Promise<Config> {
     )
 }
 
-export function updateGlobalImportapMap<T extends BaseExtension>(this: Microlc<T>) {
+export function updateGlobalImportMap<T extends BaseExtension>(this: Microlc<T>) {
   const {
     _config: {
       importmap,
@@ -127,6 +127,8 @@ export async function getApplicationSchema(): Promise<SchemaOptions | undefined>
 }
 
 function getContainer<T extends BaseExtension>(this: Microlc<T>, id: string): HTMLElement {
+  // SAFETY: has been mounted on update lifecycle
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return this.querySelector<HTMLElement>(`#${id}`)!
 }
 
@@ -162,10 +164,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       entry = uri
       break
     }
-    // const entry: Entry = uri.endsWith('js') ? { scripts: [uri] } : uri
     this._loadedApps.set(name, [undefined, {
-      // SAFETY: has been mounted on update lifecycle
-
       container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, pluginMountPointSelector.id),
       entry,
       name,

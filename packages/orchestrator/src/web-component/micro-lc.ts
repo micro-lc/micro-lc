@@ -22,7 +22,7 @@ import {
   handleInitImportMapError,
   initImportMapSupport,
   updateApplications,
-  updateGlobalImportapMap,
+  updateGlobalImportMap,
   initBaseExtensions } from './lib'
 import { createQiankunInstance } from './lib/qiankun'
 
@@ -268,7 +268,7 @@ export class Microlc<
       }
 
       // 1 => import-map 💹
-      updateGlobalImportapMap.call<Microlc<E>, [], void>(this)
+      updateGlobalImportMap.call<Microlc<E>, [], void>(this)
 
       // then render to ensure that mount point is in page
       // layout is attached with its own importmap

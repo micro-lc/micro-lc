@@ -5,6 +5,7 @@
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "check:types": "tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
+    "postinstall": "yarn check:types",
     "prebuild": "ts-node scripts/pre-bundle.ts",
     "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
     "test:browser": "wtr --node-resolve",
@@ -19,7 +20,7 @@
     "build:dev": "vite build --mode development",
     "build:prod:min": "vite build --mode production.min",
     "build:dev:min": "vite build --mode development.min",
-    "build": "yarn run -T run-s build:es build:cjs build:dev build:prod",
+    "build": "yarn run -T run-s prebuild build:es build:cjs build:dev build:prod",
     "cleanup": "yarn run -T rimraf ./dist ./.nyc_output ./coverage ./node_modules stats.html",
     "test": "yarn run -T run-s test:unit test:browser",
     "test:firefox": "wtr --node-resolve --playwright --browsers firefox",

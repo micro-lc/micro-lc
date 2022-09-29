@@ -13,7 +13,6 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       external: mode.includes('.') ? ['rxjs'] : [],
       input: {
-        composer: 'src/plugins/composer.ts',
         'micro-lc': 'src/micro-lc.ts',
       },
       output: {

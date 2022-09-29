@@ -5,19 +5,18 @@
     "defaultUrl": "/main",
     "composerUri": "/packages/orchestrator/dist/composer.development.js"
   },
+  "importmap": {
+    "imports": {
+      "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.5.6/esm/es2015/rxjs.min.js"
+    }
+  },
   "layout": {
     "sources": {
-      "uris": "/packages/layout/dist/mlc-layout.js",
-      "importmap": {
-        "imports": {
-          "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.production.min.js",
-          "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.production.min.js",
-          "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.0.0/esm/es2015/rxjs.min.js"
-        }
-      }
+      "uris": "/packages/layout/dist/mlc-layout.js"
     },
     "content": {
       "tag": "mlc-layout",
+      "content": {"tag": "div", "content": "PE$", "attributes": { "slot": "top-bar" }},
       "properties": {
         "userMenu": {
           "userInfoUrl": "/userinfo"

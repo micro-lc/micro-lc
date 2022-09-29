@@ -39,12 +39,6 @@ const createReactApp = (document: Document, props: Props): [HTMLElement, Root] =
 }
 
 describe('iconic react tests', () => {
-  after(() => {
-    for (const child of document.body.children) {
-      child.remove()
-    }
-  })
-
   it('should render an antd icon', async () => {
     const [container, root] = createReactApp(document, {
       library: '@ant-design/icons-svg',
@@ -56,6 +50,7 @@ describe('iconic react tests', () => {
     expect(container.querySelector('path')).to.have.attribute('d')
 
     root.unmount()
+    container.remove()
   })
 
   it('should fail fetching an icon and keep the fallback JSX', async () => {
@@ -71,6 +66,7 @@ describe('iconic react tests', () => {
     expect(container.querySelector('svg')).to.have.property('textContent', '')
 
     root.unmount()
+    container.remove()
   })
 })
 
@@ -95,6 +91,8 @@ describe('iconic web-component tests', () => {
 
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')
+
+    container.remove()
   })
 
   it('should fail fetching an icon and keep the fallback', async () => {
@@ -116,6 +114,8 @@ describe('iconic web-component tests', () => {
     await waitUntil(() => mlciconic.updateComplete)
 
     expect(container.querySelector('svg')).to.have.property('textContent', '')
+
+    container.remove()
   })
 
   it('should show a fontawesome solid icon', async () => {
@@ -139,6 +139,8 @@ describe('iconic web-component tests', () => {
 
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')
+
+    container.remove()
   })
 
   it('should show a fontawesome regular icon', async () => {
@@ -162,5 +164,7 @@ describe('iconic web-component tests', () => {
 
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')
+
+    container.remove()
   })
 })

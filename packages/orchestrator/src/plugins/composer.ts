@@ -5,6 +5,7 @@ import type {
   PluginConfiguration,
 } from '@micro-lc/interfaces/v2'
 import type { MicroApp } from 'qiankun'
+import { ReplaySubject } from 'rxjs'
 
 import type { createComposerContext } from '../composer'
 import type { BaseExtension, ComposableApplicationProperties, Observable } from '../web-component'
@@ -141,11 +142,13 @@ function v1AddSources(config: PluginConfiguration, extraSources: string[]): Plug
 
 async function render(
   composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>): Promise<null> {
+  // const { ReplaySubject } = await import(/* @vite-ignore */'rxjs')
   const appenderPromise = composer(
     config.content,
     {
       context: {
         ...context,
+        eventBus: new ReplaySubject(),
       },
       extraProperties: ['microlcApi', 'currentUser', 'eventBus'],
     }

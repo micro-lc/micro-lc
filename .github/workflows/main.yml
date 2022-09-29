@@ -84,9 +84,6 @@ jobs:
           path: |
             ./.yarn/cache
             ./.yarn/unplugged
-            ./.yarn/install-state.gz
-            ./.pnp.cjs
-            ./.pnp.loader.mjs
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('./package.json') }}
 
       - name: Build Cache
@@ -99,6 +96,7 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
+      - run: yarn install --immutable
       - run: cd packages/${{ matrix.package }}
       # - run: yarn install --immutable
       # - run: yarn npm publish
