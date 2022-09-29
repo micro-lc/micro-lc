@@ -8,9 +8,10 @@ export default defineConfig(({ mode }) => ({
   build: {
     emptyOutDir: false,
     manifest: true,
-    minify: mode === 'production',
+    minify: !mode.includes('development'),
     outDir: 'dist',
     rollupOptions: {
+      external: mode.includes('.') ? ['rxjs'] : [],
       input: {
         composer: 'src/plugins/composer.ts',
         'micro-lc': 'src/micro-lc.ts',
@@ -34,7 +35,7 @@ export default defineConfig(({ mode }) => ({
     alias: [
       {
         find: /process\.env\.NODE_ENV/,
-        replacement: JSON.stringify(mode),
+        replacement: JSON.stringify(mode.split('.')[0]),
       },
       { find: /^.+\/lodash\/cloneDeep.js/, replacement: require.resolve('lodash-es/cloneDeep.js') },
       { find: /^.+\/lodash\/concat.js/, replacement: require.resolve('lodash-es/concat.js') },

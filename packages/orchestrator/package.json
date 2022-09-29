@@ -17,6 +17,8 @@
     "build:cjs": "ts-node scripts/compile.cjs.ts",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
+    "build:prod:min": "vite build --mode production.min",
+    "build:dev:min": "vite build --mode development.min",
     "build": "yarn run -T run-s build:es build:cjs build:dev build:prod",
     "cleanup": "yarn run -T rimraf ./dist ./.nyc_output ./coverage ./node_modules stats.html",
     "test": "yarn run -T run-s test:unit test:browser",

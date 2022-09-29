@@ -8,7 +8,7 @@ import type { MicroApp } from 'qiankun'
 import { ReplaySubject } from 'rxjs'
 
 import type { createComposerContext } from '../composer'
-import type { BaseExtension, ComposableApplicationProperties, MicrolcApi } from '../web-component'
+import type { BaseExtension, ComposableApplicationProperties, Observable } from '../web-component'
 
 export {}
 
@@ -29,9 +29,7 @@ declare global {
 }
 
 type ComposerExtensions = BaseExtension & {
-  user?: {
-    getUser?: () => Record<string, unknown> | undefined
-  }
+  user?: Observable<Record<string, unknown>>
 }
 
 /**
@@ -163,8 +161,8 @@ async function render(
 
 function fn(exports: ComposerModule, _: Window) {
   let composerConfig: ResolvedConfig | undefined
-  let parent: HTMLElement | null = null
-  let api: {composer: typeof createComposerContext; microlcApi: MicrolcApi<ComposerExtensions>} | undefined
+  // let parent: HTMLElement | null = null
+  // let api: {composer: typeof createComposerContext; microlcApi: MicrolcApi<ComposerExtensions>} | undefined
 
   /**
    * @deprecated will be removed on 1.0.0
@@ -226,19 +224,19 @@ function fn(exports: ComposerModule, _: Window) {
     ): Promise<null> {
       logger(name, 'starting mounting...')
 
-      parent = container
-      api = { composer: createComposerContext, microlcApi }
+      // parent = container
+      // api = { composer: createComposerContext, microlcApi }
 
-      let done = Promise.resolve(null)
-
-      if (composerConfig && container) {
-        done = render(createComposerContext, composerConfig, container, {
-          currentUser: microlcApi.getExtensions().user?.getUser?.(),
-        })
-      }
+      microlcApi.subscribe(({ user }) => {
+        if (composerConfig && container && user) {
+          render(createComposerContext, composerConfig, container, {
+            currentUser: user as Record<string, unknown>,
+          }).catch(console.error)
+        }
+      })
 
       logger(name, 'mount has finished...')
-      return done
+      return Promise.resolve(null)
     },
 
     async unmount({ name }: {name: string}) {
@@ -248,16 +246,9 @@ function fn(exports: ComposerModule, _: Window) {
 
     async update() {
       logger('starting update...')
-      let done = Promise.resolve(null)
-
-      if (composerConfig && parent && api) {
-        done = render(api.composer, composerConfig, parent, {
-          currentUser: api.microlcApi.getExtensions().user?.getUser?.(),
-        })
-      }
 
       logger('update has finished...')
-      return done
+      return Promise.resolve(null)
     },
   })
 }
