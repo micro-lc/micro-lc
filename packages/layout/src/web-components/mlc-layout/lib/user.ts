@@ -1,4 +1,4 @@
-import type { UserMenu } from '../../config'
+import type { UserMenu } from '../config'
 
 export const mapUserFields = (userInfo: Record<string, unknown>, userConfig?: UserMenu): Record<string, unknown> => {
   const { userPropertiesMapping } = userConfig ?? {}

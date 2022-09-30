@@ -3,10 +3,10 @@ import type { MenuProps } from 'antd'
 import { Button, Divider, Menu, Switch } from 'antd'
 import React, { useMemo } from 'react'
 
-import type { HelpMenu, Logo, MenuItem, Mode } from '../../config'
 import type { Translations } from '../../lang'
-import type { OnThemeChange, User, VoidFn } from '../../mlc-layout/lib/types'
-import { Theme } from '../../mlc-layout/lib/types'
+import type { HelpMenu, Logo, MenuItem, Mode } from '../../web-components/mlc-layout/config'
+import type { OnThemeChange, User, VoidFn } from '../../web-components/mlc-layout/lib/types'
+import { Theme } from '../../web-components/mlc-layout/lib/types'
 import { UserMenu } from '../UserMenu'
 import { buildAntMenuItems } from '../utils/menu'
 

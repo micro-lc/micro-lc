@@ -3,8 +3,8 @@ import { Layout, Menu } from 'antd'
 import type { MenuProps } from 'antd'
 import React, { useMemo } from 'react'
 
-import type { MenuItem, Mode } from '../../config'
 import type { Translations } from '../../lang'
+import type { MenuItem, Mode } from '../../web-components/mlc-layout/config'
 import type { AntMenuItem } from '../utils/menu'
 import { buildAntMenuItems } from '../utils/menu'
 

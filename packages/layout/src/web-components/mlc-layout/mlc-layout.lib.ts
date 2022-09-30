@@ -1,7 +1,7 @@
-import type { MenuItem } from '../config'
-import type { WrapperProps } from '../react-components'
-import { COLLAPSE_KEY } from '../react-components/SideBar'
+import type { WrapperProps } from '../../react-components'
+import { COLLAPSE_KEY } from '../../react-components/SideBar'
 
+import type { MenuItem } from './config'
 import type { Theme } from './lib/types'
 import type { MlcLayout } from './mlc-layout'
 

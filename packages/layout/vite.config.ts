@@ -23,15 +23,17 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       external: mode === 'min' ? ['react', 'react-dom'] : [],
       input: {
-        'mlc-layout': 'src/index.ts',
+        index: 'src/index.ts',
+        'mlc-antd-theme-manager': 'src/web-components/mlc-antd-theme-manager/index.ts',
+        'mlc-layout': 'src/web-components/mlc-layout/index.ts',
       },
       output: {
         entryFileNames: ({ name }) => (mode !== 'min' ? `${name}.js` : `${name}.${mode}.js`),
-        // manualChunks: (id) => {
-        //   if (id.match(/qiankun/)) {
-        //     return 'qiankun'
-        //   }
-        // },
+      //   manualChunks: (id) => {
+      //     if (id.match(/@ctrl\/tinycolor/)) {
+      //       return '@ctrl/tinycolor'
+      //     }
+      //   },
       },
       plugins: [visualizer(), rollupNodePolyFill()],
     },

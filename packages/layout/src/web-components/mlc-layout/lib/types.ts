@@ -21,7 +21,3 @@ export interface MlcLayoutMicrolcApiExtension {
 }
 
 export type MicrolcApiExtension = BaseExtension & MlcLayoutMicrolcApiExtension
-  // TODO: remove httpClient override when typing is available
-  & { httpClient: { get: (url: string) => Promise<Record<string, unknown>> } }
-
-

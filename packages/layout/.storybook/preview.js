@@ -1,5 +1,6 @@
 import {html} from 'lit'
-import {MlcLayout} from '../src/mlc-layout'
+import {MlcLayout} from '../src/web-components/mlc-layout'
+import {MlcAntdThemeManager} from '../src'
 
 export const parameters = {
   actions: {argTypesRegex: '^on[A-Z].*'},
@@ -83,7 +84,6 @@ class MicroLc extends HTMLElement {
 }
 
 customElements.define('micro-lc', MicroLc)
-customElements.define('mlc-layout', MlcLayout)
 
 export const decorators = [
   story => html`<micro-lc>${story()}</micro-lc>`

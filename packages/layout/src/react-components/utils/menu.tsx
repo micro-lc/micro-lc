@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd'
 import type { ReactNode } from 'react'
 import React, { Suspense } from 'react'
 
-import type { Icon as IconConfig, MenuItem, Mode } from '../../config'
+import type { Icon as IconConfig, MenuItem, Mode } from '../../web-components/mlc-layout/config'
 
 import { getLocalizedText } from './i18n'
 

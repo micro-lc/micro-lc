@@ -1,5 +1,5 @@
-import type { LocalizedText } from '../../config'
-import { DEFAULT_LANGUAGE } from '../../mlc-layout/lib/translation-loader'
+import type { LocalizedText } from '../../web-components/mlc-layout/config'
+import { DEFAULT_LANGUAGE } from '../../web-components/mlc-layout/lib/translation-loader'
 
 export const getLocalizedText = (localizedText: LocalizedText, lang = DEFAULT_LANGUAGE): string => {
   if (typeof localizedText === 'string') { return localizedText }
