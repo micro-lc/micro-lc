@@ -13408,6 +13408,7 @@ __metadata:
   resolution: "micro-lc@workspace:."
   dependencies:
     "@types/eslint": ^8.4.6
+    "@types/glob": ^8.0.0
     "@types/rimraf": ^3.0.2
     "@typescript-eslint/eslint-plugin": ^5.37.0
     "@typescript-eslint/parser": ^5.37.0
@@ -13425,6 +13426,7 @@ __metadata:
     eslint-plugin-sort-keys-fix: ^1.1.2
     eslint-plugin-typescript-sort-keys: ^2.1.0
     eslint-visitor-keys: ^3.3.0
+    glob: ^8.0.3
     husky: ^8.0.1
     jsonc-eslint-parser: ^2.1.0
     lit-html: ^2.3.1
