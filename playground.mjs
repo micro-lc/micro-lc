@@ -1,4 +1,3 @@
-/* eslint-disable require-atomic-updates */
 import { lstatSync } from 'fs'
 import { lstat } from 'fs/promises'
 import { dirname, resolve } from 'path'
@@ -19,29 +18,23 @@ const main = async () => {
     config: {
       middleware: [
         async function rewriteIndex(ctx, next) {
-          const oneOfThem = [...folders, '/packages/orchestrator', '/packages/layout'].reduce((oneOtThem, folder) => {
-            return oneOtThem || ctx.url.includes(folder)
-          }, false)
+          const [oneOfThem, playgroundScope] = folders.reduce(([oneOtThem, prevFolder], folder) => {
+            return [oneOtThem || ctx.url.includes(folder), ctx.url.includes(folder) ? folder : prevFolder]
+          }, [false, undefined])
 
-          const url = await Promise.allSettled([
-            lstat(resolve(dir, `.${ctx.url}`)),
-            lstat(resolve(dir, `.${ctx.url}`, 'index.html')),
-          ]).then(([
-            { status: directStatus, value: directValue },
-            { status: indexStatus, value: indexValue },
-          ]) => {
-            if (directStatus === 'fulfilled' || indexStatus === 'fulfilled') {
-              if (directValue?.isFile()) {
-                return ctx.url
-              }
+          if (oneOfThem) {
+            const incoming = ctx.url
+            const url = await lstat(resolve(dir, `.${incoming}`))
+              .then((stat) => (stat.isFile() ? incoming : playgroundScope))
+              .catch(() => playgroundScope)
 
-              if (indexValue?.isFile()) {
-                return ctx.url.endsWith('/') ? `${ctx.url}index.html` : `${ctx.url}/index.html`
-              }
-            }
-          })
-          if (oneOfThem && url) {
+            // eslint-disable-next-line require-atomic-updates
             ctx.url = url
+
+            return next()
+          }
+
+          if (ctx.url.startsWith('/packages') || ctx.url.startsWith('/back-kit')) {
             return next()
           }
 

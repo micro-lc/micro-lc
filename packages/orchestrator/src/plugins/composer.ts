@@ -63,7 +63,6 @@ function v1Adapter(input: V1Content | Content, sources: string[]): Content {
     }
 
     const { tag, type, url, attributes: inAttributes, content: inContent, properties } = input as V1Component
-    console.log(type)
     typeof url === 'string' && sources.push(url)
     const attributes = (inAttributes ?? {}) as Record<string, string>
     const content = (inContent as V1Content | undefined) && v1Adapter(inContent as V1Content, sources)

@@ -8,5 +8,5 @@ export const getLocalizedText = (localizedText: LocalizedText, lang = DEFAULT_LA
 
   if (localizedText[lang.substring(0, 2)]) { return localizedText[lang.substring(0, 2)] }
 
-  return localizedText.toString()
+  return DEFAULT_LANGUAGE
 }

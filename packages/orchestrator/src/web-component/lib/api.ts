@@ -8,12 +8,13 @@ import type { Microlc } from '../micro-lc'
 import type { MicrolcEvent, Observable } from './events'
 import type { BaseExtension } from './extensions'
 import type { QiankunMicroApp } from './qiankun'
-import { getCurrentApplicationId } from './router'
+import { currentApplication$, getCurrentApplicationId } from './router'
 
 export interface MicrolcApi<
   T extends BaseExtension, E extends MicrolcEvent = MicrolcEvent
 > extends Observable<Partial<E>> {
   readonly applyImportMap: (id: string, importmap: ImportMap) => void
+  readonly currentApplication$: Observable<string | undefined>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
@@ -36,6 +37,7 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
 
   return () => Object.freeze({
     applyImportMap: (id: string, importmap: ImportMap) => Object.freeze({ ...this._applicationsImportMap.createSetMount(id, importmap) }),
+    currentApplication$,
     getApplications: () => Object.freeze([...this._config.applications]),
     getCurrentApplication: () => Object.freeze({ ...getCurrentApplicationId() }),
     getCurrentConfig: () => Object.freeze({ ...this._config }),

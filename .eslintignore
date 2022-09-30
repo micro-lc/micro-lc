@@ -2,6 +2,7 @@
 .yarn/*
 
 dist/
+node_modules/
 
 .vscode/
 .idea/

@@ -2,7 +2,7 @@
   "$schema": "../../packages/interfaces/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
-    "defaultUrl": "/main",
+    "defaultUrl": "./main",
     "composerUri": "/packages/orchestrator/dist/composer.development.js",
     "4xx": {
       "404": "/packages/orchestrator/dist/404.html"
@@ -84,13 +84,19 @@
     {
       "id": "main",
       "integrationMode": "compose",
-      "route": "/main",
+      "route": "./main",
       "config": {
         "sources": {
           "uris": "data:text/javascript;base64,CmltcG9ydCB7UmVwbGF5U3ViamVjdH0gZnJvbSAncnhqcycKCmNvbnNvbGUubG9nKFJlcGxheVN1YmplY3QpCg=="
         },
         "content": {"tag": "div", "properties": {"textContent": "Ciao Main"}}
       }
+    },
+    {
+      "id": "application_2",
+      "integrationMode": "compose",
+      "route": "./ingredients",
+      "config": "./ingredients.json"
     }
   ]
 }

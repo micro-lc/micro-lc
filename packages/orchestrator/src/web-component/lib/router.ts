@@ -1,4 +1,5 @@
 import type { LoadableApp } from 'qiankun'
+import { BehaviorSubject } from 'rxjs'
 
 import type { ErrorCodes } from '../../logger'
 import logger from '../../logger'
@@ -9,6 +10,7 @@ import type { QiankunMicroApp } from './qiankun'
 import type { ComposableApplicationProperties } from './update'
 
 let currentApplication: string | undefined
+const currentApplicationBus = new BehaviorSubject<string | undefined>(undefined)
 const applicationHandlers = new Map<string, QiankunMicroApp>()
 const pending: Promise<null>[] = []
 
@@ -28,6 +30,8 @@ export function rerouteErrorHandler(err: TypeError): null {
   logger.error('51' as ErrorCodes.UpdateError, err.message)
   return null
 }
+
+export const currentApplication$ = currentApplicationBus.asObservable()
 
 export function getCurrentApplicationId(): {handlers: QiankunMicroApp | undefined; id: string} | undefined {
   return currentApplication !== undefined ? {
@@ -126,9 +130,16 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
     applicationHandlers.set(currentApplication, handlers)
   }
 
-  // SAFETY: we ensured handlers are available
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  pending.push(handlers.bootstrapPromise.then(() => handlers!.mount()))
+
+  pending.push(
+    handlers.bootstrapPromise
+      // SAFETY: we ensured handlers are available
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .then(() => handlers!.mount().then(() => {
+        currentApplication && currentApplicationBus.next(currentApplication)
+        return null
+      }))
+  )
 }
 
 function popStateListener<T extends BaseExtension>(this: Microlc<T>, event: PopStateEvent): void {

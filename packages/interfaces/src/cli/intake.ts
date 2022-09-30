@@ -76,7 +76,6 @@ export async function intake(input: string | Buffer, path: string, opts: IntakeO
 
   switch ([inputVersion, to].join('')) {
   case 'v1v2':
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, no-fallthrough
   default: return one2two(json)
   }
 }

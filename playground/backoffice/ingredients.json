@@ -1,0 +1,14 @@
+{
+    "type": "element",
+    "url": "/back-kit/latest/bk-web-components.esm.js",
+    "tag": "bk-crud-client",
+    "properties": {
+      "basePath": "/v2/ingredients",
+      "dataSchema": {
+        "type": "object",
+        "properties": {
+          "_id": {"type": "string"}
+        }
+      }
+    }
+}
