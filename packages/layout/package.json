@@ -19,8 +19,8 @@
     "@micro-lc/iconic": "workspace:*",
     "antd": "^4.23.3",
     "lit": "^2.3.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -48,8 +48,8 @@
     "@types/babel__core": "^7",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "@types/sinon": "^10.0.13",
     "@web/dev-server-esbuild": "^0.3.2",
     "@web/dev-server-rollup": "^0.3.19",

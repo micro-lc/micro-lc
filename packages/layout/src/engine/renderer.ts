@@ -1,21 +1,24 @@
 import type { FunctionComponent } from 'react'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import type { Root } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 
 export interface LitCreatable<P = {children?: React.ReactNode}> {
   Component: FunctionComponent<P>
   container?: HTMLElement | null
   create?: () => P
   renderRoot: HTMLElement | ShadowRoot
+  root?: Root
 }
 
-export function unmount<P, T extends LitCreatable<P>>(this: T): boolean {
-  const { container: thisContainer, renderRoot } = this
+export function createReactRoot<P, T extends LitCreatable<P>>(this: T): void {
+  if (this.container) {
+    this.root = createRoot(this.container)
+  }
+}
 
-  let container = renderRoot
-  if (thisContainer) { container = thisContainer }
-
-  return ReactDOM.unmountComponentAtNode(container as HTMLElement)
+export function unmount<P, T extends LitCreatable<P>>(this: T): void {
+  this.root?.unmount()
 }
 
 export function reactRender<P extends Record<string, unknown>, T extends LitCreatable<P>>(
@@ -23,15 +26,12 @@ export function reactRender<P extends Record<string, unknown>, T extends LitCrea
   conditionalRender = true,
   ...children: React.ReactNode[]
 ): P | undefined {
-  const { Component, create, container: thisContainer, renderRoot } = this
-
-  let container = renderRoot
-  if (thisContainer) { container = thisContainer }
+  const { Component, create, root } = this
 
   const props = create?.call(this)
 
-  if (props && conditionalRender) {
-    ReactDOM.render(React.createElement(Component, { ...props }, ...children), container)
+  if (root && props && conditionalRender) {
+    root.render(React.createElement(Component, { ...props }, ...children))
   }
 
   return props

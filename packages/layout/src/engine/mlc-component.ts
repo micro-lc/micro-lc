@@ -3,14 +3,16 @@ import { LitElement, unsafeCSS } from 'lit'
 import { property } from 'lit/decorators.js'
 import type React from 'react'
 import type { FunctionComponent } from 'react'
+import type { Root } from 'react-dom/client'
 
 import type { LitCreatable } from './renderer'
-import { reactRender, unmount } from './renderer'
+import { createReactRoot, reactRender, unmount } from './renderer'
 import type { StyledComponent } from './styled-components'
 import { adoptStylesheet, adoptStylesOnShadowRoot } from './styled-components'
 
 export class MlcComponent<P = { children?: React.ReactNode }> extends LitElement implements LitCreatable<P>, StyledComponent {
   protected dynamicStyleSheet?: string
+  root?: Root
   _adoptedStyleSheets: CSSResultOrNative[] = []
 
   @property()
@@ -41,6 +43,9 @@ export class MlcComponent<P = { children?: React.ReactNode }> extends LitElement
   protected firstUpdated(_changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(_changedProperties)
     adoptStylesOnShadowRoot.call(this)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    createReactRoot.call(this)
   }
 
   protected updated(changedProperties: Map<string | number | symbol, unknown>): void {
@@ -58,7 +63,9 @@ export class MlcComponent<P = { children?: React.ReactNode }> extends LitElement
   }
 
   disconnectedCallback(): void {
-    unmount.bind<() => boolean>(this)()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    unmount.call(this)
     this._shouldRenderWhenConnected = true
 
     super.disconnectedCallback()
