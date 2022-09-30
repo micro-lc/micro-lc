@@ -4,6 +4,7 @@
   "scripts": {
     "postinstall": "yarn make-types",
     "make-types": "ts-node ./scripts/make-types.ts",
+    "check:types": "yarn make-types && yarn tsc --project ./scripts/tsconfig.types.json",
     "storybook": "start-storybook -p 6007",
     "build:prod": "vite build --mode production",
     "build:min": "vite build --mode min",

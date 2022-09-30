@@ -74,7 +74,6 @@ const menuItems: MlcLayout['menuItems'] = [
   },
 ]
 
-// @ts-expect-error // We do not need to implement all the members
 const microlcApiExtensions: MicrolcApiExtension = {
   head: {
     setIcon: attrs => action('extensions.head.setIcon')(attrs),
@@ -86,17 +85,13 @@ const microlcApiExtensions: MicrolcApiExtension = {
     action('extensions.httpClient.get')(url)
     return Promise.resolve({ fullName: 'Edoardo Pessina' })
   },
-  language: {
-    getLanguage: () => 'en',
-    setLanguage: () => { /* no-op */ },
-  },
 }
 
-// @ts-expect-error // We do not need to implement all the members
-const microlcApi: MlcLayout['microlcApi'] = {
+const microlcApi: Partial<MlcLayout['microlcApi']> = {
   getExtensions: () => microlcApiExtensions,
   router: {
     goToApplication: (id) => action('router.goToApplication')(id),
+    goToErrorPage: (status) => action('route.goToErrorPage')(status),
     open: (url, target) => action('router.open')(url, target),
   },
   setExtension: (key, val) => {

@@ -1,4 +1,4 @@
-import type { BaseExtension } from '@micro-lc/orchestrator/dist/types'
+import type { BaseExtension } from '@micro-lc/orchestrator'
 
 export interface User {
   avatar?: string

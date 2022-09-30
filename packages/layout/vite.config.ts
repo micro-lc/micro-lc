@@ -83,6 +83,6 @@ export default defineConfig(({ mode }) => ({
     alias: {
       path: 'rollup-plugin-node-polyfills/polyfills/path',
     },
-    dedupe: ['react', 'react-dom', 'antd'],
+    dedupe: ['react', 'react-dom'],
   },
 }))

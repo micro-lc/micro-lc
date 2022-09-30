@@ -2,6 +2,7 @@ const rollupNodePolyFill = require('rollup-plugin-node-polyfills')
 const {mergeConfig} = require('vite')
 const {default: tsconfigPaths} = require('vite-tsconfig-paths')
 const {default: dynamicImport} = require('vite-plugin-dynamic-import')
+const {replaceCodePlugin} = require('vite-plugin-replace')
 const {default: postcssAntDynamicTheme} = require('@micro-lc/interfaces/postcss-ant-dynamic-theme')
 
 /** @type {import('@storybook/core-common').StorybookConfig} */
@@ -21,6 +22,14 @@ module.exports = {
             return checks ? true : undefined
           }
         }),
+        replaceCodePlugin({
+          replacements: [
+            {
+              from: './lang',
+              to: './../../../lang'
+            }
+          ]
+        })
       ],
       css: {
         preprocessorOptions: {

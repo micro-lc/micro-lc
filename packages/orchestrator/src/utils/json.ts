@@ -25,7 +25,7 @@ function isSchemaOptions(input: SchemaOptions): input is MultipleSchemas {
 
 export async function jsonFetcher(url: string): Promise<unknown> {
   return fetch(
-    new URL(url, window.location.origin),
+    new URL(url, window.document.baseURI),
     {
       headers: {
         Accept: acceptedTypes.join(', '),

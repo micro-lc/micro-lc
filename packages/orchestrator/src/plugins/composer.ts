@@ -186,20 +186,24 @@ function fn(exports: ComposerModule, _: Window) {
       microlcApi: { getExtensions },
       schema,
     }: ComposableApplicationProperties & {name: string}) {
-      const { json: { validator, fetcher } } = getExtensions()
-      logger(name, 'starting bootstrap...')
-
       let resolvedConfig = config
-      if (schema && typeof config === 'string') {
-        const json = await fetcher(config)
-        resolvedConfig = await validator<PluginConfiguration>(
-          json,
-          schema,
-          {
-            defaultValue: { content: v1Adapter(json as V1Content, v1AdapterUris) },
-            file: `plugin config -> ${name}`,
-          }
-        )
+
+      const { json: jsonExtension } = getExtensions()
+      if (jsonExtension) {
+        const { validator, fetcher } = jsonExtension
+        logger(name, 'starting bootstrap...')
+
+        if (schema && typeof config === 'string') {
+          const json = await fetcher(config)
+          resolvedConfig = await validator<PluginConfiguration>(
+            json,
+            schema,
+            {
+              defaultValue: { content: v1Adapter(json as V1Content, v1AdapterUris) },
+              file: `plugin config -> ${name}`,
+            }
+          )
+        }
       }
 
       // 🗑️ no need for this on config v2
@@ -229,9 +233,9 @@ function fn(exports: ComposerModule, _: Window) {
       // api = { composer: createComposerContext, microlcApi }
 
       microlcApi.subscribe(({ user }) => {
-        if (composerConfig && container && user) {
+        if (composerConfig && container) {
           render(createComposerContext, composerConfig, container, {
-            currentUser: user as Record<string, unknown>,
+            currentUser: user as Record<string, unknown> | undefined,
           }).catch(console.error)
         }
       })

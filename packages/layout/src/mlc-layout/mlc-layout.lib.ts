@@ -6,12 +6,12 @@ import type { Theme } from './lib/types'
 import type { MlcLayout } from './mlc-layout'
 
 function onHelpMenuClick(this: MlcLayout) {
-  this.helpMenu?.helpLink && this.microlcApi?.router.open(this.helpMenu.helpLink, '_blank')
+  this.helpMenu?.helpLink && this.microlcApi?.router?.open(this.helpMenu.helpLink, '_blank')
 }
 
 // TODO: should we one also an application?
 function onLogoClick(this: MlcLayout) {
-  this.logo?.href && this.microlcApi?.router.open(this.logo.href)
+  this.logo?.href && this.microlcApi?.router?.open(this.logo.href)
 }
 
 function findMenuItemById(menuItems: MenuItem[], id: string): MenuItem | undefined {
@@ -35,12 +35,12 @@ function onSelect(this: MlcLayout, id: string) {
 
   if (menuItem?.type === 'application') {
     this._selectedKeys = [menuItem.id] as string[]
-    this.microlcApi?.router.goToApplication(menuItem.id)
+    this.microlcApi?.router?.goToApplication(menuItem.id)
     return
   }
 
   if (menuItem?.type === 'href') {
-    this.microlcApi?.router.open(menuItem.href, menuItem.target)
+    this.microlcApi?.router?.open(menuItem.href, menuItem.target)
   }
 }
 
@@ -62,7 +62,9 @@ export function createProps(this: MlcLayout): WrapperProps {
     locale: this._locale,
     logo: this.logo,
     menuItems: this.menuItems,
-    mode: this.mode,
+    // SAFETY: it is defaulted on webcomponent construction
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    mode: this.mode!,
     onHelpMenuClick: () => { onHelpMenuClick.bind(this)() },
     onLogoCLick: () => { onLogoClick.bind(this)() },
     onOverlaySideBarTriggerClick: () => { this._sideBarCollapsed = !this._sideBarCollapsed },

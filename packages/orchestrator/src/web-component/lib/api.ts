@@ -17,7 +17,7 @@ export interface MicrolcApi<
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
-  readonly getExtensions: () => Readonly<T>
+  readonly getExtensions: () => Readonly<Partial<T>>
   readonly router: {
     goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): void
     goToErrorPage(statusCode: number): void

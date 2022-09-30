@@ -18,10 +18,10 @@ import { createProps } from './mlc-layout.lib'
 export class MlcLayout extends MlcComponent<WrapperProps> {
   static styles = [cssResult]
 
-  @property({ attribute: 'mode' }) mode: Mode = 'overlaySideBar'
-  @property({ attribute: 'enable-dark-mode' }) enableDarkMode = false
+  @property({ attribute: 'mode' }) mode?: Mode = 'overlaySideBar'
+  @property({ attribute: 'enable-dark-mode' }) enableDarkMode?: boolean = false
 
-  @property({ attribute: false }) microlcApi?: MicrolcApi<MicrolcApiExtension>
+  @property({ attribute: false }) microlcApi?: Partial<MicrolcApi<MicrolcApiExtension>>
   @property({ attribute: false }) logo?: Logo
   @property({ attribute: false }) menuItems?: MenuItem[]
   @property({ attribute: false }) helpMenu?: HelpMenu
@@ -59,8 +59,8 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
 
     this.appendChild(this.ownerDocument.createElement('slot'))
 
-    this.head?.title && this.microlcApi?.getExtensions().head.setTitle(this.head.title)
-    this.head?.favIconUrl && this.microlcApi?.getExtensions().head.setIcon({ href: this.head.favIconUrl })
+    this.head?.title && this.microlcApi?.getExtensions?.().head?.setTitle(this.head.title)
+    this.head?.favIconUrl && this.microlcApi?.getExtensions?.().head?.setIcon({ href: this.head.favIconUrl })
 
     this._lang = getLang(this.microlcApi)
 
@@ -69,7 +69,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
       .catch(() => { /* no-op */ })
 
     if (this.userMenu?.userInfoUrl) {
-      this.microlcApi?.getExtensions().httpClient(this.userMenu.userInfoUrl)
+      this.microlcApi?.getExtensions?.().httpClient?.(this.userMenu.userInfoUrl)
         .then(res =>
           (res.ok
             ? res.json() as Promise<Record<string, unknown>>
@@ -78,8 +78,8 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
         .then(userInfo => {
           this._user = mapUserFields(userInfo, this.userMenu)
 
-          this.microlcApi?.set({ user: userInfo })
-          return this.microlcApi?.getCurrentApplication().handlers?.update?.({})
+          this.microlcApi?.set?.({ user: userInfo })
+          return this.microlcApi?.getCurrentApplication?.().handlers?.update?.({})
         })
         .catch(console.error)
     }

@@ -151,6 +151,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
   ]
 
   errorPages.forEach(([statusCode, uri]) => {
+    console.log(statusCode, uri)
     const name = `${this._instance}-${statusCode}`
     let entry: Entry
     switch (uri.match(/\.([^.]+)$/)?.[0]) {

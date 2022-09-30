@@ -1,8 +1,6 @@
 import { dirname, resolve } from 'path'
 
-import type { MicrolcApi } from '@micro-lc/orchestrator'
-
-import type { MicrolcApiExtension } from './types'
+import type { BaseExtension, MicrolcApi } from '@micro-lc/orchestrator'
 
 export type Locale = Record<string, unknown>
 
@@ -31,8 +29,8 @@ export const supportedLanguages = [DEFAULT_LANGUAGE, 'it']
 
 export const getCurrentLocale = (): CurrentLocale => currentLocale
 
-export const getLang = (microlcApi?: MicrolcApi<MicrolcApiExtension>): string => {
-  const microLcLang = microlcApi?.getExtensions().language.getLanguage() ?? ''
+export const getLang = (microlcApi?: Partial<MicrolcApi<BaseExtension>>): string => {
+  const microLcLang = microlcApi?.getExtensions?.().language?.getLanguage() ?? window.navigator.language
 
   if (supportedLanguages.includes(microLcLang)) { return microLcLang }
 
@@ -43,7 +41,7 @@ export const getLang = (microlcApi?: MicrolcApi<MicrolcApiExtension>): string =>
 
 export async function loadTranslations(lang: string): Promise<void> {
   const { pathname, origin } = new URL(import.meta.url)
-  const resource = `${origin}${resolve(dirname(pathname), `../../lang/${lang}.json`)}`
+  const resource = `${origin}${resolve(dirname(pathname), `./lang/${lang}.json`)}`
 
   const response = await fetch(resource)
 

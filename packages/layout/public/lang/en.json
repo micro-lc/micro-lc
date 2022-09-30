@@ -1,5 +1,5 @@
 {
-  "$schema": "./lang.schema.json",
+  "$schema": "../../src/lang/lang.schema.json",
   "MLC-LAYOUT": {
     "collapse": "Collapse",
     "light": "Light",
