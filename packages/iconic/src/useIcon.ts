@@ -1,27 +1,35 @@
-import { createElement, lazy } from 'react'
+import { createElement, forwardRef, lazy } from 'react'
 import type {
-  FunctionComponent,
   SVGProps as ReactSVGProps,
+  ForwardedRef,
+  Key,
+  ReactElement,
+  RefAttributes,
+  ForwardRefExoticComponent,
   LazyExoticComponent,
-  DOMElement,
+  PropsWithoutRef,
 } from 'react'
 
 import importIcon, { toArray } from './import-icon'
-import type { IconComponent, ResourceObject } from './import-icon'
+import type { ResourceObject, PathComponent, SvgComponent } from './import-icon'
 
 export type SVGProps = ReactSVGProps<HTMLElement>
 
-function iconCompose({ tag, attrs, children, key }: IconComponent, props?: SVGProps): DOMElement<SVGProps, HTMLElement> {
-  return createElement(tag, { ...attrs, ...props, key }, toArray(children).map((el, idx) => el && iconCompose({ ...el, key: idx })))
+function iconPathCompose({ attrs }: PathComponent, { key, ref }: PropsWithoutRef<{key: Key}> & RefAttributes<Element>) {
+  return createElement('path', { ...attrs, key, ref })
+}
+
+function iconSvgCompose({ attrs, children = [] }: SvgComponent, { ref, ...props }: SVGProps & RefAttributes<Element>): ReactElement {
+  return createElement('svg', { ...attrs, ...props, ref }, ...toArray(children).map((path, key) => iconPathCompose(path, { key })))
 }
 
 export function useIcon(
   selector: string, resource: ResourceObject, errorHandler?: (msg: string) => void
-): LazyExoticComponent<FunctionComponent<SVGProps>> {
-  const defaultReturnValue = { default: (props: SVGProps) => createElement('svg', props) }
+): LazyExoticComponent<ForwardRefExoticComponent<SVGProps & RefAttributes<HTMLElement>>> {
+  const defaultReturnValue = { default: forwardRef((props: SVGProps, ref: ForwardedRef<HTMLElement>) => createElement('svg', { props, ref })) }
   return lazy(() => importIcon(selector, resource)
     .then((icon) => (
-      { default: (props: SVGProps) => iconCompose(icon, props) }
+      { default: forwardRef((props: SVGProps, ref: ForwardedRef<HTMLElement>) => iconSvgCompose(icon as SvgComponent, { ...props, ref })) }
     ))
     .catch((err: TypeError) => {
       errorHandler?.(err.message)

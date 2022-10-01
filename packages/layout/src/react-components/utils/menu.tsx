@@ -2,7 +2,7 @@ import Icon, { DownOutlined } from '@ant-design/icons'
 import { useIcon } from '@micro-lc/iconic'
 import type { MenuProps } from 'antd'
 import type { ReactNode } from 'react'
-import React, { Suspense } from 'react'
+import React, { createRef, Suspense } from 'react'
 
 import type { Icon as IconConfig, MenuItem, Mode } from '../../web-components/mlc-layout/config'
 
@@ -11,11 +11,12 @@ import { getLocalizedText } from './i18n'
 export type AntMenuItem = Required<MenuProps>['items'][number];
 
 const DynamicIcon: React.FC<{ defaultSelector: string; iconConfig?: IconConfig }> = ({ defaultSelector, iconConfig }) => {
-  const iconSvg = useIcon(iconConfig?.selector ?? defaultSelector, iconConfig?.library ?? '@ant-design/icons-svg')
+  const ref = createRef<HTMLSpanElement>()
+  const IconSvg = useIcon(iconConfig?.selector ?? defaultSelector, iconConfig?.library ?? '@ant-design/icons-svg')
 
   return (
-    <Suspense fallback={<svg></svg>}>
-      <Icon className='anticon-link mlc-menu-item-icon' component={iconSvg}/>
+    <Suspense fallback={<span ref={ref}></span>}>
+      <Icon className='anticon-link mlc-menu-item-icon' component={IconSvg} ref={ref} />
     </Suspense>
   )
 }

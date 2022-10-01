@@ -16,6 +16,15 @@ export interface IconComponent {
   tag: 'svg' | 'path'
 }
 
+export interface PathComponent extends Omit<IconComponent, 'children'> {
+  tag: 'path'
+}
+
+export interface SvgComponent extends IconComponent {
+  children?: PathComponent | PathComponent[]
+  tag: 'svg'
+}
+
 interface AntdIconDefaultImport {
   icon: IconComponent
 }
