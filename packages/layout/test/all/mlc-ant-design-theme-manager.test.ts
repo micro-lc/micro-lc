@@ -81,7 +81,7 @@ describe('...', () => {
     expect(setStyleStub).to.be.calledOnce
 
     const [receivedArgs] = setStyleStub.args
-    expect(receivedArgs).to.deep.equal([{ global: expectedVars }])
+    expect(receivedArgs).to.deep.equal([{ global: expectedVars, nodes: {} }])
 
     sandbox.restore()
   })

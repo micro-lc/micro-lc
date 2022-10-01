@@ -1,14 +1,42 @@
 {
-    "type": "element",
-    "url": "/back-kit/latest/bk-web-components.esm.js",
-    "tag": "bk-crud-client",
-    "properties": {
-      "basePath": "/v2/ingredients",
-      "dataSchema": {
-        "type": "object",
-        "properties": {
-          "_id": {"type": "string"}
+  "$schema": "../../packages/interfaces/schemas/v2/plugin.schema.json",
+  "sources": {
+    "uris": "/back-kit/latest/bk-web-components.esm.js",
+    "importmap": {
+      "scopes": {
+        "/back-kit/latest/bk-web-components.esm.js": {
+          "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.production.min.js",
+          "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.production.min.js"
         }
       }
     }
+  },
+  "content": [
+    {
+      "tag": "div",
+      "attributes": {
+        "style": "background-color: white; height: 100%"
+      },
+      "content": [
+        {
+          "tag": "bk-title",
+          "properties": {
+            "content": "Ciao"
+          }
+        },
+        {
+          "tag": "bk-crud-client",
+          "properties": {
+            "basePath": "/v2/ingredients",
+            "dataSchema": {
+              "type": "object",
+              "properties": {
+                "_id": { "type": "string" }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
 }

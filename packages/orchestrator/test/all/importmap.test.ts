@@ -9,7 +9,6 @@ describe('importmap manipulation tests', () => {
   afterEach(() => {
     // ensure flushing
     expect(document.head.querySelectorAll('script[type=importmap]')).to.have.length(0)
-    expect(document.head.querySelectorAll('script[type=importmap-shim]')).to.have.length(0)
   })
 
   it('should assign importmap content to a tag', () => {
@@ -20,8 +19,7 @@ describe('importmap manipulation tests', () => {
 
   it('should create an importmap element according with shim option', () => {
     expect(createImportMapTag(document).textContent).to.equal('{}')
-    expect(createImportMapTag(document).type).to.equal('importmap-shim')
-    expect(createImportMapTag(document, true).type).to.equal('importmap')
+    expect(createImportMapTag(document).type).to.equal('importmap')
   })
 
   it(`should use a registry to append and remove importmaps; then toggle shims and check
@@ -37,7 +35,7 @@ describe('importmap manipulation tests', () => {
     const importmap = { imports: { dep: 'https://cdn.jsdelivr.net/dep@latest/index.js' } }
     registry.createSetMount('id', importmap)
 
-    expect(document.head.querySelector('script[type=importmap-shim]')).to.have.property(
+    expect(document.head.querySelector('script[type=importmap]')).to.have.property(
       'textContent', JSON.stringify(importmap)
     )
 
@@ -79,7 +77,6 @@ describe('importmap manipulation tests', () => {
     )
     expect(registry.getImportmap('id')).to.eql(nextImportMap)
     expect(registry.getImportmap('whatever')).to.be.undefined
-    expect(document.head.querySelector('script[type=importmap-shim]')).to.be.null
     registry.removeAll()
   })
 })

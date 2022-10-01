@@ -38,30 +38,17 @@
           "type": "string",
           "format": "uri-reference"
         },
-        "pluginMountPointSelector": {
+        "mountPoint": {
+          "$ref": "./plugin.schema.json#/definitions/content",
+          "default": {"tag": "div", "attributes": {"id": "__MICRO_LC_MOUNT_POINT"}}
+        },
+        "mountPointSelector": {
           "description": "Query selector to plugins mounting DOM element",
+          "type": "string",
           "default": "#__MICRO_LC_MOUNT_POINT",
           "examples": [
             "#my-plugin-container",
-            "body micro-lc custom-layout div#plugin-container",
-            {
-              "id": "#__MICRO_LC_MOUNT_POINT",
-              "slot": "container"
-            }
-          ],
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "type": "string" },
-                "slot": { "type": "string" }
-              },
-              "additionalProperties": false,
-              "required": ["id"]
-            }
+            "body micro-lc custom-layout div#plugin-container"
           ]
         },
         "defaultUrl": {

@@ -1,5 +1,4 @@
 import type { Config } from '@micro-lc/interfaces/v2'
-import { html, render as litHtmlRender } from 'lit-html'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'
 
@@ -7,7 +6,6 @@ import type { PremountableElement } from '../composer'
 import { createComposerContext, premount } from '../composer'
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
-import type { ImportMapTarget } from '../dom-manipulation'
 import { createImportMapTag, ImportMapRegistry } from '../dom-manipulation'
 
 
@@ -42,12 +40,9 @@ const handleUpdateError = (_: TypeError): void => {
   console.error(_)
 }
 
-const template = ({ id, slot }: Exclude<CompleteConfig['settings']['pluginMountPointSelector'], string>) =>
-  (slot ? html`<div id=${id} slot=${slot}></div>` : html`<div id=${id}></div>`)
-
 export class Microlc<
   E extends BaseExtension = BaseExtension
-> extends HTMLElement implements ImportMapTarget, PremountableElement {
+> extends HTMLElement implements PremountableElement {
   static get observedAttributes() { return ['config-src', 'disable-shadow-dom', 'disable-shims'] }
 
   private _wasDisconnected = false
@@ -294,7 +289,7 @@ export class Microlc<
       _config: {
         layout,
         settings: {
-          pluginMountPointSelector,
+          mountPoint,
         },
       },
     } = this
@@ -306,16 +301,14 @@ export class Microlc<
       context: { microlcApi: this.getApi() },
       extraProperties: ['microlcApi'],
     })
+    const mountPointAppender = await createComposerContext(mountPoint)
 
     // if shadow dom is used
     // ==> append layout inside
     // ==> append qiankun as regular child
     if (this._isShadow()) {
       layoutAppender(this._shadowRoot)
-      litHtmlRender(
-        template(pluginMountPointSelector),
-        this
-      )
+      mountPointAppender(this)
     // if not append anything as regular child
     } else {
       layoutAppender(this)

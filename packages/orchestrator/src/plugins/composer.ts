@@ -161,8 +161,7 @@ async function render(
 
 function fn(exports: ComposerModule, _: Window) {
   let composerConfig: ResolvedConfig | undefined
-  // let parent: HTMLElement | null = null
-  // let api: {composer: typeof createComposerContext; microlcApi: MicrolcApi<ComposerExtensions>} | undefined
+  let parent: HTMLElement | null = null
 
   /**
    * @deprecated will be removed on 1.0.0
@@ -228,8 +227,7 @@ function fn(exports: ComposerModule, _: Window) {
     ): Promise<null> {
       logger(name, 'starting mounting...')
 
-      // parent = container
-      // api = { composer: createComposerContext, microlcApi }
+      parent = container
 
       microlcApi.subscribe(({ user }) => {
         if (composerConfig && container) {
@@ -245,6 +243,9 @@ function fn(exports: ComposerModule, _: Window) {
 
     async unmount({ name }: {name: string}) {
       logger(name, 'unmounting...')
+      parent?.childNodes.forEach((child) => { child.remove() })
+      parent = null
+
       return Promise.resolve(null)
     },
 

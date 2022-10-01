@@ -41,7 +41,7 @@ export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSCon
    */
   if (this._isShadow() && 'adoptedStyleSheets' in this.ownerDocument) {
     const stylesheets = createCSSStyleSheets(css)
-    this.shadowRoot.adoptedStyleSheets = stylesheets
+    this.shadowRoot.adoptedStyleSheets = [...stylesheets]
   } else {
     const styleTags = Array(2).fill(0).map(() =>
       this.ownerDocument.createElement('style')
@@ -74,6 +74,7 @@ export function initBaseExtensions<T extends BaseExtension>(this: Microlc<T>): T
   return {
     css: {
       setStyle: (css: CSSConfig) => {
+        console.log('css', css)
         updateCSS.call<Microlc<T>, [CSSConfig], void>(this, css)
       },
     },

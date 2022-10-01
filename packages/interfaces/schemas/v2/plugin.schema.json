@@ -15,6 +15,17 @@
         },
         {
           "imports": {
+            "react": "https://esm.sh/react@next",
+            "react-dom": "https://esm.sh/react-dom@next"
+          },
+          "scopes": {
+            "https://esm.sh/react-dom@next": {
+              "/client": "https://esm.sh/react-dom@next/client"
+            }
+          }
+        },
+        {
+          "imports": {
             "a": "/a-1.mjs",
             "b": "/b-1.mjs",
             "c": "/c-1.mjs"
@@ -298,7 +309,5 @@
     }
   },
   "additionalProperties": false,
-  "required": [
-    "content"
-  ]
+  "required": ["content"]
 }

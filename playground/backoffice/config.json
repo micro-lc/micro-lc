@@ -15,81 +15,119 @@
   },
   "layout": {
     "sources": {
-      "uris": "/packages/layout/dist/mlc-layout.js"
-    },
-    "content": {
-      "tag": "mlc-layout",
-      "content": {"tag": "div", "content": "PE$", "attributes": { "slot": "top-bar" }},
-      "properties": {
-        "userMenu": {
-          "userInfoUrl": "./userinfo.json"
+      "importmap": {
+        "imports": {
+          "react": "https://esm.sh/react@next",
+          "react-dom": "https://esm.sh/react-dom@next"
         },
-        "logo": {
-          "urlLightImage": "/packages/orchestrator/public/favicon.png"
-        },
-        "mode": "fixedSideBar",
-        "menuItems": [
-          {
-            "icon": {
-              "library": "@ant-design/icons-svg",
-              "selector": "BugOutlined"
-            },
-            "id": "main",
-            "label": { "en": "Application 1", "it": "Applicazione 1" },
-            "type": "application"
-          },
-          {
-            "href": "https://docs.mia-platform.eu",
-            "id": "href_1",
-            "label": "Link 1",
-            "target": "_blank",
-            "type": "href"
-          },
-          {
-            "children": [
-              {
-                "id": "application_2",
-                "label": { "en": "Application 2", "it": "Applicazione 2" },
-                "type": "application"
-              },
-              {
-                "children": [
-                  {
-                    "id": "application_3",
-                    "label": { "en": "Application 1", "it": "Applicazione 1" },
-                    "type": "application"
-                  },
-                  {
-                    "href": "./www.google.com",
-                    "id": "href_2",
-                    "label": "Link 2",
-                    "target": "_blank",
-                    "type": "href"
-                  }
-                ],
-                "id": "group_1",
-                "label": { "en": "Group 1", "it": "Gruppo 1" },
-                "type": "group"
-              }
-            ],
-            "id": "category_1",
-            "label": { "en": "Category 1", "it": "Categoria 1" },
-            "type": "category"
+        "scopes": {
+          "https://esm.sh/react-dom@next": {
+            "/client": "https://esm.sh/react-dom@next/client"
           }
-        ]
+        }
+      },
+      "uris": [
+        "/packages/layout/dist/mlc-layout.min.js",
+        "/packages/layout/dist/mlc-antd-theme-manager.min.js"
+      ]
+    },
+    "content": [
+      {
+        "tag": "mlc-antd-theme-manager",
+        "attributes": {
+          "primary-color": "#25B864"
+        }
+      },
+      {
+        "tag": "mlc-layout",
+        "content": {
+          "tag": "div",
+          "content": "PE$",
+          "attributes": { "slot": "top-bar" }
+        },
+        "properties": {
+          "userMenu": {
+            "userInfoUrl": "./userinfo.json"
+          },
+          "logo": {
+            "urlLightImage": "/packages/orchestrator/public/favicon.png"
+          },
+          "mode": "fixedSideBar",
+          "menuItems": [
+            {
+              "icon": {
+                "library": "@ant-design/icons-svg",
+                "selector": "BugOutlined"
+              },
+              "id": "main",
+              "label": { "en": "Application 1", "it": "Applicazione 1" },
+              "type": "application"
+            },
+            {
+              "href": "https://docs.mia-platform.eu",
+              "id": "href_1",
+              "label": "Link 1",
+              "target": "_blank",
+              "type": "href"
+            },
+            {
+              "children": [
+                {
+                  "id": "application_2",
+                  "label": { "en": "Application 2", "it": "Applicazione 2" },
+                  "type": "application"
+                },
+                {
+                  "children": [
+                    {
+                      "id": "whatever",
+                      "label": {
+                        "en": "Application 1",
+                        "it": "Applicazione 1"
+                      },
+                      "type": "application"
+                    },
+                    {
+                      "href": "./www.google.com",
+                      "id": "href_2",
+                      "label": "Link 2",
+                      "target": "_blank",
+                      "type": "href"
+                    }
+                  ],
+                  "id": "group_1",
+                  "label": { "en": "Group 1", "it": "Gruppo 1" },
+                  "type": "group"
+                }
+              ],
+              "id": "category_1",
+              "label": { "en": "Category 1", "it": "Categoria 1" },
+              "type": "category"
+            }
+          ]
+        }
       }
-    }
+    ]
   },
   "applications": [
     {
       "id": "main",
-      "integrationMode": "compose",
+      "integrationMode": "iframe",
       "route": "./main",
+      "src": "https://wikipedia.org"
+    },
+    {
+      "id": "main2",
+      "integrationMode": "compose",
+      "route": "./main2",
       "config": {
         "sources": {
           "uris": "data:text/javascript;base64,CmltcG9ydCB7UmVwbGF5U3ViamVjdH0gZnJvbSAncnhqcycKCmNvbnNvbGUubG9nKFJlcGxheVN1YmplY3QpCg=="
         },
-        "content": {"tag": "div", "properties": {"textContent": "Ciao Main"}}
+        "content": {
+          "tag": "div",
+          "properties": { "textContent": "Ciao Main" }
+        }
       }
     },
     {

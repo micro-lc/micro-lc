@@ -18,10 +18,12 @@ export class MlcAntdThemeManager extends LitElement {
   @property({ attribute: 'warning-color' }) warningColor = '#FAAD14'
   @property({ attribute: 'font-family' }) fontFamily = '-apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\',  Arial, \'Noto Sans\', sans-serif, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\', \'Noto Color Emoji\''
 
+  @property({ attribute: false }) nodes: Record<string, Record<string, string>> = {}
+
   protected updated(changedProperties: PropertyValues) {
     super.updated(changedProperties)
 
     const variables = createVariables.call(this)
-    this.microlcApi?.getExtensions?.().css?.setStyle({ global: variables })
+    this.microlcApi?.getExtensions?.().css?.setStyle({ global: variables, nodes: this.nodes })
   }
 }

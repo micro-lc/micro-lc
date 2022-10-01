@@ -1,13 +1,9 @@
 import type { GlobalImportMap, ImportMap } from '@micro-lc/interfaces/v2'
 
-export interface ImportMapTarget extends HTMLElement {
-  disableShims: boolean
-}
-
 export class ImportMapRegistry extends Map<string, HTMLScriptElement> {
   private idx = new Set<string>()
-  private _target: ImportMapTarget
-  constructor(target: ImportMapTarget) {
+  private _target: HTMLElement
+  constructor(target: HTMLElement) {
     super()
     this._target = target
   }
@@ -26,11 +22,11 @@ export class ImportMapRegistry extends Map<string, HTMLScriptElement> {
   createSetMount(id: string, importmap: ImportMap | GlobalImportMap): this {
     let tag: HTMLScriptElement
 
-    const { _target: { ownerDocument, disableShims } } = this
+    const { _target: { ownerDocument } } = this
 
     if (!this.idx.has(id)) {
       tag = assignContent(
-        createImportMapTag(ownerDocument, disableShims), importmap
+        createImportMapTag(ownerDocument), importmap
       )
 
       this.idx.add(id)
@@ -40,7 +36,7 @@ export class ImportMapRegistry extends Map<string, HTMLScriptElement> {
       tag = this.get(id)!
     }
 
-    tag.type = disableShims ? 'importmap' : 'importmap-shim'
+    tag.type = 'importmap'
     tag.textContent = JSON.stringify(importmap)
     !tag.isConnected && ownerDocument.head.appendChild(tag)
 
@@ -62,12 +58,12 @@ export function assignContent(tag: HTMLScriptElement, importmap: ImportMap | Glo
 }
 
 export function createImportMapTag(
-  document: Document, disableShims = false
+  document: Document
 ): HTMLScriptElement {
   return Object.assign(
     document.createElement('script'), {
       textContent: '{}',
-      type: disableShims ? 'importmap' : 'importmap-shim',
+      type: 'importmap',
     }
   )
 }

@@ -10,8 +10,7 @@ export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
 export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'layout'>> & {
   layout: PluginConfiguration & {content: Content}
-  settings: Required<Omit<Settings, 'pluginMountPointSelector'>>
-    & {pluginMountPointSelector: {id: string; slot?: string}}
+  settings: Required<Settings>
 }
 
 export const defaultConfig: CompleteConfig = {
@@ -28,7 +27,28 @@ export const defaultConfig: CompleteConfig = {
     },
     composerUri: `./composer.${process.env.NODE_ENV}.js`,
     defaultUrl: './',
-    pluginMountPointSelector: { id: MICRO_LC_MOUNT_POINT },
+    mountPoint: [
+      {
+        content: `
+          div#__MICRO_LC_MOUNT_POINT > :first-child {
+            width: inherit;
+            height: inherit;
+          }
+        `,
+        tag: 'style',
+      },
+      {
+        attributes: {
+          id: MICRO_LC_MOUNT_POINT,
+          style: `
+            width: 100%;
+            height: 100%;
+          `,
+        },
+        tag: 'div',
+      },
+    ],
+    mountPointSelector: `#${MICRO_LC_MOUNT_POINT}`,
   },
   shared: {},
   version: 2,
@@ -36,11 +56,7 @@ export const defaultConfig: CompleteConfig = {
 
 export function mergeConfig(input: Config): CompleteConfig {
   const def = defaultConfig
-  const mountPointMergedConfig = input.settings?.pluginMountPointSelector
-    ?? def.settings.pluginMountPointSelector
-  const pluginMountPointSelector = typeof mountPointMergedConfig === 'object'
-    ? mountPointMergedConfig
-    : { id: mountPointMergedConfig }
+
   return {
     applications: input.applications ?? def.applications,
     importmap: input.importmap ?? def.importmap,
@@ -53,7 +69,8 @@ export function mergeConfig(input: Config): CompleteConfig {
       '5xx': input.settings?.['5xx'] ?? def.settings['5xx'],
       composerUri: input.settings?.composerUri ?? def.settings.composerUri,
       defaultUrl: input.settings?.defaultUrl ?? def.settings.defaultUrl,
-      pluginMountPointSelector,
+      mountPoint: input.settings?.mountPoint ?? def.settings.mountPoint,
+      mountPointSelector: input.settings?.mountPointSelector ?? def.settings.mountPointSelector,
     },
     shared: input.shared ?? def.shared,
     version: 2,

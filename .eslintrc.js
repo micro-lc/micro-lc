@@ -95,6 +95,14 @@ const tsConfigs = {
     'n/no-missing-import': 'off',
     'n/no-unpublished-import': 'off',
   },
+  overrides: [
+    {
+      files: ['**/*.test.ts'],
+      rules: {
+        'max-statements': 'off',
+      },
+    },
+  ],
 }
 
 const reactConfigs = {

@@ -89,14 +89,14 @@ export function updateGlobalImportMap<T extends BaseExtension>(this: Microlc<T>)
     },
   } = this
 
-  const currentType = this._globalImportmap.type
-  const newType = this._disableShims ? 'importmap' : 'importmap-shim'
-  if (currentType !== newType) {
-    this._globalImportmap.type = newType
+  if (this._disableShims || !('importShim' in window)) {
+    assignContent(this._globalImportmap, importmap)
+    !this._globalImportmap.isConnected && this.ownerDocument.head.appendChild(this._globalImportmap)
+
+    return
   }
 
-  assignContent(this._globalImportmap, importmap)
-  !this._globalImportmap.isConnected && this.ownerDocument.head.appendChild(this._globalImportmap)
+  importShim.addImportMap(importmap)
 }
 
 type PremountReturnType =
@@ -126,10 +126,10 @@ export async function getApplicationSchema(): Promise<SchemaOptions | undefined>
   return schema
 }
 
-function getContainer<T extends BaseExtension>(this: Microlc<T>, id: string): HTMLElement {
+function getContainer<T extends BaseExtension>(this: Microlc<T>, selector: string): HTMLElement {
   // SAFETY: has been mounted on update lifecycle
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return this.querySelector<HTMLElement>(`#${id}`)!
+
+  return this.querySelector<HTMLElement>(selector) ?? this
 }
 
 export async function updateApplications<T extends BaseExtension>(this: Microlc<T>): Promise<void> {
@@ -139,7 +139,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
         '4xx': pages4xx,
         '5xx': pages5xx,
         composerUri,
-        pluginMountPointSelector,
+        mountPointSelector,
       },
       applications,
     },
@@ -166,7 +166,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       break
     }
     this._loadedApps.set(name, [undefined, {
-      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, pluginMountPointSelector.id),
+      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
       name,
     }])
@@ -191,9 +191,8 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       config = {
         content: {
           attributes: {
-            style: `width: 100%;
-                    height: 100%;
-                    position: fixed;
+            style: `width: inherit;
+                    height: inherit;
                     border: none;`,
             ...app.attributes,
             src: app.src,
@@ -214,9 +213,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
 
     acc.routes.set(id, route)
     acc.apps.set(id, [route, {
-      // SAFETY: has been mounted on update lifecycle
-
-      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, pluginMountPointSelector.id),
+      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
       name: id,
       props: {
@@ -230,9 +227,6 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
         schema,
       },
     }])
-
-    // error pages
-
 
     return acc
   }, { apps: this._loadedApps, routes: this._loadedRoutes })

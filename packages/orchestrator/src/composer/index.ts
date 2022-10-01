@@ -57,36 +57,31 @@ export async function premount(this: PremountableElement, id: string | HTMLScrip
   let uris: string[] = []
   let importmap: ImportMap | undefined
 
-  if (id instanceof HTMLScriptElement) {
-    const currentType = id.type
-    const newType = this.disableShims ? 'importmap' : 'importmap-shim'
-    if (currentType !== newType) {
-      id.type = newType
-    }
-  }
-
   if (config.sources) {
     const { sources } = config
+
+    importmap = (!Array.isArray(sources) && typeof sources !== 'string')
+      ? sources.importmap ?? {}
+      : {}
+
+    if (this.disableShims || !('importShim' in window)) {
+      if (id instanceof HTMLScriptElement) {
+        assignContent(id, importmap)
+      } else {
+        this.getApi().applyImportMap(id, importmap)
+      }
+    } else {
+      importShim.addImportMap(importmap)
+    }
 
     uris = parseSources(sources)
 
     if (uris.length > 0) {
       await Promise.all(uris.map((uri) =>
-        (this.disableShims
+        (this.disableShims || !('importShim' in window)
           ? import(uri)
           : importShim(uri)
         ).catch((err) => { console.error(err) })))
-    }
-
-    importmap = (!Array.isArray(sources) && typeof sources !== 'string')
-      ? sources.importmap
-      : undefined
-
-    // script element provided
-    if (id instanceof HTMLScriptElement) {
-      assignContent(id, importmap ?? {})
-    } else if (importmap) {
-      this.getApi().applyImportMap(id, importmap)
     }
   }
 

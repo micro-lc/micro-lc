@@ -1,4 +1,4 @@
-import {MlcLayout} from './mlc-layout'
+import { MlcLayout } from './mlc-layout'
 
 export * from './mlc-layout'
 

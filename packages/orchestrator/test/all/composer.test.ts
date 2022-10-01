@@ -62,6 +62,7 @@ describe('composer api tests', () => {
       on createComposerContext properties and elements are appended`, async () => {
     const sandbox = createSandbox()
     const applyImportMap = sandbox.stub<[string, ImportMap], void>()
+    const addImportMap = sandbox.stub()
     const importShim = sandbox.stub<
       [string], Promise<{default: unknown} & object>
     >().callsFake((url) => {
@@ -70,6 +71,8 @@ describe('composer api tests', () => {
         ? Promise.resolve({ default: {} })
         : Promise.reject(new TypeError('expecting google.com'))
     })
+    Object.defineProperty(importShim, 'addImportMap', { value: addImportMap })
+
     const removeImportShim = define(window, 'importShim', importShim)
 
     // micro-lc fake
@@ -83,8 +86,10 @@ describe('composer api tests', () => {
 
 
     const resolvedConfig = await premount.call(premountable, importmap, config)
+    expect(addImportMap).to.be.calledOnce
     expect(importShim).to.be.calledOnceWith('https://www.google.com')
-    expect(importmap.textContent).to.eql(JSON.stringify({ imports: {}, scopes: {} }))
+    expect(importmap).to.have.property('textContent', '')
+    expect(importmap).to.have.property('isConnected', false)
     expect(resolvedConfig).to.eql(config)
 
     const appender = await createComposerContext(
