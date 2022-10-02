@@ -80,4 +80,4 @@ jobs:
         continue-on-error: true
         with:
           github-token: ${{ secrets.token }}
-          base-path: './${{ inputs.package }}'
+          base-path: './packages/${{ inputs.package }}'
