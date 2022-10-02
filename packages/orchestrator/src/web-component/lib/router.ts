@@ -82,30 +82,7 @@ function getNextMatchingRoute<T extends BaseExtension>(
   return [nextMatch, defaultMatch]
 }
 
-export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | URL) {
-  const unmount = getCurrentUnmount()
-
-
-  const { pathname } = url ? new URL(url, window.location.origin) : window.location
-
-  // ⤵️ when no match is found on loaded routes and the pathname
-  // matched the base path (i.e., no plugin was mounted on root)
-  // router redirects on default route if any
-  const [exactMatch, defaultMatch] = getNextMatchingRoute
-    .call<Microlc<T>, [string], MatchingRoute<T>[]>(this, pathname)
-
-  let nextMatch = exactMatch
-
-  if (!exactMatch) {
-    nextMatch = defaultMatch
-  }
-
-  // ⤵️ if we got here it means we must throw a 404 since no
-  // suitable route was found at all
-  if (!nextMatch) {
-    nextMatch = this._loadedApps.get(`${this._instance}-404`)?.[1]
-  }
-
+async function flushAndGo<T extends BaseExtension>(this: Microlc<T>, nextMatch?: MatchingRoute<T>, unmount?: (() => Promise<null>) | undefined) {
   // ⤵️ 404 page was not provided
   if (!nextMatch) {
     return Promise.reject(new TypeError('no 404 page available'))
@@ -140,6 +117,43 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
         return null
       }))
   )
+}
+
+export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, statusCode?: number): Promise<void> {
+  const unmount = getCurrentUnmount()
+
+  const nextMatch = this._loadedApps.get(`${this._instance}-${statusCode ?? '404'}`)?.[1]
+
+  return flushAndGo
+    .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
+}
+
+export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | URL): Promise<void> {
+  const unmount = getCurrentUnmount()
+
+
+  const { pathname } = url ? new URL(url, window.location.origin) : window.location
+
+  // ⤵️ when no match is found on loaded routes and the pathname
+  // matched the base path (i.e., no plugin was mounted on root)
+  // router redirects on default route if any
+  const [exactMatch, defaultMatch] = getNextMatchingRoute
+    .call<Microlc<T>, [string], MatchingRoute<T>[]>(this, pathname)
+
+  let nextMatch = exactMatch
+
+  if (!exactMatch) {
+    nextMatch = defaultMatch
+  }
+
+  // ⤵️ if we got here it means we must throw a 404 since no
+  // suitable route was found at all
+  if (!nextMatch) {
+    nextMatch = this._loadedApps.get(`${this._instance}-404`)?.[1]
+  }
+
+  return flushAndGo
+    .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
 }
 
 function popStateListener<T extends BaseExtension>(this: Microlc<T>, event: PopStateEvent): void {

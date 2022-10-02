@@ -8,6 +8,24 @@
       fill: var(--micro-lc-primary-color, #1890ff);
     }
   </style>
+  <script>
+    function fn(global) {
+      Object.assign(
+        global,
+        '500',
+        {
+          bootstrap: () => Promise.resolve(),
+          mount: () => Promise.resolve(),
+          unmount: () => Promise.resolve(null),
+          update: () => Promise.resolve()
+        }
+      )
+    }
+    ;(function register(global, factory) {
+      global.__MICRO_LC_4XX = {}
+      factory(global.__MICRO_LC_4XX, global)
+    })(window, fn)
+  </script>
 </head>
 <body>
   <div class="micro-lc-error color">

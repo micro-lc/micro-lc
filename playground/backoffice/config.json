@@ -6,6 +6,9 @@
     "composerUri": "/packages/orchestrator/dist/composer.development.js",
     "4xx": {
       "404": "/packages/orchestrator/dist/404.html"
+    },
+    "5xx": {
+      "500": "/packages/orchestrator/dist/500.html"
     }
   },
   "importmap": {
@@ -109,15 +112,18 @@
       }
     ]
   },
-  "applications": [
-    {
-      "id": "main",
+  "applications": {
+    "main": {
       "integrationMode": "iframe",
       "route": "./main",
       "src": "https://wikipedia.org"
     },
-    {
-      "id": "main2",
+    "google": {
+      "integrationMode": "iframe",
+      "route": "./google",
+      "src": "https://google.com"
+    },
+    "main2": {
       "integrationMode": "compose",
       "route": "./main2",
       "config": {
@@ -130,11 +136,10 @@
         }
       }
     },
-    {
-      "id": "application_2",
+    "application_2": {
       "integrationMode": "compose",
       "route": "./ingredients",
       "config": "./ingredients.json"
     }
-  ]
+  }
 }

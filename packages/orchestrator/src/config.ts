@@ -14,7 +14,7 @@ export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'lay
 }
 
 export const defaultConfig: CompleteConfig = {
-  applications: [],
+  applications: {},
   importmap: {} as GlobalImportMap,
   layout: { content: '' },
   settings: {

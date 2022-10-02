@@ -121,7 +121,6 @@
           "type": "object",
           "examples": [
             {
-              "id": "my-awesome-iframe",
               "integrationMode": "iframe",
               "src": "www.google.com",
               "route": "/embedded-google-page",
@@ -131,10 +130,6 @@
             }
           ],
           "properties": {
-            "id": {
-              "description": "Unique identifier of the application",
-              "type": "string"
-            },
             "integrationMode": {
               "description": "Type of the application: nested browsing context",
               "const": "iframe"
@@ -154,20 +149,18 @@
             }
           },
           "additionalProperties": false,
-          "required": ["id", "integrationMode", "src", "route"]
+          "required": ["integrationMode", "src", "route"]
         },
         {
           "title": "ComposableApplication",
           "type": "object",
           "examples": [
             {
-              "id": "my-awesome-composition",
               "integrationMode": "compose",
               "config": "./page-configuration.json",
               "route": "/composed-page"
             },
             {
-              "id": "my-awesome-composition",
               "integrationMode": "compose",
               "config": {
                 "content": {
@@ -178,10 +171,6 @@
             }
           ],
           "properties": {
-            "id": {
-              "description": "Unique identifier of the application",
-              "type": "string"
-            },
             "integrationMode": {
               "description": "Type of the application: composition of HTML tags",
               "const": "compose"
@@ -204,14 +193,13 @@
             }
           },
           "additionalProperties": false,
-          "required": ["id", "integrationMode", "config", "route"]
+          "required": ["integrationMode", "config", "route"]
         },
         {
           "title": "QiankunApplication",
           "type": "object",
           "examples": [
             {
-              "id": "my-awesome-qiankun-plugin",
               "integrationMode": "qiankun",
               "route": "/qiankun-plugin",
               "entry": "https://my-micro-frontend.com",
@@ -221,10 +209,6 @@
             }
           ],
           "properties": {
-            "id": {
-              "description": "Unique identifier of the application",
-              "type": "string"
-            },
             "integrationMode": {
               "description": "Type of the application: micro front-end loaded using qiankun",
               "const": "qiankun"
@@ -338,7 +322,7 @@
             }
           },
           "additionalProperties": false,
-          "required": ["id", "integrationMode", "entry", "route"]
+          "required": ["integrationMode", "entry", "route"]
         }
       ]
     }
@@ -370,8 +354,8 @@
 
     "applications": {
       "description": "List of mounted applications",
-      "type": "array",
-      "items": {
+      "type": "object",
+      "additionalProperties": {
         "$ref": "#/definitions/application"
       }
     },

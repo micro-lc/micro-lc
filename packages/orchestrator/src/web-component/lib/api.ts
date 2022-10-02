@@ -8,7 +8,7 @@ import type { Microlc } from '../micro-lc'
 import type { MicrolcEvent, Observable } from './events'
 import type { BaseExtension } from './extensions'
 import type { QiankunMicroApp } from './qiankun'
-import { currentApplication$, getCurrentApplicationId } from './router'
+import { currentApplication$, getCurrentApplicationId, reroute, rerouteToError } from './router'
 
 export interface MicrolcApi<
   T extends BaseExtension, E extends MicrolcEvent = MicrolcEvent
@@ -21,7 +21,7 @@ export interface MicrolcApi<
   readonly getExtensions: () => Readonly<Partial<T>>
   readonly router: {
     goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): void
-    goToErrorPage(statusCode: number): void
+    goToErrorPage(statusCode?: number): void
     open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => void
   }
   readonly set: (event: Partial<E>) => void
@@ -38,22 +38,23 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
   return () => Object.freeze({
     applyImportMap: (id: string, importmap: ImportMap) => Object.freeze({ ...this._applicationsImportMap.createSetMount(id, importmap) }),
     currentApplication$,
-    getApplications: () => Object.freeze([...this._config.applications]),
+    getApplications: () => Object.freeze({ ...this._config.applications }),
     getCurrentApplication: () => Object.freeze({ ...getCurrentApplicationId() }),
     getCurrentConfig: () => Object.freeze({ ...this._config }),
     getExtensions: () => Object.freeze({ ...this._extensions }),
     next: (value: Partial<Event>) => bus.next(value),
     router: {
-      goToApplication: (_id: string, data?: unknown): void => {
-        const url = this._config.applications.find(({ id }) => id === _id)?.route
-        if (url) {
-          window.history.pushState(data, '', url)
+      goToApplication: async (_id: string, data?: unknown): Promise<void> => {
+        if (!(_id in this._config.applications)) {
+          return this._rerouteToError(404)
         }
+
+        const { [_id]: app } = this._config.applications
+        window.history.pushState(data, '', app.route)
+        return Promise.resolve()
       },
-      goToErrorPage: (statusCode: number): void => {
-        const {
-          _config: { settings: { '4xx': pages4XX, '5xx': pages5XX } },
-        } = this
+      goToErrorPage: async (statusCode?: number): Promise<void> => {
+        return this._rerouteToError(statusCode)
       },
       open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => {
         window.open(url, target, features)

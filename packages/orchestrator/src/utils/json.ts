@@ -57,7 +57,6 @@ export async function jsonToObject<T>(input: unknown, schema?: SchemaOptions): P
         { default: Ajv },
         { default: addFormats },
       ]) => {
-        console.log(Ajv)
         try {
           let schemas = toArray(schema) as SchemaObject[]
           // SAFETY: id will be defined either here or inside the next `if`

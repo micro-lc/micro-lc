@@ -11,6 +11,7 @@ import { createImportMapTag, ImportMapRegistry } from '../dom-manipulation'
 
 import type { MicrolcApi, ComposableApplicationProperties, BaseExtension } from './lib'
 import {
+  rerouteToError,
   createMicrolcApiInstance,
   createRouter,
   removeRouter,
@@ -65,6 +66,7 @@ export class Microlc<
   protected _loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties<E>>]>()
   protected _loadedRoutes = new Map<string, string>()
   protected _reroute = reroute.bind<(url?: string | URL) => Promise<void>>(this)
+  protected _rerouteToError = rerouteToError.bind<(statusCode?: number) => Promise<void>>(this)
 
   // properties/attributes update
   protected _prepareForUpdate() {

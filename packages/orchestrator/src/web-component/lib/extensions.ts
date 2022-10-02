@@ -74,7 +74,6 @@ export function initBaseExtensions<T extends BaseExtension>(this: Microlc<T>): T
   return {
     css: {
       setStyle: (css: CSSConfig) => {
-        console.log('css', css)
         updateCSS.call<Microlc<T>, [CSSConfig], void>(this, css)
       },
     },

@@ -12,14 +12,11 @@
     "content": {
       "tag": "div",
       "attributes": {
-        "class": "inherit-size"
+        "style": "width: inherit; height: inherit;"
       },
       "content": [
         "Wrapper",
         { 
-          "attributes": {
-            "class": "inherit"
-          },
           "tag": "slot"
         }
       ] 
@@ -39,9 +36,8 @@
       "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.5.6/esm/es2015/rxjs.min.js"
     }
   },
-  "applications": [
-    {
-      "id": "main",
+  "applications": {
+    "main": {
       "integrationMode": "compose",
       "route": "/main",
       "config": {
@@ -58,8 +54,7 @@
         "content": {"tag": "div", "properties": {"textContent": "Ciao Main"}}
       }
     },
-    {
-      "id": "main2",
+    "main2": {
       "integrationMode": "compose",
       "route": "/main2",
       "config": {
@@ -69,14 +64,12 @@
         "content": ""
       }
     },
-    {
-      "id": "bo",
+    "bo": {
       "integrationMode": "compose",
       "route": "/bo",
       "config": "/.dev/bo.json"
     },
-    {
-      "id": "other",
+    "other": {
       "integrationMode": "compose",
       "route": "/other",
       "config": {
@@ -89,17 +82,15 @@
         }
       }
     },
-    {
-      "id": "iframe",
+    "iframe": {
       "integrationMode": "iframe",
       "route": "/frame",
       "src": "http://example.com"
     },
-    {
-      "id": "docs",
+    "docs": {
       "integrationMode": "iframe",
       "route": "/docs",
       "src": "https://docs.mia-platform.eu"
     }
-  ]
+  }
 }

@@ -151,7 +151,6 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
   ]
 
   errorPages.forEach(([statusCode, uri]) => {
-    console.log(statusCode, uri)
     const name = `${this._instance}-${statusCode}`
     let entry: Entry
     switch (uri.match(/\.([^.]+)$/)?.[0]) {
@@ -174,9 +173,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
 
   const schema = await getApplicationSchema()
 
-  applications.reduce((acc, app) => {
-    const { id, route } = app
-
+  Object.entries(applications).reduce((acc, [id, app]) => {
     let entry: Entry
     let config: string | PluginConfiguration | undefined
     switch (app.integrationMode) {
@@ -197,6 +194,14 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
             ...app.attributes,
             src: app.src,
           },
+          content: {
+            content: 'Your browser does not support iframes',
+            tag: 'p',
+          },
+          properties: {
+            onerror: 'onerror',
+            onload: 'onload',
+          },
           tag: 'iframe',
         },
       }
@@ -211,14 +216,23 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       break
     }
 
-    acc.routes.set(id, route)
-    acc.apps.set(id, [route, {
+    acc.routes.set(id, app.route)
+    acc.apps.set(id, [app.route, {
       container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
       name: id,
       props: {
         composerApi: {
-          createComposerContext: createComposerContext.bind(this),
+          createComposerContext: app.integrationMode !== 'iframe'
+            ? createComposerContext.bind(this)
+            : (content) => createComposerContext.call(this, content, {
+              context: {
+                onload() {
+                  /** noop */
+                },
+              },
+              extraProperties: ['onload'],
+            }),
           premount: premount
             .bind<PremountReturnType>(this),
         },
