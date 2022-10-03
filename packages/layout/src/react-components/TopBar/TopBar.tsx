@@ -12,11 +12,11 @@ import { buildAntMenuItems } from '../utils/menu'
 
 export interface TopBarProps {
   enableDarkMode: boolean | undefined
-  helpMenu: HelpMenu | undefined
+  helpMenu: Partial<HelpMenu> | undefined
   lang: string | undefined
   locale: Translations['MLC-LAYOUT'] | undefined
   logo: Logo | undefined
-  menuItems: MenuItem[]
+  menuItems: Partial<MenuItem>[]
   mode: Mode
   onHelpMenuClick: VoidFn | undefined
   onLogoCLick: VoidFn | undefined
@@ -51,12 +51,17 @@ export const TopBar: React.FC<TopBarProps> = ({
 }) => {
   const antMenuItems = useMemo(() => buildAntMenuItems(menuItems, mode, lang), [lang, menuItems, mode])
 
+  const logoSrc = useMemo(() => {
+    if (typeof logo?.url === 'string') { return logo.url }
+
+    return theme === Theme.LIGHT ? logo?.url?.urlLightImage : logo?.url?.urlDarkImage
+  }, [logo, theme])
+
   const shouldRenderOverlaySideBarTrigger = mode === 'overlaySideBar'
   const shouldRenderMenu = mode === 'topBar' && menuItems.length > 0
   const shouldRenderHelp = helpMenu
   const shouldRenderThemeSwitch = enableDarkMode
   const shouldRenderUser = user?.name
-  const shouldRenderDivider = shouldRenderUser && (shouldRenderMenu || shouldRenderHelp || shouldRenderThemeSwitch)
 
   return (
     <div className='top-bar-container'>
@@ -70,10 +75,9 @@ export const TopBar: React.FC<TopBarProps> = ({
 
       <img
         alt={logo?.altText ?? 'Logo'}
-        className={`top-bar-logo ${logo?.href ? 'top-bar-logo-with-navigation' : ''}`}
+        className={`top-bar-logo ${logo?.onClickHref ? 'top-bar-logo-with-navigation' : ''}`}
         onClick={onLogoCLick}
-        // TODO: handle dark theme
-        src={logo?.urlLightImage}
+        src={logoSrc}
       />
 
       {
@@ -111,7 +115,7 @@ export const TopBar: React.FC<TopBarProps> = ({
         {
           shouldRenderUser && (
             <>
-              {shouldRenderDivider && <Divider className='top-bar-divider' type='vertical'/> }
+              <Divider className='top-bar-divider' type='vertical'/>
               <UserMenu locale={locale} onUserMenuClick={onUserMenuClick} user={user}/>
             </>
           )

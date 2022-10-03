@@ -1,9 +1,11 @@
+import type { BaseExtension } from '@micro-lc/orchestrator'
 import { action } from '@storybook/addon-actions'
 import type { Story } from '@storybook/web-components'
 import { html } from 'lit'
 
-import type { MicrolcApiExtension } from '../lib/types'
+import type { MlcApi } from '../lib/types'
 import type { MlcLayout } from '../mlc-layout'
+
 import '../mlc-layout'
 
 export default { title: 'Layout' }
@@ -20,9 +22,31 @@ function Template(props: Partial<MlcLayout>) {
       .enableDarkMode=${props.enableDarkMode}
       .head=${props.head}
     >
-      <div slot="top-bar" style="border: 1px solid darkred">Slot</div>
+      <div slot="top-bar" style="height: 100%; display: flex; justify-content: center; align-items: center">
+        <div style="background: red; width: 24px; height: 24px"></div>
+      </div>
+      <div style="height: 100%; display: flex; justify-content: center; align-items: center">Content</div>
     </mlc-layout>
   `
+}
+
+const logo: MlcLayout['logo'] = {
+  altText: 'My company',
+  onClickHref: 'https://www.ggogle.it',
+  url: {
+    urlDarkImage: 'https://avatars.githubusercontent.com/u/92730708?s=200&v=4',
+    urlLightImage: 'https://avatars.githubusercontent.com/u/92730708?s=200&v=4',
+  },
+}
+
+const userMenu: MlcLayout['userMenu'] = {
+  logout: {
+    method: 'POST',
+    redirectUrl: './',
+    url: 'https://www.userlogout.com',
+  },
+  userInfoUrl: 'https://www.userinfo.com',
+  userPropertiesMapping: { fullName: 'name' },
 }
 
 const menuItems: MlcLayout['menuItems'] = [
@@ -74,26 +98,40 @@ const menuItems: MlcLayout['menuItems'] = [
   },
 ]
 
-const microlcApiExtensions: MicrolcApiExtension = {
+// @ts-expect-error // We do not need to implement all methods of the interface
+const microlcApiExtensions: BaseExtension = {
   head: {
     setIcon: attrs => action('extensions.head.setIcon')(attrs),
     setTitle: title => action('extensions.head.setTitle')(title),
   },
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  httpClient: (url: string) => {
-    action('extensions.httpClient.get')(url)
-    return Promise.resolve({ fullName: 'Edoardo Pessina' })
+  httpClient: (url, opts) => {
+    action('extensions.httpClient')(url, opts)
+
+    if (url === userMenu.userInfoUrl) {
+      return Promise.resolve(new Response(JSON.stringify({ fullName: 'Edoardo Pessina' })))
+    }
+
+    return Promise.resolve(new Response(JSON.stringify({})))
   },
 }
 
-const microlcApi: Partial<MlcLayout['microlcApi']> = {
+const microlcApi: Partial<MlcApi> = {
+  currentApplication$: {
+    subscribe: () => {
+      action('currentApplication$.subscribe')()
+      return {
+        closed: false,
+        unsubscribe: () => action('currentApplication$.subscribe')(),
+      }
+    },
+  },
   getExtensions: () => microlcApiExtensions,
   router: {
     goToApplication: (id) => action('router.goToApplication')(id),
     goToErrorPage: (status) => action('route.goToErrorPage')(status),
     open: (url, target) => action('router.open')(url, target),
   },
+  set: event => action('set')(event),
   setExtension: (key, val) => {
     action('setExtension')(key, val)
     return microlcApiExtensions
@@ -108,67 +146,32 @@ TopBar.args = {
     favIconUrl: 'https://www.favicourl.com',
     title: 'Tab title',
   },
-  helpMenu: {
-    helpLink: 'https://www.google.com',
-  },
-  logo: {
-    href: 'https://www.ggogle.it',
-    urlLightImage: 'https://avatars.githubusercontent.com/u/92730708?s=200&v=4',
-  },
+  helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },
+  logo,
   menuItems,
   microlcApi,
   mode: 'topBar',
-  userMenu: {
-    logout: {
-      method: 'POST',
-      redirectUrl: 'https://www.redirecturl.com',
-      url: 'https://www.userlogout.com',
-    },
-    userInfoUrl: 'https://www.userinfo.com',
-    userPropertiesMapping: { fullName: 'name' },
-  },
+  userMenu,
 }
 
 export const FixedSideBar = Template.bind({}) as unknown as Story<MlcLayout>
 FixedSideBar.storyName = 'Fixed side bar'
 FixedSideBar.args = {
-  helpMenu: {
-    helpLink: 'https://www.google.com',
-  },
-  logo: {
-    urlLightImage: 'https://avatars.githubusercontent.com/u/92730708?s=200&v=4',
-  },
+  helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },
+  logo,
   menuItems,
   microlcApi,
   mode: 'fixedSideBar',
-  userMenu: {
-    logout: {
-      method: 'POST',
-      redirectUrl: 'https://www.redirecturl.com',
-      url: 'https://www.userlogout.com',
-    },
-    userInfoUrl: 'https://www.userinfo.com',
-  },
+  userMenu,
 }
 
 export const OverlaySideBar = Template.bind({}) as unknown as Story<MlcLayout>
 OverlaySideBar.storyName = 'Overlay side bar'
 OverlaySideBar.args = {
-  helpMenu: {
-    helpLink: 'https://www.google.com',
-  },
-  logo: {
-    urlLightImage: 'https://avatars.githubusercontent.com/u/92730708?s=200&v=4',
-  },
+  helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },
+  logo,
   menuItems,
   microlcApi,
   mode: 'overlaySideBar',
-  userMenu: {
-    logout: {
-      method: 'POST',
-      redirectUrl: 'https://www.redirecturl.com',
-      url: 'https://www.userlogout.com',
-    },
-    userInfoUrl: 'https://www.userinfo.com',
-  },
+  userMenu,
 }

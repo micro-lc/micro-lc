@@ -1,4 +1,4 @@
-import type { BaseExtension } from '@micro-lc/orchestrator'
+import type { BaseExtension, MicrolcApi } from '@micro-lc/orchestrator'
 
 export interface User {
   avatar?: string
@@ -14,10 +14,10 @@ export enum Theme {
 
 export type OnThemeChange = (newTheme: Theme) => void
 
-export interface MlcLayoutMicrolcApiExtension {
-  user?: {
-    getUser: () => Record<string, unknown>
-  }
+interface MlcApiEvent {
+  [key: string]: unknown
+  theme: Theme
+  user: Record<string, unknown>
 }
 
-export type MicrolcApiExtension = BaseExtension & MlcLayoutMicrolcApiExtension
+export type MlcApi = MicrolcApi<BaseExtension, MlcApiEvent>

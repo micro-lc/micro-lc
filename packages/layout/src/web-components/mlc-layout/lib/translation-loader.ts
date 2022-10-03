@@ -1,7 +1,5 @@
 import { dirname, resolve } from 'path'
 
-import type { BaseExtension, MicrolcApi } from '@micro-lc/orchestrator'
-
 export type Locale = Record<string, unknown>
 
 class CurrentLocale {
@@ -29,12 +27,10 @@ export const supportedLanguages = [DEFAULT_LANGUAGE, 'it']
 
 export const getCurrentLocale = (): CurrentLocale => currentLocale
 
-export const getLang = (microlcApi?: Partial<MicrolcApi<BaseExtension>>): string => {
-  const microLcLang = microlcApi?.getExtensions?.().language?.getLanguage() ?? window.navigator.language
+export const getLang = (microlcLang: string = window.navigator.language): string => {
+  if (supportedLanguages.includes(microlcLang)) { return microlcLang }
 
-  if (supportedLanguages.includes(microLcLang)) { return microLcLang }
-
-  if (supportedLanguages.includes(microLcLang.substring(0, 2))) { return microLcLang.substring(0, 2) }
+  if (supportedLanguages.includes(microlcLang.substring(0, 2))) { return microlcLang.substring(0, 2) }
 
   return DEFAULT_LANGUAGE
 }

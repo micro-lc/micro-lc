@@ -238,15 +238,33 @@
       "description": "Information needed to display the company logo",
       "type": "object",
       "properties": {
-        "urlLightImage": {
-          "description": "URL of the logo image for light theme",
-          "type": "string"
+        "url": {
+          "description": "URL of the logo image.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "urlLightImage": {
+                  "description": "URL of the logo image for light theme",
+                  "type": "string"
+                },
+                "urlDarkImage": {
+                  "description": "URL of the logo image for dark theme",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "urlLightImage",
+                "urlDarkImage"
+              ]
+            }
+          ]
         },
-        "urlDarkImage": {
-          "description": "URL of the logo image for dark theme",
-          "type": "string"
-        },
-        "href": {
+        "onClickHref": {
           "description": "URL of the site the users are redirected to when they click the logo",
           "type": "string"
         },
@@ -263,14 +281,14 @@
       "description": "Configuration of the help menu rendered on the top bar",
       "type": "object",
       "properties": {
-        "helpLink": {
+        "helpHref": {
           "description": "Link to the help page",
           "type": "string"
         }
       },
       "additionalProperties": false,
       "required": [
-        "helpLink"
+        "helpHref"
       ]
     },
 

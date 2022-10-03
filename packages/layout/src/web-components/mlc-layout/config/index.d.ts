@@ -113,17 +113,24 @@ export interface GroupMenuItem {
  */
 export interface Logo {
   /**
-   * URL of the logo image for light theme
+   * URL of the logo image.
    */
-  urlLightImage?: string
-  /**
-   * URL of the logo image for dark theme
-   */
-  urlDarkImage?: string
+  url?:
+    | string
+    | {
+        /**
+         * URL of the logo image for light theme
+         */
+        urlLightImage: string
+        /**
+         * URL of the logo image for dark theme
+         */
+        urlDarkImage: string
+      }
   /**
    * URL of the site the users are redirected to when they click the logo
    */
-  href?: string
+  onClickHref?: string
   /**
    * Alternative text to display if the logo is not found
    */
@@ -136,7 +143,7 @@ export interface HelpMenu {
   /**
    * Link to the help page
    */
-  helpLink: string
+  helpHref: string
 }
 /**
  * Configuration of the user menu rendered on the top bar

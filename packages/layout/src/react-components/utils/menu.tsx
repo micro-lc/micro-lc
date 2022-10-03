@@ -33,13 +33,13 @@ const MenuItemLabel: React.FC<MenuItemLabelProps> = ({ label, rightIcon }) => (
   </>
 )
 
-export const buildAntMenuItems = (configItems: MenuItem[], mode: Mode, lang?: string): AntMenuItem[] => {
+export const buildAntMenuItems = (configItems: Partial<MenuItem>[], mode: Mode, lang?: string): AntMenuItem[] => {
   return configItems.reduce<AntMenuItem[]>((antMenuItems, configItem) => {
-    const { type } = configItem
+    if (!configItem.id) { return antMenuItems }
 
     const label = getLocalizedText(configItem.label ?? configItem.id, lang)
 
-    switch (type) {
+    switch (configItem.type) {
     case 'href': {
       const atnMenuItem: AntMenuItem = {
         icon: <DynamicIcon defaultSelector='LinkOutlined' iconConfig={configItem.icon}/>,

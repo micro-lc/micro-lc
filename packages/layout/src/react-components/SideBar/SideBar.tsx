@@ -14,7 +14,7 @@ export interface SideBarProps {
   collapsed?: boolean
   lang: string | undefined
   locale: Translations['MLC-LAYOUT'] | undefined
-  menuItems: MenuItem[]
+  menuItems: Partial<MenuItem>[]
   mode: Mode
   onSelect?: MenuProps['onSelect']
   selectedKeys: MenuProps['selectedKeys']

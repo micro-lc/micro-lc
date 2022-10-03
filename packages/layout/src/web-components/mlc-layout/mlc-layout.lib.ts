@@ -1,33 +1,37 @@
 import type { WrapperProps } from '../../react-components'
 import { COLLAPSE_KEY } from '../../react-components/SideBar'
 
-import type { MenuItem } from './config'
+import { setInLocalStorage } from './lib/localStorage'
 import type { Theme } from './lib/types'
+import { mapUserFields } from './lib/user'
+import { findMenuItemById } from './lib/utils'
 import type { MlcLayout } from './mlc-layout'
 
+export async function retrieveUser(this: MlcLayout) {
+  if (!this.userMenu?.userInfoUrl) { return }
+
+  const response = await this.microlcApi?.getExtensions?.().httpClient?.(this.userMenu.userInfoUrl)
+  if (!response?.ok) { throw new Error('Could not retrieve user data') }
+
+  const user = await response.json() as Record<string, unknown>
+  this._user = mapUserFields(user, this.userMenu)
+
+  this.microlcApi?.set?.({ user })
+}
+
 function onHelpMenuClick(this: MlcLayout) {
-  this.helpMenu?.helpLink && this.microlcApi?.router?.open(this.helpMenu.helpLink, '_blank')
+  this.helpMenu?.helpHref && this.microlcApi?.router?.open(this.helpMenu.helpHref, '_blank')
 }
 
 // TODO: should we one also an application?
 function onLogoClick(this: MlcLayout) {
-  this.logo?.href && this.microlcApi?.router?.open(this.logo.href)
-}
-
-function findMenuItemById(menuItems: MenuItem[], id: string): MenuItem | undefined {
-  for (const menuItem of menuItems) {
-    if (menuItem.id === id) { return menuItem }
-
-    if ('children' in menuItem) {
-      const foundInChildren = findMenuItemById(menuItem.children ?? [], id)
-      if (foundInChildren) { return foundInChildren }
-    }
-  }
+  this.logo?.onClickHref && this.microlcApi?.router?.open(this.logo.onClickHref)
 }
 
 function onSelect(this: MlcLayout, id: string) {
   if (id === COLLAPSE_KEY) {
     this._sideBarCollapsed = !this._sideBarCollapsed
+    setInLocalStorage('@microlc:fixedSidebarState', this._sideBarCollapsed ? 'collapsed' : 'expanded')
     return
   }
 
@@ -35,7 +39,7 @@ function onSelect(this: MlcLayout, id: string) {
 
   if (menuItem?.type === 'application') {
     this._selectedKeys = [menuItem.id] as string[]
-    this.microlcApi?.router?.goToApplication(menuItem.id)
+    menuItem.id && this.microlcApi?.router?.goToApplication(menuItem.id)
     return
   }
 
@@ -44,14 +48,25 @@ function onSelect(this: MlcLayout, id: string) {
   }
 }
 
-// TODO: implement logout
 function onUserMenuClick(this: MlcLayout, id: string) {
-  if (id === 'logout') { console.log('TODO: onLogout') }
+  if (id !== 'logout') { return }
+
+  const { logout } = this.userMenu ?? {}
+
+  logout?.url && this.microlcApi?.getExtensions?.().httpClient?.(
+    logout.url,
+    { method: logout.method ?? 'POST' }
+  )
+
+  logout?.redirectUrl && this.microlcApi?.router?.open(logout.redirectUrl)
 }
 
-// TODO: implement dark mode switch
+// TODO: implement CSS dark mode switch
 function onThemeChange(this: MlcLayout, value: Theme) {
   this._theme = value
+
+  setInLocalStorage('@microlc:currentTheme', value)
+  this.microlcApi?.set?.({ theme: value })
 }
 
 export function createProps(this: MlcLayout): WrapperProps {
@@ -62,15 +77,13 @@ export function createProps(this: MlcLayout): WrapperProps {
     locale: this._locale,
     logo: this.logo,
     menuItems: this.menuItems,
-    // SAFETY: it is defaulted on webcomponent construction
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    mode: this.mode!,
-    onHelpMenuClick: () => { onHelpMenuClick.bind(this)() },
-    onLogoCLick: () => { onLogoClick.bind(this)() },
+    mode: this.mode,
+    onHelpMenuClick: () => { onHelpMenuClick.call(this) },
+    onLogoCLick: () => { onLogoClick.call(this) },
     onOverlaySideBarTriggerClick: () => { this._sideBarCollapsed = !this._sideBarCollapsed },
-    onSelect: ({ key }) => { onSelect.bind(this)(key) },
-    onThemeChange: newTheme => { onThemeChange.bind(this)(newTheme) },
-    onUserMenuClick: ({ key }) => { onUserMenuClick.bind(this)(key) },
+    onSelect: ({ key }) => { onSelect.call(this, key) },
+    onThemeChange: newTheme => { onThemeChange.call(this, newTheme) },
+    onUserMenuClick: ({ key }) => { onUserMenuClick.call(this, key) },
     selectedKeys: this._selectedKeys,
     sideBarCollapsed: this._sideBarCollapsed,
     theme: this._theme,

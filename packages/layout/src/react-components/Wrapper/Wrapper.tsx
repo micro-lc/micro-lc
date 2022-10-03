@@ -10,11 +10,11 @@ import { TopBar } from '../TopBar'
 
 export interface WrapperProps {
   enableDarkMode: boolean | undefined
-  helpMenu: HelpMenu | undefined
+  helpMenu: Partial<HelpMenu> | undefined
   lang: string | undefined
   locale: Translations['MLC-LAYOUT'] | undefined
-  logo: Logo | undefined
-  menuItems: MenuItem[] | undefined
+  logo: Partial<Logo> | undefined
+  menuItems: Partial<MenuItem>[] | undefined
   mode: Mode
   onHelpMenuClick: VoidFn | undefined
   onLogoCLick: VoidFn | undefined
