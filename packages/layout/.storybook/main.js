@@ -26,7 +26,7 @@ module.exports = {
           replacements: [
             {
               from: './lang',
-              to: './../../../../public/lang'
+              to: './../../../../lang'
             }
           ]
         })
