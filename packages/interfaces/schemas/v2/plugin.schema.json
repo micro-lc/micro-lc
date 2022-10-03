@@ -202,16 +202,10 @@
           "booleanAttributes": ["disabled"]
         },
         {
-          "sources": "https://my-web-components-source",
           "tag": "my-custom-button"
         }
       ],
       "properties": {
-        "sources": {
-          "$ref": "#/definitions/sources",
-          "description": "Sources of custom HTML node"
-        },
-
         "tag": {
           "description": "HTML node tag name",
           "oneOf": [

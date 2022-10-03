@@ -8,7 +8,7 @@ import type { Microlc } from '../micro-lc'
 import type { MicrolcEvent, Observable } from './events'
 import type { BaseExtension } from './extensions'
 import type { QiankunMicroApp } from './qiankun'
-import { currentApplication$, getCurrentApplicationId, reroute, rerouteToError } from './router'
+import { currentApplication$, getCurrentApplicationAssets } from './router'
 
 export interface MicrolcApi<
   T extends BaseExtension, E extends MicrolcEvent = MicrolcEvent
@@ -39,7 +39,7 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
     applyImportMap: (id: string, importmap: ImportMap) => Object.freeze({ ...this._applicationsImportMap.createSetMount(id, importmap) }),
     currentApplication$,
     getApplications: () => Object.freeze({ ...this._config.applications }),
-    getCurrentApplication: () => Object.freeze({ ...getCurrentApplicationId() }),
+    getCurrentApplication: () => Object.freeze({ ...getCurrentApplicationAssets() }),
     getCurrentConfig: () => Object.freeze({ ...this._config }),
     getExtensions: () => Object.freeze({ ...this._extensions }),
     next: (value: Partial<Event>) => bus.next(value),

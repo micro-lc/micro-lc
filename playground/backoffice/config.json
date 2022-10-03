@@ -139,7 +139,7 @@
     "application_2": {
       "integrationMode": "compose",
       "route": "./ingredients",
-      "config": "./ingredients.json"
+      "config": "./ingredients_v2.json"
     }
   }
 }

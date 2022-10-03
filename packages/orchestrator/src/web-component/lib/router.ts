@@ -33,7 +33,7 @@ export function rerouteErrorHandler(err: TypeError): null {
 
 export const currentApplication$ = currentApplicationBus.asObservable()
 
-export function getCurrentApplicationId(): {handlers: QiankunMicroApp | undefined; id: string} | undefined {
+export function getCurrentApplicationAssets(): {handlers: QiankunMicroApp | undefined; id: string} | undefined {
   return currentApplication !== undefined ? {
     handlers: applicationHandlers.get(currentApplication),
     id: currentApplication,
@@ -129,6 +129,7 @@ export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, 
 }
 
 export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | URL): Promise<void> {
+  const app = getCurrentApplicationAssets()
   const unmount = getCurrentUnmount()
 
 
@@ -152,8 +153,10 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
     nextMatch = this._loadedApps.get(`${this._instance}-404`)?.[1]
   }
 
-  return flushAndGo
-    .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
+  return nextMatch?.name !== app?.id
+    ? flushAndGo
+      .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
+    : Promise.resolve()
 }
 
 function popStateListener<T extends BaseExtension>(this: Microlc<T>, event: PopStateEvent): void {

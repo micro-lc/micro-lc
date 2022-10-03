@@ -1,0 +1,454 @@
+{
+  "content": {
+    "content": [
+      {
+        "properties": { "rootElementSelectors": "microlc-element-composer" },
+        "tag": "bk-microlc-theme-manager",
+        "attributes": {}
+      },
+      {
+        "content": [
+          {
+            "content": [
+              {
+                "properties": {
+                  "content": { "it": "Ingredienti", "en": "Ingredients" }
+                },
+                "tag": "bk-title",
+                "attributes": { "style": "margin: 0 1vw 0 0;" }
+              },
+              { "tag": "bk-refresh-button", "attributes": {} }
+            ],
+            "tag": "div",
+            "attributes": {
+              "style": "display: flex; flex-direction: row; align-items: center;"
+            }
+          },
+          {
+            "content": [
+              {
+                "properties": {
+                  "placeholder": { "en": "Search...", "it": "Cerca..." }
+                },
+                "tag": "bk-search-bar",
+                "attributes": { "style": "margin: 0 1vw 0 0;" }
+              },
+              {
+                "tag": "bk-add-new-button",
+                "attributes": { "style": "margin: 0 1vw 0 0;" }
+              },
+              {
+                "properties": {
+                  "content": "",
+                  "clickConfig": {
+                    "type": "event",
+                    "actionConfig": { "label": "filter", "payload": {} }
+                  },
+                  "type": "outlined",
+                  "iconId": "FunnelPlotOutlined"
+                },
+                "tag": "bk-button",
+                "attributes": {}
+              }
+            ],
+            "tag": "div",
+            "attributes": {
+              "style": "display: flex; flex-direction: row; align-items: center;"
+            }
+          }
+        ],
+        "tag": "div",
+        "attributes": {
+          "style": "display: flex; flex-direction: row; justify-content: space-between; margin: 1vw 2vw 0vw 2vw; align-items: center;"
+        }
+      },
+      {
+        "content": [
+          {
+            "properties": {
+              "tabs": [
+                {
+                  "key": "all",
+                  "filters": [
+                    {
+                      "property": "__STATE__",
+                      "operator": "includeSome",
+                      "value": ["PUBLIC", "DRAFT"]
+                    }
+                  ],
+                  "title": { "en": "All", "it": "Tutti" }
+                },
+                {
+                  "key": "trash",
+                  "filters": [
+                    {
+                      "property": "__STATE__",
+                      "operator": "equal",
+                      "value": "TRASH"
+                    }
+                  ],
+                  "title": { "en": "Trash", "it": "Cestino" }
+                }
+              ]
+            },
+            "tag": "bk-tabs",
+            "attributes": {}
+          },
+          {
+            "properties": { "filters": [] },
+            "tag": "bk-filters-manager",
+            "attributes": {}
+          }
+        ],
+        "tag": "div",
+        "attributes": {
+          "style": "display: flex; flex-direction: row; padding: 0 24px; align-items: center; justify-content: space-between; border-bottom: 1px solid #CDCDCE; min-height: 50px;"
+        }
+      },
+      {
+        "content": [
+          {
+            "content": [
+              {
+                "properties": {
+                  "dataSchema": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "label": "_id",
+                        "type": "string",
+                        "visualizationOptions": { "hidden": true },
+                        "formOptions": { "hidden": true },
+                        "filtersOptions": { "hidden": true }
+                      },
+                      "name": {
+                        "label": { "en": "Name", "it": "Nome" },
+                        "type": "string",
+                        "unique": true
+                      },
+                      "description": {
+                        "label": { "en": "Description", "it": "Descrizione" },
+                        "type": "string",
+                        "format": "text-area",
+                        "visualizationOptions": { "hidden": true },
+                        "filtersOptions": { "hidden": true }
+                      },
+                      "isAllergen": {
+                        "label": { "it": "Allergene", "en": "Allergen" },
+                        "type": "boolean"
+                      },
+                      "__STATE__": {
+                        "label": { "en": "State", "it": "Stato" },
+                        "type": "string",
+                        "enum": ["PUBLIC", "DRAFT"],
+                        "default": "PUBLIC",
+                        "visualizationOptions": {
+                          "iconMap": {
+                            "PUBLIC": {
+                              "shape": "roundedSquare",
+                              "color": "#52C41A"
+                            },
+                            "DRAFT": {
+                              "shape": "roundedSquare",
+                              "color": "#CDCDCE"
+                            }
+                          }
+                        },
+                        "formOptions": { "hiddenOnUpdate": true },
+                        "filtersOptions": { "hidden": true }
+                      }
+                    },
+                    "required": ["name", "isAllergen"]
+                  },
+                  "rowActions": {
+                    "kind": "icons",
+                    "actions": [
+                      {
+                        "label": { "en": "Duplicate", "it": "Duplica" },
+                        "icon": "far fa-copy",
+                        "kind": "event",
+                        "content": "duplicate-data"
+                      },
+                      {
+                        "label": { "en": "Delete", "it": "Elimina" },
+                        "icon": "fas fa-trash",
+                        "kind": "event",
+                        "content": "delete-data",
+                        "meta": { "actionId": "delete-data" },
+                        "requireConfirm": true
+                      }
+                    ]
+                  },
+                  "initialSortDirection": "descend",
+                  "initialSortProperty": "createdAt",
+                  "maxLines": 8
+                },
+                "tag": "bk-table",
+                "attributes": {}
+              },
+              {
+                "properties": {
+                  "dataSchema": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "label": "_id",
+                        "type": "string",
+                        "visualizationOptions": { "hidden": true },
+                        "formOptions": { "hidden": true },
+                        "filtersOptions": { "hidden": true }
+                      },
+                      "name": {
+                        "label": { "en": "Name", "it": "Nome" },
+                        "type": "string",
+                        "unique": true
+                      },
+                      "description": {
+                        "label": { "en": "Description", "it": "Descrizione" },
+                        "type": "string",
+                        "format": "text-area",
+                        "visualizationOptions": { "hidden": true },
+                        "filtersOptions": { "hidden": true }
+                      },
+                      "isAllergen": {
+                        "label": { "it": "Allergene", "en": "Allergen" },
+                        "type": "boolean"
+                      },
+                      "__STATE__": {
+                        "label": { "en": "State", "it": "Stato" },
+                        "type": "string",
+                        "enum": ["PUBLIC", "DRAFT"],
+                        "default": "PUBLIC",
+                        "visualizationOptions": {
+                          "iconMap": {
+                            "PUBLIC": {
+                              "shape": "roundedSquare",
+                              "color": "#52C41A"
+                            },
+                            "DRAFT": {
+                              "shape": "roundedSquare",
+                              "color": "#CDCDCE"
+                            }
+                          }
+                        },
+                        "formOptions": { "hiddenOnUpdate": true },
+                        "filtersOptions": { "hidden": true }
+                      }
+                    },
+                    "required": ["name", "isAllergen"]
+                  },
+                  "customLabels": {
+                    "create": {
+                      "title": { "en": "Add new", "it": "Aggiungi nuovo" },
+                      "ctaLabel": { "en": "Add", "it": "Aggiungi" }
+                    },
+                    "update": {
+                      "title": {
+                        "en": "Ingredient detail",
+                        "it": "Dettaglio ingrediente"
+                      },
+                      "ctaLabel": { "en": "Save", "it": "Salva" }
+                    }
+                  },
+                  "width": "560",
+                  "requireConfirm": true
+                },
+                "tag": "bk-form-drawer",
+                "attributes": {}
+              },
+              {
+                "properties": {
+                  "dataSchema": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "label": "_id",
+                        "type": "string",
+                        "visualizationOptions": { "hidden": true },
+                        "formOptions": { "hidden": true },
+                        "filtersOptions": { "hidden": true }
+                      },
+                      "name": {
+                        "label": { "en": "Name", "it": "Nome" },
+                        "type": "string",
+                        "unique": true
+                      },
+                      "description": {
+                        "label": { "en": "Description", "it": "Descrizione" },
+                        "type": "string",
+                        "format": "text-area",
+                        "visualizationOptions": { "hidden": true },
+                        "filtersOptions": { "hidden": true }
+                      },
+                      "isAllergen": {
+                        "label": { "it": "Allergene", "en": "Allergen" },
+                        "type": "boolean"
+                      },
+                      "__STATE__": {
+                        "label": { "en": "State", "it": "Stato" },
+                        "type": "string",
+                        "enum": ["PUBLIC", "DRAFT"],
+                        "default": "PUBLIC",
+                        "visualizationOptions": {
+                          "iconMap": {
+                            "PUBLIC": {
+                              "shape": "roundedSquare",
+                              "color": "#52C41A"
+                            },
+                            "DRAFT": {
+                              "shape": "roundedSquare",
+                              "color": "#CDCDCE"
+                            }
+                          }
+                        },
+                        "formOptions": { "hiddenOnUpdate": true },
+                        "filtersOptions": { "hidden": true }
+                      }
+                    },
+                    "required": ["name", "isAllergen"]
+                  },
+                  "width": "300"
+                },
+                "tag": "bk-filter-drawer",
+                "attributes": {}
+              }
+            ],
+            "tag": "div",
+            "attributes": {
+              "style": "display: flex; flex-direction: column; background-color: #f0f2f5; padding: 24px 24px; flex-grow: 1; position:relative; overflow:hidden;"
+            }
+          }
+        ],
+        "tag": "div",
+        "attributes": {
+          "style": "display: flex; flex-direction: column; flex-grow: 1; position:relative; bottom: 0;"
+        }
+      },
+      {
+        "content": [
+          { "tag": "bk-footer", "attributes": {} },
+          { "tag": "bk-pagination", "attributes": {} }
+        ],
+        "tag": "div",
+        "attributes": {
+          "style": "display: flex; flex-direction: row; position: sticky; justify-content: space-between; align-items: center; padding: 12px 24px; background-color: white; z-index: 10; bottom: 0; max-height: 56px;"
+        }
+      },
+      { "tag": "bk-confirmation-modal", "attributes": {} },
+      {
+        "properties": {
+          "rootElementSelectors": "main.micro-lc-layout-content",
+          "successEventMap": {
+            "create-data": {
+              "title": { "en": "Success", "it": "Successo" },
+              "content": {
+                "en": "Ingredient successfully created",
+                "it": "L'ingrediente è stato creato correttamente"
+              },
+              "type": "success"
+            },
+            "update-data": {
+              "title": { "en": "Success", "it": "Successo" },
+              "content": {
+                "en": "Ingredient successfully updated",
+                "it": "L'ingrediente è stato aggiornato correttamente"
+              },
+              "type": "success"
+            },
+            "delete-data": {
+              "title": { "en": "Success", "it": "Successo" },
+              "content": {
+                "en": "Ingredient successfully deleted",
+                "it": "L'ingrediente è stato eliminato correttamente"
+              },
+              "type": "success"
+            }
+          },
+          "errorEventMap": {
+            "create-data": {
+              "title": { "en": "Error", "it": "Errore" },
+              "content": {
+                "en": "An error occurred during ingredient creation",
+                "it": "C'è stato un errore durante la creazione dell'ingrediente"
+              },
+              "type": "error"
+            },
+            "update-data": {
+              "title": { "en": "Error", "it": "Errore" },
+              "content": {
+                "en": "An error occurred during ingredient update",
+                "it": "C'è stato un errore durante l'aggiornamento dell'ingrediente"
+              },
+              "type": "error"
+            },
+            "delete-data": {
+              "title": { "en": "Error", "it": "Errore" },
+              "content": {
+                "en": "An error occurred during ingredient deletion",
+                "it": "C'è stato un errore durante l'eliminazione dell'ingrediente"
+              },
+              "type": "error"
+            }
+          }
+        },
+        "tag": "bk-notifications",
+        "attributes": {}
+      },
+      {
+        "properties": {
+          "basePath": "/v2/ingredients",
+          "dataSchema": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "label": "_id",
+                "type": "string",
+                "visualizationOptions": { "hidden": true },
+                "formOptions": { "hidden": true },
+                "filtersOptions": { "hidden": true }
+              },
+              "name": {
+                "label": { "en": "Name", "it": "Nome" },
+                "type": "string",
+                "unique": true
+              },
+              "description": {
+                "label": { "en": "Description", "it": "Descrizione" },
+                "type": "string",
+                "format": "text-area",
+                "visualizationOptions": { "hidden": true },
+                "filtersOptions": { "hidden": true }
+              },
+              "isAllergen": {
+                "label": { "it": "Allergene", "en": "Allergen" },
+                "type": "boolean"
+              },
+              "__STATE__": {
+                "label": { "en": "State", "it": "Stato" },
+                "type": "string",
+                "enum": ["PUBLIC", "DRAFT"],
+                "default": "PUBLIC",
+                "visualizationOptions": {
+                  "iconMap": {
+                    "PUBLIC": { "shape": "roundedSquare", "color": "#52C41A" },
+                    "DRAFT": { "shape": "roundedSquare", "color": "#CDCDCE" }
+                  }
+                },
+                "formOptions": { "hiddenOnUpdate": true },
+                "filtersOptions": { "hidden": true }
+              }
+            },
+            "required": ["name", "isAllergen"]
+          }
+        },
+        "tag": "bk-crud-client",
+        "attributes": {}
+      }
+    ],
+    "tag": "div",
+    "attributes": {
+      "style": "display: flex; flex-direction: column; height: calc(100vh - 64px);"
+    }
+  },
+  "sources": { "uris": ["/back-kit/latest/bk-web-components.esm.js"] }
+}

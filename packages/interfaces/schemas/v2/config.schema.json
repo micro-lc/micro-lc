@@ -393,7 +393,6 @@
               }
             },
             {
-              "sources": "./my-footer.js",
               "tag": "my-custom-footer"
             }
           ]
