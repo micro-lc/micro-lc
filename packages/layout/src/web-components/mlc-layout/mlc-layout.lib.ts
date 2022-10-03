@@ -71,7 +71,8 @@ function onThemeChange(this: MlcLayout, value: Theme) {
 
 export function createProps(this: MlcLayout): WrapperProps {
   return {
-    enableDarkMode: this.enableDarkMode,
+    // TODO: re-activate when dark mode is supported
+    enableDarkMode: false,
     helpMenu: this.helpMenu,
     lang: this._lang,
     locale: this._locale,
