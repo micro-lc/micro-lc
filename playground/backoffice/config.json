@@ -53,7 +53,7 @@
             "userInfoUrl": "./userinfo.json"
           },
           "logo": {
-            "urlLightImage": "/packages/orchestrator/public/favicon.png"
+            "url": "/packages/orchestrator/public/favicon.png"
           },
           "mode": "fixedSideBar",
           "menuItems": [
@@ -83,7 +83,7 @@
                 {
                   "children": [
                     {
-                      "id": "whatever",
+                      "id": "google",
                       "label": {
                         "en": "Application 1",
                         "it": "Applicazione 1"
