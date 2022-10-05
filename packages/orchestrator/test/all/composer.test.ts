@@ -2,8 +2,9 @@ import type { PluginConfiguration } from '@micro-lc/interfaces/v2'
 import { expect } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 
-import type { PremountableElement } from '../../src/composer'
 import { createComposerContext, premount } from '../../src/composer'
+
+import '../../src/plugins/composer'
 
 const now = new Date()
 const config: PluginConfiguration = {
@@ -61,7 +62,6 @@ describe('composer api tests', () => {
       premount must append importmaps when requested and uris must be fetch;
       on createComposerContext properties and elements are appended`, async () => {
     const sandbox = createSandbox()
-    const applyImportMap = sandbox.stub<[string, ImportMap], void>()
     const addImportMap = sandbox.stub()
     const importShim = sandbox.stub<
       [string], Promise<{default: unknown} & object>
@@ -75,21 +75,10 @@ describe('composer api tests', () => {
 
     const removeImportShim = define(window, 'importShim', importShim)
 
-    // micro-lc fake
-    const importmap = document.createElement('script')
-    const premountable = Object.assign(document.createElement('div'), {
-      disableShims: false,
-      getApi: () => ({
-        applyImportMap,
-      }),
-    }) as PremountableElement
 
-
-    const resolvedConfig = await premount.call(premountable, importmap, config)
+    const resolvedConfig = await premount(config)
     expect(addImportMap).to.be.calledOnce
     expect(importShim).to.be.calledOnceWith('https://www.google.com')
-    expect(importmap).to.have.property('textContent', '')
-    expect(importmap).to.have.property('isConnected', false)
     expect(resolvedConfig).to.eql(config)
 
     const appender = await createComposerContext(
@@ -119,6 +108,50 @@ describe('composer api tests', () => {
     expect(container.querySelector('#root :nth-child(3)')).to.have.property('isodate', now.toISOString())
 
     removeImportShim()
+    sandbox.restore()
+  })
+})
+
+describe('composer plugin tests', () => {
+  it('check eventBus pool discrimination', async () => {
+    const sandbox = createSandbox()
+
+    const container = document.createElement('div')
+    const microlcApi = {}
+    expect(window.__MICRO_LC_COMPOSER).to.have.property('bootstrap')
+
+    const api = {
+      composerApi: { createComposerContext, premount },
+      config: {
+        content: [
+          {
+            properties: { eventBus: 'eventBus.[0]' },
+            tag: 'div',
+          },
+          { tag: 'div' },
+          { tag: 'div' },
+        ],
+      },
+      microlcApi,
+      name: 'composable-app',
+      schema: {},
+    }
+
+    await window.__MICRO_LC_COMPOSER?.bootstrap?.(api)
+
+    await window.__MICRO_LC_COMPOSER?.mount?.({
+      container,
+      ...api,
+    })
+
+    interface ComposedDiv extends HTMLDivElement {
+      eventBus: unknown
+    }
+
+    const [div1, div2, div3] = container.querySelectorAll('div') as NodeListOf<ComposedDiv>
+    expect(div2.eventBus).to.equal(div3.eventBus)
+    expect(div1.eventBus).not.to.equal(div3.eventBus)
+
     sandbox.restore()
   })
 })

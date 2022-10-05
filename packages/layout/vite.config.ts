@@ -9,9 +9,11 @@ import dynamicImport from 'vite-plugin-dynamic-import'
 
 import target from './scripts/target'
 
+// @ts-expect-error TODO: smth wrong with css plugin types
 export default defineConfig(({ mode }) => ({
   base: './',
   build: {
+    chunkSizeWarningLimit: 3000,
     dynamicImportVarsOptions: {
       exclude: [
         require.resolve('@micro-lc/iconic/dist/import-icon.js'),
@@ -25,15 +27,12 @@ export default defineConfig(({ mode }) => ({
       input: {
         index: 'src/index.ts',
         'mlc-antd-theme-manager': 'src/web-components/mlc-antd-theme-manager/index.ts',
+        'mlc-config': 'src/web-components/mlc-config/index.ts',
         'mlc-layout': 'src/web-components/mlc-layout/index.ts',
+        'mlc-url': 'src/web-components/mlc-url/index.ts',
       },
       output: {
         entryFileNames: ({ name }) => (mode !== 'min' ? `${name}.js` : `${name}.${mode}.js`),
-      //   manualChunks: (id) => {
-      //     if (id.match(/@ctrl\/tinycolor/)) {
-      //       return '@ctrl/tinycolor'
-      //     }
-      //   },
       },
       plugins: [visualizer(), rollupNodePolyFill()],
     },
@@ -84,6 +83,7 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       path: 'rollup-plugin-node-polyfills/polyfills/path',
+      'process.env.NODE_ENV': JSON.stringify(mode.split('.')[0]),
     },
     dedupe: ['react', 'react-dom'],
   },

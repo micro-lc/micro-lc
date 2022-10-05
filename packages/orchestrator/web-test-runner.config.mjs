@@ -40,6 +40,7 @@ export default {
       name: 'chromium-firefox',
     },
   ],
+  injectWebSocket: false,
   middleware: [
     function rewriteIndex(ctx, next) {
       if (ctx.url === '/composer.test.js') {

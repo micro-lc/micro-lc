@@ -33,7 +33,7 @@ export type BaseExtension = Record<string, unknown> & {
 }
 
 export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSConfig): void {
-  this._styleTags.forEach((style) => { style.remove() })
+  this._styleElements.forEach((style) => { style.remove() })
 
   /**
    * 🍎 webkit does not support `adoptedStyleSheets`
@@ -47,8 +47,8 @@ export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSCon
       this.ownerDocument.createElement('style')
     ) as [HTMLStyleElement, HTMLStyleElement]
 
-    this._styleTags = injectStyleToElements(css, styleTags, this._isShadow())
-    this._styleTags.forEach((el) => {
+    this._styleElements = injectStyleToElements(css, styleTags, this._isShadow())
+    this._styleElements.forEach((el) => {
       this._isShadow()
         ? this.shadowRoot.insertBefore(el, this.shadowRoot.firstChild)
         : this.ownerDocument.head.appendChild(el)

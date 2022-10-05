@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/packages/orchestrator/dist/" target="_blank" />
+  <link rel="icon" href="./favicon.png" />
+  <style>
+    html, body, micro-lc {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+  <script async type="module" src="/packages/layout/dist/mlc-url.js"></script>
+  <script async type="module" src="./micro-lc.development.js"></script>
+</head>
+<body>
+  <mlc-url style="width: 100%; display: flex;"></mlc-url>
+  <micro-lc></micro-lc>
+
+  <script>
+    const _ = document.querySelector('micro-lc')
+    window.onmessage = function (event) {
+      _.config = JSON.parse(event.data)
+    }
+  </script>
+</body>
+</html>

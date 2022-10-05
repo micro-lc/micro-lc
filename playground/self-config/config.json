@@ -1,0 +1,30 @@
+{
+  "$schema": "../../packages/interfaces/schemas/v2/config.schema.json",
+  "version": 2,
+  "settings": {
+    "defaultUrl": "./",
+    "composerUri": "/packages/orchestrator/dist/composer.development.js",
+    "4xx": {
+      "404": "/packages/orchestrator/dist/404.html",
+      "401": "/packages/orchestrator/dist/401.html"
+    },
+    "5xx": {
+      "500": "/packages/orchestrator/dist/500.html"
+    }
+  },
+  "layout": {
+    "sources": "/packages/layout/dist/mlc-config.js",
+    "content": [
+      {
+        "tag": "mlc-config"
+      }
+    ]
+  },
+  "applications": {
+    "micro-lc": {
+      "integrationMode": "iframe",
+      "route": "./",
+      "src": "./micro-lc.html"
+    }
+  }
+}

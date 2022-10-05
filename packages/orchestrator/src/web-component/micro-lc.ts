@@ -2,11 +2,9 @@ import type { Config } from '@micro-lc/interfaces/v2'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'
 
-import type { PremountableElement } from '../composer'
 import { createComposerContext, premount } from '../composer'
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
-import { createImportMapTag, ImportMapRegistry } from '../dom-manipulation'
 
 
 import type { MicrolcApi, ComposableApplicationProperties, BaseExtension } from './lib'
@@ -28,23 +26,19 @@ import { createQiankunInstance } from './lib/qiankun'
 type ObservedAttributes =
   | 'config-src'
   | 'disable-shadow-dom'
-  | 'disable-shims'
 type ObservedProperties =
   | 'config'
   | 'configSrc'
   | 'disableShadowDom'
-  | 'disableShims'
 
-const booleanAttributes: ObservedAttributes[] = ['disable-shadow-dom', 'disable-shims']
+const booleanAttributes: ObservedAttributes[] = ['disable-shadow-dom']
 
 const handleUpdateError = (_: TypeError): void => {
   console.error(_)
 }
 
-export class Microlc<
-  E extends BaseExtension = BaseExtension
-> extends HTMLElement implements PremountableElement {
-  static get observedAttributes() { return ['config-src', 'disable-shadow-dom', 'disable-shims'] }
+export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElement {
+  static get observedAttributes() { return ['config-src', 'disable-shadow-dom'] }
 
   private _wasDisconnected = false
   private _updateComplete = true
@@ -55,16 +49,12 @@ export class Microlc<
   protected _config: CompleteConfig = defaultConfig
   protected _configSrc: string | null | undefined
   protected _disableShadowDom = false
-  protected _disableShims = false
 
   // queries
-  protected _esmsOptionsScript!: HTMLScriptElement
-  protected _styleTags: HTMLStyleElement[] = []
-  protected _globalImportmap = createImportMapTag(this.ownerDocument)
-  protected _layoutImportmap = createImportMapTag(this.ownerDocument)
-  protected _applicationsImportMap = new ImportMapRegistry(this)
+  protected _styleElements: HTMLStyleElement[] = []
   protected _loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties<E>>]>()
   protected _loadedRoutes = new Map<string, string>()
+  protected _applicationMapping = new Map<string, string>()
   protected _reroute = reroute.bind<(url?: string | URL) => Promise<void>>(this)
   protected _rerouteToError = rerouteToError.bind<(statusCode?: number) => Promise<void>>(this)
 
@@ -104,7 +94,12 @@ export class Microlc<
     // `setAttribute` calls
     setTimeout(() => {
       this.update()
-        .then(() => this._reroute().catch(rerouteErrorHandler))
+        .then((done) => {
+          if (done) {
+            this._reroute().catch(rerouteErrorHandler)
+            this._completeUpdate()
+          }
+        })
         .catch(handleUpdateError)
     })
   }
@@ -161,24 +156,6 @@ export class Microlc<
     }
   }
 
-  /**
-   * @observedProperty --> mirrored by `disable-shims`
-   */
-  get disableShims(): boolean {
-    return Boolean(this._disableShims)
-  }
-  set disableShims(shims: unknown) {
-    if (shims !== this._disableShims) {
-      this._prepareForUpdate()
-
-      this._handlePropertyUpdate(
-        'disableShims',
-        shims,
-        (input): input is boolean => typeof input === 'boolean'
-      )
-    }
-  }
-
   get updateComplete(): boolean {
     return this._updateComplete
   }
@@ -217,13 +194,11 @@ export class Microlc<
   }
 
   connectedCallback() {
-    if (this._wasDisconnected) {
-      this.ownerDocument.head.appendChild(this._globalImportmap)
-      this.ownerDocument.head.appendChild(this._layoutImportmap)
+    if (this._wasDisconnected && this._disableShadowDom) {
+      this._styleElements.forEach((element) => {
+        this.ownerDocument.head.appendChild(element)
+      })
     }
-
-    initImportMapSupport
-      .call<Microlc<E>, [], Promise<void>>(this).catch(handleInitImportMapError)
 
     createRouter.call<Microlc<E>, [], void>(this)
 
@@ -265,7 +240,8 @@ export class Microlc<
       }
 
       // 1 => import-map 💹
-      updateGlobalImportMap.call<Microlc<E>, [], void>(this)
+      await initImportMapSupport().catch(handleInitImportMapError)
+      await updateGlobalImportMap(this._config.importmap)
 
       // then render to ensure that mount point is in page
       // layout is attached with its own importmap
@@ -275,7 +251,7 @@ export class Microlc<
       // 3 => applications 🍎
       await updateApplications.call<Microlc<E>, [], Promise<void>>(this)
 
-      return Promise.resolve(true).finally(() => this._completeUpdate())
+      return Promise.resolve(true)
     }
 
     this._updateRequests -= 1
@@ -296,9 +272,15 @@ export class Microlc<
       },
     } = this
 
+    for (const child of this.children) {
+      child.remove()
+    }
+    for (const child of this._shadowRoot.children) {
+      child.remove()
+    }
+
     // layout composition and premount ops
-    const { content } = await premount.call(this, this._layoutImportmap, layout)
-    !this._layoutImportmap.isConnected && this.ownerDocument.head.appendChild(this._layoutImportmap)
+    const { content } = await premount(layout)
     const layoutAppender = await createComposerContext(content, {
       context: { microlcApi: this.getApi() },
       extraProperties: ['microlcApi'],
@@ -319,10 +301,9 @@ export class Microlc<
 
   disconnectedCallback() {
     // remove all tags related with microlc
-    [...this._styleTags, this._globalImportmap, this._layoutImportmap].forEach((el) => {
+    this._styleElements.forEach((el) => {
       el.remove()
     })
-    this._applicationsImportMap.removeAll()
 
     // disconnect event listeners
     removeRouter.call<Microlc<E>, [], void>(this)

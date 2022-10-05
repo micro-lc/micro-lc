@@ -61,7 +61,8 @@ module.exports = {
       },
       resolve: {
         alias: {
-          path: 'rollup-plugin-node-polyfills/polyfills/path'
+          path: 'rollup-plugin-node-polyfills/polyfills/path',
+          'process.env.NODE_ENV': JSON.stringify('development'),
         },
         dedupe: [
           '@storybook/client-api',

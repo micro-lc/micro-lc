@@ -13,14 +13,13 @@ import { currentApplication$, getCurrentApplicationAssets } from './router'
 export interface MicrolcApi<
   T extends BaseExtension, E extends MicrolcEvent = MicrolcEvent
 > extends Observable<Partial<E>> {
-  readonly applyImportMap: (id: string, importmap: ImportMap) => void
   readonly currentApplication$: Observable<string | undefined>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
   readonly getExtensions: () => Readonly<Partial<T>>
   readonly router: {
-    goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): void
+    goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): Promise<void>
     goToErrorPage(statusCode?: number): void
     open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => void
   }
@@ -36,7 +35,6 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
   const bus = new BehaviorSubject<Partial<Event>>(currentState)
 
   return () => Object.freeze({
-    applyImportMap: (id: string, importmap: ImportMap) => Object.freeze({ ...this._applicationsImportMap.createSetMount(id, importmap) }),
     currentApplication$,
     getApplications: () => Object.freeze({ ...this._config.applications }),
     getCurrentApplication: () => Object.freeze({ ...getCurrentApplicationAssets() }),

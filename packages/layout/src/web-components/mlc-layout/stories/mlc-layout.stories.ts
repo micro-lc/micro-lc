@@ -3,12 +3,12 @@ import { action } from '@storybook/addon-actions'
 import type { Story } from '@storybook/web-components'
 import { html } from 'lit'
 
-import type { MlcLayout } from '../mlc-layout'
+import { MlcLayout } from '../mlc-layout'
 import type { MlcApi } from '../types'
 
-import '../mlc-layout'
-
 export default { title: 'Layout' }
+
+customElements.define('mlc-layout', MlcLayout)
 
 function Template(props: Partial<MlcLayout>) {
   return html`
@@ -18,8 +18,8 @@ function Template(props: Partial<MlcLayout>) {
       .menuItems=${props.menuItems}
       .userMenu=${props.userMenu}
       .microlcApi=${props.microlcApi}
-      .mode=${props.mode}
-      .enableDarkMode=${props.enableDarkMode}
+      .mode=${props.mode ?? 'fixedSideBar'}
+      .enableDarkMode=${props.enableDarkMode ?? false}
       .head=${props.head}
     >
       <div slot="top-bar" style="height: 100%; display: flex; justify-content: center; align-items: center">
@@ -127,7 +127,10 @@ const microlcApi: Partial<MlcApi> = {
   },
   getExtensions: () => microlcApiExtensions,
   router: {
-    goToApplication: (id) => action('router.goToApplication')(id),
+    goToApplication: async (id): Promise<void> => {
+      action('router.goToApplication')(id)
+      return Promise.resolve()
+    },
     goToErrorPage: (status) => action('route.goToErrorPage')(status),
     open: (url, target) => action('router.open')(url, target),
   },

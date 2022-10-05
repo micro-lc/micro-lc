@@ -1,10 +1,9 @@
-import type { Config, PluginConfiguration } from '@micro-lc/interfaces/v2'
+import type { Config, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
 
 import type { ResolvedConfig } from '../../composer'
 import { createComposerContext, premount } from '../../composer'
 import { defaultConfig } from '../../config'
-import { assignContent } from '../../dom-manipulation'
 import logger from '../../logger'
 import { toArray } from '../../utils/array'
 import type { SchemaOptions } from '../../utils/json'
@@ -14,39 +13,30 @@ import type { Microlc } from '../micro-lc'
 import type { MicrolcApi } from './api'
 import type { BaseExtension } from './extensions'
 
-interface ESMSInitOptions {
-  mapOverride?: boolean
-  shimMode?: boolean
+const defaultInitOptions: ESMSInitOptions = {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  mapOverrides: true,
+  shimMode: true,
 }
 
-export async function initImportMapSupport<T extends BaseExtension>(this: Microlc<T>) {
-  let optScript = this.ownerDocument
-    .querySelector('script[type=esms-options]')
-
-  if (!optScript) {
-    optScript = Object.assign(this.ownerDocument.createElement('script'), {
-      textContent: '{}',
-      type: 'esms-options',
+export async function initImportMapSupport(): Promise<void> {
+  const { esmsInitOptions } = window
+  !esmsInitOptions
+    && Object.defineProperty(window, 'esmsInitOptions', {
+      configurable: true, value: defaultInitOptions, writable: true,
     })
+
+  const done = Promise.resolve()
+
+  // Load `es-module-shims
+  if (!('importShim' in window)) {
+    await import('es-module-shims').catch(
+      logger.dynamicImportError('es-module-shims')
+    )
   }
 
-  const { textContent } = optScript as HTMLScriptElement
-  const options = JSON.parse(textContent ?? '{}') as ESMSInitOptions
-  optScript.textContent = JSON.stringify({
-    ...options,
-    mapOverride: true,
-    shimMode: !this._disableShims,
-  } as ESMSInitOptions)
-
-  if (!optScript.isConnected) {
-    this._esmsOptionsScript = optScript as HTMLScriptElement
-    this.ownerDocument.head.appendChild(optScript)
-  }
-
-  // Load `es-module-shims`
-  await import('es-module-shims').catch(
-    logger.dynamicImportError('es-module-shims')
-  )
+  return done
 }
 
 export const handleInitImportMapError = (_: TypeError): void => {
@@ -82,25 +72,12 @@ export async function fetchConfig(url: string): Promise<Config> {
     )
 }
 
-export function updateGlobalImportMap<T extends BaseExtension>(this: Microlc<T>) {
-  const {
-    _config: {
-      importmap,
-    },
-  } = this
-
-  if (this._disableShims || !('importShim' in window)) {
-    assignContent(this._globalImportmap, importmap)
-    !this._globalImportmap.isConnected && this.ownerDocument.head.appendChild(this._globalImportmap)
-
-    return
-  }
-
+export async function updateGlobalImportMap(importmap: GlobalImportMap): Promise<void> {
   importShim.addImportMap(importmap)
+  return Promise.resolve()
 }
 
-type PremountReturnType =
-  (id: string, config: PluginConfiguration) => Promise<ResolvedConfig>
+type PremountReturnType = (config: PluginConfiguration) => Promise<ResolvedConfig>
 
 interface ComposerApi {
   createComposerContext: typeof createComposerContext
@@ -110,7 +87,7 @@ interface ComposerApi {
 export interface ComposableApplicationProperties<T extends BaseExtension = BaseExtension> {
   composerApi: ComposerApi
   config: string | PluginConfiguration | undefined
-  microlcApi: MicrolcApi<T>
+  microlcApi: Partial<MicrolcApi<T>>
   schema: SchemaOptions | undefined
 }
 
@@ -127,8 +104,6 @@ export async function getApplicationSchema(): Promise<SchemaOptions | undefined>
 }
 
 function getContainer<T extends BaseExtension>(this: Microlc<T>, selector: string): HTMLElement {
-  // SAFETY: has been mounted on update lifecycle
-
   return this.querySelector<HTMLElement>(selector) ?? this
 }
 
@@ -169,6 +144,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       entry,
       name,
     }])
+    this._applicationMapping.set(`${statusCode}-${window.crypto.randomUUID()}`, name)
   })
 
   const schema = await getApplicationSchema()
@@ -216,11 +192,13 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       break
     }
 
+    const qiankunId = `${id}-${window.crypto.randomUUID()}`
+    acc.mapping.set(qiankunId, id)
     acc.routes.set(id, app.route)
     acc.apps.set(id, [app.route, {
       container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
-      name: id,
+      name: qiankunId,
       props: {
         composerApi: {
           createComposerContext: app.integrationMode !== 'iframe'
@@ -233,8 +211,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
               },
               extraProperties: ['onload'],
             }),
-          premount: premount
-            .bind<PremountReturnType>(this),
+          premount,
         },
         config,
         microlcApi: this.getApi(),
@@ -243,7 +220,11 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     }])
 
     return acc
-  }, { apps: this._loadedApps, routes: this._loadedRoutes })
+  }, {
+    apps: this._loadedApps,
+    mapping: this._applicationMapping,
+    routes: this._loadedRoutes,
+  })
 
   return Promise.resolve()
 }

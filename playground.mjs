@@ -43,6 +43,25 @@ const main = async () => {
         },
       ],
       open: true,
+      plugins: [
+        {
+          name: 'nonce',
+          transform(ctx) {
+            function randomString(length) {
+              let text = ''
+              const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+              for (let i = 0; i < length; i++) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length))
+              }
+              return text
+            }
+            const nonce = randomString(32)
+            if (ctx.response.is('html')) {
+              return { body: ctx.body.replace(/\*\*CSP_NONCE\*\*/g, nonce) }
+            }
+          },
+        },
+      ],
     },
   })
 }

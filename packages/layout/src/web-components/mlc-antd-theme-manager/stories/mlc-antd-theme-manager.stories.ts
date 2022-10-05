@@ -2,13 +2,13 @@ import { action } from '@storybook/addon-actions'
 import type { Story } from '@storybook/web-components'
 import { html } from 'lit'
 
-import type { MlcAntdThemeManager } from '../mlc-antd-theme-manager'
-
-import '../mlc-antd-theme-manager'
+import { MlcAntdThemeManager } from '../mlc-antd-theme-manager'
 
 export default { title: 'Ant.d Theme Manager' }
 
-function Template(props: Partial<MlcAntdThemeManager>) {
+customElements.define('mlc-antd-theme-manager', MlcAntdThemeManager)
+
+function Template(props: MlcAntdThemeManager) {
   return html`
     <mlc-antd-theme-manager
       .microlcApi=${props.microlcApi}

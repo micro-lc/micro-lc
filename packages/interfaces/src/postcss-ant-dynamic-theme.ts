@@ -1,4 +1,4 @@
-import type { Plugin, PluginCreator } from 'postcss'
+import type { Plugin, PluginCreator, Processor } from 'postcss'
 
 export interface AntDynamicThemePluginOptions {
   antVariableThemeSelector?: string
@@ -7,7 +7,7 @@ export interface AntDynamicThemePluginOptions {
   outgoingPrefix: string
 }
 
-const plugin = (opts: AntDynamicThemePluginOptions): Plugin => {
+const plugin = (opts: AntDynamicThemePluginOptions): Plugin | Processor => {
   const {
     antVariableThemeSelector = ':root',
     outgoingPrefix: prefix,
@@ -91,6 +91,5 @@ const plugin = (opts: AntDynamicThemePluginOptions): Plugin => {
     postcssPlugin: 'ant-dynamic-theme',
   }
 }
-plugin.postcss = true
 
-export default plugin as PluginCreator<AntDynamicThemePluginOptions>
+export default Object.assign(plugin as PluginCreator<AntDynamicThemePluginOptions>, { postcss: true })

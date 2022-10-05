@@ -1,5 +1,4 @@
 import {html} from 'lit'
-import {MlcAntdThemeManager, MlcLayout} from '../src'
 
 export const parameters = {
   actions: {argTypesRegex: '^on[A-Z].*'},

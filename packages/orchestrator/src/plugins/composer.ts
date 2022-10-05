@@ -4,7 +4,6 @@ import type {
   ImportMap,
   PluginConfiguration,
 } from '@micro-lc/interfaces/v2'
-import type { MicroApp } from 'qiankun'
 import { ReplaySubject } from 'rxjs'
 
 import type { createComposerContext } from '../composer'
@@ -12,7 +11,16 @@ import type { BaseExtension, ComposableApplicationProperties, Observable } from 
 
 export {}
 
-type ComposerModule = Partial<MicroApp>
+type ComposerExtensions = BaseExtension & {
+  user?: Observable<Record<string, unknown>>
+}
+
+interface MicroApp {
+  bootstrap(props: ComposableApplicationProperties & {name: string}): Promise<null>
+  mount(props: ComposableApplicationProperties<ComposerExtensions> & {container: HTMLElement | null; name: string}): Promise<null>
+  unmount(props: {name: string}): Promise<null>
+  update(): Promise<null>
+}
 
 interface ResolvedConfig {
   content: Content
@@ -24,12 +32,8 @@ interface ResolvedConfig {
 
 declare global {
   interface Window {
-    __MICRO_LC_COMPOSER?: ComposerModule
+    __MICRO_LC_COMPOSER?: Partial<MicroApp>
   }
-}
-
-type ComposerExtensions = BaseExtension & {
-  user?: Observable<Record<string, unknown>>
 }
 
 /**
@@ -62,12 +66,21 @@ function v1Adapter(input: V1Content | Content, sources: string[]): Content {
       return input.map((content) => v1Adapter(content as V1Component, sources) as Component)
     }
 
-    const { tag, type, url, attributes: inAttributes, content: inContent, properties } = input as V1Component
+    const { tag, type, url, attributes: inAttributes, content: inContent, properties, busDiscriminator } = input as V1Component
     typeof url === 'string' && sources.push(url)
     const attributes = (inAttributes ?? {}) as Record<string, string>
     const content = (inContent as V1Content | undefined) && v1Adapter(inContent as V1Content, sources)
     const extra: Partial<Component> = {}
-    properties && (extra.properties = properties as Component['properties'])
+
+    if (typeof busDiscriminator === 'string') {
+      extra.properties = { eventBus: `eventBus.pool.${busDiscriminator}` }
+      if (properties) {
+        extra.properties = { ...extra.properties, ...properties } as Component['properties']
+      }
+    } else if (properties) {
+      extra.properties = properties as Component['properties']
+    }
+
     extra.tag = 'div'
     switch (type) {
     case 'row':
@@ -139,15 +152,61 @@ function v1AddSources(config: PluginConfiguration, extraSources: string[]): Plug
   return config
 }
 
+interface ReplaySubjectPool<T = unknown> extends ReplaySubject<T> {
+  [index: number]: ReplaySubject<T>
+  pool: Record<string, ReplaySubject<T>>
+}
+
+function createPool<T>(): ReplaySubjectPool<T> {
+  const array: ReplaySubject<T>[] = []
+
+  const pool = new Proxy<Record<string, ReplaySubject<T>>>({}, {
+    get(target, property, receiver) {
+      if (typeof property === 'string' && !Object.prototype.hasOwnProperty.call(target, property)) {
+        target[property] = new ReplaySubject<T>()
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return Reflect.get(target, property, receiver)
+    },
+  })
+
+  return new Proxy(new ReplaySubject() as ReplaySubjectPool<T>, {
+    get(target, property, receiver) {
+      if (property === 'pool') {
+        return pool
+      }
+
+      const idx = typeof property === 'string' ? Number.parseInt(property, 10) : Number.NaN
+      if (!Number.isNaN(idx)) {
+        if (array.at(idx) === undefined) {
+          array[idx] = new ReplaySubject<T>()
+        }
+        return array[idx]
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return Reflect.get(target, property, receiver)
+    },
+  })
+}
+
 async function render(
-  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>): Promise<null> {
+  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>
+): Promise<null> {
+  interface Event {
+    label: string
+    meta?: Record<string, unknown>
+    payload: Record<string, unknown>
+  }
+
   // const { ReplaySubject } = await import(/* @vite-ignore */'rxjs')
   const appenderPromise = composer(
     config.content,
     {
       context: {
         ...context,
-        eventBus: new ReplaySubject(),
+        eventBus: createPool<Event>(),
       },
       extraProperties: ['microlcApi', 'currentUser', 'eventBus'],
     }
@@ -159,7 +218,7 @@ async function render(
   })
 }
 
-function fn(exports: ComposerModule, _: Window) {
+function fn(exports: Partial<MicroApp>, _: Window) {
   let composerConfig: ResolvedConfig | undefined
   let parent: HTMLElement | null = null
 
@@ -186,7 +245,7 @@ function fn(exports: ComposerModule, _: Window) {
     }: ComposableApplicationProperties & {name: string}) {
       let resolvedConfig = config
 
-      const { json: jsonExtension } = getExtensions()
+      const jsonExtension = getExtensions?.().json
       if (jsonExtension) {
         const { validator, fetcher } = jsonExtension
         logger(name, 'starting bootstrap...')
@@ -210,7 +269,7 @@ function fn(exports: ComposerModule, _: Window) {
       }
 
       if (resolvedConfig) {
-        composerConfig = await premount(name, resolvedConfig as PluginConfiguration)
+        composerConfig = await premount(resolvedConfig as PluginConfiguration)
       }
 
       logger(name, 'bootstrap has finished...')
@@ -229,16 +288,20 @@ function fn(exports: ComposerModule, _: Window) {
 
       parent = container
 
-      microlcApi.subscribe(({ user }) => {
+      const subscribe = microlcApi.subscribe ?? ((callback) => { callback({}) })
+
+      let done = Promise.resolve<void | null>(null)
+
+      subscribe(({ user }) => {
         if (composerConfig && container) {
-          render(createComposerContext, composerConfig, container, {
+          done = render(createComposerContext, composerConfig, container, {
             currentUser: user as Record<string, unknown> | undefined,
           }).catch(console.error)
         }
       })
 
       logger(name, 'mount has finished...')
-      return Promise.resolve(null)
+      return done.then(() => null)
     },
 
     async unmount({ name }: {name: string}) {
@@ -258,7 +321,7 @@ function fn(exports: ComposerModule, _: Window) {
   })
 }
 
-(function register(global: Window, factory: (exp: ComposerModule, b: Window) => void) {
+(function register(global: Window, factory: (exp: Partial<MicroApp>, b: Window) => void) {
   global.__MICRO_LC_COMPOSER = {}
   factory(global.__MICRO_LC_COMPOSER, global)
 }(window, fn))

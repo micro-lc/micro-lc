@@ -50,23 +50,33 @@ function getCurrentUnmount(): (() => Promise<null>) | undefined {
   return unmount
 }
 
-type MatchingRoute<T extends BaseExtension> = LoadableApp<ComposableApplicationProperties<T>> | undefined
+type MatchingRoute<T extends BaseExtension> = LoadableApp<ComposableApplicationProperties<T>>
 
 function getNextMatchingRoute<T extends BaseExtension>(
   this: Microlc<T>, pathname: string
-): MatchingRoute<T>[] {
+): (MatchingRoute<T> | undefined)[] {
   const {
     _config: {
       settings: {
         defaultUrl,
       },
     },
+    ownerDocument: {
+      baseURI: hrefOrBaseURI,
+    },
   } = this
 
-  const basePath = this.ownerDocument.querySelector('base')?.getAttribute('href') ?? '/'
+  /**
+   * if <base /> is defined then baseURI === document.querySelector('base').href
+   * otherwise baseURI === window.location.href
+   *
+   * hence in each case the best option would be:
+   */
+  const baseURI = new URL(hrefOrBaseURI, window.location.origin).pathname
 
-  let nextMatch: MatchingRoute<T>
-  let defaultMatch: MatchingRoute<T>
+  let nextMatch: MatchingRoute<T> | undefined
+  let defaultMatch: MatchingRoute<T> | undefined
+
   for (const [route, args] of this._loadedApps.values()) {
     if (route === undefined) {
       continue
@@ -74,7 +84,8 @@ function getNextMatchingRoute<T extends BaseExtension>(
     if (pathname.match(new RegExp(route))) {
       nextMatch = args
     }
-    if (defaultUrl.match(new RegExp(route)) && (pathname === basePath || `${pathname}/` === basePath)) {
+    // console.log(route, pathname, baseURI)
+    if (defaultUrl.match(new RegExp(route)) || (pathname === baseURI || `${pathname}/` === baseURI)) {
       defaultMatch = args
     }
   }
@@ -82,12 +93,11 @@ function getNextMatchingRoute<T extends BaseExtension>(
   return [nextMatch, defaultMatch]
 }
 
-async function flushAndGo<T extends BaseExtension>(this: Microlc<T>, nextMatch?: MatchingRoute<T>, unmount?: (() => Promise<null>) | undefined) {
-  // ⤵️ 404 page was not provided
-  if (!nextMatch) {
-    return Promise.reject(new TypeError('no 404 page available'))
-  }
-
+async function flushAndGo<T extends BaseExtension>(
+  this: Microlc<T>,
+  nextMatch: MatchingRoute<T>,
+  unmount?: (() => Promise<null>) | undefined
+) {
   // unmount previous application
   if (unmount) {
     pending.push(unmount().catch(rerouteErrorHandler))
@@ -113,9 +123,12 @@ async function flushAndGo<T extends BaseExtension>(this: Microlc<T>, nextMatch?:
       // SAFETY: we ensured handlers are available
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .then(() => handlers!.mount().then(() => {
-        currentApplication && currentApplicationBus.next(currentApplication)
+        currentApplication && currentApplicationBus.next(
+          this._applicationMapping.get(currentApplication)
+        )
         return null
       }))
+      .catch((err) => { console.error(err); return null })
   )
 }
 
@@ -124,22 +137,28 @@ export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, 
 
   const nextMatch = this._loadedApps.get(`${this._instance}-${statusCode ?? '404'}`)?.[1]
 
+  // ⤵️ 404 page was not provided
+  if (!nextMatch) {
+    return Promise.reject(new TypeError('no 404 page available'))
+  }
+
   return flushAndGo
-    .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
+    .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(
+      this, nextMatch, unmount
+    )
 }
 
 export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | URL): Promise<void> {
   const app = getCurrentApplicationAssets()
   const unmount = getCurrentUnmount()
 
-
-  const { pathname } = url ? new URL(url, window.location.origin) : window.location
+  const { pathname } = url ? new URL(url, this.ownerDocument.baseURI) : window.location
 
   // ⤵️ when no match is found on loaded routes and the pathname
   // matched the base path (i.e., no plugin was mounted on root)
   // router redirects on default route if any
   const [exactMatch, defaultMatch] = getNextMatchingRoute
-    .call<Microlc<T>, [string], MatchingRoute<T>[]>(this, pathname)
+    .call<Microlc<T>, [string], (MatchingRoute<T> | undefined)[]>(this, pathname)
 
   let nextMatch = exactMatch
 
@@ -153,9 +172,13 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
     nextMatch = this._loadedApps.get(`${this._instance}-404`)?.[1]
   }
 
-  return nextMatch?.name !== app?.id
-    ? flushAndGo
-      .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
+  // ⤵️ 404 page was not provided
+  if (!nextMatch) {
+    return Promise.reject(new TypeError('no 404 page available'))
+  }
+
+  return (nextMatch.name !== app?.id)
+    ? flushAndGo.call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
     : Promise.resolve()
 }
 

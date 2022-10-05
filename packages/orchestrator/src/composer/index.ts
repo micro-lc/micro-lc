@@ -2,7 +2,6 @@ import type { Content, PluginConfiguration, ImportMap } from '@micro-lc/interfac
 import type { RenderOptions } from 'lit-html'
 import { html, render } from 'lit-html'
 
-import { assignContent } from '../dom-manipulation'
 import { toArray } from '../utils/array'
 
 import { interpolate } from './compiler'
@@ -46,14 +45,7 @@ export interface ResolvedConfig {
   }
 }
 
-export interface PremountableElement extends HTMLElement {
-  disableShims: boolean
-  getApi: () => {
-    readonly applyImportMap: (id: string, importmap: ImportMap) => void
-  }
-}
-
-export async function premount(this: PremountableElement, id: string | HTMLScriptElement, config: PluginConfiguration): Promise<ResolvedConfig> {
+export async function premount(config: PluginConfiguration): Promise<ResolvedConfig> {
   let uris: string[] = []
   let importmap: ImportMap | undefined
 
@@ -64,24 +56,20 @@ export async function premount(this: PremountableElement, id: string | HTMLScrip
       ? sources.importmap ?? {}
       : {}
 
-    if (this.disableShims || !('importShim' in window)) {
-      if (id instanceof HTMLScriptElement) {
-        assignContent(id, importmap)
-      } else {
-        this.getApi().applyImportMap(id, importmap)
-      }
-    } else {
+    try {
       importShim.addImportMap(importmap)
+    } catch (err: Error | unknown) {
+      if (err instanceof Error) {
+        console.error(err)
+      }
     }
 
     uris = parseSources(sources)
 
     if (uris.length > 0) {
-      await Promise.all(uris.map((uri) =>
-        (this.disableShims || !('importShim' in window)
-          ? import(uri)
-          : importShim(uri)
-        ).catch((err) => { console.error(err) })))
+      await Promise.all(uris.map(
+        (uri) => (importShim(uri)).catch((err) => { console.error(err) })
+      ))
     }
   }
 
