@@ -1,4 +1,4 @@
-import type { Theme } from './types'
+import type { Theme } from './utils'
 
 export interface LocalStorage {
   '@microlc:currentTheme': Theme

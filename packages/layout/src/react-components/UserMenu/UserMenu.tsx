@@ -4,7 +4,7 @@ import { Dropdown, Menu } from 'antd'
 import React, { useMemo } from 'react'
 
 import type { Translations } from '../../lang'
-import type { User } from '../../web-components/mlc-layout/lib/types'
+import type { User } from '../../web-components/mlc-layout/types'
 
 export interface UserMenuProps {
   locale: Translations['MLC-LAYOUT'] | undefined

@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "scripts": {
     "make-types": "ts-node ./scripts/make-types.ts",
-    "check:types": "yarn make-types && yarn tsc --project ./scripts/tsconfig.types.json",
+    "check:types": "yarn make-types && yarn tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
     "storybook": "start-storybook -p 6007",
     "build:prod": "vite build --mode production",
     "build:min": "vite build --mode min",
     "build": "yarn run -T run-s build:prod build:min",
-    "test": "yarn wtr --node-resolve"
+    "test": "yarn wtr --node-resolve",
+    "coverage": "yarn test --coverage"
   },
   "dependencies": {
     "@ant-design/colors": "^6.0.0",

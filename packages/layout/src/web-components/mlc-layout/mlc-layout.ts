@@ -7,20 +7,24 @@ import type { Translations } from '../../lang'
 import type { WrapperProps } from '../../react-components'
 import { Wrapper } from '../../react-components'
 import { cssResult } from '../../style'
+import { error } from '../commons/logger'
 
-import type { Head, HelpMenu, Logo, MenuItem, Mode, UserMenu } from './config'
-import { getFromLocalStorage } from './lib/localStorage'
+import { getFromLocalStorage } from './lib/local-storage'
 import { DEFAULT_LANGUAGE, getCurrentLocale, getLang, loadTranslations } from './lib/translation-loader'
-import type { MlcApi, User } from './lib/types'
-import { Theme } from './lib/types'
+import { Theme } from './lib/utils'
 import { createProps, retrieveUser } from './mlc-layout.lib'
+import type { MlcApi, User, Head, HelpMenu, Logo, MenuItem, Mode, UserMenu } from './types'
 
 export class MlcLayout extends MlcComponent<WrapperProps> {
   static styles = [cssResult]
 
+  microlcApi?: Partial<MlcApi>
+
+  private _currentApplicationSub?: Subscription
+  private _wasDisconnected = false
+
   @property({ attribute: 'mode' }) mode: Mode = 'overlaySideBar'
   @property({ attribute: 'enable-dark-mode' }) enableDarkMode = false
-  @property({ attribute: false }) microlcApi?: Partial<MlcApi>
   @property({ attribute: false }) logo?: Partial<Logo>
   @property({ attribute: false }) menuItems?: Partial<MenuItem>[]
   @property({ attribute: false }) helpMenu?: Partial<HelpMenu>
@@ -31,14 +35,10 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
   @state() _sideBarCollapsed = false
   @state() _theme: Theme = Theme.LIGHT
   @state() _selectedKeys: string[] = []
-
   @state() _lang = DEFAULT_LANGUAGE
   @state() _locale: Translations['MLC-LAYOUT'] = undefined
 
   @query('#micro-lc-layout-container') container!: HTMLDivElement
-
-  private _currentApplicationSub?: Subscription
-  private _wasDisconnected = false
 
   constructor() {
     super(Wrapper, createProps)
@@ -78,11 +78,9 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
 
     loadTranslations(this._lang)
       .then(() => { this._locale = getCurrentLocale().get(this.tagName) })
-      // TODO: use logger from micro-lc
-      .catch(console.error)
+      .catch(error)
 
-    // TODO: use logger from micro-lc
-    retrieveUser.call(this).catch(console.error)
+    retrieveUser.call(this).catch(error)
 
     this._currentApplicationSub = this.microlcApi?.currentApplication$
       ?.subscribe(currApplicationId => { if (currApplicationId) { this._selectedKeys = [currApplicationId] } })

@@ -67,6 +67,7 @@ const tsConfigs = {
     'no-duplicate-imports': 'off',
     'no-shadow': 'off',
     'sort-imports': 'off',
+    'no-use-before-define': 'off',
 
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/member-delimiter-style': [
@@ -88,6 +89,7 @@ const tsConfigs = {
       },
     ],
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+    '@typescript-eslint/no-use-before-define': ['error', { typedefs: false }],
 
     'typescript-sort-keys/interface': 'error',
     'typescript-sort-keys/string-enum': 'error',
@@ -95,14 +97,6 @@ const tsConfigs = {
     'n/no-missing-import': 'off',
     'n/no-unpublished-import': 'off',
   },
-  overrides: [
-    {
-      files: ['**/*.test.ts'],
-      rules: {
-        'max-statements': 'off',
-      },
-    },
-  ],
 }
 
 const reactConfigs = {
@@ -238,6 +232,7 @@ const testFilesConfigs = {
   files: ['*.test.*'],
   rules: {
     'max-nested-callbacks': 'off',
+    'max-statements': 'off',
     'no-unused-expressions': 'off',
   },
 }

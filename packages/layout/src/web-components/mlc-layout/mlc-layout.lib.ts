@@ -1,9 +1,9 @@
 import type { WrapperProps } from '../../react-components'
 import { COLLAPSE_KEY } from '../../react-components/SideBar'
 
-import { setInLocalStorage } from './lib/localStorage'
-import type { Theme } from './lib/types'
+import { setInLocalStorage } from './lib/local-storage'
 import { mapUserFields } from './lib/user'
+import type { Theme } from './lib/utils'
 import { findMenuItemById } from './lib/utils'
 import type { MlcLayout } from './mlc-layout'
 

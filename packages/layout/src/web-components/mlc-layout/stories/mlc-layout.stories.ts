@@ -3,8 +3,8 @@ import { action } from '@storybook/addon-actions'
 import type { Story } from '@storybook/web-components'
 import { html } from 'lit'
 
-import type { MlcApi } from '../lib/types'
 import type { MlcLayout } from '../mlc-layout'
+import type { MlcApi } from '../types'
 
 import '../mlc-layout'
 

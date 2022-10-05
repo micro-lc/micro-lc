@@ -10,7 +10,7 @@ export default {
   coverageConfig: {
     include: ['./src/**/*.ts'],
     report: true,
-    reportDir: 'coverage/browser',
+    reportDir: 'coverage',
     reporters: ['cobertura', 'lcovonly', 'text'],
   },
   groups: [
@@ -29,6 +29,10 @@ export default {
       target: 'es2020',
       ts: true,
     }),
-    replace({ 'process.env.NODE_ENV': JSON.stringify('development') }, { preventAssignment: true }),
+    replace({
+      preventAssignment: true,
+      'process.env.NODE_ENV': JSON.stringify('development'),
+    },
+    ),
   ],
 }

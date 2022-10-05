@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd'
 import React, { useMemo } from 'react'
 
 import type { Translations } from '../../lang'
-import type { MenuItem, Mode } from '../../web-components/mlc-layout/config'
+import type { MenuItem, Mode } from '../../web-components/mlc-layout/types'
 import type { AntMenuItem } from '../utils/menu'
 import { buildAntMenuItems } from '../utils/menu'
 
@@ -71,12 +71,9 @@ export const SideBar: React.FC<SideBarProps> = ({
       trigger={null}
     >
       <Menu
-        /*
-        * This property is private and should NOT be used. It is needed here to prevent the render of the title tooltip
-        * when a menu item is hovered in collapsed mode, since the tooltip is appended outside the shadow root and hence
-        * it does not get the style applied.
-        * TODO: we need to find a better way to overcome this issue
-        */
+        // @ts-expect-error This property is private and should NOT be used. It is needed here to prevent the render of
+        // the title tooltip when a menu item is hovered in collapsed mode, since the tooltip is appended outside the
+        // shadow root and hence it does not get the style applied.
         _internalDisableMenuItemTitleTooltip={true}
         className='layout-sider-menu'
         getPopupContainer={getPopupContainer}

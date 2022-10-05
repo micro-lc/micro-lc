@@ -1,4 +1,9 @@
-import type { MenuItem } from '../config'
+import type { MenuItem } from '../types'
+
+export enum Theme {
+  DARK = 'dark',
+  LIGHT = 'light'
+}
 
 export const findMenuItemById = (
   menuItems: Partial<MenuItem>[],

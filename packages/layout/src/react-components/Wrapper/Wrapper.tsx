@@ -3,8 +3,8 @@ import { Layout } from 'antd'
 import React from 'react'
 
 import type { Translations } from '../../lang'
-import type { HelpMenu, Logo, MenuItem, Mode } from '../../web-components/mlc-layout/config'
-import type { User, VoidFn, Theme, OnThemeChange } from '../../web-components/mlc-layout/lib/types'
+import type { Theme } from '../../web-components/mlc-layout/lib/utils'
+import type { HelpMenu, Logo, MenuItem, Mode, User, VoidFn, OnThemeChange } from '../../web-components/mlc-layout/types'
 import { SideBar } from '../SideBar'
 import { TopBar } from '../TopBar'
 

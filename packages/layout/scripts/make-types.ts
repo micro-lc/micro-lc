@@ -39,16 +39,6 @@ const compileSchema = async ({ schemaDirPath, schemaDirName, schemaFileName }: C
 const main = async () => {
   const schemasToCompileProps: CompileSchemaProps[] = [
     {
-      schemaDirName: 'mlc-layout/config',
-      schemaDirPath: resolve(__dirname, '../src/web-components/mlc-layout/config'),
-      schemaFileName: 'config.schema.json',
-    },
-    {
-      schemaDirName: 'mlc-antd-theme-manager/config',
-      schemaDirPath: resolve(__dirname, '../src/web-components/mlc-antd-theme-manager/config'),
-      schemaFileName: 'config.schema.json',
-    },
-    {
       schemaDirName: 'lang',
       schemaDirPath: resolve(__dirname, '../src/lang'),
       schemaFileName: 'lang.schema.json',
