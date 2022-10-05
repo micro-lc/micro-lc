@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "c": "yarn workspace @micro-lc/iconic",
+    "d": "yarn workspace @micro-lc/documentation",
     "i": "yarn workspace @micro-lc/interfaces",
     "l": "yarn workspace @micro-lc/layout",
     "o": "yarn workspace @micro-lc/orchestrator",
