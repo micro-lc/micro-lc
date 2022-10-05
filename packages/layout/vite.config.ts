@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => ({
         'mlc-antd-theme-manager': 'src/web-components/mlc-antd-theme-manager/index.ts',
         'mlc-config': 'src/web-components/mlc-config/index.ts',
         'mlc-layout': 'src/web-components/mlc-layout/index.ts',
+        'mlc-loading-animation': 'src/web-components/mlc-loading-animation/index.ts',
         'mlc-url': 'src/web-components/mlc-url/index.ts',
       },
       output: {

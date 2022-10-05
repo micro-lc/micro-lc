@@ -6,7 +6,6 @@ import { createComposerContext, premount } from '../composer'
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
 
-
 import type { MicrolcApi, ComposableApplicationProperties, BaseExtension } from './lib'
 import {
   rerouteToError,
@@ -98,6 +97,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
           if (done) {
             this._reroute().catch(rerouteErrorHandler)
             this._completeUpdate()
+            this.onload?.call(window, new Event('load'))
           }
         })
         .catch(handleUpdateError)
