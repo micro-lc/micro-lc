@@ -2626,11 +2626,11 @@ __metadata:
     "@mdx-js/react": 1.6.22
     "@tsconfig/docusaurus": ^1.0.6
     "@types/node": ^18.8.2
-    "@types/react": ^17.0.50
-    "@types/react-dom": ^17.0.17
-    react: 17.0.2
-    react-dom: 17.0.2
-    typescript: ^4.8.3
+    "@types/react": ^18.0.21
+    "@types/react-dom": ^18.0.6
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    typescript: 4.8.3
   languageName: unknown
   linkType: soft
 
@@ -2647,7 +2647,7 @@ __metadata:
     "@rollup/plugin-replace": ^4.0.0
     "@types/glob": ^8.0.0
     "@types/mocha": ^10.0.0
-    "@types/node": ^18.8.0
+    "@types/node": ^18.8.2
     "@types/prop-types": ^15.7.5
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
@@ -2663,7 +2663,7 @@ __metadata:
     lit-html: ^2.3.1
     prop-types: ^15.8.1
     ts-node: ^10.9.1
-    typescript: ^4.8.3
+    typescript: 4.8.3
   peerDependencies:
     lit-html: "*"
     react: ">=17"
@@ -2679,10 +2679,10 @@ __metadata:
     "@types/glob": ^8.0.0
     "@types/mkdirp": ^1.0.2
     "@types/mocha": ^10.0.0
-    "@types/node": ^18.8.0
+    "@types/node": ^18.8.2
     ajv: ^8.11.0
     ajv-formats: ^2.1.1
-    axios: ^0.27.2
+    axios: ^1.0.0
     chai: ^4.3.6
     commander: ^9.4.1
     esbuild: ^0.15.10
@@ -2695,7 +2695,7 @@ __metadata:
     postcss: ^8.4.17
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^4.8.3
+    typescript: 4.8.3
   peerDependencies:
     postcss: "*"
   bin:
@@ -2758,9 +2758,9 @@ __metadata:
     react-dom: ^18.2.0
     rollup-plugin-node-polyfills: ^0.2.1
     rollup-plugin-visualizer: ^5.8.2
-    sinon: ^14.0.0
+    sinon: ^14.0.1
     ts-node: ^10.9.1
-    typescript: ^4.8.3
+    typescript: 4.8.3
     vite: ^3.1.4
     vite-plugin-dynamic-import: ^1.2.2
     vite-plugin-replace: ^0.1.1
@@ -2784,7 +2784,7 @@ __metadata:
     "@types/glob": ^8.0.0
     "@types/lodash-es": ^4.17.6
     "@types/mocha": ^10.0.0
-    "@types/node": ^18.8.0
+    "@types/node": ^18.8.2
     "@types/sinon": ^10.0.13
     "@types/sinon-chai": ^3.2.8
     "@web/dev-server": ^0.1.34
@@ -2807,11 +2807,11 @@ __metadata:
     qiankun: ^2.8.1
     rollup-plugin-visualizer: ^5.8.2
     rxjs: ^7.5.7
-    sinon: ^14.0.0
+    sinon: ^14.0.1
     sinon-chai: ^3.7.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^4.8.3
+    typescript: 4.8.3
     vite: ^3.1.4
   peerDependencies:
     ajv: "*"
@@ -4990,13 +4990,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.8.0":
-  version: 18.8.0
-  resolution: "@types/node@npm:18.8.0"
-  checksum: 3433cbc22e90fafb047f93b3ef05ba01a07f780a24ff1af393f435f807537b533fe9e8a816586825f4c5fd5336c3e80225571f44ec3b6479c463408c072773e7
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:^18.8.2":
   version: 18.8.2
   resolution: "@types/node@npm:18.8.2"
@@ -5074,15 +5067,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.17":
-  version: 17.0.17
-  resolution: "@types/react-dom@npm:17.0.17"
-  dependencies:
-    "@types/react": ^17
-  checksum: 23caf98aa03e968811560f92a2c8f451694253ebe16b670929b24eaf0e7fa62ba549abe9db0ac028a9d8a9086acd6ab9c6c773f163fa21224845edbc00ba6232
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:^18.0.6":
   version: 18.0.6
   resolution: "@types/react-dom@npm:18.0.6"
@@ -5132,17 +5116,6 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 36c1a7c9d507e81e2e629c1ad3db51d7b84d8b010c2d5008da411874286c6a5ccc711ae1d4c470efc0bdc77153cc8804a40e927e929e5164c669ca41b84b846d
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^17, @types/react@npm:^17.0.50":
-  version: 17.0.50
-  resolution: "@types/react@npm:17.0.50"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: b5629dff7c2f3e9fcba95a19b2b3bfd78d7cacc33ba5fc26413dba653d34afcac3b93ddabe563e8062382688a1eac7db68e93739bb8e712d27637a03aaafbbb8
   languageName: node
   linkType: hard
 
@@ -6940,13 +6913,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.27.2":
-  version: 0.27.2
-  resolution: "axios@npm:0.27.2"
+"axios@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "axios@npm:1.0.0"
   dependencies:
-    follow-redirects: ^1.14.9
+    follow-redirects: ^1.15.0
     form-data: ^4.0.0
-  checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+    proxy-from-env: ^1.1.0
+  checksum: 6270712ec3259d0603932edbd5f9da18f941e905a128585d4e9caf8e5ccaff988f2318f45c451ab43d0d52a40dc0f63cfb53c86073e5c689a017930e1b0e6227
   languageName: node
   linkType: hard
 
@@ -11852,7 +11826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.7, follow-redirects@npm:^1.14.9":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.7, follow-redirects@npm:^1.15.0":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
   peerDependenciesMeta:
@@ -15739,7 +15713,7 @@ __metadata:
     stylelint-config-rational-order: ^0.1.2
     stylelint-config-standard: ^28.0.0
     stylelint-declaration-block-no-ignored-properties: ^2.5.0
-    typescript: ^4.8.3
+    typescript: 4.8.3
     vite: ^3.1.4
   languageName: unknown
   linkType: soft
@@ -18438,7 +18412,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:1.1.0":
+"proxy-from-env@npm:1.1.0, proxy-from-env@npm:^1.1.0":
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
@@ -19330,7 +19304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:17.0.2":
+"react-dom@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
   dependencies:
@@ -19483,7 +19457,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:17.0.2":
+"react@npm:^17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
   dependencies:
@@ -20880,9 +20854,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sinon@npm:^14.0.0":
-  version: 14.0.0
-  resolution: "sinon@npm:14.0.0"
+"sinon@npm:^14.0.1":
+  version: 14.0.1
+  resolution: "sinon@npm:14.0.1"
   dependencies:
     "@sinonjs/commons": ^1.8.3
     "@sinonjs/fake-timers": ^9.1.2
@@ -20890,7 +20864,7 @@ __metadata:
     diff: ^5.0.0
     nise: ^5.1.1
     supports-color: ^7.2.0
-  checksum: b2aeeb0cdc2cd30f904ccbcd60bae4e1b3dcf3aeeface09c1832db0336be0dbaa461f3b91b769bed84f05c83d45d5072a9da7ee14bc7289daeda2a1214fe173c
+  checksum: 55dd8dc9f33bf714fcd4cf9af5b67a3ba854da9e94d4be70bfbc13fa1113db03bdccec21fe1ded1dbf750a21f35be9727c779178ac981e55eeac9245acfdaa74
   languageName: node
   linkType: hard
 
@@ -22614,7 +22588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.8.3":
+"typescript@npm:4.8.3":
   version: 4.8.3
   resolution: "typescript@npm:4.8.3"
   bin:
@@ -22624,7 +22598,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.8.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@4.8.3#~builtin<compat/typescript>":
   version: 4.8.3
   resolution: "typescript@patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=a1c5e5"
   bin:

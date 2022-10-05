@@ -72,7 +72,6 @@ describe('micro-lc initialization tests', () => {
     await waitUntil(() => microlc.updateComplete)
 
     expect(microlc.querySelector('#__MICRO_LC_MOUNT_POINT')).not.to.be.undefined
-    await waitUntil(() => microlc.innerHTML.includes('<div>Error</div>'))
     expect(window.importShim).not.to.be.undefined
 
     root.remove()
