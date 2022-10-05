@@ -1,4 +1,4 @@
-name: micro-lc main CI
+name: Main
 
 env:
   context: './'
@@ -8,9 +8,6 @@ env:
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 

@@ -1,0 +1,24 @@
+name: Generic Push
+
+env:
+  context: './'
+  cache-name: cache-release
+  NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  node-version: 16.x
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  install:
+    uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@main
+
+  checks:
+    needs:
+      - install
+    uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@main
