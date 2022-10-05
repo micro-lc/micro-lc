@@ -69,10 +69,18 @@ describe('micro-lc initialization tests', () => {
     const microlc = root.firstElementChild as Microlc
     microlc.config = { settings: { '4xx': { 404: page404 } } }
 
-    await waitUntil(() => microlc.updateComplete)
+    await waitUntil(() => microlc.updateComplete,
+      'should have updated micro-lc webc',
+      { timeout: 10000 }
+    )
 
     expect(microlc.querySelector('#__MICRO_LC_MOUNT_POINT')).not.to.be.undefined
     expect(window.importShim).not.to.be.undefined
+
+    await waitUntil(() => microlc.innerHTML.includes('<div>Error</div>'),
+      'should have loaded 404 mock page',
+      { timeout: 10000 }
+    )
 
     root.remove()
     sandbox.restore()
