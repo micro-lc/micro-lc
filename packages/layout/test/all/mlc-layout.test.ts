@@ -9,6 +9,7 @@ describe('mlc-layout', () => {
   const setIconStub = sandbox.stub()
   const setTitleStub = sandbox.stub()
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mockUser = { fullName: 'John Doe' }
   const httpClientStub = sandbox.stub()
 
@@ -29,6 +30,7 @@ describe('mlc-layout', () => {
   const currentApplicationSubscribeStub = sandbox.stub()
     .returns({ closed: false, unsubscribe: currentApplicationUnsubscribeStub })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const microlcApi: Partial<MlcApi> = {
     currentApplication$: { subscribe: currentApplicationSubscribeStub },
     getExtensions: () => microlcApiExtensions,
