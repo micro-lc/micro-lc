@@ -13,6 +13,7 @@
     "i": "yarn workspace @micro-lc/interfaces",
     "l": "yarn workspace @micro-lc/layout",
     "o": "yarn workspace @micro-lc/orchestrator",
+    "initialize": "bash ./scripts/initialize.sh",
     "check:types": "yarn workspaces foreach --all run check:types",
     "prebuild": "yarn workspaces foreach --all run prebuild",
     "build": "yarn workspaces foreach --all run build",
