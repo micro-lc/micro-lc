@@ -16,7 +16,7 @@ function Template(this: Partial<Story<MlcLoadingAnimation>>, { primaryColor }: M
 }
 
 export const Config = Template.bind({}) as Story<MlcLoadingAnimation>
-Config.storyName = 'Default'
+Config.storyName = 'Loading Animation'
 Config.args = {
   primaryColor: 'blue',
 }
