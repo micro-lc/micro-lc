@@ -1,7 +1,7 @@
 ---
 title: Introduction
 sidebar_label: Introduction
-slug: /
+sidebar_position: 10
 ---
 
 micro-lc is an open source micro-frontend orchestrator. 

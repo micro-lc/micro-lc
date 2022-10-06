@@ -1,7 +1,7 @@
 ---
-id: composition
 title: Composition
 sidebar_label: Composition
+sidebar_position: 10
 ---
 
 While mounting your applications inside the `content` area of `micro-lc`,

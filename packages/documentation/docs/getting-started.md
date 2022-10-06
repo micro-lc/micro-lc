@@ -1,6 +1,7 @@
 ---
 title: Getting started
 sidebar_label: Getting started
+sidebar_position: 20
 ---
 
 `micro-lc` is shipped as a ES module CDN bundle and can be imported in any HTML page.
