@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import type { ImportMap } from '@micro-lc/interfaces/v2'
 import { BehaviorSubject } from 'rxjs'
 
 import type { CompleteConfig } from '../../config'
@@ -19,9 +17,12 @@ export interface MicrolcApi<
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
   readonly getExtensions: () => Readonly<Partial<T>>
   readonly router: {
+    goTo: (url: string | URL | undefined) => void
     goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): Promise<void>
     goToErrorPage(statusCode?: number): void
-    open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => void
+    open: typeof window.open
+    pushState: typeof window.history.pushState
+    replaceState: typeof window.history.replaceState
   }
   readonly set: (event: Partial<E>) => void
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
@@ -42,6 +43,22 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
     getExtensions: () => Object.freeze({ ...this._extensions }),
     next: (value: Partial<Event>) => bus.next(value),
     router: {
+      goTo: (url: string | URL | undefined) => {
+        if (url !== undefined) {
+          const regularUrl = new URL(url, this.ownerDocument.baseURI)
+
+          const isSameOrigin = regularUrl.origin === window.location.origin
+          const isSamePathname = regularUrl.pathname === window.location.pathname
+
+          if (isSameOrigin && isSamePathname) {
+            window.history.replaceState(window.history.state, '', url)
+          } else if (isSameOrigin) {
+            window.history.pushState(null, '', url)
+          } else {
+            window.open(url)
+          }
+        }
+      },
       goToApplication: async (_id: string, data?: unknown): Promise<void> => {
         if (!(_id in this._config.applications)) {
           return this._rerouteToError(404)
@@ -54,22 +71,11 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
       goToErrorPage: async (statusCode?: number): Promise<void> => {
         return this._rerouteToError(statusCode)
       },
-      open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => {
-        if (url !== undefined) {
-          const regularUrl = new URL(url, this.ownerDocument.baseURI)
-
-          const isSameOrigin = regularUrl.origin === window.location.origin
-          const isSamePathname = regularUrl.pathname === window.location.pathname
-
-          if (isSameOrigin && isSamePathname) {
-            window.history.replaceState(window.history.state, '', url)
-          } else if (isSameOrigin) {
-            window.history.pushState(null, '', url)
-          } else {
-            window.open(url, target, features)
-          }
-        }
-      },
+      open: window.open,
+      pushState: (data: unknown, unused: string, url?: string | URL | null | undefined) =>
+        window.history.pushState(data, unused, url),
+      replaceState: (data: unknown, unused: string, url?: string | URL | null | undefined) =>
+        window.history.replaceState(data, unused, url),
     },
     set: (event: Partial<Event>) => {
       const newState = Object.assign(currentState, event)
