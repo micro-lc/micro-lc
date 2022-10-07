@@ -5,7 +5,7 @@
     {
       "type": "element",
       "tag": "bk-microlc-theme-manager",
-      "url": "/back-kit/latest/bk-web-components.esm.js",
+      "url": "/back-kit/1.1.0/bk-web-components.esm.js",
       "properties": { "rootElementSelectors": "microlc-element-composer" }
     },
     {

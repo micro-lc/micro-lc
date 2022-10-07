@@ -96,23 +96,23 @@ function getNextMatchingRoute<T extends BaseExtension>(
     const { pathname: routePathname } = new URL(route, baseURI)
 
     const exact = pathname.match(new RegExp(`^${routePathname}`))
-    if (exact && pathname.length > counters[0]) {
-      counters[0] = pathname.length
+    if (exact && routePathname.length > counters[0]) {
+      counters[0] = routePathname.length
       result[0] = args
     }
 
     const { pathname: routeWtsPathname } = new URL(route.replace(/\/$/, ''), baseURI)
 
     const wts = pathname.match(new RegExp(`^${routeWtsPathname}`))
-    if (wts && pathname.length > counters[1]) {
-      counters[1] = pathname.length
+    if (wts && routeWtsPathname.length > counters[1]) {
+      counters[1] = routeWtsPathname.length
       result[1] = args
     }
 
     const { pathname: defaultPathname } = new URL(defaultUrl, baseURI)
     const def = defaultPathname.match(new RegExp(`^${routePathname}`))
-    if (def && def.length > counters[2]) {
-      counters[2] = def.length
+    if (def && routePathname.length > counters[2]) {
+      counters[2] = routePathname.length
       result[2] = args
     }
   }

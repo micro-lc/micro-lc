@@ -13,8 +13,10 @@ services:
         - host.docker.internal:host-gateway
   back-kit:
     image: microlc/bk-web-components:${BACK_KIT_VERSION:-1.1.0}
-    ports:
-      - 8080:8080
+    networks:
+        - ring
+  element-composer:
+    image: microlc/micro-lc-element-composer:${MICRO_LC_ELEMENT_COMPOSER_VERSION:-0.6.0}
     networks:
         - ring
 

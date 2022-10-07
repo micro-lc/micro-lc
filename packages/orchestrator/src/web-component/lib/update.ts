@@ -154,6 +154,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     let injectBase: boolean | undefined = false
     let entry: Entry
     let config: string | PluginConfiguration | undefined
+    let properties: Record<string, unknown> | undefined
     switch (app.integrationMode) {
     case 'compose':
       entry = { scripts: [composerUri] }
@@ -191,6 +192,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
         scripts: toArray(app.entry.scripts) as string[],
         styles: toArray(app.entry.styles ?? []),
       }
+      properties = app.properties
       break
     }
 
@@ -219,6 +221,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
         injectBase,
         microlcApi: this.getApi(),
         schema,
+        ...properties,
       },
     }])
 

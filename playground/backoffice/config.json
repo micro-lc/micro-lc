@@ -80,8 +80,13 @@
             {
               "children": [
                 {
-                  "id": "application_2",
-                  "label": { "en": "Application 2", "it": "Applicazione 2" },
+                  "id": "composer_new",
+                  "label": "Composer V2",
+                  "type": "application"
+                },
+                {
+                  "id": "composer_old",
+                  "label": "Composer V1",
                   "type": "application"
                 },
                 {
@@ -143,10 +148,18 @@
         }
       }
     },
-    "application_2": {
+    "composer_new": {
       "integrationMode": "compose",
       "route": "./ingredients",
       "config": "./ingredients_v2.json"
+    },
+    "composer_old": {
+      "integrationMode": "qiankun",
+      "entry": "/element-composer/",
+      "route": "./ingredients_old",
+      "properties": {
+        "configurationName": "../../../../ingredients_v1"
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+import { exec } from 'child_process'
 import { lstatSync } from 'fs'
 import { lstat } from 'fs/promises'
 import { dirname, resolve } from 'path'
@@ -13,7 +14,21 @@ const folders = glob
   .filter((path) => lstatSync(path).isDirectory())
   .map((path) => `/playground${path.split('/playground')[1]}`)
 
+const logger = (error, stdout, stderr) => {
+  if (error) {
+    console.log(`[docker-compose] error: ${error.message}`)
+    return
+  }
+  if (stderr) {
+    console.log(`[docker-compose] stderr: ${stderr}`)
+    return
+  }
+  console.log(`[docker-compose] stdout: ${stdout}`)
+}
+
 const main = async () => {
+  exec('docker-compose --file playground/docker-compose.yml up -d --build --force-recreate', logger)
+
   await startDevServer({
     config: {
       middleware: [
@@ -42,7 +57,6 @@ const main = async () => {
           return next()
         },
       ],
-      open: true,
       plugins: [
         {
           name: 'nonce',
@@ -66,4 +80,9 @@ const main = async () => {
   })
 }
 
-main().catch(console.error)
+main()
+  .then(() => {
+    console.log('\n\tRemind dropping docker-compose environment\n')
+    console.log('\n\tRun: `docker-compose --file playground/docker-compose.yml down`\n')
+  })
+  .catch(console.error)
