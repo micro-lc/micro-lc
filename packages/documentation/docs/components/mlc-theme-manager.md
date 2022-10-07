@@ -10,7 +10,7 @@ Logical web-component that can be included in applications layout to inject an [
 It only works on components using [Ant Design Dynamic Theme](https://ant.design/docs/react/customize-theme-variable).
 :::
 
-## Usage
+## How it works
 
 :::tip
 `mlc-antd-theme-manager` should be used in conjunction with `postcss-ant-dynamic-theme` PosCSS plugin to enable your
@@ -51,7 +51,7 @@ produces this set of variables
 On top of the global configuration, you can use the `nodes` property to inject CSS nodes (i.e., specific selectors) in
 your application.
 
-### Example configuration
+## Usage
 
 The web-component should be declared in the `layout` section of micro-lc configuration.
 

@@ -1,0 +1,52 @@
+---
+title: 🔧 mlc-layout
+sidebar_label: 🔧 mlc-layout
+sidebar_position: 10
+---
+
+...
+
+## Usage
+
+```json5 title=micro-lc.config.json
+{
+  // ...
+  "layout": {
+    "source": "...",
+    "content": {
+      "tag": "mlc-layout",
+      "properties": {
+        // ...
+      }
+    },
+    {
+      // ...
+    }
+  }
+}
+```
+
+```mdx-code-block
+<></>
+<example-frame src={"../../frames/components/mlc-layout/layout-1.html"} title={"Test frame"}></example-frame>
+```
+
+## Properties & attributes
+
+|  Property   | Attribute |                             Type                              |     Default      | Description                        |
+|:-----------:|:---------:|:-------------------------------------------------------------:|:----------------:|------------------------------------|
+|   `mode`    |  `mode`   | <code>fixedSideBar &#124; overlaySideBar &#124; topBar</code> | `overlaySideBar` | How the layout will be structured. |
+|   `logo`    |     -     |             <code><a href="#Logo">Logo</a></code>             |                  |                                    |
+| `menuItems` |     -     |        <code><a href="#MenuItem">MenuItem[]</a></code>        |        -         |                                    |
+
+### Theme
+
+#### `Logo`
+
+#### `MenuItem`
+
+#### `HelpMenu`
+
+#### `UserMenu`
+
+#### `Head`

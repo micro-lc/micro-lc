@@ -52,6 +52,7 @@ const tsConfigs = {
       path.resolve(__dirname, './packages/iconic/tsconfig.json'),
       path.resolve(__dirname, './packages/interfaces/tsconfig.json'),
       path.resolve(__dirname, './packages/layout/tsconfig.json'),
+      path.resolve(__dirname, './packages/documentation/tsconfig.json'),
     ],
   },
 
