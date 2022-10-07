@@ -1,4 +1,3 @@
-
 import type { LoadableApp } from 'qiankun'
 import { BehaviorSubject } from 'rxjs'
 
@@ -144,7 +143,29 @@ async function flushAndGo<T extends BaseExtension>(
   // ⛰️ mount
   let handlers = applicationHandlers.get(currentApplication)
   if (handlers === undefined) {
-    handlers = this._qiankun.loadMicroApp(nextMatch)
+    handlers = this._qiankun.loadMicroApp(nextMatch, {
+      postProcessTemplate: (tplResult) => {
+        if (nextMatch.props?.injectBase) {
+          const head = tplResult.template.match(/<head>(.+)<\/head>/)
+          if (head?.index) {
+            const { index } = head
+            const base = tplResult.template.match(/<base(.+)\/?>/)
+            if (base === null) {
+              const { pathname: route } = new URL(this._loadedRoutes.get(nextMatch.name) ?? '', this.ownerDocument.baseURI)
+              const newBase = `<base href="${route}" target="_blank" />`
+              tplResult.template = `
+              ${tplResult.template.slice(0, index)}
+                <head>
+                  ${newBase}
+              ${tplResult.template.slice(index + '<head>'.length)}
+            `
+            }
+          }
+        }
+        console.log(tplResult.template, tplResult.scripts, tplResult.styles)
+        return tplResult
+      },
+    })
     applicationHandlers.set(currentApplication, handlers)
   }
 
@@ -240,7 +261,7 @@ function popStateListener<T extends BaseExtension>(this: Microlc<T>, event: PopS
 }
 
 function domContentLoaded(this: Window, event: Event) {
-  console.log(event)
+  console.error('[micro-lc] unhandled DOMContentLoaded event', event)
 }
 
 let popstate: ((ev: PopStateEvent) => unknown) | undefined

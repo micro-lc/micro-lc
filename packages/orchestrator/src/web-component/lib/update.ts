@@ -87,6 +87,7 @@ interface ComposerApi {
 export interface ComposableApplicationProperties<T extends BaseExtension = BaseExtension> {
   composerApi: ComposerApi
   config: string | PluginConfiguration | undefined
+  injectBase: boolean | undefined
   microlcApi: Partial<MicrolcApi<T>>
   schema: SchemaOptions | undefined
 }
@@ -150,6 +151,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
   const schema = await getApplicationSchema()
 
   Object.entries(applications).reduce((acc, [id, app]) => {
+    let injectBase: boolean | undefined = false
     let entry: Entry
     let config: string | PluginConfiguration | undefined
     switch (app.integrationMode) {
@@ -183,6 +185,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       break
     case 'qiankun':
     default:
+      injectBase = app.injectBase
       entry = typeof app.entry === 'string' ? app.entry : {
         html: app.entry.html,
         scripts: toArray(app.entry.scripts) as string[],
@@ -206,7 +209,6 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
               context: {
                 onload() {
                   /** noop */
-                  console.log('done')
                 },
               },
               extraProperties: ['onload'],
@@ -214,6 +216,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
           premount,
         },
         config,
+        injectBase,
         microlcApi: this.getApi(),
         schema,
       },

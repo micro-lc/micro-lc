@@ -126,6 +126,7 @@
     },
     "react": {
       "integrationMode": "qiankun",
+      "injectBase": true,
       "route": "./react/",
       "entry": "http://localhost:8003/"
     },
