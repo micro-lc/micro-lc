@@ -175,7 +175,6 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
             tag: 'p',
           },
           properties: {
-            onerror: 'onerror',
             onload: 'onload',
           },
           tag: 'iframe',
@@ -194,7 +193,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
 
     const qiankunId = `${id}-${window.crypto.randomUUID()}`
     acc.mapping.set(qiankunId, id)
-    acc.routes.set(id, app.route)
+    acc.routes.set(qiankunId, app.route)
     acc.apps.set(id, [app.route, {
       container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
@@ -207,6 +206,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
               context: {
                 onload() {
                   /** noop */
+                  console.log('done')
                 },
               },
               extraProperties: ['onload'],

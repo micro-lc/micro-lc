@@ -1,3 +1,4 @@
+
 import type { LoadableApp } from 'qiankun'
 import { BehaviorSubject } from 'rxjs'
 
@@ -52,9 +53,26 @@ function getCurrentUnmount(): (() => Promise<null>) | undefined {
 
 type MatchingRoute<T extends BaseExtension> = LoadableApp<ComposableApplicationProperties<T>>
 
+type MatchingRouteReturnType<T extends BaseExtension> =
+  [MatchingRoute<T> | undefined, MatchingRoute<T> | undefined, MatchingRoute<T> | undefined]
+
+export class MatchCache<T extends BaseExtension> extends Map<string, MatchingRouteReturnType<T>> {
+  _default: MatchingRouteReturnType<T> | undefined
+  setDefault(match: MatchingRoute<T> | undefined) {
+    this._default = [undefined, undefined, match]
+  }
+  getDefault(): MatchingRouteReturnType<T> | undefined {
+    return this._default
+  }
+  invalidateCache() {
+    this._default = undefined
+    this.clear()
+  }
+}
+
 function getNextMatchingRoute<T extends BaseExtension>(
-  this: Microlc<T>, pathname: string
-): (MatchingRoute<T> | undefined)[] {
+  this: Microlc<T>, url?: string | undefined
+): MatchingRouteReturnType<T> {
   const {
     _config: {
       settings: {
@@ -62,35 +80,48 @@ function getNextMatchingRoute<T extends BaseExtension>(
       },
     },
     ownerDocument: {
-      baseURI: hrefOrBaseURI,
+      baseURI,
     },
   } = this
 
-  /**
-   * if <base /> is defined then baseURI === document.querySelector('base').href
-   * otherwise baseURI === window.location.href
-   *
-   * hence in each case the best option would be:
-   */
-  const baseURI = new URL(hrefOrBaseURI, window.location.origin).pathname
+  const result = Array(3).fill(undefined) as MatchingRouteReturnType<T>
+  const counters = Array(3).fill(0) as [number, number, number]
 
-  let nextMatch: MatchingRoute<T> | undefined
-  let defaultMatch: MatchingRoute<T> | undefined
+  const { pathname } = url ? new URL(url, baseURI) : window.location
 
   for (const [route, args] of this._loadedApps.values()) {
     if (route === undefined) {
       continue
     }
-    if (pathname.match(new RegExp(route))) {
-      nextMatch = args
+
+    const { pathname: routePathname } = new URL(route, baseURI)
+
+    const exact = pathname.match(new RegExp(`^${routePathname}`))
+    if (exact && pathname.length > counters[0]) {
+      counters[0] = pathname.length
+      result[0] = args
     }
-    // console.log(route, pathname, baseURI)
-    if (defaultUrl.match(new RegExp(route)) || (pathname === baseURI || `${pathname}/` === baseURI)) {
-      defaultMatch = args
+
+    const { pathname: routeWtsPathname } = new URL(route.replace(/\/$/, ''), baseURI)
+
+    const wts = pathname.match(new RegExp(`^${routeWtsPathname}`))
+    if (wts && pathname.length > counters[1]) {
+      counters[1] = pathname.length
+      result[1] = args
+    }
+
+    const { pathname: defaultPathname } = new URL(defaultUrl, baseURI)
+    const def = defaultPathname.match(new RegExp(`^${routePathname}`))
+    if (def && def.length > counters[2]) {
+      counters[2] = def.length
+      result[2] = args
     }
   }
 
-  return [nextMatch, defaultMatch]
+  url !== undefined ? this._matchCache.set(url, result) : this._matchCache.setDefault(result[2])
+
+  console.log(this._matchCache)
+  return result
 }
 
 async function flushAndGo<T extends BaseExtension>(
@@ -148,19 +179,40 @@ export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, 
     )
 }
 
-export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | URL): Promise<void> {
+export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | undefined): Promise<void> {
   const app = getCurrentApplicationAssets()
   const unmount = getCurrentUnmount()
 
-  const { pathname } = url ? new URL(url, this.ownerDocument.baseURI) : window.location
-
+  // const { pathname } = url ? new URL(url, this.ownerDocument.baseURI) : window.location
+  let matchingResults = Array(3).fill(undefined) as MatchingRouteReturnType<T>
+  const isDefaultCached = this._matchCache.getDefault()
+  const cachedMatch = url !== undefined ? this._matchCache.get(url) : undefined
+  if (url === undefined && isDefaultCached) {
+    matchingResults = isDefaultCached
+  } else if (cachedMatch) {
+    matchingResults = cachedMatch
+  } else {
   // ⤵️ when no match is found on loaded routes and the pathname
   // matched the base path (i.e., no plugin was mounted on root)
   // router redirects on default route if any
-  const [exactMatch, defaultMatch] = getNextMatchingRoute
-    .call<Microlc<T>, [string], (MatchingRoute<T> | undefined)[]>(this, pathname)
+  // const [exactMatch, nextMatchWithTrailingSlash, defaultMatch]
+    matchingResults = getNextMatchingRoute
+      .call<Microlc<T>, [string | undefined], MatchingRouteReturnType<T>>(this, url)
+  }
+
+  const [exactMatch, nextMatchWithTrailingSlash, defaultMatch] = matchingResults
 
   let nextMatch = exactMatch
+
+  if (!exactMatch && nextMatchWithTrailingSlash) {
+    // 🎢 SOMETHING WEIRD ==> we are pusthing from ./route ==> ./route/ and this does not
+    // create a popstate event!!!
+    // 🔽 we change the url without creating an event
+    const route = this._loadedRoutes.get(nextMatchWithTrailingSlash.name) as string
+    window.history.replaceState(window.history.state, '', route)
+    // 🧑‍🦰 and we reroute manually
+    return reroute.call<Microlc<T>, [string], Promise<void>>(this, route)
+  }
 
   if (!exactMatch) {
     nextMatch = defaultMatch

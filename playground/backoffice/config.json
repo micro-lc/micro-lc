@@ -2,7 +2,7 @@
   "$schema": "../../packages/interfaces/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
-    "defaultUrl": "./main",
+    "defaultUrl": "./home",
     "composerUri": "/packages/orchestrator/dist/composer.development.js",
     "4xx": {
       "404": "/packages/orchestrator/dist/404.html"
@@ -39,6 +39,9 @@
         "tag": "mlc-antd-theme-manager",
         "attributes": {
           "primary-color": "#25B864"
+        },
+        "properties": {
+          "varsPrefix": ["micro-lc", "back-kit", "microlc"]
         }
       },
       {
@@ -53,7 +56,8 @@
             "userInfoUrl": "./userinfo.json"
           },
           "logo": {
-            "url": "/packages/orchestrator/public/favicon.png"
+            "url": "/packages/orchestrator/public/favicon.png",
+            "onClickHref": "/playground/backoffice/home"
           },
           "mode": "fixedSideBar",
           "menuItems": [
@@ -83,11 +87,8 @@
                 {
                   "children": [
                     {
-                      "id": "google",
-                      "label": {
-                        "en": "Application 1",
-                        "it": "Applicazione 1"
-                      },
+                      "id": "react",
+                      "label": "React",
                       "type": "application"
                     },
                     {
@@ -113,15 +114,20 @@
     ]
   },
   "applications": {
+    "home": {
+      "integrationMode": "iframe",
+      "route": "./home",
+      "src": "https://docs.mia-platform.eu"
+    },
     "main": {
       "integrationMode": "iframe",
       "route": "./main",
       "src": "https://wikipedia.org"
     },
-    "google": {
-      "integrationMode": "iframe",
-      "route": "./google",
-      "src": "https://google.com"
+    "react": {
+      "integrationMode": "qiankun",
+      "route": "./react/",
+      "entry": "http://localhost:8003/"
     },
     "main2": {
       "integrationMode": "compose",

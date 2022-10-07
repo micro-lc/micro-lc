@@ -7,7 +7,7 @@ import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
 
 import type { MicrolcApi, ComposableApplicationProperties, BaseExtension } from './lib'
-import {
+import { MatchCache,
   rerouteToError,
   createMicrolcApiInstance,
   createRouter,
@@ -54,7 +54,8 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   protected _loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties<E>>]>()
   protected _loadedRoutes = new Map<string, string>()
   protected _applicationMapping = new Map<string, string>()
-  protected _reroute = reroute.bind<(url?: string | URL) => Promise<void>>(this)
+  protected _matchCache = new MatchCache<E>()
+  protected _reroute = reroute.bind<(url?: string | undefined) => Promise<void>>(this)
   protected _rerouteToError = rerouteToError.bind<(statusCode?: number) => Promise<void>>(this)
 
   // properties/attributes update
@@ -95,8 +96,14 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
       this.update()
         .then((done) => {
           if (done) {
+            // rerouting
+            this._matchCache.invalidateCache()
             this._reroute().catch(rerouteErrorHandler)
+
+            // signal webcomponent end of update
             this._completeUpdate()
+
+            // signal load finished
             this.onload?.call(window, new Event('load'))
           }
         })

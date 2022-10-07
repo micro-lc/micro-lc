@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
       output: {
         entryFileNames: ({ name }) => `${name}.${mode}.js`,
         manualChunks: (id) => {
-          if (id.match(/qiankun/)) {
+          if (mode !== 'production' && id.match(/qiankun/)) {
             return 'qiankun'
           }
         },

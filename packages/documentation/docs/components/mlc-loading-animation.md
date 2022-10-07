@@ -14,7 +14,8 @@ Practically speaking, the component injects a method called `onload` into each o
 their display style to `none`. When the `onload` method of one of these children is invoked, the component resets the
 original display style of the children and hides itself.
 
-In most use cases, this component is used as a wrapper of `micro-lc` itself, which will call `onload` when ???
+In most use cases, this component is used as a wrapper of `micro-lc` itself, which will call `onload` when
+its update lifecycle has ended upon connection and first render.
 
 ```html title=index.html
 <mlc-loading-animation primary-color="#25b864">
@@ -26,19 +27,12 @@ In most use cases, this component is used as a wrapper of `micro-lc` itself, whi
 
 Let's take in consideration the following configuration.
 
-```javascript
-import {html} from 'lit-html'
-
-const component = html`
-  <mlc-loading-animation .primaryColor=${"#25B864"}>
-      <div
-        id="content"
-        style="height: 100%; width: 100%; display: flex; align-items: center; justify-content: center;"
-      >
-        Content
-      </div>
-  </mlc-loading-animation>
-`
+```html title=index.html
+<mlc-loading-animation primary-color="#25B864">
+    <div id="content" style="display: flex;">
+      Content
+    </div>
+</mlc-loading-animation>
 ```
 
 At startup, the page will show the spinning animation and the div with id `content` will be hidden. As soon as someone

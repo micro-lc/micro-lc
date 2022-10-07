@@ -450,5 +450,5 @@
       "style": "display: flex; flex-direction: column; height: calc(100vh - 64px);"
     }
   },
-  "sources": { "uris": ["/back-kit/latest/bk-web-components.esm.js"] }
+  "sources": { "uris": ["/back-kit/1.1.0/bk-web-components.esm.js"] }
 }

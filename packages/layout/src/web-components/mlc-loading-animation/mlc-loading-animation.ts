@@ -9,10 +9,11 @@ interface LoadableElement extends HTMLElement {
 function handleSlotChange(this: LoadableElement, event: ChangeEvent<HTMLSlotElement>): void {
   event.target.assignedElements().forEach((element) => {
     if (element instanceof HTMLElement) {
+      const previousDisplay = element.style.display
       element.style.display = 'none'
       element.onload = () => {
         this._loading = false
-        element.style.display = ''
+        element.style.display = previousDisplay
       }
     }
   })

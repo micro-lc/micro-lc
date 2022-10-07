@@ -55,7 +55,20 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
         return this._rerouteToError(statusCode)
       },
       open: (url: string | URL | undefined, target?: string | undefined, features?: string | undefined) => {
-        window.open(url, target, features)
+        if (url !== undefined) {
+          const regularUrl = new URL(url, this.ownerDocument.baseURI)
+
+          const isSameOrigin = regularUrl.origin === window.location.origin
+          const isSamePathname = regularUrl.pathname === window.location.pathname
+
+          if (isSameOrigin && isSamePathname) {
+            window.history.replaceState(window.history.state, '', url)
+          } else if (isSameOrigin) {
+            window.history.pushState(null, '', url)
+          } else {
+            window.open(url, target, features)
+          }
+        }
       },
     },
     set: (event: Partial<Event>) => {
