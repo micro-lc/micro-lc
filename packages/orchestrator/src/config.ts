@@ -33,6 +33,7 @@ export const defaultConfig: CompleteConfig = {
           div#__MICRO_LC_MOUNT_POINT > :first-child {
             width: inherit;
             height: inherit;
+            overflow: hidden;
           }
         `,
         tag: 'style',
