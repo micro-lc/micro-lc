@@ -59,6 +59,7 @@ jobs:
         package:
           - iconic
           - interfaces
+          - composer
           - layout
           - orchestrator
 

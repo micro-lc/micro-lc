@@ -50,6 +50,7 @@ jobs:
 
       - run: yarn workspace @micro-lc/interfaces run build
       - run: yarn workspace @micro-lc/iconic run build
+      - run: yarn workspace @micro-lc/composer run build
       - run: yarn workspace @micro-lc/orchestrator run build
       - run: yarn workspace @micro-lc/layout run build
 
