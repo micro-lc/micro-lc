@@ -36,6 +36,7 @@ jobs:
         package:
           - iconic
           - interfaces
+          - composer
           - orchestrator
 
     uses: micro-lc/micro-lc-2.0/.github/workflows/tests.yml@main
