@@ -17,10 +17,10 @@ jobs:
   install:
     uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@main
 
-  checks:
-    needs:
-      - install
-    uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@main
+  # checks:
+  #   needs:
+  #     - install
+  #   uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@main
 
   build:
     needs:
@@ -48,7 +48,7 @@ jobs:
   release:
     needs:
       - install
-      - checks
+      # - checks
       - tests
       - build
     runs-on: ubuntu-latest

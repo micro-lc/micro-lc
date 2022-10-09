@@ -15,10 +15,10 @@ jobs:
   install:
     uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@main
 
-  checks:
-    needs:
-      - install
-    uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@main
+  # checks:
+  #   needs:
+  #     - install
+  #   uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@main
 
   build:
     needs:
