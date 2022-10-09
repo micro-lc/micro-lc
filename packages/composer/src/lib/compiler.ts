@@ -1,4 +1,4 @@
-import type { ErrorCodes } from '../logger'
+import type { ErrorCodes } from './logger'
 
 const isString = (value: string): boolean => {
   const i = value.charAt(0)

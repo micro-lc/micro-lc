@@ -84,7 +84,7 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       path: 'rollup-plugin-node-polyfills/polyfills/path',
-      'process.env.NODE_ENV': JSON.stringify(mode.split('.')[0]),
+      'process.env.NODE_ENV': JSON.stringify(mode),
     },
     dedupe: ['react', 'react-dom'],
   },

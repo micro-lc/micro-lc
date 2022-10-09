@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
-import type { ErrorCodes } from '../logger'
-import logger from '../logger'
+import type { ErrorCodes } from './logger'
+import logger from './logger'
 
 enum LexerMode {
   String,

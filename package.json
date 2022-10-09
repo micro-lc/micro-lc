@@ -3,7 +3,7 @@
   "version": "2.0.0-rc0",
   "description": "The micro frontend solution by Mia-Platform",
   "license": "SEE LICENSE IN LICENSE",
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "yarn@3.2.4",
   "workspaces": [
     "packages/*"
   ],
@@ -12,6 +12,7 @@
     "d": "yarn workspace @micro-lc/documentation",
     "i": "yarn workspace @micro-lc/interfaces",
     "l": "yarn workspace @micro-lc/layout",
+    "m": "yarn workspace @micro-lc/composer",
     "o": "yarn workspace @micro-lc/orchestrator",
     "initialize": "bash ./scripts/initialize.sh",
     "check:types": "yarn workspaces foreach --all run check:types",
@@ -20,7 +21,7 @@
     "cleanup": "yarn workspaces foreach --all --parallel run cleanup",
     "lint:code": "eslint . --ext .mjs,.js,.jsx,.ts,.tsx,.schema.json --resolve-plugins-relative-to .",
     "lint:style": "stylelint **/*.{css,less}",
-    "lint": "yarn lint:code && yarn lint:style",
+    "lint": "NODE_OPTIONS=--max-old-space-size=10000 yarn run-p lint:code lint:style",
     "test": "yarn workspaces foreach --all run test",
     "coverage": "yarn workspaces foreach --all run coverage",
     "playground": "yarn node playground.mjs"
@@ -36,6 +37,7 @@
     "confusing-browser-globals": "^1.0.11",
     "esbuild": "^0.15.10",
     "eslint": "^8.24.0",
+    "eslint-config-esnext": "^4.1.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsonc": "^2.4.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",

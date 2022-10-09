@@ -1,6 +1,6 @@
 import type { ArrayContent, Component, Content } from '@micro-lc/interfaces/v2'
 
-import { toArray } from '../utils/array'
+import { toArray } from './to-array'
 
 function contentToArrayOfNodes(rawContent: ArrayContent | Component): ArrayContent {
   return Array.isArray(rawContent) ? rawContent : [rawContent]

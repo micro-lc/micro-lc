@@ -15,6 +15,10 @@ yarn c check:types
 yarn c prebuild
 yarn c build
 
+echo -e "\n\t\U0001f382${GREEN}\tcomposer${ENDCOLOR}\n"
+yarn c check:types
+yarn c build
+
 echo -e "\n\t\U0001f3ba${GREEN}\torchestrator${ENDCOLOR}\n"
 yarn o check:types
 yarn o prebuild

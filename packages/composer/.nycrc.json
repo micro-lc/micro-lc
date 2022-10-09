@@ -1,6 +1,6 @@
 {
   "include": [
-    "src/composer"
+    "src/lib"
   ],
   "report-dir": "./coverage/unit",
   "reporter": ["text", "cobertura", "lcov"],

@@ -4,8 +4,8 @@ import { expect, use } from 'chai'
 import { createSandbox } from 'sinon'
 import sinonChai from 'sinon-chai'
 
-import logger from '../../logger'
 import { lexer } from '../lexer'
+import logger from '../logger'
 
 use(sinonChai)
 

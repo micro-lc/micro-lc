@@ -34,24 +34,3 @@ build({
 })
 
 //
-
-// external dependency
-
-const modes = ['development', 'production']
-const composerEntryPoints = ['../src/plugins/composer.ts'].map((path) => resolve(__dirname, path))
-Promise.all(modes.map(async (mode) => {
-  return build({
-    ...config,
-    define: { 'process.env.NODE_ENV': JSON.stringify(mode) },
-    entryPoints: composerEntryPoints,
-    format: 'iife',
-    outfile: resolve(__dirname, `../dist/composer.${mode}.js`),
-  }).then(() => {
-    console.log('\x1b[32m%s\x1b[0m', `✔ [${mode}] compiled successfully ${composerEntryPoints.join(', ')}`)
-  }).catch((err) => {
-    console.log('\x1b[31m%s\x1b[0m', `✖ [${mode}] failed compiling ${composerEntryPoints.join(', ')}`)
-    console.error(err)
-  })
-})).catch(console.error)
-
-//

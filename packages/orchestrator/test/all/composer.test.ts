@@ -1,10 +1,37 @@
+import { createComposerContext, premount } from '@micro-lc/composer'
 import type { PluginConfiguration } from '@micro-lc/interfaces/v2'
 import { expect } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 
-import { createComposerContext, premount } from '../../src/composer'
+import type { SchemaOptions } from '../../src/utils/json'
+import type { BaseExtension, MicrolcApi } from '../../src/web-component'
 
-import '../../src/plugins/composer'
+interface BootstapProps {
+  config: string | PluginConfiguration | undefined
+  microlcApi?: Partial<MicrolcApi<BaseExtension>>
+  name: string
+  schema?: SchemaOptions | undefined
+  version?: 1 | 2
+}
+
+interface MountProps {
+  container: HTMLElement
+  microlcApi?: Partial<MicrolcApi<BaseExtension>>
+  name: string
+}
+
+interface MicroApp {
+  bootstrap(props: BootstapProps): Promise<null>
+  mount(props: MountProps): Promise<null>
+  unmount(props: {name: string}): Promise<null>
+  update(): Promise<null>
+}
+
+declare global {
+  interface Window {
+    __MICRO_LC_COMPOSER?: Partial<MicroApp>
+  }
+}
 
 const now = new Date()
 const config: PluginConfiguration = {

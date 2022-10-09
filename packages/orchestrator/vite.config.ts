@@ -1,5 +1,6 @@
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import target from './scripts/target'
 
@@ -30,6 +31,16 @@ export default defineConfig(({ mode }) => ({
     format: 'esm',
     target,
   },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          dest: './',
+          src: require.resolve(`@micro-lc/composer/dist/composer.${mode}.js`),
+        },
+      ],
+    }),
+  ],
   resolve: {
     alias: [
       {

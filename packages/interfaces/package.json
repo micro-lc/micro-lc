@@ -12,7 +12,7 @@
     "build:es": "ts-node scripts/compile.esm.ts",
     "build:cjs": "ts-node scripts/compile.cjs.ts",
     "build:cli": "node ./scripts/build-cli.mjs",
-    "build": "yarn run -T run-p build:es build:cjs",
+    "build": "yarn run -T run-p check:types build:es build:cjs",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
     "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha",
     "cli": "yarn ts-node ./cli"

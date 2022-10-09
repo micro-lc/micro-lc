@@ -1,8 +1,9 @@
+import type { ResolvedConfig } from '@micro-lc/composer'
+import { createComposerContext, premount } from '@micro-lc/composer'
 import type { Config, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
 
-import type { ResolvedConfig } from '../../composer'
-import { createComposerContext, premount } from '../../composer'
+
 import { defaultConfig } from '../../config'
 import logger from '../../logger'
 import { toArray } from '../../utils/array'

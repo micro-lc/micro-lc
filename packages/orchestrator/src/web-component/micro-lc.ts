@@ -1,8 +1,8 @@
+import { createComposerContext, premount } from '@micro-lc/composer'
 import type { Config } from '@micro-lc/interfaces/v2'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'
 
-import { createComposerContext, premount } from '../composer'
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
 
