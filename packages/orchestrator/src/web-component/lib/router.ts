@@ -119,7 +119,6 @@ function getNextMatchingRoute<T extends BaseExtension>(
 
   url !== undefined ? this._matchCache.set(url, result) : this._matchCache.setDefault(result[2])
 
-  console.log(this._matchCache)
   return result
 }
 
@@ -162,7 +161,6 @@ async function flushAndGo<T extends BaseExtension>(
             }
           }
         }
-        console.log(tplResult.template, tplResult.scripts, tplResult.styles)
         return tplResult
       },
     })

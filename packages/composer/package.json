@@ -39,7 +39,7 @@
     "chai": "^4.3.6",
     "chai-string": "^1.5.0",
     "cobertura-merge": "^1.0.3",
-    "es-module-shims": "^1.6.0",
+    "es-module-shims": "^1.6.1",
     "esbuild": "^0.15.10",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",

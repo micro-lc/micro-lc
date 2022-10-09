@@ -170,7 +170,6 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
   }
 
   protected handleSubmit(_: MouseEvent): void {
-    console.log(this._editor?.getValue())
     const iframe = this.ownerDocument.querySelector(this.iframeSelector)
 
     if (iframe instanceof HTMLIFrameElement && this._editor) {
