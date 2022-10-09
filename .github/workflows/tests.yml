@@ -70,7 +70,7 @@ jobs:
         run: npx playwright install-deps
 
       - name: Prebuild
-        if: ${{ inputs.package != 'interfaces' || inputs.package != 'composer' }}
+        if: ${{ inputs.package != 'interfaces' && inputs.package != 'composer' }}
         run: yarn workspace @micro-lc/${{ inputs.package }} run prebuild
       - run: yarn workspace @micro-lc/${{ inputs.package }} run coverage
 
