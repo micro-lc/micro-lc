@@ -66,3 +66,8 @@ jobs:
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --immutable
+
+      - name: Config
+        run: yarn workspace @micro-lc/interfaces run check:types
+
+
