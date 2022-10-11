@@ -143,6 +143,13 @@ async function flushAndGo<T extends BaseExtension>(
   let handlers = applicationHandlers.get(currentApplication)
   if (handlers === undefined) {
     handlers = this._qiankun.loadMicroApp(nextMatch, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      fetch: (input, init) => window.fetch(input, init).catch(async (err) => {
+        console.error('ciao', err)
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        await rerouteToError.call<Microlc<T>, [number], Promise<void>>(this, 500)
+      }),
       postProcessTemplate: (tplResult) => {
         if (nextMatch.props?.injectBase) {
           const head = tplResult.template.match(/<head>(.+)<\/head>/)
@@ -167,6 +174,7 @@ async function flushAndGo<T extends BaseExtension>(
     applicationHandlers.set(currentApplication, handlers)
   }
 
+  handlers.loadPromise.catch((err) => console.error('loading...', err))
 
   pending.push(
     handlers.bootstrapPromise
@@ -192,10 +200,30 @@ export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, 
     return Promise.reject(new TypeError('no 404 page available'))
   }
 
+  // unmount previous application
+  if (unmount) {
+    pending.push(unmount().catch(rerouteErrorHandler))
+  }
+
+  // 👌 there's an application to mount hence we ensure that
+  // any previous update operation has ended
+  await flushPendingPromises()
+
+  // set new application
+  currentApplication = nextMatch.name
+
+  // ⛰️ mount
+  const handlers = applicationHandlers.get(currentApplication)
+
   return flushAndGo
     .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(
       this, nextMatch, unmount
     )
+}
+
+function isDefault(url: string, baseURI: string): boolean {
+  const { pathname } = new URL(url, window.document.baseURI)
+  return pathname.replace(/\/$/, '') === new URL(baseURI, window.document.baseURI).pathname.replace(/\/$/, '')
 }
 
 export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | undefined): Promise<void> {
@@ -233,7 +261,7 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
     return reroute.call<Microlc<T>, [string], Promise<void>>(this, route)
   }
 
-  if (!exactMatch) {
+  if (!exactMatch && isDefault(url ?? window.location.href, this.ownerDocument.baseURI)) {
     nextMatch = defaultMatch
   }
 

@@ -4,8 +4,40 @@
   <base href="%%MICRO_LC_BASE_PATH%%" />
   <title>Microlc :: Unauthorized</title>
   <style>
-    .micro-lc-error .color {
+    @media only screen and (max-width: 1000px) {
+      .scalable {
+        scale: 80%
+      }
+    }
+
+    .color {
       fill: var(--micro-lc-primary-color, #1890ff);
+    }
+
+    .centered {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: -5vh;
+    }
+
+    .message {
+      font-family: var(--micro-lc-font-family,
+        -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, 'Helvetica Neue',
+        Arial, 'Noto Sans', sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji'
+      );
+      font-style: normal;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 34px;
+      text-align: center;
+      color: #9e9e9e;
     }
   </style>
   <script>
@@ -15,7 +47,10 @@
         '401',
         {
           bootstrap: () => Promise.resolve(),
-          mount: () => Promise.resolve(),
+          mount: async ({message}) => {
+            document.querySelector('#error-message').textContent = message ?? 'Unauthorized'
+            return null
+          },
           unmount: () => Promise.resolve(null),
           update: () => Promise.resolve()
         }
@@ -28,7 +63,7 @@
   </script>
 </head>
 <body>
-  <div class="micro-lc-error color">
+  <div class="color centered scalable">
     <svg fill="none" height="349" viewBox="0 0 670 349" width="670" xmlns="http://www.w3.org/2000/svg">
       <path
         class="micro-lc-error color"
@@ -314,6 +349,7 @@
         fill="#0E0E0E"
       />
     </svg>
+    <p id="error-message" class="message"></p>
   </div>
 </body>
 </html>
