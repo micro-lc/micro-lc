@@ -127,12 +127,18 @@ const microlcApi: Partial<MlcApi> = {
   },
   getExtensions: () => microlcApiExtensions,
   router: {
+    goTo: url => action('router.goTo')(url),
     goToApplication: async (id): Promise<void> => {
       action('router.goToApplication')(id)
       return Promise.resolve()
     },
     goToErrorPage: (status) => action('route.goToErrorPage')(status),
-    open: (url, target) => action('router.open')(url, target),
+    open: (url, target) => {
+      action('router.open')(url, target)
+      return null
+    },
+    pushState: (data, unused, url) => action('route.pushState')(data, unused, url),
+    replaceState: (data, unused, url) => action('route.replaceState')(data, unused, url),
   },
   set: event => action('set')(event),
   setExtension: (key, val) => {

@@ -23,9 +23,8 @@ function onHelpMenuClick(this: MlcLayout) {
   this.helpMenu?.helpHref && this.microlcApi?.router?.open(this.helpMenu.helpHref, '_blank')
 }
 
-// TODO: should we one also an application?
 function onLogoClick(this: MlcLayout) {
-  this.logo?.onClickHref && this.microlcApi?.router?.open(this.logo.onClickHref)
+  this.logo?.onClickHref && this.microlcApi?.router?.goTo(this.logo.onClickHref)
 }
 
 function onSelect(this: MlcLayout, id: string) {
@@ -58,7 +57,7 @@ function onUserMenuClick(this: MlcLayout, id: string) {
     { method: logout.method ?? 'POST' }
   )
 
-  logout?.redirectUrl && this.microlcApi?.router?.open(logout.redirectUrl)
+  logout?.redirectUrl && this.microlcApi?.router?.goTo(logout.redirectUrl)
 }
 
 // TODO: implement CSS dark mode switch

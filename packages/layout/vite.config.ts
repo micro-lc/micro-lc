@@ -9,7 +9,6 @@ import dynamicImport from 'vite-plugin-dynamic-import'
 
 import target from './scripts/target'
 
-// @ts-expect-error TODO: smth wrong with css plugin types
 export default defineConfig(({ mode }) => ({
   base: './',
   build: {

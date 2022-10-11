@@ -99,7 +99,7 @@ export interface Logo {
   /** Alternative text to display if the logo is not found  */
   altText?: string
 
-  /** URL of the site the users are redirected to when they click the logo */
+  /** Link to navigate to when the logo is clicked */
   onClickHref?: string
 
   /** URL of the logo image */

@@ -27,4 +27,5 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
 httpd = HTTPServer(("localhost", inputs.port), CORSRequestHandler)
+print('\x1b[32mServing directory %s on localhost:%d\x1b[0m' % (inputs.directory, inputs.port))
 httpd.serve_forever()
