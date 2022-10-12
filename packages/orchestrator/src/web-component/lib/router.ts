@@ -6,7 +6,8 @@ import logger from '../../logger'
 import type { Microlc } from '../micro-lc'
 
 import type { BaseExtension } from './extensions'
-import type { QiankunMicroApp } from './qiankun'
+import type { LoadedAppUpdate, QiankunMicroApp } from './qiankun'
+import { postProcessTemplate } from './qiankun'
 import type { ComposableApplicationProperties } from './update'
 
 let currentApplication: string | undefined
@@ -34,10 +35,20 @@ export function rerouteErrorHandler(err: TypeError): null {
 export const currentApplication$ = currentApplicationBus.asObservable()
 
 export function getCurrentApplicationAssets(): {handlers: QiankunMicroApp | undefined; id: string} | undefined {
-  return currentApplication !== undefined ? {
+  if (currentApplication === undefined) {
+    return
+  }
+
+  const handlers = applicationHandlers.get(currentApplication)
+
+  if (handlers === undefined) {
+    return
+  }
+
+  return {
     handlers: applicationHandlers.get(currentApplication),
     id: currentApplication,
-  } : undefined
+  }
 }
 
 function getCurrentUnmount(): (() => Promise<null>) | undefined {
@@ -126,7 +137,8 @@ async function flushAndGo<T extends BaseExtension>(
   this: Microlc<T>,
   nextMatch: MatchingRoute<T>,
   unmount?: (() => Promise<null>) | undefined
-) {
+): Promise<LoadedAppUpdate> {
+  const UNAUTHORIZED = 'UNAUTHORIZED'
   // unmount previous application
   if (unmount) {
     pending.push(unmount().catch(rerouteErrorHandler))
@@ -143,61 +155,63 @@ async function flushAndGo<T extends BaseExtension>(
   let handlers = applicationHandlers.get(currentApplication)
   if (handlers === undefined) {
     handlers = this._qiankun.loadMicroApp(nextMatch, {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      fetch: (input, init) => window.fetch(input, init).catch(async (err) => {
-        console.error('ciao', err)
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        await rerouteToError.call<Microlc<T>, [number], Promise<void>>(this, 500)
-      }),
-      postProcessTemplate: (tplResult) => {
-        if (nextMatch.props?.injectBase) {
-          const head = tplResult.template.match(/<head>(.+)<\/head>/)
-          if (head?.index) {
-            const { index } = head
-            const base = tplResult.template.match(/<base(.+)\/?>/)
-            if (base === null) {
-              const { pathname: route } = new URL(this._loadedRoutes.get(nextMatch.name) ?? '', this.ownerDocument.baseURI)
-              const newBase = `<base href="${route}" target="_blank" />`
-              tplResult.template = `
-              ${tplResult.template.slice(0, index)}
-                <head>
-                  ${newBase}
-              ${tplResult.template.slice(index + '<head>'.length)}
-            `
-            }
+      fetch: (input, init) => window.fetch(input, init)
+        .then((res) => {
+          if (res.status === 401) {
+            throw new TypeError(UNAUTHORIZED)
           }
-        }
-        return tplResult
-      },
+
+          return res
+        }),
+      postProcessTemplate: (tplResult) =>
+        postProcessTemplate(tplResult, {
+          baseURI: this.ownerDocument.baseURI,
+          injectBase: nextMatch.props?.injectBase,
+          name: nextMatch.name,
+          routes: this._loadedRoutes,
+        }),
     })
-    applicationHandlers.set(currentApplication, handlers)
   }
 
-  handlers.loadPromise.catch((err) => console.error('loading...', err))
-
-  pending.push(
-    handlers.bootstrapPromise
-      // SAFETY: we ensured handlers are available
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .then(() => handlers!.mount().then(() => {
-        currentApplication && currentApplicationBus.next(
-          this._applicationMapping.get(currentApplication)
-        )
-        return null
-      }))
-      .catch((err) => { console.error(err); return null })
-  )
+  return handlers.loadPromise.then(() => {
+    if (handlers && currentApplication) {
+      applicationHandlers.set(currentApplication, handlers)
+      pending.push(
+        handlers.bootstrapPromise
+          // SAFETY: we ensured handlers are available
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          .then(() => handlers!.mount().then(() => {
+            currentApplication && currentApplicationBus.next(
+              this._applicationMapping.get(currentApplication)
+            )
+            return null
+          }))
+          .catch((err) => { console.error(err); return null })
+      )
+      return handlers.update?.bind(undefined)
+    }
+  }).catch(async (err: TypeError | unknown) => {
+    let status = 500
+    let reason: string | undefined
+    if (err instanceof TypeError) {
+      err.message === UNAUTHORIZED ? (status = 401) : (reason = err.message)
+    }
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    await rerouteToError.call<Microlc<T>, [number, string | undefined], Promise<LoadedAppUpdate>>(this, status, reason)
+    return undefined
+  })
 }
 
-export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, statusCode?: number): Promise<void> {
+export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, statusCode?: number, reason?: string): Promise<LoadedAppUpdate> {
+  const code = statusCode ?? '404'
+
   const unmount = getCurrentUnmount()
 
-  const nextMatch = this._loadedApps.get(`${this._instance}-${statusCode ?? '404'}`)?.[1]
+  const nextMatch = this._loadedApps.get(`${this._instance}-${code}`)?.[1]
 
   // ⤵️ 404 page was not provided
   if (!nextMatch) {
-    return Promise.reject(new TypeError('no 404 page available'))
+    return Promise.reject(new TypeError(`no ${code} page available`))
   }
 
   // unmount previous application
@@ -212,13 +226,14 @@ export async function rerouteToError<T extends BaseExtension>(this: Microlc<T>, 
   // set new application
   currentApplication = nextMatch.name
 
-  // ⛰️ mount
-  const handlers = applicationHandlers.get(currentApplication)
-
   return flushAndGo
-    .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(
+    .call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<LoadedAppUpdate>>(
       this, nextMatch, unmount
     )
+    .then(async (update) => {
+      await update?.({ message: 'Oops! Something went wrong', reason })
+      return undefined
+    })
 }
 
 function isDefault(url: string, baseURI: string): boolean {
@@ -226,7 +241,7 @@ function isDefault(url: string, baseURI: string): boolean {
   return pathname.replace(/\/$/, '') === new URL(baseURI, window.document.baseURI).pathname.replace(/\/$/, '')
 }
 
-export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | undefined): Promise<void> {
+export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: string | undefined): Promise<LoadedAppUpdate | void> {
   const app = getCurrentApplicationAssets()
   const unmount = getCurrentUnmount()
 
@@ -258,7 +273,7 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
     const route = this._loadedRoutes.get(nextMatchWithTrailingSlash.name) as string
     window.history.replaceState(window.history.state, '', route)
     // 🧑‍🦰 and we reroute manually
-    return reroute.call<Microlc<T>, [string], Promise<void>>(this, route)
+    return reroute.call<Microlc<T>, [string], Promise<LoadedAppUpdate | void>>(this, route)
   }
 
   if (!exactMatch && isDefault(url ?? window.location.href, this.ownerDocument.baseURI)) {
@@ -277,7 +292,7 @@ export async function reroute<T extends BaseExtension>(this: Microlc<T>, url?: s
   }
 
   return (nextMatch.name !== app?.id)
-    ? flushAndGo.call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<void>>(this, nextMatch, unmount)
+    ? flushAndGo.call<Microlc<T>, [MatchingRoute<T>, (() => Promise<null>) | undefined], Promise<LoadedAppUpdate | void>>(this, nextMatch, unmount)
     : Promise.resolve()
 }
 

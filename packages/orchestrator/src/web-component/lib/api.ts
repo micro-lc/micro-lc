@@ -71,7 +71,8 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
       goToErrorPage: async (statusCode?: number): Promise<void> => {
         return this._rerouteToError(statusCode)
       },
-      open: window.open,
+      open: (url?: string | URL | undefined, target?: string | undefined, features?: string | undefined) =>
+        window.open(url, target, features),
       pushState: (data: unknown, unused: string, url?: string | URL | null | undefined) =>
         window.history.pushState(data, unused, url),
       replaceState: (data: unknown, unused: string, url?: string | URL | null | undefined) =>

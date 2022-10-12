@@ -1,8 +1,4 @@
 import './randomuuid-polyfill'
+import Microlc from './web-component'
 
-export default new Promise<void>((resolve) => {
-  import('./web-component').then(({ default: Microlc }) => {
-    customElements.define('micro-lc', Microlc)
-    resolve()
-  }).catch(console.error)
-})
+customElements.define('micro-lc', Microlc)

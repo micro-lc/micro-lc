@@ -33,7 +33,20 @@
   <micro-lc></micro-lc>
   <script>
     const _ = document.querySelector('micro-lc')
-    _.config = {version: 2, layout: {content: {tag: 'div', content: ["Hello", {tag: 'slot'}]}}}
+    _.config = {
+      version: 2,
+      layout: {content: {tag: 'div', content: ["Hello", {tag: 'slot'}]}},
+      applications: {
+        home: {
+          route: '/home',
+          entry: 'localhost:8080',
+          integrationMode: 'qiankun'
+        }
+      },
+      settings: {
+        defaultUrl: '/home'
+      }
+    }
   </script>
 </body>
 </html>
