@@ -62,7 +62,7 @@ describe('iconic react tests', () => {
     await waitUntil(() => container.querySelectorAll('svg').length >= 1, `
       no div here:
         ${container.outerHTML}
-    `)
+    `, { timeout: 10000 })
     expect(container.querySelector('svg')).to.have.property('textContent', '')
 
     root.unmount()
