@@ -21,9 +21,8 @@ describe('micro-lc initialization tests', () => {
     const microlc = root.firstElementChild as Microlc
     await waitUntil(() => microlc.updateComplete)
 
-    expect(microlc).dom.to.equal(`<micro-lc></micro-lc>`)
-    expect(microlc).shadowDom.to.equal(``)
-    expect(window.importShim).to.be.undefined
+    expect(microlc).shadowDom.to.equal(`<slot></slot>`)
+    expect(window.importShim).not.to.be.undefined
 
     root.remove()
   })

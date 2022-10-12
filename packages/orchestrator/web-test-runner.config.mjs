@@ -71,6 +71,7 @@ export default {
         { find: /^.+\/lodash\/noop.js/, replacement: require.resolve('lodash-es/noop.js') },
         { find: /^.+\/lodash\/once.js/, replacement: require.resolve('lodash-es/once.js') },
         { find: /^.+\/lodash\/snakeCase.js/, replacement: require.resolve('lodash-es/snakeCase.js') },
+        { find: /^.+\/lodash\/without.js/, replacement: require.resolve('lodash-es/without.js') },
         // custom bundles
         { find: /^.+\/@babel\/runtime\/regenerator\/index.js/, replacement: require.resolve('./node_modules/@babel/runtime/regenerator/index.js') },
         { find: /^.+\/ajv\/dist\/ajv.js/, replacement: require.resolve('./node_modules/ajv/dist/ajv.js') },

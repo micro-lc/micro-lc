@@ -30,8 +30,8 @@
     "@types/eslint": "^8.4.6",
     "@types/glob": "^8.0.0",
     "@types/rimraf": "^3.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.37.0",
-    "@typescript-eslint/parser": "^5.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "@web/dev-server": "^0.1.34",
     "@web/dev-server-esbuild": "^0.3.2",
     "confusing-browser-globals": "^1.0.11",
@@ -43,7 +43,7 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-mocha": "^10.1.0",
     "eslint-plugin-n": "^15.3.0",
-    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-typescript-sort-keys": "^2.1.0",
@@ -61,7 +61,7 @@
     "stylelint-config-standard": "^28.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
     "typescript": "^4.8.4",
-    "vite": "^3.1.6"
+    "vite": "^3.1.7"
   },
   "engines": {
     "node": ">=16.17.0"
