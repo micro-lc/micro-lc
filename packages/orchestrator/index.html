@@ -30,6 +30,10 @@
   <script type="module" src="/src/micro-lc.ts"></script>
 </head>
 <body>
-  <micro-lc config-src="/.dev/config.json"></micro-lc>
+  <micro-lc></micro-lc>
+  <script>
+    const _ = document.querySelector('micro-lc')
+    _.config = {version: 2, layout: {content: {tag: 'div', content: ["Hello", {tag: 'slot'}]}}}
+  </script>
 </body>
 </html>

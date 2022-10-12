@@ -45,9 +45,9 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   protected _$$updatesCount: number | null = null
   protected _instance = window.crypto.randomUUID()
 
-  protected _config: CompleteConfig = defaultConfig
+  protected _config!: CompleteConfig
   protected _configSrc: string | null | undefined
-  protected _disableShadowDom = false
+  protected _disableShadowDom: boolean | undefined
 
   // queries
   protected _styleElements: HTMLStyleElement[] = []
@@ -67,6 +67,46 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   protected _completeUpdate() {
     this._updateRequests = 0
     this._updateComplete = true
+  }
+
+  protected _handlePropertyChange(name: ObservedProperties, value: unknown): void {
+    switch (name) {
+    case 'config':
+      this._configSrc = null
+      this.removeAttribute('config-src')
+
+      this._prepareForUpdate()
+
+      this._handlePropertyUpdate(
+        'config',
+        mergeConfig(value as Config),
+      )
+      break
+    case 'configSrc':
+      if (value !== this._configSrc) {
+        this._prepareForUpdate()
+
+        this._handlePropertyUpdate(
+          'configSrc',
+          value,
+          (input): input is string => typeof input === 'string'
+        )
+      }
+      break
+    case 'disableShadowDom':
+      if (value !== this._disableShadowDom) {
+        this._prepareForUpdate()
+
+        this._handlePropertyUpdate(
+          'disableShadowDom',
+          value,
+          (input): input is boolean => typeof input === 'boolean'
+        )
+      }
+      break
+    default:
+      break
+    }
   }
 
   protected _handlePropertyUpdate<T>(
@@ -116,15 +156,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   }
 
   set config(src: unknown) {
-    this._configSrc = null
-    this.removeAttribute('config-src')
-
-    this._prepareForUpdate()
-
-    this._handlePropertyUpdate(
-      'config',
-      mergeConfig(src as Config),
-    )
+    this._handlePropertyChange('config', src)
   }
 
   /**
@@ -134,33 +166,17 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     return this._configSrc
   }
   set configSrc(src: unknown) {
-    if (src !== this._configSrc) {
-      this._prepareForUpdate()
-
-      this._handlePropertyUpdate(
-        'configSrc',
-        src,
-        (input): input is string => typeof input === 'string'
-      )
-    }
+    this._handlePropertyChange('configSrc', src)
   }
 
   /**
    * @observedProperty --> mirrored by `disable-shadow-dom`
    */
-  get disableShadowDom(): boolean {
+  get disableShadowDom(): boolean | undefined {
     return Boolean(this._disableShadowDom)
   }
   set disableShadowDom(disable: unknown) {
-    if (disable !== this._disableShadowDom) {
-      this._prepareForUpdate()
-
-      this._handlePropertyUpdate(
-        'disableShadowDom',
-        disable,
-        (input): input is boolean => typeof input === 'boolean'
-      )
-    }
+    this._handlePropertyChange('disableShadowDom', disable)
   }
 
   get updateComplete(): boolean {
@@ -198,6 +214,11 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   constructor() {
     super()
     this._shadowRoot = this.attachShadow({ mode: 'open' })
+
+    // first update
+    this._handlePropertyChange('config', this.config ?? defaultConfig)
+    this._handlePropertyChange('disableShadowDom', this.disableShadowDom ?? false)
+    this.configSrc !== undefined && this._handlePropertyChange('configSrc', this.configSrc)
   }
 
   connectedCallback() {

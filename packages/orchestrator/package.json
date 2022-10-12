@@ -20,7 +20,8 @@
     "test:chromium": "wtr --node-resolve --playwright --browsers chromium",
     "test:firefox": "wtr --node-resolve --playwright --browsers firefox",
     "test:webkit": "wtr --node-resolve --playwright --browsers webkit",
-    "esm": "ts-node scripts/esm-url-generator.ts"
+    "esm": "ts-node scripts/esm-url-generator.ts",
+    "serve": "wds --node-resolve"
   },
   "devDependencies": {
     "@babel/runtime": "^7.19.0",
