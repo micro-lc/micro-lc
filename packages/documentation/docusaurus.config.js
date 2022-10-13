@@ -15,9 +15,14 @@ const themeConfig = {
   colorMode: {
     defaultMode: 'light',
   },
+  docs: {
+    sidebar: {
+      hideable: true,
+    },
+  },
   image: 'img/favicon.png',
   navbar: {
-    hideOnScroll: false,
+    hideOnScroll: true,
     items: [
       {
         docId: 'introduction',

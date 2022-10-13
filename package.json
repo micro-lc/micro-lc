@@ -24,7 +24,8 @@
     "lint": "NODE_OPTIONS=--max-old-space-size=10000 yarn run-p lint:code lint:style",
     "test": "yarn workspaces foreach --all run test",
     "coverage": "yarn workspaces foreach --all run coverage",
-    "playground": "yarn node playground.mjs"
+    "playground": "yarn node playground.mjs",
+    "serve": " python3 ./scripts/server.py -p 8000 -d ."
   },
   "devDependencies": {
     "@types/eslint": "^8.4.6",

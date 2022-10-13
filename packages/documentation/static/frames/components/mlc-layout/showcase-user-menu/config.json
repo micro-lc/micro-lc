@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../interfaces/schemas/v2/config.schema.json",
+  "version": 2,
+  "settings": {
+    "defaultUrl": "./home",
+    "composerUri": "http://localhost:8000/packages/composer/dist/composer.production.js",
+    "4xx": {
+      "404": "http://localhost:8000/packages/orchestrator/dist/404.html"
+    }
+  },
+  "layout": {
+    "sources": "http://localhost:8000/packages/layout/dist/mlc-layout.js",
+    "content": [
+      {
+        "tag": "mlc-layout",
+        "properties": {
+          "mode": "topBar",
+          "logo": {
+            "url": "https://avatars.githubusercontent.com/u/92730708?s=200&v=4"
+          },
+          "userMenu": {
+            "logout": {
+              "method": "POST",
+              "url": "."
+            },
+            "userInfoUrl": "./userinfo.json",
+            "userPropertiesMapping": {
+              "image": "avatar"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "applications": {
+    "orders": {
+      "integrationMode": "compose",
+      "route": "./home",
+      "config": {
+        "content": [
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "content"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import type { CSSConfig } from '@micro-lc/orchestrator'
-import { expect, fixture, html } from '@open-wc/testing'
+import { expect, fixture, fixtureCleanup, html } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 
 import type { MlcAntdThemeManager } from '../../src'
@@ -7,6 +7,8 @@ import type { MlcAntdThemeManager } from '../../src'
 import '../../src/web-components/mlc-antd-theme-manager'
 
 describe('mlc-antd-theme-manager', () => {
+  afterEach(() => { fixtureCleanup() })
+
   it('should send configuration to micro-lc API with default values', async () => {
     const sandbox = createSandbox()
 

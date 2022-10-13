@@ -1,11 +1,18 @@
 .user-menu-container {
   display: flex;
   align-items: center;
-  cursor: pointer;
+
+  &.user-menu-container-clickable {
+    cursor: pointer;
+  }
+
+  & .user-menu-down-icon {
+    margin-right: @margin-sm;
+  }
 
   & .user-menu-name {
     max-height: 100%;
-    margin: 0 @margin-sm;
+    margin-right: @margin-sm;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -21,15 +28,10 @@
   .user-menu-overlay-body {
     padding: 0 !important;
     border: none !important;
-    //box-shadow: 0 2px 8px rgb(0 0 0 / 15%) !important;
 
     & .@{ant-prefix}-dropdown-menu-item {
       margin: auto !important;
       text-align: center;
-
-      &:hover {
-        //background: #e6f3ff;
-      }
 
       & .@{ant-prefix}-dropdown-menu-item:hover {
         color: @primary-color-hover;

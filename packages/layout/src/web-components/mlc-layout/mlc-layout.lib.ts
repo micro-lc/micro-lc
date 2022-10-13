@@ -1,11 +1,27 @@
 import type { WrapperProps } from '../../react-components'
 import { COLLAPSE_KEY } from '../../react-components/SideBar'
+import { error } from '../commons/logger'
 
 import { setInLocalStorage } from './lib/local-storage'
+import { getCurrentLocale, getLang, loadTranslations } from './lib/translation-loader'
 import { mapUserFields } from './lib/user'
 import type { Theme } from './lib/utils'
 import { findMenuItemById } from './lib/utils'
 import type { MlcLayout } from './mlc-layout'
+
+export function loadLocale(this: MlcLayout) {
+  if (this.locale) {
+    this._locale = this.locale
+    return
+  }
+
+  const microlcLang = this.microlcApi?.getExtensions?.().language?.getLanguage()
+  this._lang = getLang(microlcLang)
+
+  loadTranslations(this._lang)
+    .then(() => { this._locale = getCurrentLocale().get(this.tagName) })
+    .catch(error)
+}
 
 export async function retrieveUser(this: MlcLayout) {
   if (!this.userMenu?.userInfoUrl) { return }
@@ -47,17 +63,23 @@ function onSelect(this: MlcLayout, id: string) {
   }
 }
 
+async function logout(this: MlcLayout) {
+  const { logout: conf } = this.userMenu ?? {}
+
+  if (conf?.url) {
+    const response = await this.microlcApi?.getExtensions?.().httpClient?.(
+      conf.url,
+      { method: conf.method ?? 'POST' }
+    )
+
+    if (!response?.ok) { throw new Error('Error logging out user') }
+  }
+
+  conf?.redirectUrl && this.microlcApi?.router?.goTo(conf.redirectUrl)
+}
+
 function onUserMenuClick(this: MlcLayout, id: string) {
-  if (id !== 'logout') { return }
-
-  const { logout } = this.userMenu ?? {}
-
-  logout?.url && this.microlcApi?.getExtensions?.().httpClient?.(
-    logout.url,
-    { method: logout.method ?? 'POST' }
-  )
-
-  logout?.redirectUrl && this.microlcApi?.router?.goTo(logout.redirectUrl)
+  if (id === 'logout') { logout.call(this).catch(error) }
 }
 
 // TODO: implement CSS dark mode switch
@@ -70,6 +92,7 @@ function onThemeChange(this: MlcLayout, value: Theme) {
 
 export function createProps(this: MlcLayout): WrapperProps {
   return {
+    canLogout: Boolean(this.userMenu?.logout),
     // TODO: re-activate when dark mode is supported
     enableDarkMode: false,
     helpMenu: this.helpMenu,

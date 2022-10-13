@@ -9,6 +9,7 @@ import { SideBar } from '../SideBar'
 import { TopBar } from '../TopBar'
 
 export interface WrapperProps {
+  canLogout: boolean | undefined
   enableDarkMode: boolean | undefined
   helpMenu: Partial<HelpMenu> | undefined
   lang: string | undefined
@@ -29,6 +30,7 @@ export interface WrapperProps {
 }
 
 export const Wrapper: React.FC<WrapperProps> = ({
+  canLogout,
   enableDarkMode,
   helpMenu,
   lang,
@@ -52,6 +54,7 @@ export const Wrapper: React.FC<WrapperProps> = ({
       <Layout>
         <Layout.Header className='layout-header'>
           <TopBar
+            canLogout={canLogout}
             enableDarkMode={enableDarkMode}
             helpMenu={helpMenu}
             lang={lang}

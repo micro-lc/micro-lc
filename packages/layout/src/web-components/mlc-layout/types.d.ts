@@ -22,7 +22,7 @@ export type MlcApi = MicrolcApi<BaseExtension, MlcApiEvent>
 /** How the layout will be structured */
 export type Mode = 'fixedSideBar' | 'overlaySideBar' | 'topBar'
 
-/** Translatable text. It can be a string constant for all language or a map linking language rfc5646 language codes to
+/** Translatable text. It can be a string constant for all language or a map linking rfc5646 language codes to
  *  localized strings
  */
 export type LocalizedText = string | Record<string, string>
@@ -120,14 +120,12 @@ export interface HelpMenu {
   helpHref: string
 }
 
-/**
- * Configuration of the user menu rendered on the top bar
- */
+/** Configuration of the user menu rendered on the top bar */
 export interface UserMenu {
   /** Configuration needed to perform user logout */
   logout?: {
     /** Method used to perform the call to the URL specified in the 'url' property */
-    method?: 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT'
+    method?: 'GET' | 'POST'
 
     /** URL to be redirected to after the logout */
     redirectUrl?: string
@@ -140,11 +138,7 @@ export interface UserMenu {
   userInfoUrl: string
 
   /** Mapping between the properties returned from the user info URL call and the ones expected by the component */
-  userPropertiesMapping?: {
-    [k: string]: string
-    avatar?: string
-    name?: string
-  }
+  userPropertiesMapping?: Record<string, 'name' | 'avatar' | string>
 }
 
 /** Configuration for the HTML document head */

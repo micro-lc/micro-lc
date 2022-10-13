@@ -10,6 +10,7 @@ import { UserMenu } from '../UserMenu'
 import { buildAntMenuItems } from '../utils/menu'
 
 export interface TopBarProps {
+  canLogout: boolean | undefined
   enableDarkMode: boolean | undefined
   helpMenu: Partial<HelpMenu> | undefined
   lang: string | undefined
@@ -30,6 +31,7 @@ export interface TopBarProps {
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
+  canLogout,
   enableDarkMode,
   helpMenu,
   lang,
@@ -115,7 +117,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           shouldRenderUser && (
             <>
               <Divider className='top-bar-divider' type='vertical'/>
-              <UserMenu locale={locale} onUserMenuClick={onUserMenuClick} user={user}/>
+              <UserMenu canLogout={canLogout} locale={locale} onUserMenuClick={onUserMenuClick} user={user}/>
             </>
           )
         }

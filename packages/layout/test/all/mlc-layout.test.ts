@@ -1,7 +1,10 @@
 import type { BaseExtension } from '@micro-lc/orchestrator/src'
+import { expect, fixture, fixtureCleanup, html } from '@open-wc/testing'
 import { createSandbox } from 'sinon'
 
 import type { MlcApi } from '../../src/web-components/mlc-layout/types'
+
+import '../../src/web-components/mlc-layout'
 
 describe('mlc-layout', () => {
   const sandbox = createSandbox()
@@ -22,6 +25,7 @@ describe('mlc-layout', () => {
     httpClient: httpClientStub,
   }
 
+  const goToStub = sandbox.stub()
   const goToApplicationStub = sandbox.stub()
   const openStub = sandbox.stub()
   const setStub = sandbox.stub()
@@ -30,14 +34,16 @@ describe('mlc-layout', () => {
   const currentApplicationSubscribeStub = sandbox.stub()
     .returns({ closed: false, unsubscribe: currentApplicationUnsubscribeStub })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const microlcApi: Partial<MlcApi> = {
     currentApplication$: { subscribe: currentApplicationSubscribeStub },
     getExtensions: () => microlcApiExtensions,
     router: {
+      goTo: goToStub,
       goToApplication: goToApplicationStub,
       goToErrorPage: sandbox.stub(),
       open: openStub,
+      pushState: sandbox.stub(),
+      replaceState: sandbox.stub(),
     },
     set: setStub,
     setExtension: setExtensionStub,
@@ -45,5 +51,7 @@ describe('mlc-layout', () => {
 
   beforeEach(() => sandbox.reset())
 
-  afterEach(() => sandbox.restore())
+  afterEach(() => { fixtureCleanup() })
+
+  after(() => sandbox.restore())
 })

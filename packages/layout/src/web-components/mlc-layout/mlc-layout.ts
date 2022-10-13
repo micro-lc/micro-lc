@@ -10,9 +10,9 @@ import { cssResult } from '../../style'
 import { error } from '../commons/logger'
 
 import { getFromLocalStorage } from './lib/local-storage'
-import { DEFAULT_LANGUAGE, getCurrentLocale, getLang, loadTranslations } from './lib/translation-loader'
+import { DEFAULT_LANGUAGE } from './lib/translation-loader'
 import { Theme } from './lib/utils'
-import { createProps, retrieveUser } from './mlc-layout.lib'
+import { createProps, loadLocale, retrieveUser } from './mlc-layout.lib'
 import type { MlcApi, User, Head, HelpMenu, Logo, MenuItem, Mode, UserMenu } from './types'
 
 export class MlcLayout extends MlcComponent<WrapperProps> {
@@ -30,6 +30,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
   @property({ attribute: false }) helpMenu?: Partial<HelpMenu>
   @property({ attribute: false }) userMenu?: Partial<UserMenu>
   @property({ attribute: false }) head?: Partial<Head>
+  @property({ attribute: false }) locale?: Translations['MLC-LAYOUT']
 
   @state() _user?: User
   @state() _sideBarCollapsed = false
@@ -73,12 +74,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
     this.head?.title && this.microlcApi?.getExtensions?.().head?.setTitle(this.head.title)
     this.head?.favIconUrl && this.microlcApi?.getExtensions?.().head?.setIcon({ href: this.head.favIconUrl })
 
-    const microlcLang = this.microlcApi?.getExtensions?.().language?.getLanguage()
-    this._lang = getLang(microlcLang)
-
-    loadTranslations(this._lang)
-      .then(() => { this._locale = getCurrentLocale().get(this.tagName) })
-      .catch(error)
+    loadLocale.call(this)
 
     retrieveUser.call(this).catch(error)
 

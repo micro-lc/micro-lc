@@ -21,6 +21,7 @@ function Template(props: Partial<MlcLayout>) {
       .mode=${props.mode ?? 'fixedSideBar'}
       .enableDarkMode=${props.enableDarkMode ?? false}
       .head=${props.head}
+      .locale=${props.locale}
     >
       <div slot="top-bar" style="height: 100%; display: flex; justify-content: center; align-items: center">
         <div style="background: red; width: 24px; height: 24px"></div>
@@ -113,6 +114,13 @@ const microlcApiExtensions: BaseExtension = {
 
     return Promise.resolve(new Response(JSON.stringify({})))
   },
+  language: {
+    getLanguage: () => {
+      action('language.getLanguage')
+      return 'it'
+    },
+    setLanguage: () => action('language.setLanguage'),
+  },
 }
 
 const microlcApi: Partial<MlcApi> = {
@@ -182,5 +190,22 @@ OverlaySideBar.args = {
   menuItems,
   microlcApi,
   mode: 'overlaySideBar',
+  userMenu,
+}
+
+export const CustomLocale = Template.bind({}) as unknown as Story<MlcLayout>
+CustomLocale.storyName = 'With custom locale'
+CustomLocale.args = {
+  helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },
+  locale: {
+    collapse: 'zusammenbrechen',
+    dark: 'dunkel',
+    light: 'leicht',
+    logout: 'Abmeldung',
+  },
+  logo,
+  menuItems,
+  microlcApi,
+  mode: 'fixedSideBar',
   userMenu,
 }
