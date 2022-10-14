@@ -1,7 +1,6 @@
 declare module '*.less'
 declare module '*.less?inline'
 
-
 declare module 'monaco-editor/esm/vs/editor/editor.worker?worker' {
   export default class EditorWorker extends Worker {
     constructor()

@@ -155,7 +155,7 @@ const microlcApi: Partial<MlcApi> = {
   },
 }
 
-export const TopBar = Template.bind({}) as unknown as Story<MlcLayout>
+export const TopBar = Template.bind({}) as Story<MlcLayout>
 TopBar.storyName = 'Top bar menu'
 TopBar.args = {
   enableDarkMode: true,
@@ -171,7 +171,7 @@ TopBar.args = {
   userMenu,
 }
 
-export const FixedSideBar = Template.bind({}) as unknown as Story<MlcLayout>
+export const FixedSideBar = Template.bind({}) as Story<MlcLayout>
 FixedSideBar.storyName = 'Fixed side bar'
 FixedSideBar.args = {
   helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },
@@ -182,7 +182,7 @@ FixedSideBar.args = {
   userMenu,
 }
 
-export const OverlaySideBar = Template.bind({}) as unknown as Story<MlcLayout>
+export const OverlaySideBar = Template.bind({}) as Story<MlcLayout>
 OverlaySideBar.storyName = 'Overlay side bar'
 OverlaySideBar.args = {
   helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },
@@ -193,7 +193,7 @@ OverlaySideBar.args = {
   userMenu,
 }
 
-export const CustomLocale = Template.bind({}) as unknown as Story<MlcLayout>
+export const CustomLocale = Template.bind({}) as Story<MlcLayout>
 CustomLocale.storyName = 'With custom locale'
 CustomLocale.args = {
   helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },

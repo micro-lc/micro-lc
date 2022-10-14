@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Overview</title>
+  <title>Default prefix</title>
 
   <style>
     html, body {
@@ -21,10 +21,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      font-weight: bold;
+      font-size: 24px;
     }
   </style>
 
   <script async type="module" src="http://localhost:8000/packages/orchestrator/dist/micro-lc.production.js"></script>
+  <script async type="module" src="http://localhost:8000/packages/layout/dist/mlc-antd-theme-manager.js"></script>
 </head>
 <body>
   <micro-lc config-src="./config.json"></micro-lc>

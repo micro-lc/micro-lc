@@ -9,17 +9,10 @@
     }
   },
   "layout": {
-    "sources": {
-      "importmap": {
-        "imports": {
-          "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@2.4.0/lit-html.min.js"
-        }
-      },
-      "uris": [
-        "http://localhost:8000/packages/layout/dist/mlc-layout.js",
-        "http://localhost:8000/packages/iconic/dist/mlc-iconic.js"
-      ]
-    },
+    "sources": [
+      "http://localhost:8000/packages/layout/dist/mlc-layout.js",
+      "http://localhost:8000/packages/layout/dist/mlc-iconic.js"
+    ],
     "content": [
       {
         "tag": "mlc-layout",
@@ -125,13 +118,20 @@
           }
         },
         "content": {
-          "tag": "mlc-iconic",
+          "tag": "div",
           "attributes": {
-            "slot": "top-bar"
+            "slot": "top-bar",
+            "style": "height: 100%; display: flex; justify-content: center; align-items: center;"
           },
-          "properties": {
-            "selector": "MessageOutlined",
-            "library": "@ant-design/icons-svg"
+          "content": {
+            "tag": "mlc-iconic",
+            "attributes": {
+              "style": "width: 20px; display: flex; justify-content: center; align-items: center; color: grey;"
+            },
+            "properties": {
+              "selector": "MessageOutlined",
+              "library": "@ant-design/icons-svg"
+            }
           }
         }
       }

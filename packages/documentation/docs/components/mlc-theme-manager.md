@@ -10,6 +10,17 @@ Logical web-component that can be included in applications layout to inject an [
 It only works on components using [Ant Design Dynamic Theme](https://ant.design/docs/react/customize-theme-variable).
 :::
 
+```mdx-code-block
+<></>
+<example-frame
+  base="../../frames/components/mlc-antd-theme-manager/overview"
+  height="550px"
+  showSource={false}
+  src="/index.html"
+  title="Overview"
+></example-frame>
+```
+
 ## How it works
 
 :::tip
@@ -53,7 +64,13 @@ your application.
 
 ## Usage
 
-The web-component should be declared in the `layout` section of micro-lc configuration.
+:::caution
+This component is intended to be used inside micro-lc, since it makes extensive use of micro-lc API.
+
+You can technically use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
+:::
+
+To use the component in micro-lc, declare it as part of the application layout with its [properties and attributes](#properties-and-attributes).
 
 ```json5 title="micro-lc.config.json"
 {
@@ -74,12 +91,20 @@ The web-component should be declared in the `layout` section of micro-lc configu
         }
       },
       {
-        // ...
+        // Other layout parts
       }
     ]
   }
 }
 ```
+
+## Showcase
+
+### Default prefix
+
+### Multiple prefixes
+
+### Nodes styling
 
 ## Properties & attributes
 
@@ -90,7 +115,7 @@ All color properties can be Hex, 8-digit Hex, RGB, RGBA HSL, HSLA, HSV, HSVA, or
 |     Property      |     Attribute      |                  Type                   |                                                                                         Default                                                                                          | Description                                                                                                                  |
 |:-----------------:|:------------------:|:---------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------|
 |   `varsPrefix`    |         -          |   <code>string &#124; string[]</code>   |                                                                                       `micro-lc`                                                                                         | Prefix to apply to the generated set of variables. If more thant one is specified, a set for each prefix will be generated.  |
-|      `nodes`      |         -          | <code><a href="#Nodes">Nodes</a></code> |                                                                                           `{}`                                                                                           | CSS class definitions rendered in a key-value map where key is the CSS selector and value is CSS styling rules.              |
+|      `nodes`      |         -          | <code><a href="#nodes">Nodes</a></code> |                                                                                           `{}`                                                                                           | CSS class definitions rendered in a key-value map where key is the CSS selector and value is CSS styling rules.              |
 |  `primaryColor`   |  `primary-color`   |          <code>string</code>            |                                                                                        `#1890FF`                                                                                         | Ant Design primary color.                                                                                                    |
 |    `infoColor`    |    `info-color`    |           <code>string</code>           |                                                                                        `#1890FF`                                                                                         | Ant Design info color.                                                                                                       |
 |  `successColor`   |  `success-color`   |           <code>string</code>           |                                                                                        `#52C41A`                                                                                         | Ant Design success color.                                                                                                    |
@@ -99,9 +124,7 @@ All color properties can be Hex, 8-digit Hex, RGB, RGBA HSL, HSLA, HSV, HSVA, or
 |  `warningColor`   |  `warning-color`   |           <code>string</code>           |                                                                                        `#FAAD14`                                                                                         | Ant Design warning color.                                                                                                    |
 |   `fontFamily`    |   `font-family`    |           <code>string</code>           | `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',  Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'` | Font family CSS property.                                                                                                    |
 
-### Types {#types}
-
-#### `Nodes` {#Nodes}
+<h3 id="nodes"><code>Nodes</code></h3>
 
 ```ts
 interface Nodes {

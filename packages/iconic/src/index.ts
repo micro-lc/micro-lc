@@ -1,2 +1,2 @@
-import './mlc-iconic'
+export * from './import-icon'
 export * from './useIcon'

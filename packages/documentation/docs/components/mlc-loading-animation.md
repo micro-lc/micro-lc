@@ -6,7 +6,18 @@ sidebar_position: 20
 
 Web-component to display a loading animation until one of its children has finished loading.
 
-## Usage
+```mdx-code-block
+<></>
+<example-frame
+  base="../../frames/components/mlc-loading-animation"
+  height="550px"
+  showSource={false}
+  src={"/overview.html"}
+  title="Overview"
+></example-frame>
+```
+
+## How it works
 
 The web-component works by hiding its children with a spinning animation until one of them declares its readiness.
 
@@ -14,29 +25,26 @@ Practically speaking, the component injects a method called `onload` into each o
 their display style to `none`. When the `onload` method of one of these children is invoked, the component resets the
 original display style of the children and hides itself.
 
-In most use cases, this component is used as a wrapper of `micro-lc` itself, which will call `onload` when
-its update lifecycle has ended upon connection and first render.
+In most use cases, this component is used as a wrapper of `micro-lc` itself, which will call `onload` when its update 
+lifecycle has ended upon connection and first render.
+
+## Usage
+
+To use the component in micro-lc wrap the `micro-lc` element tag in the HTML definition.
 
 ```html title=index.html
-<mlc-loading-animation primary-color="#25b864">
-  <micro-lc config-src="./config.json"></micro-lc>
-</mlc-loading-animation>
+<!doctype html>
+<html lang="en">
+<head>
+  <script async type="module" src="TODO"></script>
+  <script async type="module" src="TODO"></script>
+</head>
+<body>
+  <mlc-loading-animation primary-color="#25b864">
+    <micro-lc config-src="./config.json"></micro-lc>
+  </mlc-loading-animation>
+</body>
 ```
-
-### Example
-
-Let's take in consideration the following configuration.
-
-```html title=index.html
-<mlc-loading-animation primary-color="#25B864">
-    <div id="content" style="display: flex;">
-      Content
-    </div>
-</mlc-loading-animation>
-```
-
-At startup, the page will show the spinning animation and the div with id `content` will be hidden. As soon as someone
-calls the newly injected method `onload` of the div, the animation is hidden and the div shown.
 
 ## Properties & attributes
 

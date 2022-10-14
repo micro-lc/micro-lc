@@ -9,9 +9,10 @@ Web-component that provides a classic navigation layout for micro-lc application
 ```mdx-code-block
 <></>
 <example-frame
+  base="../../frames/components/mlc-layout/overview"
   height="550px"
   showSource={false}
-  src={"../../frames/components/mlc-layout/overview/index.html"}
+  src={"/index.html"}
   title="Overview"
 ></example-frame>
 ```
@@ -24,7 +25,7 @@ This component is intended to be used inside micro-lc, since it makes extensive 
 You can technically use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
 :::
 
-To use the component in micro-lc, just declare it as part of the application layout with its
+To use the component in micro-lc, declare it as part of the application layout with its
 [properties and attributes](#properties-and-attributes).
 
 ```json5 title=micro-lc.config.json

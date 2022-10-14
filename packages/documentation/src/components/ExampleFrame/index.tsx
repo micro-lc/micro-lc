@@ -1,5 +1,6 @@
 import Details from '@docusaurus/theme-classic/lib/theme/Details'
 import BrowserWindow from '@site/src/components/BrowserWindow'
+import { SourceCodeBlock } from '@site/src/components/SourceCodeBlock'
 import type { SourceTabsProps } from '@site/src/components/SourceTabs'
 import { SourceTabs } from '@site/src/components/SourceTabs'
 import React, { useState } from 'react'
@@ -8,7 +9,7 @@ interface ExampleFrameProps {
   base?: string
   height?: string
   showSource: boolean
-  sourceTabs: SourceTabsProps['tabs']
+  sourceTabs?: SourceTabsProps['tabs']
   src: string
   title: string
 }
@@ -26,7 +27,6 @@ export function ExampleFrame({
   return (
     <>
       <BrowserWindow height={height}>
-
         {
           isLoading && (
             <div style={{
@@ -53,7 +53,11 @@ export function ExampleFrame({
       {
         showSource && (
           <Details {...{ summary: <summary>Source code</summary> }}>
-            <SourceTabs base={base} tabs={sourceTabs} />
+            {
+              sourceTabs
+                ? (<SourceTabs base={base} tabs={sourceTabs}/>)
+                : (<SourceCodeBlock base={base} filePath={src} />)
+            }
           </Details>
         )
       }

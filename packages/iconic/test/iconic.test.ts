@@ -1,12 +1,11 @@
 import { expect, waitUntil } from '@open-wc/testing'
-import { render, html } from 'lit-html'
 import React, { createElement, Suspense } from 'react'
 import type { Root } from 'react-dom/client'
 import { createRoot } from 'react-dom/client'
 
 import type { SVGProps } from '../src'
-import { useIcon } from '../src'
-import type { Library } from '../src/import-icon'
+import { index } from '../src'
+import type { Library } from '../src/import-icon/import-icon'
 
 interface Props extends SVGProps {
   library: Library
@@ -15,7 +14,7 @@ interface Props extends SVGProps {
 }
 
 function App({ selector, library, src, ref: _, ...props }: Props) {
-  const Icon = useIcon(
+  const Icon = index(
     selector,
     src ? { library, src } : library,
     console.error
@@ -66,105 +65,6 @@ describe('iconic react tests', () => {
     expect(container.querySelector('svg')).to.have.property('textContent', '')
 
     root.unmount()
-    container.remove()
-  })
-})
-
-describe('iconic web-component tests', () => {
-  it('should render an antd icon', async () => {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-
-    render(html`
-      <mlc-iconic
-        selector="MessageOutlined"
-        library="@ant-design/icons-svg"
-      ></mlc-iconic>
-    `, container)
-
-    const mlciconic: HTMLElement & {
-      readonly updateComplete: boolean
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconic')!
-
-    await waitUntil(() => mlciconic.updateComplete)
-
-    expect(container.querySelector('svg')).to.have.attribute('viewBox')
-    expect(container.querySelector('path')).to.have.attribute('d')
-
-    container.remove()
-  })
-
-  it('should fail fetching an icon and keep the fallback', async () => {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-
-    render(html`
-      <mlc-iconic
-        selector="MessageOutlined_"
-        library="@ant-design/icons-svg"
-      ></mlc-iconic>
-    `, container)
-
-    const mlciconic: HTMLElement & {
-      readonly updateComplete: boolean
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconic')!
-
-    await waitUntil(() => mlciconic.updateComplete)
-
-    expect(container.querySelector('svg')).to.have.property('textContent', '')
-
-    container.remove()
-  })
-
-  it('should show a fontawesome solid icon', async () => {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-
-    render(html`
-      <mlc-iconic
-        selector="faTrash"
-        library="@fortawesome/free-solid-svg-icons"
-        src="/dist/fas/"
-      ></mlc-iconic>
-    `, container)
-
-    const mlciconic: HTMLElement & {
-      readonly updateComplete: boolean
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconic')!
-
-    await waitUntil(() => mlciconic.updateComplete)
-
-    expect(container.querySelector('svg')).to.have.attribute('viewBox')
-    expect(container.querySelector('path')).to.have.attribute('d')
-
-    container.remove()
-  })
-
-  it('should show a fontawesome regular icon', async () => {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-
-    render(html`
-      <mlc-iconic
-        selector="faAddressBook"
-        library="@fortawesome/free-regular-svg-icons"
-        src="/dist/far/"
-      ></mlc-iconic>
-    `, container)
-
-    const mlciconic: HTMLElement & {
-      readonly updateComplete: boolean
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    } = container.querySelector('mlc-iconic')!
-
-    await waitUntil(() => mlciconic.updateComplete)
-
-    expect(container.querySelector('svg')).to.have.attribute('viewBox')
-    expect(container.querySelector('path')).to.have.attribute('d')
-
     container.remove()
   })
 })

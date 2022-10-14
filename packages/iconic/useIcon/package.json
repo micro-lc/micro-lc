@@ -1,0 +1,5 @@
+{
+  "name": "@micro-lc/iconic/useIcon",
+  "module": "../dist/useIcon/index.js",
+  "types": "../dist/useIcon/index.d.ts"
+}

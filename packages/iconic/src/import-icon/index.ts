@@ -53,9 +53,7 @@ export function toArray<T>(input: T | T[]): T[] {
   return Array.isArray(input) ? input : [input]
 }
 
-export default async function importIcon(
-  selector: string, resource: ResourceObject
-): Promise<IconComponent> {
+export async function importIcon(selector: string, resource: ResourceObject): Promise<IconComponent> {
   const library = typeof resource === 'string' ? resource : resource.library
 
   if (!isResourceKey(library)) {
@@ -64,12 +62,11 @@ export default async function importIcon(
 
   const url = typeof resource === 'string' ? resources[library] : resource.src
   const uri = `${url.replace(/\/$/, '')}/${selector.replace(/^\//, '').replace(/\.js$/, '')}.js`
-  // SAFETY: library check is already enforced
 
+  // SAFETY: library check is already enforced
   switch (library) {
   case '@ant-design/icons-svg':
-    return import(uri)
-      .then(({ default: { icon } }: { default: AntdIconDefaultImport }) => icon)
+    return import(uri).then(({ default: { icon } }: { default: AntdIconDefaultImport }) => icon)
   case '@fortawesome/free-regular-svg-icons':
   case '@fortawesome/free-solid-svg-icons':
     return import(uri).then(({ default: { definition } }: FontAwesomeIconImport) => {

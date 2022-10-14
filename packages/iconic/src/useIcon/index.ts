@@ -10,8 +10,8 @@ import type {
   PropsWithoutRef,
 } from 'react'
 
-import importIcon, { toArray } from './import-icon'
-import type { ResourceObject, PathComponent, SvgComponent } from './import-icon'
+import { importIcon, toArray } from '../import-icon'
+import type { ResourceObject, PathComponent, SvgComponent } from '../import-icon'
 
 export type SVGProps = ReactSVGProps<HTMLElement>
 
@@ -23,7 +23,7 @@ function iconSvgCompose({ attrs, children = [] }: SvgComponent, { ref, ...props 
   return createElement('svg', { ...attrs, ...props, ref }, ...toArray(children).map((path, key) => iconPathCompose(path, { key })))
 }
 
-export function useIcon(
+export function index(
   selector: string, resource: ResourceObject, errorHandler?: (msg: string) => void
 ): LazyExoticComponent<ForwardRefExoticComponent<SVGProps & RefAttributes<HTMLElement>>> {
   const defaultReturnValue = { default: forwardRef((props: SVGProps, ref: ForwardedRef<HTMLElement>) => createElement('svg', { props, ref })) }

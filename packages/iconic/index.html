@@ -14,7 +14,6 @@
     import React, {createElement, Suspense} from 'react'
     import {createRoot} from 'react-dom/client'
     import {useIcon} from '/src/useIcon.ts'
-    import '/src/mlc-iconic.ts'
 
     function App() {
       const AntdIcon = useIcon('AccountBookFilled', '@ant-design/icons-svg', console.error)
@@ -43,9 +42,5 @@
 </head>
 <body style="width: 64px;">
   <div id="root"></div>
-  <mlc-iconic selector="RightOutlined" library="@ant-design/icons-svg"></mlc-iconic>
-  <mlc-iconic selector="VerticalRightOutlined" library="@ant-design/icons-svg"></mlc-iconic>
-  <mlc-iconic selector="PieChartOutlined" library="@ant-design/icons-svg"></mlc-iconic>
-  <mlc-iconic selector="faUser" library="@fortawesome/free-solid-svg-icons" src="/dist/fas"></mlc-iconic>
 </body>
 </html>
