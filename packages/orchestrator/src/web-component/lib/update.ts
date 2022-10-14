@@ -141,12 +141,12 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       entry = uri
       break
     }
-    this._loadedApps.set(name, [undefined, {
+    this.loadedApps.set(name, [undefined, {
       container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
       name,
     }])
-    this._applicationMapping.set(`${statusCode}-${window.crypto.randomUUID()}`, name)
+    this.applicationMapping.set(`${statusCode}-${window.crypto.randomUUID()}`, name)
   })
 
   const schema = await getApplicationSchema()
@@ -220,7 +220,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
         },
         config,
         injectBase,
-        microlcApi: this.getApi(),
+        microlcApi: this.getApi() as Partial<MicrolcApi<BaseExtension>>,
         schema,
         ...properties,
       },
@@ -228,9 +228,9 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
 
     return acc
   }, {
-    apps: this._loadedApps,
-    mapping: this._applicationMapping,
-    routes: this._loadedRoutes,
+    apps: this.loadedApps,
+    mapping: this.applicationMapping,
+    routes: this.loadedRoutes,
   })
 
   return Promise.resolve()

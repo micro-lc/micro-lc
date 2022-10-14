@@ -6,9 +6,16 @@ import type { LoadableApp } from 'qiankun'
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
 
-import type { MicrolcApi, ComposableApplicationProperties, BaseExtension } from './lib'
-import { MatchCache,
+import type {
+  MicrolcApi,
+  ComposableApplicationProperties,
+  BaseExtension,
+  RouterContainer,
+  QiankunApi } from './lib'
+import {
   rerouteToError,
+
+  MatchCache,
   createMicrolcApiInstance,
   createRouter,
   removeRouter,
@@ -19,8 +26,9 @@ import { MatchCache,
   initImportMapSupport,
   updateApplications,
   updateGlobalImportMap,
-  initBaseExtensions } from './lib'
-import { createQiankunInstance } from './lib/qiankun'
+  initBaseExtensions,
+  createQiankunInstance,
+} from './lib'
 
 type ObservedAttributes =
   | 'config-src'
@@ -36,7 +44,9 @@ const handleUpdateError = (_: TypeError): void => {
   console.error(_)
 }
 
-export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElement {
+export class Microlc<
+  E extends BaseExtension = BaseExtension
+> extends HTMLElement implements RouterContainer {
   static get observedAttributes() { return ['config-src', 'disable-shadow-dom'] }
 
   private _wasDisconnected = false
@@ -48,15 +58,12 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
   protected _config!: CompleteConfig
   protected _configSrc: string | null | undefined
   protected _disableShadowDom: boolean | undefined
+  protected _reroute = reroute.bind(this)
+  protected _rerouteToError = rerouteToError.bind(this)
+  protected _qiankun = createQiankunInstance()
 
   // queries
   protected _styleElements: HTMLStyleElement[] = []
-  protected _loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties<E>>]>()
-  protected _loadedRoutes = new Map<string, string>()
-  protected _applicationMapping = new Map<string, string>()
-  protected _matchCache = new MatchCache<E>()
-  protected _reroute = reroute.bind<(url?: string | undefined) => Promise<void>>(this)
-  protected _rerouteToError = rerouteToError.bind<(statusCode?: number) => Promise<void>>(this)
 
   // properties/attributes update
   protected _prepareForUpdate() {
@@ -137,7 +144,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
         .then((done) => {
           if (done) {
             // rerouting
-            this._matchCache.invalidateCache()
+            this.matchCache.invalidateCache()
             this._reroute().catch(rerouteErrorHandler)
 
             // signal webcomponent end of update
@@ -151,7 +158,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     })
   }
 
-  get config(): CompleteConfig | undefined {
+  get config(): CompleteConfig {
     return this._config
   }
 
@@ -187,9 +194,20 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     return this._$$updatesCount
   }
 
-  // 🐝 api
 
-  protected _qiankun = createQiankunInstance()
+  // 🚥 router
+  loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties>]>()
+  loadedRoutes = new Map<string, string>()
+  applicationMapping = new Map<string, string>()
+  matchCache = new MatchCache()
+  get qiankun(): QiankunApi {
+    return this._qiankun
+  }
+  get instance(): string {
+    return this._instance
+  }
+
+  // 🐝 api
   protected _extensions: E = initBaseExtensions.call<Microlc<E>, [], E>(this)
 
   getApi: () => MicrolcApi<E> = createMicrolcApiInstance
@@ -216,7 +234,7 @@ export class Microlc<E extends BaseExtension = BaseExtension> extends HTMLElemen
     this._shadowRoot = this.attachShadow({ mode: 'open' })
 
     // first update
-    this._handlePropertyChange('config', this.config ?? defaultConfig)
+    this._handlePropertyChange('config', (this.config as CompleteConfig | undefined) ?? defaultConfig)
     this._handlePropertyChange('disableShadowDom', this.disableShadowDom ?? false)
     this.configSrc !== undefined && this._handlePropertyChange('configSrc', this.configSrc)
   }

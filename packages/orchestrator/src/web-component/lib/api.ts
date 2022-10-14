@@ -61,7 +61,7 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
       },
       goToApplication: async (_id: string, data?: unknown): Promise<void> => {
         if (!(_id in this._config.applications)) {
-          return this._rerouteToError(404)
+          return this._rerouteToError(404).then(() => { /* noop */ })
         }
 
         const { [_id]: app } = this._config.applications
@@ -69,7 +69,7 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
         return Promise.resolve()
       },
       goToErrorPage: async (statusCode?: number): Promise<void> => {
-        return this._rerouteToError(statusCode)
+        return this._rerouteToError(statusCode).then(() => { /* noop */ })
       },
       open: (url?: string | URL | undefined, target?: string | undefined, features?: string | undefined) =>
         window.open(url, target, features),

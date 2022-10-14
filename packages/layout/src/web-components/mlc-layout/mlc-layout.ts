@@ -79,7 +79,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
     retrieveUser.call(this).catch(error)
 
     this._currentApplicationSub = this.microlcApi?.currentApplication$
-      ?.subscribe(currApplicationId => { if (currApplicationId) { this._selectedKeys = [currApplicationId] } })
+      ?.subscribe(currApplicationId => { this._selectedKeys = currApplicationId ? [currApplicationId] : [] })
 
     this._sideBarCollapsed = getFromLocalStorage('@microlc:fixedSidebarState') === 'collapsed'
     this._theme = getFromLocalStorage('@microlc:currentTheme') ?? Theme.LIGHT

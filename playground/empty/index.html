@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/playground/empty/" target="_blank" />
+  <title>micro-lc :: backoffice</title>
+  <link rel="icon" href="/packages/orchestrator/dist/favicon.png" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https: http:;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: data:;
+    connect-src 'self' data:
+      http://localhost:8003/
+      https://micro-lc.io/
+      https://cdn.jsdelivr.net/npm/
+      https://esm.sh/;
+    object-src 'none';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: https: http:;
+    font-src 'self';
+    worker-src 'self' blob:;
+  "/>
+  <style>
+    html, body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+  <script async type="module" src="/packages/orchestrator/dist/micro-lc.development.js"></script>
+</head>
+<body>
+  <micro-lc config-src="./config.json"></micro-lc>
+</body>
+</html>

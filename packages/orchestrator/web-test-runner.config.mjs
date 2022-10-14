@@ -4,6 +4,7 @@ import rollupAlias from '@rollup/plugin-alias'
 import rollupJson from '@rollup/plugin-json'
 import rollupReplace from '@rollup/plugin-replace'
 import { esbuildPlugin } from '@web/dev-server-esbuild'
+import { importMapsPlugin } from '@web/dev-server-import-maps'
 import { fromRollup } from '@web/dev-server-rollup'
 import { playwrightLauncher } from '@web/test-runner-playwright'
 
@@ -40,15 +41,14 @@ export default {
       name: 'chromium-firefox',
     },
   ],
-  injectWebSocket: false,
   middleware: [
     function rewriteIndex(ctx, next) {
-      if (ctx.url === '/composer.test.js') {
+      if (['/composer.test.js', '/app.js'].includes(ctx.url)) {
         ctx.url = `/mocks${ctx.url}`
       } else if (ctx.url.match(/\/[45]\d{2}.html/)) {
         ctx.url = `/mocks/4xx.html`
       } else {
-        const directPaths = /^\/(\?wtr|dist|.dev|src|__|node_modules|wds|test)/
+        const directPaths = /^\/(\?wtr|dist|.dev|src|__|node_modules|wds|test|mocks)/
         if (!ctx.url.match(directPaths)) {
           ctx.url = '/'
         }
@@ -82,6 +82,15 @@ export default {
     esbuildPlugin({
       target: 'es2020',
       ts: true,
+    }),
+    importMapsPlugin({
+      inject: {
+        importMap: {
+          imports: {
+            '/src/web-component/lib/handler': '/mocks/handler.js',
+          },
+        },
+      },
     }),
     json(),
     replace({
