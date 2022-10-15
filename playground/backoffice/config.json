@@ -5,10 +5,16 @@
     "defaultUrl": "./home",
     "composerUri": "/packages/composer/dist/composer.development.js",
     "4xx": {
-      "404": "/packages/orchestrator/dist/404.html"
+      "404": {
+        "integrationMode": "qiankun",
+        "entry": "/packages/orchestrator/dist/404.html"
+      }
     },
     "5xx": {
-      "500": "/packages/orchestrator/dist/500.html"
+      "500": {
+        "integrationMode": "qiankun",
+        "entry": "/packages/orchestrator/dist/500.html"
+      }
     }
   },
   "importmap": {
@@ -38,7 +44,7 @@
       {
         "tag": "mlc-antd-theme-manager",
         "attributes": {
-          "primary-color": "#25B864"
+          "primary-color": "#cd1c8c"
         },
         "properties": {
           "varsPrefix": ["micro-lc", "back-kit", "microlc"]

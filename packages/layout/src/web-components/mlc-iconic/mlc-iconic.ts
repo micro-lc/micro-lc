@@ -12,12 +12,22 @@ export class MlcIconic extends LitElement {
   @property({ attribute: 'library' }) library?: Library
   @property({ attribute: 'src' }) src?: string
 
-  @state() _icon = emptyIcon
+  @state() private _icon = emptyIcon
 
-  protected updated(changedProperties: PropertyValues) {
-    super.updated(changedProperties)
+  protected renderIcon = renderIcon.bind(this)
 
-    renderIcon.call(this).catch(error)
+  protected update(changedProperties: PropertyValues) {
+    super.update(changedProperties)
+
+    if (
+      changedProperties.has('selector')
+        || changedProperties.has('library')
+        || changedProperties.has('src')
+    ) {
+      this.renderIcon().then((template) => {
+        this._icon = template
+      }).catch(error)
+    }
   }
 
   protected createRenderRoot() {

@@ -25,14 +25,6 @@ export default {
       files: 'test/all/**/*.test.ts',
       name: 'browser',
     },
-    {
-      browsers: [
-        playwrightLauncher({ product: 'chromium' }),
-        playwrightLauncher({ product: 'firefox' }),
-      ],
-      files: 'test/chromium-firefox/**/*.test.ts',
-      name: 'browser',
-    },
   ],
   plugins: [
     esbuildPlugin({ target: ['es2020', 'safari11.1'], ts: true }),

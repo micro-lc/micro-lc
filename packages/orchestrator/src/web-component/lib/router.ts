@@ -291,7 +291,7 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
   // ⤵️ if we got here it means we must throw a 404 since no
   // suitable route was found at all
   if (!nextMatch) {
-    error = { message: RoutingErrorMessage.NOT_FOUND, status: 404 }
+    error = { message: RoutingErrorMessage.NOT_FOUND, reason: `Page ${url ?? window.location.pathname} cannot be found`, status: 404 }
     nextMatch = this.loadedApps.get(`${this.instance}-404`)?.[1]
   }
 
@@ -302,7 +302,7 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
   }
 
   return (nextMatch.name !== currentApplication)
-    ? flushAndGo.call(this, nextMatch, error)
+    ? flushAndGo.call(this, nextMatch, error).then(async (update) => { await update?.({ ...error }) })
     : Promise.resolve()
 }
 

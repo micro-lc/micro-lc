@@ -2,13 +2,6 @@ import type { Entry, FrameworkConfiguration } from 'qiankun'
 
 type TemplateResult = Parameters<Exclude<FrameworkConfiguration['postProcessTemplate'], undefined>>[0]
 
-interface PostProcessTemplateOptions {
-  baseURI?: string | undefined
-  injectBase?: boolean
-  name: string
-  routes: Map<string, string>
-}
-
 export enum RoutingErrorMessage {
   INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
   NOT_FOUND = 'NOT_FOUND',
@@ -42,22 +35,29 @@ export const microlcFetch = async (input: RequestInfo | URL, init?: RequestInit,
         : [res, undefined]
     })
 
+interface PostProcessTemplateOptions {
+  baseURI?: string | undefined
+  injectBase?: boolean
+  name: string
+  routes: Map<string, string>
+}
+
 export function postProcessTemplate(tplResult: TemplateResult, opts: PostProcessTemplateOptions): TemplateResult {
+  console.log(opts.injectBase, opts)
   if (opts.injectBase) {
-    const head = tplResult.template.match(/<head>(.+)<\/head>/)
-    if (head?.index) {
-      const { index } = head
-      const base = tplResult.template.match(/<base(.+)\/?>/)
-      if (base === null) {
-        const { pathname: route } = new URL(opts.routes.get(opts.name) ?? '', opts.baseURI)
-        const newBase = `<base href="${route}" target="_blank" />`
-        tplResult.template = `
-          ${tplResult.template.slice(0, index)}
-            <head>
-              ${newBase}
-          ${tplResult.template.slice(index + '<head>'.length)}
-        `
-      }
+    const parser = new DOMParser()
+    const document = parser.parseFromString(tplResult.template, 'text/html')
+    const head = document.querySelector('head')
+    const base = document.querySelector('base')
+    if (base === null) {
+      const { pathname: route } = new URL(opts.routes.get(opts.name) ?? '', opts.baseURI)
+      head?.appendChild(
+        Object.assign(document.createElement('base'), {
+          href: route,
+          target: '_blank',
+        })
+      )
+      tplResult.template = document.documentElement.outerHTML
     }
   }
   return tplResult

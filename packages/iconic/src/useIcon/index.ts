@@ -23,7 +23,7 @@ function iconSvgCompose({ attrs, children = [] }: SvgComponent, { ref, ...props 
   return createElement('svg', { ...attrs, ...props, ref }, ...toArray(children).map((path, key) => iconPathCompose(path, { key })))
 }
 
-export function index(
+export function useIcon(
   selector: string, resource: ResourceObject, errorHandler?: (msg: string) => void
 ): LazyExoticComponent<ForwardRefExoticComponent<SVGProps & RefAttributes<HTMLElement>>> {
   const defaultReturnValue = { default: forwardRef((props: SVGProps, ref: ForwardedRef<HTMLElement>) => createElement('svg', { props, ref })) }

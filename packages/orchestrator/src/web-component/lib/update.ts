@@ -127,31 +127,14 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     ...Object.entries(pages5xx),
   ]
 
-  errorPages.forEach(([statusCode, uri]) => {
-    const name = `${this._instance}-${statusCode}`
-    let entry: Entry
-    switch (uri.match(/\.([^.]+)$/)?.[0]) {
-    case 'js':
-      entry = { scripts: [uri] }
-      break
-    case 'html':
-      entry = { html: uri }
-      break
-    default:
-      entry = uri
-      break
-    }
-    this.loadedApps.set(name, [undefined, {
-      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
-      entry,
-      name,
-    }])
-    this.applicationMapping.set(`${statusCode}-${window.crypto.randomUUID()}`, name)
-  })
+  const pages = [
+    ...errorPages,
+    ...Object.entries(applications),
+  ]
 
   const schema = await getApplicationSchema()
 
-  Object.entries(applications).reduce((acc, [id, app]) => {
+  pages.reduce((acc, [id, app], idx) => {
     let injectBase: boolean | undefined = false
     let entry: Entry
     let config: string | PluginConfiguration | undefined
@@ -197,10 +180,17 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       break
     }
 
+    let idScopedByInstance = id
     const qiankunId = `${id}-${window.crypto.randomUUID()}`
-    acc.mapping.set(qiankunId, id)
-    acc.routes.set(qiankunId, app.route)
-    acc.apps.set(id, [app.route, {
+    if (idx < errorPages.length) {
+      idScopedByInstance = `${this._instance}-${id}`
+      acc.mapping.set(qiankunId, idScopedByInstance)
+    } else {
+      acc.mapping.set(qiankunId, idScopedByInstance)
+      app.route && acc.routes.set(qiankunId, app.route)
+    }
+
+    acc.apps.set(idScopedByInstance, [app.route, {
       container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
       name: qiankunId,

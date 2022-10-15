@@ -1,5 +1,5 @@
 import Icon, { DownOutlined } from '@ant-design/icons'
-import { useIcon } from '@micro-lc/iconic'
+import { useIcon } from '@micro-lc/iconic/useIcon'
 import type { MenuProps } from 'antd'
 import type { ReactNode } from 'react'
 import React, { createRef, Suspense } from 'react'

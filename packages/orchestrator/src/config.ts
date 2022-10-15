@@ -19,11 +19,20 @@ export const defaultConfig: CompleteConfig = {
   layout: { content: { tag: 'slot' } },
   settings: {
     '4xx': {
-      401: './401.html',
-      404: './404.html',
+      401: {
+        entry: './401.html',
+        integrationMode: 'qiankun',
+      },
+      404: {
+        entry: './404.html',
+        integrationMode: 'qiankun',
+      },
     },
     '5xx': {
-      500: './500.html',
+      500: {
+        entry: './500.html',
+        integrationMode: 'qiankun',
+      },
     },
     composerUri: `./composer.${process.env.NODE_ENV}.js`,
     defaultUrl: './',

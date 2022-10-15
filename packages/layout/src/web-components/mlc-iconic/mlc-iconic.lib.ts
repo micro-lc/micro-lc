@@ -1,5 +1,6 @@
 import type { IconComponent } from '@micro-lc/iconic'
 import { importIcon } from '@micro-lc/iconic/import-icon'
+import type { TemplateResult } from 'lit'
 import { html } from 'lit'
 import type { DirectiveResult } from 'lit/directive'
 import type { UnsafeHTMLDirective } from 'lit/directives/unsafe-html.js'
@@ -33,14 +34,14 @@ function iconCompose({ tag, attrs, children }: IconComponent, style?: CSSStyleDe
   `)
 }
 
-export async function renderIcon(this: MlcIconic) {
+export async function renderIcon(this: MlcIconic): Promise<TemplateResult<1>> {
   if (!this.selector || !this.library) {
-    this._icon = emptyIcon
-    return
+    return emptyIcon
   }
 
   const resource = this.src ? { library: this.library, src: this.src } : this.library
 
-  const iconComponent = await importIcon(this.selector, resource)
-  this._icon = html`${iconCompose(iconComponent, this.style)}`
+  return importIcon(this.selector, resource)
+    .then((iconComponent) => html`${iconCompose(iconComponent, this.style)}`)
+    .catch(() => emptyIcon)
 }

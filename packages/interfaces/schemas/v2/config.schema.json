@@ -11,25 +11,58 @@
         "4xx": {
           "type": "object",
           "default": {
-            "401": "./401.html",
-            "404": "./404.html"
+            "401": {
+              "entry": "./401.html",
+              "integrationMode": "qiankun"
+            },
+            "404": {
+              "entry": "./404.html",
+              "integrationMode": "qiankun"
+            }
           },
           "patternProperties": {
             "^4\\d{2}$": {
-              "type": "string",
-              "format": "uri-reference"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/iframeApplication",
+                  "required": ["integrationMode", "src"]
+                },
+                {
+                  "$ref": "#/definitions/composableApplication",
+                  "required": ["integrationMode", "config"]
+                },
+                {
+                  "$ref": "#/definitions/qiankunApplication",
+                  "required": ["integrationMode", "entry"]
+                }
+              ]
             }
           }
         },
         "5xx": {
           "type": "object",
           "default": {
-            "500": "./500.html"
+            "500": {
+              "entry": "./500.html",
+              "integrationMode": "qiankun"
+            }
           },
           "patternProperties": {
             "^5\\d{2}$": {
-              "type": "string",
-              "format": "uri-reference"
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/iframeApplication",
+                  "required": ["integrationMode", "src"]
+                },
+                {
+                  "$ref": "#/definitions/composableApplication",
+                  "required": ["integrationMode", "config"]
+                },
+                {
+                  "$ref": "#/definitions/qiankunApplication",
+                  "required": ["integrationMode", "entry"]
+                }
+              ]
             }
           }
         },
@@ -40,7 +73,10 @@
         },
         "mountPoint": {
           "$ref": "./plugin.schema.json#/definitions/content",
-          "default": {"tag": "div", "attributes": {"id": "__MICRO_LC_MOUNT_POINT"}}
+          "default": {
+            "tag": "div",
+            "attributes": { "id": "__MICRO_LC_MOUNT_POINT" }
+          }
         },
         "mountPointSelector": {
           "description": "Query selector to plugins mounting DOM element",
@@ -112,227 +148,237 @@
       },
       "additionalProperties": false
     },
+    "iframeApplication": {
+      "title": "IFrameApplication",
+      "type": "object",
+      "examples": [
+        {
+          "integrationMode": "iframe",
+          "src": "www.google.com",
+          "route": "/embedded-google-page",
+          "attributes": {
+            "allow": "fullscreen"
+          }
+        }
+      ],
+      "properties": {
+        "integrationMode": {
+          "description": "Type of the application: nested browsing context",
+          "const": "iframe"
+        },
+        "src": {
+          "description": "iFrame src attribute value",
+          "type": "string"
+        },
+        "route": {
+          "description": "Path on which the iFrame will be rendered",
+          "type": "string"
+        },
+        "attributes": {
+          "$comment": "TODO: should we list all possible properties?",
+          "description": "Valid attributes of iframe HTML element",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "composableApplication": {
+      "title": "ComposableApplication",
+      "type": "object",
+      "examples": [
+        {
+          "integrationMode": "compose",
+          "config": "./page-configuration.json",
+          "route": "/composed-page"
+        },
+        {
+          "integrationMode": "compose",
+          "config": {
+            "content": {
+              "tag": "div"
+            }
+          },
+          "route": "/composed-page"
+        }
+      ],
+      "properties": {
+        "integrationMode": {
+          "description": "Type of the application: composition of HTML tags",
+          "const": "compose"
+        },
+        "config": {
+          "oneOf": [
+            {
+              "$ref": "./plugin.schema.json#",
+              "description": "Composer configuration. It can be an url or an in-line configuration"
+            },
+            {
+              "type": "string",
+              "format": "uri-reference"
+            }
+          ]
+        },
+        "route": {
+          "description": "Path on which the plugin will be rendered",
+          "type": "string"
+        },
+        "version": {
+          "description": "element-composer version schema",
+          "type": "number",
+          "default": 2,
+          "enum": [1, 2]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "qiankunApplication": {
+      "title": "QiankunApplication",
+      "type": "object",
+      "examples": [
+        {
+          "integrationMode": "qiankun",
+          "route": "/qiankun-plugin",
+          "entry": "https://my-micro-frontend.com",
+          "properties": {
+            "foo": "bar"
+          }
+        }
+      ],
+      "properties": {
+        "integrationMode": {
+          "description": "Type of the application: micro front-end loaded using qiankun",
+          "const": "qiankun"
+        },
+        "entry": {
+          "$comment": "TODO: complete the description",
+          "description": "Entry of the plugin",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "scripts": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          },
+                          "minItems": 1
+                        }
+                      ]
+                    },
+                    "styles": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          }
+                        }
+                      ]
+                    },
+                    "html": {
+                      "type": "string",
+                      "format": "uri-reference"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["scripts"]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "scripts": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          }
+                        }
+                      ]
+                    },
+                    "styles": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          }
+                        }
+                      ]
+                    },
+                    "html": {
+                      "type": "string",
+                      "format": "uri-reference"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["html"]
+                }
+              ]
+            }
+          ]
+        },
+        "route": {
+          "description": "qiankun activeRule",
+          "type": "string"
+        },
+        "container": {
+          "$comment": "TODO: do we need this?"
+        },
+        "properties": {
+          "description": "Data passed to the plugin",
+          "type": "object"
+        },
+        "injectBase": {
+          "description": "Whether to inject a base tag according to the application given route. Can be used when an hash router is not available",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
 
     "application": {
       "title": "Application",
       "oneOf": [
         {
-          "title": "IFrameApplication",
-          "type": "object",
-          "examples": [
-            {
-              "integrationMode": "iframe",
-              "src": "www.google.com",
-              "route": "/embedded-google-page",
-              "attributes": {
-                "allow": "fullscreen"
-              }
-            }
-          ],
-          "properties": {
-            "integrationMode": {
-              "description": "Type of the application: nested browsing context",
-              "const": "iframe"
-            },
-            "src": {
-              "description": "iFrame src attribute value",
-              "type": "string"
-            },
-            "route": {
-              "description": "Path on which the iFrame will be rendered",
-              "type": "string"
-            },
-            "attributes": {
-              "$comment": "TODO: should we list all possible properties?",
-              "description": "Valid attributes of iframe HTML element",
-              "type": "object"
-            }
-          },
-          "additionalProperties": false,
+          "$ref": "#/definitions/iframeApplication",
           "required": ["integrationMode", "src", "route"]
         },
         {
-          "title": "ComposableApplication",
-          "type": "object",
-          "examples": [
-            {
-              "integrationMode": "compose",
-              "config": "./page-configuration.json",
-              "route": "/composed-page"
-            },
-            {
-              "integrationMode": "compose",
-              "config": {
-                "content": {
-                  "tag": "div"
-                }
-              },
-              "route": "/composed-page"
-            }
-          ],
-          "properties": {
-            "integrationMode": {
-              "description": "Type of the application: composition of HTML tags",
-              "const": "compose"
-            },
-            "config": {
-              "oneOf": [
-                {
-                  "$ref": "./plugin.schema.json#",
-                  "description": "Composer configuration. It can be an url or an in-line configuration"
-                },
-                {
-                  "type": "string",
-                  "format": "uri-reference"
-                }
-              ]
-            },
-            "route": {
-              "description": "Path on which the plugin will be rendered",
-              "type": "string"
-            },
-            "version": {
-              "description": "element-composer version schema",
-              "type": "number",
-              "default": 2,
-              "enum": [1, 2]
-            }
-          },
-          "additionalProperties": false,
+          "$ref": "#/definitions/composableApplication",
           "required": ["integrationMode", "config", "route"]
         },
         {
-          "title": "QiankunApplication",
-          "type": "object",
-          "examples": [
-            {
-              "integrationMode": "qiankun",
-              "route": "/qiankun-plugin",
-              "entry": "https://my-micro-frontend.com",
-              "properties": {
-                "foo": "bar"
-              }
-            }
-          ],
-          "properties": {
-            "integrationMode": {
-              "description": "Type of the application: micro front-end loaded using qiankun",
-              "const": "qiankun"
-            },
-            "entry": {
-              "$comment": "TODO: complete the description",
-              "description": "Entry of the plugin",
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "oneOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "scripts": {
-                          "oneOf": [
-                            {
-                              "type": "string",
-                              "format": "uri-reference"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uri-reference"
-                              },
-                              "minItems": 1
-                            }
-                          ]
-                        },
-                        "styles": {
-                          "oneOf": [
-                            {
-                              "type": "string",
-                              "format": "uri-reference"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uri-reference"
-                              }
-                            }
-                          ]
-                        },
-                        "html": {
-                          "type": "string",
-                          "format": "uri-reference"
-                        }
-                      },
-                      "additionalProperties": false,
-                      "required": ["scripts"]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "scripts": {
-                          "oneOf": [
-                            {
-                              "type": "string",
-                              "format": "uri-reference"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uri-reference"
-                              }
-                            }
-                          ]
-                        },
-                        "styles": {
-                          "oneOf": [
-                            {
-                              "type": "string",
-                              "format": "uri-reference"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "format": "uri-reference"
-                              }
-                            }
-                          ]
-                        },
-                        "html": {
-                          "type": "string",
-                          "format": "uri-reference"
-                        }
-                      },
-                      "additionalProperties": false,
-                      "required": ["html"]
-                    }
-                  ]
-                }
-              ]
-            },
-            "route": {
-              "description": "qiankun activeRule",
-              "type": "string"
-            },
-            "container": {
-              "$comment": "TODO: do we need this?"
-            },
-            "properties": {
-              "description": "Data passed to the plugin",
-              "type": "object"
-            },
-            "injectBase": {
-              "description": "Whether to inject a base tag according to the application given route. Can be used when an hash router is not available",
-              "type": "boolean",
-              "default": false
-            }
-          },
-          "additionalProperties": false,
+          "$ref": "#/definitions/qiankunApplication",
           "required": ["integrationMode", "entry", "route"]
         }
       ]

@@ -4,8 +4,8 @@ import type { Root } from 'react-dom/client'
 import { createRoot } from 'react-dom/client'
 
 import type { SVGProps } from '../src'
-import { index } from '../src'
-import type { Library } from '../src/import-icon/import-icon'
+import { useIcon } from '../src'
+import type { Library } from '../src/import-icon'
 
 interface Props extends SVGProps {
   library: Library
@@ -14,7 +14,7 @@ interface Props extends SVGProps {
 }
 
 function App({ selector, library, src, ref: _, ...props }: Props) {
-  const Icon = index(
+  const Icon = useIcon(
     selector,
     src ? { library, src } : library,
     console.error
