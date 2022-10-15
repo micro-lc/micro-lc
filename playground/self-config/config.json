@@ -5,11 +5,20 @@
     "defaultUrl": "./",
     "composerUri": "/packages/orchestrator/dist/composer.development.js",
     "4xx": {
-      "404": "/packages/orchestrator/dist/404.html",
-      "401": "/packages/orchestrator/dist/401.html"
+      "401": {
+        "entry": "/packages/orchestrator/dist/401.html",
+        "integrationMode": "parcel"
+      },
+      "404": {
+        "entry": "/packages/orchestrator/dist/404.html",
+        "integrationMode": "parcel"
+      }
     },
     "5xx": {
-      "500": "/packages/orchestrator/dist/500.html"
+      "500": {
+        "entry": "/packages/orchestrator/dist/500.html",
+        "integrationMode": "parcel"
+      }
     }
   },
   "layout": {

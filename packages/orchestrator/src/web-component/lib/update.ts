@@ -1,5 +1,5 @@
 import type { ResolvedConfig } from '@micro-lc/composer'
-import { createComposerContext, premount } from '@micro-lc/composer'
+import { createComposerContext } from '@micro-lc/composer'
 import type { Config, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
 
@@ -86,7 +86,7 @@ interface ComposerApi {
 }
 
 export interface ComposableApplicationProperties<T extends BaseExtension = BaseExtension> {
-  composerApi: ComposerApi
+  composerApi: Partial<ComposerApi>
   config: string | PluginConfiguration | undefined
   injectBase: boolean | undefined
   microlcApi: Partial<MicrolcApi<T>>
@@ -161,14 +161,11 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
             content: 'Your browser does not support iframes',
             tag: 'p',
           },
-          properties: {
-            onload: 'onload',
-          },
           tag: 'iframe',
         },
       }
       break
-    case 'qiankun':
+    case 'parcel':
     default:
       injectBase = app.injectBase
       entry = typeof app.entry === 'string' ? app.entry : {
@@ -181,32 +178,32 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     }
 
     let idScopedByInstance = id
-    const qiankunId = `${id}-${window.crypto.randomUUID()}`
+    const name = `${id}-${window.crypto.randomUUID()}`
     if (idx < errorPages.length) {
       idScopedByInstance = `${this._instance}-${id}`
-      acc.mapping.set(qiankunId, idScopedByInstance)
+      acc.mapping.set(name, idScopedByInstance)
     } else {
-      acc.mapping.set(qiankunId, idScopedByInstance)
-      app.route && acc.routes.set(qiankunId, app.route)
+      acc.mapping.set(name, idScopedByInstance)
+      app.route && acc.routes.set(name, app.route)
     }
 
     acc.apps.set(idScopedByInstance, [app.route, {
       container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
       entry,
-      name: qiankunId,
+      name,
       props: {
         composerApi: {
           createComposerContext: app.integrationMode !== 'iframe'
-            ? createComposerContext.bind(this)
-            : (content) => createComposerContext.call(this, content, {
+            ? createComposerContext
+            : (content, opts) => createComposerContext(content, {
               context: {
+                ...opts?.context,
                 onload() {
                   /** noop */
                 },
               },
-              extraProperties: ['onload'],
+              extraProperties: [...(opts?.extraProperties ?? []), 'onload'],
             }),
-          premount,
         },
         config,
         injectBase,

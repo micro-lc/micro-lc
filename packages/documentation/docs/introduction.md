@@ -4,22 +4,40 @@ sidebar_label: Introduction
 sidebar_position: 10
 ---
 
-micro-lc is an open source micro-frontend orchestrator. 
+<span style={{color: '#ef0088', fontWeight: 600}}>micro</span><span style={{color: '#214449', fontWeight: 300}}>-lc </span>
+is an open source micro-frontend orchestrator.
 
-Orchestration happens at run-time, meaning a JSON configuration is all micro-lc needs to add a new micro-frontend to the
-application.
+It brings together three different micro-frontend patterns inside the same application:
 
-It provides a smooth navigation/routing experience between different applications, SPAs, and iFrames while wrapping
+- iframes,
+- parcels, and
+- shadowed components
+
+An `iframe` refers to the practice of embedding external websites into our application/website.
+A `parcel` instead is a fully-fledged (possibly single-page) application which lives within the context of the main application but
+is JS-sandboxed and routed by a browser router (History API) or hash router.
+Finally `shadowed components` refer to business logic encapsulation via webcomponents which allows to protect from style leaks and to scope events
+using HTML5 elements shadow DOM.
+
+Orchestration happens at run-time, meaning that a JSON configuration is all micro-lc needs to add a new micro-frontend application.
+Configurations can be hot-swapped or edited at run time, meaning a page refresh is enough to preview your application after
+config changes.
+
+<span style={{color: '#ef0088', fontWeight: 600}}>micro</span><span style={{color: '#214449', fontWeight: 300}}>-lc </span>
+provides a smooth navigation/routing experience between different applications, SPAs, and iframes while wrapping
 them in a static layout.
 
-It ships as a CDN bundle that can be embedded in your HTML pages or other scripts.
+It ships as a:
+
+- **cdn bundle** that can be embedded in your HTML pages or other scripts,
+- `docker` **container** that can be configured by mounting volumes,
+- `docker-compose` **configuration** to orchestrate other micro-services (e.g., BFFs, middleware, ...)
 
 It aims to be as lightweight as possible and improve web security.
 
-micro-lc is heavily inspired by and based on micro-frontend orchestration tools such as SPA and Qiankun.
+<span style={{color: '#ef0088', fontWeight: 600}}>micro</span><span style={{color: '#214449', fontWeight: 300}}>-lc </span>
+is heavily inspired by and based on micro-frontend orchestration tools such as SPA and Qiankun.
 
-Configuration can be hot-swapped or edited at run time, meaning a page refresh is enough to preview your application after
-config changes.
 
 > **Marketing**
 > 
@@ -47,15 +65,17 @@ Compared to other tools, micro-lc provides:
 
 ## Building blocks
 
-micro-lc is a web-component meant to be embedded in your web page. Within its context, it splits the viewport in two parts:
-layout and content.
+<span style={{color: '#ef0088', fontWeight: 600}}>micro</span><span style={{color: '#214449', fontWeight: 300}}>-lc </span>
+is a web-component meant to be embedded in your web page. Within its context (i.e., its real and shadow DOMs),
+it splits the viewport in two parts: layout and content.
 
 Layout does not depend on the current window history state (i.e., it does not refresh on URL changes), while content does.
 
-Specifically, micro-lc embeds a SPA-like DOM router to respond to useragent-driven URL changes mounting the content selected
-according to your configuration.
+Specifically, micro-lc embeds a SPA-like DOM router to respond to useragent-driven URL changes. The typical response is mounting the content selected
+according to your configuration. Another scenario might be mounting error pages to signal the user that something went wrong or a suitable
+application was not found for the given URL.
 
-Due to the fact that the layout is fully customizable, micro-lc is well suited to build any type of web application
+Since the layout is fully customizable, micro-lc is well suited to build any type of web application
 like classical top-bar/side-bar multi-pages websites, CMSs, blogs, or even applications with no layout at all.
 
 This dual nature of micro-lc content is reflected on its configuration since there is no overlap between layout and

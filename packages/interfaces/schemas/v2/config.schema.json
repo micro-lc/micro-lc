@@ -13,11 +13,11 @@
           "default": {
             "401": {
               "entry": "./401.html",
-              "integrationMode": "qiankun"
+              "integrationMode": "parcel"
             },
             "404": {
               "entry": "./404.html",
-              "integrationMode": "qiankun"
+              "integrationMode": "parcel"
             }
           },
           "patternProperties": {
@@ -32,7 +32,7 @@
                   "required": ["integrationMode", "config"]
                 },
                 {
-                  "$ref": "#/definitions/qiankunApplication",
+                  "$ref": "#/definitions/parcelApplication",
                   "required": ["integrationMode", "entry"]
                 }
               ]
@@ -44,7 +44,7 @@
           "default": {
             "500": {
               "entry": "./500.html",
-              "integrationMode": "qiankun"
+              "integrationMode": "parcel"
             }
           },
           "patternProperties": {
@@ -59,7 +59,7 @@
                   "required": ["integrationMode", "config"]
                 },
                 {
-                  "$ref": "#/definitions/qiankunApplication",
+                  "$ref": "#/definitions/parcelApplication",
                   "required": ["integrationMode", "entry"]
                 }
               ]
@@ -232,13 +232,13 @@
       "additionalProperties": false
     },
 
-    "qiankunApplication": {
-      "title": "QiankunApplication",
+    "parcelApplication": {
+      "title": "ParcelApplication",
       "type": "object",
       "examples": [
         {
-          "integrationMode": "qiankun",
-          "route": "/qiankun-plugin",
+          "integrationMode": "parcel",
+          "route": "/parcel-plugin",
           "entry": "https://my-micro-frontend.com",
           "properties": {
             "foo": "bar"
@@ -247,8 +247,8 @@
       ],
       "properties": {
         "integrationMode": {
-          "description": "Type of the application: micro front-end loaded using qiankun",
-          "const": "qiankun"
+          "description": "Type of the application: micro front-end loaded using parcels",
+          "const": "parcel"
         },
         "entry": {
           "$comment": "TODO: complete the description",
@@ -347,7 +347,7 @@
           ]
         },
         "route": {
-          "description": "qiankun activeRule",
+          "description": "parcel activeRule",
           "type": "string"
         },
         "container": {
@@ -378,7 +378,7 @@
           "required": ["integrationMode", "config", "route"]
         },
         {
-          "$ref": "#/definitions/qiankunApplication",
+          "$ref": "#/definitions/parcelApplication",
           "required": ["integrationMode", "entry", "route"]
         }
       ]

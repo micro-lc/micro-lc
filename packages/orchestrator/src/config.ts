@@ -21,17 +21,17 @@ export const defaultConfig: CompleteConfig = {
     '4xx': {
       401: {
         entry: './401.html',
-        integrationMode: 'qiankun',
+        integrationMode: 'parcel',
       },
       404: {
         entry: './404.html',
-        integrationMode: 'qiankun',
+        integrationMode: 'parcel',
       },
     },
     '5xx': {
       500: {
         entry: './500.html',
-        integrationMode: 'qiankun',
+        integrationMode: 'parcel',
       },
     },
     composerUri: `./composer.${process.env.NODE_ENV}.js`,

@@ -7,7 +7,7 @@ import type { SchemaObject } from 'ajv'
 import type { Observable } from 'rxjs'
 import { BehaviorSubject, ReplaySubject } from 'rxjs'
 
-import { createComposerContext, fetcher, premount } from './lib'
+import { premount, createComposerContext, fetcher } from './lib'
 import type { V1Content } from './v1adapter'
 import { v1Adapter, v1AddSources } from './v1adapter'
 
@@ -35,7 +35,13 @@ interface MicrolcApi extends Observable<EventWithUser> {
   }
 }
 
+interface ComposerApi {
+  createComposerContext: typeof createComposerContext
+  premount: typeof premount
+}
+
 interface BootstapProps {
+  composerApi?: Partial<ComposerApi>
   config: string | PluginConfiguration | undefined
   microlcApi?: Partial<MicrolcApi>
   name: string
@@ -44,6 +50,7 @@ interface BootstapProps {
 }
 
 interface MountProps {
+  composerApi?: Partial<ComposerApi>
   container: HTMLElement
   microlcApi?: Partial<MicrolcApi>
   name: string
@@ -159,6 +166,7 @@ const logger = (name: string, ...args: string[]) => {
 
 export async function bootstrap({
   name,
+  composerApi,
   config,
   microlcApi,
   schema,
@@ -198,7 +206,8 @@ export async function bootstrap({
   }
 
   if (resolvedConfig) {
-    await premount(resolvedConfig as PluginConfiguration)
+    const premountFn = composerApi?.premount ?? premount
+    await premountFn(resolvedConfig as PluginConfiguration)
       .then((conf) => { composerConfig.set(name, conf) })
   }
 
@@ -209,6 +218,7 @@ export async function bootstrap({
 export async function mount(
   {
     name,
+    composerApi,
     microlcApi,
     container,
   }: MountProps
@@ -221,10 +231,12 @@ export async function mount(
   const observer = new BehaviorSubject<EventWithUser>({})
   const { subscribe = observer.subscribe.bind(observer) } = microlcApi ?? {}
 
+  const composer = composerApi?.createComposerContext ?? createComposerContext
+
   subscribe(({ user }) => {
     const config = composerConfig.get(name)
     if (config) {
-      done = render(createComposerContext, config, container, {
+      done = render(composer, config, container, {
         currentUser: user,
       }).catch(console.error)
     }

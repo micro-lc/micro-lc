@@ -6,13 +6,13 @@
     "composerUri": "/packages/composer/dist/composer.development.js",
     "4xx": {
       "404": {
-        "integrationMode": "qiankun",
+        "integrationMode": "parcel",
         "entry": "/packages/orchestrator/dist/404.html"
       }
     },
     "5xx": {
       "500": {
-        "integrationMode": "qiankun",
+        "integrationMode": "parcel",
         "entry": "/packages/orchestrator/dist/500.html"
       }
     }
@@ -136,7 +136,7 @@
       "src": "https://wikipedia.org"
     },
     "react": {
-      "integrationMode": "qiankun",
+      "integrationMode": "parcel",
       "injectBase": true,
       "route": "./react/",
       "entry": "http://localhost:8003/"
@@ -160,7 +160,7 @@
       "config": "./ingredients_v2.json"
     },
     "composer_old": {
-      "integrationMode": "qiankun",
+      "integrationMode": "parcel",
       "entry": "/element-composer/",
       "route": "./ingredients_old",
       "properties": {
