@@ -14,9 +14,7 @@ import type { Microlc } from '../micro-lc'
 import type { MicrolcApi } from './api'
 import type { BaseExtension } from './extensions'
 
-const defaultInitOptions: ESMSInitOptions = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
+const defaultInitOptions: Partial<ESMSInitOptions> = {
   mapOverrides: true,
   shimMode: true,
 }
