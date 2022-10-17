@@ -3,10 +3,7 @@
   "version": 2,
   "settings": {
     "defaultUrl": "./orders",
-    "composerUri": "http://localhost:8000/packages/composer/dist/composer.production.js",
-    "4xx": {
-      "404": "http://localhost:8000/packages/orchestrator/dist/404.html"
-    }
+    "composerUri": "http://localhost:8000/packages/composer/dist/composer.production.js"
   },
   "layout": {
     "sources": [
