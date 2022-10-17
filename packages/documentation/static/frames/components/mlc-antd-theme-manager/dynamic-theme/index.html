@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Default prefix</title>
+  <title>Dynamic theme</title>
 
   <style>
+    * {
+      font-family: var(--micro-lc-font-family);
+    }
+
     html, body {
       height: 100%;
       width: 100%;
@@ -19,9 +23,9 @@
       background: #e3e3e3;
       border-radius: 7px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-weight: bold;
       font-size: 24px;
     }
   </style>
@@ -31,5 +35,23 @@
 </head>
 <body>
   <micro-lc config-src="./config.json"></micro-lc>
+
+  <script>
+    let themeManager
+
+    setTimeout(() => {
+      const microLc = document.querySelector('micro-lc')
+
+      themeManager = microLc.shadowRoot.querySelector('mlc-antd-theme-manager')
+
+      // const primaryColorInput = microLc.shadowRoot.querySelector('#primary-color')
+      // primaryColorInput.addEventListener("input", event => setAttributeFromEvent(event, 'primary-color'))
+    }, 1000)
+
+    function setAttributeFromEvent(event, attribute) {
+      const value = event.target.value
+      themeManager.setAttribute(attribute, value)
+    }
+  </script>
 </body>
 </html>

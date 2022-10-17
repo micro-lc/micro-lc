@@ -4,7 +4,7 @@ sidebar_label: 🔧 mlc-loading-animation
 sidebar_position: 20
 ---
 
-Web-component to display a loading animation until one of its children has finished loading.
+Web component to display a loading animation until one of its children has finished loading.
 
 ```mdx-code-block
 <></>
@@ -19,7 +19,7 @@ Web-component to display a loading animation until one of its children has finis
 
 ## How it works
 
-The web-component works by hiding its children with a spinning animation until one of them declares its readiness.
+The web component works by hiding its children with a spinning animation until one of them declares its readiness.
 
 Practically speaking, the component injects a method called `onload` into each one of its children while hiding them setting
 their display style to `none`. When the `onload` method of one of these children is invoked, the component resets the

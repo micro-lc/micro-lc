@@ -4,7 +4,7 @@ sidebar_label: 🔧 mlc-layout
 sidebar_position: 10
 ---
 
-Web-component that provides a classic navigation layout for micro-lc applications.
+Web component that provides a classic navigation layout for micro-lc applications.
 
 ```mdx-code-block
 <></>

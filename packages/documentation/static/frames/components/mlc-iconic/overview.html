@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Overview</title>
+
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    #container {
+      width: calc(100% - 48px - 48px);
+      height: calc(100% - 48px - 48px);
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-container {
+      width: 32px;
+      height: 32px;
+      fill: #3a3a3a;
+    }
+  </style>
+
+  <script async type="module" src="http://localhost:8000/packages/layout/dist/mlc-iconic.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="icon-container">
+      <mlc-iconic library="@ant-design/icons-svg" selector="HomeOutlined"></mlc-iconic>
+    </div>
+
+    <div class="icon-container">
+      <mlc-iconic library="@ant-design/icons-svg" selector="SettingFilled"></mlc-iconic>
+    </div>
+
+    <div class="icon-container">
+      ???
+    </div>
+
+    <div class="icon-container">
+      ???
+    </div>
+  </div>
+</body>
+</html>

@@ -4,7 +4,7 @@ sidebar_label: 🔧 mlc-antd-theme-manager
 sidebar_position: 30
 ---
 
-Logical web-component that can be included in applications layout to inject an [Ant Design](https://ant.design/) compatible theme.
+Logical web component that can be included in applications layout to inject an [Ant Design](https://ant.design/) compatible theme.
 
 :::caution
 It only works on components using [Ant Design Dynamic Theme](https://ant.design/docs/react/customize-theme-variable).
@@ -25,10 +25,10 @@ It only works on components using [Ant Design Dynamic Theme](https://ant.design/
 
 :::tip
 `mlc-antd-theme-manager` should be used in conjunction with `postcss-ant-dynamic-theme` PosCSS plugin to enable your
-Ant Design projects to apply the theme created by the web-component.
+Ant Design projects to apply the theme created by the web component.
 :::
 
-The web-component calculated the CSS variables needed by [Ant Design Dynamic Theme](https://ant.design/docs/react/customize-theme-variable)
+The web component calculated the CSS variables needed by [Ant Design Dynamic Theme](https://ant.design/docs/react/customize-theme-variable)
 from a set of base colors (namely, primary, info, success, processing, error, and warning colors). These variables are 
 then injected globally through micro-lc `setStyle` API. 
 
@@ -100,11 +100,25 @@ To use the component in micro-lc, declare it as part of the application layout w
 
 ## Showcase
 
-### Default prefix
+### Dynamic theme
 
 ### Multiple prefixes
 
-### Nodes styling
+```mdx-code-block
+<></>
+<example-frame
+  base="../../frames/components/mlc-antd-theme-manager/multiple-prefixes"
+  height="550px"
+  sourceTabs={[
+    { filePath: "/index.html" },
+    { filePath: "/config.json", isDefault: true }
+  ]}
+  src="/index.html"
+  title="Multiple prefixes"
+></example-frame>
+```
+
+### Nodes styling (???)
 
 ## Properties & attributes
 

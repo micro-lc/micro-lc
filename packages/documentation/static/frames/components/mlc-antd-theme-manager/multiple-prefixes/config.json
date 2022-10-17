@@ -11,6 +11,10 @@
       {
         "tag": "mlc-antd-theme-manager",
         "properties": {
+          "varsPrefix": [
+            "custom-prefix",
+            "other-custom-prefix"
+          ],
           "primaryColor": "#25B864"
         }
       },
@@ -45,10 +49,24 @@
           {
             "tag": "div",
             "attributes": {
-              "class": "content",
-              "style": "color: var(--micro-lc-primary-color);"
+              "class": "content"
             },
-            "content": "var(--micro-lc-primary-color)"
+            "content": [
+              {
+                "tag": "div",
+                "attributes": {
+                  "style": "color: var(--custom-prefix-primary-color); margin-bottom: 16px"
+                },
+                "content": "var(--custom-prefix-primary-color)"
+              },
+              {
+                "tag": "div",
+                "attributes": {
+                  "style": "color: var(--other-custom-prefix-primary-color);"
+                },
+                "content": "var(--other-custom-prefix-primary-color)"
+              }
+            ]
           }
         ]
       }

@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../../../../interfaces/schemas/v2/config.schema.json",
+  "version": 2,
+  "settings": {
+    "defaultUrl": "./orders",
+    "composerUri": "http://localhost:8000/packages/composer/dist/composer.production.js"
+  },
+  "layout": {
+    "sources": "http://localhost:8000/packages/layout/dist/mlc-layout.js",
+    "content": [
+      {
+        "tag": "mlc-antd-theme-manager",
+        "properties": {
+          "nodes": {
+            "p": {
+              "font-weight": "bold",
+              "color": "red"
+            }
+          }
+        }
+      },
+      {
+        "tag": "mlc-layout",
+        "properties": {
+          "mode": "topBar",
+          "logo": {
+            "url": "https://avatars.githubusercontent.com/u/92730708?s=200&v=4"
+          },
+          "menuItems": [
+            {
+              "icon": {
+                "library": "@ant-design/icons-svg",
+                "selector": "ShoppingOutlined"
+              },
+              "id": "orders",
+              "label": "Orders",
+              "type": "application"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "applications": {
+    "orders": {
+      "integrationMode": "compose",
+      "route": "./orders",
+      "config": {
+        "content": [
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "content"
+            },
+            "content": {
+              "tag": "p",
+              "content": "Paragraphs are styled by theme manager"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

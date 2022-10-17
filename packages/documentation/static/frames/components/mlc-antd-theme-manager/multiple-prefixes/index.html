@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multiple prefixes</title>
+
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .content {
+      height: calc(100% - 16px);
+      width: calc(100% - 16px);
+      margin: 8px;
+      background: #e3e3e3;
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 24px;
+    }
+  </style>
+
+  <script async type="module" src="http://localhost:8000/packages/orchestrator/dist/micro-lc.production.js"></script>
+  <script async type="module" src="http://localhost:8000/packages/layout/dist/mlc-antd-theme-manager.js"></script>
+</head>
+<body>
+  <micro-lc config-src="./config.json"></micro-lc>
+</body>
+</html>
