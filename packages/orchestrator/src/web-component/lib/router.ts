@@ -118,6 +118,17 @@ export function rerouteErrorHandler(err: TypeError): null {
   return null
 }
 
+function getIFramePathname(win = window, baseURI: string): URL {
+  let completeHref = window.location.href
+  const { location: { origin, href } } = win
+  const iframePathname = href.match(new RegExp(origin))
+  if (iframePathname?.index !== undefined) {
+    completeHref = href.slice(iframePathname.index + origin.length)
+  }
+
+  return new URL(completeHref, baseURI)
+}
+
 function getNextMatchingRoute(
   this: RouterContainer, url?: string | undefined
 ): MatchingRouteReturnType {
@@ -135,7 +146,7 @@ function getNextMatchingRoute(
   const result = Array(3).fill(undefined) as MatchingRouteReturnType
   const counters = Array(3).fill(0) as [number, number, number]
 
-  const { pathname } = url ? new URL(url, baseURI) : window.location
+  const { pathname } = url ? new URL(url, baseURI) : getIFramePathname(window, baseURI)
 
   for (const [route, args] of this.loadedApps.values()) {
     if (route === undefined) {
