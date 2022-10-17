@@ -72,7 +72,9 @@ jobs:
       - name: Prebuild
         if: ${{ inputs.package != 'interfaces' && inputs.package != 'composer' }}
         run: yarn workspace @micro-lc/${{ inputs.package }} run prebuild
-      - run: yarn workspace @micro-lc/${{ inputs.package }} run coverage
+
+      - name: Tests
+        run: yarn workspace @micro-lc/${{ inputs.package }} run coverage
 
       - name: Collect coveralls coverage
         if: ${{ inputs.package != 'interfaces' }}
@@ -80,4 +82,4 @@ jobs:
         continue-on-error: true
         with:
           github-token: ${{ secrets.token }}
-          base-path: './packages/${{ inputs.package }}'
+          path-to-lcov: './packages/${{ inputs.package }}/coverage/lcov.info'
