@@ -32,6 +32,10 @@ const main = async () => {
   await startDevServer({
     config: {
       middleware: [
+        async function accessControl(ctx, next) {
+          ctx.set({ 'Access-Control-Allow-Origin': '*' })
+          return next()
+        },
         async function rewriteIndex(ctx, next) {
           const [oneOfThem, playgroundScope] = folders.reduce(([oneOtThem, prevFolder], folder) => {
             return [oneOtThem || ctx.url.includes(folder), ctx.url.includes(folder) ? folder : prevFolder]
