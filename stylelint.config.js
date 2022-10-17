@@ -17,6 +17,7 @@ module.exports = {
     'comment-empty-line-before': null,
     'declaration-empty-line-before': null,
     'function-name-case': 'lower',
+    'import-notation': null,
     'no-descending-specificity': null,
     'no-invalid-double-slash-comments': null,
     'no-invalid-position-at-import-rule': null,
