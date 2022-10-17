@@ -83,7 +83,7 @@ content composition.
 
 Still, means of communication are easily accessible by both layout and content while keeping them apart.
 
-:::
+:::caution
 Global state pattern is discouraged in favour of event-driven communication. Moreover, contexts can be shared between
 applications and sub-applications by using either declarative tools or forcing state refresh by updating properties (React-like).
 :::
