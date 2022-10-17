@@ -166,7 +166,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     case 'parcel':
     default:
       injectBase = app.injectBase
-      entry = typeof app.entry === 'string' ? app.entry : {
+      entry = typeof app.entry === 'string' ? { html: app.entry } : {
         html: app.entry.html,
         scripts: toArray(app.entry.scripts) as string[],
         styles: toArray(app.entry.styles ?? []),
