@@ -10,77 +10,194 @@ which needs to be supplied with the assets entry point.
 > A single-spa parcel is a framework-agnostic component. It is a chunk of functionality meant to be mounted manually by an
 > application, without having to worry about which framework was used to implement the parcel or application. A parcel can
 > be as large as an application or as small as a component and written in any language as long as it exports the correct
-> lifecycle events.
+> [lifecycle events](#lifecycle-methods).
 > 
 > — [single-spa documentation](https://single-spa.js.org/docs/parcels-overview/#parcel-lifecycles)
 
-An entry is an object with keys `html`, `scripts`, and `styles`. At least one between `html` and `scripts` is mandatory.
-By polymorphism, we allow entry to be a string which will be interpreted as an HTML asset entry.
+For what concerns micro-lc configuration, a parcel is an object with keys `html`, `scripts`, and `styles` (at least one
+between `html` and `scripts` is mandatory). By polymorphism, we allow entry to be a string which will be interpreted as
+an HTML asset entry.
 
 :::danger Important takeaway
-Up to now, only JavaScript **UMD scripts** can be used as application assets.
+Up to now, only JavaScript **UMD scripts** can be used as parcel application assets.
 :::
 
-Parcels use
-similar methodology as registered applications but are mounted by a manual function call rather than the activity function.
- In a single-spa world, your SPA contains many registered applications and potentially many
-parcels. Typically, we recommend you mount a parcel within the context of an application because the parcel will be
-unmounted with the application.
+```json
+{
+  "applications": {
+    "home": {
+      "route": "./home",
+      "integrationMode": "parcel",
+      "entry": "./home/index.html"
+    },
+    "orders": {
+      "route": "./orders",
+      "integrationMode": "parcel",
+      "entry": {
+        "scripts": "./orders/index.js",
+        "styles": "./orders/style.css"
+      }
+    },
+    "customers": {
+      "route": "./customers",
+      "integrationMode": "parcel",
+      "entry": {
+        "html": "./customers/index.html",
+        "styles": "./customers/style.css"
+      }
+    }
+  }
+}
+```
+
+We provide an extensive list of templates to build your own parcel application using your favourite framework:
+* [React](https://github.com/micro-lc/micro-lc-react-template)
+* ...
 
 ## Lifecycle methods
+
+A parcel application has to provide a standard set of lifecycle methods. Those methods must be located either in an
+inline script in the application HTML asset, or as UMD script export within one of the application scrip assets.
+
+The simplest form of a parcel application is shown in following example.
+
+```mdx-code-block
+<></>
+<source-tabs
+  base="../../../frames/guides/applications/parcels/lifecycle-methods"
+  tabs={[
+    { filePath: "/index.html" },
+    { filePath: "/config.json" }
+  ]}
+></source-tabs>
+```
+
+Lifecycle methods are:
+* [`bootstrap`](#bootstrap)
+* [`mount`](#mount)
+* [`unmount`](#unmount)
+* [`update`](#update)
+
+They all return `Promise<null>`. Update is not mandatory and is available only for [error pages](./error-pages.md#update-lifecycle).
+The others take as argument an object with the following interface.
+
+```typescript
+interface LifecycleProps {
+  name: string
+  container: HTMLElement
+  entry: {
+    html: string
+    scripts: string[]
+    styles: string[]
+  }
+  props: {
+    injectBase: boolean
+    microlcApi?: Partial<MicrolcApi>
+    [key: string]: unknown
+  }
+}
+```
+
+* `name` is the application unique identifier as per micro-lc configuration at "applications".
+* `container` is the application mount point which is provided by micro-lc configuration at "settings.mountPointSelector".
+* `entry` is the application assets object.
+* `props` is an object including application custom properties and micro-lc injected properties. See 
+[dedicated section](#properties) for a detailed description.
 
 ### Bootstrap
 
 This lifecycle function will be called once, right before the parcel is mounted for the first time.
 
-```js
-function bootstrap(props) {
-  return Promise.resolve().then(() => {
-    // This is where you do one-time initialization
-    console.log('bootstrapped!');
-  });
+```typescript
+function bootstrap(props: LifecycleProps): Promise<null> {
+  /* This is where you do one-time initialization */
 }
 ```
 
 ### Mount
 
-If the parcel is not mounted this lifecycle function is called when ever `mountParcel` is called. When called, this 
-function should create DOM elements, DOM event listeners, etc. to render content to the user.
+This lifecycle function is called when the router selects the parcel for rendering.
 
-```js
-function mount(props) {
-  return Promise.resolve().then(() => {
-    // This is where you tell a framework (e.g., React) to render some ui to the dom
-    console.log('mounted!');
-  });
+```typescript
+function mount(props: LifecycleProps): Promise<null> {
+  /* This is where you tell a framework (e.g., React) to render some UI to the DOM */
 }
 ```
 
 ### Unmount
 
-This lifecycle function will be called whenever the parcel is mounted and one of the following cases is true:
+When redirecting to another application, the parcel is unmounted.
 
-- `unmount()` is called
-- The parent parcel or application is unmounted
-
+:::tip
 When called, this function should clean up all DOM elements, DOM event listeners, leaked memory, globals, observable 
 subscriptions, etc. that were created at any point when the parcel was mounted.
+:::
 
-```js
-function unmount(props) {
-  return Promise.resolve().then(() => {
-    // This is where you tell a framework (e.g., React) to unrender some ui from the dom
-    console.log('unmounted!');
-  });
+```typescript
+function unmount(props: LifecycleProps): Promise<null> {
+  /* This is where you tell a framework (e.g., React) to unrender some ui from the DOM */
 }
 ```
 
-### Update (optional)
+### Update
 
-The update lifecycle function will be called whenever the user of the parcel calls `parcel.update()`. Since this 
-lifecycle is optional, the user of a parcel needs to check whether the parcel has implemented the update lifecycle before
-attempting to make the call.
+:::caution
+This lifecycle method is only available for [error pages](./error-pages.md#update-lifecycle).
+:::
 
 ## Properties
 
+micro-lc injects two default properties which can be extended on a per-application basis via the `properties` key on the
+application configuration.
+
+<h4 id="injectBase"><code>injectBase</code></h4>
+
+`injectBase` is a boolean property, defaulting to `false`. 
+
+:::caution
+This property should be set to `true` only on applications that do not have a hash router. On applications without 
+internal routing, this property does not do anything.
+:::
+
+Instructs micro-lc on whether to inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to
+allow application internal routing to behave as if it was deployed on the bundle selected root, or any root that was
+selected at build time.
+
+```mdx-code-block
+<></>
+<source-tabs
+  base="../../../frames/guides/applications/parcels/inject-base"
+  tabs={[
+    { filePath: "/config.json5" },
+    { filePath: "/browser-parcel.jsx" },
+    { filePath: "/hash-parcel.jsx" }
+  ]}
+></source-tabs>
+```
+
+:::tip
+For better compatibility, we recommend to choose `./` as build time public URL. 
+:::
+
+:::danger
+If your application `index.html` already has a `base` tag, this property **will not** override it. micro-lc will consider
+this plugin to have been built with prior knowledge of its configuration and deploy route. 
+:::
+
+<h4 id="microlcApi"><code>microlcApi</code></h4>
+
+micro-lc injects some useful utils to each application in order to share state, events, and styles. The full reference
+for this property can be found ...
+
 ## Routing injection
+
+```mdx-code-block
+<></>
+<example-frame
+  base="../../../frames/guides/applications/parcels/routers"
+  height="550px"
+  showSource={false}
+  src={"/"}
+  title="Routers"
+></example-frame>
+```

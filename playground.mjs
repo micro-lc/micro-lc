@@ -31,6 +31,7 @@ const main = async () => {
 
   await startDevServer({
     config: {
+      injectWebSocket: false,
       middleware: [
         async function accessControl(ctx, next) {
           ctx.set({ 'Access-Control-Allow-Origin': '*' })

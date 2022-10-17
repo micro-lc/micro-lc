@@ -11,10 +11,10 @@ appear on internal server errors.
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/guides/add-an-application/error-page-404"
+  base="../../../frames/guides/applications/error-pages/404"
   height="550px"
   showSource={false}
-  src={"/index.html"}
+  src={"/"}
   title="404 error"
 ></example-frame>
 ```
@@ -64,3 +64,33 @@ without route.
 :::tip
 Displaying error pages can be triggered by micro-lc API.
 :::
+
+### Lifecycle
+
+Error pages have access to a slightly different version of [parcels lifecycle methods](./parcels.md#lifecycle-methods).
+
+[`bootstrap`](./parcels.md#bootstrap), [`mount`](./parcels.md#mount), and [`unmount`](./parcels.md#unmount) methods
+have arguments implementing the following interface.
+
+```typescript
+interface ErrorPageLifecycleProps extends LifecycleProps {
+  message?: string
+  reason?: string
+}
+```
+
+* `message` is the primary error message.
+* `reason` is the cause of the error.
+
+:::tip
+You can use those extra properties for user feedback.
+:::
+
+On top of that, error pages have an extra [update](./parcels.md#update) method, which is called when the page is already
+mounted but properties have changed.
+
+```typescript
+function bootstrap(props: { message?: string; reason?: string }): Promise<null> {
+  /* This is where you do updates */
+}
+```
