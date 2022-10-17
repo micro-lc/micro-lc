@@ -296,6 +296,7 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
   }
 
   if (!exactMatch && isDefault(url ?? window.location.href, this.ownerDocument.baseURI)) {
+    window.history.replaceState(window.history.state, '', this.config.settings.defaultUrl)
     nextMatch = defaultMatch
   }
 
