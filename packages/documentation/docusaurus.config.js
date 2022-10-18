@@ -30,6 +30,10 @@ const themeConfig = {
         position: 'left',
         type: 'doc',
       },
+      {
+        label: 'Playground',
+        to: '/playground',
+      },
     ],
     logo: {
       alt: 'micro-lc',
@@ -50,7 +54,10 @@ const config = {
   favicon: 'img/favicon.png',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  plugins: [['@docusaurus/plugin-content-docs', pluginContentDocsConfig]],
+  plugins: [
+    ['@docusaurus/plugin-content-docs', pluginContentDocsConfig],
+    '@docusaurus/plugin-content-pages',
+  ],
   tagline: 'micro-lc project documentation',
   themeConfig,
   themes: [['@docusaurus/theme-classic', themeClassicConfig]],
