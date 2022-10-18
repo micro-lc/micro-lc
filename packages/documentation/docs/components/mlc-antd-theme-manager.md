@@ -30,7 +30,7 @@ Ant Design projects to apply the theme created by the web component.
 
 The web component calculated the CSS variables needed by [Ant Design Dynamic Theme](https://ant.design/docs/react/customize-theme-variable)
 from a set of base colors (namely, primary, info, success, processing, error, and warning colors). These variables are 
-then injected globally through micro-lc `setStyle` API. 
+then injected globally through <micro-lc></micro-lc> `setStyle` API. 
 
 Variables can be scoped using one or more prefixes. For example, the following component
 
@@ -65,12 +65,12 @@ your application.
 ## Usage
 
 :::caution
-This component is intended to be used inside micro-lc, since it makes extensive use of micro-lc API.
+This component is intended to be used inside <micro-lc></micro-lc>, since it makes extensive use of <micro-lc></micro-lc> API.
 
 You can technically use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
 :::
 
-To use the component in micro-lc, declare it as part of the application layout with its [properties and attributes](#properties-and-attributes).
+To use the component in <micro-lc></micro-lc>, declare it as part of the application layout with its [properties and attributes](#properties-and-attributes).
 
 ```json5 title="micro-lc.config.json"
 {

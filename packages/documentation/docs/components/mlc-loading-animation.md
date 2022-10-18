@@ -25,12 +25,12 @@ Practically speaking, the component injects a method called `onload` into each o
 their display style to `none`. When the `onload` method of one of these children is invoked, the component resets the
 original display style of the children and hides itself.
 
-In most use cases, this component is used as a wrapper of `micro-lc` itself, which will call `onload` when its update 
+In most use cases, this component is used as a wrapper of <micro-lc></micro-lc> itself, which will call `onload` when its update 
 lifecycle has ended upon connection and first render.
 
 ## Usage
 
-To use the component in micro-lc wrap the `micro-lc` element tag in the HTML definition.
+To use the component in <micro-lc></micro-lc> wrap the `micro-lc` element tag in the HTML definition.
 
 ```html title=index.html
 <!doctype html>

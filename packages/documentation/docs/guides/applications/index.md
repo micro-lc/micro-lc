@@ -2,7 +2,7 @@
 title: Applications
 ---
 
-Three integration methods are available to add an application to the context of micro-lc. Applications are distinguished
+Three integration methods are available to add an application to the context of <micro-lc></micro-lc>. Applications are distinguished
 by error pages due to the fact they have a fixed routing pattern.
 
 ## Route
@@ -17,7 +17,7 @@ Each application must have a **route** which must be a valid URL pathname (the t
 
 Absolute paths do not interact with an eventual `base` tag provided to your main HTML page whereas relative do. 
 
-Clearly if no `base` tag is provided there is no need to use relative path. Anyway when configuring a micro-lc
+Clearly if no `base` tag is provided there is no need to use relative path. Anyway when configuring a <micro-lc></micro-lc>
 instance it might be useful to use relative paths in order to be able to move your application away from `/` if needed.
 
 ```json5 title=micro-lc.config.json

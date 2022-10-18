@@ -14,7 +14,7 @@ which needs to be supplied with the assets entry point.
 > 
 > — [single-spa documentation](https://single-spa.js.org/docs/parcels-overview/#parcel-lifecycles)
 
-For what concerns micro-lc configuration, a parcel is an object with keys `html`, `scripts`, and `styles` (at least one
+For what concerns <micro-lc></micro-lc> configuration, a parcel is an object with keys `html`, `scripts`, and `styles` (at least one
 between `html` and `scripts` is mandatory). By polymorphism, we allow entry to be a string which will be interpreted as
 an HTML asset entry.
 
@@ -98,10 +98,10 @@ interface LifecycleProps {
 }
 ```
 
-* `name` is the application unique identifier as per micro-lc configuration at "applications".
-* `container` is the application mount point which is provided by micro-lc configuration at "settings.mountPointSelector".
+* `name` is the application unique identifier as per <micro-lc></micro-lc> configuration at "applications".
+* `container` is the application mount point which is provided by <micro-lc></micro-lc> configuration at "settings.mountPointSelector".
 * `entry` is the application assets object.
-* `props` is an object including application custom properties and micro-lc injected properties. See 
+* `props` is an object including application custom properties and <micro-lc></micro-lc> injected properties. See 
 [dedicated section](#properties) for a detailed description.
 
 ### Bootstrap
@@ -147,7 +147,7 @@ This lifecycle method is only available for [error pages](./error-pages.md#updat
 
 ## Properties
 
-micro-lc injects two default properties which can be extended on a per-application basis via the `properties` key on the
+<micro-lc></micro-lc> injects two default properties which can be extended on a per-application basis via the `properties` key on the
 application configuration.
 
 <h4 id="injectBase"><code>injectBase</code></h4>
@@ -159,7 +159,7 @@ This property should be set to `true` only on applications that do not have a ha
 internal routing, this property does not do anything.
 :::
 
-Instructs micro-lc on whether to inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to
+Instructs <micro-lc></micro-lc> on whether to inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to
 allow application internal routing to behave as if it was deployed on the bundle selected root, or any root that was
 selected at build time.
 
@@ -180,13 +180,13 @@ For better compatibility, we recommend to choose `./` as build time public URL.
 :::
 
 :::danger
-If your application `index.html` already has a `base` tag, this property **will not** override it. micro-lc will consider
+If your application `index.html` already has a `base` tag, this property **will not** override it. <micro-lc></micro-lc> will consider
 this plugin to have been built with prior knowledge of its configuration and deploy route. 
 :::
 
 <h4 id="microlcApi"><code>microlcApi</code></h4>
 
-micro-lc injects some useful utils to each application in order to share state, events, and styles. The full reference
+<micro-lc></micro-lc> injects some useful utils to each application in order to share state, events, and styles. The full reference
 for this property can be found ...
 
 ## Routing injection

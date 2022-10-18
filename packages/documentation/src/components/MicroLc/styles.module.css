@@ -1,0 +1,9 @@
+.micro {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+.lc {
+  color: #214449;
+  font-weight: 300;
+}

@@ -38,7 +38,7 @@ The web component can be used standalone
 </body>
 ```
 
-or as part of a `compose` application of micro-lc
+or as part of a `compose` application of <micro-lc></micro-lc>
 
 ```json5 title=micro-lc.config.json
 {

@@ -4,7 +4,7 @@ sidebar_label: 🔧 mlc-layout
 sidebar_position: 10
 ---
 
-Web component that provides a classic navigation layout for micro-lc applications.
+Web component that provides a classic navigation layout for <micro-lc></micro-lc> applications.
 
 ```mdx-code-block
 <></>
@@ -20,12 +20,12 @@ Web component that provides a classic navigation layout for micro-lc application
 ## Usage
 
 :::caution
-This component is intended to be used inside micro-lc, since it makes extensive use of micro-lc API.
+This component is intended to be used inside <micro-lc></micro-lc>, since it makes extensive use of <micro-lc></micro-lc> API.
 
 You can technically use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
 :::
 
-To use the component in micro-lc, declare it as part of the application layout with its
+To use the component in <micro-lc></micro-lc>, declare it as part of the application layout with its
 [properties and attributes](#properties-and-attributes).
 
 ```json5 title=micro-lc.config.json
@@ -223,14 +223,14 @@ Link to specific url.
 
 #### `ApplicationMenuItem`
 
-This type of menu items triggers the navigation to a specific micro-lc application, identified by the `id` prop.
+This type of menu items triggers the navigation to a specific <micro-lc></micro-lc> application, identified by the `id` prop.
 
 | Property |                                 Type                                  |                                  Default                                   | Description                                                                                                               |
 |:--------:|:---------------------------------------------------------------------:|:--------------------------------------------------------------------------:|---------------------------------------------------------------------------------------------------------------------------|
 |  `icon`  |                 <code><a href="#icon">Icon</a></code>                 | [Ant Design](https://ant.design/components/icon/) `DeploymentUnitOutlined` | Icon icon of the menu item                                                                                                |
-|   `id`   |                          <code>string</code>                          |                                **Required**                                | Unique identifier of the menu item. It **must** match the id of the micro-lc application the menu item should navigate to |
+|   `id`   |                          <code>string</code>                          |                                **Required**                                | Unique identifier of the menu item. It **must** match the id of the <micro-lc></micro-lc> application the menu item should navigate to |
 | `label`  | <code>string &#124; <a href="#localizedtext">LocalizedText</a></code> |                             Value of `id` prop                             | Menu label                                                                                                                |
-|  `type`  |                             `application`                             |                                **Required**                                | Type of the item: micro-lc application                                                                                    |
+|  `type`  |                             `application`                             |                                **Required**                                | Type of the item: <micro-lc></micro-lc> application                                                                                    |
 
 #### `CategoryMenuItem`
 
@@ -359,7 +359,7 @@ type UserPropertiesMapping = Record<string, 'name' | 'avatar' | string>
 
 <h3 id="head"><code>Head</code></h3>
 
-Information used by micro-lc to manipulate the head of the document.
+Information used by <micro-lc></micro-lc> to manipulate the head of the document.
 
 |   Property   |        Type         | Default | Description         |
 |:------------:|:-------------------:|:-------:|---------------------|

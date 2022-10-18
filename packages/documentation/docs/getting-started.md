@@ -4,8 +4,8 @@ sidebar_label: Getting started
 sidebar_position: 20
 ---
 
-`micro-lc` is shipped as a ES module CDN bundle and can be imported in any HTML page.
-Moreover a dockerized webserver is available on `docker hub` with a `docker-compose` yaml.
+<micro-lc></micro-lc> is shipped as an ES module CDN bundle and can be imported in any HTML page. Moreover, a dockerized webserver is
+available on Docker Hub with a Docker Compose `yaml` file.
 
 ## Import from CDN
 
@@ -89,7 +89,7 @@ then write your config file
 
 ```
 
-then run any static server like
+then run any static server like.
 
 ### Python 2.x
 

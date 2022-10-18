@@ -19,7 +19,7 @@ appear on internal server errors.
 ></example-frame>
 ```
 
-micro-lc provides three default error pages matching errors `401`, `404`, and `500`. It displays `404` when the required
+<micro-lc></micro-lc> provides three default error pages matching errors `401`, `404`, and `500`. It displays `404` when the required
 route does not match a configured application, while `401` and `500` are triggered on assists fetch errors corresponding
 to unauthorized and internal server error.
 
@@ -33,7 +33,7 @@ Unauthorized status must be fully managed by your Backend interface.
 
 ## Custom error pages
 
-To override default error pages, a dedicated section of micro-lc configuration is available. Under `settings`, errors
+To override default error pages, a dedicated section of <micro-lc></micro-lc> configuration is available. Under `settings`, errors
 are divided into client errors (key `4xx`) and server errors (key `5xx`). Error pages are then just regular applications
 without route.
 
@@ -62,7 +62,7 @@ without route.
 ```
 
 :::tip
-Displaying error pages can be triggered by micro-lc API.
+Displaying error pages can be triggered by <micro-lc></micro-lc> API.
 :::
 
 ### Lifecycle
