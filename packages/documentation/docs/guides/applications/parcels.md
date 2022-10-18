@@ -147,10 +147,10 @@ This lifecycle method is only available for [error pages](./error-pages.md#updat
 
 ## Properties
 
-<micro-lc></micro-lc> injects two default properties which can be extended on a per-application basis via the `properties` key on the
-application configuration.
+<micro-lc></micro-lc> injects two default properties which can be extended on a per-application basis via the `properties`
+key on the application configuration.
 
-<h4 id="injectBase"><code>injectBase</code></h4>
+### `injectBase`
 
 `injectBase` is a boolean property, defaulting to `false`. 
 
@@ -165,14 +165,17 @@ selected at build time.
 
 ```mdx-code-block
 <></>
-<source-tabs
+<example-frame
   base="/frames/guides/applications/parcels/inject-base"
-  tabs={[
+  height="550px"
+  sourceTabs={[
     { filePath: "/config.json5" },
     { filePath: "/browser-parcel.jsx" },
     { filePath: "/hash-parcel.jsx" }
   ]}
-></source-tabs>
+  src={"/"}
+  title="Base injection"
+></example-frame>
 ```
 
 :::tip
@@ -184,20 +187,7 @@ If your application `index.html` already has a `base` tag, this property **will 
 this plugin to have been built with prior knowledge of its configuration and deploy route. 
 :::
 
-<h4 id="microlcApi"><code>microlcApi</code></h4>
+### `microlcApi`
 
 <micro-lc></micro-lc> injects some useful utils to each application in order to share state, events, and styles. The full reference
 for this property can be found ...
-
-## Routing injection
-
-```mdx-code-block
-<></>
-<example-frame
-  base="/frames/guides/applications/parcels/routers"
-  height="550px"
-  showSource={false}
-  src={"/"}
-  title="Routers"
-></example-frame>
-```
