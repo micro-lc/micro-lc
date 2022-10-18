@@ -17,6 +17,7 @@ const themeConfig = {
   },
   docs: {
     sidebar: {
+      autoCollapseCategories: true,
       hideable: true,
     },
   },

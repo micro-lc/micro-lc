@@ -11,7 +11,7 @@ appear on internal server errors.
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../../frames/guides/applications/error-pages/404"
+  base="/frames/guides/applications/error-pages/404"
   height="550px"
   showSource={false}
   src={"/"}
@@ -90,7 +90,7 @@ On top of that, error pages have an extra [update](./parcels.md#update) method, 
 mounted but properties have changed.
 
 ```typescript
-function bootstrap(props: { message?: string; reason?: string }): Promise<null> {
+function update(props: { message?: string; reason?: string }): Promise<null> {
   /* This is where you do updates */
 }
 ```

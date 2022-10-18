@@ -9,7 +9,7 @@ Web component that provides a classic navigation layout for <micro-lc></micro-lc
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-layout/overview"
+  base="/frames/components/mlc-layout/overview"
   height="550px"
   showSource={false}
   src={"/index.html"}
@@ -99,7 +99,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-layout/showcase-top-bar"
+  base="/frames/components/mlc-layout/showcase-top-bar"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -115,7 +115,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-layout/showcase-overlay-sidebar"
+  base="/frames/components/mlc-layout/showcase-overlay-sidebar"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -131,7 +131,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-layout/showcase-fixed-sidebar"
+  base="/frames/components/mlc-layout/showcase-fixed-sidebar"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -147,7 +147,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-layout/showcase-user-menu"
+  base="/frames/components/mlc-layout/showcase-user-menu"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -164,7 +164,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-layout/showcase-help-menu"
+  base="/frames/components/mlc-layout/showcase-help-menu"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -180,7 +180,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-layout/showcase-top-bar-slot"
+  base="/frames/components/mlc-layout/showcase-top-bar-slot"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },

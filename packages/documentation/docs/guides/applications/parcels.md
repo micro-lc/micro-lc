@@ -64,7 +64,7 @@ The simplest form of a parcel application is shown in following example.
 ```mdx-code-block
 <></>
 <source-tabs
-  base="../../../frames/guides/applications/parcels/lifecycle-methods"
+  base="/frames/guides/applications/parcels/lifecycle-methods"
   tabs={[
     { filePath: "/index.html" },
     { filePath: "/lifecycle.js" }
@@ -166,7 +166,7 @@ selected at build time.
 ```mdx-code-block
 <></>
 <source-tabs
-  base="../../../frames/guides/applications/parcels/inject-base"
+  base="/frames/guides/applications/parcels/inject-base"
   tabs={[
     { filePath: "/config.json5" },
     { filePath: "/browser-parcel.jsx" },
@@ -194,7 +194,7 @@ for this property can be found ...
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../../frames/guides/applications/parcels/routers"
+  base="/frames/guides/applications/parcels/routers"
   height="550px"
   showSource={false}
   src={"/"}

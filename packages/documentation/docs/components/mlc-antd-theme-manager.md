@@ -4,7 +4,8 @@ sidebar_label: 🔧 mlc-antd-theme-manager
 sidebar_position: 30
 ---
 
-Logical web component that can be included in applications layout to inject an [Ant Design](https://ant.design/) compatible theme.
+Logical web component that can be included in applications layout to inject an [Ant Design](https://ant.design/) 
+compatible theme.
 
 :::caution
 It only works on components using [Ant Design Dynamic Theme](https://ant.design/docs/react/customize-theme-variable).
@@ -13,7 +14,7 @@ It only works on components using [Ant Design Dynamic Theme](https://ant.design/
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-antd-theme-manager/overview"
+  base="/frames/components/mlc-antd-theme-manager/overview"
   height="550px"
   showSource={false}
   src="/"
@@ -107,7 +108,7 @@ To use the component in <micro-lc></micro-lc>, declare it as part of the applica
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-antd-theme-manager/multiple-prefixes"
+  base="/frames/components/mlc-antd-theme-manager/multiple-prefixes"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },

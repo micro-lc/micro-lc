@@ -9,7 +9,7 @@ Web component to render icons dynamically loaded from different libraries.
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-iconic/overview"
+  base="/frames/components/mlc-iconic/overview"
   height="200px"
   showSource={false}
   src={"/"}
@@ -75,7 +75,7 @@ By default, provided version of [Ant Design Icons](https://ant.design/components
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-iconic/ant-design"
+  base="/frames/components/mlc-iconic/ant-design"
   height="300px"
   sourceTabs={[
     { filePath: "/index.html" },
