@@ -27,7 +27,7 @@ to unauthorized and internal server error.
 Default error pages primary color can be set by the `--micro-lc-primary-color` global variable.
 :::
 
-:::caution
+:::danger Important Takeaway
 Unauthorized status must be fully managed by your Backend interface.
 :::
 

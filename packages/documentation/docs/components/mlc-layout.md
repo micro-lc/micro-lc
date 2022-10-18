@@ -105,7 +105,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
     { filePath: "/index.html" },
     { filePath: "/config.json", isDefault: true },
   ]}
-  src="/index.html"
+  src="/"
   title="Top bar menu"
 ></example-frame>
 ```
@@ -121,7 +121,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
     { filePath: "/index.html" },
     { filePath: "/config.json", isDefault: true },
   ]}
-  src="/index.html"
+  src="/"
   title="Overlay sidebar"
 ></example-frame>
 ```
@@ -137,7 +137,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
     { filePath: "/index.html" },
     { filePath: "/config.json", isDefault: true },
   ]}
-  src="/index.html"
+  src="/"
   title="Fixed sidebar"
 ></example-frame>
 ```
@@ -154,7 +154,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
     { filePath: "/config.json", isDefault: true },
     { filePath: "/userinfo.json" },
   ]}
-  src="/index.html"
+  src="/"
   title="User menu"
 ></example-frame>
 ```
@@ -170,7 +170,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
     { filePath: "/index.html" },
     { filePath: "/config.json", isDefault: true },
   ]}
-  src="/index.html"
+  src="/"
   title="Help menu"
 ></example-frame>
 ```
@@ -186,7 +186,7 @@ save bundle size, but requires import maps for the needed dependencies, which ar
     { filePath: "/index.html" },
     { filePath: "/config.json", isDefault: true },
   ]}
-  src="/index.html"
+  src="/"
   title="Top bar slot"
 ></example-frame>
 ```

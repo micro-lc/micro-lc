@@ -16,7 +16,7 @@ It only works on components using [Ant Design Dynamic Theme](https://ant.design/
   base="../../frames/components/mlc-antd-theme-manager/overview"
   height="550px"
   showSource={false}
-  src="/index.html"
+  src="/"
   title="Overview"
 ></example-frame>
 ```
@@ -113,7 +113,7 @@ To use the component in <micro-lc></micro-lc>, declare it as part of the applica
     { filePath: "/index.html" },
     { filePath: "/config.json", isDefault: true }
   ]}
-  src="/index.html"
+  src="/"
   title="Multiple prefixes"
 ></example-frame>
 ```

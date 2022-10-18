@@ -67,7 +67,7 @@ The simplest form of a parcel application is shown in following example.
   base="../../../frames/guides/applications/parcels/lifecycle-methods"
   tabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.json" }
+    { filePath: "/lifecycle.js" }
   ]}
 ></source-tabs>
 ```

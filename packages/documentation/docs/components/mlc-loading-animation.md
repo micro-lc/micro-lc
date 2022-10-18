@@ -9,10 +9,10 @@ Web component to display a loading animation until one of its children has finis
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-loading-animation"
+  base="../../frames/components/mlc-loading-animation/overview"
   height="550px"
   showSource={false}
-  src={"/overview.html"}
+  src={"/"}
   title="Overview"
 ></example-frame>
 ```

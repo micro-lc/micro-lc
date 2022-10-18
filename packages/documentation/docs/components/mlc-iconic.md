@@ -9,10 +9,10 @@ Web component to render icons dynamically loaded from different libraries.
 ```mdx-code-block
 <></>
 <example-frame
-  base="../../frames/components/mlc-iconic"
+  base="../../frames/components/mlc-iconic/overview"
   height="200px"
   showSource={false}
-  src={"/overview.html"}
+  src={"/"}
   title="Overview"
 ></example-frame>
 ```
@@ -38,7 +38,7 @@ The web component can be used standalone
 </body>
 ```
 
-or as part of a `compose` application of <micro-lc></micro-lc>
+or as part of a [compose](../guides/applications/compose.md) application of <micro-lc></micro-lc>
 
 ```json5 title=micro-lc.config.json
 {
@@ -69,6 +69,22 @@ or as part of a `compose` application of <micro-lc></micro-lc>
 ## Showcase
 
 ### Ant Design
+
+By default, provided version of [Ant Design Icons](https://ant.design/components/icon/) is `4.2.1`.
+
+```mdx-code-block
+<></>
+<example-frame
+  base="../../frames/components/mlc-iconic/ant-design"
+  height="300px"
+  sourceTabs={[
+    { filePath: "/index.html" },
+    { filePath: "/config.json", isDefault: true },
+  ]}
+  src="/"
+  title="Ant Design"
+></example-frame>
+```
 
 ### Fontawesome regular
 
