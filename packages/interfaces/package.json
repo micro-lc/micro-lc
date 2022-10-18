@@ -1,12 +1,15 @@
 {
   "name": "@micro-lc/interfaces",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
   "bin": "./dist/cjs/cli/index.js",
   "files": [
+    "cli",
     "dist",
+    "postcss-ant-dynamic-theme",
+    "schemas",
     "v1",
     "v2",
     "package.json"
