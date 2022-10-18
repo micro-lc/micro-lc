@@ -1,21 +1,21 @@
-import Layout from '@theme/Layout'
-import React from 'react'
+import Layout from "@theme/Layout";
+import React from "react";
 
 export default function fastTrack(): JSX.Element {
   return (
-    <Layout title='Fast Track'>
+    <Layout title="Playground">
       <div
         style={{
-          alignItems: 'center',
-          display: 'flex',
-          fontSize: '20px',
-          height: '50vh',
-          justifyContent: 'center',
-        }}>
-        <p>
-          Work in progress!
-        </p>
+          position: "absolute",
+          height: "100%",
+          width: "100%"
+        }}
+      >
+        <iframe
+          style={{width: 'inherit', height: 'inherit'}}
+          src="http://localhost:8000/packages/orchestrator/dist/playground/index.html"
+        ></iframe>
       </div>
     </Layout>
-  )
+  );
 }

@@ -6,7 +6,7 @@ import { property, query, state } from 'lit/decorators.js'
 
 import monacoStyle from './mlc-config.css'
 import * as monaco from './worker'
-import type { IStandaloneCodeEditor } from './worker'
+import type { IStandaloneCodeEditor, IEditorAction } from './worker'
 
 interface Resizable extends HTMLElement {
   _w: number
@@ -42,6 +42,18 @@ function mouseDownHandler(this: Resizable, event: MouseEvent): void {
   if (borderDelta < borderWidth) {
     document.addEventListener('mousemove', this.mouseMoveHandler)
     document.addEventListener('mouseup', this.mouseUpHandler)
+  }
+}
+
+function handleSlotChange(this: MlcConfig, { target }: Event) {
+  if (target instanceof HTMLSlotElement) {
+    const interval = setInterval(() => {
+      const iframe = this.ownerDocument.querySelector(this.iframeSelector)
+      if (iframe instanceof HTMLIFrameElement) {
+        clearInterval(interval)
+        this.handleSubmit(iframe)
+      }
+    }, 100)
   }
 }
 
@@ -126,6 +138,15 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
 
   @property({ attribute: 'iframe-selector' }) iframeSelector = 'iframe'
 
+  @property({ attribute: 'init-content' })
+  set initContent(init: unknown) {
+    if (typeof init === 'string') {
+      this._content = init
+    } else {
+      this._content = JSON.stringify(init)
+    }
+  }
+
   @query('#editor-container') container!: HTMLDivElement
 
   @query('#submit-button') submitButton!: HTMLButtonElement
@@ -137,6 +158,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
   mouseMoveHandler = mouseMoveHandler.bind<(event: MouseEvent) => void>(this)
   mouseDownHandler = mouseDownHandler.bind<(event: MouseEvent) => void>(this)
   mouseUpHandler = mouseUpHandler.bind<(event: MouseEvent) => void>(this)
+  handleSlotChange = handleSlotChange.bind(this)
   ctrlEnterClickHandler = ctrlEnterClickHandler.bind<(event: KeyboardEvent) => void>(this)
   microlcApi?: Partial<MicrolcApi<BaseExtension>> | undefined
 
@@ -166,23 +188,34 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
       window.dispatchEvent(new KeyboardEvent('keypress', { ctrlKey: true, key: 'Enter' }))
     })
-    this._editor.getAction('editor.action.formatDocument').run().catch(console.error)
   }
 
-  protected handleSubmit(_: MouseEvent): void {
-    const iframe = this.ownerDocument.querySelector(this.iframeSelector)
+  protected handleSubmit(_: MouseEvent | HTMLIFrameElement): void {
+    let iframe = _ as HTMLIFrameElement | null
+    if (!(iframe instanceof HTMLIFrameElement)) {
+      iframe = this.ownerDocument.querySelector(this.iframeSelector)
+    }
+    console.log(_, iframe)
 
-    if (iframe instanceof HTMLIFrameElement && this._editor) {
-      iframe.contentWindow?.postMessage(this._editor.getValue(), window.location.origin)
+    if (this._editor) {
+      iframe?.contentWindow?.postMessage(this._editor.getValue(), window.location.origin)
     }
   }
 
-  protected update(changedProperties: PropertyValueMap<{_content?: string}>): void {
-    super.update(changedProperties)
+  protected updated(changedProperties: PropertyValueMap<{_content?: string}>): void {
+    super.updated(changedProperties)
 
     if (changedProperties.has('_content')) {
       typeof this._content === 'string' && this._editor?.setValue(this._content)
-      this._editor?.getAction('editor.action.formatDocument').run().catch(console.error)
+      const formatAction = this._editor?.getAction('editor.action.formatDocument') as IEditorAction | null
+
+      if (formatAction) {
+        setTimeout(() => {
+          formatAction.run().catch(console.error)
+        }, 200)
+      } else {
+        console.warn('no format action available')
+      }
     }
   }
 
@@ -204,7 +237,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
         <div class="editor default-cursor" id="editor-container"></div>
       </section>
       <section class="half">
-        <slot></slot>
+        <slot @slotchange=${this.handleSlotChange}></slot>
       </section>
     `
   }

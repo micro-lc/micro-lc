@@ -184,7 +184,32 @@ function getNextMatchingRoute(
   return result
 }
 
-async function flushAndGo(this: RouterContainer, nextMatch: MatchingRoute, incomingError?: RoutingError | undefined): Promise<LoadedAppUpdate> {
+function isSameError(first: RoutingError, second: RoutingError): boolean {
+  if (first.message !== second.message) {
+    return false
+  }
+
+  if (first.reason !== second.reason) {
+    return false
+  }
+
+  if (first.status !== second.status) {
+    return false
+  }
+
+  return true
+}
+
+async function flushAndGo(
+  this: RouterContainer,
+  nextMatch: MatchingRoute,
+  incomingError?: RoutingError | undefined,
+  previousIncomingError?: RoutingError | undefined
+): Promise<LoadedAppUpdate> {
+  if (previousIncomingError && incomingError && isSameError(previousIncomingError, incomingError)) {
+    return undefined
+  }
+
   let error: RoutingError | undefined = incomingError
 
   const unmount = getUnmount()
@@ -232,7 +257,7 @@ async function flushAndGo(this: RouterContainer, nextMatch: MatchingRoute, incom
       error = { ...error, message, status }
 
       if (errorRoute) {
-        await flushAndGo.call(this, errorRoute, error).then((update) => update?.({ message, reason }))
+        await flushAndGo.call(this, errorRoute, error, incomingError).then((update) => update?.({ message, reason }))
       }
 
       return undefined
