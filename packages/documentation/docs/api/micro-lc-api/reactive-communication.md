@@ -27,7 +27,7 @@ microlcApi.subscribe((state) => console.log(JSON.stringify(state)))
 
 :::tip
 If you need to extend state with specific state management tools, like Redux, you can either add a specific key using
-this API, or register your tool as an [extension](./extensions).
+this API, or register your tool as an [extension](extensions.md).
 :::
 
 <!-- TODO: Insert frame with content that prints what custom layout sets -->

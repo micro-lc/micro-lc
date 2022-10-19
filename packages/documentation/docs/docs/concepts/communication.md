@@ -1,6 +1,12 @@
 ---
-title: API
+title: Communication
+sidebar_label: Communication
+sidebar_position: 40
 ---
+
+## Browser native API
+
+## micro-lc API
 
 <micro-lc></micro-lc> injects an API into each element composing the layout and as property of all applications rendered
 as content.
@@ -40,8 +46,3 @@ class MyAwesomeWebComponent extends HTMLElement {
 customElements.define('my-awesome-component', MyAwesomeWebComponent)
 ```
 
-The API is clustered into:
-* [application state](./application-state)
-* [reactive communication](./reactive-communication)
-* [routing](./routing)
-* [extensions](./extensions)

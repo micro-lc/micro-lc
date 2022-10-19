@@ -78,7 +78,7 @@ Lifecycle methods are:
 * [`unmount`](#unmount)
 * [`update`](#update)
 
-They all return `Promise<null>`. Update is not mandatory and is available only for [error pages](./error-pages.md#update-lifecycle).
+They all return `Promise<null>`. Update is not mandatory and is available only for [error pages](error-pages.md#update-lifecycle).
 The others take as argument an object with the following interface.
 
 ```typescript
@@ -142,7 +142,7 @@ function unmount(props: LifecycleProps): Promise<null> {
 ### Update
 
 :::caution
-This lifecycle method is only available for [error pages](./error-pages.md#update-lifecycle).
+This lifecycle method is only available for [error pages](error-pages.md#update-lifecycle).
 :::
 
 ## Properties

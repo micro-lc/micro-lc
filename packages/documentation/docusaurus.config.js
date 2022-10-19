@@ -26,8 +26,14 @@ const themeConfig = {
     hideOnScroll: true,
     items: [
       {
-        docId: 'introduction',
+        docId: 'docs/introduction',
         label: 'Docs',
+        position: 'left',
+        type: 'doc',
+      },
+      {
+        docId: 'api/micro-lc.config.json',
+        label: 'API',
         position: 'left',
         type: 'doc',
       },

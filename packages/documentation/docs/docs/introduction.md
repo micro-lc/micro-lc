@@ -7,8 +7,8 @@ sidebar_position: 10
 <micro-lc></micro-lc> is an open source micro-frontend orchestrator.
 
 It brings together three different micro-frontend patterns inside the same application:
-[iFrames](./guides/applications/iframes), [parcels](./guides/applications/parcels), and
-[shadowed components](./guides/applications/compose).
+[iFrames](guides/applications/iframes), [parcels](guides/applications/parcels), and
+[shadowed components](guides/applications/compose).
 
 An `iFrame` refers to the practice of embedding external websites into our application/website. A `parcel` instead is a
 fully-fledged (possibly single-page) application which lives within the context of the main application but is JS-sandboxed
