@@ -1,7 +1,9 @@
-import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker&inline'
 import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker&inline'
 import YamlWorker from 'monaco-yaml/yaml.worker?worker&inline'
+
+import './monaco-contrib'
 
 type ITextModel = monaco.editor.ITextModel
 type IEditorAction = monaco.editor.IEditorAction

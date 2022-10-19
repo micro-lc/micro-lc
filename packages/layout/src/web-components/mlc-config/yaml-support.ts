@@ -1,8 +1,14 @@
+import jsYaml from 'js-yaml'
 import { setDiagnosticsOptions } from 'monaco-yaml'
 
 import { Uri } from './worker'
 
 export const modelUri = Uri.parse('a://b/foo.yaml')
+export const yaml = {
+  ...jsYaml,
+  dump: (text: string) => jsYaml.dump(JSON.parse(text), { schema: jsYaml.JSON_SCHEMA }),
+  load: (content: string): unknown => jsYaml.load(content, { json: true, schema: jsYaml.JSON_SCHEMA }),
+}
 
 setDiagnosticsOptions({
   completion: true,

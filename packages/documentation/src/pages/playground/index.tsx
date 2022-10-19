@@ -13,7 +13,7 @@ export default function fastTrack(): JSX.Element {
       >
         <iframe
           style={{width: 'inherit', height: 'inherit'}}
-          src="/playground/index.html"
+          src="/playground/config.html"
         ></iframe>
       </div>
     </Layout>

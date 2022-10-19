@@ -1,6 +1,5 @@
 import type { BaseExtension, MicrolcApi } from '@micro-lc/orchestrator'
 import { defaultConfig } from '@micro-lc/orchestrator'
-import yaml from 'js-yaml'
 import type { PropertyValueMap } from 'lit'
 import { unsafeCSS, css, html, LitElement } from 'lit'
 import { property, query, state } from 'lit/decorators.js'
@@ -8,7 +7,7 @@ import { property, query, state } from 'lit/decorators.js'
 import monacoStyle from './mlc-config.css'
 import * as monaco from './worker'
 import type { IStandaloneCodeEditor, IEditorAction, ITextModel } from './worker'
-import { modelUri } from './yaml-support'
+import { modelUri, yaml } from './yaml-support'
 
 interface Resizable extends HTMLElement {
   _w: number
@@ -277,7 +276,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     })
 
     this.models.json = monaco.editor.createModel(this._content, 'json')
-    this.models.yaml = monaco.editor.createModel(yaml.dump(JSON.parse(this._content), { schema: yaml.JSON_SCHEMA }), 'yaml', modelUri)
+    this.models.yaml = monaco.editor.createModel(yaml.dump(this._content), 'yaml', modelUri)
 
     this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
       window.dispatchEvent(new KeyboardEvent('keypress', { ctrlKey: true, key: 'Enter' }))
@@ -296,7 +295,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
       console.log(content)
       const value = this.editorFormat === EditorFormat.JSON
         ? content
-        : JSON.stringify(yaml.load(content, { json: true, schema: yaml.JSON_SCHEMA }))
+        : JSON.stringify(yaml.load(content))
       iframe?.contentWindow?.postMessage(value, window.location.origin)
     }
   }
@@ -314,11 +313,11 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
       if (this.editorFormat === EditorFormat.YAML) {
         this._editor.setModel(null)
         this._editor.setModel(this.models.yaml ?? null)
-        this._editor.setValue(yaml.dump(JSON.parse(content), { schema: yaml.JSON_SCHEMA }))
+        this._editor.setValue(yaml.dump(content))
       } else {
         this._editor.setModel(null)
         this._editor.setModel(this.models.json ?? null)
-        this._editor.setValue(JSON.stringify(yaml.load(content, { json: true, schema: yaml.JSON_SCHEMA })))
+        this._editor.setValue(JSON.stringify(yaml.load(content)))
         this.formatText().catch(() => { /* noop */ })
       }
     }

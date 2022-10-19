@@ -9,10 +9,12 @@ import dynamicImport from 'vite-plugin-dynamic-import'
 
 import target from './scripts/target'
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/** @ts-expect-error */
 export default defineConfig(({ mode }) => ({
   base: './',
   build: {
-    chunkSizeWarningLimit: 3000,
+    chunkSizeWarningLimit: 5000,
     dynamicImportVarsOptions: {
       exclude: [
         require.resolve('@micro-lc/iconic/dist/import-icon/index.js'),
