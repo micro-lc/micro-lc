@@ -3,7 +3,7 @@ import BrowserWindow from '@site/src/components/BrowserWindow'
 import { SourceCodeBlock } from '@site/src/components/SourceCodeBlock'
 import type { SourceTabsProps } from '@site/src/components/SourceTabs'
 import { SourceTabs } from '@site/src/components/SourceTabs'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface ExampleFrameProps {
   base?: string
@@ -14,6 +14,42 @@ interface ExampleFrameProps {
   title: string
 }
 
+type UrlChangeCb = (url: string) => void
+
+const frameUrlChangeListener = (element: HTMLIFrameElement, callback: UrlChangeCb) => {
+  let lastDispatched: string
+
+  const dispatchChange = (href = element.contentWindow?.location.href) => {
+    const newHref = href ?? ''
+
+    if (newHref !== lastDispatched) {
+      lastDispatched = newHref
+      return callback(newHref)
+    }
+  }
+
+  const unloadHandler = () => { setTimeout(dispatchChange) }
+
+  const attachUnload = () => {
+    element.contentWindow?.removeEventListener('unload', unloadHandler)
+    element.contentWindow?.addEventListener('unload', unloadHandler)
+  }
+
+  element.addEventListener('load', () => {
+    attachUnload()
+    dispatchChange()
+  })
+
+  element.contentWindow?.addEventListener('popstate', function onPopState(event: PopStateEvent) {
+    const targetWindow = (event.target as Window | null) ?? window
+    console.log('popstate', targetWindow.location.href)
+
+    dispatchChange(targetWindow.location.href)
+  })
+
+  attachUnload()
+}
+
 export function ExampleFrame({
   base,
   height,
@@ -22,11 +58,20 @@ export function ExampleFrame({
   src,
   title,
 }: ExampleFrameProps): JSX.Element {
+  const iFrameRef = useRef<HTMLIFrameElement | null>()
   const [isLoading, setIsLoading] = useState(true)
+  const [currUrl, setCurrUrl] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    if (iFrameRef.current) {
+      frameUrlChangeListener(iFrameRef.current, url => setCurrUrl(url))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [iFrameRef, iFrameRef.current])
 
   return (
     <>
-      <BrowserWindow height={height}>
+      <BrowserWindow height={height} url={currUrl}>
         {
           isLoading && (
             <div style={{
@@ -44,6 +89,7 @@ export function ExampleFrame({
 
         <iframe
           onLoad={() => setIsLoading(false)}
+          ref={innerRef => { iFrameRef.current = innerRef }}
           src={[base, src].join('')}
           style={{ height: '100%', width: '100%' }}
           title={title}

@@ -6,7 +6,11 @@
     "jsx": "react",
     "lib": ["DOM"],
     "noEmit": true,
-    "types": ["node", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic"],
+    "types": [
+      "node",
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic"
+    ],
     "baseUrl": ".",
     "strictNullChecks": true,
     "skipLibCheck": true,

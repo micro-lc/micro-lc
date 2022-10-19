@@ -20,9 +20,17 @@
   <micro-lc></micro-lc>
 
   <script>
-    const _ = document.querySelector('micro-lc')
     window.onmessage = function (event) {
-      _.config = JSON.parse(event.data)
+      try {
+        const microlc = document.querySelector('micro-lc')
+        console.log(microlc.config)
+        const config = JSON.parse(event.data)
+        setTimeout(() => {
+          Object.assign(microlc, {config})
+        })
+      } catch (err) {
+        console.error(err)
+      }
     }
   </script>
 </body>

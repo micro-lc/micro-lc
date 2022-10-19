@@ -1,0 +1,102 @@
+"$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json"
+version: 2
+settings:
+  defaultUrl: "./home"
+  composerUri: "/packages/composer/dist/composer.development.js"
+  4xx:
+    '401':
+      entry: "/packages/orchestrator/dist/401.html"
+      integrationMode: parcel
+    '404':
+      entry: "/packages/orchestrator/dist/404.html"
+      integrationMode: parcel
+  5xx:
+    '500':
+      entry: "/packages/orchestrator/dist/500.html"
+      integrationMode: parcel
+importmap:
+  imports:
+    rxjs: https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.5.6/esm/es2015/rxjs.min.js
+layout:
+  sources:
+    importmap:
+      imports:
+        react: https://esm.sh/react@18.2.0
+        react-dom: https://esm.sh/react-dom@18.2.0
+      scopes:
+        https://esm.sh/react-dom@next:
+          "/client": https://esm.sh/react-dom@18.2.0/client
+    uris:
+      - "/packages/layout/dist/mlc-layout.min.js"
+      - "/packages/layout/dist/mlc-antd-theme-manager.min.js"
+  content: |
+    <mlc-antd-theme-manger
+      primary-color="#25b864"
+      .varsPrefix=${["micro-lc", "back-kit", "microlc"]}
+    ></mlc-antd-theme-manager>
+    <mlc-layout
+      .logo=${{"url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"}}
+    >
+      <div slot="top-bar">PE$</div>
+    </mlc-layout>
+  # - tag: mlc-antd-theme-manager
+  #   attributes:
+  #     primary-color: "#25B864"
+  #   properties:
+  #     varsPrefix:
+  #     - micro-lc
+  #     - back-kit
+  #     - microlc
+  # - tag: mlc-layout
+  #   content:
+  #     tag: div
+  #     content: PE$
+  #     attributes:
+  #       slot: top-bar
+  #   properties:
+  #     userMenu:
+  #       userInfoUrl: "./userinfo.json"
+  #     logo:
+  #       url: "/packages/orchestrator/public/favicon.png"
+  #       onClickHref: "/playground/backoffice/home"
+  #     mode: fixedSideBar
+  #     menuItems:
+  #     - icon:
+  #         library: "@ant-design/icons-svg"
+  #         selector: BugOutlined
+  #       id: main
+  #       label:
+  #         en: Application 1
+  #         it: Applicazione 1
+  #       type: application
+  #     - href: https://docs.mia-platform.eu
+  #       id: href_1
+  #       label: Link 1
+  #       target: _blank
+  #       type: href
+  #     - children:
+  #       - id: composer_new
+  #         label: Composer V2
+  #         type: application
+  #       - id: composer_old
+  #         label: Composer V1
+  #         type: application
+  #       - children:
+  #         - id: react
+  #           label: React
+  #           type: application
+  #         - href: "./www.google.com"
+  #           id: href_2
+  #           label: Link 2
+  #           target: _blank
+  #           type: href
+  #         id: group_1
+  #         label:
+  #           en: Group 1
+  #           it: Gruppo 1
+  #         type: group
+  #       id: category_1
+  #       label:
+  #         en: Category 1
+  #         it: Categoria 1
+  #       type: category

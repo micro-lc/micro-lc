@@ -1,22 +1,23 @@
 import { css, html, LitElement } from 'lit'
 import { property, state } from 'lit/decorators.js'
-import type { ChangeEvent } from 'react'
 
 interface LoadableElement extends HTMLElement {
   _loading: boolean
 }
 
-function handleSlotChange(this: LoadableElement, event: ChangeEvent<HTMLSlotElement>): void {
-  event.target.assignedElements().forEach((element) => {
-    if (element instanceof HTMLElement) {
-      const previousDisplay = element.style.display
-      element.style.display = 'none'
-      element.onload = () => {
-        this._loading = false
-        element.style.display = previousDisplay
+function handleSlotChange(this: LoadableElement, { target }: Event): void {
+  if (target instanceof HTMLSlotElement) {
+    target.assignedElements().forEach((element) => {
+      if (element instanceof HTMLElement) {
+        const previousDisplay = element.style.display
+        element.style.display = 'none'
+        element.onload = () => {
+          this._loading = false
+          element.style.display = previousDisplay
+        }
       }
-    }
-  })
+    })
+  }
 }
 
 export class MlcLoadingAnimation extends LitElement implements LoadableElement {

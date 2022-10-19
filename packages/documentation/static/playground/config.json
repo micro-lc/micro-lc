@@ -1,0 +1,83 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json",
+  "version": 2,
+  "settings": {
+    "defaultUrl": "./",
+    "composerUri": "http://localhost:8000/packages/orchestrator/dist/composer.development.js",
+    "4xx": {
+      "401": {
+        "entry": "http://localhost:8000/packages/orchestrator/dist/401.html",
+        "integrationMode": "parcel"
+      },
+      "404": {
+        "entry": "http://localhost:8000/packages/orchestrator/dist/404.html",
+        "integrationMode": "parcel"
+      }
+    },
+    "5xx": {
+      "500": {
+        "entry": "http://localhost:8000/packages/orchestrator/dist/500.html",
+        "integrationMode": "parcel"
+      }
+    }
+  },
+  "layout": {
+    "sources": "http://localhost:8000/packages/layout/dist/mlc-config.js",
+    "content": [
+      {
+        "tag": "mlc-config",
+        "properties": {
+          "initContent": {
+            "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json",
+            "version": 2,
+            "settings": {
+              "composerUri": "http://localhost:8000/packages/orchestrator/dist/composer.production.js",
+              "4xx": {
+                "401": {
+                  "entry": "http://localhost:8000/packages/orchestrator/dist/401.html",
+                  "integrationMode": "parcel"
+                },
+                "404": {
+                  "entry": "http://localhost:8000/packages/orchestrator/dist/404.html",
+                  "integrationMode": "parcel"
+                }
+              },
+              "5xx": {
+                "500": {
+                  "entry": "http://localhost:8000/packages/orchestrator/dist/500.html",
+                  "integrationMode": "parcel"
+                }
+              },
+              "mountPoint": [
+                {
+                  "content": "div#__MICRO_LC_MOUNT_POINT > :first-child {\n  width: inherit;\n  height: inherit;\n  overflow: hidden;\n}\n",
+                  "tag": "style"
+                },
+                {
+                  "attributes": {
+                    "id": "__MICRO_LC_MOUNT_POINT",
+                    "style": "width: 100%; height: 100%;"
+                  },
+                  "tag": "div"
+                }
+              ],
+              "mountPointSelector": "#__MICRO_LC_MOUNT_POINT"
+            },
+            "layout": {
+              "content": {
+                "tag": "slot"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "applications": {
+    "micro-lc": {
+      "integrationMode": "iframe",
+      "route": "./",
+      "src": "./micro-lc.html"
+    }
+  }
+}

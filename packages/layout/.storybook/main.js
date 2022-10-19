@@ -51,7 +51,7 @@ module.exports = {
       build: {
         dynamicImportVarsOptions: {
           exclude: [
-            require.resolve('@micro-lc/iconic/dist/import-icon.js'),
+            require.resolve('@micro-lc/iconic/dist/import-icon/index.js'),
           ]
         },
         rollupOptions: {

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../../interfaces/schemas/v2/config.schema.json",
+  "version": 2,
+  "settings": {
+    "4xx": {
+      "404": {
+        "integrationMode": "parcel",
+        "entry": "http://localhost:8000/packages/orchestrator/dist/404.html"
+      }
+    }
+  }
+}

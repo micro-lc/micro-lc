@@ -31,7 +31,12 @@ const main = async () => {
 
   await startDevServer({
     config: {
+      injectWebSocket: false,
       middleware: [
+        async function noCache(ctx, next) {
+          ctx.set({ 'Cache-Control': 'no-cache' })
+          return next()
+        },
         async function accessControl(ctx, next) {
           ctx.set({ 'Access-Control-Allow-Origin': '*' })
           return next()

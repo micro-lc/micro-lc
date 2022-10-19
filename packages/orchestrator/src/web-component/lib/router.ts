@@ -118,6 +118,17 @@ export function rerouteErrorHandler(err: TypeError): null {
   return null
 }
 
+function getIFramePathname(win = window, baseURI: string): URL {
+  let completeHref = window.location.href
+  const { location: { origin, href } } = win
+  const iframePathname = href.match(new RegExp(origin))
+  if (iframePathname?.index !== undefined) {
+    completeHref = href.slice(iframePathname.index + origin.length)
+  }
+
+  return new URL(completeHref, baseURI)
+}
+
 function getNextMatchingRoute(
   this: RouterContainer, url?: string | undefined
 ): MatchingRouteReturnType {
@@ -135,7 +146,7 @@ function getNextMatchingRoute(
   const result = Array(3).fill(undefined) as MatchingRouteReturnType
   const counters = Array(3).fill(0) as [number, number, number]
 
-  const { pathname } = url ? new URL(url, baseURI) : window.location
+  const { pathname } = url ? new URL(url, baseURI) : getIFramePathname(window, baseURI)
 
   for (const [route, args] of this.loadedApps.values()) {
     if (route === undefined) {
@@ -173,7 +184,32 @@ function getNextMatchingRoute(
   return result
 }
 
-async function flushAndGo(this: RouterContainer, nextMatch: MatchingRoute, incomingError?: RoutingError | undefined): Promise<LoadedAppUpdate> {
+function isSameError(first: RoutingError, second: RoutingError): boolean {
+  if (first.message !== second.message) {
+    return false
+  }
+
+  if (first.reason !== second.reason) {
+    return false
+  }
+
+  if (first.status !== second.status) {
+    return false
+  }
+
+  return true
+}
+
+async function flushAndGo(
+  this: RouterContainer,
+  nextMatch: MatchingRoute,
+  incomingError?: RoutingError | undefined,
+  previousIncomingError?: RoutingError | undefined
+): Promise<LoadedAppUpdate> {
+  if (previousIncomingError && incomingError && isSameError(previousIncomingError, incomingError)) {
+    return undefined
+  }
+
   let error: RoutingError | undefined = incomingError
 
   const unmount = getUnmount()
@@ -221,7 +257,7 @@ async function flushAndGo(this: RouterContainer, nextMatch: MatchingRoute, incom
       error = { ...error, message, status }
 
       if (errorRoute) {
-        await flushAndGo.call(this, errorRoute, error).then((update) => update?.({ message, reason }))
+        await flushAndGo.call(this, errorRoute, error, incomingError).then((update) => update?.({ message, reason }))
       }
 
       return undefined
@@ -285,6 +321,7 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
   }
 
   if (!exactMatch && isDefault(url ?? window.location.href, this.ownerDocument.baseURI)) {
+    window.history.replaceState(window.history.state, '', this.config.settings.defaultUrl)
     nextMatch = defaultMatch
   }
 

@@ -17,6 +17,7 @@ const themeConfig = {
   },
   docs: {
     sidebar: {
+      autoCollapseCategories: true,
       hideable: true,
     },
   },
@@ -25,10 +26,20 @@ const themeConfig = {
     hideOnScroll: true,
     items: [
       {
-        docId: 'introduction',
+        docId: 'docs/introduction',
         label: 'Docs',
         position: 'left',
         type: 'doc',
+      },
+      {
+        docId: 'api/micro-lc.config.json',
+        label: 'API',
+        position: 'left',
+        type: 'doc',
+      },
+      {
+        label: 'Playground',
+        to: '/playground',
       },
     ],
     logo: {
@@ -50,7 +61,10 @@ const config = {
   favicon: 'img/favicon.png',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  plugins: [['@docusaurus/plugin-content-docs', pluginContentDocsConfig]],
+  plugins: [
+    ['@docusaurus/plugin-content-docs', pluginContentDocsConfig],
+    '@docusaurus/plugin-content-pages',
+  ],
   tagline: 'micro-lc project documentation',
   themeConfig,
   themes: [['@docusaurus/theme-classic', themeClassicConfig]],

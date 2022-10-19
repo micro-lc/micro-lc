@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/playground/" target="_blank" />
+  <link rel="icon" href="./favicon.png" />
+  <style>
+    html, body, micro-lc {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+  <script async type="module" src="http://localhost:8000/packages/layout/dist/mlc-url.js"></script>
+  <script async type="module" src="http://localhost:8000/packages/orchestrator/dist/micro-lc.development.js"></script>
+</head>
+<body>
+  <mlc-url style="width: 100%; display: flex;"></mlc-url>
+
+  <script>
+    window.onmessage = function (event) {
+      try {
+        const config = JSON.parse(event.data)
+        let microlc = document.querySelector('micro-lc')
+
+        console.log('microlc', microlc)
+
+        if(microlc === null) {
+          microlc = document.createElement('micro-lc')
+          document.body.appendChild(microlc)
+        }
+
+        setTimeout(() => {
+          Object.assign(microlc, {config})
+        }, 300)        
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  </script>
+</body>
+</html>

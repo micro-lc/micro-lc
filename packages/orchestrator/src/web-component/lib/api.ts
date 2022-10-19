@@ -1,21 +1,24 @@
+import type { Observable, Subscription } from 'rxjs'
 import { BehaviorSubject } from 'rxjs'
 
 import type { CompleteConfig } from '../../config'
 import type { Microlc } from '../micro-lc'
 
-import type { MicrolcEvent, Observable } from './events'
 import type { BaseExtension } from './extensions'
 import type { QiankunMicroApp } from './qiankun'
 import { currentApplication$, getCurrentApplicationAssets } from './router'
 
+export type MicrolcEvent = Record<string, unknown>
+
 export interface MicrolcApi<
   T extends BaseExtension, E extends MicrolcEvent = MicrolcEvent
-> extends Observable<Partial<E>> {
+> {
   readonly currentApplication$: Observable<string | undefined>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
   readonly getExtensions: () => Readonly<Partial<T>>
+  readonly next: (value: E) => void
   readonly router: {
     goTo: (url: string | URL | undefined) => void
     goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): Promise<void>
@@ -27,6 +30,7 @@ export interface MicrolcApi<
   readonly set: (event: Partial<E>) => void
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
   readonly setExtension: (key: keyof T, value: T[keyof T]) => Readonly<T>
+  readonly subscribe: (next: (value: Partial<E>) => void) => Subscription
 }
 
 export function createMicrolcApiInstance<Extensions extends BaseExtension, Event extends MicrolcEvent>(
