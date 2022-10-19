@@ -13,9 +13,18 @@ interface MultipleSchemas {
 
 export type SchemaOptions = SchemaObject | MultipleSchemas
 
-const acceptedTypes = [
+const jsonAcceptedTypes = [
   'application/json',
   'text/x-json',
+]
+const yamlAcceptedTypes = [
+  'application/x-yaml',
+  'text/yaml',
+]
+
+const acceptedTypes = [
+  ...jsonAcceptedTypes,
+  ...yamlAcceptedTypes,
 ]
 
 function isSchemaOptions(input: SchemaOptions): input is MultipleSchemas {
@@ -33,12 +42,22 @@ export async function jsonFetcher(url: string): Promise<unknown> {
     })
     .then((res) => {
       const contentType = res.headers.get('Content-Type') ?? ''
-      const isJson = acceptedTypes.reduce(
+      const isJson = jsonAcceptedTypes.reduce(
+        (accepted, str) => contentType.includes(str) || accepted, false
+      )
+      const isYaml = yamlAcceptedTypes.reduce(
         (accepted, str) => contentType.includes(str) || accepted, false
       )
 
       if (res.ok && isJson) {
         return res.json() as Promise<unknown>
+      }
+
+      if (res.ok && isYaml) {
+        return Promise.all([import('js-yaml'), res.text()])
+          .then(([{ default: yaml }, data]) => {
+            return yaml.load(data, { json: true, schema: yaml.JSON_SCHEMA })
+          })
       }
 
       return Promise.reject(new TypeError('20' as ErrorCodes.InvalidJSONError))

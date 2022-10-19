@@ -13,7 +13,7 @@ export default function fastTrack(): JSX.Element {
       >
         <iframe
           style={{width: 'inherit', height: 'inherit'}}
-          src="http://localhost:8000/packages/orchestrator/dist/playground/index.html"
+          src="/playground/index.html"
         ></iframe>
       </div>
     </Layout>

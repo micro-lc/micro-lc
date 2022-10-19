@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <base href="/playground/" target="_blank" />
   <link rel="icon" href="./favicon.png" />
   <style>
     html, body, micro-lc {
@@ -16,14 +17,23 @@
 </head>
 <body>
   <mlc-url style="width: 100%; display: flex;"></mlc-url>
-  <micro-lc></micro-lc>
 
   <script>
-    const _ = document.querySelector('micro-lc')
     window.onmessage = function (event) {
       try {
         const config = JSON.parse(event.data)
-        _.config = config
+        let microlc = document.querySelector('micro-lc')
+
+        console.log('microlc', microlc)
+
+        if(microlc === null) {
+          microlc = document.createElement('micro-lc')
+          document.body.appendChild(microlc)
+        }
+
+        setTimeout(() => {
+          Object.assign(microlc, {config})
+        }, 300)        
       } catch (err) {
         console.error(err)
       }

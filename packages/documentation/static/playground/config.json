@@ -1,36 +1,35 @@
 {
-  "$schema": "../../../../packages/interfaces/schemas/v2/config.schema.json",
+  "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
     "defaultUrl": "./",
-    "composerUri": "/packages/orchestrator/dist/composer.development.js",
+    "composerUri": "http://localhost:8000/packages/orchestrator/dist/composer.development.js",
     "4xx": {
       "401": {
-        "entry": "/packages/orchestrator/dist/401.html",
+        "entry": "http://localhost:8000/packages/orchestrator/dist/401.html",
         "integrationMode": "parcel"
       },
       "404": {
-        "entry": "/packages/orchestrator/dist/404.html",
+        "entry": "http://localhost:8000/packages/orchestrator/dist/404.html",
         "integrationMode": "parcel"
       }
     },
     "5xx": {
       "500": {
-        "entry": "/packages/orchestrator/dist/500.html",
+        "entry": "http://localhost:8000/packages/orchestrator/dist/500.html",
         "integrationMode": "parcel"
       }
     }
   },
   "layout": {
-    "sources": "/packages/layout/dist/mlc-config.js",
+    "sources": "http://localhost:8000/packages/layout/dist/mlc-config.js",
     "content": [
       {
         "tag": "mlc-config",
         "properties": {
-          "initConfig": {
-            "applications": {},
-            "importmap": {},
-            "layout": { "content": { "tag": "slot" } },
+          "initContent": {
+            "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json",
+            "version": 2,
             "settings": {
               "composerUri": "http://localhost:8000/packages/orchestrator/dist/composer.production.js",
               "4xx": {
@@ -51,7 +50,7 @@
               },
               "mountPoint": [
                 {
-                  "content": "div#__MICRO_LC_MOUNT_POINT > :first-child {width: inherit; height: inherit; overflow: hidden;}",
+                  "content": "div#__MICRO_LC_MOUNT_POINT > :first-child {\n  width: inherit;\n  height: inherit;\n  overflow: hidden;\n}\n",
                   "tag": "style"
                 },
                 {
@@ -64,8 +63,11 @@
               ],
               "mountPointSelector": "#__MICRO_LC_MOUNT_POINT"
             },
-            "shared": {},
-            "version": 2
+            "layout": {
+              "content": {
+                "tag": "slot"
+              }
+            }
           }
         }
       }

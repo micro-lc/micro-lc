@@ -2,6 +2,7 @@
   "name": "@micro-lc/layout",
   "version": "0.1.0",
   "scripts": {
+    "cleanup": "yarn run -T rimraf dist node_modules coverage",
     "make-types": "ts-node ./scripts/make-types.ts",
     "check:types": "yarn make-types && yarn tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
     "storybook": "start-storybook -p 6007",
@@ -18,8 +19,10 @@
     "@ctrl/tinycolor": "^3.4.1",
     "@micro-lc/iconic": "workspace:*",
     "antd": "^4.23.5",
+    "js-yaml": "^4.1.0",
     "lit": "^2.4.0",
     "monaco-editor": "^0.34.0",
+    "monaco-yaml": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -48,6 +51,7 @@
     "@storybook/web-components": "^6.5.12",
     "@types/babel__core": "^7.1.19",
     "@types/glob": "^8.0.0",
+    "@types/js-yaml": "^4.0.5",
     "@types/lodash-es": "^4.17.6",
     "@types/mocha": "^10.0.0",
     "@types/react": "^18.0.21",

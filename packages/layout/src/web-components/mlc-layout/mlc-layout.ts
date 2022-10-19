@@ -1,4 +1,3 @@
-import type { Subscription } from '@micro-lc/orchestrator'
 import { html } from 'lit'
 import { property, query, state } from 'lit/decorators.js'
 
@@ -20,7 +19,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
 
   microlcApi?: Partial<MlcApi>
 
-  private _currentApplicationSub?: Subscription
+  private _currentApplicationSub?: ReturnType<MlcApi['subscribe']>
   private _wasDisconnected = false
 
   @property({ attribute: 'mode' }) mode: Mode = 'overlaySideBar'
