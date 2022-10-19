@@ -66,6 +66,7 @@ export function ExampleFrame({
     if (iFrameRef.current) {
       frameUrlChangeListener(iFrameRef.current, url => setCurrUrl(url))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iFrameRef, iFrameRef.current])
 
   return (
