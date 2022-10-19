@@ -32,9 +32,9 @@ interface AntdIconDefaultImport {
 interface FontAwesomeIconImport { default: { definition: FontawesomeIconDefinition } }
 
 const resources: Resources = {
-  '@ant-design/icons-svg': 'https://cdn.jsdelivr.net/npm/@ant-design/icons-svg@4.2.1/es/asn/',
-  '@fortawesome/free-regular-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconix@next/dist/far/',
-  '@fortawesome/free-solid-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconix@next/dist/fas/',
+  '@ant-design/icons-svg': 'https://cdn.jsdelivr.net/npm/@ant-design/icons-svg@latest/es/asn/',
+  '@fortawesome/free-regular-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/far/',
+  '@fortawesome/free-solid-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/fas/',
 }
 
 const resourceKeys = Object.keys(resources)
