@@ -2643,7 +2643,7 @@ __metadata:
     "@types/chai": ^4.3.3
     "@types/chai-string": ^1.4.2
     "@types/mocha": ^10.0.0
-    "@types/node": ^18.11.0
+    "@types/node": ^18.11.2
     "@types/sinon": ^10.0.13
     "@types/sinon-chai": ^3.2.8
     "@web/dev-server-esbuild": ^0.3.2
@@ -2684,7 +2684,7 @@ __metadata:
     "@mdx-js/react": 1.6.22
     "@micro-lc/layout": "workspace:*"
     "@tsconfig/docusaurus": ^1.0.6
-    "@types/node": ^18.11.0
+    "@types/node": ^18.11.2
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
     clsx: ^1.2.1
@@ -2708,7 +2708,7 @@ __metadata:
     "@rollup/plugin-replace": ^5.0.0
     "@types/glob": ^8.0.0
     "@types/mocha": ^10.0.0
-    "@types/node": ^18.11.0
+    "@types/node": ^18.11.2
     "@types/prop-types": ^15.7.5
     "@types/react": ^18.0.21
     "@types/react-dom": ^18.0.6
@@ -2738,7 +2738,7 @@ __metadata:
     "@types/glob": ^8.0.0
     "@types/mkdirp": ^1.0.2
     "@types/mocha": ^10.0.0
-    "@types/node": ^18.11.0
+    "@types/node": ^18.11.2
     ajv: ^8.11.0
     ajv-formats: ^2.1.1
     axios: ^1.1.3
@@ -2805,7 +2805,7 @@ __metadata:
     "@web/dev-server-rollup": ^0.3.19
     "@web/test-runner": ^0.14.0
     "@web/test-runner-playwright": ^0.8.10
-    antd: ^4.23.5
+    antd: ^4.23.6
     cssnano: ^5.1.13
     esbuild: ^0.15.11
     glob: ^8.0.3
@@ -2814,7 +2814,7 @@ __metadata:
     less: ^4.1.3
     lit: ^2.4.0
     mocha: ^10.1.0
-    monaco-editor: ^0.34.0
+    monaco-editor: ^0.34.1
     monaco-yaml: ^4.0.2
     postcss: ^8.4.18
     react: ^18.2.0
@@ -2850,7 +2850,7 @@ __metadata:
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.6
     "@types/mocha": ^10.0.0
-    "@types/node": ^18.11.0
+    "@types/node": ^18.11.2
     "@types/sinon": ^10.0.13
     "@types/sinon-chai": ^3.2.8
     "@web/dev-server": ^0.1.34
@@ -5074,10 +5074,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.11.0":
-  version: 18.11.0
-  resolution: "@types/node@npm:18.11.0"
-  checksum: f27f899ab428e5732f04fadadc9203f44bdf3abf56474540ee27da90e4f2ba133faf87263cada4d2271955f92ee6a142bd50683c86290fe5070c19aac44fd654
+"@types/node@npm:^18.11.2":
+  version: 18.11.2
+  resolution: "@types/node@npm:18.11.2"
+  checksum: 0ff5c90fb9ab653e018b858479aea4d2f763b07b31f9502383d408936f525ca37cac82ea27774a0dd0356ff9badba2792a6a3fff94f79fd7c82ee2a892c43ed5
   languageName: node
   linkType: hard
 
@@ -6554,9 +6554,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"antd@npm:^4.23.5":
-  version: 4.23.5
-  resolution: "antd@npm:4.23.5"
+"antd@npm:^4.23.6":
+  version: 4.23.6
+  resolution: "antd@npm:4.23.6"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@ant-design/icons": ^4.7.0
@@ -6583,7 +6583,7 @@ __metadata:
     rc-motion: ^2.6.1
     rc-notification: ~4.6.0
     rc-pagination: ~3.1.17
-    rc-picker: ~2.6.10
+    rc-picker: ~2.6.11
     rc-progress: ~3.3.2
     rc-rate: ~2.9.0
     rc-resize-observer: ^1.2.0
@@ -6593,8 +6593,8 @@ __metadata:
     rc-steps: ~4.1.0
     rc-switch: ~3.2.0
     rc-table: ~7.26.0
-    rc-tabs: ~12.1.0-alpha.1
-    rc-textarea: ~0.4.3
+    rc-tabs: ~12.2.0
+    rc-textarea: ~0.4.5
     rc-tooltip: ~5.2.0
     rc-tree: ~5.7.0
     rc-tree-select: ~5.5.0
@@ -6605,7 +6605,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 07ce3e12bb4e7da9a0e859702d80d511adee59c87d4f4bd83fc9f0832e0831f26dedf3ce6b9776353079df77032c18df09f20838d2b6f3609b5d1f6d78398300
+  checksum: 8139cadcb51a0ca8aa56b4c2eb75fe6879f0a4f1253151fef545da19aa10e0afb1b8c2caeae328b690519f355f353d05d19f726d0a3266c80e0e0f348b3d9b67
   languageName: node
   linkType: hard
 
@@ -16470,10 +16470,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monaco-editor@npm:^0.34.0":
-  version: 0.34.0
-  resolution: "monaco-editor@npm:0.34.0"
-  checksum: 10a28c1fe07268a23106ec9b743339af603e00c3ce646de72bf74f77e3d44065536f1a11f1a86ed459dfd9cb891261e6c7974377fc511eb65f354d6ddc89275b
+"monaco-editor@npm:^0.34.1":
+  version: 0.34.1
+  resolution: "monaco-editor@npm:0.34.1"
+  checksum: 4c6b35d7c566ec414b758cdd45dfb08d6fe46e2e8fdeed88b619a52c47592ce6df476d9490a58e5d450339c4a93f09d500adc9c017a348179277b98aa6009fa4
   languageName: node
   linkType: hard
 
@@ -19382,9 +19382,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-picker@npm:~2.6.10":
-  version: 2.6.10
-  resolution: "rc-picker@npm:2.6.10"
+"rc-picker@npm:~2.6.11":
+  version: 2.6.11
+  resolution: "rc-picker@npm:2.6.11"
   dependencies:
     "@babel/runtime": ^7.10.1
     classnames: ^2.2.1
@@ -19397,7 +19397,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 4a94b64ce57d6bbd9dab3b496c652ccfb05f4a621e1cfbd71071a81fc184dc81dc3a4a6095765c34b20f547774adbc8615125179ca89b0795c38c966a5cce135
+  checksum: 85a50c1a26764602bf5072c63be9c8a3141696ec4d6db7bb5252e574d9e63ab0abc33c85ad2f6337f455c858e0257c20ea188d792546b70d293a42e25348fc05
   languageName: node
   linkType: hard
 
@@ -19536,9 +19536,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-tabs@npm:~12.1.0-alpha.1":
-  version: 12.1.0-alpha.1
-  resolution: "rc-tabs@npm:12.1.0-alpha.1"
+"rc-tabs@npm:~12.2.0":
+  version: 12.2.1
+  resolution: "rc-tabs@npm:12.2.1"
   dependencies:
     "@babel/runtime": ^7.11.2
     classnames: 2.x
@@ -19550,11 +19550,11 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 5f5d642ee7b88d793f107c5c7a12a8a7aae95baefbe95edde10513343ded71326e3a12c5bec645cd4f62eff809e1f939d2a1d981315a0a1d9241aa231703634b
+  checksum: f2ed5b66a4c1ea077b23221d84fef5aa9b01cd45984870d59f66db82f1c8a36c63a74e24fe94b7c7695bb10574d5d1004ddf6939e3ae9f844aa4701ff3807db6
   languageName: node
   linkType: hard
 
-"rc-textarea@npm:^0.4.0, rc-textarea@npm:~0.4.3":
+"rc-textarea@npm:^0.4.0, rc-textarea@npm:~0.4.5":
   version: 0.4.5
   resolution: "rc-textarea@npm:0.4.5"
   dependencies:

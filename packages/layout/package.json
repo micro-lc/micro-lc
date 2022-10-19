@@ -18,10 +18,10 @@
     "@ant-design/icons-svg": "^4.2.1",
     "@ctrl/tinycolor": "^3.4.1",
     "@micro-lc/iconic": "workspace:*",
-    "antd": "^4.23.5",
+    "antd": "^4.23.6",
     "js-yaml": "^4.1.0",
     "lit": "^2.4.0",
-    "monaco-editor": "^0.34.0",
+    "monaco-editor": "^0.34.1",
     "monaco-yaml": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
