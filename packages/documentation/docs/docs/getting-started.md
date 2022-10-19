@@ -4,8 +4,8 @@ sidebar_label: Getting started
 sidebar_position: 20
 ---
 
-<micro-lc></micro-lc> is shipped as an ES module CDN bundle and can be imported in any HTML page. Moreover, a dockerized webserver is
-available on Docker Hub with a Docker Compose `yaml` file.
+<micro-lc></micro-lc> is shipped as an ES module CDN bundle and can be imported in any HTML page. Moreover, a dockerized
+webserver is available on Docker Hub with a Docker Compose `yaml` file.
 
 ## Import from CDN
 
@@ -105,21 +105,4 @@ python -m http.server 8000
 
 ## Deploy docker container
 
-## Docker Compose configuration
-
-```yaml file="docker-compose.yml
-version: '3'
-
-services:
-  micro-lc:
-
-```
-
-* Implementazione da CND
-* Download del container (Docker + Docker Compose)
-* Building from source
-
-## Playground
-
-* Code sandbox
-* StackBlitz
+## Building from source

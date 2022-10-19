@@ -1,5 +1,6 @@
 ---
 title: Reactive communication
+description: Reactive state object manipulation
 sidebar_label: Reactive communication
 sidebar_position: 20
 ---

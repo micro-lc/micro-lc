@@ -17,8 +17,8 @@ alike. Namely, <micro-lc></micro-lc> API provides method to inject global
 This technique could be useful to unify global CSS features like primary color, danger color, font family, border radius,
 and so on.
 
-According with <micro-lc></micro-lc> shadow DOM configuration, CSS global variables are injected in `:host` if <micro-lc></micro-lc>
-is in shadow DOM mode. Otherwise, variable will be appended to `:root` (which in most cases is `head`). 
+According with <micro-lc></micro-lc> shadow DOM configuration, CSS global variables are injected in `:host` if 
+<micro-lc></micro-lc> is in shadow DOM mode. Otherwise, variable will be appended to `:root` (which in most cases is `head`). 
 
 :::tip
 To avoid using shadow DOM, a <micro-lc></micro-lc> property `disableShadowDom` (and mirrored attribute `disable-shadow-dom`)

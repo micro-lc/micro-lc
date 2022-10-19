@@ -32,8 +32,14 @@ const themeConfig = {
         type: 'doc',
       },
       {
-        docId: 'api/micro-lc.config.json',
+        docId: 'api/configuration-schema',
         label: 'API',
+        position: 'left',
+        type: 'doc',
+      },
+      {
+        docId: 'add-ons/components/index',
+        label: 'Add-ons',
         position: 'left',
         type: 'doc',
       },
