@@ -21,7 +21,7 @@ export interface MicrolcApi<
   readonly next: (value: E) => void
   readonly router: {
     goTo: (url: string | URL | undefined) => void
-    goToApplication<S = unknown>(id: string, opts?: {data?: S; type?: 'push' | 'replace'}): Promise<void>
+    goToApplication<S = unknown>(id: string, data?: S): Promise<void>
     goToErrorPage(statusCode?: number): void
     open: typeof window.open
     pushState: typeof window.history.pushState
@@ -72,8 +72,8 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
         window.history.pushState(data, '', app.route)
         return Promise.resolve()
       },
-      goToErrorPage: async (statusCode?: number): Promise<void> => {
-        return this._rerouteToError(statusCode).then(() => { /* noop */ })
+      goToErrorPage: async (statusCode?: number, reason?: string): Promise<void> => {
+        return this._rerouteToError(statusCode, reason).then(() => { /* noop */ })
       },
       open: (url?: string | URL | undefined, target?: string | undefined, features?: string | undefined) =>
         window.open(url, target, features),
