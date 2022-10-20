@@ -41,3 +41,9 @@ export const GROUPS_CONFIGURATION = {
     key: 'groups',
   },
 }
+
+export const PERMISSIONS_CONFIGURATION = {
+  function: {
+    key: 'permissions',
+  },
+}

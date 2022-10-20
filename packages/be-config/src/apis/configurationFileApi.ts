@@ -24,7 +24,7 @@ import {referencesReplacer} from '../utils/referencesReplacer'
 const retrieveJsonConfiguration = async(instanceConfig: any, configurationName: string, userGroups: string[]) => {
   const configurationPath = `${instanceConfig.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}`
   const configurationContent = await readJsonConfigurationFile(configurationPath)
-  const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
+  const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups, [])
   return referencesReplacer(configurationContentFiltered)
 }
 

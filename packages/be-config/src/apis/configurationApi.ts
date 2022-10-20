@@ -38,8 +38,8 @@ export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify)
   const configuration: Configuration = await readPluginConfiguration(fastifyInstance)
   return (request, reply) => {
     const userGroups = request.getGroups()
-    const allowedPlugins = aclExpressionEvaluator(configuration.plugins || [], userGroups)
-    const allowedInternalPlugins = aclExpressionEvaluator(configuration.internalPlugins || [], userGroups)
+    const allowedPlugins = aclExpressionEvaluator(configuration.plugins || [], userGroups, [])
+    const allowedInternalPlugins = aclExpressionEvaluator(configuration.internalPlugins || [], userGroups, [])
     const configurationForUser = buildNewConfiguration(configuration, allowedPlugins, allowedInternalPlugins)
     reply.send(configurationForUser)
   }

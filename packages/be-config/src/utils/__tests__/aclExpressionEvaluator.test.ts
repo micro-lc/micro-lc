@@ -21,7 +21,7 @@ import validMicrolcConfig from '../../__tests__/configurationMocks/validMicrolcC
 describe('Plugins filter tests', () => {
   it('Return all the plugins without expression', () => {
     const plugins = validMicrolcConfig.plugins as Plugin[]
-    const pluginsFiltered = aclExpressionEvaluator(plugins, [])
+    const pluginsFiltered = aclExpressionEvaluator(plugins, [], [])
     expect(pluginsFiltered.length).toBe(plugins.length)
     expect(pluginsFiltered).toMatchObject(plugins)
   })
@@ -39,7 +39,7 @@ describe('Plugins filter tests', () => {
       label: 'Plugin 2',
       aclExpression: '!groups.developer',
     }]
-    const pluginsFiltered = aclExpressionEvaluator(plugins, ['ceo', 'admin', 'developer'])
+    const pluginsFiltered = aclExpressionEvaluator(plugins, ['ceo', 'admin', 'developer'], [])
     expect(pluginsFiltered.length).toBe(1)
     expect(pluginsFiltered[0]).toMatchObject(allowedPlugin)
   })
@@ -61,18 +61,18 @@ describe('Plugins filter tests', () => {
       label: 'Plugin 1',
       aclExpression: 'groups.admin && groups.ceo',
     }]
-    const pluginsFiltered = aclExpressionEvaluator(plugins, ['po', 'reviewer'])
+    const pluginsFiltered = aclExpressionEvaluator(plugins, ['po', 'reviewer'], [])
     expect(pluginsFiltered.length).toBe(2)
     expect(pluginsFiltered).toMatchObject(allowedPlugins)
   })
 
   it('Everything is fine with empty plugins list', () => {
-    const pluginsFiltered = aclExpressionEvaluator([], ['po', 'reviewer'])
+    const pluginsFiltered = aclExpressionEvaluator([], ['po', 'reviewer'], [])
     expect(pluginsFiltered).toMatchObject([])
   })
 
   it('Everything is fine with empty plugins and groups list', () => {
-    const pluginsFiltered = aclExpressionEvaluator([], [])
+    const pluginsFiltered = aclExpressionEvaluator([], [], [])
     expect(pluginsFiltered).toMatchObject([])
   })
 
@@ -84,7 +84,7 @@ describe('Plugins filter tests', () => {
         },
       },
     }
-    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [])
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [], [])
     expect(pluginsFiltered).toMatchObject(allConfiguration)
   })
 
@@ -97,7 +97,7 @@ describe('Plugins filter tests', () => {
         },
       },
     }
-    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [])
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [], [])
     expect(pluginsFiltered).toMatchObject({test: {}})
   })
 
@@ -110,7 +110,7 @@ describe('Plugins filter tests', () => {
         },
       },
     }
-    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, ['ceo', 'admin'])
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, ['ceo', 'admin'], [])
     expect(pluginsFiltered).toMatchObject(allConfiguration)
   })
 
@@ -123,12 +123,38 @@ describe('Plugins filter tests', () => {
         },
       },
     }
-    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, ['po', 'admin'])
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, ['po', 'admin'], [])
+    expect(pluginsFiltered).toMatchObject({test: {}})
+  })
+
+  it('general acl object and invalid permissions', () => {
+    const allConfiguration = {
+      test: {
+        nested: {
+          aclExpression: 'permissions.api.users.get',
+          object: {},
+        },
+      },
+    }
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [], ['api.users.patch'])
+    expect(pluginsFiltered).toMatchObject({test: {}})
+  })
+
+  it('general acl object and permission with less nested object', () => {
+    const allConfiguration = {
+      test: {
+        nested: {
+          aclExpression: 'permissions.api && permissions.api.users && permissions.api.users.get',
+          object: {},
+        },
+      },
+    }
+    const pluginsFiltered = aclExpressionEvaluator(allConfiguration, [], ['api'])
     expect(pluginsFiltered).toMatchObject({test: {}})
   })
 
   it('not object value', () => {
-    const pluginsFiltered = aclExpressionEvaluator(true, ['po', 'admin'])
+    const pluginsFiltered = aclExpressionEvaluator(true, ['po', 'admin'], [])
     expect(pluginsFiltered).toBe(true)
   })
 
@@ -146,8 +172,31 @@ describe('Plugins filter tests', () => {
         },
       ],
     }
-    const filtered = aclExpressionEvaluator(toFilter, ['doctor'])
+    const filtered = aclExpressionEvaluator(toFilter, ['doctor'], [])
     expect(filtered.plugins.length).toBe(1)
+    expect(filtered.plugins.length).not.toBe(toFilter.plugins.length)
+    expect(filtered).not.toBe(toFilter)
+  })
+
+  it('works with both groups and permissions', () => {
+    const toFilter = {
+      plugins: [
+        {
+          aclExpression: 'groups.superadmin || groups.admin || groups.secretary',
+        },
+        {
+          aclExpression: 'groups.superadmin || groups.admin || groups.doctor',
+        },
+        {
+          aclExpression: 'groups.superadmin || groups.admin',
+        },
+        {
+          aclExpression: 'permissions.api.test_crud.all',
+        },
+      ],
+    }
+    const filtered = aclExpressionEvaluator(toFilter, ['doctor'], ['api.users.get', 'api.users.post', 'api.test-crud.all'])
+    expect(filtered.plugins.length).toBe(2)
     expect(filtered.plugins.length).not.toBe(toFilter.plugins.length)
     expect(filtered).not.toBe(toFilter)
   })
