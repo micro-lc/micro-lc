@@ -24,9 +24,12 @@
       margin: 0;
     }
   </style>
+  <script type="module" src="http://localhost:8000/packages/layout/dist/mlc-loading-animation.js"></script>
   <script type="module" src="http://localhost:8000/packages/orchestrator/dist/micro-lc.development.js"></script>
 </head>
 <body>
-  <micro-lc config-src="./config.json"></micro-lc>
+  <mlc-loading-animation primary-color="#de1f92">
+    <micro-lc config-src="./config.json"></micro-lc>
+  </mlc-loading-animation>
 </body>
 </html>
