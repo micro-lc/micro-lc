@@ -4,6 +4,11 @@ sidebar_label: Composition
 sidebar_position: 20
 ---
 
+---
+<micro-lc></micro-lc> provides a simple configuration setting that is converted into a fully functioning HTML fragment then embedded
+in your page, starting from a JSON or a Yaml (coming soon) file.
+---
+
 Composition refers to the process of transforming a `string` or a serialization markup language content, as JSON or Yaml,
 into a valid appendable DOM. In the case at hand we would love to dynamically instruct <micro-lc></micro-lc> on the shape of our layout
 by writing a configuration file to be loaded at runtime.
