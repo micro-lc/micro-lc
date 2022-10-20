@@ -43,7 +43,6 @@ interface PostProcessTemplateOptions {
 }
 
 export function postProcessTemplate(tplResult: TemplateResult, opts: PostProcessTemplateOptions): TemplateResult {
-  console.log(opts.injectBase, opts)
   if (opts.injectBase) {
     const parser = new DOMParser()
     const document = parser.parseFromString(tplResult.template, 'text/html')

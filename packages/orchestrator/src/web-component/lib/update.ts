@@ -5,6 +5,7 @@ import type { Entry } from 'qiankun'
 
 
 import { defaultConfig } from '../../config'
+import type { ErrorCodes } from '../../logger'
 import logger from '../../logger'
 import { toArray } from '../../utils/array'
 import type { SchemaOptions } from '../../utils/json'
@@ -38,8 +39,8 @@ export async function initImportMapSupport(): Promise<void> {
   return done
 }
 
-export const handleInitImportMapError = (_: TypeError): void => {
-  console.error(_)
+export const handleInitImportMapError = (err: TypeError): void => {
+  logger.error('2' as ErrorCodes.ImportMapError, err.message)
 }
 
 export async function fetchConfig(url: string): Promise<Config> {
