@@ -83,3 +83,5 @@ layout and content composition.
 
 Still, [means of communication](./concepts/communication.md) are easily accessible by both layout and content while
 keeping them apart.
+
+## Compatibility (?)

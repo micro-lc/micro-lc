@@ -4,6 +4,11 @@ sidebar_label: Reuse third party libraries
 sidebar_position: 60
 ---
 
+```mdx-code-block
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+```
+
 :::info Disclaimer
 For the time being, this feature is applicable **only to web components** (i.e., layout and application of type
 [compose](./applications/compose)). In the future it will be extended also to [parcels](./applications/compose).
@@ -21,14 +26,11 @@ Since at present time neither Firefox nor Safari [support](https://caniuse.com/i
 embeds the [es-module-shims](https://github.com/guybedford/es-module-shims) import maps polyfill. Any composable content 
 of <micro-lc></micro-lc> can leverage the import maps technique utility.
 
-### Example
+### Usage example
 
 Suppose you want to use two web components form two different libraries, both having a direct dependency from RxJS.
 
-```mdx-code-block
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
-
+```mdx-code-block 
 <Tabs>
 <TabItem value="library-1" label="Library 1" default>
 ```
@@ -77,16 +79,14 @@ customElements.define('my-other-awesome-web-component', MyAwesomeWebComponent)
 ```yaml title=micro-lc.config.yml
 "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json"
 version: 2
-settings:
-  composerUri: "https://****************/composer.development.js"
 applications:
   admins:
     integrationMode: compose
     route: "/",
     config:
       sources:
-        - "https://library-1.js"
-        - "https://library-2.js"
+        - "https://my-static-server/library-1.js"
+        - "https://my-static-server/library-2.js"
       content:
         # highlight-next-line
         - tag: "my-awesome-web-component"
@@ -115,22 +115,23 @@ import { filter } from 'rxjs'
 Otherwise, the browser will fire an error like:
 
 ```mdx-code-block
-<p style={{padding: '10px', backgroundColor: '#ffc7d577', color: 'red', borderRadius: '5px'}}>
-  Error: Unable to resolve specifier 'rxjs'
-</p>
+<console-error-line>Error: Unable to resolve specifier 'rxjs'</console-error-line>
 ```
 
 To learn more about the topic, visit [ES Module Shims repository](https://github.com/guybedford/es-module-shims#es-module-shims).
 :::
 
-To achieve this behaviour, the share dependency has to be declared in <micro-lc></micro-lc> configuration at application
-level:
+To achieve this behaviour, the share dependency has to be declared in <micro-lc></micro-lc> configuration. The point
+where you declare it depends on its scope: it can be declared at application level – and it would be available only to
+the components in that application –, or globally – and it would be available everywhere –.
 
+```mdx-code-block
+<Tabs>
+<TabItem value="application-level" label="Application level" default>
+```
 ```yaml title=micro-lc.config.yml
 "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json"
 version: 2
-settings:
-  composerUri: "https://****************/composer.development.js"
 applications:
   admins:
     integrationMode: compose
@@ -138,8 +139,8 @@ applications:
     config:
       sources:
         uris: 
-          - "https://library-1.js"
-          - "https://library-2.js"
+        - "https://my-static-server/library-1.js"
+        - "https://my-static-server/library-2.js"
         # highlight-start
         importmap: 
           imports:
@@ -149,14 +150,13 @@ applications:
         - tag: "my-awesome-web-component"
         - tag: "my-other-awesome-web-component"
 ```
-
-Or, even better, at top level:
-
+```mdx-code-block
+</TabItem>
+<TabItem value="global-level" label="Global level">
+```
 ```yaml title=micro-lc.config.yml
 "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json"
 version: 2
-settings:
-  composerUri: "https://****************/composer.development.js"
 # highlight-start
 importmap:
   imports:
@@ -168,13 +168,15 @@ applications:
     route: "/",
     config:
       sources:
-        - "https://library-1.js"
-        - "https://library-2.js"
+        - "https://my-static-server/library-1.js"
+        - "https://my-static-server/library-2.js"
       content:
         - tag: "my-awesome-web-component"
         - tag: "my-other-awesome-web-component"
 ```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
 
-:::caution
-Something about deps versioning...
-:::
+### Dependency scoping
