@@ -4,6 +4,12 @@ sidebar_label: Communication
 sidebar_position: 40
 ---
 
+:::info Disclaimer
+Global state pattern is discouraged in favour of event-driven communication. Moreover, contexts can be shared between
+applications and sub-applications by using either declarative tools or forcing state refresh by updating properties
+(React-like).
+:::
+
 ## Browser native API
 
 ## micro-lc API
