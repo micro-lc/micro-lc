@@ -2,24 +2,7 @@
   "$schema": "../../packages/interfaces/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
-    "defaultUrl": "./",
-    "composerUri": "/packages/orchestrator/dist/composer.development.js",
-    "4xx": {
-      "401": {
-        "entry": "/packages/orchestrator/dist/401.html",
-        "integrationMode": "parcel"
-      },
-      "404": {
-        "entry": "/packages/orchestrator/dist/404.html",
-        "integrationMode": "parcel"
-      }
-    },
-    "5xx": {
-      "500": {
-        "entry": "/packages/orchestrator/dist/500.html",
-        "integrationMode": "parcel"
-      }
-    }
+    "defaultUrl": "./"
   },
   "layout": {
     "sources": "/packages/layout/dist/mlc-config.js",
