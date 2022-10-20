@@ -2,9 +2,12 @@ import { createComposerContext, premount } from '@micro-lc/composer'
 import type { Config } from '@micro-lc/interfaces/v2'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'
+import { take } from 'rxjs'
 
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
+import type { ErrorCodes } from '../logger'
+import logger from '../logger'
 
 import type {
   MicrolcApi,
@@ -13,6 +16,7 @@ import type {
   RouterContainer,
   QiankunApi } from './lib'
 import {
+  currentApplication$,
   rerouteToError,
 
   MatchCache,
@@ -40,8 +44,10 @@ type ObservedProperties =
 
 const booleanAttributes: ObservedAttributes[] = ['disable-shadow-dom']
 
-const handleUpdateError = (_: TypeError): void => {
-  console.error(_)
+const handleUpdateError = (err: TypeError): void => {
+  currentApplication$.pipe(take(1)).subscribe((app) => {
+    logger.error('50' as ErrorCodes.UpdateError, app, err.message)
+  })
 }
 
 export class Microlc<

@@ -1,6 +1,26 @@
+/* !
+  Copyright 2022 Mia srl
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ */
 /* eslint-disable no-undef */
 let errorMessage
 let reasonMessage
+const messageMap = {
+  INTERNAL_SERVER_ERROR: 'Oops! Something went wrong',
+  NOT_FOUND: 'Application cannot be found',
+  UNAUTHORIZED: 'Unauthorized',
+}
 function fn(self) {
   Object.assign(
     self,
@@ -8,15 +28,14 @@ function fn(self) {
       bootstrap: () => Promise.resolve(),
       mount: async ({ message, reason }) => {
         errorMessage = document.querySelector('#error-message')
-        errorMessage && (errorMessage.textContent = message !== undefined ? message : 'Oops! Something went wrong')
+        errorMessage && (errorMessage.textContent = message !== undefined && messageMap[message] ? messageMap[message] : messageMap.INTERNAL_SERVER_ERROR)
         reasonMessage = document.querySelector('#reason-message')
         typeof reason === 'string' && reasonMessage && (reasonMessage.textContent = reason)
         return null
       },
       unmount: () => Promise.resolve(null),
       update: async ({ message, reason }) => {
-        console.log(message, reason)
-        errorMessage && (errorMessage.textContent = message !== undefined ? message : 'Oops! Something went wrong')
+        errorMessage && (errorMessage.textContent = message !== undefined && messageMap[message] ? messageMap[message] : messageMap.INTERNAL_SERVER_ERROR)
         typeof reason === 'string' && reasonMessage && (reasonMessage.textContent = reason)
         return null
       },

@@ -1,4 +1,4 @@
-# Copyright 2019 Mia srl
+# Copyright 2022 Mia srl
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 
-ARG NGINX_VERSION="1.23.1"
+ARG NGINX_VERSION="1.23.2"
 
 ###########################################
 # nginx is enhanced with security modules #
@@ -85,22 +85,21 @@ LABEL name="micro-lc" \
       eu.mia-platform.url="https://www.mia-platform.eu" \
       eu.mia-platform.version=${VERSION}
 
-COPY .docker/nginx /etc/nginx
+COPY docker/etc/nginx /etc/nginx
+COPY docker/usr/static /usr/static
+COPY dist /usr/static
 
 RUN touch ./off \
   && chmod o+rw ./off \
   && echo "[micro-lc]: ${COMMIT_SHA}" >> /etc/nginx/commit.sha
 
-WORKDIR /usr/static
-
-COPY dist/ ./
-
 ENV BASE_PATH="/"
-ENV MODE="development"
-ENV CONFIG_SRC=
+ENV MODE="production"
+ENV CONFIG_SRC="./config.json"
 
 RUN chown nginx /etc/nginx/nginx.conf
 RUN chown -R nginx /etc/nginx/conf.d/*
+RUN chown -R nginx /usr/static/*
 
 STOPSIGNAL SIGTERM
 

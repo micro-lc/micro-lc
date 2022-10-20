@@ -5,7 +5,7 @@ import {
 import { build } from 'esbuild'
 import glob from 'glob'
 
-import target from './target'
+import settings from '../../../settings.json'
 
 const reduceToFiles = (globs: string[]) => globs.reduce<string[]>((names, name) => {
   const filename = basename(name, '.js')
@@ -44,7 +44,7 @@ Promise.all(Object.entries({ far, fas }).map(([key, files]) => {
     legalComments: 'inline',
     minify: true,
     outdir: resolve(__dirname, `../dist/${key}`),
-    target,
+    target: settings.target,
   })
 })).then(() => {
   Object.values(mapping).forEach((lib) => {

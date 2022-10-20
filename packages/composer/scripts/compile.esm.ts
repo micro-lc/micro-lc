@@ -10,7 +10,7 @@ build({
   },
   entryPoints,
   format: 'esm',
-  outdir: 'dist',
+  outdir: 'dist/lib',
   target: settings.target,
 }).then(() => {
   console.log('✓ es module')

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noEmit": false,
     "declaration": true,
+    "emitDeclarationOnly": true,
     "outDir": "../dist/lib"
   },
   "include": ["../src/lib", "../src/types"],
