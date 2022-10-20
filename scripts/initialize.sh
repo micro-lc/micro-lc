@@ -3,27 +3,32 @@
 GREEN="\e[1;32m"
 ENDCOLOR="\e[0m"
 
-echo -e "\n\t\U0001F5D1${GREEN}\tcleanup${ENDCOLOR}\n"
+printf "\n\t\U0001F5D1${GREEN}\tcleanup${ENDCOLOR}"
+echo -e "\n"
 yarn cleanup
 
-echo -e "\n\t\u2699${GREEN}\tinterfaces${ENDCOLOR}\n"
-yarn i check:types
+printf "\n\t\u2699${GREEN}\tinterfaces${ENDCOLOR}"
+echo -e "\n"
 yarn i build
 
-echo -e "\n\t\U0001f5bc${GREEN}\ticonic${ENDCOLOR}\n"
+printf "\n\t\U0001f5bc${GREEN}\ticonic${ENDCOLOR}"
+echo -e "\n"
 yarn c check:types
 yarn c prebuild
 yarn c build
 
-echo -e "\n\t\U0001f382${GREEN}\tcomposer${ENDCOLOR}\n"
+printf "\n\t\U0001f382${GREEN}\tcomposer${ENDCOLOR}"
+echo -e "\n"
 yarn c check:types
 yarn c build
 
-echo -e "\n\t\U0001f3ba${GREEN}\torchestrator${ENDCOLOR}\n"
+printf "\n\t\U0001f3ba${GREEN}\torchestrator${ENDCOLOR}"
+echo -e "\n"
 yarn o check:types
 yarn o prebuild
 yarn o build
 
-echo -e "\n\t\u2728${GREEN}\tlayout${ENDCOLOR}\n"
+printf "\n\t\u2728${GREEN}\tlayout${ENDCOLOR}"
+echo -e "\n"
 yarn l check:types
 yarn l build
