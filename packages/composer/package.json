@@ -7,6 +7,18 @@
     "dist",
     "package.json"
   ],
+  "exports": {
+    ".": {
+      "default": "./dist/lib/index.js",
+      "types": "./dist/lib/index.d.ts"
+    },
+    "./composer.development": {
+      "default": "./dist/composer.development.js"
+    },
+    "./composer.production": {
+      "default": "./dist/composer.production.js"
+    }
+  },
   "scripts": {
     "check:types": "tsc --project ./scripts/tsconfig.build.json && echo \"✓ check types\"",
     "build:dev": "vite build --mode development",

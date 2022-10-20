@@ -1,5 +1,4 @@
 import type { BaseExtension, MicrolcApi } from '@micro-lc/orchestrator'
-import { defaultConfig } from '@micro-lc/orchestrator'
 import type { PropertyValueMap } from 'lit'
 import { unsafeCSS, css, html, LitElement } from 'lit'
 import { property, query, state } from 'lit/decorators.js'
@@ -128,6 +127,10 @@ function ctrlEnterClickHandler(this: Submittable, event: KeyboardEvent) {
   if (event.key === 'Enter' && event.ctrlKey) {
     this.submitButton.click()
   }
+}
+
+const defaultConfig = {
+  version: 2,
 }
 
 export class MlcConfig extends LitElement implements Resizable, Submittable {

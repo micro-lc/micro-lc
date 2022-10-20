@@ -1,8 +1,7 @@
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-import target from './scripts/target'
+import settings from '../../settings.json'
 
 export default defineConfig(({ mode }) => ({
   base: './',
@@ -12,7 +11,6 @@ export default defineConfig(({ mode }) => ({
     minify: !mode.includes('development'),
     outDir: 'dist',
     rollupOptions: {
-      external: mode.includes('.') ? ['rxjs'] : [],
       input: {
         'micro-lc': 'src/micro-lc.ts',
       },
@@ -29,23 +27,13 @@ export default defineConfig(({ mode }) => ({
   },
   esbuild: {
     format: 'esm',
-    target,
+    target: settings.target,
   },
-  plugins: [
-    viteStaticCopy({
-      targets: [
-        {
-          dest: './',
-          src: require.resolve(`@micro-lc/composer/dist/composer.${mode}.js`),
-        },
-      ],
-    }),
-  ],
   resolve: {
     alias: [
       {
         find: /process\.env\.NODE_ENV/,
-        replacement: JSON.stringify(mode.split('.')[0]),
+        replacement: JSON.stringify(mode),
       },
       { find: /^.+\/lodash\/cloneDeep.js/, replacement: require.resolve('lodash-es/cloneDeep.js') },
       { find: /^.+\/lodash\/concat.js/, replacement: require.resolve('lodash-es/concat.js') },

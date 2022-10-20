@@ -1,3 +1,4 @@
+import composerUrl from '@micro-lc/composer/composer.production?url'
 import type {
   Config,
   Content,
@@ -5,6 +6,10 @@ import type {
   PluginConfiguration,
   Settings,
 } from '@micro-lc/interfaces/v2'
+
+import page401Url from './assets/401.html?url'
+import page404Url from './assets/404.html?url'
+import page500Url from './assets/500.html?url'
 
 export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
@@ -20,21 +25,21 @@ export const defaultConfig: CompleteConfig = {
   settings: {
     '4xx': {
       401: {
-        entry: './401.html',
+        entry: page401Url,
         integrationMode: 'parcel',
       },
       404: {
-        entry: './404.html',
+        entry: page404Url,
         integrationMode: 'parcel',
       },
     },
     '5xx': {
       500: {
-        entry: './500.html',
+        entry: page500Url,
         integrationMode: 'parcel',
       },
     },
-    composerUri: `./composer.${process.env.NODE_ENV}.js`,
+    composerUri: composerUrl,
     defaultUrl: './',
     mountPoint: [
       {
