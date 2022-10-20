@@ -4,9 +4,9 @@ sidebar_label: Style
 sidebar_position: 50
 ---
 
-Ci sono due modi per iniettare stile:
-1 global -> api di micro-lc
-2 local -> scritto in fase di composizione
+> Ci sono due modi per iniettare stile:
+>  1. global -> api di micro-lc
+>  2. local -> scritto in fase di composizione
 
 ## Global styling
 

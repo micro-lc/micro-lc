@@ -1,7 +1,7 @@
 ---
 title: Communication
 sidebar_label: Communication
-sidebar_position: 20
+sidebar_position: 30
 ---
 
 In the classic, monolithic approach to frontend applications, each page, section, or domain resides in the same

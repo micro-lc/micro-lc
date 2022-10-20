@@ -1,37 +1,8 @@
 ---
 title: Composition
 sidebar_label: Composition
-sidebar_position: 10
+sidebar_position: 20
 ---
-
-While mounting your applications inside the `content` area of <micro-lc></micro-lc>, it is useful to lay out, as a configuration,
-the kind of frame your entire web application is wrapped around. The user will then perform essential functions on the
-browser:
-- navigate the application
-- anchor to external references
-
-Many websites use top-bars or sidebars with anchors and links, but this sometimes might be neither the case nor the
-best option. Check out <micro-lc></micro-lc> live configuration playground to review a different type of layout.
-
-<micro-lc></micro-lc> provides a simple configuration setting that is converted into a fully functioning HTML fragment then embedded
-in your page, starting from a JSON or a Yaml (coming soon) file.
-
-<micro-lc></micro-lc> web component is divided in separate DOMs to embed both `content` and `layout` (this behaviour can be toggled 
-off rendering in a single root):
-- `shadow-dom` ➡ `layout`
-- `dom` ➡ `content`
-
-Strictly speaking, <micro-lc></micro-lc> provides us with an HTML root for both parts and then awaits for HTML compliant elements to
-append.
-
-```html
-<micro-lc>
-  #shadow-root
-    ↪️ <div>Layout</div>
-
-  <div>Content</div>
-</micro-lc>
-```
 
 Composition refers to the process of transforming a `string` or a serialization markup language content, as JSON or Yaml,
 into a valid appendable DOM. In the case at hand we would love to dynamically instruct <micro-lc></micro-lc> on the shape of our layout

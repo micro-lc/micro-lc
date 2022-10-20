@@ -8,9 +8,12 @@ sidebar_position: 10
 
 🧱 <micro-lc></micro-lc> offers a solution for building **flexible**, **multi-tenant** frontend applications.
 
+🖼 <micro-lc></micro-lc> is well suited to build any type of web application, from classical top-bar/sidebar multi-pages
+websites, to CMSs, blogs, or even applications with no layout at all.
+
 ⚡ <micro-lc></micro-lc> aims to be as **lightweight** as possible and to improve **web security**. 
 
-🖼 <micro-lc></micro-lc> brings together **different micro-frontend patterns** inside the same application.
+🔗 <micro-lc></micro-lc> brings together **different micro-frontend patterns** inside the same application.
 
 🏃 <micro-lc></micro-lc> consists of a core interface that loads, embeds, and orchestrates individual frontend applications
 at **runtime**, while providing **configuration options** and useful **out-of-the-box features**.
@@ -65,23 +68,9 @@ Compared to other tools, <micro-lc></micro-lc> provides:
 * HTML-like composition tools (lit-html);
 * import map integration (es-module-shims).
 
-## Building blocks
+## Browser compatibility
 
-<micro-lc></micro-lc> is a web-component meant to be embedded in your web page. Within its context (i.e., its real and shadow DOMs),
-it splits the viewport in two parts: **layout** and **content**. Layout does not depend on the current window history state
-(i.e., it does not refresh on URL changes), while content does.
+|     IE     | Edge | Firefox | Chrome | Safari | Opera |
+|:----------:|:----:|:-------:|:------:|:------:|:-----:|
+| No support | 79+  |   67+   |  64+   | 11.1+  |  51+  |
 
-Specifically, <micro-lc></micro-lc> embeds a SPA-like DOM router to respond to useragent-driven URL changes. The typical
-response is mounting the content selected according to your configuration. Another scenario might be mounting error pages
-to signal the user that something went wrong or a suitable application was not found for the given URL.
-
-Since the layout is fully customizable, <micro-lc></micro-lc> is well suited to build any type of web application
-like classical top-bar/sidebar multi-pages websites, CMSs, blogs, or even applications with no layout at all.
-
-This dual nature of <micro-lc></micro-lc> content is reflected on its configuration since there is no overlap between 
-layout and content composition.
-
-Still, [means of communication](./concepts/communication.md) are easily accessible by both layout and content while
-keeping them apart.
-
-## Compatibility (?)
