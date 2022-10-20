@@ -2642,6 +2642,7 @@ __metadata:
     "@rollup/plugin-replace": ^5.0.0
     "@types/chai": ^4.3.3
     "@types/chai-string": ^1.4.2
+    "@types/glob": ^8.0.0
     "@types/mocha": ^10.0.0
     "@types/node": ^18.11.2
     "@types/sinon": ^10.0.13
@@ -2656,6 +2657,7 @@ __metadata:
     cobertura-merge: ^1.0.3
     es-module-shims: ^1.6.2
     esbuild: ^0.15.12
+    glob: ^8.0.3
     lit-html: ^2.4.0
     mocha: ^10.1.0
     nyc: ^15.1.0
@@ -2666,6 +2668,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     vite: ^3.1.8
+    vite-plugin-banner: ^0.5.0
   peerDependencies:
     es-module-shims: "*"
   languageName: unknown
@@ -2877,6 +2880,7 @@ __metadata:
     ts-node: ^10.9.1
     typescript: ^4.8.4
     vite: ^3.1.8
+    vite-plugin-banner: ^0.5.0
   peerDependencies:
     ajv: ">=8.11.0"
     ajv-format: ">=2.1.1"
@@ -23771,6 +23775,13 @@ __metadata:
     unist-util-stringify-position: ^2.0.0
     vfile-message: ^2.0.0
   checksum: ee5726e10d170472cde778fc22e0f7499caa096eb85babea5d0ce0941455b721037ee1c9e6ae506ca2803250acd313d0f464328ead0b55cfe7cb6315f1b462d6
+  languageName: node
+  linkType: hard
+
+"vite-plugin-banner@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "vite-plugin-banner@npm:0.5.0"
+  checksum: 5c4ae4916663965e944a6259e3d116a5c94c5599d9ccfba17cd5aba3de47273e546e9f792dd14f8ff61d79d58329292d0fa7d4b54ad9d5c6349a924e06dbc193
   languageName: node
   linkType: hard
 

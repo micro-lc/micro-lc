@@ -1,5 +1,6 @@
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
+import banner from 'vite-plugin-banner'
 
 import settings from '../../settings.json'
 
@@ -29,6 +30,9 @@ export default defineConfig(({ mode }) => ({
     format: 'esm',
     target: settings.target,
   },
+  plugins: [
+    banner(settings.banner.join('\n')),
+  ],
   resolve: {
     alias: [
       {
