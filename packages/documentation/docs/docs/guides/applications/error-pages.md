@@ -4,6 +4,10 @@ sidebar_label: Error pages
 sidebar_position: 40
 ---
 
+:::caution
+This section is work in progress.
+:::
+
 Error pages are applications without a **route**, meaning that they will be mounted when something goes wrong either
 fetching the required application assets, or the requested application is not available or configured. Finally, they may
 appear on internal server errors.
@@ -11,7 +15,7 @@ appear on internal server errors.
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/guides/applications/error-pages/404"
+  base="/frames/guides/applications/error-pages"
   height="550px"
   showSource={false}
   src={"/"}

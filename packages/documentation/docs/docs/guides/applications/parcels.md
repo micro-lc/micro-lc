@@ -9,10 +9,6 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 ```
 
-:::caution
-This section is work in progress.
-:::
-
 Most common integration mode, recommended to embed SPAs. This kind of application are directly managed by the orchestrator,
 which needs to be supplied with the assets entry point.
 
@@ -65,12 +61,11 @@ interface ParcelApplication {
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/guides/applications/parcels/inject-base"
+  base="/frames/guides/applications/parcels"
   height="550px"
   sourceTabs={[
-    { filePath: "/config.json5" },
-    { filePath: "/browser-parcel.jsx" },
-    { filePath: "/hash-parcel.jsx" }
+    { filePath: "/index.html" },
+    { filePath: "/config.yaml", isDefault: true }
   ]}
   src={"/"}
   title="Base injection"
@@ -207,25 +202,41 @@ key on the application configuration.
 
 ### `injectBase`
 
+:::danger
+If your application `index.html` already has a `base` tag, this property **will not** override it. <micro-lc></micro-lc> will consider
+this plugin to have been built with prior knowledge of its configuration and deploy route.
+:::
+
 `injectBase` is a boolean property, defaulting to `false`. 
 
-:::caution
 This property should be set to `true` only on applications that do not have a hash router. On applications without 
 internal routing, this property does not do anything.
-:::
 
 Instructs <micro-lc></micro-lc> on whether to inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to
 allow application internal routing to behave as if it was deployed on the bundle selected root, or any root that was
 selected at build time.
 
 :::tip
-For better compatibility, we recommend to choose `./` as build time public URL. 
+For better compatibility, we recommend to choose `./` as build time public URL.
 :::
 
-:::danger
-If your application `index.html` already has a `base` tag, this property **will not** override it. <micro-lc></micro-lc> will consider
-this plugin to have been built with prior knowledge of its configuration and deploy route. 
-:::
+The example below is a showcase of two minimal React applications, one with a browser router and one with a hash router.
+The correct usage of `injectBase` enables both of them to work correctly (and to coexist undisturbed).
+
+```mdx-code-block
+<></>
+<example-frame
+  base="/frames/guides/applications/parcels/inject-base"
+  height="550px"
+  sourceTabs={[
+    { filePath: "/config.yaml" },
+    { filePath: "/browser-parcel.jsx" },
+    { filePath: "/hash-parcel.jsx" }
+  ]}
+  src={"/"}
+  title="Base injection"
+></example-frame>
+```
 
 ### `microlcApi`
 
