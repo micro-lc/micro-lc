@@ -4,9 +4,9 @@ version: 2
 layout:
   content: |
     <link rel="stylesheet" href="./style.css">
-    <div class="top-bar linear-bg-vertical">Layout</div>
+    <div class="top-bar layout">Layout</div>
     <div class="layout-content">
-      <div class="side-bar linear-bg-vertical">
+      <div class="side-bar layout">
         <span>Layout</span>
       </div>
       <slot></slot>

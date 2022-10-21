@@ -13,7 +13,16 @@ import TabItem from '@theme/TabItem'
 in two parts, **layout** and **content**, which are technically independent of one another, but can
 [communicate](./communication) to fill the functional need of cohesion.
 
-> Example showing separation
+```mdx-code-block
+<></>
+<example-frame
+  base="/frames/concepts/separation-of-concernes"
+  height="550px"
+  showSource={false}
+  src={"/"}
+  title="Viewport separation"
+></example-frame>
+```
 
 :::tip
 The example above shows an application featuring a classic top bar/sidebar layout. Sometimes this might be neither the
