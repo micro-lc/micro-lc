@@ -312,6 +312,7 @@ export class Microlc<
         layout,
         settings: {
           mountPoint,
+          mountPointSelector,
         },
       },
     } = this
@@ -343,8 +344,23 @@ export class Microlc<
     }
 
     if (mountPoint) {
-      const mountPointAppender = await createComposerContext(mountPoint)
-      mountPointAppender(this._container)
+      // 'development' failsafe
+      let isDomMountable = false
+      if (process.env.NODE_ENV === 'development') {
+        if (mountPointSelector !== undefined) {
+          const mountPointAppender = await createComposerContext(mountPoint)
+          const temporaryMountPoint = this.ownerDocument.createElement('div')
+          mountPointAppender(temporaryMountPoint)
+          isDomMountable = temporaryMountPoint.querySelector(mountPointSelector) !== null
+        }
+      } else {
+        isDomMountable = true
+      }
+
+      if (isDomMountable) {
+        const mountPointAppender = await createComposerContext(mountPoint)
+        mountPointAppender(this._container)
+      }
     }
   }
 
