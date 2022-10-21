@@ -71,12 +71,12 @@ describe('Plugins filter tests', () => {
     expect(pluginsFiltered).toMatchObject([])
   })
 
-  it('Everything is fine with empty plugins and groups list', () => {
+  it('Everything is fine with empty plugins and groups and permissions list', () => {
     const pluginsFiltered = aclExpressionEvaluator([], [], [])
     expect(pluginsFiltered).toMatchObject([])
   })
 
-  it('general object and no groups', () => {
+  it('general object and no groups and permissions', () => {
     const allConfiguration = {
       test: {
         nested: {
@@ -197,6 +197,20 @@ describe('Plugins filter tests', () => {
     }
     const filtered = aclExpressionEvaluator(toFilter, ['doctor'], ['api.users.get', 'api.users.post', 'api.test-crud.all'])
     expect(filtered.plugins.length).toBe(2)
+    expect(filtered.plugins.length).not.toBe(toFilter.plugins.length)
+    expect(filtered).not.toBe(toFilter)
+  })
+
+  it('works with permissions not assigned in aclExpression', () => {
+    const toFilter = {
+      plugins: [
+        {
+          aclExpression: 'permissions.api.test-crud.all || permissions.api.test-crud.get',
+        },
+      ],
+    }
+    const filtered = aclExpressionEvaluator(toFilter, ['doctor'], ['api.users.post'])
+    expect(filtered.plugins.length).toBe(0)
     expect(filtered.plugins.length).not.toBe(toFilter.plugins.length)
     expect(filtered).not.toBe(toFilter)
   })
