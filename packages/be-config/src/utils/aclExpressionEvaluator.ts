@@ -54,15 +54,16 @@ const createUserPermissionsNestedObject = (originalObject: any, permissionPaths:
 const userPermissionsObjectBuilder = (userPermissions: string[]) => {
   const userPermissionObject: UserPermissionsObject = {}
   for (let i = 0; i < userPermissions.length; i++) {
-    const permissions = userPermissions[i].replace('-', '_').split('.')
+    const permissions = userPermissions[i].split('.')
     createUserPermissionsNestedObject(userPermissionObject, permissions)
   }
   return userPermissionObject
 }
 
 const buildPluginFunction = (plugin: FilterableObject) => {
+  const bracketsNotationExpression = plugin.aclExpression.replace(/\.(.+?)(?=\.|$| )/g, (_, string) => `['${string}']`)
   // eslint-disable-next-line no-new-func
-  return new Function(GROUPS_CONFIGURATION.function.key, PERMISSIONS_CONFIGURATION.function.key, `return !!(${plugin.aclExpression})`)
+  return new Function(GROUPS_CONFIGURATION.function.key, PERMISSIONS_CONFIGURATION.function.key, `return !!(${bracketsNotationExpression})`)
 }
 
 const evaluatePluginExpression = (userGroupsObject: UserGroupsObject, userPermissionsObject: UserPermissionsObject) => {

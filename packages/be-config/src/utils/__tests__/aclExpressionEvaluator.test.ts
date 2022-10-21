@@ -182,6 +182,9 @@ describe('Plugins filter tests', () => {
     const toFilter = {
       plugins: [
         {
+          aclExpression: 'permissions.api.test-crud.all || permissions.api.test-crud.get',
+        },
+        {
           aclExpression: 'groups.superadmin || groups.admin || groups.secretary',
         },
         {
@@ -189,9 +192,6 @@ describe('Plugins filter tests', () => {
         },
         {
           aclExpression: 'groups.superadmin || groups.admin',
-        },
-        {
-          aclExpression: 'permissions.api.test_crud.all',
         },
       ],
     }
