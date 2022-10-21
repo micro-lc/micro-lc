@@ -4,6 +4,10 @@ sidebar_label: Compose
 sidebar_position: 20
 ---
 
+:::caution
+This section is work in progress.
+:::
+
 > Da finire dopo la sezione "composability" e spiegare chiave "config" (json, yaml o conf diretta)
 
 A composable application is a pseudo-HTML document enhanced with JavaScript properties dynamically injected

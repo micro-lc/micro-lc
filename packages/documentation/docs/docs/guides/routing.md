@@ -4,6 +4,10 @@ sidebar_label: Routing
 sidebar_position: 30
 ---
 
+:::caution
+This section is work in progress.
+:::
+
 > Best practice per il routing (aka come organizzare le chiavi "root" delle applicazioni)
 >   * puoi fare tutto relativo a /
 >   * puoi fare tutto relativo a ./ e scopizzare con base da inserire in index

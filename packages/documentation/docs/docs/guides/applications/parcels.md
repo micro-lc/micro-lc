@@ -4,8 +4,21 @@ sidebar_label: Parcels
 sidebar_position: 30
 ---
 
+```mdx-code-block
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+```
+
+:::caution
+This section is work in progress.
+:::
+
 Most common integration mode, recommended to embed SPAs. This kind of application are directly managed by the orchestrator,
 which needs to be supplied with the assets entry point.
+
+:::danger
+Up to now, only JavaScript **UMD scripts** can be used as parcel application assets.
+:::
 
 > A single-spa parcel is a framework-agnostic component. It is a chunk of functionality meant to be mounted manually by an
 > application, without having to worry about which framework was used to implement the parcel or application. A parcel can
@@ -14,45 +27,55 @@ which needs to be supplied with the assets entry point.
 > 
 > — [single-spa documentation](https://single-spa.js.org/docs/parcels-overview/#parcel-lifecycles)
 
-For what concerns <micro-lc></micro-lc> configuration, a parcel is an object with keys `html`, `scripts`, and `styles` (at least one
-between `html` and `scripts` is mandatory). By polymorphism, we allow entry to be a string which will be interpreted as
-an HTML asset entry.
-
-:::danger Important takeaway
-Up to now, only JavaScript **UMD scripts** can be used as parcel application assets.
-:::
-
-```json
-{
-  "applications": {
-    "home": {
-      "route": "./home",
-      "integrationMode": "parcel",
-      "entry": "./home/index.html"
-    },
-    "orders": {
-      "route": "./orders",
-      "integrationMode": "parcel",
-      "entry": {
-        "scripts": "./orders/index.js",
-        "styles": "./orders/style.css"
-      }
-    },
-    "customers": {
-      "route": "./customers",
-      "integrationMode": "parcel",
-      "entry": {
-        "html": "./customers/index.html",
-        "styles": "./customers/style.css"
-      }
-    }
-  }
-}
-```
-
 We provide an extensive list of templates to build your own parcel application using your favourite framework:
 * [React](https://github.com/micro-lc/micro-lc-react-template)
 * ...
+
+## Usage
+
+For what concerns <micro-lc></micro-lc> configuration, a parcel is an object with keys `html`, `scripts`, and `styles`
+(at least one between `html` and `scripts` is mandatory). By polymorphism, we allow entry to be a string which will be
+interpreted as an HTML asset entry.
+
+```typescript
+interface ParcelApplication {
+  integrationMode: "parcel"
+  entry:
+    // Shorthand syntax
+    | string
+    // Normal syntax
+    | (
+        | {
+            scripts: string | [string, ...string[]]
+            styles?: string | string[]
+            html?: string
+          }
+        | {
+            scripts?: string | string[]
+            styles?: string | string[]
+            html: string
+          }
+      )
+  route: string // Path on which the parcel will be rendered
+  properties?: Record<string, unknown> // Data passed to the parcel
+  injectBase?: boolean // See explanation below
+}
+```
+
+```mdx-code-block
+<></>
+<example-frame
+  base="/frames/guides/applications/parcels/inject-base"
+  height="550px"
+  sourceTabs={[
+    { filePath: "/config.json5" },
+    { filePath: "/browser-parcel.jsx" },
+    { filePath: "/hash-parcel.jsx" }
+  ]}
+  src={"/"}
+  title="Base injection"
+></example-frame>
+```
 
 ## Lifecycle methods
 
@@ -61,15 +84,49 @@ inline script in the application HTML asset, or as UMD script export within one 
 
 The simplest form of a parcel application is shown in following example.
 
+```mdx-code-block 
+<Tabs>
+<TabItem value="0" label="index.html" default>
+```
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Lifecycle methods</title>
+
+  <script src="lifecycle.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+```
 ```mdx-code-block
-<></>
-<source-tabs
-  base="/frames/guides/applications/parcels/lifecycle-methods"
-  tabs={[
-    { filePath: "/index.html" },
-    { filePath: "/lifecycle.js" }
-  ]}
-></source-tabs>
+</TabItem>
+<TabItem value="1" label="lifecycle.js">
+```
+```javascript
+function registerLifecycle(self) {
+  Object.assign(
+    self,
+    {
+      bootstrap: () => Promise.resolve(null),
+      mount: () => Promise.resolve(null),
+      unmount: () => Promise.resolve(null),
+      update: () => Promise.resolve(null),
+    }
+  )
+}
+
+// 👇 https://dontkry.com/posts/code/browserify-and-the-universal-module-definition.html
+(function register(self, factory) {
+  self.__MY_PARCEL = {}
+  factory(self.__MICRO_LC_ERROR, self)
+}(window, registerLifecycle))
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 Lifecycle methods are:
@@ -141,9 +198,7 @@ function unmount(props: LifecycleProps): Promise<null> {
 
 ### Update
 
-:::caution
-This lifecycle method is only available for [error pages](error-pages.md#update-lifecycle).
-:::
+This lifecycle method is only available for [error pages](error-pages#update-lifecycle).
 
 ## Properties
 
@@ -163,21 +218,6 @@ Instructs <micro-lc></micro-lc> on whether to inject a [base tag](https://develo
 allow application internal routing to behave as if it was deployed on the bundle selected root, or any root that was
 selected at build time.
 
-```mdx-code-block
-<></>
-<example-frame
-  base="/frames/guides/applications/parcels/inject-base"
-  height="550px"
-  sourceTabs={[
-    { filePath: "/config.json5" },
-    { filePath: "/browser-parcel.jsx" },
-    { filePath: "/hash-parcel.jsx" }
-  ]}
-  src={"/"}
-  title="Base injection"
-></example-frame>
-```
-
 :::tip
 For better compatibility, we recommend to choose `./` as build time public URL. 
 :::
@@ -189,5 +229,5 @@ this plugin to have been built with prior knowledge of its configuration and dep
 
 ### `microlcApi`
 
-<micro-lc></micro-lc> injects some useful utils to each application in order to share state, events, and styles. The full reference
-for this property can be found ...
+<micro-lc></micro-lc> injects some useful utils to each application in order to share state, events, and styles. Read
+[the full reference](../../../api/micro-lc-api) for this property.

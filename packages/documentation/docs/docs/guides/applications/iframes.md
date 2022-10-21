@@ -4,31 +4,55 @@ sidebar_label: iFrames
 sidebar_position: 10
 ---
 
-When an `iframe` integrated application is configured, its context is rendered inside the <micro-lc></micro-lc> mount point
-as an `iframe` tag. It is mandatory to explicitly set a source to the corresponding
-[`iframe`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe) element. Moreover any valid attribute
-will be passed to the element
+When an **iframe integrated** application is configured, its context is rendered inside the <micro-lc></micro-lc> mount
+point as an [iframe tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe). It is mandatory to explicitly
+set a source for the frame. Moreover, any 
+[valid attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#attributes) will be passed to the
+element (attributes are not mandatory).
 
-```json5 title=micro-lc.config.json
-{
-  // ...,
-  "applications": {
-    "docs": {
-      "route": "/docs",
-      "integrationMode": "iframe",
-      "src": "https://docs.mia-platform.eu",
-      "attributes": {
-        "title": "Inline Frame Example",
-        // ... more attributes
-      }
-    }
-  }
+:::caution
+Be mindful that a website [cannot](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) be embedded
+as an iFrame if it served with any `X-Frame-Options` header and <micro-lc></micro-lc> is not `SAMEORIGIN` of the
+embedded iFrame. Attempting to do so will result in a console error like:
+
+```mdx-code-block
+<console-error-line>
+  The loading of “https://www.google.com/” in a frame is denied by “X-Frame-Options“ directive set to “SAMEORIGIN“
+</console-error-line>
+```
+
+When a website responds with a `X-Frame-Options` header, the iFrame does not emit an `onerror` event, hence
+<micro-lc></micro-lc> cannot redirect to an error page. The view then depends on the browser used to run the application.
+:::
+
+## Usage
+
+Declare an application with integration mode `iframe` in <micro-lc></micro-lc> configuration:
+
+```typescript
+interface IFrameApplication {
+  integrationMode: "iframe"
+  src: string // iFrame src attribute value
+  route: string // Path on which the iFrame will be rendered
+  attributes?: Record<string, unknown> // Valid attributes of iframe HTML element
 }
 ```
 
-Attributes are not mandatory.
+```mdx-code-block
+<></>
+<example-frame
+  base="/frames/guides/applications/iframes"
+  height="550px"
+  sourceTabs={[
+    { filePath: "/index.html" },
+    { filePath: "/config.yaml", isDefault: true }
+  ]}
+  src={"/"}
+  title="iFrame integration"
+></example-frame>
+```
 
-By default, the style of an `iframe` application is set to
+By default, the style of an iFrame application is set to
 
 ```css
 iframe {
@@ -39,19 +63,3 @@ iframe {
 ```
 
 and can be overridden easily by setting the `style` attribute.
-
-:::caution
-Be mindful that a website [cannot](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) be embedded
-as an `iframe` if it served with any `X-Frame-Options` header and <micro-lc></micro-lc> is not `SAMEORIGIN` of the embedded `iframe`.
-
-Attempting to do so will result in a console error like:
-
-```mdx-code-block
-<p style={{padding: '10px', backgroundColor: '#ffc7d577', color: 'red', borderRadius: '5px'}}>
-  The loading of “https://www.google.com/” in a frame is denied by “X-Frame-Options“ directive set to “SAMEORIGIN“
-</p>
-```
-
-When a website responds with a `X-Frame-Options` header, the `iframe` does not emit an `onerror` event, hence <micro-lc></micro-lc>
-cannot redirect to an error page. The view then depends on the browser used to run the application.
-:::

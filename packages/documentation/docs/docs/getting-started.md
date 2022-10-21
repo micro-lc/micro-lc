@@ -4,6 +4,10 @@ sidebar_label: Getting started
 sidebar_position: 20
 ---
 
+:::caution
+This section is work in progress.
+:::
+
 <micro-lc></micro-lc> is shipped as an ES module CDN bundle and can be imported in any HTML page. Moreover, a dockerized
 webserver is available on Docker Hub with a Docker Compose `yaml` file.
 

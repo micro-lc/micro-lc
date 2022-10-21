@@ -26,7 +26,7 @@ and content and both are constructed dynamically from a textual configuration.
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.yaml", default: true }
+    { filePath: "/config.yaml", isDefault: true }
   ]}
   src={"/"}
   title="Composition"

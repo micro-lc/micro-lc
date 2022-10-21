@@ -4,6 +4,10 @@ sidebar_label: Layout
 sidebar_position: 20
 ---
 
+:::caution
+This section is work in progress.
+:::
+
 > Come customizzare il layout:
 >   * come funziona la chiave layout (riferimento a compose)
 >   * layout di default
