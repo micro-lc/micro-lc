@@ -32,7 +32,7 @@ function mouseDownHandler(this: Resizable, event: MouseEvent): void {
   const leftStyle = window.getComputedStyle(this.left)
   const rightStyle = window.getComputedStyle(this.right)
   const borderWidth = parseInt(leftStyle.borderRightWidth, 10)
-   + parseInt(rightStyle.borderRightWidth, 10)
+   + parseInt(rightStyle.borderLeftWidth, 10)
 
   this._x = event.clientX
   this._w = parseInt(leftStyle.width, 10)
