@@ -104,8 +104,11 @@ export async function getApplicationSchema(): Promise<SchemaOptions | undefined>
   return schema
 }
 
-function getContainer<T extends BaseExtension>(this: Microlc<T>, selector: string): HTMLElement {
-  return this.querySelector<HTMLElement>(selector) ?? this
+function getContainer<T extends BaseExtension>(this: Microlc<T>, selector: string | undefined): HTMLElement {
+  const selected = selector
+    ? this.querySelector<HTMLElement>(selector)
+    : this._container
+  return selected ?? this._container
 }
 
 export async function updateApplications<T extends BaseExtension>(this: Microlc<T>): Promise<void> {
@@ -187,7 +190,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     }
 
     acc.apps.set(idScopedByInstance, [app.route, {
-      container: getContainer.call<Microlc<T>, [string], HTMLElement>(this, mountPointSelector),
+      container: getContainer.call<Microlc<T>, [string | undefined], HTMLElement>(this, mountPointSelector),
       entry,
       name,
       props: {

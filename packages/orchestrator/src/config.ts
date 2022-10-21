@@ -15,7 +15,10 @@ export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
 export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'layout'>> & {
   layout: PluginConfiguration & {content: Content}
-  settings: Required<Settings>
+  settings: Required<Omit<Settings, 'mountPointSelector' | 'mountPoint'>> & {
+    mountPoint?: Settings['mountPoint']
+    mountPointSelector?: Settings['mountPointSelector']
+  }
 }
 
 export const defaultConfig: CompleteConfig = {
@@ -41,29 +44,6 @@ export const defaultConfig: CompleteConfig = {
     },
     composerUri: composerUrl,
     defaultUrl: './',
-    mountPoint: [
-      {
-        content: `
-          div#__MICRO_LC_MOUNT_POINT > :first-child {
-            width: inherit;
-            height: inherit;
-            overflow: hidden;
-          }
-        `,
-        tag: 'style',
-      },
-      {
-        attributes: {
-          id: MICRO_LC_MOUNT_POINT,
-          style: `
-            width: 100%;
-            height: 100%;
-          `,
-        },
-        tag: 'div',
-      },
-    ],
-    mountPointSelector: `#${MICRO_LC_MOUNT_POINT}`,
   },
   shared: {},
   version: 2,

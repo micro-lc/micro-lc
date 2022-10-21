@@ -51,14 +51,14 @@ function getMount(name = currentApplication): (() => Promise<null>) | undefined 
   }
 }
 
-function getUnmount(name = currentApplication): (() => Promise<null>) | undefined {
+export function getUnmount(name = currentApplication): (() => Promise<null>) | undefined {
   const app = name && applicationHandlers.get(name)
   if (app) {
     if (app.getStatus() !== 'UNMOUNTING') {
       return () => app.loadPromise
         .then(() => app.bootstrapPromise)
         .then(() => app.mountPromise)
-        .then(() => app.unmount())
+        .then(() => (app.getStatus() === 'NOT_MOUNTED' ? app.unmountPromise : app.unmount()))
     }
 
     return () => app.unmountPromise

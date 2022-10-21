@@ -16,6 +16,7 @@ import type {
   RouterContainer,
   QiankunApi } from './lib'
 import {
+  getUnmount,
   currentApplication$,
   rerouteToError,
 
@@ -36,24 +37,21 @@ import {
 
 type ObservedAttributes =
   | 'config-src'
-  | 'disable-shadow-dom'
 type ObservedProperties =
   | 'config'
   | 'configSrc'
-  | 'disableShadowDom'
 
-const booleanAttributes: ObservedAttributes[] = ['disable-shadow-dom']
 
 const handleUpdateError = (err: TypeError): void => {
   currentApplication$.pipe(take(1)).subscribe((app) => {
-    logger.error('50' as ErrorCodes.UpdateError, app, err.message)
+    logger.error('50' as ErrorCodes.UpdateError, app ?? '[unknown]', err.message)
   })
 }
 
 export class Microlc<
   E extends BaseExtension = BaseExtension
 > extends HTMLElement implements RouterContainer {
-  static get observedAttributes() { return ['config-src', 'disable-shadow-dom'] }
+  static get observedAttributes() { return ['config-src'] }
 
   private _wasDisconnected = false
   private _updateComplete = true
@@ -103,17 +101,6 @@ export class Microlc<
           'configSrc',
           value,
           (input): input is string => typeof input === 'string'
-        )
-      }
-      break
-    case 'disableShadowDom':
-      if (value !== this._disableShadowDom) {
-        this._prepareForUpdate()
-
-        this._handlePropertyUpdate(
-          'disableShadowDom',
-          value,
-          (input): input is boolean => typeof input === 'boolean'
         )
       }
       break
@@ -182,16 +169,6 @@ export class Microlc<
     this._handlePropertyChange('configSrc', src)
   }
 
-  /**
-   * @observedProperty --> mirrored by `disable-shadow-dom`
-   */
-  get disableShadowDom(): boolean | undefined {
-    return Boolean(this._disableShadowDom)
-  }
-  set disableShadowDom(disable: unknown) {
-    this._handlePropertyChange('disableShadowDom', disable)
-  }
-
   get updateComplete(): boolean {
     return this._updateComplete
   }
@@ -219,29 +196,46 @@ export class Microlc<
   getApi: () => MicrolcApi<E> = createMicrolcApiInstance
     .call<Microlc<E>, [], () => MicrolcApi<E>>(this)
 
-  // 🚲 lifecycle & DOM
 
-  protected _isShadow() {
-    return !this._disableShadowDom
-  }
-
-  private _shadowRoot: ShadowRoot
-
-  get shadowRoot(): ShadowRoot {
-    return this._shadowRoot
-  }
-
-  get renderRoot(): this | ShadowRoot {
-    return this.disableShadowDom ? this : this._shadowRoot
-  }
+  // DOM
+  protected _style: HTMLStyleElement
+  protected _container: HTMLDivElement
 
   constructor() {
     super()
-    this._shadowRoot = this.attachShadow({ mode: 'open' })
+
+    const shadow = this.getAttribute('disable-shadow-dom') === null
+    const microlcRootId = this.getAttribute('root-id') ?? '__micro_lc'
+    if (shadow) {
+      this.attachShadow({ mode: 'open' })
+    }
+
+    // one-off style
+    const appendStyle = this.getAttribute('disable-styling') === null
+    this._style = Object.assign(
+      this.ownerDocument.createElement('style'), {
+        textContent: `
+          div#__micro_lc {
+            width: 100%;
+            height: 100%;
+          }
+
+          div#__micro_lc > :first-child {
+            width: inherit;
+            height: inherit;
+            overflow: hidden
+          }
+        `,
+      }
+    )
+    appendStyle && this.appendChild(this._style)
+
+    this._container = this.ownerDocument.createElement('div')
+    this._container.setAttribute('id', microlcRootId)
+    this.appendChild(this._container)
 
     // first update
     this._handlePropertyChange('config', (this.config as CompleteConfig | undefined) ?? defaultConfig)
-    this._handlePropertyChange('disableShadowDom', this.disableShadowDom ?? false)
     this.configSrc !== undefined && this._handlePropertyChange('configSrc', this.configSrc)
   }
 
@@ -261,9 +255,7 @@ export class Microlc<
     name: ObservedAttributes, oldValue: string | null, newValue: unknown
   ) {
     let nextValue: unknown = newValue
-    if (booleanAttributes.includes(name) && newValue === '') {
-      nextValue = true
-    } else if (newValue === '') {
+    if (newValue === '') {
       nextValue = null
     }
 
@@ -324,10 +316,15 @@ export class Microlc<
       },
     } = this
 
-    for (const child of this.children) {
-      child.remove()
+    const unmount = getUnmount()
+    await unmount?.().catch(rerouteErrorHandler)
+
+    if (this.shadowRoot) {
+      for (const child of this.shadowRoot.children) {
+        child.remove()
+      }
     }
-    for (const child of this._shadowRoot.children) {
+    for (const child of this._container.children) {
       child.remove()
     }
 
@@ -337,17 +334,17 @@ export class Microlc<
       context: { microlcApi: this.getApi() },
       extraProperties: ['microlcApi'],
     })
-    const mountPointAppender = await createComposerContext(mountPoint)
 
     // if shadow dom is used
     // ==> append layout inside
     // ==> append qiankun as regular child
-    if (this._isShadow()) {
-      layoutAppender(this._shadowRoot)
-      mountPointAppender(this)
-    // if not append anything as regular child
-    } else {
-      layoutAppender(this)
+    if (this.shadowRoot) {
+      layoutAppender(this.shadowRoot)
+    }
+
+    if (mountPoint) {
+      const mountPointAppender = await createComposerContext(mountPoint)
+      mountPointAppender(this._container)
     }
   }
 

@@ -37,9 +37,9 @@ export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSCon
 
   /**
    * 🍎 webkit does not support `adoptedStyleSheets`
-   * @link {https://caniuse.com/?search=adoptedStyleSheets}
+   * @link {https://caniuse.com/mdn-api_document_adoptedstylesheets}
    */
-  if (this._isShadow() && 'adoptedStyleSheets' in this.ownerDocument) {
+  if (this.shadowRoot && 'adoptedStyleSheets' in this.ownerDocument) {
     const stylesheets = createCSSStyleSheets(css)
     this.shadowRoot.adoptedStyleSheets = [...stylesheets]
   } else {
@@ -47,9 +47,9 @@ export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSCon
       this.ownerDocument.createElement('style')
     ) as [HTMLStyleElement, HTMLStyleElement]
 
-    this._styleElements = injectStyleToElements(css, styleTags, this._isShadow())
+    this._styleElements = injectStyleToElements(css, styleTags, this.shadowRoot !== null)
     this._styleElements.forEach((el) => {
-      this._isShadow()
+      this.shadowRoot
         ? this.shadowRoot.insertBefore(el, this.shadowRoot.firstChild)
         : this.ownerDocument.head.appendChild(el)
     })
