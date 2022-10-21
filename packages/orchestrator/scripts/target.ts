@@ -1,9 +1,0 @@
-export default [
-  'es2020',
-  'chrome64',
-  'edge79',
-  'firefox67',
-  'node16',
-  'safari11.1',
-  'opera51',
-]

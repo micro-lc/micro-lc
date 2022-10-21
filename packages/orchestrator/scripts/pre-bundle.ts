@@ -3,13 +3,13 @@ import { resolve } from 'path'
 import { build } from 'esbuild'
 import type { BuildOptions } from 'esbuild'
 
-import target from './target'
+import settings from '../../../settings.json'
 
 const config: BuildOptions = {
   bundle: true,
   format: 'esm',
   minify: true,
-  target,
+  target: settings.target,
 }
 
 // lib dependencies
