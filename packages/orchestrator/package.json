@@ -4,6 +4,25 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./dist/es/index.js",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./micro-lc.development.js": {
+      "default": "./dist/micro-lc.development.js"
+    },
+    "./micro-lc.production.js": {
+      "default": "./dist/micro-lc.production.js"
+    }
+  },
+  "files": [
+    "dist",
+    "docker",
+    "package.json"
+  ],
   "scripts": {
     "check:types": "tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
     "prebuild": "ts-node scripts/pre-bundle.ts",
@@ -13,8 +32,6 @@
     "build:cjs": "ts-node scripts/compile.cjs.ts",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
-    "build:prod:min": "vite build --mode production.min",
-    "build:dev:min": "vite build --mode development.min",
     "build": "yarn run -T run-s prebuild build:es build:cjs build:dev build:prod",
     "cleanup": "yarn run -T rimraf ./dist ./.nyc_output ./coverage ./node_modules stats.html",
     "test:chromium": "wtr --node-resolve --playwright --browsers chromium",
