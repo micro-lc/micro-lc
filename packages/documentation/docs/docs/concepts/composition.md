@@ -4,132 +4,236 @@ sidebar_label: Composition
 sidebar_position: 20
 ---
 
----
-<micro-lc></micro-lc> provides a simple configuration setting that is converted into a fully functioning HTML fragment then embedded
-in your page, starting from a JSON or a Yaml (coming soon) file.
----
+```mdx-code-block
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+```
 
-Composition refers to the process of transforming a `string` or a serialization markup language content, as JSON or Yaml,
-into a valid appendable DOM. In the case at hand we would love to dynamically instruct <micro-lc></micro-lc> on the shape of our layout
-by writing a configuration file to be loaded at runtime.
+The key of <micro-lc></micro-lc> flexibility lies – among others – in the built-in capacity of **transforming** a string or
+a serialization markup language content, as JSON or YAML, into a valid, appendable DOM. 
 
-We achieved this feature by leveraging the [lit-html library](https://lit.dev/docs/libraries/standalone-templates/) apis
-combined with a lexer and a `non-eval` interpolation library.
+This behaviour enables the possibility to dynamically instruct <micro-lc></micro-lc> on the shape of a page by writing a
+configuration file to be loaded at runtime, and can be applied both on [layout](../guides/layout) and on content
+when using [compose integration](../guides/applications/compose) strategy.
+
+Let us take a look at a working example. The frame below shows a simple use case where the page is divided into layout
+and content and both are constructed dynamically from a textual configuration.
+
+```mdx-code-block
+<></>
+<example-frame
+  base="/frames/concepts/composition"
+  height="550px"
+  sourceTabs={[
+    { filePath: "/index.html" },
+    { filePath: "/config.yaml", default: true }
+  ]}
+  src={"/"}
+  title="Composition"
+></example-frame>
+```
+
+## How it works
+
+:::tip
+The composition functionality is exposed as a standalone package under [@micro-lc/composer](../../api/composer-api).
+:::
+
+At height level, this feature is achieved by leveraging
+[lit-html library](https://lit.dev/docs/libraries/standalone-templates/) APIs combined with a 
+[lexer](https://en.wikipedia.org/wiki/Lexical_analysis) and a _non-eval_ interpolation library.
+
+:::info
+One of the main feature of <micro-lc></micro-lc> composition is, actually, that it does not exploit any kind of unsafe
+runtime evaluation (e.g., `eval` or `Function`) which are strongly discouraged on websites and mitigated via
+[omission in `Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#unsafe_eval_expressions).
+:::
 
 Almost any HTML element can be seen, from the point of view of the DOM, as the combination of:
-- a tag, i.e. `div`, `header`, `aside`, `img`, `micro-lc`...
-- a list of attributes, i.e. `style="margin: 10px;"`, `class="my-css-class"`...
-- a list of boolean attributes, i.e. `hidden`, `disabled`...
-- a list of properties injected by JavaScript on the DOM counterpart of the given element
-- a content inside of the tag, i.e. `0`, `Hello, World!`, `<p>My Paragraph</p>`...
+- a tag (e.g., `div`, `header`, `aside`, `img`, `micro-lc`),
+- a list of attributes (e.g., `style="margin: 10px;"`, `class="my-css-class"`),
+- a list of boolean attributes (e.g., `hidden`, `disabled`),
+- a list of properties injected by JavaScript on the DOM counterpart of the given element,
+- a content inside of the tag, (e.g., `0`, `Hello, World!`, `<p>My Paragraph</p>`).
 
-`lit-html` provides an ES6 
-[tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates)
-that evaluate attributes, boolean attributes and properties:
+```text title="HTML element"
+<p ⬅ Tag
+  id="my-awesome-paragraph" ⬅ Attribute
+  disabled ⬅ Boolean attribute
+>
+  Hello, World! ⬅ Content
+</p>
 
-```javascript
+<script>
+  const element = document.getElementById('my-awesome-paragraph')
+  element.className = 'my-custom-dynamic-class' ⬅ Property
+</script>
+```
+
+HTML elements can be full represented in JavaScript with the help of `lit-html` ES6 
+[tagged templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates),
+that evaluate attributes, boolean attributes and properties. The example above would translate in:
+
+```javascript title="Lit HTML element rappresentation"
 import {html} from 'lit-html'
 
-const customProperty = "my possibly dynamically evaluated string"
+const customClassName = 'my-custom-dynamic-class'
+
 const template = html`
-  <div style="margin: 10px;">
-    <p>Some Text</p>
-    <button disabled="" .customProperty=${customProperty}>Click Me!</button>
-  </div>
+  <p ⬅ Tag
+    id="my-awesome-paragraph" ⬅ Attribute
+    disabled="" ⬅ Boolean attribute
+    .className=${customClassName} ⬅ Property
+  >
+    Hello, World! ⬅ Content
+  </p>
 `
 ```
 
-Finally, a `render` function attaches the template to a provided HTML element by interpreting non-dotted keys (style,
-disabled, ...) as attributes and dotted keys as JavaScript properties.
+Now that the desired HTML tree is described in JavaScript, a **render function** attaches the template to a provided 
+container (i.e., another HTML element) by interpreting non-dotted keys (e.g, `id`, `disabled`) as attributes, and dotted
+keys (e.g., `className`) as JavaScript properties.
 
-Obviously in our case we do not know `customProperty` at compile time , and we would like to inject it at runtime, which 
-opens the door of the "evil" `eval`, strongly discouraged on websites and mitigated via 
-[omission in `Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#unsafe_eval_expressions).
+:::tip
+In <micro-lc></micro-lc> composition api, properties can be any combination of numbers, strings, arrays or JSON
+equivalent objects.
+:::
 
-## Advanced --- how it works
+Before doing this, however, we need to address the fact that we do not know the value of `customClassName` at compile 
+time, and we would like to inject it at runtime (without using `eval`, of course!). To solve this issue, 
+<micro-lc></micro-lc> provides a **lexer** and an **interpolation API** to plug a
+[fully compliant](https://lit.dev/docs/templates/expressions/#well-formed-html) template literal to the `lit-html`
+library.
 
-<micro-lc></micro-lc> provides a lexer and an interpolation api to avoid `eval` and plug a 
-[fully compliant](https://lit.dev/docs/templates/expressions/#well-formed-html) template literal to the `lit-html` library.
-Together these tools make the `compositionApi`.
+Together, these tools make the [composition API](../../api/composer-api), the flow of which is fully visualized in the
+example below.
 
-Consider the following JSON file
+### The complete process
 
-```json
+```mdx-code-block 
+<Tabs>
+<TabItem value="0" label="Starting point" default>
+```
+Let us consider the following JSON file describing what we would like out DOM to be.
+
+```json title="JSON DOM description"
 {
-  "content": {
-    "tag": "div",
-    "attributes": {
-      "style": "margin: 10px;"
+  "tag": "div",
+  "attributes": {
+    "style": "margin: 10px;"
+  },
+  "content": [
+    {
+      "tag": "p",
+      "content": "Some Text"
     },
-    "content": [
-      {
-        "tag": "p",
-        "content": "Some Text"
+    {
+      "tag": "button",
+      "booleanAttributes": ["disabled"],
+      "properties": {
+        "myProp": { "foo": "bar" },
+        "special": "special.[0]"
       },
-      {
-        "tag": "button",
-        "booleanAttributes": ["disabled"],
-        "properties": {
-          "customProperties": "my possibly dynamically evaluated string"
-        },
-        "content": "Click Me!"
-      }
-    ]
-  }
-}
-```
-
-<micro-lc></micro-lc> composition api performs the following steps
-1. parse the JSON into a JavaScript object
-2. (in development mode only) checks it against a provided schema
-3. transform the JavaScript object into a template literal
-4. parse values associated with properties
-5. interpolate values with any previously provided context (similar to `handlebars` without `eval`)
-6. passes the result to `lit-html` render
-
-in <micro-lc></micro-lc> composition api, properties can be any combination of numbers, strings, arrays or JSON equivalent objects.
-
-```json
-{
-  "content": {
-    "tag": "div",
-    "properties": {
-      "myProp": {"a": 1},
-      "$special": "$special.[0]"
+      "content": "Click Me!"
     }
-  }
+  ]
 }
 ```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="First step">
+```
+The first step consists in parsing the JSON file into JavaScript object (and – _if in development mode_ – checking it
+against a provided [JSON schema](https://json-schema.org/)).
 
-```javascript
+```javascript title="JavaScript parsed object"
 const obj = {
-  content: {
-    tag: 'div',
-    properties: {
-      myProp: {a: 1},
-      $special: '$special.[0]'
-    }
-  }
+  tag: 'div',
+  attributes: {
+    style: 'margin: 10px;'
+  },
+  content: [
+    {
+      tag: 'p',
+      content: 'Some Text',
+    },
+    {
+      tag: 'button',
+      booleanAttributes: ['disabled'],
+      properties: {
+        myProp: { foo: 'bar' },
+        special: 'special.[0]'
+      },
+      content: 'Click Me!'
+    },
+  ],
 }
 ```
+```mdx-code-block
+</TabItem>
+<TabItem value="2" label="Second step">
+```
+The second step consists in transforming the JavaScript object into a template literal.
 
-```javascript
+```javascript title="Template literal"
 const literals = [
-  '<div .myProp=',
-  ' .$special=',
-  '></div>'
+  '<div style="margin: 10px;"><p>Some Text</p><button disabled .myProp=',
+  ' .special=',
+  '>Click Me!</button></div>'
 ]
-const values = [{a: 1}, '$special.[0]']
-```
 
-```javascript
-const context = {$special: [1, 'string']}
+const values = ["{\"foo\":\"bar\"}", 'special.[0]']
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="3" label="Third step">
+```
+The third step consists in parsing values associated with properties.
+
+```javascript title="Template literal with parserd values"
+const literals = [
+  '<div style="margin: 10px;"><p>Some Text</p><button disabled .myProp=',
+  ' .special=',
+  '>Click Me!</button></div>'
+]
+
+const values = [{ foo: 'bar' }, 'special.[0]']
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="4" label="Fourth step">
+```
+The fourth step consists in interpolating values with any previously provided context (similar to 
+[handlebars](https://handlebarsjs.com/), without the usage of `eval`).
+
+```javascript title="Interpolated context"
+const context = { special: [1, 'string'] }
 interpolate(values, context)
-/**
- * returns
- * [{a: 1}, 1]
- */
-```
 
-<micro-lc></micro-lc> area devoted to these tasks could be the `layout` area. Such area does not have a given shape and can be fully
-tailored. The same pattern will be also available to the `content` area for a given `integration mode`
+// Output: [{ foo: 'bar' }, 1]
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="5" label="Final result">
+```
+Finally, the result is passed to `lit-html` render.
+
+```html title="Final HTML result"
+<div style="margin: 10px;">
+  <p>Some Text</p>
+  <button disabled>
+    Click Me!
+  </button>
+</div>
+
+<script>
+  const buttonElement = document.querySelector('button')
+  
+  console.log(buttonElement.myProp, button.special)
+  // Output: { foo: 'bar' }, 1
+</script>
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
