@@ -1,0 +1,23 @@
+version: 2
+
+layout:
+  sources: http://localhost:8000/packages/layout/dist/mlc-layout.js
+  content:
+    - tag: mlc-layout
+      properties:
+        mode: topBar
+        logo:
+          url: https://avatars.githubusercontent.com/u/92730708?s=200&v=4
+        menuItems:
+          - icon:
+              library: '@ant-design/icons-svg'
+              selector: GlobalOutlined
+            id: react
+            label: React parcel
+            type: application
+
+applications:
+  react:
+    integrationMode: parcel
+    route: ./
+    entry: /applications/react-hash-router/

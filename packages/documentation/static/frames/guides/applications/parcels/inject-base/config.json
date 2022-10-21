@@ -2,19 +2,7 @@
   "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
-    "defaultUrl": "./browser/",
-    "4xx": {
-      "404": {
-        "integrationMode": "parcel",
-        "entry": "http://localhost:8000/packages/orchestrator/dist/404.html"
-      }
-    },
-    "5xx": {
-      "500": {
-        "integrationMode": "parcel",
-        "entry": "http://localhost:8000/packages/orchestrator/dist/500.html"
-      }
-    }
+    "defaultUrl": "./browser/"
   },
   "layout": {
     "sources": "http://localhost:8000/packages/layout/dist/mlc-layout.js",

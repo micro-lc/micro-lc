@@ -1,0 +1,9 @@
+# ...
+
+applications:
+    browser-parcel:
+      # Mandatory props...
+      injectBase: true
+    hash-parcel:
+      # Mandatory props...
+      injectBase: false
