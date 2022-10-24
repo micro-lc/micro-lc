@@ -9,6 +9,10 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 ```
 
+:::caution
+This section is work in progress.
+:::
+
 :::info Disclaimer
 For the time being, this feature is applicable **only to web components** (i.e., layout and application of type
 [compose](./applications/compose)). In the future it will be extended also to [parcels](./applications/compose).

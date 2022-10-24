@@ -4,6 +4,10 @@ sidebar_label: Composer API
 sidebar_position: 30
 ---
 
+:::caution
+This section is work in progress.
+:::
+
 > Descrivere composer API
 
 ```typescript

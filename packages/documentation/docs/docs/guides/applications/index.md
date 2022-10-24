@@ -2,82 +2,67 @@
 title: Applications
 ---
 
-Three integration methods are available to add an application to the context of <micro-lc></micro-lc>. Applications are distinguished
-by error pages due to the fact they have a fixed routing pattern.
-
-## Route
-
-Each application must have a **route** which must be a valid URL pathname (the trailing slash is not mandatory) like:
-
-- /home
-- /home/accessible/
-- /my-awesome-application/
-- ./react-application
-- ./react-application/about
-
-Absolute paths do not interact with an eventual `base` tag provided to your main HTML page whereas relative do. 
-
-Clearly if no `base` tag is provided there is no need to use relative path. Anyway when configuring a <micro-lc></micro-lc>
-instance it might be useful to use relative paths in order to be able to move your application away from `/` if needed.
-
-```json5 title=micro-lc.config.json
-{
-  // ...
-  "applications": {
-    "home": {
-      "route": "./home",
-      // ... rest of the application configuration
-    },
-    "orders": {
-      "route": "/plugins/orders",
-      // ... rest of the application configuration
-    }
-  }
-}
+```mdx-code-block
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import CodeBlock from '@theme-original/CodeBlock'
 ```
-
-The user is responsible for creating a list of routes that do not overlap.
-
-The router picks always the longest match, hence if both `/home` and `/home/accessible` are registered, on 
-`/home/accessible` navigation from URL top bar or `pushState` the router will avoid `/home`. It is up to the user to 
-ensure there are no clashes between an application which have an internal router and routes declarations. This scenario 
-though is fairly unlikely.
 
 :::caution
-Routes do not depend on the current `href` of the page but are determined once  and for all according to the document 
-`baseURI`. Keep in mind that `baseURI` is the `href` of a `base` tag, if any, or the current window location.
+This section is work in progress.
 :::
 
-## Integration modes
+Applications are micro-frontends rendered in the [dynamic part](../../concepts/separation-of-concernes) of 
+<micro-lc></micro-lc>. Each application corresponds to a URL pathname, and <micro-lc></micro-lc> is responsible to 
+property handle [routing](../routing.md) between them.
 
-An application must have an `integrationMode` property which is either:
+<micro-lc></micro-lc> supports three different micro-frontend patterns to integrate applications:
+- [`iframe`](./iframes), where applications are embedded in an iframe tag providing full strict encapsulation,
+- [`compose`](./compose), where applications are dynamically composed of HTML5 elements or web components following a
+provided configuration, and
+- [`parcel`](./parcels), where the orchestrator is provided with the full scope of assets needed to start the applications
+(most of the time either an HTML file or JS scripts).
 
-- [`iframe`](./iframes), which indicates the application will be embedded in an iframe tag providing full strict 
-encapsulation;
-- [`compose`](./compose), which means that the application will be composed of HTML5 elements or web components using 
-the composer API on a provided configuration;
-- [`parcel`](./parcels), which means that the orchestrator will be provided with the full scope of assets needed to
-start the applications (most of the time either an HTML file or JS scripts).
+There also exists a particular type of applications, [error pages](./error-pages.md), which differ in that have a fixed
+routing pattern.
 
-```json5 title=micro-lc.config.json
+## Configuration
+
+Applications are registered in the context of <micro-lc></micro-lc> through 
+[configuration key `applications`](../../../api/micro-lc#applications), a map linking application **unique identifiers**
+to specific information needed for the **integration**.
+
+<CodeBlock language="typescript">
+interface Applications &#123;{'\n'}
+  {'\ \ '}[unique_id: string]: <a href="./iframes">IFrameApplication</a> | <a href="./compose">ComposableApplication</a> | <a href="./parcels">ParcelApplication</a>{'\n'}
+}
+</CodeBlock>
+
+```mdx-code-block
+<details>
+<summary>Example</summary>
+<div>
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
+```
+```yaml title="micro-lc.config.yaml"
+applications:
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="JSON">
+```
+```json title="micro-lc.config.json"
 {
-  // ...
   "applications": {
-    "home": {
-      "route": "./home",
-      "integrationMode": "parcel"
-      // ... rest of the application configuration
-    },
-    "orders": {
-      "route": "/plugins/orders",
-      "integrationMode": "compose"
-      // ... rest of the application configuration
-    },
-    "docs": {
-      "route": "/docs",
-      "integrationMode": "iframe"
-      // ... rest of the application configuration
-    }
   }
 }
 ```
+```mdx-code-block
+</TabItem>
+</Tabs>
+</div>
+</details>
+```
+
+

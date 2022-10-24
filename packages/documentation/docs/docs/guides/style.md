@@ -4,6 +4,10 @@ sidebar_label: Style
 sidebar_position: 50
 ---
 
+:::caution
+This section is work in progress.
+:::
+
 > Ci sono due modi per iniettare stile:
 >  1. global -> api di micro-lc
 >  2. local -> scritto in fase di composizione

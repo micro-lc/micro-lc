@@ -5,10 +5,7 @@ sidebar_position: 10
 ---
 
 When an **iframe integrated** application is configured, its context is rendered inside the <micro-lc></micro-lc> mount
-point as an [iframe tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe). It is mandatory to explicitly
-set a source for the frame. Moreover, any 
-[valid attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#attributes) will be passed to the
-element (attributes are not mandatory).
+point as an [iframe tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
 
 :::caution
 Be mindful that a website [cannot](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) be embedded

@@ -9,8 +9,8 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 ```
 
-Most common integration mode, recommended to embed SPAs. This kind of application are directly managed by the orchestrator,
-which needs to be supplied with the assets entry point.
+Most common integration mode, recommended to embed SPAs. This kind of applications are directly managed by the 
+orchestrator, which needs to be supplied with the assets entry point.
 
 :::danger
 Up to now, only JavaScript **UMD scripts** can be used as parcel application assets.
