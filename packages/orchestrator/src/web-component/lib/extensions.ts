@@ -19,7 +19,8 @@ import type { SchemaOptions } from '../../utils/json'
 import { jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../../utils/json'
 import type { Microlc } from '../micro-lc'
 
-import { updateErrorHandler } from './qiankun'
+import { currentApplication$, rerouteErrorHandler } from './router'
+import { handleUpdateError } from './update'
 
 type HTTPClient = typeof window.fetch
 
@@ -79,8 +80,18 @@ function initLanguageExtension<T extends BaseExtension>(this: Microlc<T>) {
     },
     setLanguage: (nextLang: string): void => {
       currentLanguage = nextLang
-      const { id, handlers } = this.getApi().getCurrentApplication()
-      handlers?.update?.({}).catch((err: TypeError) => updateErrorHandler(id ?? 'unknown', err))
+      setTimeout(() => {
+        this._prepareForUpdate()
+        this.update()
+          .then((done) => {
+            if (done) {
+              this.matchCache.invalidateCache()
+              this._reroute().catch(rerouteErrorHandler)
+              this._completeUpdate()
+            }
+          })
+          .catch((err: TypeError) => handleUpdateError(currentApplication$, err))
+      })
     },
   }
 }

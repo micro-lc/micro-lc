@@ -47,11 +47,13 @@ function isSchemaOptions(input: SchemaOptions): input is MultipleSchemas {
     && Object.prototype.hasOwnProperty.call(input, 'parts')
 }
 
-export async function jsonFetcher(url: string): Promise<unknown> {
+export async function jsonFetcher(url: string, init?: RequestInit): Promise<unknown> {
   return fetch(
     new URL(url, window.document.baseURI),
     {
+      ...init,
       headers: {
+        ...init?.headers,
         Accept: acceptedTypes.join(', '),
       },
     })
