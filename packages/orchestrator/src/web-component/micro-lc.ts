@@ -17,12 +17,10 @@ import { createComposerContext, premount } from '@micro-lc/composer'
 import type { Config } from '@micro-lc/interfaces/v2'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'
-import { take } from 'rxjs'
 
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
-import type { ErrorCodes } from '../logger'
-import logger from '../logger'
+import { craftLanguageHeader } from '../utils/lang'
 
 import type {
   MicrolcApi,
@@ -31,10 +29,10 @@ import type {
   RouterContainer,
   QiankunApi } from './lib'
 import {
+  handleUpdateError,
   getUnmount,
   currentApplication$,
   rerouteToError,
-
   MatchCache,
   createMicrolcApiInstance,
   createRouter,
@@ -56,12 +54,6 @@ type ObservedProperties =
   | 'config'
   | 'configSrc'
 
-
-const handleUpdateError = (err: TypeError): void => {
-  currentApplication$.pipe(take(1)).subscribe((app) => {
-    logger.error('50' as ErrorCodes.UpdateError, app ?? '[unknown]', err.message)
-  })
-}
 
 export class Microlc<
   E extends BaseExtension = BaseExtension
@@ -162,7 +154,7 @@ export class Microlc<
             this.onload?.call(window, new Event('load'))
           }
         })
-        .catch(handleUpdateError)
+        .catch((err: TypeError) => handleUpdateError(currentApplication$, err))
     })
   }
 
@@ -294,7 +286,10 @@ export class Microlc<
 
       // ⛏️ get config file
       if (typeof this._configSrc === 'string') {
-        const config = await fetchConfig(this._configSrc)
+        const headers = craftLanguageHeader(
+          this.getApi().getExtensions().language?.getLanguage()
+        )
+        const config = await fetchConfig(this._configSrc, { headers })
         this._config = mergeConfig(config)
       }
 
@@ -317,6 +312,7 @@ export class Microlc<
     return Promise.resolve(false)
   }
 
+
   async render(): Promise<void> {
     // render is made of two seperate
     // areas:
@@ -336,13 +332,13 @@ export class Microlc<
     await unmount?.().catch(rerouteErrorHandler)
 
     if (this.shadowRoot) {
-      for (const child of this.shadowRoot.children) {
+      Array.from(this.shadowRoot.children).forEach((child) => {
         child.remove()
-      }
+      })
     }
-    for (const child of this._container.children) {
+    Array.from(this._container.children).forEach((child) => {
       child.remove()
-    }
+    })
 
     // layout composition and premount ops
     const { content } = await premount(layout)

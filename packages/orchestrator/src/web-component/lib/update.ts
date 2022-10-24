@@ -17,6 +17,8 @@ import type { ResolvedConfig } from '@micro-lc/composer'
 import { createComposerContext } from '@micro-lc/composer'
 import type { Config, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
+import type { Observable } from 'rxjs'
+import { take } from 'rxjs'
 
 
 import { defaultConfig } from '../../config'
@@ -58,8 +60,14 @@ export const handleInitImportMapError = (err: TypeError): void => {
   logger.error('2' as ErrorCodes.ImportMapError, err.message)
 }
 
-export async function fetchConfig(url: string): Promise<Config> {
-  return jsonFetcher(url)
+export const handleUpdateError = (currentApplication$: Observable<string | undefined>, err: TypeError): void => {
+  currentApplication$.pipe(take(1)).subscribe((app) => {
+    logger.error('50' as ErrorCodes.UpdateError, app ?? '[unknown]', err.message)
+  })
+}
+
+export async function fetchConfig(url: string, init?: RequestInit): Promise<Config> {
+  return jsonFetcher(url, init)
     .then((json) => {
       if (process.env.NODE_ENV === 'development') {
         return Promise.all<[unknown, SchemaOptions]>([

@@ -21,7 +21,6 @@ import { interpolate } from './compiler'
 import { parseSources } from './importmap'
 import { jsonToHtml } from './json'
 import { lexer } from './lexer'
-import type { ErrorCodes } from './logger'
 
 export interface ComposerOptions {
   context?: Record<string, unknown>
@@ -84,31 +83,4 @@ export async function premount(config: PluginConfiguration): Promise<ResolvedCon
     content: config.content,
     sources: { importmap, uris },
   })
-}
-
-export async function fetcher(url: string): Promise<unknown> {
-  const acceptedTypes = [
-    'application/json',
-    'text/x-json',
-  ]
-
-  return window.fetch(
-    new URL(url, window.document.baseURI),
-    {
-      headers: {
-        Accept: acceptedTypes.join(', '),
-      },
-    })
-    .then((res) => {
-      const contentType = res.headers.get('Content-Type') ?? ''
-      const isJson = acceptedTypes.reduce(
-        (accepted, str) => contentType.includes(str) || accepted, false
-      )
-
-      if (res.ok && isJson) {
-        return res.json() as Promise<unknown>
-      }
-
-      return Promise.reject(new TypeError('20' as ErrorCodes.InvalidJSONError))
-    })
 }

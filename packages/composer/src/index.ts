@@ -22,7 +22,7 @@ import type { SchemaObject } from 'ajv'
 import type { Observable } from 'rxjs'
 import { BehaviorSubject, ReplaySubject } from 'rxjs'
 
-import { premount, createComposerContext, fetcher } from './lib'
+import { premount, createComposerContext } from './lib'
 import type { V1Content } from './v1adapter'
 import { v1Adapter, v1AddSources } from './v1adapter'
 
@@ -45,7 +45,11 @@ interface EventWithUser {
 interface MicrolcApi extends Observable<EventWithUser> {
   getExtensions: () => {
     json?: {
+      fetcher: (url: string, init?: RequestInit) => Promise<unknown>
       validator?: <S>(json: unknown, schema: SchemaOptions, opts?: JsonCatcherOptions<S>) => Promise<S>
+    }
+    language?: {
+      getLanguage?: () => string
     }
   }
 }
@@ -179,6 +183,20 @@ const logger = (name: string, ...args: string[]) => {
   }
 }
 
+export function craftLanguageHeader(lang: string | undefined, win = window): Record<'Accept-Language', string> {
+  const language = lang ?? win.navigator.language
+  const [main, secondary] = language.split('-') as [string, string | undefined]
+  if (secondary !== undefined) {
+    return {
+      'Accept-Language': `${language}, ${main};q=0.5`,
+    }
+  }
+
+  return {
+    'Accept-Language': language,
+  }
+}
+
 export async function bootstrap({
   name,
   composerApi,
@@ -195,9 +213,14 @@ export async function bootstrap({
     ({ content: version < 2 ? v1Adapter(conf as V1Content, v1AdapterUris) : (conf as PluginConfiguration).content })
   const validator = microlcApi?.getExtensions?.().json?.validator
     ?? ((conf: unknown) => defaultValue(conf))
+  const fetcher = microlcApi?.getExtensions?.().json?.fetcher
+    ?? (() => Promise.reject(new TypeError('[micro-lc][composer] no fetcher was provided on micro-lc API')))
+  const headers = craftLanguageHeader(
+    microlcApi?.getExtensions?.().language?.getLanguage?.()
+  )
 
   if (typeof config === 'string') {
-    resolvedConfig = await fetcher(config)
+    resolvedConfig = await fetcher(config, { headers })
       .then((jsonConfig) => {
         const defaultConfig = defaultValue(jsonConfig)
         if (schema) {
@@ -251,8 +274,13 @@ export async function mount(
   subscribe(({ user }) => {
     const config = composerConfig.get(name)
     if (config) {
-      done = render(composer, config, container, {
+      const virtualContainer = document.createElement('div')
+      done = render(composer, config, virtualContainer, {
         currentUser: user,
+      }).then(() => {
+        Array.from(virtualContainer.children).forEach((child) => {
+          container.appendChild(child)
+        })
       }).catch(console.error)
     }
   })
