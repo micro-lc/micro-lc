@@ -61,9 +61,10 @@ const userPermissionsObjectBuilder = (userPermissions: string[]) => {
 }
 
 const buildPluginFunction = (plugin: FilterableObject) => {
-  const bracketsNotationExpression = plugin.aclExpression.replace(/\.(.+?)(?=\.|$| )/g, (_, string) => `?.['${string}']`)
+  const bracketsNotationExpression = plugin.aclExpression.replace(/\.(.+?)(?=\.|$| |\))/g, (_, string) => `?.['${string}']`)
+  const booleanEvaluationExpression = bracketsNotationExpression.replace(/'](?=]|$| )/g, `'] === true`)
   // eslint-disable-next-line no-new-func
-  return new Function(GROUPS_CONFIGURATION.function.key, PERMISSIONS_CONFIGURATION.function.key, `return !!(${bracketsNotationExpression})`)
+  return new Function(GROUPS_CONFIGURATION.function.key, PERMISSIONS_CONFIGURATION.function.key, `return !!(${booleanEvaluationExpression})`)
 }
 
 const evaluatePluginExpression = (userGroupsObject: UserGroupsObject, userPermissionsObject: UserPermissionsObject) => {

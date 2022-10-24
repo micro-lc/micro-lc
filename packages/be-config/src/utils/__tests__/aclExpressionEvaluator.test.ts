@@ -88,7 +88,7 @@ describe('Plugins filter tests', () => {
     expect(pluginsFiltered).toMatchObject(allConfiguration)
   })
 
-  it('general acl object and no groups', () => {
+  it('general acl object and no groups and permissions', () => {
     const allConfiguration = {
       test: {
         nested: {
@@ -101,7 +101,7 @@ describe('Plugins filter tests', () => {
     expect(pluginsFiltered).toMatchObject({test: {}})
   })
 
-  it('general acl object and groups', () => {
+  it('general acl object and groups but no permissions', () => {
     const allConfiguration = {
       test: {
         nested: {
@@ -114,7 +114,7 @@ describe('Plugins filter tests', () => {
     expect(pluginsFiltered).toMatchObject(allConfiguration)
   })
 
-  it('general acl object and invalid groups', () => {
+  it('general acl object and invalid groups and no permissions', () => {
     const allConfiguration = {
       test: {
         nested: {
@@ -201,16 +201,45 @@ describe('Plugins filter tests', () => {
     expect(filtered).not.toBe(toFilter)
   })
 
-  it('works with permissions not assigned in aclExpression', () => {
+  it('works with permissions with different nested levels', () => {
     const toFilter = {
       plugins: [
         {
-          aclExpression: 'permissions.api.test-crud.all || permissions.api.test-crud.get',
+          aclExpression: 'permissions.api',
+        },
+        {
+          aclExpression: 'permissions.api.users.count.get',
+        },
+        {
+          aclExpression: 'permissions.api.companies',
         },
       ],
     }
-    const filtered = aclExpressionEvaluator(toFilter, ['doctor'], ['api.users.post'])
-    expect(filtered.plugins.length).toBe(0)
+    const filtered = aclExpressionEvaluator(toFilter, [], ['api.users.post', 'api.users.count.get'])
+    expect(filtered.plugins.length).toBe(1)
+    expect(filtered.plugins.length).not.toBe(toFilter.plugins.length)
+    expect(filtered).not.toBe(toFilter)
+  })
+
+  it('works with aclExpression with parenthesis and other boolean operators', () => {
+    const toFilter = {
+      plugins: [
+        {
+          aclExpression: '(groups.doctor && !permissions.api.users.post) || permissions.api.users.count.get',
+        },
+        {
+          aclExpression: '(groups.doctor === true && permissions.api.users.post === true)',
+        },
+        {
+          aclExpression: '(groups.doctor === false && permissions.api.users.post === true)',
+        },
+        {
+          aclExpression: '(groups.doctor && permissions.api.users.post === false)',
+        },
+      ],
+    }
+    const filtered = aclExpressionEvaluator(toFilter, ['doctor'], ['api.users.post', 'api.users.count.get'])
+    expect(filtered.plugins.length).toBe(2)
     expect(filtered.plugins.length).not.toBe(toFilter.plugins.length)
     expect(filtered).not.toBe(toFilter)
   })
