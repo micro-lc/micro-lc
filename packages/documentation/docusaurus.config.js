@@ -32,7 +32,7 @@ const themeConfig = {
         type: 'doc',
       },
       {
-        docId: 'api/configuration-schema',
+        docId: 'api/micro-lc',
         label: 'API',
         position: 'left',
         type: 'doc',
