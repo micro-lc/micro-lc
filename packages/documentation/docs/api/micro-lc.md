@@ -357,7 +357,7 @@ importmap:
 
 * Type: `Object`
 
-Application [layout DOM configuration](../docs/guides/layout).
+[Application layout](../docs/guides/layout) DOM configuration.
 
 Example:
 

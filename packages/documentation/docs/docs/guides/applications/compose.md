@@ -11,7 +11,7 @@ This section is work in progress.
 A [composable](../../concepts/composition) application is a pseudo-HTML document enhanced with JavaScript properties
 dynamically injected by the [composer application](../../../api/composer-api). 
 
-The resulting DOM tree is constructed on the basis of a specific configuration, which can be directly provided or sourced
+The resulting DOM tree is constructed on the basis of a specific configuration, which can be directly provided, or sourced
 from an external JSON or YAML file.
 
 ## Usage
