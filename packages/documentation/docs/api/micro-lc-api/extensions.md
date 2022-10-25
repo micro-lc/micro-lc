@@ -119,7 +119,7 @@ setting.
 export type BaseExtension = Record<string, unknown> & {
   json: {
     // highlight-next-line
-    fetcher: (url: string) => Promise<unknown>
+    fetcher: (url: string, init?: RequestInit) => Promise<unknown>
   }
 }
 ```
@@ -136,6 +136,19 @@ The response is interpreted according to `Content-Type` header vale and then par
 :::caution
 Be aware that YAML parsing requires an extra ~38KB of dynamic import to be added to the total bundle size.
 :::
+
+and an `Accept-Language` header matching either the browser current language or any language that has been set via 
+<micro-lc></micro-lc> API using the [`setLanguage`](#languagesetlanguage) method. When the required language is 
+expressed ad `aa-AA`, an extra generic language is added with a quality factor. On `en-US` the header would be
+
+```text
+Accept-Language: en-US, en;q=0.5
+```
+
+This header can be leveraged in server [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation).
+
+The `RequestInit` type is the standard [fetch option type](https://github.com/microsoft/TypeScript/blob/main/lib/lib.dom.d.ts#L1534) where
+`Accept` and `Accept-Language` headers cannot be overridden.
 
 ### `json.validator`
 
@@ -197,8 +210,9 @@ export type BaseExtension = Record<string, unknown> & {
 [rfc5646 specification](https://datatracker.ietf.org/doc/html/rfc5646) tag.
 
 :::caution
-Be aware that, given the static nature of <micro-lc></micro-lc> APi extensions, `language.setLanguage` cannot be used
-to dynamically change language (i.e., without a page reload).
+Be aware that, given the static nature of <micro-lc></micro-lc> APi extensions, `language.setLanguage` can be used
+to dynamically change language but it will trigger a full <micro-lc></micro-lc> config reload and update. This feature
+is required to properly re-negotiate a translated configuration file.
 
 Refer to [reactive communication section](reactive-communication.md) for event-driven alternatives, but keep in mind
 that <micro-lc></micro-lc> will use `language` extension to perform any language-related operation. 
