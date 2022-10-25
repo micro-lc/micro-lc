@@ -4,6 +4,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github')
 const pluginContentDocsConfig = {
   breadcrumbs: true,
   path: 'docs',
+  routeBasePath: '/',
   sidebarPath: 'sidebars.js',
 }
 
