@@ -133,6 +133,9 @@ const defaultConfig = {
   version: 2,
 }
 
+const MLC_SESSION_CONTENT_KEY = '@microlc:_content'
+const MLC_SESSION_FORMAT_KEY = '@microlc:editorFormat'
+
 export class MlcConfig extends LitElement implements Resizable, Submittable {
   static styles = [css`
     :host {
@@ -262,10 +265,21 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
 
   connectedCallback(): void {
     super.connectedCallback()
+
+    const initialContent = window.sessionStorage.getItem(MLC_SESSION_CONTENT_KEY)
+    const format = window.sessionStorage.getItem(MLC_SESSION_FORMAT_KEY)
+    if (initialContent !== null) {
+      this.editorFormat = format as EditorFormat
+      this._content = initialContent
+    }
     window.addEventListener('keypress', this.ctrlEnterClickHandler)
   }
+
   disconnectedCallback(): void {
     super.disconnectedCallback()
+
+    window.sessionStorage.setItem(MLC_SESSION_CONTENT_KEY, this._content)
+    window.sessionStorage.setItem(MLC_SESSION_FORMAT_KEY, this.editorFormat)
     window.removeEventListener('keypress', this.ctrlEnterClickHandler)
   }
 
@@ -273,13 +287,26 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     super.firstUpdated(_changedProperties)
     this._editor = monaco.editor.create(this.container, {
       automaticLayout: true,
-      language: 'json',
+      language: this.editorFormat,
       tabSize: 2,
       value: this._content,
     })
 
     this.models.json = monaco.editor.createModel(this._content, 'json')
     this.models.yaml = monaco.editor.createModel(yaml.dump(this._content), 'yaml', modelUri)
+
+    this.models.json.onDidChangeContent(() => {
+      const newContent = this._editor?.getValue()
+
+      newContent && window.sessionStorage.setItem(MLC_SESSION_CONTENT_KEY, newContent)
+      window.sessionStorage.setItem(MLC_SESSION_FORMAT_KEY, this.editorFormat)
+    })
+    this.models.yaml.onDidChangeContent(() => {
+      const newContent = this._editor?.getValue()
+
+      newContent && window.sessionStorage.setItem(MLC_SESSION_CONTENT_KEY, newContent)
+      window.sessionStorage.setItem(MLC_SESSION_FORMAT_KEY, this.editorFormat)
+    })
 
     this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
       window.dispatchEvent(new KeyboardEvent('keypress', { ctrlKey: true, key: 'Enter' }))
@@ -349,13 +376,13 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
             <div style="display: flex; flex-direction: column;">
               <div>
                 <input
-                  type="radio" id="json" name="json" value="json" checked
+                  type="radio" id="json" name="json" value="json" ?checked=${this.editorFormat === EditorFormat.JSON}
                   @change=${(event: Event) => this.handleFormatChange(event, EditorFormat.JSON)}
                 ><label for="json">JSON</label>
               </div>
               <div>
                 <input
-                  type="radio" id="yaml" name="yaml" value="yaml"
+                  type="radio" id="yaml" name="yaml" value="yaml" ?checked=${this.editorFormat === EditorFormat.YAML}
                   @change=${(event: Event) => this.handleFormatChange(event, EditorFormat.YAML)}
                 ><label for="yaml">YAML</label>
               </div>
