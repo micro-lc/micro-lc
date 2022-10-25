@@ -1,5 +1,6 @@
 ---
 title: micro-lc API
+description: micro-lc API
 ---
 
 <micro-lc></micro-lc> injects an API into each element composing the layout and as property of all applications rendered as content

@@ -1,5 +1,6 @@
 ---
 title: Routing
+description: micro-lc approach to routing
 sidebar_label: Routing
 sidebar_position: 30
 ---

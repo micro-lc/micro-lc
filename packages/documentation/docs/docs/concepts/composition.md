@@ -1,5 +1,6 @@
 ---
 title: Composition
+description: DOM composition from markup language content
 sidebar_label: Composition
 sidebar_position: 20
 ---

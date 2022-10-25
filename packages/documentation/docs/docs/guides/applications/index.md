@@ -1,5 +1,6 @@
 ---
 title: Applications
+description: Dynamic portion of micro-lc
 ---
 
 ```mdx-code-block
@@ -25,6 +26,12 @@ provided configuration, and
 
 There also exists a particular type of applications, [error pages](./error-pages.md), which differ in that have a fixed
 routing pattern.
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```
 
 ## Configuration
 

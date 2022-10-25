@@ -1,5 +1,6 @@
 ---
 title: Layout
+description: Static portion of micro-lc
 sidebar_label: Layout
 sidebar_position: 20
 ---

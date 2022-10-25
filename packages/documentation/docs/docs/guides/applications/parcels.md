@@ -1,5 +1,6 @@
 ---
 title: Parcels
+description: micro-frontend loaded using parcels
 sidebar_label: Parcels
 sidebar_position: 30
 ---

@@ -1,5 +1,6 @@
 ---
 title: Composer API
+description: micro-lc composer API
 sidebar_label: Composer API
 sidebar_position: 30
 ---

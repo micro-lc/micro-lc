@@ -1,5 +1,6 @@
 ---
 title: Architecture
+description: micro-lc architecture
 sidebar_label: Architecture
 sidebar_position: 10
 ---

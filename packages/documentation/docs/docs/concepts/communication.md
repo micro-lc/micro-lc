@@ -1,5 +1,6 @@
 ---
 title: Communication
+description: Internal communication between micro-lc building blocks
 sidebar_label: Communication
 sidebar_position: 30
 ---
@@ -11,7 +12,7 @@ This task of cross-communication becomes a bit more troublesome when transitioni
 the whole application is divided into multiple, smaller entities running independently with respect to one another.
 
 [Multiple techniques](https://sharvishi9118.medium.com/cross-micro-frontend-communication-techniques-a10fedc11c59)
-are available to solve this issue, and the approve of <micro-lc></micro-lc> consists in **discouraging global state
+are available to solve this issue. The approach of <micro-lc></micro-lc> consists in **discouraging global state
 pattern in favour of event-driven communication**. Moreover, contexts can be shared between applications and
 content applications by using either declarative tools or forcing state refresh by updating properties (React-like).
 

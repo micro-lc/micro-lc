@@ -1,5 +1,6 @@
 ---
 title: Separation of concerns
+description: micro-lc viewport and DOM management
 sidebar_label: Separation of concerns
 sidebar_position: 10
 ---

@@ -1,5 +1,6 @@
 ---
 title: Error pages
+description: Applications to cover for errors
 sidebar_label: Error pages
 sidebar_position: 40
 ---

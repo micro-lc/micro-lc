@@ -1,5 +1,6 @@
 ---
 title: Style
+description: Application styling and theming
 sidebar_label: Style
 sidebar_position: 50
 ---

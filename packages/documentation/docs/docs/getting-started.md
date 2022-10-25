@@ -1,5 +1,6 @@
 ---
 title: Getting started
+description: Start using micro-lc
 sidebar_label: Getting started
 sidebar_position: 20
 ---

@@ -1,5 +1,6 @@
 ---
 title: Compose
+description: Composition of HTML tags
 sidebar_label: Compose
 sidebar_position: 20
 ---
