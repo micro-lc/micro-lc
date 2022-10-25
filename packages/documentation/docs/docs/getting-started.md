@@ -108,6 +108,80 @@ This container has the following runtime environment variables.
 |    `MODE`    | <code>development &#124; production</code> |  `production`   | <micro-lc></micro-lc> bundle.                                                                           |
 | `CONFIG_SRC` |            <code>string</code>             | `./config.json` | URL to <micro-lc></micro-lc> config.                                                                    |
 
+`BASE_PATH` is useful if your <micro-lc></micro-lc> app must be served on a subpath. Be aware that any `route` declared in the configuration file under `applications`, when relative, 
+are computed with respect to `BASE_PATH`.
+
+### Web Server
+
+The <micro-lc></micro-lc> container is effectively an [nginx](https://www.nginx.com/) web server, currently on version `1.23.2`. It is preset to rewrite any route
+according with your `BASE_PATH` choice. Moreover it does per-call [sub filtering](http://nginx.org/en/docs/http/ngx_http_sub_module.html#sub_filter) of special variables.
+This feature is useful for
+
+1. inject runtime variables to <micro-lc></micro-lc> webcomponent
+2. inject a [CSP nonce](https://content-security-policy.com/nonce/) on scripts and style tags
+
+Which basically sums up to the following configuration:
+
+```nginx
+http {
+  server {
+    # ...
+    location ~ (^/|^${BASE_PATH}) {
+      set_secure_random_alphanum      $cspNonce 32;
+
+      rewrite                         ^${BASE_PATH}$ /index.html break;
+      rewrite                         ^${BASE_PATH}/?(.*) /$1 break;
+
+      sub_filter_once                 off;
+      sub_filter                      '**MICRO_LC_BASE_PATH**' '${BASE_PATH}';
+      sub_filter                      '**MICRO_LC_MODE**' '${MODE}';
+      sub_filter                      '**MICRO_LC_CONFIG_SRC**' '${CONFIG_SRC}';
+      sub_filter                      '**CSP_NONCE**' $cspNonce;
+
+      expires                         -1;
+      try_files                       $uri $uri/index.html /index.html =404;
+    }
+  }
+}
+```
+
+Notice that the algorithm `set_secure_random_alphanum` is provided by an `nginx` external [module](https://github.com/openresty/set-misc-nginx-module)
+and generates 32 bytes of random hash on each endpoint call replacing the variable `**CSP_NONCE**.
+
+To override default configurations with your own remind that volumes can be mounted on:
+
+1. `index.html` at `/usr/static/index.html`
+2. `config.json` at `/usr/static/config.json`
+3. `default.conf` at `/etc/nginx/conf.d/default.conf`
+
 ## Building from source
 
+If you would like to contribute or simply run <micro-lc></micro-lc> from source code, checkout locally the [official repository](https://github.com/micro-lc/micro-lc).
+Be aware that it needs `node` `16+` and `yarn` `1.22+`. But requirements can be met installing a node version manager
+like [`nvm`](https://github.com/nvm-sh/nvm#install--update-script) and then running
+
+```shell
+nvm install lts/gallium
+corepack enable
+```
+
+Once your `node` is up and running
+
+```shell
+yarn install
+yarn initialize
+```
+
+and the source code of <micro-lc></micro-lc> will be located at `packages/orchestrator/dist`. Locally a playground is available but
+requires [`docker`](https://docs.docker.com/engine/install/) and `docker-compose` to run. After running
+
+```shell
+yarn playground
+```
+
+the playground will be available on `http://localhost:3000`.
+
 ## Playground
+
+An online playground is <a href="/playground/" target="_blank">available</a> on this documentation website.
+Refer to our guides to try <micro-lc></micro-lc> out on the playground setup.
