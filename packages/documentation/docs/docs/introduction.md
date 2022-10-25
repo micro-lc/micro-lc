@@ -72,7 +72,7 @@ Compared to other tools, <micro-lc></micro-lc> provides:
 
 ## Browser compatibility
 
-|     IE     | Edge | Firefox | Chrome | Safari | Opera |
-|:----------:|:----:|:-------:|:------:|:------:|:-----:|
-| No support | 79+  |   67+   |  64+   | 11.1+  |  51+  |
+| IE 11 | Edge 79+ | Firefox 67+ | Chrome 64+ | Safari 11.1+ | Opera 51+ |
+|:-----:|:--------:|:-----------:|:----------:|:------------:|:---------:|
+|   ✖   |    ✔     |      ✔      |     ✔      |      ✔       |     ✔     |
 

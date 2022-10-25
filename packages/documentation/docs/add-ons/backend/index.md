@@ -1,6 +1,6 @@
 ---
-title: Components
-description: Web components catalogue
+title: Backend solutions
+description: Backend middlewares for configurations serving
 ---
 
 A curated catalogue of ready-to-use web components for your <micro-lc></micro-lc> [layout](../../docs/guides/layout.md)

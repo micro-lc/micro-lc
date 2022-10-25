@@ -1,6 +1,7 @@
 ---
-title: 🔧 mlc-iconic
-sidebar_label: 🔧 mlc-iconic
+title: 🖼 mlc-iconic
+description: Dynamically loaded icons from different libraries
+sidebar_label: 🖼 mlc-iconic
 sidebar_position: 40
 ---
 

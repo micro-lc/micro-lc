@@ -8,8 +8,6 @@ sidebar_position: 40
 Extensions is a grouping for static (i.e., not event-driven) API. `extensions` accepts plugins as keys in a JavaScript
 object. `extensions` are initialized with a set of default features.
 
-<micro-lc></micro-lc> ships a set of...
-
 ## Manipulating extensions
 
 To get currently mounted extensions, API provides method `getExtensions` which returns an immutable object which

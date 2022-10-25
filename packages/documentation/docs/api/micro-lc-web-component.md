@@ -1,7 +1,7 @@
 ---
-sidebar_label: micro-lc
+sidebar_label: micro-lc web component
 description: micro-lc web component and configuration
-title: micro-lc
+title: micro-lc web component
 sidebar_position: 10
 ---
 

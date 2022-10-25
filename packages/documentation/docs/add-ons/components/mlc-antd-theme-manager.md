@@ -1,6 +1,7 @@
 ---
-title: 🔧 mlc-antd-theme-manager
-sidebar_label: 🔧 mlc-antd-theme-manager
+title: 🖼 mlc-antd-theme-manager
+description: Adapter for Ant Design dynamic theme
+sidebar_label: 🖼 mlc-antd-theme-manager
 sidebar_position: 30
 ---
 

@@ -1,6 +1,7 @@
 ---
-title: 🔧 mlc-layout
-sidebar_label: 🔧 mlc-layout
+title: 🖼 mlc-layout
+description: Top bar/sidebar navigation layout
+sidebar_label: 🖼 mlc-layout
 sidebar_position: 10
 ---
 

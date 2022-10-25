@@ -33,7 +33,7 @@ const themeConfig = {
         type: 'doc',
       },
       {
-        docId: 'api/micro-lc',
+        docId: 'api/micro-lc-web-component',
         label: 'API',
         position: 'left',
         type: 'doc',
