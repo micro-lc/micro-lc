@@ -10,13 +10,9 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 ```
 
-:::caution
-This section is work in progress.
-:::
-
-:::info Disclaimer
-For the time being, this feature is applicable **only to web components** (i.e., layout and application of type
-[compose](./applications/compose)). In the future it will be extended also to [parcels](./applications/compose).
+:::caution Disclaimer
+For the time being, this feature is applicable **only to web components** (i.e., [layout](./layout) and application of
+type [compose](./applications/compose)). In the future it will be extended also to [parcels](./applications/compose).
 :::
 
 Encapsulation and complete separation among components/applications may lead to bundle same third-party dependencies
@@ -31,9 +27,8 @@ Since at present time neither Firefox nor Safari [support](https://caniuse.com/i
 embeds the [es-module-shims](https://github.com/guybedford/es-module-shims) import maps polyfill. Any composable content 
 of <micro-lc></micro-lc> can leverage the import maps technique utility.
 
-### Usage example
-
-Suppose you want to use two web components form two different libraries, both having a direct dependency from RxJS.
+Suppose you want to use two web components form two different libraries, both having a direct dependency from 
+[RxJS](https://rxjs.dev/).
 
 ```mdx-code-block 
 <Tabs>
@@ -82,10 +77,8 @@ customElements.define('my-other-awesome-web-component', MyAwesomeWebComponent)
 <TabItem value="micro-lc" label="micro-lc config">
 ```
 ```yaml title=micro-lc.config.yml
-"$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json"
-version: 2
 applications:
-  admins:
+  home:
     integrationMode: compose
     route: "/",
     config:
@@ -126,62 +119,230 @@ Otherwise, the browser will fire an error like:
 To learn more about the topic, visit [ES Module Shims repository](https://github.com/guybedford/es-module-shims#es-module-shims).
 :::
 
-To achieve this behaviour, the share dependency has to be declared in <micro-lc></micro-lc> configuration. The point
-where you declare it depends on its scope: it can be declared at application level – and it would be available only to
-the components in that application –, or globally – and it would be available everywhere –.
+### Usage
 
-```mdx-code-block
-<Tabs>
-<TabItem value="application-level" label="Application level" default>
+Import maps can be declared in different sections of <micro-lc></micro-lc> configuration depending on their scope.
+
+If you want them to be accessible by the whole application (i.e., both layout and all mounted micro-frontends), you can
+use top-level [`importmap` configuration key](../../api/micro-lc#importmap).
+
+```mdx-code-block 
+<details>
+<summary>Example</summary>
+<div>
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
 ```
-```yaml title=micro-lc.config.yml
-"$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json"
-version: 2
-applications:
-  admins:
-    integrationMode: compose
-    route: "/",
-    config:
-      sources:
-        uris: 
-        - "https://my-static-server/library-1.js"
-        - "https://my-static-server/library-2.js"
-        # highlight-start
-        importmap: 
-          imports:
-            rxjs: "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.5.6/esm/es2015/rxjs.min.js"
-        # highlight-end
-      content:
-        - tag: "my-awesome-web-component"
-        - tag: "my-other-awesome-web-component"
+```yaml title="micro-lc.config.yaml"
+importmap:
+  imports:
+    react: https://esm.sh/react@next
+    react-dom: https://esm.sh/react-dom@next
+  scopes:
+    https://esm.sh/react-dom@next:
+      /client: https://esm.sh/react-dom@next/client
 ```
 ```mdx-code-block
 </TabItem>
-<TabItem value="global-level" label="Global level">
+<TabItem value="1" label="JSON">
 ```
-```yaml title=micro-lc.config.yml
-"$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json"
-version: 2
-# highlight-start
-importmap:
-  imports:
-    rxjs: "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.5.6/esm/es2015/rxjs.min.js"
-# highlight-end
-applications:
-  admins:
-    integrationMode: compose
-    route: "/",
-    config:
-      sources:
-        - "https://my-static-server/library-1.js"
-        - "https://my-static-server/library-2.js"
-      content:
-        - tag: "my-awesome-web-component"
-        - tag: "my-other-awesome-web-component"
+```json title="micro-lc.config.json"
+{
+  "importmap": {
+    "imports": {
+      "react": "https://esm.sh/react@next",
+      "react-dom": "https://esm.sh/react-dom@next"
+    },
+    "scopes": {
+      "https://esm.sh/react-dom@next": {
+        "/client": "https://esm.sh/react-dom@next/client"
+      }
+    }
+  }
+}
 ```
 ```mdx-code-block
 </TabItem>
 </Tabs>
+</div>
+</details>
 ```
 
-### Dependency scoping
+On the contrary, if you want to narrow their scope, you need to use the 
+[`sources.importmap` key](./applications/compose#plugin-configuration) when defining the
+configuration of a [layout](./layout), a [composable application](./applications/compose) or a
+[custom composable error page](./applications/error-pages#custom-error-pages).
+
+```mdx-code-block 
+<details>
+<summary>Example</summary>
+<div>
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
+```
+```yaml title="micro-lc.config.yaml"
+# 👇 Custom error pages
+settings:
+  4xx:
+    404:
+      integrationMode: compose
+      config:
+        sources:
+          uris: https://my-static-server/my-web-component.js
+        importmap:
+          imports:
+            react: https://esm.sh/react@next
+            react-dom: https://esm.sh/react-dom@next
+          scopes:
+            https://esm.sh/react-dom@next:
+              /client: https://esm.sh/react-dom@next/client
+        content:
+          tag: my-web-component
+
+# 👇 Layout
+layout:
+  sources:
+    uris: https://my-static-server/my-web-component.js
+  importmap:
+    imports:
+      react: https://esm.sh/react@next
+      react-dom: https://esm.sh/react-dom@next
+    scopes:
+      https://esm.sh/react-dom@next:
+        /client: https://esm.sh/react-dom@next/client
+  content:
+    tag: my-web-component
+
+# 👇 Composable applications
+applications:
+  - compose:
+      integrationMode: compose
+      route: ./compose
+      config:
+        sources:
+          uris: https://my-static-server/my-web-component.js
+        importmap:
+          imports:
+            react: https://esm.sh/react@next
+            react-dom: https://esm.sh/react-dom@next
+          scopes:
+            https://esm.sh/react-dom@next:
+              /client: https://esm.sh/react-dom@next/client
+        content:
+          tag: my-web-component
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="JSON">
+```
+```json title="micro-lc.config.json"
+{
+  "settings": {
+    "4xx": {
+      "404": {
+        "integrationMode": "compose",
+        "config": {
+          "sources": {
+            "uris": "https://my-static-server/my-web-component.js"
+          },
+          "importmap": {
+            "imports": {
+              "react": "https://esm.sh/react@next",
+              "react-dom": "https://esm.sh/react-dom@next"
+            },
+            "scopes": {
+              "https://esm.sh/react-dom@next": {
+                "/client": "https://esm.sh/react-dom@next/client"
+              }
+            }
+          },
+          "content": {
+            "tag": "my-web-component"
+          }
+        }
+      }
+    }
+  },
+  "layout": {
+    "sources": {
+      "uris": "https://my-static-server/my-web-component.js"
+    },
+    "importmap": {
+      "imports": {
+        "react": "https://esm.sh/react@next",
+        "react-dom": "https://esm.sh/react-dom@next"
+      },
+      "scopes": {
+        "https://esm.sh/react-dom@next": {
+          "/client": "https://esm.sh/react-dom@next/client"
+        }
+      }
+    },
+    "content": {
+      "tag": "my-web-component"
+    }
+  },
+  "applications": [
+    {
+      "compose": {
+        "integrationMode": "compose",
+        "route": "./compose",
+        "config": {
+          "sources": {
+            "uris": "https://my-static-server/my-web-component.js"
+          },
+          "importmap": {
+            "imports": {
+              "react": "https://esm.sh/react@next",
+              "react-dom": "https://esm.sh/react-dom@next"
+            },
+            "scopes": {
+              "https://esm.sh/react-dom@next": {
+                "/client": "https://esm.sh/react-dom@next/client"
+              }
+            }
+          },
+          "content": {
+            "tag": "my-web-component"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+</div>
+</details>
+```
+
+Regardless of where import maps are declared, their configuration is an object of the following shape:
+
+```typescript
+interface ImportMap {
+  imports?: Record<string, string>
+  scopes?: Record<string, Record<string, string>>
+}
+```
+
+Key `imports` allows control over what URLs get fetched by JavaScript import statements and import() expressions. It is
+an object mapping modules to URLs from which they can be fetched.
+
+```yaml
+importmap:
+  imports:
+    react: https://esm.sh/react@next
+```
+
+It is often the case that you want to use the same import specifier to refer to multiple versions of a single library,
+depending on who is importing them. This encapsulates the versions of each dependency in use, and avoids dependency hell.
+This use case is supported through key `scopes` which allows you to change the meaning of a specifier within a given
+scope.
+
+```yaml
+scopes:
+  https://esm.sh/react-dom@next:
+    /client: https://esm.sh/react-dom@next/client
+```

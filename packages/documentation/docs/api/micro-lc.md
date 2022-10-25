@@ -147,7 +147,7 @@ settings:
   4xx:
     401:
       integrationMode: parcel
-      entry: "/custom-401-error-page.html"
+      entry: https://my-static-server/custom-401-error-page.html
 ```
 ```mdx-code-block
 </TabItem>
@@ -159,7 +159,7 @@ settings:
     "4xx": {
       "401": {
         "integrationMode": "parcel",
-        "entry": "/custom-401-error-page.html"
+        "entry": "https://my-static-server/custom-401-error-page.html"
       }
     }
   }
@@ -189,7 +189,7 @@ settings:
   5xx:
     502:
       integrationMode: parcel
-      entry: "/custom-502-error-page.html"
+      entry: https://my-static-server/custom-502-error-page.html
 ```
 ```mdx-code-block
 </TabItem>
@@ -201,7 +201,7 @@ settings:
     "5xx": {
       "502": {
         "integrationMode": "parcel",
-        "entry": "/custom-502-error-page.html"
+        "entry": "https://my-static-server/custom-502-error-page.html"
       }
     }
   }

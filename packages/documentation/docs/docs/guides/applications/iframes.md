@@ -15,7 +15,7 @@ embedded iFrame. Attempting to do so will result in a console error like:
 
 ```mdx-code-block
 <console-error-line>
-  The loading of “https://www.google.com/” in a frame is denied by “X-Frame-Options“ directive set to “SAMEORIGIN“
+  The loading of "https://www.google.com/" in a frame is denied by "X-Frame-Options" directive set to "SAMEORIGIN"
 </console-error-line>
 ```
 

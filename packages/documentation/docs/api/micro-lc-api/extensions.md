@@ -214,6 +214,6 @@ Be aware that, given the static nature of <micro-lc></micro-lc> APi extensions, 
 to dynamically change language but it will trigger a full <micro-lc></micro-lc> config reload and update. This feature
 is required to properly re-negotiate a translated configuration file.
 
-Refer to [reactive communication section](reactive-communication.md) for event-driven alternatives, but keep in mind
+Refer to [reactive communication section](reactive-communication) for event-driven alternatives, but keep in mind
 that <micro-lc></micro-lc> will use `language` extension to perform any language-related operation. 
 :::

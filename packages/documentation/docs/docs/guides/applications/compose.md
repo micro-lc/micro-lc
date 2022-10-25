@@ -67,7 +67,7 @@ By polymorphism, `sources` can be a string or an array of strings if just JavaSc
 If an [importmap](../reuse-third-party-libraries) is needed, `sources` can become an object housing JavaScript asset
 entry URIs (key `uris`) and importmap definition (key `importmap`).
 
-```yaml title=micro-lc.conf.yaml
+```yaml title="micro-lc.conf.yaml"
 applications:
 
   # Single JavaScript asset entry URI

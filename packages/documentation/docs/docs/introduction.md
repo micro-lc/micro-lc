@@ -53,7 +53,7 @@ enough to preview your application after config changes.
 while wrapping them in a static layout.
 
 It ships as a *CDN bundle* that can be embedded into HTML pages or other scripts, and as a *Docker container* that can be
-configured by mounting volumes (see [getting started page](./getting-started.md) for more information).
+configured by mounting volumes (see [getting started page](./getting-started) for more information).
 
 <micro-lc></micro-lc> is heavily inspired by and based on micro-frontend orchestration tools such as 
 [single-spa](https://single-spa.js.org/) and [qiankun](https://qiankun.umijs.org/).
