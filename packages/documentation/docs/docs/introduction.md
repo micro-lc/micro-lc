@@ -1,4 +1,5 @@
 ---
+slug: /docs
 title: Introduction
 description: Introduction to micro-lc
 sidebar_label: Introduction
