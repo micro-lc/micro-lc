@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+- user's permissions evaluation based on user's properties in USER_PROPERTIES_HEADER_KEY request header
+
 ## 0.8.1
 
 ### Fixed

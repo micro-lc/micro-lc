@@ -16,10 +16,14 @@
 import {JSONPath} from 'jsonpath-plus'
 import {applyOperation, Operation, deepClone} from 'fast-json-patch'
 
-import {GROUPS_CONFIGURATION} from '../constants'
+import {GROUPS_CONFIGURATION, PERMISSIONS_CONFIGURATION} from '../constants'
 
 type UserGroupsObject = {
   [key: string]: boolean
+}
+
+type UserPermissionsObject = {
+  [key: string]: boolean | object
 }
 
 type FilterableObject = {
@@ -34,15 +38,39 @@ const userGroupsObjectBuilder = (userGroups: string[]) => {
   return userGroupsObject
 }
 
-const buildPluginFunction = (plugin: FilterableObject) => {
-  // eslint-disable-next-line no-new-func
-  return new Function(GROUPS_CONFIGURATION.function.key, `return !!(${plugin.aclExpression})`)
+const createUserPermissionsNestedObject = (originalObject: any, permissionPaths: string[]) => {
+  for (let i = 0; i < permissionPaths.length; i++) {
+    // eslint-disable-next-line no-param-reassign, no-multi-assign
+    if (i < permissionPaths.length - 1) {
+      // eslint-disable-next-line no-param-reassign, no-multi-assign
+      originalObject = originalObject[permissionPaths[i]] = originalObject[permissionPaths[i]] || {}
+    } else {
+      // eslint-disable-next-line no-multi-assign, no-param-reassign
+      originalObject = originalObject[permissionPaths[i]] = true
+    }
+  }
 }
 
-const evaluatePluginExpression = (userGroupsObject: UserGroupsObject) => {
+const userPermissionsObjectBuilder = (userPermissions: string[]) => {
+  const userPermissionObject: UserPermissionsObject = {}
+  for (let i = 0; i < userPermissions.length; i++) {
+    const permissions = userPermissions[i].split('.')
+    createUserPermissionsNestedObject(userPermissionObject, permissions)
+  }
+  return userPermissionObject
+}
+
+const buildPluginFunction = (plugin: FilterableObject) => {
+  const bracketsNotationExpression = plugin.aclExpression.replace(/\.(.+?)(?=\.|$| |\))/g, (_, string) => `?.['${string}']`)
+  const booleanEvaluationExpression = bracketsNotationExpression.replace(/'](?=]|$| )/g, `'] === true`)
+  // eslint-disable-next-line no-new-func
+  return new Function(GROUPS_CONFIGURATION.function.key, PERMISSIONS_CONFIGURATION.function.key, `return !!(${booleanEvaluationExpression})`)
+}
+
+const evaluatePluginExpression = (userGroupsObject: UserGroupsObject, userPermissionsObject: UserPermissionsObject) => {
   return (plugin: FilterableObject) => {
     const expressionEvaluationFunction = buildPluginFunction(plugin)
-    return expressionEvaluationFunction(userGroupsObject)
+    return expressionEvaluationFunction(userGroupsObject, userPermissionsObject)
   }
 }
 
@@ -57,10 +85,11 @@ const patchCreator = (valueToAvoid: string): Operation => ({
   path: valueToAvoid,
 })
 
-export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[]) => {
+export const aclExpressionEvaluator = (jsonToFilter: any, userGroups: string[], userPermissions: string[]) => {
   const clonedJsonToFilter = deepClone(jsonToFilter)
   const userGroupsObject = userGroupsObjectBuilder(userGroups)
-  const expressionEvaluator = evaluatePluginExpression(userGroupsObject)
+  const userPermissionsObject = userPermissionsObjectBuilder(userPermissions)
+  const expressionEvaluator = evaluatePluginExpression(userGroupsObject, userPermissionsObject)
   const valuesToAvoid: string[] = []
   const pathCallback = jsonPathCallback(valuesToAvoid, expressionEvaluator)
   do {

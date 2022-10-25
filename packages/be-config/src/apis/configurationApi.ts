@@ -19,6 +19,7 @@ import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
 import {readValidateConfiguration} from '../utils/configurationManager'
 import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
+import {getPermissions} from '../utils/getPermissions'
 
 const readPluginConfiguration = async(fastifyInstance: DecoratedFastify) => {
   const configurationPath = fastifyInstance.config.MICROLC_CONFIGURATION_PATH as string
@@ -36,10 +37,13 @@ const buildNewConfiguration = (oldConfiguration: Configuration, allowedPlugins: 
 
 export const configurationApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Promise<Handler<Configuration>> = async(fastifyInstance) => {
   const configuration: Configuration = await readPluginConfiguration(fastifyInstance)
+  const userPropertiesHeader = fastifyInstance.config.USER_PROPERTIES_HEADER_KEY
+
   return (request, reply) => {
     const userGroups = request.getGroups()
-    const allowedPlugins = aclExpressionEvaluator(configuration.plugins || [], userGroups)
-    const allowedInternalPlugins = aclExpressionEvaluator(configuration.internalPlugins || [], userGroups)
+    const userPermissions = getPermissions(request, userPropertiesHeader)
+    const allowedPlugins = aclExpressionEvaluator(configuration.plugins || [], userGroups, userPermissions)
+    const allowedInternalPlugins = aclExpressionEvaluator(configuration.internalPlugins || [], userGroups, userPermissions)
     const configurationForUser = buildNewConfiguration(configuration, allowedPlugins, allowedInternalPlugins)
     reply.send(configurationForUser)
   }

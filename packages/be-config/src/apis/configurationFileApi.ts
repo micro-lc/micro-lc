@@ -20,11 +20,12 @@ import {CONFIGURATION_NAME} from '../constants'
 import {aclExpressionEvaluator} from '../utils/aclExpressionEvaluator'
 import {readJsonConfigurationFile, readRawFile} from '../utils/configurationManager'
 import {referencesReplacer} from '../utils/referencesReplacer'
+import {getPermissions} from '../utils/getPermissions'
 
-const retrieveJsonConfiguration = async(instanceConfig: any, configurationName: string, userGroups: string[]) => {
+const retrieveJsonConfiguration = async(instanceConfig: any, configurationName: string, userGroups: string[], userPermissions: string[]) => {
   const configurationPath = `${instanceConfig.PLUGINS_CONFIGURATIONS_PATH}/${configurationName}`
   const configurationContent = await readJsonConfigurationFile(configurationPath)
-  const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups)
+  const configurationContentFiltered = aclExpressionEvaluator(configurationContent, userGroups, userPermissions)
   return referencesReplacer(configurationContentFiltered)
 }
 
@@ -35,12 +36,13 @@ const retrieveRawConfiguration = async(instanceConfig: any, configurationName: s
 
 export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFastify) => Handler<any> = (fastifyInstance) => {
   const instanceConfig: any = fastifyInstance.config
+  const userPropertiesHeader = fastifyInstance.config.USER_PROPERTIES_HEADER_KEY
   return async(request, reply) => {
     if (instanceConfig.PLUGINS_CONFIGURATIONS_PATH) {
       // @ts-ignore
       const configurationName: string = request.params[CONFIGURATION_NAME]
       const retrieveFunction = configurationName.endsWith('.json') ? retrieveJsonConfiguration : retrieveRawConfiguration
-      const fileContent = await retrieveFunction(instanceConfig, configurationName, request.getGroups())
+      const fileContent = await retrieveFunction(instanceConfig, configurationName, request.getGroups(), getPermissions(request, userPropertiesHeader))
       reply.send(fileContent)
     } else {
       reply.status(404).send()
