@@ -73,6 +73,7 @@ interface MountProps {
   container: HTMLElement
   microlcApi?: Partial<MicrolcApi>
   name: string
+  properties?: Record<string, unknown>
 }
 
 interface MicroApp {
@@ -141,7 +142,7 @@ function createPool<T>(): ReplaySubjectPool<T> {
 }
 
 async function render(
-  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>
+  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>, extraProperties: string[] = []
 ): Promise<null> {
   interface Event {
     label: string
@@ -157,7 +158,7 @@ async function render(
         ...context,
         eventBus: createPool<Event>(),
       },
-      extraProperties: ['microlcApi', 'currentUser', 'eventBus'],
+      extraProperties: ['microlcApi', 'currentUser', 'eventBus', ...extraProperties],
     }
   )
 
@@ -259,6 +260,7 @@ export async function mount(
     composerApi,
     microlcApi,
     container,
+    properties = {},
   }: MountProps
 ): Promise<null> {
   logger(name, 'starting mounting...')
@@ -275,9 +277,16 @@ export async function mount(
     const config = composerConfig.get(name)
     if (config) {
       const virtualContainer = document.createElement('div')
-      done = render(composer, config, virtualContainer, {
-        currentUser: user,
-      }).then(() => {
+      done = render(
+        composer,
+        config,
+        virtualContainer,
+        {
+          currentUser: user,
+          ...properties,
+        },
+        Object.keys(properties)
+      ).then(() => {
         Array.from(virtualContainer.children).forEach((child) => {
           container.appendChild(child)
         })

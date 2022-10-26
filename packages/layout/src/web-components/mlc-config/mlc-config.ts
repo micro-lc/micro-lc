@@ -160,7 +160,6 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
       resize: horizontal;
       display: flex;
       flex-direction: column;
-      width: inherit;
       height: 100%;
     }
 
@@ -222,6 +221,8 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
 
   @state() private _content = JSON.stringify(defaultConfig)
   private _editor?: IStandaloneCodeEditor | undefined
+
+  @property() width = 'inherit'
 
   @property({ attribute: 'iframe-selector' }) iframeSelector = 'iframe'
 
@@ -371,6 +372,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
         <section
           id="left-section"
           class="half resizer-l"
+          style=${`width: ${this.width}`}
         >
           <div class="top-area default-cursor">
             <div style="display: flex; flex-direction: column;">
@@ -396,7 +398,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
           </div>
           <div class="editor default-cursor" id="editor-container"></div>
         </section>
-        <section id="right-section" class="half resizer-r">
+        <section id="right-section" class="half resizer-r" style=${`width: inherit;`}>
           <slot @slotchange=${this.handleSlotChange}></slot>
         </section>
       </div>

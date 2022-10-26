@@ -5,7 +5,10 @@
     "sources": "http://localhost:8000/packages/layout/dist/mlc-config.js",
     "content": [
       {
-        "tag": "mlc-config"
+        "tag": "mlc-config",
+        "attributes": {
+          "width": "65%"
+        }
       }
     ]
   },

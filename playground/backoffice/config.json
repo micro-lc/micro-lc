@@ -1,6 +1,13 @@
 {
   "$schema": "../../packages/interfaces/schemas/v2/config.schema.json",
   "version": 2,
+  "shared": {
+    "properties": {
+      "headers": {
+        "key": "value"
+      }
+    }
+  },
   "settings": {
     "defaultUrl": "./home"
   },

@@ -28,12 +28,13 @@ import page500Url from './assets/500.html?url'
 
 export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
-export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'layout'>> & {
+export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'layout' | 'shared'>> & {
   layout: PluginConfiguration & {content: Content}
   settings: Required<Omit<Settings, 'mountPointSelector' | 'mountPoint'>> & {
     mountPoint?: Settings['mountPoint']
     mountPointSelector?: Settings['mountPointSelector']
   }
+  shared: Record<string, unknown> & { properties: Record<string, unknown> }
 }
 
 export const defaultConfig: CompleteConfig = {
@@ -60,7 +61,7 @@ export const defaultConfig: CompleteConfig = {
     composerUri: composerUrl,
     defaultUrl: './',
   },
-  shared: {},
+  shared: { properties: {} },
   version: 2,
 }
 
@@ -82,7 +83,12 @@ export function mergeConfig(input: Config): CompleteConfig {
       mountPoint: input.settings?.mountPoint ?? def.settings.mountPoint,
       mountPointSelector: input.settings?.mountPointSelector ?? def.settings.mountPointSelector,
     },
-    shared: input.shared ?? def.shared,
+    shared: {
+      ...input.shared,
+      properties: {
+        ...(input.shared?.properties ?? def.shared.properties),
+      },
+    },
     version: 2,
   }
 }

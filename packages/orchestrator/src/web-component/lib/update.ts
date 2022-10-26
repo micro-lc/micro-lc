@@ -13,9 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { ResolvedConfig } from '@micro-lc/composer'
+import type { ComposerOptions, ResolvedConfig } from '@micro-lc/composer'
 import { createComposerContext } from '@micro-lc/composer'
-import type { Config, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
+import type { Application, Config, Content, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
 import type { Observable } from 'rxjs'
 import { take } from 'rxjs'
@@ -134,6 +134,32 @@ function getContainer<T extends BaseExtension>(this: Microlc<T>, selector: strin
   return selected ?? this._container
 }
 
+const buildComposer = (mode: Application['integrationMode'], extraProperties: Record<string, unknown>): typeof createComposerContext | undefined => {
+  switch (mode) {
+  case 'iframe':
+    return (content: Content, opts: ComposerOptions | undefined) => createComposerContext(content, {
+      context: {
+        ...opts?.context,
+        onload() {
+          /** noop */
+        },
+      },
+      extraProperties: [...(opts?.extraProperties ?? []), 'onload'],
+    })
+  case 'compose':
+    return (content: Content, opts: ComposerOptions | undefined) => createComposerContext(content, {
+      context: {
+        ...extraProperties,
+        ...opts?.context,
+      },
+      extraProperties: [...(opts?.extraProperties ?? []), ...Object.keys(extraProperties), 'onload'],
+    })
+  case 'parcel':
+  default:
+    return createComposerContext
+  }
+}
+
 export async function updateApplications<T extends BaseExtension>(this: Microlc<T>): Promise<void> {
   const {
     _config: {
@@ -144,6 +170,9 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
         mountPointSelector,
       },
       applications,
+      shared: {
+        properties: sharedProperties,
+      },
     },
   } = this
 
@@ -218,17 +247,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       name,
       props: {
         composerApi: {
-          createComposerContext: app.integrationMode !== 'iframe'
-            ? createComposerContext
-            : (content, opts) => createComposerContext(content, {
-              context: {
-                ...opts?.context,
-                onload() {
-                  /** noop */
-                },
-              },
-              extraProperties: [...(opts?.extraProperties ?? []), 'onload'],
-            }),
+          createComposerContext: buildComposer(app.integrationMode, sharedProperties),
         },
         config,
         injectBase,

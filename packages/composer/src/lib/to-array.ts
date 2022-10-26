@@ -1,3 +1,4 @@
+// eslint-disable-next-line valid-jsdoc
 /**
   Copyright 2022 Mia srl
 
@@ -13,7 +14,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-// eslint-disable-next-line valid-jsdoc
 export function toArray<T>(input: T | T[]): T[] {
   return Array.isArray(input) ? input : [input]
 }
