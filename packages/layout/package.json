@@ -1,6 +1,42 @@
 {
   "name": "@micro-lc/layout",
   "version": "0.1.1",
+  "types": "./dist/types/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./mlc-antd-theme-manager": {
+      "import": "./dist/mlc-antd-theme-manager.js",
+      "types": "./dist/types/mlc-antd-theme-manager.d.ts"
+    },
+    "./mlc-config": {
+      "import": "./dist/mlc-config.js",
+      "types": "./dist/types/mlc-config.d.ts"
+    },
+    "./mlc-iconic": {
+      "import": "./dist/mlc-iconic.js",
+      "types": "./dist/types/mlc-iconic.d.ts"
+    },
+    "./mlc-layout": {
+      "import": "./dist/mlc-layout.js",
+      "types": "./dist/types/mlc-layout.d.ts"
+    },
+    "./mlc-loading-animation": {
+      "import": "./dist/mlc-loading-animation.js",
+      "types": "./dist/types/mlc-loading-animation.d.ts"
+    },
+    "./mlc-url": {
+      "import": "./dist/mlc-url.js",
+      "types": "./dist/types/mlc-url.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "cleanup": "yarn run -T rimraf dist node_modules coverage",
     "make-types": "ts-node ./scripts/make-types.ts",
@@ -34,7 +70,7 @@
     "@micro-lc/interfaces": "workspace:*",
     "@micro-lc/orchestrator": "workspace:*",
     "@open-wc/testing": "^3.1.6",
-    "@rollup/plugin-replace": "^5.0.0",
+    "@rollup/plugin-replace": "^5.0.1",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-backgrounds": "^6.5.12",
     "@storybook/addon-docs": "^6.5.12",
@@ -54,13 +90,13 @@
     "@types/js-yaml": "^4.0.5",
     "@types/lodash-es": "^4.17.6",
     "@types/mocha": "^10.0.0",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^18.0.23",
+    "@types/react-dom": "^18.0.7",
     "@types/sinon": "^10.0.13",
     "@web/dev-server-esbuild": "^0.3.3",
     "@web/dev-server-rollup": "^0.3.19",
-    "@web/test-runner": "^0.14.1",
-    "@web/test-runner-playwright": "^0.8.10",
+    "@web/test-runner": "^0.15.0",
+    "@web/test-runner-playwright": "^0.9.0",
     "cssnano": "^5.1.13",
     "esbuild": "^0.15.12",
     "glob": "^8.0.3",
@@ -74,11 +110,11 @@
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4",
-    "vite": "^3.1.8",
+    "vite": "^3.2.0",
     "vite-plugin-banner": "^0.5.0",
     "vite-plugin-dynamic-import": "^1.2.3",
     "vite-plugin-replace": "^0.1.1",
-    "vite-tsconfig-paths": "^3.5.1"
+    "vite-tsconfig-paths": "^3.5.2"
   },
   "engines": {
     "node": ">=16.17.0"

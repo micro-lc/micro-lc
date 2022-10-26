@@ -28,7 +28,7 @@
     "serve": " python3 ./scripts/server.py -p 8000 -d ."
   },
   "devDependencies": {
-    "@types/eslint": "^8.4.6",
+    "@types/eslint": "^8.4.8",
     "@types/glob": "^8.0.0",
     "@types/rimraf": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
@@ -37,10 +37,10 @@
     "@web/dev-server-esbuild": "^0.3.3",
     "confusing-browser-globals": "^1.0.11",
     "esbuild": "^0.15.12",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-config-esnext": "^4.1.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsonc": "^2.4.0",
+    "eslint-plugin-jsonc": "^2.5.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-mocha": "^10.1.0",
     "eslint-plugin-n": "^15.3.0",
@@ -60,9 +60,9 @@
     "stylelint": "^14.14.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^29.0.0",
-    "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.6.0",
     "typescript": "^4.8.4",
-    "vite": "^3.1.8"
+    "vite": "^3.2.0"
   },
   "engines": {
     "node": ">=16.17.0"
