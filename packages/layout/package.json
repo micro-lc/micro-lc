@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/layout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "cleanup": "yarn run -T rimraf dist node_modules coverage",
     "make-types": "ts-node ./scripts/make-types.ts",
