@@ -5,92 +5,65 @@ sidebar_label: 🖼 mlc-layout
 sidebar_position: 10
 ---
 
-Web component that provides a classic navigation layout for <micro-lc></micro-lc> applications.
+Web component providing a classic navigation top bar/sidebar layout for <micro-lc></micro-lc> applications.
 
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout/overview"
+  base="/frames/components/mlc-layout"
   height="550px"
   showSource={false}
-  src={"/index.html"}
-  title="Overview"
+  src={"/"}
+  title="mlc-layout"
 ></example-frame>
 ```
 
 ## Usage
 
 :::caution
-This component is intended to be used inside <micro-lc></micro-lc>, since it makes extensive use of <micro-lc></micro-lc> API.
+This component is intended to be used inside <micro-lc></micro-lc>, since it makes extensive use of 
+[<micro-lc></micro-lc> API](../../api/micro-lc-api).
 
-You can technically use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
+You **can** use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
 :::
 
-To use the component in <micro-lc></micro-lc>, declare it as part of the application layout with its
-[properties and attributes](#properties-and-attributes).
+To use the component in <micro-lc></micro-lc>, declare it as part of the application [layout](../../docs/guides/layout.md)
+with its [properties and attributes](#properties-and-attributes).
 
-```json5 title=micro-lc.config.json
-{
-  // ...
-  "layout": {
-    "sources": "TODO",
-    "content": {
-      "tag": "mlc-layout",
-      "properties": {
-        // See "properties & attributes" table below
-      },
-      "attributes": {
-        // See "properties & attributes" table below
-      },
-      "booleanAttributes": {
-        // See "properties & attributes" table below
-      },
-      "content": {
-        // ...
-      }
-    },
-    {
-      // Other layout parts
-    }
-  }
-}
+```yaml title=micro-lc.config.yaml
+layout: 
+  sources: ...,
+  content: 
+    tag: mlc-layout,
+    properties: # See properties & attributes table below
+    attributes: # See properties & attributes table below
+    booleanAttributes: # See properties & attributes table below
+    content: # See slots table below
 ```
 
 ### Minified version
 
 The component is also shipped in a minified version, that does not bundle peer dependencies. Using this version will
-save bundle size, but requires import maps for the needed dependencies, which are:
+save bundle size, but requires [import maps](../../docs/guides/reuse-third-party-libraries.md#import-maps) for the needed
+dependencies, which are:
 - `react` compatible with version `18.2.0`
 - `react-dom` compatible with version `18.2.0`
 
-```json5 title=micro-lc.config.json
-{
-  // ...
-  "layout": {
-    "sources": {
-      "importmap": {
-        "imports": {
-          "react": "https://esm.sh/react@18.2.0",
-          "react-dom": "https://esm.sh/react-dom@18.2.0"
-        },
-        "scopes": {
-          "https://esm.sh/react-dom@next": {
-            "/client": "https://esm.sh/react-dom@18.2.0/client"
-          }
-        }
-      },
-      "uris": [
-        "TODO"
-      ]
-    },
-    "content": [
-      {
-        "tag": "mlc-layout",
-        // ...
-      }
-    ]
-  },
-}
+```yaml title=micro-lc.config.json
+layout:
+  sources:
+    importmap:
+      imports:
+        react: https://esm.sh/react@18.2.0
+        react-dom: https://esm.sh/react-dom@18.2.0
+      scopes:
+        https://esm.sh/react-dom@next:
+          /client: https://esm.sh/react-dom@18.2.0/client
+    uris:
+      - ...
+  content:
+    tag: mlc-layout,
+    # ...
 ```
 
 ## Showcase
