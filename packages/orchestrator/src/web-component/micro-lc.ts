@@ -347,7 +347,7 @@ export class Microlc<
     const { content } = await premount(layout)
     const composerByContent = async (conf: Content) => createComposerContext(conf, {
       context: { composerApi: { createComposerContext }, microlcApi: this.getApi(), ...properties },
-      extraProperties: ['microlcApi', 'composerApi', ...Object.keys(properties)],
+      extraProperties: new Set(['microlcApi', 'composerApi', ...Object.keys(properties)]),
     })
     const layoutAppender = await composerByContent(content)
 

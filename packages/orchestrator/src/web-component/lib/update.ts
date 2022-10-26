@@ -144,19 +144,21 @@ const buildComposer = (mode: Application['integrationMode'], extraProperties: Re
           /** noop */
         },
       },
-      extraProperties: [...(opts?.extraProperties ?? []), 'onload'],
+      extraProperties: new Set([...(opts?.extraProperties ?? []), 'onload']),
     })
   case 'compose':
-    return (content: Content, opts: ComposerOptions | undefined) => createComposerContext(content, {
+    return (content: Content, { context, extraProperties: incomingExtraProperties = new Set<string>() }: ComposerOptions = {}) => createComposerContext(content, {
       context: {
+        ...context,
         ...extraProperties,
-        ...opts?.context,
       },
-      extraProperties: [...(opts?.extraProperties ?? []), ...Object.keys(extraProperties), 'onload'],
+      extraProperties: Object.keys(extraProperties).reduce((set, key) => {
+        set.add(key)
+        return set
+      }, incomingExtraProperties),
     })
   case 'parcel':
   default:
-    return createComposerContext
   }
 }
 
@@ -247,7 +249,10 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       name,
       props: {
         composerApi: {
-          createComposerContext: buildComposer(app.integrationMode, sharedProperties),
+          createComposerContext: buildComposer(app.integrationMode, {
+            microlcApi: this.getApi(),
+            ...sharedProperties,
+          }),
         },
         config,
         injectBase,

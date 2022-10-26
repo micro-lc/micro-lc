@@ -21,7 +21,7 @@ function contentToArrayOfNodes(rawContent: ArrayContent | Component): ArrayConte
   return Array.isArray(rawContent) ? rawContent : [rawContent]
 }
 
-function parseContent(buffer: string[], content: Content, extraProperties: string[]): void {
+function parseContent(buffer: string[], content: Content, extraProperties: Set<string>): void {
   if (typeof content !== 'object') {
     buffer.push(`${content}`)
     return
@@ -55,14 +55,14 @@ function parseContent(buffer: string[], content: Content, extraProperties: strin
     const { override, props } = Object
       .entries(properties)
       .reduce<{override: Record<string, string | undefined>; props: Record<string, unknown>}>((acc, [key, value]) => {
-        extraProperties.includes(key)
+        extraProperties.has(key)
           ? (typeof value === 'string' && (acc.override[key] = value))
           : acc.props[key] = value
         return acc
       }, { override: {}, props: {} })
 
     // override if available
-    const initialTagExtraProperties = extraProperties
+    const initialTagExtraProperties = Array.from(extraProperties.keys())
       .map((prop) => `.${prop}=\${${override[prop] ?? prop}}`)
 
     // set regular props
@@ -102,7 +102,7 @@ function parseContent(buffer: string[], content: Content, extraProperties: strin
   })
 }
 
-export function jsonToHtml(content: Content, extraProperties: string[] = []): string {
+export function jsonToHtml(content: Content, extraProperties = new Set<string>()): string {
   const buffer: string[] = []
   parseContent(buffer, content, extraProperties)
 

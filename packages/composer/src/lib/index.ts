@@ -24,7 +24,7 @@ import { lexer } from './lexer'
 
 export interface ComposerOptions {
   context?: Record<string, unknown>
-  extraProperties?: string[]
+  extraProperties?: Set<string> | string[]
 }
 
 export interface ResolvedConfig {
@@ -44,7 +44,8 @@ export async function createComposerContext(
   content: Content,
   { extraProperties, context = {} }: ComposerOptions = {}
 ): Promise<ComposerContextAppender> {
-  const htmlBuffer = jsonToHtml(content, extraProperties)
+  const extra = Array.isArray(extraProperties) ? new Set(extraProperties) : extraProperties
+  const htmlBuffer = jsonToHtml(content, extra)
   const template = await lexer(htmlBuffer)
   const variables = interpolate(template.variables, context)
   const htmlTemplate = html(template.literals, ...variables)

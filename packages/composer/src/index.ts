@@ -107,6 +107,12 @@ interface ReplaySubjectPool<T = unknown> extends ReplaySubject<T> {
   pool: Record<string, ReplaySubject<T>>
 }
 
+interface Event {
+  label: string
+  meta?: Record<string, unknown>
+  payload: Record<string, unknown>
+}
+
 function createPool<T>(): ReplaySubjectPool<T> {
   const array: ReplaySubject<T>[] = []
 
@@ -142,23 +148,14 @@ function createPool<T>(): ReplaySubjectPool<T> {
 }
 
 async function render(
-  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>, extraProperties: string[] = []
+  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>
 ): Promise<null> {
-  interface Event {
-    label: string
-    meta?: Record<string, unknown>
-    payload: Record<string, unknown>
-  }
-
   // const { ReplaySubject } = await import(/* @vite-ignore */'rxjs')
   const appenderPromise = composer(
     config.content,
     {
-      context: {
-        ...context,
-        eventBus: createPool<Event>(),
-      },
-      extraProperties: ['microlcApi', 'currentUser', 'eventBus', ...extraProperties],
+      context,
+      extraProperties: new Set(Object.keys(context)),
     }
   )
 
@@ -260,7 +257,6 @@ export async function mount(
     composerApi,
     microlcApi,
     container,
-    properties = {},
   }: MountProps
 ): Promise<null> {
   logger(name, 'starting mounting...')
@@ -282,10 +278,10 @@ export async function mount(
         config,
         virtualContainer,
         {
+          composerApi: { createComposerContext, premount, ...composerApi },
           currentUser: user,
-          ...properties,
-        },
-        Object.keys(properties)
+          eventBus: createPool<Event>(),
+        }
       ).then(() => {
         Array.from(virtualContainer.children).forEach((child) => {
           container.appendChild(child)
