@@ -176,7 +176,7 @@ requires [`docker`](https://docs.docker.com/engine/install/) and `docker-compose
 yarn playground
 ```
 
-the playground will be available on `http://localhost:3000`.
+the playground will be available on [http://localhost/](http://localhost).
 
 ## Playground
 
