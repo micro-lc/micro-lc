@@ -253,6 +253,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
         injectBase,
         microlcApi: this.getApi() as Partial<MicrolcApi<BaseExtension>>,
         schema,
+        ...sharedProperties,
         ...properties,
       },
     }])

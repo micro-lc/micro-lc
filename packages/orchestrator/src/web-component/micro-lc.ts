@@ -14,7 +14,7 @@
   limitations under the License.
 */
 import { createComposerContext, premount } from '@micro-lc/composer'
-import type { Config } from '@micro-lc/interfaces/v2'
+import type { Config, Content } from '@micro-lc/interfaces/v2'
 import { camelCase, kebabCase } from 'lodash-es'
 import type { LoadableApp } from 'qiankun'
 
@@ -325,6 +325,9 @@ export class Microlc<
           mountPoint,
           mountPointSelector,
         },
+        shared: {
+          properties,
+        },
       },
     } = this
 
@@ -342,10 +345,11 @@ export class Microlc<
 
     // layout composition and premount ops
     const { content } = await premount(layout)
-    const layoutAppender = await createComposerContext(content, {
-      context: { microlcApi: this.getApi() },
-      extraProperties: ['microlcApi'],
+    const composerByContent = async (conf: Content) => createComposerContext(conf, {
+      context: { composerApi: { createComposerContext }, microlcApi: this.getApi(), ...properties },
+      extraProperties: ['microlcApi', 'composerApi', ...Object.keys(properties)],
     })
+    const layoutAppender = await composerByContent(content)
 
     // if shadow dom is used
     // ==> append layout inside
@@ -359,7 +363,7 @@ export class Microlc<
       let isDomMountable = false
       if (process.env.NODE_ENV === 'development') {
         if (mountPointSelector !== undefined) {
-          const mountPointAppender = await createComposerContext(mountPoint)
+          const mountPointAppender = await composerByContent(mountPoint)
           const temporaryMountPoint = this.ownerDocument.createElement('div')
           mountPointAppender(temporaryMountPoint)
           isDomMountable = temporaryMountPoint.querySelector(mountPointSelector) !== null
@@ -369,7 +373,7 @@ export class Microlc<
       }
 
       if (isDomMountable) {
-        const mountPointAppender = await createComposerContext(mountPoint)
+        const mountPointAppender = await composerByContent(mountPoint)
         mountPointAppender(this._container)
       }
     }
