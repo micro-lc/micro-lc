@@ -5,9 +5,10 @@ import cssnano from 'cssnano'
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
+import banner from 'vite-plugin-banner'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
-import target from './scripts/target'
+import settings from '../../settings.json'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 /** @ts-expect-error */
@@ -58,7 +59,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   esbuild: {
-    target,
+    target: settings.target,
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -82,6 +83,7 @@ export default defineConfig(({ mode }) => ({
         return checks ? true : undefined
       },
     }),
+    banner(settings.banner.join('\n')),
   ],
   resolve: {
     alias: {
