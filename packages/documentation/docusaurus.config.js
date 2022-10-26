@@ -3,9 +3,21 @@ const lightCodeTheme = require('prism-react-renderer/themes/github')
 
 const pluginContentDocsConfig = {
   breadcrumbs: true,
+  lastVersion: 'current',
   path: 'docs',
   routeBasePath: '/',
+  showLastUpdateAuthor: true,
   sidebarPath: 'sidebars.js',
+  versions: {
+    '1.0.0': {
+      label: '1.0.0',
+      path: '1.0.0',
+    },
+    current: {
+      label: '2.0.0',
+      path: '',
+    },
+  },
 }
 
 const themeClassicConfig = {
@@ -15,6 +27,7 @@ const themeClassicConfig = {
 const themeConfig = {
   colorMode: {
     defaultMode: 'light',
+    disableSwitch: true,
   },
   docs: {
     sidebar: {
@@ -24,7 +37,7 @@ const themeConfig = {
   },
   image: 'img/favicon.png',
   navbar: {
-    hideOnScroll: true,
+    hideOnScroll: false,
     items: [
       {
         docId: 'docs/introduction',
@@ -45,8 +58,12 @@ const themeConfig = {
         type: 'doc',
       },
       {
-        label: 'Playground',
+        label: 'Playground v2',
         to: '/playground',
+      },
+      {
+        position: 'right',
+        type: 'docsVersionDropdown',
       },
     ],
     logo: {

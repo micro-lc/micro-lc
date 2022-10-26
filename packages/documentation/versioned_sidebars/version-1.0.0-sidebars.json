@@ -1,0 +1,48 @@
+{
+  "docs": [
+    {
+      "type": "doc",
+      "id": "docs/introduction"
+    },
+    {
+      "type": "doc",
+      "id": "docs/authentication"
+    },
+    {
+      "type": "doc",
+      "id": "docs/analytics"
+    },
+    {
+      "type": "doc",
+      "id": "docs/backend"
+    },
+    {
+      "type": "doc",
+      "id": "docs/base_tag_configuration"
+    },
+    {
+      "type": "doc",
+      "id": "docs/core_configuration"
+    },
+    {
+      "type": "doc",
+      "id": "docs/general_configuration"
+    },
+    {
+      "type": "doc",
+      "id": "docs/plugin_configuration"
+    },
+    {
+      "type": "doc",
+      "id": "docs/core_plugins"
+    },
+    {
+      "type": "doc",
+      "id": "docs/seo"
+    },
+    {
+      "type": "doc",
+      "id": "docs/setup"
+    }
+  ]
+}
