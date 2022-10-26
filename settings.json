@@ -1,4 +1,10 @@
 {
+  "comments": {
+    "es2020": "polyfill required for 'window.crypto.randomUUID' on safari11.1 https://caniuse.com/mdn-api_crypto_randomuuid",
+    "chrome64": "https://caniuse.com/mdn-javascript_operators_import_meta",
+    "firefox67": "https://caniuse.com/es6-module-dynamic-import",
+    "safari11.1": "https://caniuse.com/mdn-javascript_operators_import_meta"
+  },
   "target": [
     "es2020",
     "chrome64",
