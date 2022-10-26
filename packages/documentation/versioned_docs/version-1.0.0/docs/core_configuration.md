@@ -5,7 +5,7 @@ sidebar_label: Core configuration
 ---
 
 To compose the application, `micro-lc` needs to consume a configuration at runtime. When loaded, the
-[fe-container](overview.md#front-end-container) performs a GET request to `/api/v1/microlc/configuration`: the expected 
+[fe-container](introduction.md#front-end-container) performs a GET request to `/api/v1/microlc/configuration`: the expected 
 response is the configuration in JSON format. This endpoint is always called, even in parallel if necessary.
 
 ## Configuration structure
