@@ -132,7 +132,7 @@ Accept: application/json,text/x-json,application/x-yaml,text/yaml
 The response is interpreted according to `Content-Type` header vale and then parsed as a JSON or a YAML accordingly.
 
 :::caution
-Be aware that YAML parsing requires an extra ~38KB of dynamic import to be added to the total bundle size.
+Be aware that YAML parsing requires an extra ~38 KB of dynamic import to be added to the total bundle size.
 :::
 
 and an `Accept-Language` header matching either the browser current language or any language that has been set via 

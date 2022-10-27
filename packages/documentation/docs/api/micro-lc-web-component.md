@@ -67,18 +67,30 @@ export default App;
 
 ### Development and production mode
 
-TODO
+<micro-lc></micro-lc> web component comes in two flavors: _development_ and _production_.
+
+_Development_ variant is injected into the
+[`CustomElementRegistry`](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry) with a larger bundle
+size (~700 KB) since it includes an instance of the [Ajv JSON schema validator](https://ajv.js.org/) to check if
+configurations provided to the web components are valid. _Development_ variant also provides feedback on errors via
+browser `console`.
+
+To reduce the bundle size, _production_ variant lacks all previously mentioned features and shrinks down to ~180 KB.
 
 ### Properties & attributes
 
+|  Property   |      Attribute       |                          Type                           |                                 Default                                 | Description                                                                 |
+|:-----------:|:--------------------:|:-------------------------------------------------------:|:-----------------------------------------------------------------------:|-----------------------------------------------------------------------------|
+|  `config`   |          -           | <code><a href="#configuration">Configuration</a></code> | <code><a href="#default-configuration">Default configuration</a></code> | <micro-lc></micro-lc> configuration.                                        |
+| `configSrc` |     `config-src`     |                   <code>string</code>                   |                                    -                                    | URL from which configuration can be fetched.                                |
+|      -      | `disable-shadow-dom` |                  <code>boolean</code>                   |                                 `false`                                 | Whether <micro-lc></micro-lc> should be in Shadow DOM.                      |
+|      -      |      `root-id`       |                   <code>string</code>                   |                              `__micro_lc`                               | [Mount point](../docs/guides/layout.md#mount-point) div `id`.               |
+|      -      |  `disable-styling`   |                  <code>boolean</code>                   |                                 `false`                                 | Disable [mount point](../docs/guides/layout.md#mount-point) preset styling. |
 
-|  Property   |      Attribute       |                          Type                           |   Default    | Description                                            |
-|:-----------:|:--------------------:|:-------------------------------------------------------:|:------------:|--------------------------------------------------------|
-|  `config`   |          -           | <code><a href="#configuration">Configuration</a></code> |     ???      | <micro-lc></micro-lc> configuration.                   |
-| `configSrc` |     `config-src`     |                   <code>string</code>                   |      -       | URL from which configuration can be fetched.           |
-|      -      | `disable-shadow-dom` |                  <code>boolean</code>                   |   `false`    | Whether <micro-lc></micro-lc> should be in Shadow DOM. |
-|      -      |      `root-id`       |                   <code>string</code>                   | `__micro_lc` | ???                                                    |
-|      -      |  `disable-styling`   |                  <code>boolean</code>                   |   `false`    | ???                                                    |
+:::caution
+Attributes `disable-shadow-dom`, `root-id`, and `disable-styling` are **not observed**, meaning their initial value is
+the only one that matters and no changes are listened to.
+:::
 
 ## Configuration
 
@@ -90,7 +102,7 @@ This configuration can be **directly supplied** to <micro-lc></micro-lc> web com
 **sourced** through property `configSrc` (or mirrored attribute `config-src`) in JSON or YAML format.
 
 :::tip
-YAML is clearer and easier to read and write, but bring a computational and bundle size (~38KB) overhead, since it
+YAML is clearer and easier to read and write, but bring a computational and bundle size (~38 KB) overhead, since it
 requires an extra step to be compiled back to JSON.
 
 For this reason, we recommend YAML for development and JSON for production. A YAML to JSON converter is available in 
@@ -120,7 +132,18 @@ the writing process by constantly validating the JSON or YAML content against it
 
 ### Default configuration
 
-???
+If no configuration is provided <micro-lc></micro-lc> uses the following default configuration:
+
+```yaml title=micro-lc.config.yaml
+version: 2
+
+settings:
+  defaultUrl: ./
+
+layout:
+  content:
+    tag: slot
+```
 
 ### `settings`
 
@@ -270,6 +293,7 @@ Example:
 #### `defaultUrl`
 
 * Type: `string`
+* Default: `./`
 
 Landing URL. If it does not correspond to any configured application, **404 error page** will be rendered.
 
@@ -301,13 +325,49 @@ settings:
 
 ### `shared`
 
-* Type: `Record<string, unknown>`
+* Type:
+  ```typescript
+  interface Shared {
+    properties?: Record<string, unknown>
+  } 
+  ```
+  
+Properties injected by <micro-lc></micro-lc> into all registered [applications](../docs/guides/applications), 
+[custom error pages](../docs/guides/applications/error-pages.md#custom-error-pages), and
+[composed layout](../docs/guides/layout.md).
 
-???
+Parcel applications and custom error pages of type parcel can access shared properties in
+[lifecycle methods](../docs/guides/applications/parcels.md#properties). Web components of composed applications, error
+pages of type compose, and constructed layout will find shared properties as 
+[interpolated properties](../docs/guides/applications/compose.md#interpolated-properties).
 
 Example:
 
-???
+```mdx-code-block 
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
+```
+```yaml title="micro-lc.config.yaml"
+shared:
+  properties:
+    client-key: some_client_key
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="JSON">
+```
+```json title="micro-lc.config.json"
+{
+  "shared": {
+    "properties": {
+      "client-key": "some_client_key"
+  }
+}
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
 
 ### `importmap`
 
@@ -357,6 +417,12 @@ importmap:
 ### `layout`
 
 * Type: `Object`
+* Default:
+  ```yaml
+  layout:
+    content:
+      tag: slot
+  ```
 
 [Application layout](../docs/guides/layout) DOM configuration.
 
