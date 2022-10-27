@@ -112,9 +112,9 @@ one. It may be:
 * a [stringified DOM tree](#stringified-dom-tree)
   ```yaml
   content: |
-    <div .classname=${dynamic-class}>
+    <div .classname=${"my-class"} .microlcApi=${microlcApi} .eventBus=${{ "mainDataBus": "eventBus.pool.mainDataBus" }}>
       <p style="color: red;">
-        This is written following the lit-html templating
+        This is written as a single string
       </p>
     </div>
   ```
@@ -125,7 +125,10 @@ one. It may be:
     attributes:
       style: "color: red;"
     properties:
-      classname: ${dynamic-class}
+      classname: "dynamic-class"
+      microlcApi: microlcApi
+      eventBus:
+        mainDataBus: eventBus.pool.mainDataBus
     content: This structure is transformed into a valid HTML element
   ```
 * a list of the above
@@ -144,10 +147,18 @@ This way of writing content is particularly powerful when used in YAML files, si
 :::
 
 Instead of recurring to the ["objective" representation](#component-representation) of components, DOM nodes can also
-be expressed in a single string using an HTML-like syntax compliant with 
-[lit-html template syntax](https://lit.dev/docs/v1/lit-html/template-reference/).
+be expressed in a single string using an HTML-like syntax in which properties are represented with a **dotted
+notation** (i.e., `.property_name=property_value).
 
-> TODO: which lit-html features can be used?
+```yaml
+content: |
+  <div
+    style="color: red;"
+    .
+  >
+    Hello World!
+  </div>
+```
 
 ## Component representation
 
@@ -205,6 +216,97 @@ content:
 #   document.querySelector("my-custom-component").myCustomProperty 👉 "some-value"
 ```
 
-### Interpolated properties
+## Interpolated properties
 
-???
+<micro-lc></micro-lc> composer injects a series of properties into each DOM node it creates. 
+
+These properties are automatically available in web components, you just need to declare them and access them through
+the component context (i.e., `this`). For example:
+
+```typescript title="my-awesome-web-component.ts"
+import type { MicrolcApi } from '@micro-lc/orchestrator'
+
+class MyAwesomeWebComponent extends HTMLElement {
+  // highlight-next-line
+  microlcApi?: MicrolcApi
+
+  connectedCallback () {
+    // highlight-next-line
+    this.microlcApi?.goTo('/')
+  }
+}
+
+customElements.define('my-awesome-web-component', MyAwesomeWebComponent)
+```
+
+```typescript
+{
+  this.eventBus.banana
+}
+```
+
+Even if this behavior is automatic, it can be customized varying the way properties are defined in
+[component representations](#component-representation).
+
+#### `microlcApi`
+
+#### `composerApi`
+
+Composer mette a disposizione una serie di prop interpolate:
+- microlcApi
+- composerApi
+- eventBus
+- currentUser --> observable preso dal canale pub/sub della API --> deprecated!
+- shared props spread --> deprecated, verranno inserite in base dell'API
+
+### Usage
+
+Queste possono essere dichiarate in configurationze dei vai componenti (devono esserlo nel caso di htmlx)
+
+```yaml
+content:
+  - tag: my-custom-component --> trovi microlcApi
+  
+  - tag: my-custom-component --> trovi microlcApi
+    properties:
+
+  - tag: my-custom-component --> trovi microlcApi
+    properties:
+      microlcApi: microlcApi
+
+  - tag: my-custom-component --> trovi microlc e microlcApi
+    properties:
+      microlc: microlcApi 
+
+  - tag: my-custom-component --> trovi microlcApi con valore pippo
+    properties:
+      microlcApi: pippo
+```
+
+- Se non le metti, ti vengono comunque iniettate
+- Se le metti a loro stesse, ti vengono comunque iniettate
+
+### Event bus
+
+E' un replay subject
+
+Non ce l'ha il layout
+
+```yaml
+  - tag: my-custom-component --> trovi eventBus di default
+  
+  - tag: my-custom-component --> trovi eventBus di default
+    properties:
+
+  - tag: my-custom-component --> trovi eventBus di default
+    properties:
+      eventBus: eventBus
+
+  - tag: my-custom-component --> trovi un altro eventBus
+    properties:
+      eventBus: eventBus.[0]
+
+  - tag: my-custom-component --> trovi un altro eventBus
+    properties:
+      eventBus: eventBus.pool.foo
+```

@@ -30,9 +30,11 @@ You **can** use it standalone, but you will have to manually provide a matching 
 To use the component in <micro-lc></micro-lc>, declare it as part of the application [layout](../../docs/guides/layout.md)
 with its [properties and attributes](#properties-and-attributes).
 
+An unnamed `slot` is already set in the component so that content will be automatically mounted in the right position.
+
 ```yaml title=micro-lc.config.yaml
 layout: 
-  sources: ...,
+  sources: https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js,
   content: 
     tag: mlc-layout,
     properties: # See properties & attributes table below
@@ -60,7 +62,7 @@ layout:
         https://esm.sh/react-dom@next:
           /client: https://esm.sh/react-dom@18.2.0/client
     uris:
-      - ...
+      - https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.min.js
   content:
     tag: mlc-layout,
     # ...
@@ -77,7 +79,7 @@ layout:
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.json", isDefault: true },
+    { filePath: "/config.yaml", isDefault: true },
   ]}
   src="/"
   title="Top bar menu"
@@ -93,7 +95,7 @@ layout:
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.json", isDefault: true },
+    { filePath: "/config.yaml", isDefault: true },
   ]}
   src="/"
   title="Overlay sidebar"
@@ -109,7 +111,7 @@ layout:
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.json", isDefault: true },
+    { filePath: "/config.yaml", isDefault: true },
   ]}
   src="/"
   title="Fixed sidebar"
@@ -125,7 +127,7 @@ layout:
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.json", isDefault: true },
+    { filePath: "/config.yaml", isDefault: true },
     { filePath: "/userinfo.json" },
   ]}
   src="/"
@@ -142,7 +144,7 @@ layout:
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.json", isDefault: true },
+    { filePath: "/config.yaml", isDefault: true },
   ]}
   src="/"
   title="Help menu"
@@ -158,7 +160,7 @@ layout:
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
-    { filePath: "/config.json", isDefault: true },
+    { filePath: "/config.yaml", isDefault: true },
   ]}
   src="/"
   title="Top bar slot"
@@ -346,3 +348,72 @@ Information used by <micro-lc></micro-lc> to manipulate the head of the document
 |:---------:|----------------------------------------------------|
 | `top-bar` | Content is placed on the right side of the top bar |
 
+## CSS custom properties
+
+This component is based on [Ant Design](https://ant.design/) and makes use of its
+[dynamic theme](https://ant.design/docs/react/customize-theme-variable) functionality to expose a set of CSS variables
+for style customization. 
+
+Follows the list of CSS variables used by Ant Design dynamic theme. The exact usage of each variable is hidden in Ant
+Design components implementations and some of them may not be used by `mlc-layout`.
+
+:::tip
+We recommend using [mlc-antd-theme-manager](./mlc-antd-theme-manager.md) component to customize the layout theme in an
+easier and more organic way.
+:::
+
+| Name                                              |
+|:--------------------------------------------------|
+| `--micro-lc-primary-1`                            |
+| `--micro-lc-primary-2`                            |
+| `--micro-lc-primary-3`                            |
+| `--micro-lc-primary-4`                            |
+| `--micro-lc-primary-5`                            |
+| `--micro-lc-primary-6`                            |
+| `--micro-lc-primary-7`                            |
+| `--micro-lc-primary-8`                            |
+| `--micro-lc-primary-9`                            |
+| `--micro-lc-primary-10`                           |
+| `--micro-lc-primary-color`                        |
+| `--micro-lc-primary-color-active`                 |
+| `--micro-lc-primary-color-active-deprecated-d-02` |
+| `--micro-lc-primary-color-active-deprecated-f-30` |
+| `--micro-lc-primary-color-deprecated-bg`          |
+| `--micro-lc-primary-color-deprecated-border`      |
+| `--micro-lc-primary-color-deprecated-f-12`        |
+| `--micro-lc-primary-color-deprecated-l-20`        |
+| `--micro-lc-primary-color-deprecated-l-35`        |
+| `--micro-lc-primary-color-deprecated-t-20`        |
+| `--micro-lc-primary-color-deprecated-t-50`        |
+| `--micro-lc-primary-color-disabled`               |
+| `--micro-lc-primary-color-hover`                  |
+| `--micro-lc-primary-color-outline`                |
+| `--micro-lc-success-color`                        |
+| `--micro-lc-success-color-active`                 |
+| `--micro-lc-success-color-deprecated-bg`          |
+| `--micro-lc-success-color-deprecated-border`      |
+| `--micro-lc-success-color-disabled`               |
+| `--micro-lc-success-color-hover`                  |
+| `--micro-lc-success-color-outline`                |
+| `--micro-lc-info-color`                           |
+| `--micro-lc-info-color-active`                    |
+| `--micro-lc-info-color-deprecated-bg`             |
+| `--micro-lc-info-color-deprecated-border`         |
+| `--micro-lc-info-color-disabled`                  |
+| `--micro-lc-info-color-hover`                     |
+| `--micro-lc-info-color-outline`                   |
+| `--micro-lc-warning-color`                        |
+| `--micro-lc-warning-color-active`                 |
+| `--micro-lc-warning-color-deprecated-bg`          |
+| `--micro-lc-warning-color-deprecated-border`      |
+| `--micro-lc-warning-color-disabled`               |
+| `--micro-lc-warning-color-hover`                  |
+| `--micro-lc-warning-color-outline`                |
+| `--micro-lc-error-color`                          |
+| `--micro-lc-error-color-active`                   |
+| `--micro-lc-error-color-deprecated-bg`            |
+| `--micro-lc-error-color-deprecated-border`        |
+| `--micro-lc-error-color-disabled`                 |
+| `--micro-lc-error-color-hover`                    |
+| `--micro-lc-error-color-outline`                  |
+| `--micro-lc-font-family`                          |
