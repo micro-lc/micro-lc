@@ -37,4 +37,4 @@ window.MonacoEnvironment = {
 }
 
 export type { IStandaloneCodeEditor, IEditorAction, ITextModel }
-export const { editor, KeyCode, KeyMod, Uri } = monaco
+export const { editor, languages, KeyCode, KeyMod, Uri } = monaco

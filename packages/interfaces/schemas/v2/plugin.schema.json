@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/plugin.schema.json",
+  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "title": "PluginConfiguration",
   "definitions": {
@@ -224,7 +224,7 @@
                   "pattern": "^[^-](([a-z]+)-)+([a-z]+)$"
                 },
                 {
-                  "$ref": "html-tag.schema.json#/definitions/html-tag"
+                  "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/html-tag.schema.json#/definitions/html-tag"
                 }
               ]
             },
@@ -264,15 +264,15 @@
           "required": ["tag"]
         },
         {
-          "type": "object",
           "title": "VoidComponent",
           "description": "An HTML void node",
+          "type": "object",
           "properties": {
             "tag": {
               "description": "HTML node tag name",
               "oneOf": [
                 {
-                  "$ref": "html-tag.schema.json#/definitions/html-void-tag"
+                  "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/html-tag.schema.json#/definitions/html-void-tag"
                 }
               ]
             },

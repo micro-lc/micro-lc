@@ -33,31 +33,7 @@ setDiagnosticsOptions({
   schemas: [
     {
       fileMatch: [String(modelUri)],
-      schema: {
-        properties: {
-          p1: {
-            enum: ['v1', 'v2'],
-          },
-          p2: {
-            // Reference the second schema
-            $ref: 'http://myserver/bar-schema.json',
-          },
-        },
-        type: 'object',
-      },
-      uri: 'http://myserver/foo-schema.json',
-    },
-    {
-      fileMatch: [String(modelUri)],
-      schema: {
-        properties: {
-          q1: {
-            enum: ['x1', 'x2'],
-          },
-        },
-        type: 'object',
-      },
-      uri: 'http://myserver/bar-schema.json',
+      uri: 'https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json',
     },
   ],
   validate: true,

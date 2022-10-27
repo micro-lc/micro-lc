@@ -47,7 +47,7 @@ function mouseDownHandler(this: Resizable, event: MouseEvent): void {
   const leftStyle = window.getComputedStyle(this.left)
   const rightStyle = window.getComputedStyle(this.right)
   const borderWidth = parseInt(leftStyle.borderRightWidth, 10)
-   + parseInt(rightStyle.borderLeftWidth, 10)
+    + parseInt(rightStyle.borderLeftWidth, 10)
 
   this._x = event.clientX
   this._w = parseInt(leftStyle.width, 10)
@@ -301,6 +301,14 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
 
   protected firstUpdated(_changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(_changedProperties)
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+      schemas: [
+        {
+          uri: 'https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json',
+        },
+      ],
+      validate: true,
+    })
     this._editor = monaco.editor.create(this.container, {
       automaticLayout: true,
       language: this.editorFormat,
@@ -369,7 +377,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     }
   }
 
-  protected updated(changedProperties: PropertyValueMap<{_content?: string}>): void {
+  protected updated(changedProperties: PropertyValueMap<{ _content?: string }>): void {
     super.updated(changedProperties)
 
     if (changedProperties.has('_content')) {
