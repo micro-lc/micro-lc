@@ -127,7 +127,7 @@ describe('json2html parser recursive tests', () => {
     })).to.equalIgnoreSpaces(`
       <div hidden disabled>
         <video height="240" width="320" controls>
-          <source src="./movie.mp4" type="video/mp4"></source>
+          <source src="./movie.mp4" type="video/mp4" />
           Hello
         </video>
       </div>
@@ -141,7 +141,7 @@ describe('extraProps injection', () => {
       attributes: { role: 'button' },
       content: 'Hello',
       tag: 'div',
-    }, ['extra'])).to.equalIgnoreSpaces(`
+    }, new Set(['extra']))).to.equalIgnoreSpaces(`
       <div role="button" .extra=\${extra}>
         Hello
       </div>
@@ -154,7 +154,7 @@ describe('extraProps injection', () => {
       content: 'Hello',
       properties: { extra: 'userInput' },
       tag: 'div',
-    }, ['extra'])).to.equalIgnoreSpaces(`
+    }, new Set(['extra']))).to.equalIgnoreSpaces(`
       <div role="button" .extra=\${userInput}>
         Hello
       </div>

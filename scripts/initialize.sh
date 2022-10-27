@@ -19,8 +19,7 @@ yarn c build
 
 printf "\n\t\xf0\x9f\x8e\x82${GREEN}\tcomposer${ENDCOLOR}"
 echo -e "\n"
-yarn c check:types
-yarn c build
+yarn m build
 
 printf "\n\t\xf0\x9f\x8e\xba${GREEN}\torchestrator${ENDCOLOR}"
 echo -e "\n"

@@ -5,7 +5,7 @@
   <link rel="icon" href="../img/favicon.png" />
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self' https: http:;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: data: http://localhost:8000/ https://cdn.jsdelivr.net/npm/;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: data: https://cdn.jsdelivr.net/npm/;
     connect-src 'self' data:
       http://localhost:8000/
       https://cdn.jsdelivr.net/npm/
@@ -25,7 +25,7 @@
       overflow: hidden;
     }
   </style>
-  <script type="module" src="http://localhost:8000/packages/layout/dist/mlc-loading-animation.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-loading-animation.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/@micro-lc/orchestrator@latest/dist/micro-lc.production.js"></script>
 </head>
 <body>

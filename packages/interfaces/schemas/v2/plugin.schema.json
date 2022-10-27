@@ -205,57 +205,99 @@
           "tag": "my-custom-button"
         }
       ],
-      "properties": {
-        "tag": {
-          "description": "HTML node tag name",
-          "oneOf": [
-            {
-              "description": "Custom tag name",
-              "type": "string",
-              "pattern": "^[^-](([a-z]+)-)+([a-z]+)$"
+      "oneOf": [
+        {
+          "properties": {
+            "tag": {
+              "description": "HTML node tag name",
+              "oneOf": [
+                {
+                  "description": "Custom tag name",
+                  "type": "string",
+                  "pattern": "^[^-](([a-z]+)-)+([a-z]+)$"
+                },
+                {
+                  "$ref": "html-tag.schema.json#/definitions/html-tag"
+                }
+              ]
             },
-            {
-              "$ref": "html-tag.schema.json#/definitions/html-tag"
-            }
-          ]
-        },
-
-        "attributes": {
-          "description": "HTML5 attribute applied using setAttribute API",
-          "type": "object",
-          "properties": {},
-          "additionalProperties": {
-            "type": "string"
-          }
-        },
-
-        "booleanAttributes": {
-          "description": "HTML5 boolean attribute applied using setAttribute API",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "array",
-              "items": {
+            "attributes": {
+              "description": "HTML5 attribute applied using setAttribute API",
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
                 "type": "string"
               }
+            },
+
+            "booleanAttributes": {
+              "description": "HTML5 boolean attribute applied using setAttribute API",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "properties": {
+              "description": "DOM element property applied as object property after creating an element",
+              "type": "object"
+            },
+            "content": {
+              "$ref": "#/definitions/content",
+              "description": "HTML node children"
             }
-          ]
+          },
+          "additionalProperties": false,
+          "required": ["tag"]
         },
+        {
+          "properties": {
+            "tag": {
+              "description": "HTML node tag name",
+              "oneOf": [
+                {
+                  "$ref": "html-tag.schema.json#/definitions/html-void-tag"
+                }
+              ]
+            },
+            "attributes": {
+              "description": "HTML5 attribute applied using setAttribute API",
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
 
-        "properties": {
-          "description": "DOM element property applied as object property after creating an element",
-          "type": "object"
-        },
-
-        "content": {
-          "$ref": "#/definitions/content",
-          "description": "HTML node children"
+            "booleanAttributes": {
+              "description": "HTML5 boolean attribute applied using setAttribute API",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "properties": {
+              "description": "DOM element property applied as object property after creating an element",
+              "type": "object"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["tag"]
         }
-      },
-      "additionalProperties": false,
-      "required": ["tag"]
+      ]
     },
 
     "array-content": {

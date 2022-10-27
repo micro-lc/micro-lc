@@ -6,8 +6,8 @@ settings:
 
 layout:
   sources:
-    - http://localhost:8000/packages/layout/dist/mlc-layout.js
-    - http://localhost:8000/packages/layout/dist/mlc-iconic.js
+    - https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js
+    - https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-iconic.js
   content:
     - tag: mlc-layout
       properties:

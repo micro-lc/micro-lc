@@ -155,7 +155,7 @@ const buildComposer = (mode: Application['integrationMode'], extraProperties: Re
       extraProperties: Object.keys(extraProperties).reduce((set, key) => {
         set.add(key)
         return set
-      }, incomingExtraProperties),
+      }, new Set(incomingExtraProperties)),
     })
   case 'parcel':
   default:

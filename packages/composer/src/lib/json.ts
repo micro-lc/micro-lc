@@ -13,9 +13,31 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { ArrayContent, Component, Content } from '@micro-lc/interfaces/v2'
+import type { ArrayContent, Component, Content, Content1, HTMLVoidTag } from '@micro-lc/interfaces/v2'
 
 import { toArray } from './to-array'
+
+const voidTags = [
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'keygen',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr'
+]
+
+function isVoidTag(input: string): input is HTMLVoidTag {
+  return voidTags.includes(input)
+}
 
 function contentToArrayOfNodes(rawContent: ArrayContent | Component): ArrayContent {
   return Array.isArray(rawContent) ? rawContent : [rawContent]
@@ -38,10 +60,13 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
       attributes = {},
       booleanAttributes = [],
       properties = {},
-      content: nextContent,
+      // content: nextContent,
     } = el
+
+    const isVoid = isVoidTag(tag)
+
     const initialTagOpen = `<${tag}`
-    const initialTagClose = `>`
+    const initialTagClose = isVoid ? '/>' : '>'
     const finalTag = `</${tag}>`
     const initialTagAttributes = Object
       .entries(attributes)
@@ -54,7 +79,7 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
     // separate extra properties for override
     const { override, props } = Object
       .entries(properties)
-      .reduce<{override: Record<string, string | undefined>; props: Record<string, unknown>}>((acc, [key, value]) => {
+      .reduce<{ override: Record<string, string | undefined>; props: Record<string, unknown> }>((acc, [key, value]) => {
         extraProperties.has(key)
           ? (typeof value === 'string' && (acc.override[key] = value))
           : acc.props[key] = value
@@ -70,16 +95,16 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
       .entries(props)
       .reduce<string[]>((acc, [name, value]) => {
         switch (typeof value) {
-        case 'object':
-        case 'number':
-        case 'boolean':
-          acc.push(`.${name}=\${${JSON.stringify(value)}}`)
-          break
-        case 'string':
-          acc.push(`.${name}=\${"${value}"}`)
-          break
-        default:
-          break
+          case 'object':
+          case 'number':
+          case 'boolean':
+            acc.push(`.${name}=\${${JSON.stringify(value)}}`)
+            break
+          case 'string':
+            acc.push(`.${name}=\${"${value}"}`)
+            break
+          default:
+            break
         }
 
         return acc
@@ -94,11 +119,12 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
       initialTagClose,
     ].join(' '))
 
-    if (nextContent !== undefined) {
-      parseContent(buffer, nextContent, extraProperties)
+    if (!isVoid) {
+      const {content} = (el as {content: Content1 | undefined})
+      content !== undefined && parseContent(buffer, content, extraProperties)
+    
+      buffer.push(finalTag)
     }
-
-    buffer.push(finalTag)
   })
 }
 

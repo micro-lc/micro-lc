@@ -12,7 +12,7 @@
       overflow: hidden;
     }
   </style>
-  <script async type="module" src="http://localhost:8000/packages/layout/dist/mlc-url.js"></script>
+  <script async type="module" src="https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-url.js"></script>
   <script async type="module" src="https://cdn.jsdelivr.net/npm/@micro-lc/orchestrator@latest/dist/micro-lc.development.js"></script>
 </head>
 <body>
@@ -30,18 +30,20 @@
   </style>
   <micro-lc></micro-lc>
 
-  <script>
+  <script async defer>
     window.onmessage = function (event) {
-      try {
-        const config = JSON.parse(event.data)
-        let microlc = document.querySelector('micro-lc')
+      customElements.whenDefined('micro-lc').then(() => {
+        try {
+          const config = JSON.parse(event.data)
+          let microlc = document.querySelector('micro-lc')
 
-        setTimeout(() => {
-          Object.assign(microlc, {config})
-        }, 500)
-      } catch (err) {
-        console.error(err)
-      }
+          setTimeout(() => {
+            Object.assign(microlc, {config})
+          }, 500)
+        } catch (err) {
+          console.error(err)
+        }
+      })
     }
   </script>
 </body>

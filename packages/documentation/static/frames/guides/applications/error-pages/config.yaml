@@ -5,7 +5,7 @@ settings:
   defaultUrl: ./401
 
 layout:
-  sources: http://localhost:8000/packages/layout/dist/mlc-layout.js
+  sources: https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js
   content:
     - tag: mlc-layout
       properties:
