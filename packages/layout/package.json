@@ -88,6 +88,7 @@
     "@types/babel__core": "^7.1.19",
     "@types/glob": "^8.0.0",
     "@types/js-yaml": "^4.0.5",
+    "@types/json-schema": "^7.0.11",
     "@types/lodash-es": "^4.17.6",
     "@types/mocha": "^10.0.0",
     "@types/react": "^18.0.23",

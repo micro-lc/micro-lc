@@ -19,8 +19,9 @@ import { unsafeCSS, css, html, LitElement } from 'lit'
 import { property, query, state } from 'lit/decorators.js'
 
 import monacoStyle from './mlc-config.css'
-import * as monaco from './worker'
 import type { IStandaloneCodeEditor, IEditorAction, ITextModel } from './worker'
+import * as monaco from './worker'
+import { schema } from './worker'
 import { modelUri, yaml } from './yaml-support'
 
 interface Resizable extends HTMLElement {
@@ -299,16 +300,16 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     window.removeEventListener('keypress', this.ctrlEnterClickHandler)
   }
 
-  protected firstUpdated(_changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
-    super.firstUpdated(_changedProperties)
+  protected setupSchemaValidation() {
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-      schemas: [
-        {
-          uri: 'https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json',
-        },
-      ],
+      enableSchemaRequest: true,
+      schemas: [{ uri: schema }],
       validate: true,
     })
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
+    super.firstUpdated(_changedProperties)
     this._editor = monaco.editor.create(this.container, {
       automaticLayout: true,
       language: this.editorFormat,
@@ -335,6 +336,8 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
       window.dispatchEvent(new KeyboardEvent('keypress', { ctrlKey: true, key: 'Enter' }))
     })
+
+    this.setupSchemaValidation()
   }
 
   protected handleSubmit(_: MouseEvent | HTMLIFrameElement): void {

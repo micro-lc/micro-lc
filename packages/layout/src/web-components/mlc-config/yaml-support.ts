@@ -14,27 +14,19 @@
   limitations under the License.
 */
 import jsYaml from 'js-yaml'
-import { setDiagnosticsOptions } from 'monaco-yaml'
 
 import { Uri } from './worker'
 
 export const modelUri = Uri.parse('a://b/foo.yaml')
 export const yaml = {
   ...jsYaml,
-  dump: (text: string) => jsYaml.dump(JSON.parse(text), { schema: jsYaml.JSON_SCHEMA }),
+  dump: (text: string): string => {
+    try {
+      const value = JSON.parse(text) as unknown
+      return jsYaml.dump(value, { schema: jsYaml.JSON_SCHEMA })
+    } catch {
+      return jsYaml.dump(text, { schema: jsYaml.JSON_SCHEMA })
+    }
+  },
   load: (content: string): unknown => jsYaml.load(content, { json: true, schema: jsYaml.JSON_SCHEMA }),
 }
-
-setDiagnosticsOptions({
-  completion: true,
-  enableSchemaRequest: true,
-  format: true,
-  hover: true,
-  schemas: [
-    {
-      fileMatch: [String(modelUri)],
-      uri: 'https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json',
-    },
-  ],
-  validate: true,
-})

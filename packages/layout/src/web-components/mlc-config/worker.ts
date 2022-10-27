@@ -38,3 +38,4 @@ window.MonacoEnvironment = {
 
 export type { IStandaloneCodeEditor, IEditorAction, ITextModel }
 export const { editor, languages, KeyCode, KeyMod, Uri } = monaco
+export const schema = 'https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json'

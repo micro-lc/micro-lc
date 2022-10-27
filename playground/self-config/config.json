@@ -8,7 +8,10 @@
     "sources": "/packages/layout/dist/mlc-config.js",
     "content": [
       {
-        "tag": "mlc-config"
+        "tag": "mlc-config",
+        "properties": {
+          "width": "75%"
+        }
       }
     ]
   },
