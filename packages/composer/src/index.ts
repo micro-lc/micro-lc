@@ -22,6 +22,7 @@ import type { SchemaObject } from 'ajv'
 import type { Observable } from 'rxjs'
 import { BehaviorSubject, ReplaySubject } from 'rxjs'
 
+import type { ComposerApi, ReplaySubjectPool } from './lib'
 import { premount, createComposerContext } from './lib'
 import type { V1Content } from './v1adapter'
 import { v1Adapter, v1AddSources } from './v1adapter'
@@ -52,11 +53,6 @@ interface MicrolcApi extends Observable<EventWithUser> {
       getLanguage?: () => string
     }
   }
-}
-
-interface ComposerApi {
-  createComposerContext: typeof createComposerContext
-  premount: typeof premount
 }
 
 interface BootstapProps {
@@ -100,11 +96,6 @@ declare global {
       MODE: 'development' | 'production'
     }
   }
-}
-
-interface ReplaySubjectPool<T = unknown> extends ReplaySubject<T> {
-  [index: number]: ReplaySubject<T>
-  pool: Record<string, ReplaySubject<T>>
 }
 
 interface Event {

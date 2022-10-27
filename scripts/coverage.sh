@@ -4,6 +4,7 @@ GREEN="\e[1;32m"
 ENDCOLOR="\e[0m"
 
 printf "\n${GREEN}\tCOVERAGE${ENDCOLOR}"
+echo -e "\n"
 printf "\n\t\xe2\x9d\x93${GREEN}\tDid you build?${ENDCOLOR}"
 echo -e "\n"
 
