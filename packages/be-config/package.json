@@ -1,6 +1,6 @@
 {
   "name": "@mia-platform/be-config",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx}",
