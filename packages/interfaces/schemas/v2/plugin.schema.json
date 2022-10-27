@@ -173,10 +173,14 @@
     },
 
     "component": {
-      "title": "Component",
-      "description": "An HTML node",
-      "type": "object",
       "examples": [
+        {
+          "tag": "link",
+          "attributes": {
+            "rel": "stylesheet",
+            "href": "./style.css"
+          }
+        },
         {
           "tag": "div",
           "content": "hello!"
@@ -207,6 +211,9 @@
       ],
       "oneOf": [
         {
+          "title": "Component",
+          "description": "An HTML node",
+          "type": "object",
           "properties": {
             "tag": {
               "description": "HTML node tag name",
@@ -257,6 +264,9 @@
           "required": ["tag"]
         },
         {
+          "type": "object",
+          "title": "VoidComponent",
+          "description": "An HTML void node",
           "properties": {
             "tag": {
               "description": "HTML node tag name",

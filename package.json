@@ -23,7 +23,7 @@
     "lint:style": "stylelint **/*.{css,less}",
     "lint": "NODE_OPTIONS=--max-old-space-size=10000 yarn run-p lint:code lint:style",
     "test": "yarn workspaces foreach --all run test",
-    "coverage": "yarn workspaces foreach --all run coverage",
+    "coverage": "bash ./scripts/coverage.sh",
     "playground": "yarn node playground.mjs",
     "serve": " python3 ./scripts/server.py -p 8000 -d ."
   },

@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { ArrayContent, Component, Content, Content1, HTMLVoidTag } from '@micro-lc/interfaces/v2'
+import type { ArrayContent, Component, Content, VoidComponent } from '@micro-lc/interfaces/v2'
 
 import { toArray } from './to-array'
 
@@ -35,8 +35,8 @@ const voidTags = [
   'wbr'
 ]
 
-function isVoidTag(input: string): input is HTMLVoidTag {
-  return voidTags.includes(input)
+function isVoidTag(content: Component | VoidComponent): content is VoidComponent {
+  return voidTags.includes(content.tag)
 }
 
 function contentToArrayOfNodes(rawContent: ArrayContent | Component): ArrayContent {
@@ -63,7 +63,7 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
       // content: nextContent,
     } = el
 
-    const isVoid = isVoidTag(tag)
+    const isVoid = isVoidTag(el)
 
     const initialTagOpen = `<${tag}`
     const initialTagClose = isVoid ? '/>' : '>'
@@ -120,7 +120,7 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
     ].join(' '))
 
     if (!isVoid) {
-      const {content} = (el as {content: Content1 | undefined})
+      const {content} = el
       content !== undefined && parseContent(buffer, content, extraProperties)
     
       buffer.push(finalTag)

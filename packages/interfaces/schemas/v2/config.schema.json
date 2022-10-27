@@ -25,14 +25,17 @@
               "oneOf": [
                 {
                   "$ref": "#/definitions/iframeApplication",
+                  "type": "object",
                   "required": ["integrationMode", "src"]
                 },
                 {
                   "$ref": "#/definitions/composableApplication",
+                  "type": "object",
                   "required": ["integrationMode", "config"]
                 },
                 {
                   "$ref": "#/definitions/parcelApplication",
+                  "type": "object",
                   "required": ["integrationMode", "entry"]
                 }
               ]
@@ -52,14 +55,17 @@
               "oneOf": [
                 {
                   "$ref": "#/definitions/iframeApplication",
+                  "type": "object",
                   "required": ["integrationMode", "src"]
                 },
                 {
                   "$ref": "#/definitions/composableApplication",
+                  "type": "object",
                   "required": ["integrationMode", "config"]
                 },
                 {
                   "$ref": "#/definitions/parcelApplication",
+                  "type": "object",
                   "required": ["integrationMode", "entry"]
                 }
               ]
@@ -371,14 +377,17 @@
       "oneOf": [
         {
           "$ref": "#/definitions/iframeApplication",
+          "type": "object",
           "required": ["integrationMode", "src", "route"]
         },
         {
           "$ref": "#/definitions/composableApplication",
+          "type": "object",
           "required": ["integrationMode", "config", "route"]
         },
         {
           "$ref": "#/definitions/parcelApplication",
+          "type": "object",
           "required": ["integrationMode", "entry", "route"]
         }
       ]
