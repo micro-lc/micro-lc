@@ -29,6 +29,7 @@ export interface ReplaySubjectPool<T = unknown> extends ReplaySubject<T> {
 }
 
 export interface ComposerApi {
+  context: ComposerOptions['context']
   createComposerContext: typeof createComposerContext
   premount: typeof premount
 }

@@ -13,8 +13,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { ComposerOptions, ResolvedConfig } from '@micro-lc/composer'
-import { createComposerContext } from '@micro-lc/composer'
+import type { ComposerOptions, ComposerApi } from '@micro-lc/composer'
+import { premount, createComposerContext } from '@micro-lc/composer'
 import type { Application, Config, Content, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
 import type { Observable } from 'rxjs'
@@ -100,13 +100,6 @@ export async function updateGlobalImportMap(importmap: GlobalImportMap): Promise
   return Promise.resolve()
 }
 
-type PremountReturnType = (config: PluginConfiguration) => Promise<ResolvedConfig>
-
-interface ComposerApi {
-  createComposerContext: typeof createComposerContext
-  premount: PremountReturnType
-}
-
 export interface ComposableApplicationProperties<T extends BaseExtension = BaseExtension> {
   composerApi: Partial<ComposerApi>
   config: string | PluginConfiguration | undefined
@@ -134,31 +127,32 @@ function getContainer<T extends BaseExtension>(this: Microlc<T>, selector: strin
   return selected ?? this._container
 }
 
-const buildComposer = (mode: Application['integrationMode'], extraProperties: Record<string, unknown>): typeof createComposerContext | undefined => {
+const buildComposer = (mode: Application['integrationMode'], extraProperties: Record<string, unknown>): Partial<ComposerApi> => {
+  const defaultComposerApi: ComposerApi = {
+    context: extraProperties,
+    createComposerContext,
+    premount,
+  }
   switch (mode) {
   case 'iframe':
-    return (content: Content, opts: ComposerOptions | undefined) => createComposerContext(content, {
-      context: {
-        ...opts?.context,
-        onload() {
+    return {
+      ...defaultComposerApi,
+      createComposerContext: (content: Content, opts: ComposerOptions | undefined) => createComposerContext(content, {
+        context: {
+          ...opts?.context,
+          onload() {
           /** noop */
+          },
         },
-      },
-      extraProperties: new Set([...(opts?.extraProperties ?? []), 'onload']),
-    })
+        extraProperties: new Set([...(opts?.extraProperties ?? []), 'onload']),
+      }),
+      premount,
+    }
   case 'compose':
-    return (content: Content, { context, extraProperties: incomingExtraProperties = new Set<string>() }: ComposerOptions = {}) => createComposerContext(content, {
-      context: {
-        ...context,
-        ...extraProperties,
-      },
-      extraProperties: Object.keys(extraProperties).reduce((set, key) => {
-        set.add(key)
-        return set
-      }, new Set(incomingExtraProperties)),
-    })
+    return { context: defaultComposerApi.context }
   case 'parcel':
   default:
+    return defaultComposerApi
   }
 }
 
@@ -249,12 +243,10 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       entry,
       name,
       props: {
-        composerApi: {
-          createComposerContext: buildComposer(app.integrationMode, {
-            microlcApi: this.getApi(),
-            ...sharedProperties,
-          }),
-        },
+        composerApi: buildComposer(app.integrationMode, {
+          microlcApi: this.getApi(),
+          ...sharedProperties,
+        }),
         config,
         injectBase,
         microlcApi: this.getApi() as Partial<MicrolcApi<BaseExtension>>,

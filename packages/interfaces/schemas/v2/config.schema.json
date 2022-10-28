@@ -213,12 +213,6 @@
         "route": {
           "description": "Path on which the plugin will be rendered",
           "type": "string"
-        },
-        "version": {
-          "description": "element-composer version schema",
-          "type": "number",
-          "default": 2,
-          "enum": [1, 2]
         }
       },
       "additionalProperties": false

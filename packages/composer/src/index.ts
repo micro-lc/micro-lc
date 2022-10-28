@@ -56,7 +56,7 @@ interface MicrolcApi extends Observable<EventWithUser> {
 }
 
 interface BootstapProps {
-  composerApi?: Partial<ComposerApi>
+  composerApi?: Partial<Pick<ComposerApi, 'context'>>
   config: string | PluginConfiguration | undefined
   microlcApi?: Partial<MicrolcApi>
   name: string
@@ -65,7 +65,7 @@ interface BootstapProps {
 }
 
 interface MountProps {
-  composerApi?: Partial<ComposerApi>
+  composerApi?: Partial<Pick<ComposerApi, 'context'>>
   container: HTMLElement
   microlcApi?: Partial<MicrolcApi>
   name: string
@@ -139,10 +139,10 @@ function createPool<T>(): ReplaySubjectPool<T> {
 }
 
 async function render(
-  composer: typeof createComposerContext, config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>
+  config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>
 ): Promise<null> {
   // const { ReplaySubject } = await import(/* @vite-ignore */'rxjs')
-  const appenderPromise = composer(
+  const appenderPromise = createComposerContext(
     config.content,
     {
       context,
@@ -188,7 +188,6 @@ export function craftLanguageHeader(lang: string | undefined, win = window): Rec
 
 export async function bootstrap({
   name,
-  composerApi,
   config,
   microlcApi,
   schema,
@@ -233,8 +232,7 @@ export async function bootstrap({
   }
 
   if (resolvedConfig) {
-    const premountFn = composerApi?.premount ?? premount
-    await premountFn(resolvedConfig as PluginConfiguration)
+    await premount(resolvedConfig as PluginConfiguration)
       .then((conf) => { composerConfig.set(name, conf) })
   }
 
@@ -258,25 +256,21 @@ export async function mount(
   const observer = new BehaviorSubject<EventWithUser>({})
   const { subscribe = observer.subscribe.bind(observer) } = microlcApi ?? {}
 
-  const composer = composerApi?.createComposerContext ?? createComposerContext
-
   subscribe(({ user }) => {
     const config = composerConfig.get(name)
     if (config) {
       const virtualContainer = document.createElement('div')
       done = render(
-        composer,
         config,
         virtualContainer,
         {
-          composerApi: { createComposerContext, premount, ...composerApi },
+          ...composerApi?.context,
+          composerApi: { context: composerApi?.context, createComposerContext, premount },
           currentUser: user,
           eventBus: createPool<Event>(),
         }
       ).then(() => {
-        Array.from(virtualContainer.children).forEach((child) => {
-          container.appendChild(child)
-        })
+        container.replaceChildren(...virtualContainer.children)
       }).catch(console.error)
     }
   })
@@ -290,7 +284,7 @@ export async function unmount({ name }: {name: string}) {
 
   const container = parent.get(name)
   if (container) {
-    container.childNodes.forEach((child) => { child.remove() })
+    container.replaceChildren()
     parent.set(name, null)
   }
 
