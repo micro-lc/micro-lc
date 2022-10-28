@@ -19,8 +19,9 @@ import { unsafeCSS, css, html, LitElement } from 'lit'
 import { property, query, state } from 'lit/decorators.js'
 
 import monacoStyle from './mlc-config.css'
-import * as monaco from './worker'
 import type { IStandaloneCodeEditor, IEditorAction, ITextModel } from './worker'
+import * as monaco from './worker'
+import { schema } from './worker'
 import { modelUri, yaml } from './yaml-support'
 
 interface Resizable extends HTMLElement {
@@ -47,7 +48,7 @@ function mouseDownHandler(this: Resizable, event: MouseEvent): void {
   const leftStyle = window.getComputedStyle(this.left)
   const rightStyle = window.getComputedStyle(this.right)
   const borderWidth = parseInt(leftStyle.borderRightWidth, 10)
-   + parseInt(rightStyle.borderLeftWidth, 10)
+    + parseInt(rightStyle.borderLeftWidth, 10)
 
   this._x = event.clientX
   this._w = parseInt(leftStyle.width, 10)
@@ -299,6 +300,14 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     window.removeEventListener('keypress', this.ctrlEnterClickHandler)
   }
 
+  protected setupSchemaValidation() {
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+      enableSchemaRequest: true,
+      schemas: [{ uri: schema }],
+      validate: true,
+    })
+  }
+
   protected firstUpdated(_changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(_changedProperties)
     this._editor = monaco.editor.create(this.container, {
@@ -327,6 +336,8 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
       window.dispatchEvent(new KeyboardEvent('keypress', { ctrlKey: true, key: 'Enter' }))
     })
+
+    this.setupSchemaValidation()
   }
 
   protected handleSubmit(_: MouseEvent | HTMLIFrameElement): void {
@@ -369,7 +380,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     }
   }
 
-  protected updated(changedProperties: PropertyValueMap<{_content?: string}>): void {
+  protected updated(changedProperties: PropertyValueMap<{ _content?: string }>): void {
     super.updated(changedProperties)
 
     if (changedProperties.has('_content')) {

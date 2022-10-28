@@ -16,11 +16,22 @@
 import type { Content, PluginConfiguration, ImportMap } from '@micro-lc/interfaces/v2'
 import type { RenderOptions } from 'lit-html'
 import { html, render } from 'lit-html'
+import type { ReplaySubject } from 'rxjs'
 
 import { interpolate } from './compiler'
 import { parseSources } from './importmap'
 import { jsonToHtml } from './json'
 import { lexer } from './lexer'
+
+export interface ReplaySubjectPool<T = unknown> extends ReplaySubject<T> {
+  [index: number]: ReplaySubject<T>
+  pool: Record<string, ReplaySubject<T>>
+}
+
+export interface ComposerApi {
+  createComposerContext: typeof createComposerContext
+  premount: typeof premount
+}
 
 export interface ComposerOptions {
   context?: Record<string, unknown>

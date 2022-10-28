@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs'
 import { readdir, writeFile } from 'fs/promises'
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
@@ -26,8 +27,22 @@ const makeTypesFromSchema = async (schemaDirPath, schemaDirName) => {
   const outputFilePath = resolve(outputDirPath, TYPES_FILE_NAME)
 
   try {
+    /** @type {import('json-schema-to-typescript').Options} */
     const compileProps = {
-      $refOptions: { resolve: { external: true } },
+      $refOptions: {
+        resolve: {
+          http: {
+            read({ url }) {
+              const fileNameMatch = url.match(/v\d\/[^/]+$/g)
+              if (fileNameMatch !== null && fileNameMatch[0] !== undefined) {
+                return readFileSync(resolve(schemasDirPath, fileNameMatch[0]))
+              }
+
+              throw new TypeError(`Cannot find locally a file for ${url} $ref`)
+            },
+          },
+        },
+      },
       bannerComment,
       style: { semi: false },
     }

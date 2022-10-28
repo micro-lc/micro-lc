@@ -5,61 +5,64 @@ sidebar_label: Composer API
 sidebar_position: 30
 ---
 
-:::caution
-This section is work in progress.
-:::
+Any HTML element mounted in <micro-lc></micro-lc> via [layout](../docs/guides/layout.md), [mount point](../docs/guides/layout.md#mount-point)
+or any [composable application](../docs/guides/applications/compose.md) is provided with the property `composerApi`. Each element can though
+[specialize this variable or override it](../docs/concepts/composition.md).
 
-> Descrivere composer API
+The `Composer API` provides the same dynamic capability for mounting HTML subtrees which <micro-lc></micro-lc> uses under the hood.
+
+The `Composer API` is an object with two methods:
+
+- `premount` which flattens polymorphic configurations and injects import maps
+- `createComposerContext` builds an appender that can be called by assigning a root HTML DOM appending the dynamically configured HTML DOM as subtree of the root
+
+## `premount`
 
 ```typescript
-import type { Content } from '@micro-lc/interfaces/v2'
-import { createComposerContext, premount } from '@micro-lc/composer'
-
-const content: Content = {
-  attributes: { id: 'inner-div' },
-  content: [
-    'Hello',
-    {
-      attributes: { id: 'paragraph' },
-      booleanAttributes: 'hidden',
-      properties: { today: 'date' },
-      tag: 'p',
-    },
-  ],
-  tag: 'div',
+interface ComposerApi {
+  // ... rest of the API
+  premount: (config: PluginConfiguration) => Promise<ResolvedConfig>
 }
+```
 
-class MyAwesomeWebComponent extends HTMLElement {
-  connectedCallback () {
-    const appender = createComposerContext(
-      content,
-      { extraProperties: ['today'], context: { date: new Date() } }
-    )
+`premount` allows to reduce the [`PluginConfiguration` type](localhost:3000/docs/guides/applications/compose#plugin-configuration) to
+the following `ResolvedConfig` type
 
-    appender(this)
+```typescript
+interface ResolvedConfig {
+  content: Content
+  sources: {
+    importmap?: ImportMap
+    uris: string[]
   }
 }
-
-customElements.define('my-awesome-web-component', MyAwesomeWebComponent)
 ```
 
-```html
-<my-awesome-web-component>
-  <div id="inner-div">
-    Hello
-    <p hidden id="paragraph"></p>
-  </div>
-</my-awesome-web-component>
+After been called, `premount` ensures all import maps declared are available and `uris` souces have been fetched and
+their code run. If there is no `sources` in the `PluginConfiguration`, `premount` is a no-operation.
 
-<script>
-  const paragraph = document.getElementById('paragraph')
-  
-  console.log(paragraph.today)
-  // Output: ....
-</script>
+## `createComposerContext`
+
+```typescript
+interface ComposerApi {
+  // ... rest of the API
+  createComposerContext: (
+    content: Content,
+    options: ComposerOptions
+  ) => Promise<ComposerContextAppender>
+}
 ```
 
-> premount risolve la configurazione
+Once `premount` has been run, if needed, `createComposerContext` provides a callback for appending the DOM
+configured in `content`:
 
-> createComposerContext prende la config e torna una funzione che si può utilizzare per appendere
-> 
+```typescript
+type ComposerContextAppender = (container: HTMLElement | DocumentFragment, options?: RenderOptions) => void
+```
+
+where `container` is the root element that will be used to append the composed subtree and `options`
+refer to optional features provided by the [`lit-html` `render` method](https://lit.dev/docs/api/templates/#render).
+
+Finally, `options` in `createComposerContext` is the object to interact with when the compiler needs to be
+instructed to recognize some properties as special context. This feature allows to inject JS context avoiding eval and
+works according to the [composability principles](../docs/guides/applications/compose.md#interpolated-properties).

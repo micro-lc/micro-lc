@@ -55,11 +55,16 @@ describe('composer tests', () => {
     const name = window.crypto.randomUUID()
     const config = '/config.json'
 
-    await bootstrap({ config, name, microlcApi: { getExtensions: () => ({
-      json: {
-        fetcher: (info, init) => fetch(info, init).then((res) => res.json())
-      } 
-    })}})
+    await bootstrap({ config,
+      microlcApi: {
+        getExtensions: () => ({
+          json: {
+            fetcher: (info, init) => fetch(info, init).then((res) => res.json()),
+          },
+        }),
+      },
+      name,
+    })
     expect(fetch).to.be.called
 
     const container = document.createElement('div')

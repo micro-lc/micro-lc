@@ -32,7 +32,7 @@ const voidTags = [
   'param',
   'source',
   'track',
-  'wbr'
+  'wbr',
 ]
 
 function isVoidTag(content: Component | VoidComponent): content is VoidComponent {
@@ -95,16 +95,16 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
       .entries(props)
       .reduce<string[]>((acc, [name, value]) => {
         switch (typeof value) {
-          case 'object':
-          case 'number':
-          case 'boolean':
-            acc.push(`.${name}=\${${JSON.stringify(value)}}`)
-            break
-          case 'string':
-            acc.push(`.${name}=\${"${value}"}`)
-            break
-          default:
-            break
+        case 'object':
+        case 'number':
+        case 'boolean':
+          acc.push(`.${name}=\${${JSON.stringify(value)}}`)
+          break
+        case 'string':
+          acc.push(`.${name}=\${"${value}"}`)
+          break
+        default:
+          break
         }
 
         return acc
@@ -120,9 +120,9 @@ function parseContent(buffer: string[], content: Content, extraProperties: Set<s
     ].join(' '))
 
     if (!isVoid) {
-      const {content} = el
-      content !== undefined && parseContent(buffer, content, extraProperties)
-    
+      const { content: nextContent } = el
+      nextContent !== undefined && parseContent(buffer, nextContent, extraProperties)
+
       buffer.push(finalTag)
     }
   })

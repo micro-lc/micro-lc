@@ -48,10 +48,20 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - run: yarn workspace @micro-lc/interfaces run build
-      - run: yarn workspace @micro-lc/iconic run build
-      - run: yarn workspace @micro-lc/composer run build
-      - run: yarn workspace @micro-lc/orchestrator run build
-      - run: yarn workspace @micro-lc/layout run build
+      - name: Build interfaces 
+        run: yarn i build
+      
+      - name: Build icons
+        run: yarn c build
 
+      - name: Build composer
+        run: yarn m build
 
+      - name: Build orchestrator
+        run: yarn o build
+
+      - name: Build layout
+        run: yarn l build
+
+      - name: Prepare Test
+        run: yarn prepare-test

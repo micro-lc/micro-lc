@@ -9,97 +9,99 @@ env:
 on:
   push:
     branches:
-      - main
+      - v2/main
+  pull_request:
+    branches:
+      - v2/main
 
 jobs:
   # https://stackoverflow.com/questions/73305126/passing-env-variable-inputs-to-a-reusable-workflow
 
   install:
-    uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@main
-
-  # checks:
-  #   needs:
-  #     - install
-  #   uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@main
+    uses: micro-lc/micro-lc-2.0/.github/workflows/install.yml@v2/main
 
   build:
     needs:
       - install
-    uses: micro-lc/micro-lc-2.0/.github/workflows/build.yml@main
+    uses: micro-lc/micro-lc-2.0/.github/workflows/build.yml@v2/main
+
+  checks:
+    needs:
+      - install
+    uses: micro-lc/micro-lc-2.0/.github/workflows/checks.yml@v2/main
 
   tests:
     needs:
-      - install
+      - build
     strategy:
       fail-fast: false
       matrix:
         package:
+          - composer
           - iconic
           - interfaces
-          - composer
+          - layout
           - orchestrator
-
-    uses: micro-lc/micro-lc-2.0/.github/workflows/tests.yml@main
+    uses: micro-lc/micro-lc-2.0/.github/workflows/tests.yml@v2/main
     with:
       package: ${{ matrix.package }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
 
+  # release:
+  #   needs:
+  #     - install
+  #     # - checks
+  #     - tests
+  #     - build
+  #   runs-on: ubuntu-latest
 
-  release:
-    needs:
-      - install
-      # - checks
-      - tests
-      - build
-    runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       package:
+  #         - iconic
+  #         - interfaces
+  #         - composer
+  #         - layout
+  #         - orchestrator
 
-    strategy:
-      fail-fast: false
-      matrix:
-        package:
-          - iconic
-          - interfaces
-          - composer
-          - layout
-          - orchestrator
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-    steps:
-      - uses: actions/checkout@v3
+  #     - name: Extract branch name
+  #       id: extract_branch
+  #       shell: bash
+  #       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
 
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+  #     - name: Use Node.js ${{ env.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ env.node-version }}
 
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
+  #     ## Yarn Install State
+  #     - name: Yarn Cache
+  #       uses: actions/cache@v3
+  #       id: yarn-cache
+  #       with:
+  #         path: |
+  #           ./.yarn/cache
+  #           ./.yarn/unplugged
+  #           ./.yarn/install-state.gz
+  #           ./.pnp.cjs
+  #           ./.pnp.loader.mjs
+  #         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('./package.json') }}
 
-      ## Yarn Install State
-      - name: Yarn Cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: |
-            ./.yarn/cache
-            ./.yarn/unplugged
-            ./.yarn/install-state.gz
-            ./.pnp.cjs
-            ./.pnp.loader.mjs
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('./package.json') }}
+  #     - name: Build Cache
+  #       uses: actions/cache@v3
+  #       id: build-cache
+  #       with:
+  #         path: |
+  #           ./node_modules
+  #           ./packages/**/dist
+  #           ./packages/**/node_modules
+  #         key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - name: Build Cache
-        uses: actions/cache@v3
-        id: build-cache
-        with:
-          path: |
-            ./node_modules
-            ./packages/**/dist
-            ./packages/**/node_modules
-          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
-
-      - run: cd packages/${{ matrix.package }}
-      # - run: yarn install --immutable
-      # - run: yarn npm publish
+  #     - run: cd packages/${{ matrix.package }}
+  #     # - run: yarn install --immutable
+  #     # - run: yarn npm publish
