@@ -60,14 +60,9 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
 
       - name: Reinstall
-        if: ${{ inputs.package != 'interfaces' && steps.playwright-cache.outputs.cache-hit != 'true' }} 
+        if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }} 
         run: rm -rf ./.yarn/install-state.gz && yarn install --immutable
       
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --immutable
-
-      - name: Config
-        run: yarn workspace @micro-lc/interfaces run check:types
-
-

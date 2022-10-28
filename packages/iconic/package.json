@@ -13,7 +13,7 @@
     "check:types": "tsc --project scripts/tsconfig.types.json && echo \"✓ check types\"",
     "bundle:dependencies": "ts-node ./scripts/pre-bundle.ts",
     "bundle:icons": "ts-node ./scripts/bundle-icons.ts",
-    "prebuild": "yarn run -T run-p bundle:dependencies bundle:icons",
+    "prepare-test": "yarn run -T run-p bundle:dependencies bundle:icons",
     "test": "wtr --node-resolve",
     "coverage": "yarn test --coverage",
     "build:es": "ts-node ./scripts/compile.esm.ts",

@@ -48,9 +48,5 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - run: yarn workspace @micro-lc/interfaces run check:types
-      - run: yarn workspace @micro-lc/iconic run check:types
-      - run: yarn workspace @micro-lc/composer run check:types
-      - run: yarn workspace @micro-lc/orchestrator run check:types
-      - run: yarn workspace @micro-lc/layout run check:types
-      - run: yarn lint
+      - name: Linting
+        run: yarn lint

@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "check:types": "tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
-    "prebuild": "ts-node scripts/pre-bundle.ts",
+    "prepare-test": "ts-node scripts/pre-bundle.ts",
     "test": "wtr --node-resolve",
     "coverage": "yarn test:browser --coverage",
     "build:es": "ts-node scripts/compile.esm.ts",
