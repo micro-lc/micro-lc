@@ -6,7 +6,7 @@ sidebar_position: 30
 ---
 
 Routing refers to the logic <micro-lc></micro-lc> applies when choosing which micro-frontend should be loaded in the
-[dynamic section](../concepts/separation-of-concernes.md) of the application based on the current URL.
+[dynamic section](../concepts/separation-of-concerns.md) of the application based on the current URL.
 
 Each [registered application](./applications) has to **declare its route**, which must be a valid URL pathname like:
 - /home
@@ -62,7 +62,7 @@ Moving to `/` – or equivalently to the `window.location.origin` – will still
 found and `settings.defaultUrl` is declared to be `/home`.
 
 When the client requires `/about/details`, the longest match is given by the `about-details` application, despite `/about`
-being also available (and this behavior is the one enabling the **construction of entire SPA-like applications** using
+being also available (and this behaviour is the one enabling the **construction of entire SPA-like applications** using
 <micro-lc></micro-lc> router).
 
 Finally, when a router application is called, like browsing to `/application/` the internal router of the application

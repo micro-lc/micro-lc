@@ -17,12 +17,12 @@ key of the new extension and its content.
 
 ```typescript
 // Application 1 ⤵
-microlcApi.setExtension({ getUserName: () => 'Jhon Doe' })
+microlcApi.setExtension({ getUserName: () => 'John Doe' })
 
 // Application 2 ⤵
 const userNameGetter = microlcApi.getExtensions().getUserName
 console.log(userNameGetter())
-// output: "Jhon Doe"
+// output: "John Doe"
 ```
 
 ### `getExtensions`

@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem'
 import CodeBlock from '@theme-original/CodeBlock'
 ```
 
-Applications are micro-frontends rendered in the [dynamic part](../../concepts/separation-of-concernes.md) of 
+Applications are micro-frontends rendered in the [dynamic part](../../concepts/separation-of-concerns.md) of 
 <micro-lc></micro-lc>. Each application corresponds to a URL pathname, and <micro-lc></micro-lc> is responsible to 
 property handle [routing](../routing.md) between them.
 

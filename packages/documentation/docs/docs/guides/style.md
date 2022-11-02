@@ -269,7 +269,7 @@ microlcApi.getExtensions().css.setStyle({
 })
 ```
 
-all `<p>` elements in the same DOM of the call will be colored red.
+all `<p>` elements in the same DOM of the call will be red.
 ```mdx-code-block
 </div>
 ```

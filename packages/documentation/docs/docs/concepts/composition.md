@@ -191,7 +191,7 @@ const values = ["{\"foo\":\"bar\"}", 'special.[0]']
 ```
 The third step consists in parsing values associated with properties.
 
-```javascript title="Template literal with parserd values"
+```javascript title="Template literal with parsed values"
 const literals = [
   '<div style="margin: 10px;"><p>Some Text</p><button disabled .myProp=',
   ' .special=',

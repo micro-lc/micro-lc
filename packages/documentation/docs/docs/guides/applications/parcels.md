@@ -190,7 +190,7 @@ subscriptions, etc. that were created at any point when the parcel was mounted.
 
 ```typescript
 function unmount(props: LifecycleProps): Promise<null> {
-  /* This is where you tell a framework (e.g., React) to unrender some ui from the DOM */
+  /* This is where you tell a framework (e.g., React) to un-render some ui from the DOM */
 }
 ```
 
