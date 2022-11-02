@@ -1,7 +1,7 @@
 import Layout from "@theme/Layout";
 import React from "react";
 
-export default function fastTrack(): JSX.Element {
+export default function playground(): JSX.Element {
   return (
     <Layout title="Playground">
       <div
@@ -17,5 +17,5 @@ export default function fastTrack(): JSX.Element {
         ></iframe>
       </div>
     </Layout>
-  );
+  )
 }
