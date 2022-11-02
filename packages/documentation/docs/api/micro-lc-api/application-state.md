@@ -82,8 +82,6 @@ export interface MicrolcApi {
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
   // ...rest of the API
 }
-
-type CompleteConfig = TODO
 ```
 
 `getCurrentConfig` provides, statically, <micro-lc></micro-lc> complete configuration, where "complete" means the user
@@ -102,8 +100,6 @@ export interface MicrolcApi {
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
   // ...rest of the API
 }
-
-type CompleteConfig = TODO
 ```
 
 `setCurrentConfig` provides a handler to replace <micro-lc></micro-lc> configuration at runtime.

@@ -51,7 +51,7 @@ runtime evaluation (e.g., `eval` or `Function`) which are strongly discouraged o
 :::
 
 Almost any HTML element can be seen, from the point of view of the DOM, as the combination of:
-- a tag (e.g., `div`, `header`, `aside`, `img`, `micro-lc`),
+- a tag (e.g., `<div>`, `<header>`, `<aside>`, `<img>`, `<micro-lc>`),
 - a list of attributes (e.g., `style="margin: 10px;"`, `class="my-css-class"`),
 - a list of boolean attributes (e.g., `hidden`, `disabled`),
 - a list of properties injected by JavaScript on the DOM counterpart of the given element,

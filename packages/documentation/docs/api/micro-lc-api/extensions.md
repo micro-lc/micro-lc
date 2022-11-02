@@ -72,7 +72,7 @@ interface CSSConfig {
 }
 ```
 
-<!-- TODO: Wait for docs/guides/style to be completed -->
+`head.setIcon` can be used to [inject styling](../../docs/guides/style.md) in <micro-lc></micro-lc> applications.
 
 ### `head.setIcon`
 

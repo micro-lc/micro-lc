@@ -31,7 +31,7 @@ The component can be sourced from
 [jsDelivr CDN](https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js).
 
 To use the component in <micro-lc></micro-lc>, declare it as part of the application [layout](../../docs/guides/layout.md)
-with its [properties and attributes](#properties-and-attributes). An unnamed _slot_ is already set in the component so
+with its [properties and attributes](#properties-and-attributes). An unnamed `<slot>` is already set in the component so
 that content will be [automatically mounted](../../docs/guides/layout.md#slotting) in the right position.
 
 ```yaml title=micro-lc.config.yaml

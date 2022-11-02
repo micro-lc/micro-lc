@@ -23,7 +23,7 @@ layout at all, <micro-lc></micro-lc> provides the flexibility to meet every requ
 To understand how layout works, it is important to talk about <micro-lc></micro-lc> mount point, the place in DOM on
 which <micro-lc></micro-lc> appends the dynamic content.
 
-In its simplest (and default) form, <micro-lc></micro-lc> mount point is a _div_ tag with id `__micro_lc` and a _style_
+In its simplest (and default) form, <micro-lc></micro-lc> mount point is a `<div>` tag with id `__micro_lc` and a `<style>`
 tag applying some base styling. The resulting tree depends on whether Shadow DOM is enabled, but regardless both the tags
 are rendered in the default DOM.
 
@@ -86,8 +86,8 @@ are rendered in the default DOM.
 </Tabs>
 ```
 
-The _div_ **is always rendered**, since <micro-lc></micro-lc> needs it to ensure content is correctly mounted. However,
-the _div_ id [can be changed](../../api/micro-lc-web-component.md#properties--attributes), and the preset style 
+The `<div>` **is always rendered**, since <micro-lc></micro-lc> needs it to ensure content is correctly mounted. However,
+the `<div>` id [can be changed](../../api/micro-lc-web-component.md#properties--attributes), and the preset style 
 [can be disabled](../../api/micro-lc-web-component.md#properties--attributes).
 
 ### Composition
@@ -109,7 +109,7 @@ In a customized mount point, the actual element in which <micro-lc></micro-lc> s
 to change. To instruct <micro-lc></micro-lc> of the new mount point, use the
 configuration key [`mountPointSelector`](../../api/micro-lc-web-component.md#mountpointselector), which accepts a
 valid [query selector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector#parameters) to be run on
-<micro-lc></micro-lc> base _div_ (i.e., the one with id `__micro_lc` by default) subtree to find the new mount point.
+<micro-lc></micro-lc> base `<div>` (i.e., the one with id `__micro_lc` by default) subtree to find the new mount point.
 
 :::caution
 Any content of the node referenced by `mountPointSelector` will be **substituted** by <micro-lc></micro-lc> content.
@@ -280,7 +280,7 @@ a detailed description of the subject.
 When building custom layouts, [_slots_](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) can be used to
 mark placeholders to be filled with markup at runtime.
 
-A <micro-lc></micro-lc> layout **needs one unnamed slot** (i.e., a _slot_ without the
+A <micro-lc></micro-lc> layout **needs one unnamed `<slot>`** (i.e., a `<slot>` without the
 [name attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot#attr-name)) to correctly mount the
 dynamic content.
 
@@ -346,7 +346,7 @@ layout:
 ```
 
 :::tip
-While <micro-lc></micro-lc> requires an unnamed _slot_, you can use as many named slots as you want to allow external 
+While <micro-lc></micro-lc> requires an unnamed `<slot>`, you can use as many named slots as you want to allow external 
 injection of content in specific spots of the layout.
 :::
 
@@ -355,8 +355,8 @@ injection of content in specific spots of the layout.
 If you build a custom web component to be used as layout, and you want it to be in Shadow DOM too, you will face the
 issue of mounting the content through two levels of shadow-root.
 
-To make this work, you need to append a _slot_ as sibling of the layout web component Shadow DOM with the same name of
-the inner content _slot_ so that any sibling of the layout is correctly mounted.
+To make this work, you need to append a `<slot>` as sibling of the layout web component Shadow DOM with the same name of
+the inner content `<slot>` so that any sibling of the layout is correctly mounted.
 
 ```mdx-code-block 
 <Tabs>

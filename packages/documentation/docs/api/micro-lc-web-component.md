@@ -75,12 +75,12 @@ To reduce the bundle size, _production_ variant lacks all previously mentioned f
 
 ### Properties & attributes
 
-|  Property   |      Attribute       |                          Type                           |                                 Default                                 | Description                                                                 |
-|:-----------:|:--------------------:|:-------------------------------------------------------:|:-----------------------------------------------------------------------:|-----------------------------------------------------------------------------|
-|  `config`   |          -           | <code><a href="#configuration">Configuration</a></code> | <code><a href="#default-configuration">Default configuration</a></code> | <micro-lc></micro-lc> configuration.                                        |
-| `configSrc` |     `config-src`     |                   <code>string</code>                   |                                    -                                    | URL from which configuration can be fetched.                                |
-|      -      | `disable-shadow-dom` |                  <code>boolean</code>                   |                                 `false`                                 | Whether <micro-lc></micro-lc> should be in Shadow DOM.                      |
-|      -      |      `root-id`       |                   <code>string</code>                   |                              `__micro_lc`                               | [Mount point](../docs/guides/layout.md#mount-point) div `id`.               |
+|  Property   |      Attribute       |                          Type                           |                                 Default                                 | Description                                                               |
+|:-----------:|:--------------------:|:-------------------------------------------------------:|:-----------------------------------------------------------------------:|---------------------------------------------------------------------------|
+|  `config`   |          -           | <code><a href="#configuration">Configuration</a></code> | <code><a href="#default-configuration">Default configuration</a></code> | <micro-lc></micro-lc> configuration.                                      |
+| `configSrc` |     `config-src`     |                   <code>string</code>                   |                                    -                                    | URL from which configuration can be fetched.                              |
+|      -      | `disable-shadow-dom` |                  <code>boolean</code>                   |                                 `false`                                 | Whether <micro-lc></micro-lc> should be in Shadow DOM.                    |
+|      -      |      `root-id`       |                   <code>string</code>                   |                              `__micro_lc`                               | [Mount point](../docs/guides/layout.md#mount-point) `<div>` id.           |
 |      -      |  `disable-styling`   |                  <code>boolean</code>                   |                                 `false`                                 | Disable [mount point](../docs/guides/layout.md#mount-point) preset styling. |
 
 :::caution
