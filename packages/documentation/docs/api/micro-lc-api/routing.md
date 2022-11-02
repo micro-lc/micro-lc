@@ -53,7 +53,7 @@ by `id` argument, while `data` corresponds to the first argument of `history.pus
 
 :::caution
 If provided `id` does not match any registered application, `goToApplication` will route to 404 
-[error page](../../docs/guides/applications/error-pages). 
+[error page](../../docs/guides/applications/error-pages.md). 
 :::
 
 ## `goToErrorPage`
@@ -69,7 +69,7 @@ export interface MicrolcApi {
 }
 ```
 
-`goToErrorPage` can be used to programmatically route to an [error page](../../docs/guides/applications/error-pages).
+`goToErrorPage` can be used to programmatically route to an [error page](../../docs/guides/applications/error-pages.md).
 Argument `statusCode` is the error number (defaults to 404), and `reason` is the cause of the error.
 
 :::caution

@@ -7,7 +7,8 @@ sidebar_position: 10
 
 ## Web component layout
 
-<micro-lc></micro-lc> is an HTML5 custom web component with tag `micro-lc` and comes in two flavors: _development_ and _production_.
+<micro-lc></micro-lc> is an HTML5 custom web component with tag `micro-lc` and comes in two flavors: _development_ and
+_production_.
 
 _Development_ variant is injected into the 
 [`CustomElementRegistry`](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry) with a larger bundle

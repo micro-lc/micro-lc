@@ -41,15 +41,15 @@ Default error pages primary color can be set by the `--micro-lc-primary-color` g
 
 ## Custom error pages
 
-To override default error pages, a [dedicated section](../../../api/micro-lc#settings) of <micro-lc></micro-lc> 
-configuration is available. Under `settings`, errors are divided into client errors (key `4xx`) and server errors 
-(key `5xx`). 
+To override default error pages, a [dedicated section](../../../api/micro-lc-web-component.md#settings) of 
+<micro-lc></micro-lc> configuration is available. Under `settings`, errors are divided into client errors (key `4xx`) 
+and server errors (key `5xx`). 
 
-Error pages are then just regular applications without route, meaning that you can have [parcels](./parcels),
-[composed applications](./compose), and even [iFrames](./iframes) rendered in response to errors.
+Error pages are then just regular applications without route, meaning that you can have [parcels](./parcels.md),
+[composed applications](./compose.md), and even [iFrames](./iframes.md) rendered in response to errors.
 
 :::tip
-Displaying error pages can be triggered by [<micro-lc></micro-lc> API](../../../api/micro-lc-api/routing#gotoerrorpage).
+Displaying error pages can be triggered by [<micro-lc></micro-lc> API](../../../api/micro-lc-api/routing.md#gotoerrorpage).
 :::
 
 ```mdx-code-block 
@@ -109,10 +109,10 @@ settings:
 
 ### Lifecycle
 
-When error pages are parcel applications, thery have access to a slightly different version of 
-[parcels lifecycle methods](parcels#lifecycle-methods).
+When error pages are parcel applications, they have access to a slightly different version of 
+[parcels lifecycle methods](parcels.md#lifecycle-methods).
 
-[`bootstrap`](parcels#bootstrap), [`mount`](parcels#mount), and [`unmount`](parcels#unmount) methods
+[`bootstrap`](parcels.md#bootstrap), [`mount`](parcels.md#mount), and [`unmount`](parcels.md#unmount) methods
 have arguments implementing the following interface.
 
 ```typescript
@@ -128,7 +128,7 @@ Where `message` is the primary error message, and `reason` is the cause of the e
 You can use those extra properties for user feedback.
 :::
 
-On top of that, error pages have an extra [update](parcels#update) method, which is called when the page is already
+On top of that, error pages have an extra [update](parcels.md#update) method, which is called when the page is already
 mounted but properties have changed.
 
 ```typescript

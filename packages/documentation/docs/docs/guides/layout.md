@@ -15,8 +15,8 @@ A well-though, user-friendly layout is one of the most important aspect of a fro
 
 Whether we talk about classic top bar/sidebar navigation, peculiar layouts crafted around a specific need, or even no
 layout at all, <micro-lc></micro-lc> provides the flexibility to meet every requirement 
-[dynamically composing](../concepts/composition) applications layout at runtime on the basis of a user-supplied 
-[configuration](../../api/micro-lc#layout).
+[dynamically composing](../concepts/composition.md) applications layout at runtime on the basis of a user-supplied 
+[configuration](../../api/micro-lc-web-component.md#layout).
 
 ## Mount point
 
@@ -249,7 +249,7 @@ settings:
 ## Build a layout
 
 If <micro-lc></micro-lc> **Shadow DOM [is enabled](../../api/micro-lc-web-component.md#properties--attributes)**, a 
-custom layout can be built using the configuration key [`layout`](../../api/micro-lc#layout).
+custom layout can be built using the configuration key [`layout`](../../api/micro-lc-web-component.md#layout).
 
 ```typescript
 interface Layout {
@@ -271,16 +271,16 @@ dynamically at runtime. The building blocks (`content`) are HTML5 elements or cu
 Take a look at <micro-lc></micro-lc> [add-on components](../../add-ons/components) for ready-to-use layout solutions.
 :::
 
-The layout interface (and [the engine](../concepts/composition) behind its creation) has the same shape of the interface
-used to build composable applications. Hence, refer to [that section](./applications/compose#plugin-configuration) for a
-detailed description of the subject.
+The layout interface (and [the engine](../concepts/composition.md) behind its creation) has the same shape of the interface
+used to build composable applications. Hence, refer to [that section](./applications/compose.md#plugin-configuration) for
+a detailed description of the subject.
 
 ### Slotting
 
 When building custom layouts, [_slots_](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) can be used to
 mark placeholders to be filled with markup at runtime.
 
-A <micro-lc></micro-lc> layout **needs one unnamed slot** (i.e., a slot without the
+A <micro-lc></micro-lc> layout **needs one unnamed slot** (i.e., a _slot_ without the
 [name attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot#attr-name)) to correctly mount the
 dynamic content.
 
@@ -346,7 +346,7 @@ layout:
 ```
 
 :::tip
-While <micro-lc></micro-lc> requires an unnamed slot, you can use as many named slots as you want to allow external 
+While <micro-lc></micro-lc> requires an unnamed _slot_, you can use as many named slots as you want to allow external 
 injection of content in specific spots of the layout.
 :::
 
@@ -356,7 +356,7 @@ If you build a custom web component to be used as layout, and you want it to be 
 issue of mounting the content through two levels of shadow-root.
 
 To make this work, you need to append a _slot_ as sibling of the layout web component Shadow DOM with the same name of
-the inner content slot so that any sibling of the layout is correctly mounted.
+the inner content _slot_ so that any sibling of the layout is correctly mounted.
 
 ```mdx-code-block 
 <Tabs>

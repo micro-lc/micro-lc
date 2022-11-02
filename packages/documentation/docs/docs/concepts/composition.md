@@ -14,8 +14,8 @@ The key of <micro-lc></micro-lc> flexibility lies – among others – in the bu
 a serialization markup language content, as JSON or YAML, into a valid, appendable DOM. 
 
 This behaviour enables the possibility to dynamically instruct <micro-lc></micro-lc> on the shape of a page by writing a
-configuration file to be loaded at runtime, and can be applied both on [layout](../guides/layout) and on content
-when using [compose integration](../guides/applications/compose) strategy.
+configuration file to be loaded at runtime, and can be applied both on [layout](../guides/layout.md) and content
+when using [compose integration](../guides/applications/compose.md) strategy.
 
 Let us take a look at a working example. The frame below shows a simple use case where the page is divided into layout
 and content and both are constructed dynamically from a textual configuration.
@@ -37,7 +37,7 @@ and content and both are constructed dynamically from a textual configuration.
 ## How it works
 
 :::tip
-The composition functionality is exposed as a standalone package under [@micro-lc/composer](../../api/composer-api).
+The composition functionality is exposed though <micro-lc></micro-lc> [composer API](../../api/composer-api.md).
 :::
 
 At height level, this feature is achieved by leveraging
@@ -57,7 +57,7 @@ Almost any HTML element can be seen, from the point of view of the DOM, as the c
 - a list of properties injected by JavaScript on the DOM counterpart of the given element,
 - a content inside of the tag, (e.g., `0`, `Hello, World!`, `<p>My Paragraph</p>`).
 
-```text title="HTML element"
+```html title="HTML element"
 <p ⬅ Tag
   id="my-awesome-paragraph" ⬅ Attribute
   disabled ⬅ Boolean attribute
@@ -106,7 +106,7 @@ time, and we would like to inject it at runtime (without using `eval`, of course
 [fully compliant](https://lit.dev/docs/templates/expressions/#well-formed-html) template literal to the `lit-html`
 library.
 
-Together, these tools make the [composition API](../../api/composer-api), the flow of which is fully visualized in the
+Together, these tools make the [composition API](../../api/composer-api.md), the flow of which is fully visualized in the
 example below.
 
 ### The complete process

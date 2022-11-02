@@ -5,8 +5,8 @@ sidebar_label: Getting started
 sidebar_position: 20
 ---
 
-<micro-lc></micro-lc> is shipped as an ES module CDN bundle and can be imported in any HTML page. Moreover, a dockerized
-webserver is available on Docker Hub with a Docker Compose `yaml` file.
+<micro-lc></micro-lc> is shipped as an ES module [CDN bundle](#import-from-cdn) and can be imported in any HTML page.
+Moreover, a [dockerized webserver](#deploy-docker-container) is available on Docker Hub.
 
 ## Import from CDN
 
@@ -82,7 +82,7 @@ You can now serve the application with your static server of choice, like
 python -m http.server 8000
 ```
 
-Read the documentation to know more about what <micro-lc></micro-lc> can do, and use the live <a href="../../playground" target="_blank">Playground section</a>
+Read the documentation to know more about what <micro-lc></micro-lc> can do, and use the live <a href="../../playground" target="_blank">Playground section</a> 
 to test your configurations.
 
 ## Deploy Docker container
@@ -105,17 +105,17 @@ This container has the following runtime environment variables.
 |    `MODE`    | <code>development &#124; production</code> |  `production`   | <micro-lc></micro-lc> bundle.                                                                           |
 | `CONFIG_SRC` |            <code>string</code>             | `./config.json` | URL to <micro-lc></micro-lc> config.                                                                    |
 
-`BASE_PATH` is useful if your <micro-lc></micro-lc> app must be served on a subpath. Be aware that any `route` declared in the configuration file under `applications`, when relative, 
-are computed with respect to `BASE_PATH`.
+`BASE_PATH` is useful if your <micro-lc></micro-lc> app must be served on a sub path. Be aware that any `route` declared
+in the configuration file under `applications`, when relative, are computed with respect to `BASE_PATH`.
 
 ### Web Server
 
-The <micro-lc></micro-lc> container is effectively an [nginx](https://www.nginx.com/) web server, currently on version `1.23.2`. It is preset to rewrite any route
-according with your `BASE_PATH` choice. Moreover it does per-call [sub filtering](http://nginx.org/en/docs/http/ngx_http_sub_module.html#sub_filter) of special variables.
-This feature is useful for
-
-1. inject runtime variables to <micro-lc></micro-lc> webcomponent
-2. inject a [CSP nonce](https://content-security-policy.com/nonce/) on scripts and style tags
+The <micro-lc></micro-lc> container is effectively an [nginx](https://www.nginx.com/) web server, currently on version 
+`1.23.2`. It is preset to rewrite any route according to your `BASE_PATH` choice. Moreover, it does per-call 
+[sub filtering](http://nginx.org/en/docs/http/ngx_http_sub_module.html#sub_filter) of special variables. This feature is
+useful to
+* inject runtime variables to <micro-lc></micro-lc> web component, and 
+* inject a [CSP nonce](https://content-security-policy.com/nonce/) on scripts and style tags.
 
 Which basically sums up to the following configuration:
 
@@ -142,35 +142,40 @@ http {
 }
 ```
 
-Notice that the algorithm `set_secure_random_alphanum` is provided by an `nginx` external [module](https://github.com/openresty/set-misc-nginx-module)
-and generates 32 bytes of random hash on each endpoint call replacing the variable `**CSP_NONCE**.
+Notice that the algorithm `set_secure_random_alphanum` is provided by an `nginx` external
+[module](https://github.com/openresty/set-misc-nginx-module) and generates 32 bytes of random hash on each endpoint call
+replacing the variable `**CSP_NONCE**.
 
-To override default configurations with your own remind that volumes can be mounted on:
+### Customization
 
-1. `index.html` at `/usr/static/index.html`
-2. `config.json` at `/usr/static/config.json`
-3. `default.conf` at `/etc/nginx/conf.d/default.conf`
+To override default configurations with your own, you can use **volumes**:
+* `index.html` is mounted at `/usr/static/index.html`
+* `config.json` is mounted at `/usr/static/config.json`
+* `default.conf` is mounted at `/etc/nginx/conf.d/default.conf`
 
 ## Building from source
 
-If you would like to contribute or simply run <micro-lc></micro-lc> from source code, checkout locally the [official repository](https://github.com/micro-lc/micro-lc).
-Be aware that it needs `node` `16+` and `yarn` `1.22+`. But requirements can be met installing a node version manager
-like [`nvm`](https://github.com/nvm-sh/nvm#install--update-script) and then running
+If you would like to contribute or simply run <micro-lc></micro-lc> from source code, checkout locally the
+[official repository](https://github.com/micro-lc/micro-lc). 
+
+Be aware that it needs `node` `16+` and `yarn` `1.22+`. These requirements can be met installing a node version manager
+like [`nvm`](https://github.com/nvm-sh/nvm#install--update-script) and then running:
 
 ```shell
 nvm install lts/gallium
 corepack enable
 ```
 
-Once your `node` is up and running
+Once your `node` is up and running, issue:
 
 ```shell
 yarn install
 yarn initialize
 ```
 
-and the source code of <micro-lc></micro-lc> will be located at `packages/orchestrator/dist`. Locally a playground is available but
-requires [`docker`](https://docs.docker.com/engine/install/) and `docker-compose` to run. After running
+and the source code of <micro-lc></micro-lc> will be located at `packages/orchestrator/dist`. 
+
+Locally a playground is available but requires Docker and Docker Compose to run. After running:
 
 ```shell
 yarn playground
@@ -180,5 +185,5 @@ the playground will be available on [http://localhost/](http://localhost).
 
 ## Playground
 
-An online playground is <a href="/playground/" target="_blank">available</a> on this documentation website.
-Refer to our guides to try <micro-lc></micro-lc> out on the playground setup.
+An online playground is <a href="/playground/" target="_blank">available</a> on this documentation website. Refer to our
+guides to try <micro-lc></micro-lc> out on the playground setup.
