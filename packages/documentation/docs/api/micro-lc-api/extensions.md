@@ -72,7 +72,7 @@ interface CSSConfig {
 }
 ```
 
-<!-- Wait for docs/guides/style to be completed -->
+<!-- TODO: Wait for docs/guides/style to be completed -->
 
 ### `head.setIcon`
 

@@ -2,43 +2,21 @@
   "$schema": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json",
   "version": 2,
   "settings": {
-    "defaultUrl": "./orders",
+    "defaultUrl": "./",
     "composerUri": "http://localhost:8000/packages/composer/dist/composer.production.js"
   },
   "layout": {
     "sources": "https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js",
     "content": [
       {
-        "tag": "mlc-antd-theme-manager",
-        "properties": {
-          "nodes": {
-            "#layout-container": {
-              "height": "100%",
-              "width": "100%",
-              "display": "grid",
-              "grid-template-rows": "1fr min-content"
-            },
-            "#manager-container": {
-              "border": "1px solid lightgray",
-              "width":"calc(100% - 16px - 24px)",
-              "margin": "8px",
-              "padding": "12px",
-              "display": "grid",
-              "grid-template-columns": "1fr 1fr 1fr",
-              "grid-template-rows": "min-content min-content",
-              "row-gap": "8px",
-              "column-gap": "16px"
-            },
-            ".input-container": {
-              "height": "fit-content",
-              "display": "flex",
-              "align-items": "center"
-            },
-            ".input-container label": {
-              "margin-left": "8px"
-            }
-          }
+        "tag": "link",
+        "attributes": {
+          "rel": "stylesheet",
+          "href": "./style.css"
         }
+      },
+      {
+        "tag": "mlc-antd-theme-manager"
       },
       {
         "tag": "div",
@@ -78,146 +56,8 @@
               {
                 "tag": "div",
                 "attributes": {
-                  "class": "input-container"
-                },
-                "content": [
-                  {
-                    "tag": "input",
-                    "attributes": {
-                      "type": "color",
-                      "id": "primary-color",
-                      "name": "primary-color",
-                      "value": "#1890FF"
-                    }
-                  },
-                  {
-                    "tag": "label",
-                    "attributes": {
-                      "for": "primary-color"
-                    },
-                    "content": "primary-color"
-                  }
-                ]
-              },
-              {
-                "tag": "div",
-                "attributes": {
-                  "class": "input-container"
-                },
-                "content": [
-                  {
-                    "tag": "input",
-                    "attributes": {
-                      "type": "color",
-                      "id": "info-color",
-                      "name": "info-color",
-                      "value": "#1890FF"
-                    }
-                  },
-                  {
-                    "tag": "label",
-                    "attributes": {
-                      "for": "info-color"
-                    },
-                    "content": "info-color"
-                  }
-                ]
-              },
-              {
-                "tag": "div",
-                "attributes": {
-                  "class": "input-container"
-                },
-                "content": [
-                  {
-                    "tag": "input",
-                    "attributes": {
-                      "type": "color",
-                      "id": "success-color",
-                      "name": "success-color",
-                      "value": "#52C41A"
-                    }
-                  },
-                  {
-                    "tag": "label",
-                    "attributes": {
-                      "for": "success-color"
-                    },
-                    "content": "success-color"
-                  }
-                ]
-              },
-              {
-                "tag": "div",
-                "attributes": {
-                  "class": "input-container"
-                },
-                "content": [
-                  {
-                    "tag": "input",
-                    "attributes": {
-                      "type": "color",
-                      "id": "processing-color",
-                      "name": "processing-color",
-                      "value": "#1890FF"
-                    }
-                  },
-                  {
-                    "tag": "label",
-                    "attributes": {
-                      "for": "processing-color"
-                    },
-                    "content": "processing-color"
-                  }
-                ]
-              },
-              {
-                "tag": "div",
-                "attributes": {
-                  "class": "input-container"
-                },
-                "content": [
-                  {
-                    "tag": "input",
-                    "attributes": {
-                      "type": "color",
-                      "id": "error-color",
-                      "name": "error-color",
-                      "value": "#FF4D4"
-                    }
-                  },
-                  {
-                    "tag": "label",
-                    "attributes": {
-                      "for": "error-color"
-                    },
-                    "content": "error-color"
-                  }
-                ]
-              },
-              {
-                "tag": "div",
-                "attributes": {
-                  "class": "input-container"
-                },
-                "content": [
-                  {
-                    "tag": "input",
-                    "attributes": {
-                      "type": "color",
-                      "id": "warning-color",
-                      "name": "warning-color",
-                      "value": "#FAAD14"
-                    }
-                  },
-                  {
-                    "tag": "label",
-                    "attributes": {
-                      "for": "warning-color"
-                    },
-                    "content": "warning-color"
-                  }
-                ]
+                  "id": "color-inputs-container"
+                }
               }
             ]
           }
@@ -226,9 +66,9 @@
     ]
   },
   "applications": {
-    "orders": {
+    "home": {
       "integrationMode": "compose",
-      "route": "./orders",
+      "route": "./",
       "config": {
         "content": [
           {

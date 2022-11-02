@@ -10,7 +10,7 @@ Web component to display a loading animation until one of its children has finis
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-loading-animation/overview"
+  base="/frames/components/mlc-loading-animation"
   height="550px"
   showSource={false}
   src={"/"}
@@ -31,14 +31,17 @@ lifecycle has ended upon connection and first render.
 
 ## Usage
 
+The component can be sourced from 
+[jsDelivr CDN](https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-loading-animation.js).
+
 To use the component in <micro-lc></micro-lc> wrap the `micro-lc` element tag in the HTML definition.
 
 ```html title=index.html
 <!doctype html>
 <html lang="en">
 <head>
-  <script async type="module" src="TODO"></script>
-  <script async type="module" src="TODO"></script>
+  <script async type="module" src="https://cdn.jsdelivr.net/npm/@micro-lc/orchestrator@latest/dist/micro-lc.production.js"></script>
+  <script async type="module" src="https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-loading-animation.js"></script>
 </head>
 <body>
   <mlc-loading-animation primary-color="#25b864">
@@ -52,4 +55,3 @@ To use the component in <micro-lc></micro-lc> wrap the `micro-lc` element tag in
 |    Property    |    Attribute    |   Type   | Description                                                                                                   |
 |:--------------:|:---------------:|:--------:|---------------------------------------------------------------------------------------------------------------|
 | `primaryColor` | `primary-color` | `string` | Color of the animation. It can be Hex, 8-digit Hex, RGB, RGBA HSL, HSLA, HSV, HSVA, or CSS color name string. |
-
