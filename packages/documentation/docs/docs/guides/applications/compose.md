@@ -5,12 +5,13 @@ sidebar_label: Compose
 sidebar_position: 20
 ---
 
-:::caution
-This section is work in progress.
-:::
+```mdx-code-block
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+```
 
-A [composable](../../concepts/composition) application is a pseudo-HTML document enhanced with JavaScript properties
-dynamically injected by the [composer application](../../../api/composer-api). 
+A [composable](../../concepts/composition.md) application is a pseudo-HTML document enhanced with JavaScript properties
+dynamically injected by the [composer application](../../../api/composer-api.md). 
 
 The resulting DOM tree is constructed on the basis of a specific configuration, which can be directly provided, or sourced
 from an external JSON or YAML file.
@@ -24,21 +25,18 @@ interface ComposableApplication {
   integrationMode: "compose"
   config: PluginConfiguration | string // See explanation below
   route: string // Path on which the composable application will be rendered
-  version?: 1 | 2 // ???
 }
 ```
 
-The application configuration has to be supplied with the `config` key, which may directly be or a full
+The application configuration has to be supplied with the `config` key, which may be either a full
 [configuration object](#plugin-configuration) or a URL string from which a configuration with the same structure can
 be downloaded.
-
-> Example frame with two different applications (one with string and one with configuration)
 
 ## Plugin configuration
 
 The configuration of a composable application is the blueprint used by <micro-lc></micro-lc> composer (being it the
-default one or a [custom implementation](../../../api/micro-lc#composeruri)) to dynamically construct the page at
-runtime.
+default one or a [custom implementation](../../../api/micro-lc-web-component.md#composeruri)) to dynamically construct
+the page at runtime.
 
 ```typescript
 interface PluginConfiguration {
@@ -64,7 +62,7 @@ The actual page structure is provided in `content` key, and building blocks are 
 In the letter case, sources have to be provided for custom components, and one can do so with the `sources` key.
 
 By polymorphism, `sources` can be a string or an array of strings if just JavaScript asset entries have to be provided.
-If an [importmap](../reuse-third-party-libraries) is needed, `sources` can become an object housing JavaScript asset
+If an [importmap](../reuse-third-party-libraries.md) is needed, `sources` can become an object housing JavaScript asset
 entry URIs (key `uris`) and importmap definition (key `importmap`).
 
 ```yaml title="micro-lc.conf.yaml"
@@ -95,7 +93,7 @@ applications:
 ## Content definition
 
 A composable application content is a representation of a pseudo-DOM tree written in a markup language (namely JSON
-or YAML) that undergoes a [series of processes](../../concepts/composition) to be transformed into a valid, appendable
+or YAML) that undergoes a [series of processes](../../concepts/composition.md) to be transformed into a valid, appendable
 DOM.
 
 ```typescript
@@ -109,10 +107,11 @@ one. It may be:
   ```yaml
   content: "A string is a valid HTML element!"
   ```
-* a [stringified DOM tree](#stringified-dom-tree)
+* a stringified DOM tree#stringified-dom-tree, particularly powerful when used in YAML files, since it can benefit
+from [YAML block scalars](https://yaml-multiline.info/) to greatly enhance readability
   ```yaml
   content: |
-    <div .classname=${"my-class"} .microlcApi=${microlcApi} .eventBus=${{ "mainDataBus": "eventBus.pool.mainDataBus" }}>
+    <div .classname=${"my-class"} .microlcApi=${microlcApi}>
       <p style="color: red;">
         This is written as a single string
       </p>
@@ -125,10 +124,7 @@ one. It may be:
     attributes:
       style: "color: red;"
     properties:
-      classname: "dynamic-class"
-      microlcApi: microlcApi
-      eventBus:
-        mainDataBus: eventBus.pool.mainDataBus
+      classname: my-class
     content: This structure is transformed into a valid HTML element
   ```
 * a list of the above
@@ -138,27 +134,6 @@ one. It may be:
     - 12
     - tag: div
   ```
-
-### Stringified DOM tree
-
-:::tip
-This way of writing content is particularly powerful when used in YAML files, since it can benefit from
-[YAML block scalars](https://yaml-multiline.info/) to greatly enhance readability.
-:::
-
-Instead of recurring to the ["objective" representation](#component-representation) of components, DOM nodes can also
-be expressed in a single string using an HTML-like syntax in which properties are represented with a **dotted
-notation** (i.e., `.property_name=property_value).
-
-```yaml
-content: |
-  <div
-    style="color: red;"
-    .
-  >
-    Hello World!
-  </div>
-```
 
 ## Component representation
 
@@ -188,125 +163,302 @@ The type is recursive as `content` is a [content definition](#content-definition
 `Component`.
 
 ```yaml
-tag: button
-attributes:
-  style: "color: red;"
-booleanAttributes: disabled
-content: Click me!
+content:
+  tag: button
+  attributes:
+    style: "color: red;"
+  booleanAttributes: disabled
+  content: Click me!
 
 # Output: <button disabled style="color: red;">Click me!</button>
 
 ---
 
-tag: my-custom-component
-attributes:
-  class: my-class
-  my-numeric-attribute: 2
-properties:
-  myCustomProperty: some-value
 content:
-  tag: span
-  content: Hello World!
+  tag: my-component
+  attributes:
+    class: my-class
+    my-numeric-attribute: 2
+  properties:
+    myCustomProperty: some-value
+  content:
+    tag: span
+    content: Hello World!
 
 # Output: 👇
-#   <my-custom-component class="my-class" my-numeric-attribute="2">
+#   <my-component class="my-class" my-numeric-attribute="2">
 #     <span>Hello World!</span>
-#   </my-custom-component>
+#   </my-component>
 #
-#   document.querySelector("my-custom-component").myCustomProperty 👉 "some-value"
+#   document.querySelector("my-component").myCustomProperty 👉 "some-value"
 ```
 
-## Interpolated properties
+## Properties injection
 
-<micro-lc></micro-lc> composer injects a series of properties into each DOM node it creates. 
+When composing a content, the constructed nodes can receive two types of properties: 
+- user-supplied properties **explicitly declared** in configuration, and
+- a set of **special properties** interpolated and injected directly by <micro-lc></micro-lc> composer.
 
-These properties are automatically available in web components, you just need to declare them and access them through
-the component context (i.e., `this`). For example:
+### User-supplied properties
 
-```typescript title="my-awesome-web-component.ts"
-import type { MicrolcApi } from '@micro-lc/orchestrator'
+User-supplied properties can be declared using the `properties` property of
+[component interface](#component-representation), or through a special _dotted notation_ 
+(`.property_name=${property_value}`) if relying on the stringified DOM tree representation. Either case, any 
+**valid JSON value** is acceptable as property and injected into components context as is.
 
-class MyAwesomeWebComponent extends HTMLElement {
-  // highlight-next-line
-  microlcApi?: MicrolcApi
+```mdx-code-block 
+<Tabs>
+<TabItem value="0" label="Objective representation" default>
+```
+```yaml
+content:
+  tag: my-component
+  properties:
+    stringProp: foo
+    numberProp: 3
+    arrayProp:
+      - foo
+      - bar
+    objectProp:
+      foo: bar
 
-  connectedCallback () {
-    // highlight-next-line
-    this.microlcApi?.goTo('/')
-  }
-}
+# myComponent.stringProp 👉 Output: "foo"
+# myComponent.numberProp 👉 Output: 3
+# myComponent.arrayProp  👉 Output: ["foo", "bar"]
+# myComponent.objectProp 👉 Output: {foo: "bar"}
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="Stringified representation">
+```
+```yaml
+layout:
+  content: |
+    <div
+      .stringProp=${"foo"}
+      .numberProp=${4}
+      .arrayProp=${["foo", "bar"]}
+      .objectProp=${{"foo": "bar"}}
+    ></div>
 
-customElements.define('my-awesome-web-component', MyAwesomeWebComponent)
+# myComponent.stringProp 👉 Output: "foo"
+# myComponent.numberProp 👉 Output: 3
+# myComponent.arrayProp  👉 Output: ["foo", "bar"]
+# myComponent.objectProp 👉 Output: {foo: "bar"}
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
-```typescript
-{
-  this.eventBus.banana
-}
+### Interpolated properties
+
+<micro-lc></micro-lc> injects a series of special properties into each DOM node it creates. These properties are
+automatically interpolated, and therefore they need to be marked by **reserved keywords** for <micro-lc></micro-lc> to
+recognize them and assign them the correct value (always in a secure manner without `eval` or similar structures).
+
+When using _object component representation_, interpolated properties **do not need to be explicitly declared**. However,
+if they are, the key used must match the reserved one, and the value must be equal to the key. On the other hand, when
+using _stringified DOM tree representation_, properties you want to be injected need to be **explicitly declared** with
+the correct key and value.
+
+For example, let's consider the special property `microlcApi` and different scenarios.
+
+```mdx-code-block 
+<Tabs>
+<TabItem value="0" label="Objective representation" default>
+```
+```yaml
+content:
+  tag: my-component
+
+# myComponent.microlcApi is defined and correctly set
+
+---
+
+content:
+  tag: my-component
+  properties:
+    stringProp: foo
+
+# myComponent.microlcApi is defined and correctly set
+
+---
+
+content:
+  tag: my-component
+  properties:
+    microlcApi: microlcApi
+    
+# myComponent.microlcApi is defined and correctly set
+
+---
+
+content:
+  tag: my-component
+  properties:
+    microlcApi: foo
+
+# myComponent.microlcApi is undefined
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="Stringified representation">
+```
+```yaml
+layout:
+  content: |
+    <my-component></my-component>
+
+# myComponent.microlcApi is undefined
+
+---
+
+layout:
+  content: |
+    <my-component .microlcApi=${microlcApi}></my-component>
+
+# myComponent.microlcApi is defined and correctly set
+
+---
+
+layout:
+  content: |
+    <my-component .microlcApi=${foo}></my-component>
+
+# myComponent.microlcApi is undefined
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
-Even if this behavior is automatic, it can be customized varying the way properties are defined in
-[component representations](#component-representation).
+The special properties injected by <micro-lc></micro-lc> are the following.
 
 #### `microlcApi`
 
-#### `composerApi`
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+* Type: `Object`
 
-Composer mette a disposizione una serie di prop interpolate:
-- microlcApi
-- composerApi
-- eventBus
-- currentUser --> observable preso dal canale pub/sub della API --> deprecated!
-- shared props spread --> deprecated, verranno inserite in base dell'API
-
-### Usage
-
-Queste possono essere dichiarate in configurationze dei vai componenti (devono esserlo nel caso di htmlx)
-
-```yaml
-content:
-  - tag: my-custom-component --> trovi microlcApi
-  
-  - tag: my-custom-component --> trovi microlcApi
-    properties:
-
-  - tag: my-custom-component --> trovi microlcApi
-    properties:
-      microlcApi: microlcApi
-
-  - tag: my-custom-component --> trovi microlc e microlcApi
-    properties:
-      microlc: microlcApi 
-
-  - tag: my-custom-component --> trovi microlcApi con valore pippo
-    properties:
-      microlcApi: pippo
+Common [API](../../../api/micro-lc-api) offered by <micro-lc></micro-lc> as 
+[mean of communication](../../concepts/communication.md#micro-lc-api).
+```mdx-code-block
+</div>
 ```
 
-- Se non le metti, ti vengono comunque iniettate
-- Se le metti a loro stesse, ti vengono comunque iniettate
+#### `composerApi`
 
-### Event bus
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+* Type: `Object`
 
-E' un replay subject
+Common [API](../../../api/composer-api.md) offered by <micro-lc></micro-lc> composer to achieve 
+[composition](../../concepts/composition.md).
+```mdx-code-block
+</div>
+```
 
-Non ce l'ha il layout
+#### `eventBus`
 
-```yaml
-  - tag: my-custom-component --> trovi eventBus di default
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+:::caution
+Composed [layouts](../layout.md#build-a-layout) and [mount points](../layout.md#mount-point) **do not have access** to
+this property.
+:::
+
+* Type
+  ```typescript
+  interface EventBus<T = unknown> extends rxjs.ReplaySubject<T> {
+    [index: number]: rxjs.ReplaySubject<T>
+    pool: Record<string, rxjs.ReplaySubject<T>>
+  }
+  ```
+
+[RxJS ReplaySubject](https://rxjs.dev/api/index/class/ReplaySubject) useful to establish a reactive communication
+between components of the same application.
+
+The property gives component the ability to spawn multiple ReplaySubjects, allowing multichannel communication.
+`eventBus` itself is a ReplaySubject, but calling `eventBus[0]` or `eventBus.pool.foo` will create two other – 
+completely different – ReplaySubject entities.
+
+```yaml title=micro-lc.config.yaml
+content:
+  tag: my-component
   
-  - tag: my-custom-component --> trovi eventBus di default
-    properties:
+# myComponent.eventBus !== myComponent.eventBus[0] !== myComponent.eventBus.pool.foo
+```
+```mdx-code-block
+</div>
+```
 
-  - tag: my-custom-component --> trovi eventBus di default
-    properties:
-      eventBus: eventBus
+#### `currentUser`
 
-  - tag: my-custom-component --> trovi un altro eventBus
-    properties:
-      eventBus: eventBus.[0]
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+:::danger Deprecation notice
+This property will be removed in future versions. Use <micro-lc></micro-lc> API 
+[subscribe method](../../../api/micro-lc-api/reactive-communication.md#subscribe) instead.
+:::
 
-  - tag: my-custom-component --> trovi un altro eventBus
-    properties:
-      eventBus: eventBus.pool.foo
+* Type: `rxjs.Observable`
+
+[RxJS Observable](https://rxjs.dev/guide/observable) taken from <micro-lc></micro-lc> API
+[Pub/Sub channel](../../../api/micro-lc-api/reactive-communication.md#subscribe) containing information on the current
+application user.
+```mdx-code-block
+</div>
+```
+
+#### Shared properties
+
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+Content of `properties` key of configuration key [`shared`](../../../api/micro-lc-web-component.md#shared). `properties`
+key is spread and each of its property is injected independently.
+
+Example:
+
+```mdx-code-block 
+<Tabs>
+<TabItem value="0" label="Objective representation" default>
+```
+```yaml
+shared:
+  properties:
+    foo: bar
+
+layout:
+  content:
+    tag: my-component
+
+# myComponent.foo 👉 Output: "bar"
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="Stringified representation">
+```
+```yaml
+shared:
+  properties:
+    foo: bar
+
+layout:
+  content: |
+    <div id="my-div" .foo=${foo}></div>
+
+# myComponent.foo 👉 Output: "bar"
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+```mdx-code-block
+</div>
 ```

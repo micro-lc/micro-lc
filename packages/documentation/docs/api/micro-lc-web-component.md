@@ -10,10 +10,6 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 ```
 
-:::caution
-This section is work in progress.
-:::
-
 ## Web component
 
 <micro-lc></micro-lc> in itself is a web component, registered with tag `micro-lc`. It can be
@@ -45,7 +41,7 @@ This section is work in progress.
 <TabItem value="1" label="npm package">
 ```
 ```typescript title="App.tsx"
-import React from 'react';
+import React from 'react'
 
 // highlight-next-line
 import MicroLc from '@micro-lc/orchestrator'
@@ -58,7 +54,7 @@ function App() {
 // highlight-next-line
 customElements.define('micro-lc', MicroLc)
 
-export default App;
+export default App
 ```
 ```mdx-code-block
 </TabItem>
@@ -270,14 +266,44 @@ settings:
 
 #### `mountPoint`
 
-* Type: `Array | Object | number | string`
+* Type: `Object`
 * Optional
 
-???
+Custom application [mount point](../docs/guides/layout.md#mount-point) configuration.
 
 Example:
 
-???
+```mdx-code-block 
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
+```
+```yaml title="micro-lc.config.yaml"
+settings:
+  mountPoint:
+    tag: div
+    attributes:
+      id: custom-mount-point
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="JSON">
+```
+```json title="micro-lc.config.json"
+{
+  "settings": {
+    "mountPoint": {
+      "tag": "div",
+      "attributes": {
+        "id": "custom-mount-point"
+      }
+    }
+  }
+}
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
 
 #### `mountPointSelector`
 
@@ -288,7 +314,29 @@ Query selector to plugins mounting DOM element.
 
 Example:
 
-???
+```mdx-code-block 
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
+```
+```yaml title="micro-lc.config.yaml"
+settings:
+  mountPointSelector: "#custom-mount-point"
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="JSON">
+```
+```json title="micro-lc.config.json"
+{
+  "settings": {
+    "mountPointSelector": "#custom-mount-point"
+  }
+}
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
 
 #### `defaultUrl`
 

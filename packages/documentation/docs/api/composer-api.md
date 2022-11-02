@@ -5,18 +5,18 @@ sidebar_label: Composer API
 sidebar_position: 30
 ---
 
-Any HTML element mounted in <micro-lc></micro-lc> via [layout](../docs/guides/layout.md), [mount point](../docs/guides/layout.md#mount-point)
-or any [composable application](../docs/guides/applications/compose.md) is provided with the property `composerApi`. Each element can though
-[specialize this variable or override it](../docs/concepts/composition.md).
+Any HTML element mounted in <micro-lc></micro-lc> via [layout](../docs/guides/layout.md) or
+[mount point](../docs/guides/layout.md#mount-point), or any 
+[composable application](../docs/guides/applications/compose.md) is provided with the property `composerApi`, which
+provides the same dynamic capability for [mounting HTML subtrees](../docs/concepts/composition.md) <micro-lc></micro-lc>
+itself uses under the hood.
 
-The `Composer API` provides the same dynamic capability for mounting HTML subtrees which <micro-lc></micro-lc> uses under the hood.
+The composer API is an object with two methods:
+- `premount` which flattens polymorphic configurations and injects import maps, and
+- `createComposerContext` which builds an appender that can be called by assigning a root HTML DOM appending the
+dynamically configured HTML DOM as subtree of the root.
 
-The `Composer API` is an object with two methods:
-
-- `premount` which flattens polymorphic configurations and injects import maps
-- `createComposerContext` builds an appender that can be called by assigning a root HTML DOM appending the dynamically configured HTML DOM as subtree of the root
-
-## `premount`
+### `premount`
 
 ```typescript
 interface ComposerApi {
@@ -25,8 +25,9 @@ interface ComposerApi {
 }
 ```
 
-`premount` allows to reduce the [`PluginConfiguration` type](localhost:3000/docs/guides/applications/compose#plugin-configuration) to
-the following `ResolvedConfig` type
+`premount` allows to reduce the 
+[`PluginConfiguration` type](localhost:3000/docs/guides/applications/compose#plugin-configuration) to the following
+`ResolvedConfig` type
 
 ```typescript
 interface ResolvedConfig {
@@ -38,10 +39,10 @@ interface ResolvedConfig {
 }
 ```
 
-After been called, `premount` ensures all import maps declared are available and `uris` souces have been fetched and
+After being called, `premount` ensures all import maps declared are available and `uris` sources have been fetched and
 their code run. If there is no `sources` in the `PluginConfiguration`, `premount` is a no-operation.
 
-## `createComposerContext`
+### `createComposerContext`
 
 ```typescript
 interface ComposerApi {

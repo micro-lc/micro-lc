@@ -59,6 +59,7 @@ const themeConfig = {
       },
       {
         label: 'Playground v2',
+        target: '_blank',
         to: '/playground',
       },
       {

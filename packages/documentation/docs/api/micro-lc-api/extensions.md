@@ -209,7 +209,7 @@ export type BaseExtension = Record<string, unknown> & {
 
 :::caution
 Be aware that, given the static nature of <micro-lc></micro-lc> APi extensions, `language.setLanguage` can be used
-to dynamically change language but it will trigger a full <micro-lc></micro-lc> config reload and update. This feature
+to dynamically change language, but it will trigger a full <micro-lc></micro-lc> config reload and update. This feature
 is required to properly re-negotiate a translated configuration file.
 
 Refer to [reactive communication section](reactive-communication) for event-driven alternatives, but keep in mind
