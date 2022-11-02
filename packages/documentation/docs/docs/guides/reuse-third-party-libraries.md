@@ -171,7 +171,7 @@ importmap:
 On the contrary, if you want to narrow their scope, you need to use key 
 [`sources.importmap`](./applications/compose.md#plugin-configuration) when defining the configuration of a 
 [layout](./layout.md), a [composable application](./applications/compose.md) or a
-[custom composable error page](./applications/error-page.md#custom-error-pages).
+[custom composable error page](./applications/error-pages.md#custom-error-pages).
 
 ```mdx-code-block 
 <details>
