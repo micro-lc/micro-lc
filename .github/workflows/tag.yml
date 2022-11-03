@@ -43,8 +43,7 @@ jobs:
 
   release-docker:
     needs:
-      - tests
-      - checks
+      - prepare
 
     name: Build web-server docker container
     runs-on: ubuntu-latest
@@ -93,8 +92,7 @@ jobs:
 
   release-package:
     needs:
-      - tests
-      - checks
+      - prepare
 
     name: Release package on npm
     runs-on: ubuntu-latest
