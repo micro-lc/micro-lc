@@ -10,8 +10,6 @@ import dynamicImport from 'vite-plugin-dynamic-import'
 
 import settings from '../../settings.json'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-/** @ts-expect-error */
 export default defineConfig(({ mode }) => ({
   base: './',
   build: {

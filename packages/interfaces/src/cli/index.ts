@@ -15,15 +15,13 @@
 */
 import { readFile } from 'fs/promises'
 
-import packageJson from '../../package.json'
-
 import { intake } from './intake'
 import { parseArgs, exit, resolveFiles, error } from './utils'
 
 export { intake, resolveFiles }
 
 async function run() {
-  const { files, to = 'v2', from = 'v1', mode = 'config' } = parseArgs(packageJson.version)
+  const { files, to = 'v2', from = 'v1', mode = 'config' } = parseArgs('0.3.0')
 
   const paths = resolveFiles(files)
 

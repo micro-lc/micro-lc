@@ -1,6 +1,6 @@
 import { expect } from '@open-wc/testing'
 
-import { removeRouter, reroute } from '../../../src/web-component/lib/router'
+import { removeRouter, reroute } from '../../src/web-component/lib/router'
 
 import { createRouter, templateHTML } from './interface'
 

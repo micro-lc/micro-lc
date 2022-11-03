@@ -44,7 +44,7 @@ describe('iconic react tests', () => {
       selector: 'AccountBookFilled',
     })
 
-    await waitUntil(() => container.querySelectorAll('svg').length >= 1)
+    await waitUntil(() => container.querySelectorAll('svg').length >= 1, 'should find an SVG element', { timeout: 10000 })
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')
 

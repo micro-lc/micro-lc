@@ -1,9 +1,9 @@
 import type { Entry, LoadableApp } from 'qiankun'
 
-import type { MicrolcDefaultConfig, ComposableApplicationProperties } from '../../../src'
-import { createQiankunInstance } from '../../../src'
-import type { RouterContainer } from '../../../src/web-component/lib/router'
-import { MatchCache } from '../../../src/web-component/lib/router'
+import type { MicrolcDefaultConfig, ComposableApplicationProperties } from '../../src'
+import { createQiankunInstance } from '../../src'
+import type { RouterContainer } from '../../src/web-component/lib/router'
+import { MatchCache } from '../../src/web-component/lib/router'
 
 export class Router implements RouterContainer {
   applicationMapping = new Map<string, string>()
@@ -115,7 +115,7 @@ export function createRouter(
         mountPoint: '',
         mountPointSelector: '__MICRO_LC_MOUNT_POINT',
       },
-      shared: {},
+      shared: { properties: {} },
       version: 2,
     },
   })
