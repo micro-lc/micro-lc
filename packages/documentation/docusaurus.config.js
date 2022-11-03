@@ -86,10 +86,12 @@ const config = {
   favicon: 'img/favicon.png',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  organizationName: 'micro-lc',
   plugins: [
     ['@docusaurus/plugin-content-docs', pluginContentDocsConfig],
     '@docusaurus/plugin-content-pages',
   ],
+  projectName: 'micro-lc',
   tagline: 'micro-lc project documentation',
   themeConfig,
   themes: [['@docusaurus/theme-classic', themeClassicConfig]],
