@@ -1,4 +1,4 @@
-$schema: https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json
+$schema: https://unpkg.com/@micro-lc/interfaces@latest/schemas/v2/config.schema.json
 version: 2
 
 layout:
@@ -17,7 +17,7 @@ layout:
 applications:
   home:
     integrationMode: compose
-    route: "/"
+    route: "./"
     config:
       content:
         - tag: div

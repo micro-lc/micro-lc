@@ -17,7 +17,7 @@ It only works on components using [Ant Design Dynamic Theme](https://ant.design/
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-antd-theme-manager"
+  base="../../frames/components/mlc-antd-theme-manager"
   height="550px"
   showSource={false}
   src="/"
@@ -87,7 +87,7 @@ layout:
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-antd-theme-manager/multiple-prefixes"
+  base="../../frames/components/mlc-antd-theme-manager/multiple-prefixes"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },

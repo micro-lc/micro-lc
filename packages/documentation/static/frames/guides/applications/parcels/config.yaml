@@ -8,7 +8,7 @@ layout:
       properties:
         mode: topBar
         logo:
-          url: /img/favicon.png
+          url: ../../../../img/favicon.png
         menuItems:
           - icon:
               library: '@ant-design/icons-svg'
@@ -21,4 +21,4 @@ applications:
   react:
     integrationMode: parcel
     route: ./
-    entry: /applications/react-hash-router/
+    entry: ../../../../applications/react-hash-router/

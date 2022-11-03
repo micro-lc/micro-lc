@@ -13,7 +13,7 @@ export default function playground(): JSX.Element {
       >
         <iframe
           style={{width: 'inherit', height: 'inherit'}}
-          src="/playground/config.html"
+          src="./config.html"
         ></iframe>
       </div>
     </Layout>

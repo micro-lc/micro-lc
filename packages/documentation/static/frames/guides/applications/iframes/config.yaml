@@ -8,7 +8,7 @@ layout:
       properties:
         mode: topBar
         logo:
-          url: /img/favicon.png
+          url: ../../../../img/favicon.png
         menuItems:
           - icon:
               library: '@ant-design/icons-svg'
@@ -20,7 +20,7 @@ layout:
 applications:
   wiki:
     integrationMode: iframe
-    route: /
+    route: ./
     src: https://www.wikipedia.org/
     attributes:
       title: Wikipedia

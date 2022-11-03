@@ -27,7 +27,7 @@ Unauthorized status must be fully managed by your Backend interface.
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/guides/applications/error-pages"
+  base="../../../frames/guides/applications/error-pages"
   height="550px"
   showSource={false}
   src={"/"}

@@ -12,7 +12,7 @@
         "properties": {
           "mode": "topBar",
           "logo": {
-            "url": "/img/favicon.png"
+            "url": "/micro-lc/img/favicon.png"
           },
           "menuItems": [
             {
@@ -43,12 +43,12 @@
       "integrationMode": "parcel",
       "injectBase": true,
       "route": "./browser/",
-      "entry": "/applications/react-browser-router/"
+      "entry": "/micro-lc/applications/react-browser-router/"
     },
     "hash": {
       "integrationMode": "parcel",
       "route": "./hash/",
-      "entry": "/applications/react-hash-router/"
+      "entry": "/micro-lc/applications/react-hash-router/"
     }
   }
 }

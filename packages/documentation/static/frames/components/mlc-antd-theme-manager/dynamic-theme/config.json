@@ -32,7 +32,7 @@
             "properties": {
               "mode": "topBar",
               "logo": {
-                "url": "/img/favicon.png"
+                "url": "../../../../img/favicon.png"
               },
               "menuItems": [
                 {

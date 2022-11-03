@@ -39,7 +39,7 @@ interface IFrameApplication {
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/guides/applications/iframes"
+  base="../../../frames/guides/applications/iframes"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },

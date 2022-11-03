@@ -10,7 +10,7 @@ Web component providing a classic navigation top bar/sidebar layout for <micro-l
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout"
+  base="../../frames/components/mlc-layout"
   height="550px"
   showSource={false}
   src={"/"}
@@ -77,7 +77,7 @@ layout:
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout/showcase-top-bar"
+  base="../../frames/components/mlc-layout/showcase-top-bar"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -93,7 +93,7 @@ layout:
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout/showcase-overlay-sidebar"
+  base="../../frames/components/mlc-layout/showcase-overlay-sidebar"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -109,7 +109,7 @@ layout:
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout/showcase-fixed-sidebar"
+  base="../../frames/components/mlc-layout/showcase-fixed-sidebar"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -125,7 +125,7 @@ layout:
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout/showcase-user-menu"
+  base="../../frames/components/mlc-layout/showcase-user-menu"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -142,7 +142,7 @@ layout:
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout/showcase-help-menu"
+  base="../../frames/components/mlc-layout/showcase-help-menu"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
@@ -158,7 +158,7 @@ layout:
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/components/mlc-layout/showcase-top-bar-slot"
+  base="../../frames/components/mlc-layout/showcase-top-bar-slot"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },

@@ -17,7 +17,7 @@ in two parts, **layout** and **content**, which are technically independent of o
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/concepts/separation-of-concerns"
+  base="../../frames/concepts/separation-of-concerns"
   height="550px"
   showSource={false}
   src={"/"}

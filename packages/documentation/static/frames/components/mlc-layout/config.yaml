@@ -13,7 +13,7 @@ layout:
       properties:
         mode: fixedSideBar
         logo:
-          url: /img/favicon.png
+          url: ../../../img/favicon.png
         menuItems:
           - id: orders
             icon:

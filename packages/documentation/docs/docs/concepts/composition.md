@@ -23,7 +23,7 @@ and content and both are constructed dynamically from a textual configuration.
 ```mdx-code-block
 <></>
 <example-frame
-  base="/frames/concepts/composition"
+  base="../../frames/concepts/composition"
   height="550px"
   sourceTabs={[
     { filePath: "/index.html" },
