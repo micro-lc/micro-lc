@@ -58,7 +58,7 @@ either on your web server response header (e.g. [nginx](https://content-security
 
 <micro-lc></micro-lc> works even without a configuration file, however a 404 error page is all you will see. It's time
 to write our first configuration file. You can choose either JSON or YAML (we suggest YAML for development, and JSON for
-production). A YAML to JSON converter is available in the <a href="../../playground" target="_blank">Playground section</a>.
+production). A YAML to JSON converter is available in the <a href="../playground" target="_blank">Playground section</a>.
 
 ```yaml title="config.yaml"
 # 👇 Configuration writing process gets easier if your file is validated against the schema below
@@ -82,7 +82,7 @@ You can now serve the application with your static server of choice, like
 python -m http.server 8000
 ```
 
-Read the documentation to know more about what <micro-lc></micro-lc> can do, and use the live <a href="../../playground" target="_blank">Playground section</a> 
+Read the documentation to know more about what <micro-lc></micro-lc> can do, and use the live <a href="../playground" target="_blank">Playground section</a> 
 to test your configurations.
 
 ## Deploy Docker container
@@ -185,5 +185,5 @@ the playground will be available on [http://localhost/](http://localhost).
 
 ## Playground
 
-An online playground is <a href="/playground/" target="_blank">available</a> on this documentation website. Refer to our
+An online playground is <a href="../playground/" target="_blank">available</a> on this documentation website. Refer to our
 guides to try <micro-lc></micro-lc> out on the playground setup.

@@ -102,7 +102,7 @@ YAML is clearer and easier to read and write, but bring a computational and bund
 requires an extra step to be compiled back to JSON.
 
 For this reason, we recommend YAML for development and JSON for production. A YAML to JSON converter is available in 
-the <a href="../../playground" target="_blank">Playground section</a>.
+the <a href="../playground" target="_blank">Playground section</a>.
 :::
 
 Practically speaking, <micro-lc></micro-lc> configuration is an object with the following structure (each key is
