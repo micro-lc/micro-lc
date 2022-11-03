@@ -6,10 +6,14 @@ env:
 
 on:
   push:
-    branches: [ main ]
-    tags: '*'
+    branches:
+      - v1/main
+    tags-ignore:
+      - v*
+      - @micro-lc/*
   pull_request:
-    branches: [ main ]
+    branches:
+      - v1/main
 
 jobs:
   test:
