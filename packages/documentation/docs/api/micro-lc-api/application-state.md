@@ -5,6 +5,8 @@ sidebar_label: Application state
 sidebar_position: 10
 ---
 
+<!-- TODO: Insert some examples -->
+
 <micro-lc></micro-lc> API provides a subset of methods and properties to read the current state of the content part
 of the application, and which sub-application is running in it.
 
@@ -33,8 +35,6 @@ If no application is found, it emits `undefined`.
 
 Since <micro-lc></micro-lc> applications are configured as a key-value pair, where the key is the unique identifier of
 the application, currentApplication$` return such id as a string.
-
-<!-- TODO: Insert frame with console-like layout portion which prints micro-lc API calls -->
 
 ## `getCurrentApplication`
 
@@ -74,8 +74,6 @@ running as content.
 
 It can be helpful to update or unmount manually the application.
 
-<!-- TODO: Insert an example -->
-
 ## `getCurrentConfig`
 
 ```typescript
@@ -84,14 +82,10 @@ export interface MicrolcApi {
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
   // ...rest of the API
 }
-
-type CompleteConfig = TODO
 ```
 
 `getCurrentConfig` provides, statically, <micro-lc></micro-lc> complete configuration, where "complete" means the user
 defined configuration merged with default on key not specified while configuring.
-
-<!-- TODO: Insert frame with console-like layout portion which prints micro-lc API calls -->
 
 ## `setCurrentConfig`
 
@@ -106,8 +100,6 @@ export interface MicrolcApi {
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
   // ...rest of the API
 }
-
-type CompleteConfig = TODO
 ```
 
 `setCurrentConfig` provides a handler to replace <micro-lc></micro-lc> configuration at runtime.

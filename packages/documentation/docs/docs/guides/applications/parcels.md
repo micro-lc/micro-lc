@@ -131,7 +131,7 @@ Lifecycle methods are:
 * [`unmount`](#unmount)
 * [`update`](#update)
 
-They all return `Promise<null>`. Update is not mandatory and is available only for [error pages](error-pages#update-lifecycle).
+They all return `Promise<null>`. Update is not mandatory and is available only for [error pages](error-pages.md#lifecycle).
 The others take as argument an object with the following interface.
 
 ```typescript
@@ -151,8 +151,10 @@ interface LifecycleProps {
 }
 ```
 
-* `name` is the application unique identifier as per <micro-lc></micro-lc> configuration at "applications".
-* `container` is the application mount point which is provided by <micro-lc></micro-lc> configuration at "settings.mountPointSelector".
+* `name` is the application unique identifier as per <micro-lc></micro-lc> configuration key 
+[applications](../../../api/micro-lc-web-component.md#applications).
+* `container` is the application mount point which is provided by <micro-lc></micro-lc> configuration key
+[mountPointSelector](../../../api/micro-lc-web-component.md#mountpointselector).
 * `entry` is the application assets object.
 * `props` is an object including application custom properties and <micro-lc></micro-lc> injected properties. See 
 [dedicated section](#properties) for a detailed description.
@@ -188,34 +190,37 @@ subscriptions, etc. that were created at any point when the parcel was mounted.
 
 ```typescript
 function unmount(props: LifecycleProps): Promise<null> {
-  /* This is where you tell a framework (e.g., React) to unrender some ui from the DOM */
+  /* This is where you tell a framework (e.g., React) to un-render some ui from the DOM */
 }
 ```
 
 ### Update
 
-This lifecycle method is only available for [error pages](error-pages#update-lifecycle).
+This lifecycle method is only available for [error pages](error-pages.md#lifecycle).
 
 ## Properties
 
-<micro-lc></micro-lc> injects two default properties which can be extended on a per-application basis via the `properties`
-key on the application configuration.
+<micro-lc></micro-lc> injects two default properties, which can be extended in two ways:
+* on a per-application basis with the `properties` key on the application configuration, and
+* with configuration key [shared](../../../api/micro-lc-web-component.md#shared) for properties common to all applications
+and [composed](./compose.md) DOM nodes (the content of `shared.properties` will be spread on first level).
 
 ### `injectBase`
 
 :::danger
-If your application `index.html` already has a `base` tag, this property **will not** override it. <micro-lc></micro-lc> will consider
-this plugin to have been built with prior knowledge of its configuration and deploy route.
+If your application `index.html` already has a `base` tag, this property **will not** override it. <micro-lc></micro-lc>
+will consider this plugin to have been built with prior knowledge of its configuration and deploy route.
 :::
 
-`injectBase` is a boolean property, defaulting to `false`. 
-
-This property should be set to `true` only on applications that do not have a hash router. On applications without 
-internal routing, this property does not do anything.
+* Type: `boolean`
+* Default: `false`
 
 Instructs <micro-lc></micro-lc> on whether to inject a [base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to
 allow application internal routing to behave as if it was deployed on the bundle selected root, or any root that was
 selected at build time.
+
+This property should be set to `true` only on applications that **do not have a hash router**. On applications without 
+internal routing, this property does not do anything.
 
 :::tip
 For better compatibility, we recommend to choose `./` as build time public URL.
@@ -242,4 +247,4 @@ The correct usage of `injectBase` enables both of them to work correctly (and to
 ### `microlcApi`
 
 <micro-lc></micro-lc> injects some useful utils to each application in order to share state, events, and styles. Read
-[the full reference](../../../api/micro-lc-api) for this property.
+[the full reference](../../../api/micro-lc-api) for a detailed description of this property.

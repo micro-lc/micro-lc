@@ -10,10 +10,6 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 ```
 
-:::caution
-This section is work in progress.
-:::
-
 ## Web component
 
 <micro-lc></micro-lc> in itself is a web component, registered with tag `micro-lc`. It can be
@@ -45,7 +41,7 @@ This section is work in progress.
 <TabItem value="1" label="npm package">
 ```
 ```typescript title="App.tsx"
-import React from 'react';
+import React from 'react'
 
 // highlight-next-line
 import MicroLc from '@micro-lc/orchestrator'
@@ -58,7 +54,7 @@ function App() {
 // highlight-next-line
 customElements.define('micro-lc', MicroLc)
 
-export default App;
+export default App
 ```
 ```mdx-code-block
 </TabItem>
@@ -79,12 +75,12 @@ To reduce the bundle size, _production_ variant lacks all previously mentioned f
 
 ### Properties & attributes
 
-|  Property   |      Attribute       |                          Type                           |                                 Default                                 | Description                                                                 |
-|:-----------:|:--------------------:|:-------------------------------------------------------:|:-----------------------------------------------------------------------:|-----------------------------------------------------------------------------|
-|  `config`   |          -           | <code><a href="#configuration">Configuration</a></code> | <code><a href="#default-configuration">Default configuration</a></code> | <micro-lc></micro-lc> configuration.                                        |
-| `configSrc` |     `config-src`     |                   <code>string</code>                   |                                    -                                    | URL from which configuration can be fetched.                                |
-|      -      | `disable-shadow-dom` |                  <code>boolean</code>                   |                                 `false`                                 | Whether <micro-lc></micro-lc> should be in Shadow DOM.                      |
-|      -      |      `root-id`       |                   <code>string</code>                   |                              `__micro_lc`                               | [Mount point](../docs/guides/layout.md#mount-point) div `id`.               |
+|  Property   |      Attribute       |                          Type                           |                                 Default                                 | Description                                                               |
+|:-----------:|:--------------------:|:-------------------------------------------------------:|:-----------------------------------------------------------------------:|---------------------------------------------------------------------------|
+|  `config`   |          -           | <code><a href="#configuration">Configuration</a></code> | <code><a href="#default-configuration">Default configuration</a></code> | <micro-lc></micro-lc> configuration.                                      |
+| `configSrc` |     `config-src`     |                   <code>string</code>                   |                                    -                                    | URL from which configuration can be fetched.                              |
+|      -      | `disable-shadow-dom` |                  <code>boolean</code>                   |                                 `false`                                 | Whether <micro-lc></micro-lc> should be in Shadow DOM.                    |
+|      -      |      `root-id`       |                   <code>string</code>                   |                              `__micro_lc`                               | [Mount point](../docs/guides/layout.md#mount-point) `<div>` id.           |
 |      -      |  `disable-styling`   |                  <code>boolean</code>                   |                                 `false`                                 | Disable [mount point](../docs/guides/layout.md#mount-point) preset styling. |
 
 :::caution
@@ -98,7 +94,7 @@ Everything concerning the structure of your application – from layout to conte
 imports – is contained in <micro-lc></micro-lc> configuration.
 
 This configuration can be **directly supplied** to <micro-lc></micro-lc> web component through property `config`,
-**programmatically set** with API method [`setcurrentconfig`](./micro-lc-api/application-state#setcurrentconfig), or
+**programmatically set** with API method [`setcurrentconfig`](./micro-lc-api/application-state.md#setcurrentconfig), or
 **sourced** through property `configSrc` (or mirrored attribute `config-src`) in JSON or YAML format.
 
 :::tip
@@ -156,7 +152,7 @@ Global <micro-lc></micro-lc> settings.
 * Type: `Object`
 * Optional
 
-Configuration for [custom error pages](../docs/guides/applications/error-pages#custom-error-pages) linked to **client
+Configuration for [custom error pages](../docs/guides/applications/error-pages.md#custom-error-pages) linked to **client
 errors**.
 
 Example:
@@ -198,7 +194,7 @@ settings:
 * Type: `Object`
 * Optional
 
-Configuration for [custom error pages](../docs/guides/applications/error-pages#custom-error-pages) linked to **server
+Configuration for [custom error pages](../docs/guides/applications/error-pages.md#custom-error-pages) linked to **server
 errors**.
 
 Example:
@@ -270,14 +266,44 @@ settings:
 
 #### `mountPoint`
 
-* Type: `Array | Object | number | string`
+* Type: `Object`
 * Optional
 
-???
+Custom application [mount point](../docs/guides/layout.md#mount-point) configuration.
 
 Example:
 
-???
+```mdx-code-block 
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
+```
+```yaml title="micro-lc.config.yaml"
+settings:
+  mountPoint:
+    tag: div
+    attributes:
+      id: custom-mount-point
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="JSON">
+```
+```json title="micro-lc.config.json"
+{
+  "settings": {
+    "mountPoint": {
+      "tag": "div",
+      "attributes": {
+        "id": "custom-mount-point"
+      }
+    }
+  }
+}
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
 
 #### `mountPointSelector`
 
@@ -288,14 +314,37 @@ Query selector to plugins mounting DOM element.
 
 Example:
 
-???
+```mdx-code-block 
+<Tabs groupId="configuration">
+<TabItem value="0" label="YAML" default>
+```
+```yaml title="micro-lc.config.yaml"
+settings:
+  mountPointSelector: "#custom-mount-point"
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="JSON">
+```
+```json title="micro-lc.config.json"
+{
+  "settings": {
+    "mountPointSelector": "#custom-mount-point"
+  }
+}
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
 
 #### `defaultUrl`
 
 * Type: `string`
 * Default: `./`
 
-Landing URL. If it does not correspond to any configured application, **404 error page** will be rendered.
+Landing URL. If it [does not correspond](../docs/guides/routing.md) to any configured application, **404 error page** 
+will be rendered.
 
 Example:
 
@@ -332,9 +381,9 @@ settings:
   } 
   ```
   
-Properties injected by <micro-lc></micro-lc> into all registered [applications](../docs/guides/applications), 
+Properties injected by <micro-lc></micro-lc> into all registered [parcels](../docs/guides/applications/parcels.md), 
 [custom error pages](../docs/guides/applications/error-pages.md#custom-error-pages), and
-[composed layout](../docs/guides/layout.md).
+[composed DOM elements](../docs/guides/applications/compose.md#interpolated-properties).
 
 Parcel applications and custom error pages of type parcel can access shared properties in
 [lifecycle methods](../docs/guides/applications/parcels.md#properties). Web components of composed applications, error
@@ -373,7 +422,7 @@ shared:
 
 * Type: `Object`
 
-Global [import map](../docs/guides/reuse-third-party-libraries).
+Global [import map](../docs/guides/reuse-third-party-libraries.md).
 
 Example:
 
@@ -424,7 +473,7 @@ importmap:
       tag: slot
   ```
 
-[Application layout](../docs/guides/layout) DOM configuration.
+[Application layout](../docs/guides/layout.md) DOM configuration.
 
 Example:
 

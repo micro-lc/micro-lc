@@ -1,0 +1,31 @@
+{
+  "version": "0.2",
+  "language": "en-GB",
+  "words": [
+    "antd",
+    "vars",
+    "microlc",
+    "RGBA",
+    "Segoe",
+    "Roboto",
+    "Neue",
+    "Noto",
+    "Delivr",
+    "Behavior",
+    "Microlc",
+    "keyof",
+    "lexer",
+    "iframes",
+    "qiankun"
+  ],
+  "dictionaries": [
+    "softwareTerms",
+    "companies",
+    "misc"
+  ],
+  "flagWords": [],
+  "ignorePaths": [],
+  "allowCompoundWords": true,
+  "ignoreRegExpList": []
+}
+

@@ -380,7 +380,7 @@ After processing, the resulting configuration will be:
 
 ### ACL
 
-Both configuration structures support ACL using the [`aclExpression`](core_configuration.mdclexpression) property previously discussed.
+Both configuration structures support ACL using the [`aclExpression`](core_configuration.md#aclexpression) property previously discussed.
 
 For example, given this plain configuration:
 

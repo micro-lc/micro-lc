@@ -11,8 +11,8 @@ import TabItem from '@theme/TabItem'
 ```
 
 :::caution Disclaimer
-For the time being, this feature is applicable **only to web components** (i.e., [layout](./layout) and application of
-type [compose](./applications/compose)). In the future it will be extended also to [parcels](./applications/compose).
+For the time being, this feature is applicable **only to web components** (i.e., [layout](./layout.md) and application of
+type [compose](./applications/compose.md)). In the future it will be extended also to [parcels](./applications/compose.md).
 :::
 
 Encapsulation and complete separation among components/applications may lead to bundle same third-party dependencies
@@ -76,7 +76,7 @@ customElements.define('my-other-awesome-web-component', MyAwesomeWebComponent)
 </TabItem>
 <TabItem value="micro-lc" label="micro-lc config">
 ```
-```yaml title=micro-lc.config.yml
+```yaml title=micro-lc.config.yaml
 applications:
   home:
     integrationMode: compose
@@ -124,7 +124,7 @@ To learn more about the topic, visit [ES Module Shims repository](https://github
 Import maps can be declared in different sections of <micro-lc></micro-lc> configuration depending on their scope.
 
 If you want them to be accessible by the whole application (i.e., both layout and all mounted micro-frontends), you can
-use top-level [`importmap` configuration key](../../api/micro-lc#importmap).
+use top-level [`importmap` configuration key](../../api/micro-lc-web-component.md#importmap).
 
 ```mdx-code-block 
 <details>
@@ -168,10 +168,10 @@ importmap:
 </details>
 ```
 
-On the contrary, if you want to narrow their scope, you need to use the 
-[`sources.importmap` key](./applications/compose#plugin-configuration) when defining the
-configuration of a [layout](./layout), a [composable application](./applications/compose) or a
-[custom composable error page](./applications/error-pages#custom-error-pages).
+On the contrary, if you want to narrow their scope, you need to use key 
+[`sources.importmap`](./applications/compose.md#plugin-configuration) when defining the configuration of a 
+[layout](./layout.md), a [composable application](./applications/compose.md) or a
+[custom composable error page](./applications/error-pages.md#custom-error-pages).
 
 ```mdx-code-block 
 <details>

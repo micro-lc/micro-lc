@@ -22,21 +22,23 @@ Web component providing a classic navigation top bar/sidebar layout for <micro-l
 
 :::caution
 This component is intended to be used inside <micro-lc></micro-lc>, since it makes extensive use of 
-[<micro-lc></micro-lc> API](../../api/micro-lc-api).
+<micro-lc></micro-lc> [API](../../api/micro-lc-api).
 
 You **can** use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
 :::
 
-To use the component in <micro-lc></micro-lc>, declare it as part of the application [layout](../../docs/guides/layout.md)
-with its [properties and attributes](#properties-and-attributes).
+The component can be sourced from
+[jsDelivr CDN](https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js).
 
-An unnamed `slot` is already set in the component so that content will be automatically mounted in the right position.
+To use the component in <micro-lc></micro-lc>, declare it as part of the application [layout](../../docs/guides/layout.md)
+with its [properties and attributes](#properties-and-attributes). An unnamed `<slot>` is already set in the component so
+that content will be [automatically mounted](../../docs/guides/layout.md#slotting) in the right position.
 
 ```yaml title=micro-lc.config.yaml
 layout: 
-  sources: https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js,
+  sources: https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js
   content: 
-    tag: mlc-layout,
+    tag: mlc-layout
     properties: # See properties & attributes table below
     attributes: # See properties & attributes table below
     booleanAttributes: # See properties & attributes table below
@@ -51,7 +53,7 @@ dependencies, which are:
 - `react` compatible with version `18.2.0`
 - `react-dom` compatible with version `18.2.0`
 
-```yaml title=micro-lc.config.json
+```yaml title=micro-lc.config.yaml
 layout:
   sources:
     importmap:
@@ -64,7 +66,7 @@ layout:
     uris:
       - https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.min.js
   content:
-    tag: mlc-layout,
+    tag: mlc-layout
     # ...
 ```
 
@@ -201,11 +203,11 @@ Link to specific url.
 
 This type of menu items triggers the navigation to a specific <micro-lc></micro-lc> application, identified by the `id` prop.
 
-| Property |                                 Type                                  |                                  Default                                   | Description                                                                                                               |
-|:--------:|:---------------------------------------------------------------------:|:--------------------------------------------------------------------------:|---------------------------------------------------------------------------------------------------------------------------|
-|  `icon`  |                 <code><a href="#icon">Icon</a></code>                 | [Ant Design](https://ant.design/components/icon/) `DeploymentUnitOutlined` | Icon icon of the menu item                                                                                                |
+| Property |                                 Type                                  |                                  Default                                   | Description                                                                                                                            |
+|:--------:|:---------------------------------------------------------------------:|:--------------------------------------------------------------------------:|----------------------------------------------------------------------------------------------------------------------------------------|
+|  `icon`  |                 <code><a href="#icon">Icon</a></code>                 | [Ant Design](https://ant.design/components/icon/) `DeploymentUnitOutlined` | Icon icon of the menu item                                                                                                             |
 |   `id`   |                          <code>string</code>                          |                                **Required**                                | Unique identifier of the menu item. It **must** match the id of the <micro-lc></micro-lc> application the menu item should navigate to |
-| `label`  | <code>string &#124; <a href="#localizedtext">LocalizedText</a></code> |                             Value of `id` prop                             | Menu label                                                                                                                |
+| `label`  | <code>string &#124; <a href="#localizedtext">LocalizedText</a></code> |                             Value of `id` prop                             | Menu label                                                                                                                             |
 |  `type`  |                             `application`                             |                                **Required**                                | Type of the item: <micro-lc></micro-lc> application                                                                                    |
 
 #### `CategoryMenuItem`
@@ -417,3 +419,14 @@ easier and more organic way.
 | `--micro-lc-error-color-hover`                    |
 | `--micro-lc-error-color-outline`                  |
 | `--micro-lc-font-family`                          |
+
+## micro-lc API
+
+### Reactive state object
+
+The component [inserts](../../api/micro-lc-api/reactive-communication.md#set) the following values in the reactive state
+of <micro-lc></micro-lc> API.
+
+|  Key   |           Type            | Description                                                  |
+|:------:|:-------------------------:|--------------------------------------------------------------|
+| `user` | `Record<string, unknown>` | User data retrieved with call to [`userInfoUrl`](#usermenu). |

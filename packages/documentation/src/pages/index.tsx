@@ -1,21 +1,6 @@
-import Layout from '@theme/Layout'
+import { Redirect } from '@docusaurus/router'
 import React from 'react'
 
 export default function homePage(): JSX.Element {
-  return (
-    <Layout>
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          fontSize: '20px',
-          height: '50vh',
-          justifyContent: 'center',
-        }}>
-        <p>
-          Work in progress!
-        </p>
-      </div>
-    </Layout>
-  )
+  return <Redirect to='/docs' />
 }

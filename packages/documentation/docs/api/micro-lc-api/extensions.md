@@ -17,12 +17,12 @@ key of the new extension and its content.
 
 ```typescript
 // Application 1 ⤵
-microlcApi.setExtension({ getUserName: () => 'Jhon Doe' })
+microlcApi.setExtension({ getUserName: () => 'John Doe' })
 
 // Application 2 ⤵
 const userNameGetter = microlcApi.getExtensions().getUserName
 console.log(userNameGetter())
-// output: "Jhon Doe"
+// output: "John Doe"
 ```
 
 ### `getExtensions`
@@ -72,7 +72,7 @@ interface CSSConfig {
 }
 ```
 
-<!-- Wait for docs/guides/style to be completed -->
+`head.setIcon` can be used to [inject styling](../../docs/guides/style.md) in <micro-lc></micro-lc> applications.
 
 ### `head.setIcon`
 
@@ -89,7 +89,7 @@ export type BaseExtension = Record<string, unknown> & {
 relation.
 
 :::caution
-Be aware that any application with integration mode [parcel](../../docs/guides/applications/parcels) can override this 
+Be aware that any application with integration mode [parcel](../../docs/guides/applications/parcels.md) can override this 
 setting.
 :::
 
@@ -107,7 +107,7 @@ export type BaseExtension = Record<string, unknown> & {
 `head.setTitle` can be used to set a [`title` tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title).
 
 :::caution
-Be aware that any application with integration mode [parcel](../../docs/guides/applications/parcels) can override this
+Be aware that any application with integration mode [parcel](../../docs/guides/applications/parcels.md) can override this
 setting.
 :::
 
@@ -209,9 +209,9 @@ export type BaseExtension = Record<string, unknown> & {
 
 :::caution
 Be aware that, given the static nature of <micro-lc></micro-lc> APi extensions, `language.setLanguage` can be used
-to dynamically change language but it will trigger a full <micro-lc></micro-lc> config reload and update. This feature
+to dynamically change language, but it will trigger a full <micro-lc></micro-lc> config reload and update. This feature
 is required to properly re-negotiate a translated configuration file.
 
-Refer to [reactive communication section](reactive-communication) for event-driven alternatives, but keep in mind
+Refer to [reactive communication section](./reactive-communication.md) for event-driven alternatives, but keep in mind
 that <micro-lc></micro-lc> will use `language` extension to perform any language-related operation. 
 :::

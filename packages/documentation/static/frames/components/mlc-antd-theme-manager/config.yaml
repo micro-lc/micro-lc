@@ -4,6 +4,9 @@ version: 2
 layout:
   sources: https://cdn.jsdelivr.net/npm/@micro-lc/layout@latest/dist/mlc-layout.js
   content:
+    - tag: mlc-antd-theme-manager
+      properties:
+        primaryColor: '#25B864'
     - tag: mlc-layout
       properties:
         mode: topBar
@@ -12,13 +15,19 @@ layout:
         menuItems:
           - icon:
               library: '@ant-design/icons-svg'
-              selector: GlobalOutlined
-            id: react
-            label: React parcel
+              selector: HomeOutlined
+            id: home
+            label: Home
             type: application
 
 applications:
-  react:
-    integrationMode: parcel
+  home:
+    integrationMode: compose
     route: ./
-    entry: /applications/react-hash-router/
+    config:
+      content:
+        tag: div
+        attributes:
+          class: content
+          style: "color: var(--micro-lc-primary-color);"
+        content: var(--micro-lc-primary-color)
