@@ -1,4 +1,4 @@
 {
   "name": "@micro-lc/interfaces/v2",
-  "types": "../dist/types/v2/index.d.ts"
+  "types": "../schemas/v2/index.d.ts"
 }

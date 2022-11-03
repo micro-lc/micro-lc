@@ -9,7 +9,7 @@ import mkdirp from 'mkdirp'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const schemasDirPath = resolve(__dirname, '../schemas')
-const typesDirPath = resolve(__dirname, '../dist/types')
+const typesDirPath = resolve(__dirname, '../schemas')
 
 const eslint = new ESLint({ fix: true })
 

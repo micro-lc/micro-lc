@@ -18,13 +18,28 @@ import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
 import axios from 'axios'
 
-import type { Config as V1 } from '../../dist/types/v1/index'
-import type { Config as V2 } from '../../dist/types/v2/index'
+import type { Config as V1 } from '../../schemas/v1'
+import type { Config as V2 } from '../../schemas/v2'
 
-import type { IntakeOptions, Latest, Version } from './types'
 import { toArray } from './utils'
 
+export type Latest = V2
+
+export type Mode = 'config' | 'compose'
+export type Version = 'v1' | 'v2'
+
+export interface IntakeOptions {
+  from?: Version
+  mode?: Mode
+  to?: Version
+}
+
+export interface Context extends IntakeOptions{
+  console: boolean
+  files: string[]
+}
 export const supportedVersions: Version[] = ['v1', 'v2']
+export const modes: Mode[] = ['config', 'compose']
 
 const client = axios.create({ headers: { 'Cache-Control': 'no-cache', Expires: '0', Pragma: 'no-cache' } })
 
@@ -55,28 +70,31 @@ const setup = (versions: Version[]): Map<Version, Promise<Schema[]>> => {
   }, new Map<Version, Promise<Schema[]>>())
 }
 
-export function one2two(_: V1): V2 {
-  return {
-    $schema: schemaUrls.v2[0],
-    version: 2,
-  }
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+export function one2two(input: V1): V2 {
+  const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    plugins = [],
+  } = input
 }
 
-export async function intake(input: string | Buffer, path: string, opts: IntakeOptions = {}): Promise<V1 | V2 | Latest> {
-  const latest = 'v2'
+export async function intake(input: string | Buffer, _: string, { from, to }: Required<IntakeOptions>): Promise<V1 | V2 | Latest> {
+  const latest: Version = 'v2'
 
-  const { version = 1, ...json } = JSON.parse(input.toString()) as { version?: number }
+  const { version = from, ...json } = JSON.parse(input.toString()) as { version?: number }
   const inputVersion = `v${version}` as Version
 
-  if (!supportedVersions.includes(inputVersion)) { throw new TypeError(`${version} should an integer larger than 0`) }
+  if (!supportedVersions.includes(inputVersion)) {
+    throw new TypeError(`${version} should be one of ${['1', '2'].join(', ')}`)
+  }
 
   if (inputVersion === latest) { return { version, ...json } }
-
-  const to = opts.to ?? latest
   if (inputVersion === to) { return { version, ...json } }
 
   const schemas = setup([inputVersion, to])
-  // SAFETY: versions are certainly available here
+  // SAFETY: versions are certainly available here since schema is
+  // not given away as a reference anywhere else
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const schema = await schemas.get(inputVersion)!
 

@@ -195,7 +195,6 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
       config = typeof app.config === 'string'
         ? app.config
         : { ...app.config }
-      properties = { version: app.version }
       break
     case 'iframe':
       entry = { scripts: [composerUri] }

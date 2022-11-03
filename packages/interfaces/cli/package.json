@@ -1,6 +1,0 @@
-{
-  "name": "@micro-lc/interfaces/cli",
-  "types": "../dist/types/cli/index.d.ts",
-  "main": "../dist/cjs/cli/index.js",
-  "module": "../dist/es/cli/index.js"
-}

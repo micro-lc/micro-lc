@@ -24,8 +24,6 @@ import { BehaviorSubject, ReplaySubject } from 'rxjs'
 
 import type { ComposerApi, ReplaySubjectPool } from './lib'
 import { premount, createComposerContext } from './lib'
-import type { V1Content } from './v1adapter'
-import { v1Adapter, v1AddSources } from './v1adapter'
 
 interface MultipleSchemas {
     id: string
@@ -61,7 +59,6 @@ interface BootstapProps {
   microlcApi?: Partial<MicrolcApi>
   name: string
   schema?: SchemaOptions | undefined
-  version?: 1 | 2
 }
 
 interface MountProps {
@@ -159,11 +156,6 @@ async function render(
 const composerConfig = new Map<string, ResolvedConfig>()
 const parent = new Map<string, HTMLElement | null>()
 
-/**
- * @deprecated will be removed on 1.0.0
- */
-const v1AdapterUris: string[] = []
-
 const logger = (name: string, ...args: string[]) => {
   if (import.meta.env.MODE === 'development') {
     console.info(`
@@ -191,16 +183,12 @@ export async function bootstrap({
   config,
   microlcApi,
   schema,
-  version = 2,
 }: BootstapProps) {
   logger(name, 'starting bootstrap...')
 
   let resolvedConfig = config
 
-  const defaultValue = (conf: unknown) =>
-    ({ content: version < 2 ? v1Adapter(conf as V1Content, v1AdapterUris) : (conf as PluginConfiguration).content })
-  const validator = microlcApi?.getExtensions?.().json?.validator
-    ?? ((conf: unknown) => defaultValue(conf))
+  const validator = microlcApi?.getExtensions?.().json?.validator ?? ((conf: unknown) => (conf as PluginConfiguration))
   const fetcher = microlcApi?.getExtensions?.().json?.fetcher
     ?? (() => Promise.reject(new TypeError('[micro-lc][composer] no fetcher was provided on micro-lc API')))
   const headers = craftLanguageHeader(
@@ -210,25 +198,19 @@ export async function bootstrap({
   if (typeof config === 'string') {
     resolvedConfig = await fetcher(config, { headers })
       .then((jsonConfig) => {
-        const defaultConfig = defaultValue(jsonConfig)
         if (schema) {
           return validator<PluginConfiguration>(
             jsonConfig,
             schema,
             {
-              defaultValue: defaultConfig,
+              defaultValue: jsonConfig as PluginConfiguration,
               file: `plugin config -> ${name}`,
             }
           )
         }
 
-        return defaultConfig
+        return jsonConfig as PluginConfiguration
       })
-  }
-
-  // 🗑️ no need for this on config v2
-  if (resolvedConfig) {
-    resolvedConfig = v1AddSources(resolvedConfig as PluginConfiguration, v1AdapterUris)
   }
 
   if (resolvedConfig) {

@@ -18,8 +18,8 @@ import { resolve as nodeResolve } from 'path'
 import { Command } from 'commander'
 import glob from 'glob'
 
-import { supportedVersions } from './intake'
-import type { Context, Version } from './types'
+import { modes, supportedVersions } from './intake'
+import type { Context, Version } from './intake'
 
 interface CliOptions {
   quiet?: boolean
@@ -43,30 +43,33 @@ export const exit = (code?: number, msg = 'Bye!') => {
 
 function saveArgsInContext(this: Context, [key, value]: [string, unknown]) {
   switch (key) {
+  case 'from':
   case 'to': {
     if (!supportedVersions.includes(value as Version)) {
       exit(1, `${value as string} is not a supported version to target. Supported versions are ${supportedVersions.join(', ')}`)
       return
     }
 
-    this.to = value as Version
+    this[key] = value as Version
     break
   }
   default: break
   }
 }
 
-export function parseArgs(): Context {
+export function parseArgs(version: string): Context {
   const program = new Command()
 
   // TODO: take from package.json
   program
     .name('cli')
     .description('micro-lc configuration migration tool')
-    .version('0.1.0')
+    .version(version)
 
   program
-    .option('-t, --to <version>', `configuration version to target (${supportedVersions.join(', ')})`, 'v2')
+    .option('-f, --from <version>', `input files configuration version (${supportedVersions.join(', ')})`, '1')
+    .option('-t, --to <version>', `configuration version to target (${supportedVersions.join(', ')})`, '2')
+    .option('-m, --mode <mode>', `translation mode, choose between ${modes.join(', ')}`, 'config')
     .option('-q, --quiet', 'no output on stdout')
     .argument('<files>', 'file or files glob to be transformed')
     .action((files: string, opts: CliOptions) => {

@@ -15,19 +15,21 @@
 */
 import { readFile } from 'fs/promises'
 
+import packageJson from '../../package.json'
+
 import { intake } from './intake'
 import { parseArgs, exit, resolveFiles, error } from './utils'
 
 export { intake, resolveFiles }
 
 async function run() {
-  const { to, files } = parseArgs()
+  const { files, to = 'v2', from = 'v1', mode = 'config' } = parseArgs(packageJson.version)
 
   const paths = resolveFiles(files)
 
   const intakeFilePromises = paths.map(async path => {
     const buffer = await readFile(path)
-    return intake(buffer, path, { to })
+    return intake(buffer, path, { from, mode, to })
   })
 
   const results = await Promise.allSettled(intakeFilePromises)

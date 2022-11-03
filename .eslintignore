@@ -18,6 +18,7 @@ mocks/
 
 # there's an experimental assert
 **/packages/composer/web-test-runner.config.mjs
+**/packages/interfaces/scripts/build-cli.mjs
 
 # docs static assets
 **/packages/documentation/static/

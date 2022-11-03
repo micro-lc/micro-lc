@@ -3,16 +3,16 @@ import { fileURLToPath } from 'url'
 
 import { build } from 'esbuild'
 
-import settings from '../../../settings.json'
+import settings from '../../../settings.json' assert {type: 'json'}
 
 const __dirname = dirname(resolve(fileURLToPath(import.meta.url)))
 
 build({
   banner: {
-    js: ['/*!', ...settings.banner, '*/'].join('\n'),
+    js: '#!/usr/bin/env node',
   },
   bundle: true,
-  entryPoints: [resolve(__dirname, '../cli/index.ts')],
+  entryPoints: [resolve(__dirname, '../src/cli/index.ts')],
   minify: true,
   outdir: resolve(__dirname, '../dist/cli'),
   platform: 'node',

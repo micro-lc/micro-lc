@@ -2761,7 +2761,7 @@ __metadata:
   peerDependencies:
     postcss: "*"
   bin:
-    interfaces: ./dist/cjs/cli/index.js
+    interfaces: ./dist/cli/index.js
   languageName: unknown
   linkType: soft
 
