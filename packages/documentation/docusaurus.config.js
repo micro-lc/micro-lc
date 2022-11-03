@@ -82,7 +82,7 @@ const themeConfig = {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  baseUrl: '/',
+  baseUrl: '/micro-lc/',
   favicon: 'img/favicon.png',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
