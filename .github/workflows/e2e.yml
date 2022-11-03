@@ -5,8 +5,8 @@ on:
     branches:
       - v1/main
     tags-ignore:
-      - v*
-      - @micro-lc/*
+      - 'v*'
+      - '@micro-lc/*'
   pull_request:
     branches:
       - v1/main
