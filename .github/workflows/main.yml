@@ -77,7 +77,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build
-        run: yarn d build
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
