@@ -1,6 +1,6 @@
 {
   "name": "@mia-platform/core",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Shared core elements of mia-microlc",
   "module": "dist/core.esm.js",
   "main": "dist/index.js",

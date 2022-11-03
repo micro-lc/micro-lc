@@ -7,19 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
-## 0.9.0
+## [1.0.0] 2022-11-03
+
+## [0.9.0]
 
 ### Added
 
 - user's permissions evaluation based on user's properties in USER_PROPERTIES_HEADER_KEY request header
 
-## 0.8.1
+## [0.8.1]
 
 ### Fixed
 
 - CSP evaluation
 
-## 0.8.0
+## [0.8.0]
 
 ### Added
 
@@ -34,13 +36,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - config file API now is able to return something that is not a JSON
 
-
-## 0.7.0
+## [0.7.0]
 
 ### Added
 
 - full support for Angular 2+, thanks to zone import
-
 
 ### Changed
 
@@ -50,13 +50,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Dependencies
 
-## 0.6.2
+## [0.6.2]
 
 ### Fixed
 
 - favicon import url
 
-## 0.6.1
+## [0.6.1]
 
 ### Fixed
 
@@ -67,7 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Dependencies
 
-## 0.6.0
+## [0.6.0]
 
 ### Added
 
@@ -81,13 +81,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Dependencies
 
-## 0.5.0
+## [0.5.0]
 
 ### Added
 
 - Support for multiple back-end
 
-## 0.4.0
+## [0.4.0]
 
 ### Fixed
 
@@ -99,7 +99,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - custom plugin lib to version 4.2.0
 - general dependencies
 
-## 0.3.1
+## [0.3.1]
 
 ### Fixed
 
@@ -109,7 +109,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Dependencies
 
-## 0.3.0
+## [0.3.0]
 
 ### Added
 
@@ -119,7 +119,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Dependencies
 
-## 0.1.1
+## [0.1.1]
 
 ### Updated
 
@@ -129,7 +129,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - 404 page flash on first load
 
-## 0.1.0
+## [0.1.0]
 
 ### Added
 
