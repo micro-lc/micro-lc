@@ -29,3 +29,6 @@ yarn-error.log*
 test-results
 lerna-debug.log
 .history
+
+.yarn
+.pnp.*
