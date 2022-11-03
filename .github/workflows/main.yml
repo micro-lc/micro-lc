@@ -73,6 +73,12 @@ jobs:
             ./.pnp.loader.mjs
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn d build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
