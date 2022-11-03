@@ -50,9 +50,6 @@ jobs:
     needs:
       - install
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/documentation
     steps:
       - uses: actions/checkout@v3
 
@@ -77,13 +74,13 @@ jobs:
         run: yarn install --immutable
 
       - name: Build
-        run: yarn build
+        run: yarn workspace @micro-lc/documentation build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./packages/documentation/build
 
   release-docker:
     needs:
