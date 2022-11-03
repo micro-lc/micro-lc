@@ -50,8 +50,6 @@ jobs:
     needs:
       - tests
       - checks
-
-    name: Build web-server docker container
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/heads/main') }}
 
@@ -89,11 +87,11 @@ jobs:
           username: ${{ secrets.BOT_DOCKER_USERNAME }}
           password: ${{ secrets.BOT_DOCKER_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: ./packages/orchestrator
-          file: 'docker/Dockerfile'
-          build-args: COMMIT_SHA=${GITHUB_SHA},DESCRIPTION="The Mia-Platform micro frontend solution",VERSION=${VERSION}
-          push: true
-          tags: ${{ steps.prepare.outputs.tags }}
+      # - name: Build and push
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     context: ./packages/orchestrator
+      #     file: 'docker/Dockerfile'
+      #     build-args: COMMIT_SHA=${GITHUB_SHA},DESCRIPTION="The Mia-Platform micro frontend solution",VERSION=${VERSION}
+      #     push: true
+      #     tags: ${{ steps.prepare.outputs.tags }}
