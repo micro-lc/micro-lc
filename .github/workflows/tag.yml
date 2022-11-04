@@ -8,8 +8,7 @@ env:
 on:
   push:
     tags:
-      - 'v*'
-      - '@micro-lc/*'
+      - '**'
 
 jobs:
   prepare:
