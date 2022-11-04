@@ -119,5 +119,4 @@ jobs:
           echo ${VERSION}
 
       - name: Publish
-        working-directory: ./packages/${{ steps.prepare.outputs.package }}
-        run: yarn npm publish
+        run: cd ./packages/${{ steps.prepare.outputs.package }} && yarn npm publish
