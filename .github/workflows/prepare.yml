@@ -11,7 +11,7 @@ on:
         default: ./
         required: false
         type: string
-    
+
 jobs:
   install:
     runs-on: ubuntu-latest
@@ -60,9 +60,15 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
 
       - name: Reinstall
-        if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }} 
+        if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }}
         run: rm -rf ./.yarn/install-state.gz && yarn install --immutable
-      
+
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --immutable
+
+      - name: Build
+        run: yarn initialize
+
+      - name: Prepare Test
+        run: yarn prepare-test

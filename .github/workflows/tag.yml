@@ -118,8 +118,6 @@ jobs:
           echo "##[set-output name=package;]${PACKAGE}"
           echo ${VERSION}
 
-      - name: Move to package
-        run: cd packages/${{ steps.prepare.outputs.package }}
-
       - name: Publish
+        working-directory: ./packages/${{ steps.prepare.outputs.package }}
         run: yarn npm publish

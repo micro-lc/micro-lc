@@ -15,22 +15,17 @@ on:
       - v2/main
 
 jobs:
-  install:
-    uses: micro-lc/micro-lc/.github/workflows/install.yml@v2/main
-
-  build:
-    needs:
-      - install
-    uses: micro-lc/micro-lc/.github/workflows/build.yml@v2/main
+  prepare:
+    uses: micro-lc/micro-lc/.github/workflows/prepare.yml@v2/main
 
   checks:
     needs:
-      - build
+      - prepare
     uses: micro-lc/micro-lc/.github/workflows/checks.yml@v2/main
 
   tests:
     needs:
-      - build
+      - prepare
     strategy:
       fail-fast: false
       matrix:
@@ -45,10 +40,10 @@ jobs:
       package: ${{ matrix.package }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
-  
+
   deploy-pages:
     needs:
-      - install
+      - prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
