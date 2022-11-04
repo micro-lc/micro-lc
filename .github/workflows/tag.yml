@@ -8,7 +8,7 @@ env:
 on:
   push:
     tags:
-      - '*'
+      - '**'
 
 jobs:
   prepare:
@@ -116,7 +116,7 @@ jobs:
           VERSION=$(echo $TAGS | sed 's/^\(@micro-lc\/\)//' | sed 's/.*@//')
           echo "##[set-output name=package;]${PACKAGE}"
           echo ${VERSION}
-      
+
       - name: Move to package
         run: cd packages/${{ steps.prepare.outputs.package }}
 
