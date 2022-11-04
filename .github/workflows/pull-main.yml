@@ -1,0 +1,39 @@
+name: Main
+
+env:
+  context: './'
+  cache-name: cache-release
+  NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  node-version: 16.x
+
+on:
+  pull_request:
+    branches:
+      - v2/main
+
+jobs:
+  prepare:
+    uses: micro-lc/micro-lc/.github/workflows/prepare.yml@v2/main
+
+  checks:
+    needs:
+      - prepare
+    uses: micro-lc/micro-lc/.github/workflows/checks.yml@v2/main
+
+  tests:
+    needs:
+      - prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - composer
+          - iconic
+          - interfaces
+          - layout
+          - orchestrator
+    uses: micro-lc/micro-lc/.github/workflows/tests.yml@v2/main
+    with:
+      package: ${{ matrix.package }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
