@@ -31,4 +31,5 @@ git commit -e -nm "@micro-lc/$PACKAGE tagged at version: $NEW_VERSION"
 
 git tag -a "@micro-lc/${PACKAGE}@${NEW_VERSION}" -m "@micro-lc/$PACKAGE tagged at version: $NEW_VERSION"
 
-printf "\n push both branch and tag \n"
+printf "\n${GREEN}push both branch and tag${ENDCOLOR}"
+printf "\n\n\tgit push && git push origin @micro-lc/${PACKAGE}@${NEW_VERSION}\n"

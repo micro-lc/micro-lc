@@ -10,6 +10,8 @@ on:
   push:
     branches:
       - v2/main
+    paths:
+      - 'packages/**'
 
 jobs:
   prepare:
