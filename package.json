@@ -15,6 +15,7 @@
     "m": "yarn workspace @micro-lc/composer",
     "o": "yarn workspace @micro-lc/orchestrator",
     "initialize": "bash ./scripts/initialize.sh",
+    "bump": "bash ./scripts/version.sh",
     "check:types": "yarn workspaces foreach --all run check:types",
     "prepare-test": "yarn workspaces foreach --all run prepare-test",
     "build": "yarn workspaces foreach --all run build",
