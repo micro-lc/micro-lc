@@ -2,6 +2,7 @@
 
 RED="\e[1;31m"
 GREEN="\e[1;32m"
+PURPLE="\e[1;35m"
 ENDCOLOR="\e[0m"
 
 PACKAGE=$1
@@ -31,5 +32,5 @@ git commit -e -nm "@micro-lc/$PACKAGE tagged at version: $NEW_VERSION"
 
 git tag -a "@micro-lc/${PACKAGE}@${NEW_VERSION}" -m "@micro-lc/$PACKAGE tagged at version: $NEW_VERSION"
 
-printf "\n${GREEN}push both branch and tag${ENDCOLOR}"
-printf "\n\n\tgit push && git push origin @micro-lc/${PACKAGE}@${NEW_VERSION}\n"
+printf "\n${GREEN}\tpush both branch and tag:${ENDCOLOR}"
+printf "\n\n\t${PURPLE}git push && git push origin @micro-lc/${PACKAGE}@${NEW_VERSION}${ENDCOLOR}\n\n"
