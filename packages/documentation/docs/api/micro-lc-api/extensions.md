@@ -126,7 +126,7 @@ export type BaseExtension = Record<string, unknown> & {
 with the following value:
 
 ```text
-Accept: application/json,text/x-json,application/x-yaml,text/yaml
+Accept: application/json,text/x-json,application/yaml,application/x-yaml,text/yaml
 ```
 
 The response is interpreted according to `Content-Type` header vale and then parsed as a JSON or a YAML accordingly.

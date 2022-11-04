@@ -33,6 +33,7 @@ const jsonAcceptedTypes = [
   'text/x-json',
 ]
 const yamlAcceptedTypes = [
+  'application/yaml',
   'application/x-yaml',
   'text/yaml',
 ]
