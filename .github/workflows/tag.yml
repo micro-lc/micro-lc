@@ -53,6 +53,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Extract tag name
+        id: extract_tag
+        shell: bash
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
@@ -62,17 +67,12 @@ jobs:
           key: ${{ runner.os }}-${{ steps.extract_tag.outputs.tag }}-build
 
       - name: Prepare
-        id: prepare
+        id: prepare-docker-container
         run: |
           DOCKER_IMAGE=microlc/micro-lc
           VERSION=${GITHUB_REF#refs/tags/}
           VERSION=$(echo ${VERSION} | sed s/^v//)
-          TAGS="${DOCKER_IMAGE}:${VERSION}"
-          echo "##[set-output name=tags;]${TAGS}"
-          echo "##[set-output name=image;]${DOCKER_IMAGE}"
-
-      - name: Move to Orchestrator package
-        run: cd packages/orchestrator
+          echo "tag=${DOCKER_IMAGE}:${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -86,10 +86,11 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          file: 'docker/Dockerfile'
+          context: ./packages/orchestrator
+          file: '{context}/docker/Dockerfile'
           build-args: COMMIT_SHA=${GITHUB_SHA},DESCRIPTION="The Mia-Platform micro frontend solution",VERSION=${VERSION}
           push: true
-          tags: ${{ steps.prepare.outputs.tags }}
+          tags: ${{ steps.prepare-docker-container.outputs.tag }}
 
   release-package:
     needs:
