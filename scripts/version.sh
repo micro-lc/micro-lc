@@ -9,7 +9,7 @@ PACKAGE=$1
 MODE=$2
 
 if [ -z "$PACKAGE" ]; then
-  printf "${RED}no package specified${ENDCOLOR}"
+  printf "${RED}no package specified: micro-lc, interfaces, iconic, composer, orchestrator, layout${ENDCOLOR}"
   printf "\nsyntax: ${GREEN}yarn bump <package> <version>${ENDCOLOR}\n"
   exit 1
 fi
@@ -20,17 +20,32 @@ if [ -z "$MODE" ]; then
   exit 1
 fi
 
-( cd packages/$PACKAGE ; yarn version $MODE )
+if [ "micro-lc" = "$PACKAGE" ]; then
+  WORKING_DIR='.'
+  TAG_SCOPE='micro-lc'
+  TAG_PREFIX_NAME='v'
+else
+  WORKING_DIR="./packages/$PACKAGE"
+  TAG_SCOPE="@micro-lc/$PACKAGE"
+  TAG_PREFIX_NAME="${TAG_SCOPE}@"
+fi
+
+( cd $WORKING_DIR ; yarn version $MODE )
 
 git reset
-git add packages/$PACKAGE/package.json
+git add $WORKING_DIR/package.json
 git add .yarn/versions
 
-NEW_VERSION=`cat packages/$PACKAGE/package.json | grep version | sed 's/\s\s"version": "//' | sed 's/",$//'`
+NEW_VERSION=`cat $WORKING_DIR/package.json | grep "\"version\":" | sed 's/\s\s"version": "//' | sed 's/",$//'`
 
-git commit -e -nm "@micro-lc/$PACKAGE tagged at version: $NEW_VERSION"
+if [ -z "$NEW_VERSION" ]; then
+  printf "${RED}ERROR: no version found in $WORKING_DIR/package.json${ENDCOLOR}\n"
+  exit 1
+fi
 
-git tag -a "@micro-lc/${PACKAGE}@${NEW_VERSION}" -m "@micro-lc/$PACKAGE tagged at version: $NEW_VERSION"
+git commit -e -nm "$TAG_SCOPE tagged at version: $NEW_VERSION"
+
+git tag -a "${TAG_PREFIX_NAME}${NEW_VERSION}" -m "$TAG_SCOPE tagged at version: $NEW_VERSION"
 
 printf "\n${GREEN}\tpush both branch and tag:${ENDCOLOR}"
-printf "\n\n\t${PURPLE}git push && git push origin @micro-lc/${PACKAGE}@${NEW_VERSION}${ENDCOLOR}\n\n"
+printf "\n\n\t${PURPLE}git push && git push origin ${TAG_PREFIX_NAME}${NEW_VERSION}${ENDCOLOR}\n\n"
