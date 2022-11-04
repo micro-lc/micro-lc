@@ -115,9 +115,11 @@ jobs:
         run: |
           PACKAGE=$(echo $TAGS | sed 's/^\(@micro-lc\/\)//' | sed 's/@.*$//')
           VERSION=$(echo $TAGS | sed 's/^\(@micro-lc\/\)//' | sed 's/.*@//')
-          echo $PACKAGE >> $GITHUB_PACKAGE
+          echo "package=$PACKAGE" >> $GITHUB_OUTPUT
           echo ${VERSION}
 
       - name: Publish
-        working-directory: ./packages/$GITHUB_PACKAGE
-        run: yarn npm publish
+        working-directory: ./packages/${{ steps.prepare.outputs.package }}
+        run: |
+          pwd
+          yarn npm publish

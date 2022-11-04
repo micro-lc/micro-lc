@@ -10,6 +10,24 @@ import dynamicImport from 'vite-plugin-dynamic-import'
 
 import settings from '../../settings.json'
 
+const input = (mode: string): Record<string, string> => {
+  const minInput = {
+    'mlc-antd-theme-manager': 'src/web-components/mlc-antd-theme-manager/index.ts',
+    'mlc-layout': 'src/web-components/mlc-layout/index.ts',
+    'mlc-loading-animation': 'src/web-components/mlc-loading-animation/index.ts',
+  }
+  if (mode !== 'min') {
+    return {
+      index: 'src/index.ts',
+      ...minInput,
+      'mlc-config': 'src/web-components/mlc-config/index.ts',
+      'mlc-iconic': 'src/web-components/mlc-iconic/index.ts',
+      'mlc-url': 'src/web-components/mlc-url/index.ts',
+    }
+  }
+  return minInput
+}
+
 export default defineConfig(({ mode }) => ({
   base: './',
   build: {
@@ -24,15 +42,7 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     rollupOptions: {
       external: mode === 'min' ? ['react', 'react-dom'] : [],
-      input: {
-        index: 'src/index.ts',
-        'mlc-antd-theme-manager': 'src/web-components/mlc-antd-theme-manager/index.ts',
-        'mlc-config': 'src/web-components/mlc-config/index.ts',
-        'mlc-iconic': 'src/web-components/mlc-iconic/index.ts',
-        'mlc-layout': 'src/web-components/mlc-layout/index.ts',
-        'mlc-loading-animation': 'src/web-components/mlc-loading-animation/index.ts',
-        'mlc-url': 'src/web-components/mlc-url/index.ts',
-      },
+      input: input(mode),
       output: {
         entryFileNames: ({ name }) => (mode !== 'min' ? `${name}.js` : `${name}.${mode}.js`),
       },
