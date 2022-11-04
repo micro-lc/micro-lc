@@ -4,6 +4,7 @@ env:
   context: './'
   cache-name: cache-release
   node-version: 16.x
+  NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 on:
   push:
