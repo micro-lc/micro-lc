@@ -236,7 +236,6 @@
                 "type": "string"
               }
             },
-
             "booleanAttributes": {
               "description": "HTML5 boolean attribute applied using setAttribute API",
               "oneOf": [

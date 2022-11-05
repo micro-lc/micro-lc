@@ -5,6 +5,8 @@
  * and run `yarn make-types` to regenerate this file.
  */
 
+export type Component = Row | Column | Element
+
 export interface Config {
   theming?: {
     header?: {
@@ -93,10 +95,6 @@ export interface Plugin {
    */
   id: string
   /**
-   * Expression to evaluate the users that can access the plugin
-   */
-  aclExpression?: string
-  /**
    * Plugin registration order
    */
   order?: number
@@ -115,9 +113,18 @@ export interface Plugin {
   /**
    * Data passed to the plugin
    */
-  props?: {
-    [k: string]: unknown
-  }
+  props?:
+    | {
+        [k: string]: unknown
+      }
+    | {
+        configurationName?: string
+        [k: string]: unknown
+      }
+    | {
+        configuration?: Component
+        [k: string]: unknown
+      }
   externalLink?: {
     /**
      * Url of the external application
@@ -142,15 +149,80 @@ export interface Plugin {
   category?: string
   content?: Plugin[]
 }
+/**
+ * Div HTML node with row flex styling
+ */
+export interface Row {
+  type: "row"
+  /**
+   * HTML node children
+   */
+  content?: Component[]
+  /**
+   * HTML5 attribute applied using setAttribute API
+   */
+  attributes?: {
+    [k: string]: string
+  }
+  [k: string]: unknown
+}
+/**
+ * Flex column
+ */
+export interface Column {
+  type: "column"
+  /**
+   * HTML node children
+   */
+  content?: Component[]
+  /**
+   * HTML5 attribute applied using setAttribute API
+   */
+  attributes?: {
+    [k: string]: string
+  }
+  [k: string]: unknown
+}
+/**
+ * HTML node
+ */
+export interface Element {
+  type: "element"
+  /**
+   * HTML node children
+   */
+  content?: Component[]
+  /**
+   * HTML5 attribute applied using setAttribute API
+   */
+  attributes?: {
+    [k: string]: string
+  }
+  /**
+   * HTML node tag name
+   */
+  tag?: string
+  /**
+   * URL of  the entry point used to register and boot the custom element
+   */
+  url?: string
+  /**
+   * DOM element property applied as object property after creating an element
+   */
+  properties?: {
+    [k: string]: unknown
+  }
+  /**
+   * Event bus discriminator
+   */
+  busDiscriminator?: string
+  [k: string]: unknown
+}
 export interface InternalPlugin {
   /**
    * Unique identifier of the plugin
    */
   id: string
-  /**
-   * Expression to evaluate the users that can access the plugin
-   */
-  aclExpression?: string
   /**
    * Plugin registration order
    */

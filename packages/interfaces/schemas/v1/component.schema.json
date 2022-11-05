@@ -1,0 +1,105 @@
+{
+  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v1/component.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "definitions": {
+    "component": {
+      "title": "Component",
+      "oneOf": [
+        {
+          "title": "Row",
+          "description": "Div HTML node with row flex styling",
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "row"
+            },
+            "content": {
+              "description": "HTML node children",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/component"
+              }
+            },
+            "attributes": {
+              "description": "HTML5 attribute applied using setAttribute API",
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["type"]
+        },
+        {
+          "title": "Column",
+          "description": "Flex column",
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "column"
+            },
+            "content": {
+              "description": "HTML node children",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/component"
+              }
+            },
+            "attributes": {
+              "description": "HTML5 attribute applied using setAttribute API",
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["type"]
+        },
+        {
+          "title": "Element",
+          "description": "HTML node",
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "element"
+            },
+            "content": {
+              "description": "HTML node children",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/component"
+              }
+            },
+            "attributes": {
+              "description": "HTML5 attribute applied using setAttribute API",
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "tag": {
+              "description": "HTML node tag name",
+              "type": "string"
+            },
+            "url": {
+              "description": "URL of  the entry point used to register and boot the custom element",
+              "type": "string"
+            },
+            "properties": {
+              "description": "DOM element property applied as object property after creating an element",
+              "type": "object"
+            },
+            "busDiscriminator": {
+              "description": "Event bus discriminator",
+              "type": "string"
+            }
+          },
+          "required": ["type"]
+        }
+      ]
+    }
+  }
+}

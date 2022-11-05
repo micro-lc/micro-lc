@@ -10,10 +10,6 @@
           "description": "Unique identifier of the plugin",
           "type": "string"
         },
-        "aclExpression": {
-          "description": "Expression to evaluate the users that can access the plugin",
-          "type": "string"
-        },
         "order": {
           "description": "Plugin registration order",
           "type": "integer"
@@ -63,10 +59,6 @@
           "description": "Unique identifier of the plugin",
           "type": "string"
         },
-        "aclExpression": {
-          "description": "Expression to evaluate the users that can access the plugin",
-          "type": "string"
-        },
         "order": {
           "description": "Plugin registration order",
           "type": "integer"
@@ -86,8 +78,30 @@
         },
         "props": {
           "description": "Data passed to the plugin",
-          "type": "object",
-          "additionalProperties": true
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "configurationName": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "configuration": {
+                  "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v1/component.schema.json#/definitions/component"
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
         },
         "externalLink": {
           "type": "object",
