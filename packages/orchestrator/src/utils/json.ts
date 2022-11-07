@@ -49,8 +49,8 @@ function isSchemaOptions(input: SchemaOptions): input is MultipleSchemas {
 }
 
 export async function jsonFetcher(url: string, init?: RequestInit): Promise<unknown> {
-  return fetch(
-    new URL(url, window.document.baseURI),
+  return globalThis.fetch(
+    new URL(url, globalThis.document.baseURI),
     {
       ...init,
       headers: {

@@ -6,7 +6,8 @@
       "request": "launch",
       "name": "Mocha Tests",
       "env": {
-        "TS_NODE_COMPILER_OPTIONS": "{\"module\":\"CommonJS\"}"
+        "TS_NODE_COMPILER_OPTIONS": "{\"module\":\"CommonJS\"}",
+        "NODE_ENV": "development"
       },
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["o", "ts-mocha", "src/**/${fileBasename}"],

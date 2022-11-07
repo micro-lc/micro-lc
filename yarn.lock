@@ -3078,12 +3078,14 @@ __metadata:
     "@rollup/plugin-node-resolve": ^15.0.1
     "@rollup/plugin-replace": ^5.0.1
     "@types/chai": ^4.3.3
+    "@types/chai-as-promised": ^7.1.5
     "@types/chai-string": ^1.4.2
     "@types/glob": ^8.0.0
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.6
     "@types/mocha": ^10.0.0
     "@types/node": ^18.11.9
+    "@types/node-fetch": ^2.6.2
     "@types/sinon": ^10.0.13
     "@types/sinon-chai": ^3.2.8
     "@web/dev-server": ^0.1.35
@@ -3095,6 +3097,7 @@ __metadata:
     ajv: ^8.11.0
     ajv-formats: ^2.1.1
     chai: ^4.3.6
+    chai-as-promised: ^7.1.1
     chai-string: ^1.5.0
     cobertura-merge: ^1.0.3
     es-module-shims: ^1.6.2
@@ -3103,10 +3106,15 @@ __metadata:
     js-yaml: ^4.1.0
     lit-html: ^2.4.0
     lodash-es: ^4.17.21
+    mocha: ^10.1.0
+    node-fetch: ^2.6.1
+    nyc: ^15.1.0
     qiankun: ^2.8.4
     rollup-plugin-visualizer: ^5.8.3
     rxjs: ^7.5.7
     sinon: ^14.0.1
+    sinon-chai: ^3.7.0
+    ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^4.8.4
     vite: ^3.2.2
@@ -4911,6 +4919,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chai-as-promised@npm:^7.1.5":
+  version: 7.1.5
+  resolution: "@types/chai-as-promised@npm:7.1.5"
+  dependencies:
+    "@types/chai": "*"
+  checksum: 7c1345c6e32513d52d8e562ec173c23161648d6b792046525f18803a9932d7b3ad3dca8f0181e3c529ec42b106099f174e34edeb184d61dc93e32c98b5132fd4
+  languageName: node
+  linkType: hard
+
 "@types/chai-dom@npm:^0.0.12":
   version: 0.0.12
   resolution: "@types/chai-dom@npm:0.0.12"
@@ -5314,7 +5331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:^2.5.7":
+"@types/node-fetch@npm:^2.5.7, @types/node-fetch@npm:^2.6.2":
   version: 2.6.2
   resolution: "@types/node-fetch@npm:2.6.2"
   dependencies:
@@ -8201,6 +8218,17 @@ __metadata:
   dependencies:
     axe-core: ^4.3.3
   checksum: 5e42287236f6e1aa0bdcf31fbdcc3730bf8697484f9f9fd162e4c490cf131b04718788eb2655a7ae6f836cb4537eac0a7ac3ba5a614dbcb505ba222087152f84
+  languageName: node
+  linkType: hard
+
+"chai-as-promised@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "chai-as-promised@npm:7.1.1"
+  dependencies:
+    check-error: ^1.0.2
+  peerDependencies:
+    chai: ">= 2.1.2 < 5"
+  checksum: 7262868a5b51a12af4e432838ddf97a893109266a505808e1868ba63a12de7ee1166e9d43b5c501a190c377c1b11ecb9ff8e093c89f097ad96c397e8ec0f8d6a
   languageName: node
   linkType: hard
 

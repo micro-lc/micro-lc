@@ -1,5 +1,4 @@
-export function craftLanguageHeader(lang: string | undefined, win = window): Record<'Accept-Language', string> {
-  const language = lang ?? win.navigator.language
+export function craftLanguageHeader(language = window.navigator.language): Record<'Accept-Language', string> {
   const [main, secondary] = language.split('-') as [string, string | undefined]
   if (secondary !== undefined) {
     return {
