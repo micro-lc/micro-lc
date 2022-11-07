@@ -63,7 +63,7 @@
     "sinon-chai": "^3.7.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
-    "vite": "^3.2.2",
+    "vite": "^3.2.3",
     "vite-plugin-banner": "^0.6.1"
   },
   "dependencies": {
