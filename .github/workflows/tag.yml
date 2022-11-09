@@ -87,7 +87,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./packages/orchestrator
-          file: '{context}/docker/Dockerfile'
+          file: './packages/orchestrator/docker/Dockerfile'
           build-args: COMMIT_SHA=${GITHUB_SHA},DESCRIPTION="The Mia-Platform micro frontend solution",VERSION=${VERSION}
           push: true
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
