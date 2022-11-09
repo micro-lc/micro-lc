@@ -12,40 +12,7 @@ on:
       - '**'
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Extract tag name
-        id: extract_tag
-        shell: bash
-        run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/})"
-
-      - name: Use Node.js ${{ inputs.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.node-version }}
-          cache: yarn
-
-      - name: Build Cache
-        uses: actions/cache@v3
-        id: build-cache
-        with:
-          path: |
-            ./packages/**/dist
-          key: ${{ runner.os }}-${{ steps.extract_tag.outputs.tag }}-build
-
-      - name: Install
-        run: yarn install --immutable
-
-      - name: Build
-        run: yarn initialize
-
   release-docker:
-    needs:
-      - prepare
-
     name: Build web-server docker container
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
@@ -53,18 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Extract tag name
-        id: extract_tag
-        shell: bash
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
-      - name: Build Cache
-        uses: actions/cache@v3
-        id: build-cache
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
         with:
-          path: |
-            ./packages/orchestrator/dist
-          key: ${{ runner.os }}-${{ steps.extract_tag.outputs.tag }}-build
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn initialize
 
       - name: Prepare
         id: prepare-docker-container
@@ -87,15 +52,15 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./packages/orchestrator
-          file: './packages/orchestrator/docker/Dockerfile'
-          build-args: COMMIT_SHA=${GITHUB_SHA},DESCRIPTION="The Mia-Platform micro frontend solution",VERSION=${VERSION}
+          file: ./packages/orchestrator/docker/Dockerfile
+          build-args: |
+            COMMIT_SHA=${GITHUB_SHA}
+            DESCRIPTION="The Mia-Platform micro frontend solution"
+            VERSION=${VERSION}
           push: true
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
 
   release-package:
-    needs:
-      - prepare
-
     name: Release package on npm
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
@@ -106,15 +71,18 @@ jobs:
       - name: Extract tag name
         id: extract_tag
         shell: bash
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        run: echo "tag=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
 
-      - name: Build Cache
-        uses: actions/cache@v3
-        id: build-cache
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
         with:
-          path: |
-            ./packages/**/dist
-          key: ${{ runner.os }}-${{ steps.extract_tag.outputs.tag }}-build
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn initialize
 
       - name: Prepare NPM
         id: prepare-npm-package
