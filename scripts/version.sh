@@ -36,7 +36,15 @@ git reset
 git add $WORKING_DIR/package.json
 git add .yarn/versions
 
-NEW_VERSION=`cat $WORKING_DIR/package.json | grep "\"version\":" | sed 's/\s\s"version": "//' | sed 's/",$//'`
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Darwin*)
+      NEW_VERSION=`cat $WORKING_DIR/package.json | grep "\"version\":" | sed -E 's/(\s\s)?"version": "//' | sed -E 's/",$//'`
+      NEW_VERSION=`echo $NEW_VERSION`
+      ;;
+    *)
+      NEW_VERSION=`cat $WORKING_DIR/package.json | grep "\"version\":" | sed 's/\s\s"version": "//' | sed 's/",$//'`
+esac
 
 if [ -z "$NEW_VERSION" ]; then
   printf "${RED}ERROR: no version found in $WORKING_DIR/package.json${ENDCOLOR}\n"
