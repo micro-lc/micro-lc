@@ -2,9 +2,9 @@
 
 First off, thank you for considering contributing to this project.
 
-Please follow these guidelines for helping us to better address your issue, assessing changes, and helping you finalize your pull requests.
-There are many ways to contribute, from writing examples, improving the documentation, submitting bug reports
-and feature requests or writing code which can be incorporated into the module itself.
+Please follow these guidelines for helping us to better address your issue, assessing changes, and helping you finalize 
+your pull requests. There are many ways to contribute, from writing examples, improving the documentation, submitting
+bug reports and feature requests or writing code which can be incorporated into the module itself.
 
 ## Code of Conduct
 
