@@ -20,7 +20,7 @@ Create a blank `index.html` file and paste the following snippet:
   <link rel="icon" href="https://avatars.githubusercontent.com/u/92730708?s=200&v=4" />
 
   <!-- 👇 CDN link to download micro-lc -->
-  <script async type="module" src="https://cdn.jsdelivr.net/npm/@micro-lc/orchestrator@latest/dist/micro-lc.production.js"></script>
+  <script async type="module" src="https://unpkg.com/@micro-lc/orchestrator@latest/dist/micro-lc.production.js"></script>
 </head>
 <body>
   <!-- 👇 micro-lc tag with config reference -->
@@ -50,7 +50,7 @@ either on your web server response header (e.g. [nginx](https://content-security
   http-equiv="Content-Security-Policy"
   content="
     default-src 'self' https: http:;
-    script-src 'self' 'unsafe-eval' blob: data: https://cdn.jsdelivr.net/npm/;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: data:;
   "
 />
 ```
@@ -108,6 +108,72 @@ This container has the following runtime environment variables.
 `BASE_PATH` is useful if your <micro-lc></micro-lc> app must be served on a sub path. Be aware that any `route` declared
 in the configuration file under `applications`, when relative, are computed with respect to `BASE_PATH`.
 
+### Web Page Index File
+
+By default, <micro-lc></micro-lc> landing page is located in `/usr/static/index.html` and enforces no CSP security
+rules. Moreover it comes with 3 variables that the upstream `nginx` web server [filters out and substitute](http://nginx.org/en/docs/http/ngx_http_sub_module.html#sub_filter).
+
+- `**MICRO_LC_BASE_PATH**` becomes the container environment variable `BASE_PATH`
+- `**CSP_NONCE**` is substituted once per request and provides a valid 32 bytes random nonce
+- `**MICRO_LC_MODE**` becomes the container environment variable `MODE`
+- `**MICRO_LC_CONFIG_SRC**` becomes the container environment variable `CONFIG_SRC`
+
+Due to the presence of the `**CSP_NONCE**` variable, `nginx` attempts multiple substitutions on any
+resource it serves ([`sub_filter_once`](http://nginx.org/en/docs/http/ngx_http_sub_module.html#sub_filter_once) is set to `off`).
+<micro-lc></micro-lc> code is aware of that, but be careful in case you embed static files in this container that they will be filtered
+using such rules.
+
+```html title=index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- HEAD section -->
+</head>
+<body>
+  <micro-lc config-src="**MICRO_LC_CONFIG_SRC**"></micro-lc>
+</body>
+</html>
+```
+
+The `head` element provides specifications for `base` tag, icon and title. CSP
+are also declared
+
+```html title=index.html/head
+<head>
+  <base href="**MICRO_LC_BASE_PATH**" target="_blank" />
+  <title>Microlc</title>
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <meta
+    http-equiv="Content-Security-Policy" content="
+      default-src 'self' https: http:;
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' blob:;
+      object-src 'none';
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https: http:;
+      font-src 'self';
+      worker-src 'self' blob:;
+      base-uri 'self';"
+    />
+  <style>
+    html, body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    micro-lc {
+      display: inline-block;
+      position: relative;
+      height: inherit;
+      width: inherit;
+    }
+  </style>
+  <script async type="module" src="./micro-lc.**MICRO_LC_MODE**.js"></script>
+</head>
+```
+
 ### Web Server
 
 The <micro-lc></micro-lc> container is effectively an [nginx](https://www.nginx.com/) web server, currently on version 
@@ -149,6 +215,7 @@ replacing the variable `**CSP_NONCE**.
 ### Customization
 
 To override default configurations with your own, you can use **volumes**:
+
 * `index.html` is mounted at `/usr/static/index.html`
 * `config.json` is mounted at `/usr/static/config.json`
 * `default.conf` is mounted at `/etc/nginx/conf.d/default.conf`
