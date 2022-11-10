@@ -90,7 +90,7 @@ async function logout(this: MlcLayout) {
     if (!response?.ok) { throw new Error('Error logging out user') }
   }
 
-  conf?.redirectUrl && this.microlcApi?.router?.open(conf.redirectUrl)
+  conf?.redirectUrl && this.microlcApi?.router?.open(conf.redirectUrl, '_self')
 }
 
 function onUserMenuClick(this: MlcLayout, id: string) {
