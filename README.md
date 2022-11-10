@@ -1,30 +1,23 @@
-# micro-lc
+<h1 align="center">
+  <a href="https://micro-lc.io"><img src="https://micro-lc.github.io/micro-lc/img/logo-light.png" alt="micro-lc"></a>
+</h1>
 
-## ci lifecycle
+<p align="center">
+    <a href="https://mia-platform.eu/?utm_source=referral&utm_medium=github&utm_campaign=micro-lc"><img src="https://img.shields.io/badge/Supported%20by-Mia--Platform-green?style=for-the-badge&link=https://mia-platform.eu/&color=DE0D92&labelColor=214147" alt="Mia-Platform" /></a>
+</p>
 
-- install => setup repo and fetch dependencies
-- postinstall => build anything might be needed by other packages
-- lint => (global only) runs linter
+## Introduction
 
-- check:types => run tsc
-- prebuild => build anything needed for testing
-<!-- - test:browser => run tests on all browsers -->
-- coverage => run overall coverage (browser runs on chromium only)
-- build => create every single artifact that goes into the release
+> This section is work in progress
 
-- release => npm release
-- pack => creation of docker containers
+## Installation
 
-## local scripts
+> This section is work in progress
 
-- cleanup => removes dist node_modules coverage and so on
-- test => runs all tests with in-browser on chromium
-- test:[browser] => tests on a given browser (if apply)
+## Contributing
 
-## dependencies
+> This section is work in progress
 
-- interfaces => none
-- iconic => none
-- layout => types: interfaces/orchestrator => direct: iconic
-- orchestrator => types: interfaces
+## Licence
 
+micro-lc is [Apache 2.0 licensed](https://www.apache.org/licenses/LICENSE-2.0).
