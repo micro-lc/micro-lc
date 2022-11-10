@@ -21,8 +21,8 @@ Web component providing a classic navigation top bar/sidebar layout for <micro-l
 ## Usage
 
 :::caution
-This component is intended to be used inside <micro-lc></micro-lc>, since it makes extensive use of 
-<micro-lc></micro-lc> [API](../../api/micro-lc-api).
+This component is intended to be used inside <micro-lc></micro-lc>, since it makes use of <micro-lc></micro-lc>
+[API](../../api/micro-lc-api).
 
 You **can** use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
 :::

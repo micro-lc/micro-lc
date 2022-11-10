@@ -1,4 +1,5 @@
 import Details from '@docusaurus/theme-classic/lib/theme/Details'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 import BrowserWindow from '@site/src/components/BrowserWindow'
 import { SourceCodeBlock } from '@site/src/components/SourceCodeBlock'
 import type { SourceTabsProps } from '@site/src/components/SourceTabs'
@@ -62,6 +63,8 @@ export function ExampleFrame({
   const [isLoading, setIsLoading] = useState(true)
   const [currUrl, setCurrUrl] = useState<string | undefined>(undefined)
 
+  const loadingImagePath = useBaseUrl('/img/loading.svg')
+
   useEffect(() => {
     if (iFrameRef.current) {
       frameUrlChangeListener(iFrameRef.current, url => setCurrUrl(url))
@@ -82,7 +85,7 @@ export function ExampleFrame({
               top: 'calc(50% - 20px)',
               width: '40px',
             }}>
-              <img alt='Loading...' src='/img/loading.svg'/>
+              <img alt='Loading...' src={loadingImagePath}/>
             </div>
           )
         }

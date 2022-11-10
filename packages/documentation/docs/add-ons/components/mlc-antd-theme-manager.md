@@ -61,18 +61,21 @@ inject in the Document the following set of variables
 ## Usage
 
 :::caution
-This component is intended to be used inside <micro-lc></micro-lc>, since it makes extensive use of
-<micro-lc></micro-lc> [API](../../api/micro-lc-api).
+This component is intended to be used inside <micro-lc></micro-lc>, since it makes use of <micro-lc></micro-lc> 
+[API](../../api/micro-lc-api).
 
 You **can** use it standalone, but you will have to manually provide a matching API with the property `microlcApi`.
 :::
+
+The component can be sourced from
+[jsDelivr CDN](https://cdn.jsdelivr.net/npm/@micro-lc/layout@0.1.4/dist/mlc-antd-theme-manager.js).
 
 To use the component in <micro-lc></micro-lc>, declare it as part of the application layout with its
 [properties and attributes](#properties-and-attributes).
 
 ```yaml title=micro-lc.config.yaml
 layout:
-  sources: https://cdn.jsdelivr.net/npm/@micro-lc/orchestrator@latest/dist/micro-lc.production.js
+  sources: https://cdn.jsdelivr.net/npm/@micro-lc/layout@0.1.4/dist/mlc-antd-theme-manager.js
   content:
     - tag: mlc-antd-theme-manager
       properties:
@@ -104,16 +107,16 @@ layout:
 All color properties can be Hex, 8-digit Hex, RGB, RGBA HSL, HSLA, HSV, HSVA, or CSS color name string.
 :::
 
-|     Property      |     Attribute      |                  Type                   |                                                                                         Default                                                                                          | Description                                                                                                                  |
-|:-----------------:|:------------------:|:---------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------|
-|   `varsPrefix`    |         -          |   <code>string &#124; string[]</code>   |                                                                                       `micro-lc`                                                                                         | Prefix to apply to the generated set of variables. If more thant one is specified, a set for each prefix will be generated.  |
-|  `primaryColor`   |  `primary-color`   |          <code>string</code>            |                                                                                        `#1890FF`                                                                                         | Ant Design primary color.                                                                                                    |
-|    `infoColor`    |    `info-color`    |           <code>string</code>           |                                                                                        `#1890FF`                                                                                         | Ant Design info color.                                                                                                       |
-|  `successColor`   |  `success-color`   |           <code>string</code>           |                                                                                        `#52C41A`                                                                                         | Ant Design success color.                                                                                                    |
-| `processingColor` | `processing-color` |           <code>string</code>           |                                                                                        `#1890FF`                                                                                         | Ant Design processing color.                                                                                                 |
-|   `errorColor`    |   `error-color`    |           <code>string</code>           |                                                                                        `#FF4D4F`                                                                                         | Ant Design error color.                                                                                                      |
-|  `warningColor`   |  `warning-color`   |           <code>string</code>           |                                                                                        `#FAAD14`                                                                                         | Ant Design warning color.                                                                                                    |
-|   `fontFamily`    |   `font-family`    |           <code>string</code>           | `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',  Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'` | Font family CSS property.                                                                                                    |
+|     Property      |     Attribute      |                Type                 |                                                                                         Default                                                                                          | Description                                                                                                                  |
+|:-----------------:|:------------------:|:-----------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------|
+|   `varsPrefix`    |         -          | <code>string &#124; string[]</code> |                                                                                        `micro-lc`                                                                                        | Prefix to apply to the generated set of variables. If more thant one is specified, a set for each prefix will be generated.  |
+|  `primaryColor`   |  `primary-color`   |         <code>string</code>         |                                                                                        `#1890FF`                                                                                         | Ant Design primary color.                                                                                                    |
+|    `infoColor`    |    `info-color`    |         <code>string</code>         |                                                                                        `#1890FF`                                                                                         | Ant Design info color.                                                                                                       |
+|  `successColor`   |  `success-color`   |         <code>string</code>         |                                                                                        `#52C41A`                                                                                         | Ant Design success color.                                                                                                    |
+| `processingColor` | `processing-color` |         <code>string</code>         |                                                                                        `#1890FF`                                                                                         | Ant Design processing color.                                                                                                 |
+|   `errorColor`    |   `error-color`    |         <code>string</code>         |                                                                                        `#FF4D4F`                                                                                         | Ant Design error color.                                                                                                      |
+|  `warningColor`   |  `warning-color`   |         <code>string</code>         |                                                                                        `#FAAD14`                                                                                         | Ant Design warning color.                                                                                                    |
+|   `fontFamily`    |   `font-family`    |         <code>string</code>         | `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',  Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'` | Font family CSS property.                                                                                                    |
 
 ## CSS custom properties
 
