@@ -66,6 +66,12 @@ const themeConfig = {
         position: 'right',
         type: 'docsVersionDropdown',
       },
+      {
+        'aria-label': 'GitHub repository',
+        className: 'header-github-link',
+        href: 'https://github.com/micro-lc/micro-lc/tree/v2/main',
+        position: 'right',
+      },
     ],
     logo: {
       alt: 'micro-lc',

@@ -11,50 +11,85 @@ import TabItem from '@theme/TabItem'
 import CodeBlock from '@theme-original/CodeBlock'
 ```
 
-:::caution
-This section is work in progress.
+This doc guides you through migrating an existing <micro-lc></micro-lc> 1 application to <micro-lc></micro-lc> 2. We try
+to make this as easy as possible, and provide a migration CLI.
+
+## Main differences
+
+<<micro-lc></micro-lc> 1 was a React application built as a **vertical micro-frontend orchestrator** (i.e., each 
+micro-frontend corresponded to a specific route), which leverages another React application (the 
+[element composer](https://github.com/micro-lc/micro-lc-element-composer)) to implement **horizontal micro-frontend 
+orchestration** (i.e., page composition). Moreover, <micro-lc></micro-lc> 1 enforced a pre-defined and ever-present
+top-bar/sidebar navigation layout.
+
+<micro-lc></micro-lc> 2, rebuilt from the ground up, is a [web component](../api/micro-lc-web-component.md) that
+includes both [vertical](./guides/routing.md) and [horizontal](./concepts/composition.md) with a much lower footprint
+in terms of bundle size and loading speed. Moreover, <micro-lc></micro-lc> 2 leaves complete flexibility when it comes
+to building [layouts](./guides/layout.md), and implements some really useful features like
+[internal communication](./concepts/communication.md) and [dependencies sharing](./guides/reuse-third-party-libraries.md).
+
+## Migration process
+
+To obtain a fully functional <micro-lc></micro-lc> 2 application, you firstly need to update <micro-lc></micro-lc>
+[Docker image](https://hub.docker.com/r/microlc/micro-lc) version. Remember that the container can now
+[be tuned](./getting-started.md#deploy-docker-container) to cover some specific need.
+
+Once the image has been updated, you need to adapt the configuration files to the new structure. Keep in mind that a
+[CLI](#automated-migration) is provided to automate this migration, and that you can consult the new configuration
+[JSON schema](https://raw.githubusercontent.com/micro-lc/micro-lc/v2/main/packages/interfaces/schemas/v2/config.schema.json)
+for reference.
+
+:::tip
+We provide a [backend service](../add-ons/backend/servo.md) to serve configurations with ACL and references resolution
+utilities.
 :::
 
-<micro-lc></micro-lc> version 2 relaxes some choices made during version 1 development. Primarly, 
-the layout/content separation of concerns imposes a strong reframing of the main configuration file but,
-fear not, a **CLI comes to the rescue**.
+<micro-lc></micro-lc> 1 needed two configuration files to define its registered micro-frontend, theming options, and
+layout preferences. In addition to them, it needed a configuration file for each plugin implementing the element
+composer for dynamic page composition.
 
-## v1 API
+#### `authentication.json`
 
-In your production enviroment you might have a web-server or a generic service to provide configuration.
-Moreover version 1 strictly depended on a [config manager microservice](https://github.com/micro-lc/micro-lc/tree/main/packages/be-config)
-and also enforced a default `api` to be called to retrieve `configuration.json`, `authentication.json` and composer plugin configuraitions.
+This file contained instructions on how to retrieve current user information and handle logout operations. This file
+is not needed in <micro-lc></micro-lc> 1 as its content can be moved in 
+[`userMenu`](../add-ons/components/mlc-layout.md#usermenu) key of default layout configuration.
 
-Such api was:
+#### `configuration.json`
 
-- `configuration` -> `/api/v1/microlc/configuration`
-- `authentication` -> `/api/v1/microlc/authentication`
-- any field `configurationName` as `props` key of any plugin -> `/api/v1/microlc/configuration/<configurationName>`
+This file contained the core configuration of the application, namely its plugins, theming, and addons. Its content can
+be transferred in <micro-lc></micro-lc> 2 [configuration file](../api/micro-lc-web-component.md#configuration). The main
+differences can be roughly outlined as:
 
-### Authentication
+- <micro-lc></micro-lc> 1 plugins became [application](../api/micro-lc-web-component.md#applications) definitions and
+– possibly – layout [menu items](../add-ons/components/mlc-layout.md#menuitem).
+- <micro-lc></micro-lc> 1 internal plugins became [application](../api/micro-lc-web-component.md#applications) 
+definitions, but do not appear on the layout.
+- initial loading animation must be [added](../add-ons/components/mlc-loading-animation.md) on your `index.html` file.
+- <micro-lc></micro-lc> 1 right menu can be inserted in default layout [slot](../add-ons/components/mlc-layout.md#slots). 
+- <micro-lc></micro-lc> 1 theming configurations are spread in default layout 
+[properties](../add-ons/components/mlc-layout.md#properties-and-attributes).
 
-The authentication API does not make sense anymore since configure a user interface can be done wherever you'd like:
-the default layout plugin [`mlc-layout`](../add-ons/components/mlc-layout.md) gets you covered and provides backward
-compatibility by tuning the [user menu](../add-ons/components/mlc-layout#user-menu)
+#### Element composer configurations
 
-### Configuration
+While you can still use the element composer registering it as a [parcel](./guides/applications/parcels.md) (in which
+case configuration files stays the same), <micro-lc></micro-lc> 2 offers 
+[composition functionalities](./concepts/composition.md) out of the box.
 
-[Version 1](https://unpkg.com/@micro-lc/interfaces@latest/schemas/v1/config.schema.json) and
-[Version 2](https://unpkg.com/@micro-lc/interfaces@latest/schemas/v2/config.schema.json) configurations are checked against their own JSON schemas and roughly
-the differences can be outlined as:
+To use them, just register the applications as [compose](./guides/applications/compose.md) and tweak the configuration
+files accordingly. The main differences can be roughly outlined as:
 
-- plugins/internal plugins -> [applications](./guides/applications) (definitions) and possibly [layout](../add-ons/components/mlc-layout#menuitem) configuration (menu links)
-- initial loading animation must be [added](http://localhost:3000/micro-lc/add-ons/components/mlc-loading-animation) on your `index.html` file
-- rightMenu -> [slotted area](../add-ons/components/mlc-layout.md#slots) on top of the default layout
-- theming -> layout configurations
+- custom elements sources are put together in `sources` properties.
+- <micro-lc></micro-lc> 1 `busDiscriminator` property is converted into a named 
+[`eventBus`](./guides/applications/compose.md#eventbus).
+- <micro-lc></micro-lc> 1 rows and columns are converted into `<div>` with appropriate styling.
 
-## CLI
+## Automated migration
 
-To provide a smooth transation all v1 config files can be updated via a `CLI` provided within the library [`@micro-lc/servo`](https://github.com/micro-lc/servo) as
-a standalone binary with the following syntax:
+The migration CLI can be used to automatically translate an application configurations from <micro-lc></micro-lc> 1 to 
+<micro-lc></micro-lc> 2.
 
 ```mdx-code-block
-<Tabs>
+<Tabs groupId="pkg-manager">
 <TabItem value="0" label="npm" default>
 ```
 ```shell
@@ -72,52 +107,141 @@ yarn dlx @micro-lc/servo <args>
 </Tabs>
 ```
 
-The `@micro-lc/servo` cli provides to modes
+The CLI operates in two modes, [config](#config-mode) to translate old `authentication.json` and `configuration.json`
+files to the new configuration file, and [compose](#compose-mode) to translate old element composer configuration
+files to new [compose applications](./guides/applications/compose.md) configurations.
 
-- `config` -> _(default mode)_ with flag `-m config`
-- `compose` -> with flag `-m compose`
+The mode can be specified with flag `-m (--mode)` which can have value `config` (default) or `compose`.
 
 ### Config Mode
 
-The config mode translates `authentication` and `configuration` files to the new v2 config by
-invoking
+To invoke the CLI in this mode, it has to receive **exactly two args**, namely the absolute or relative path to
+`authentication.json` file **followed** by the absolute or relative path to `configuration.json` file.
 
+```mdx-code-block
+<Tabs groupId="pkg-manager">
+<TabItem value="0" label="npm" default>
+```
 ```shell
-npx @micro-lc/servo authentication.json configuration.json
+npx @micro-lc/servo --mode config <path_to_authentication.json_file> <configuration.json_file>
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="yarn 2+">
+```
+```shell
+yarn dlx @micro-lc/servo --mode config <path_to_authentication.json_file> <configuration.json_file>
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
-where `authentication.json` and `configuration.json` are the paths to
-your v1 configuration files
+Available options are the following.
 
-:::caution
-In Config Mode the order is **strict**:
-authentication file must come first, then the configuration file
-:::
+#### `dir (-d)`
 
-In version 1 the composition plugin was located outside of `micro-lc`, hence v1 plugins
-with `integrationMode` `qiankun` that used the [`element-composer`](https://github.com/micro-lc/micro-lc-element-composer)
-must be remapped to `integrationMode` `compose` in version 2 configuration.
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+* Type: `string`
 
-Usually version 1 `element-composer` was invoked by specifying, on each plugin,
-the url where the plugin was located
+Absolute or relative path of the output directory. The output file will be called `config.json`. If the specified
+directory does not exist, **it will be created**.
+
+If no output dir is specified, the resulting file **will be printed in standard output**.
+```mdx-code-block
+</div>
+```
+
+#### `elementComposerUrlRegex (-e)`
+
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+* Type: `RegExp`
+
+This option can be used to identify <micro-lc></micro-lc> 1 plugins the uses the element composer and have to be
+converted in <micro-lc></micro-lc> 2 compose applications.
+
+The regex specified with this option will be run against the `pluginUrl` of each plugin with integration mode `qiankun`.
+So, for example, if you have a plugin lke this:
 
 ```json5
 {
+  "id": "my-element-composer-plugin",
+  "integrationMode": "qiankun",
+  "pluginRoute": "/foo",
+  // highlight-next-line
   "pluginUrl": "/element-composer/"
 }
 ```
 
-that's the only way the CLI can identify composable plugins. There's a flag on the key, 
-in `compose` mode to explicitly pass the `pluginUrl` to track. For instance:
+and you want it to be transformed in a `compose` application, the cli invocation would be
 
-```shell
-npx @micro-lc/servo -e '/element-composer/' authentication.json configuration.json
+```mdx-code-block
+<Tabs groupId="pkg-manager">
+<TabItem value="0" label="npm" default>
 ```
+```shell
+npx @micro-lc/servo --m config -e "/element-composer/" <path_to_authentication.json_file> <configuration.json_file>
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="yarn 2+">
+```
+```shell
+yarn dlx @micro-lc/servo --m config -e "/element-composer/" <path_to_authentication.json_file> <configuration.json_file>
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+```mdx-code-block
+</div>
+```
+
+For compatibility reasons, the config URL of `compose` applications is set to 
+`/api/v1/microlc/configuration/${oldPlugin.props.configurationName}.json`. After the conversion, remember to change it
+accordingly to your specific setup. 
 
 ### Compose Mode
 
-The CLI provides a conversion tool by invoking:
+The CLI invoked in this mode can receive as many arguments as you want, each of them being a relative or absolute path
+(**glob syntax can be used**) resolving to one or more files to be converted.
 
+```mdx-code-block
+<Tabs groupId="pkg-manager">
+<TabItem value="0" label="npm" default>
+```
 ```shell
-npx @micro-lc/servo <config files>
+npx @micro-lc/servo --mode compose <paths_to_files...>
+```
+```mdx-code-block
+</TabItem>
+<TabItem value="1" label="yarn 2+">
+```
+```shell
+yarn dlx @micro-lc/servo --mode compose <paths_to_files...>
+```
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+Available options are the following.
+
+#### `dir (-d)`
+
+```mdx-code-block
+<div style={{paddingLeft: '1em'}}>
+```
+* Type: `string`
+
+Absolute or relative path of the output directory. The output files will be called as the respective input. If the
+specified directory does not exist, **it will be created**.
+
+If no output dir is specified, the resulting files **will be printed in standard output**.
+```mdx-code-block
+</div>
 ```
