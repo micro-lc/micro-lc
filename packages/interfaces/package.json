@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/interfaces",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",

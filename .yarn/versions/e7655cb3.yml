@@ -3,5 +3,5 @@ undecided:
   - "@micro-lc/composer"
   - "@micro-lc/documentation"
   - "@micro-lc/iconic"
-  - "@micro-lc/interfaces"
+  - "@micro-lc/layout"
   - "@micro-lc/orchestrator"
