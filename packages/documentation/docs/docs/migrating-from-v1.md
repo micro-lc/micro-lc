@@ -82,6 +82,28 @@ files accordingly. The main differences can be roughly outlined as:
 - <micro-lc></micro-lc> 1 `busDiscriminator` property is converted into a named 
 [`eventBus`](./guides/applications/compose.md#eventbus).
 - <micro-lc></micro-lc> 1 rows and columns are converted into `<div>` with appropriate styling.
+- `$ref` property becomes `definitions` to align to JSON schema standard notation, and references in content changes from
+  ```json
+  {
+    "$ref": {
+      "referencesString": "bar"
+    },
+    "foo": {
+      "$ref": "referencesString"
+    }
+  }
+  ```
+  to
+  ```json
+  {
+    "definitions": {
+      "referencesString": "bar"
+    },
+    "foo": {
+      "$ref": "#/definitions/referencesString"
+    }
+  }
+  ```
 
 ## Automated migration
 
