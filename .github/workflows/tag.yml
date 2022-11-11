@@ -81,14 +81,14 @@ jobs:
       - name: Install
         run: yarn install --immutable
 
-      - name: Build
-        run: yarn initialize --cleanup ${{ steps.prepare-npm-package.outputs.package }}
-
       - name: Prepare NPM
         id: prepare-npm-package
         run: |
           TAGS=${{ steps.extract_tag.outputs.tag }}
           echo "package=$(echo $TAGS | sed 's/^\(@micro-lc\/\)//' | sed 's/@.*$//')" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: yarn initialize --cleanup ${{ steps.prepare-npm-package.outputs.package }}
 
       - name: Publish
         working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
