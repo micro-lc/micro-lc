@@ -7,8 +7,6 @@
 Collection of micro-lc versioned interfaces. Interfaces are formalized using [JSON Schemas](https://json-schema.org/),
 from which Typescript types are generated.
 
-This repo offers also a [command-line interface](#cli) to perform conversion between different configurations versions.
-
 ## Using interfaces
 
 The interfaces declared here are meant to be used as guidance when configuring and developing micro-lc.
@@ -20,10 +18,6 @@ The interfaces declared here are meant to be used as guidance when configuring a
 ### Typescript types
 
 > ⚠ This section is still work-in-progress.
-
-## CLI
-
-> ⚠ The command-line interface is still work-in-progress.
 
 ## Development
 

@@ -157,7 +157,6 @@ export type Application = IFrameApplication2 | ComposableApplication2 | ParcelAp
  * Version 2 of micro-lc configuration
  */
 export interface Config {
-  $schema?: string
   version: 2
   settings?: Settings
   shared?: {
@@ -174,6 +173,7 @@ export interface Config {
     [k: string]: Application
   }
   layout?: PluginConfiguration1
+  [k: string]: unknown
 }
 /**
  * Global micro-lc settings
@@ -242,7 +242,6 @@ export interface ComposableApplication {
  * Composer configuration. It can be an url or an in-line configuration
  */
 export interface PluginConfiguration {
-  $schema?: string
   /**
    * Global sources
    */
@@ -257,6 +256,7 @@ export interface PluginConfiguration {
         importmap?: ImportMap
       }
   content: Content
+  [k: string]: unknown
 }
 /**
  * Specific import map for the component
@@ -523,7 +523,6 @@ export interface ParcelApplication2 {
  * Orchestrator main page layout DOM configuration
  */
 export interface PluginConfiguration1 {
-  $schema?: string
   /**
    * Global sources
    */
@@ -538,4 +537,5 @@ export interface PluginConfiguration1 {
         importmap?: ImportMap
       }
   content: Content
+  [k: string]: unknown
 }

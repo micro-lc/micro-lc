@@ -4,7 +4,6 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
-  "bin": "./dist/cli/index.js",
   "files": [
     "dist",
     "postcss-ant-dynamic-theme",
@@ -19,11 +18,9 @@
     "check:types": "yarn run -T run-s make-types-from-schemas make-types",
     "build:es": "ts-node scripts/compile.esm.ts",
     "build:cjs": "ts-node scripts/compile.cjs.ts",
-    "build:cli": "node ./scripts/build-cli.mjs",
-    "build": "yarn run -T run-s check:types build:es build:cjs build:cli",
+    "build": "yarn run -T run-s check:types build:es build:cjs",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
-    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha",
-    "cli": "yarn ts-node ./src/cli"
+    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha"
   },
   "devDependencies": {
     "@types/chai": "^4.3.3",
@@ -36,7 +33,6 @@
     "ajv-formats": "^2.1.1",
     "axios": "^1.1.3",
     "chai": "^4.3.6",
-    "commander": "^9.4.1",
     "esbuild": "^0.15.13",
     "eslint": "^8.27.0",
     "glob": "^8.0.3",

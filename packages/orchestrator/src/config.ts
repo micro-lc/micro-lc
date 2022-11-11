@@ -28,7 +28,7 @@ import page500Url from './assets/500.html?url'
 
 export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
-export type CompleteConfig = Required<Omit<Config, '$schema' | 'settings' | 'layout' | 'shared'>> & {
+export type CompleteConfig = Required<Pick<Config, 'version' | 'importmap' | 'applications'>> & {
   layout: PluginConfiguration & {content: Content}
   settings: Required<Omit<Settings, 'mountPointSelector' | 'mountPoint'>> & {
     mountPoint?: Settings['mountPoint']

@@ -375,10 +375,6 @@
   },
   "type": "object",
   "properties": {
-    "$schema": {
-      "type": "string"
-    },
-
     "version": {
       "const": 2
     },
@@ -451,6 +447,5 @@
       ]
     }
   },
-  "additionalProperties": false,
   "required": ["version"]
 }

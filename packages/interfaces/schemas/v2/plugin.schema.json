@@ -341,10 +341,6 @@
   },
   "type": "object",
   "properties": {
-    "$schema": {
-      "type": "string"
-    },
-
     "sources": {
       "$ref": "#/definitions/sources"
     },
@@ -353,6 +349,5 @@
       "$ref": "#/definitions/content"
     }
   },
-  "additionalProperties": false,
   "required": ["content"]
 }
