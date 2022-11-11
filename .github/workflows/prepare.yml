@@ -68,7 +68,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build
-        run: yarn initialize
+        run: yarn initialize --cleanup
 
       - name: Prepare Test
         run: yarn prepare-test

@@ -16351,6 +16351,7 @@ __metadata:
     husky: ^8.0.1
     jsonc-eslint-parser: ^2.1.0
     lit-html: ^2.4.0
+    node-color-log: ^10.0.2
     npm-run-all: ^4.1.5
     postcss: ^8.4.18
     postcss-less: ^6.0.0
@@ -16997,6 +16998,13 @@ __metadata:
     lower-case: ^2.0.2
     tslib: ^2.0.3
   checksum: 0b2ebc113dfcf737d48dde49cfebf3ad2d82a8c3188e7100c6f375e30eafbef9e9124aadc3becef237b042fd5eb0aad2fd78669c20972d045bbe7fea8ba0be5c
+  languageName: node
+  linkType: hard
+
+"node-color-log@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "node-color-log@npm:10.0.2"
+  checksum: f0e8ee38c5934758c2101bcdf339cd6a07a86bf6e7eb22b6458e31cf590256894e73a9494e976e07c700ba0bf756aa8452625f5fdeb30e13b2c34327530a3445
   languageName: node
   linkType: hard
 
