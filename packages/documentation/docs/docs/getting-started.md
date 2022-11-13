@@ -225,7 +225,7 @@ To override default configurations with your own, you can use **volumes**:
 If you would like to contribute or simply run <micro-lc></micro-lc> from source code, checkout locally the
 [official repository](https://github.com/micro-lc/micro-lc). 
 
-Be aware that it needs `node` `16+` and `yarn` `1.22+`. These requirements can be met installing a node version manager
+Be aware that it needs `node` `16+` and \. These requirements can be met installing a node version manager
 like [`nvm`](https://github.com/nvm-sh/nvm#install--update-script) and then running:
 
 ```shell

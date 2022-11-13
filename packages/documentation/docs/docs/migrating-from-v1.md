@@ -8,7 +8,6 @@ sidebar_position: 60
 ```mdx-code-block
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
-import CodeBlock from '@theme-original/CodeBlock'
 ```
 
 This doc guides you through migrating an existing <micro-lc></micro-lc> 1 application to <micro-lc></micro-lc> 2. We try
@@ -112,14 +111,14 @@ The migration CLI can be used to automatically translate an application configur
 
 ```mdx-code-block
 <Tabs groupId="pkg-manager">
-<TabItem value="0" label="npm" default>
+<TabItem value="npm" label="npm" default>
 ```
 ```shell
 npx @micro-lc/servo <args>
 ```
 ```mdx-code-block
 </TabItem>
-<TabItem value="1" label="yarn 2+">
+<TabItem value="yarn" label="yarn 2+">
 ```
 ```shell
 yarn dlx @micro-lc/servo <args>
@@ -142,14 +141,14 @@ To invoke the CLI in this mode, it has to receive **exactly two args**, namely t
 
 ```mdx-code-block
 <Tabs groupId="pkg-manager">
-<TabItem value="0" label="npm" default>
+<TabItem value="npm" label="npm" default>
 ```
 ```shell
 npx @micro-lc/servo --mode config <path_to_authentication.json_file> <configuration.json_file>
 ```
 ```mdx-code-block
 </TabItem>
-<TabItem value="1" label="yarn 2+">
+<TabItem value="yarn" label="yarn 2+">
 ```
 ```shell
 yarn dlx @micro-lc/servo --mode config <path_to_authentication.json_file> <configuration.json_file>
@@ -203,14 +202,14 @@ and you want it to be transformed in a `compose` application, the cli invocation
 
 ```mdx-code-block
 <Tabs groupId="pkg-manager">
-<TabItem value="0" label="npm" default>
+<TabItem value="npm" label="npm" default>
 ```
 ```shell
 npx @micro-lc/servo --m config -e "/element-composer/" <path_to_authentication.json_file> <configuration.json_file>
 ```
 ```mdx-code-block
 </TabItem>
-<TabItem value="1" label="yarn 2+">
+<TabItem value="yarn" label="yarn 2+">
 ```
 ```shell
 yarn dlx @micro-lc/servo --m config -e "/element-composer/" <path_to_authentication.json_file> <configuration.json_file>
@@ -234,14 +233,14 @@ The CLI invoked in this mode can receive as many arguments as you want, each of 
 
 ```mdx-code-block
 <Tabs groupId="pkg-manager">
-<TabItem value="0" label="npm" default>
+<TabItem value="npm" label="npm" default>
 ```
 ```shell
 npx @micro-lc/servo --mode compose <paths_to_files...>
 ```
 ```mdx-code-block
 </TabItem>
-<TabItem value="1" label="yarn 2+">
+<TabItem value="yarn" label="yarn 2+">
 ```
 ```shell
 yarn dlx @micro-lc/servo --mode compose <paths_to_files...>
