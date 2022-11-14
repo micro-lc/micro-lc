@@ -243,14 +243,14 @@ You can install the SDK from NPM
 <TabItem value="npm" label="npm" default>
 ```
 ```shell
-npm install TODO
+npm install @micro-lc/servo/sdk
 ```
 ```mdx-code-block
 </TabItem>
 <TabItem value="yarn" label="yarn">
 ```
 ```shell
-yarn add TODO
+yarn add @micro-lc/servo/sdk
 ```
 ```mdx-code-block
 </TabItem>
@@ -264,14 +264,14 @@ and import it in your files
 <TabItem value="common-js" label="CommonJS" default>
 ```
 ```javascript
-const servoSdk = require('TODO')
+const servoSdk = require('@micro-lc/servo/sdk')
 ```
 ```mdx-code-block
 </TabItem>
 <TabItem value="modules" label="ECMAScript modules">
 ```
 ```javascript
-import servoSdk from 'TODO'
+import * as servoSdk from '@micro-lc/servo/sdk'
 ```
 ```mdx-code-block
 </TabItem>
