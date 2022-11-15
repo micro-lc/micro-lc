@@ -22,7 +22,7 @@ jobs:
       - name: Extract branch name
         id: extract_branch
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
 
       - name: Use Node.js ${{ inputs.node-version }}
         uses: actions/setup-node@v3
@@ -58,10 +58,6 @@ jobs:
           path: |
             /home/runner/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Reinstall
-        if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }}
-        run: rm -rf ./.yarn/install-state.gz && yarn install --immutable
 
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
