@@ -27,6 +27,98 @@ webserver** is available on Docker Hub.
 [Read the docs](https://micro-lc.github.io/micro-lc/docs/getting-started) to learn how you can use micro-lc in your
 next project!
 
+## Handle the repo
+
+### Build
+
+This repository is made of 5 subpackages plus the documentation package. The dependencies can be sketched as follows:
+
+```
+  `interfaces` `iconic`
+         |      |
+        `composer`
+            |
+      `orchestrator`
+            |
+         `layout`
+```
+
+to build the packages there's a script which can be invoked after install as
+
+```shell
+yarn initialize [OPTIONS]
+```
+
+where `OPTIONS` are
+
+1. `-c` or `--cleanup`
+2. one of the subpackages: `interfaces`, `iconic`, `composer`, `orchestrator`, and `layout` (default)
+
+By using `cleanup` you require `initialize` to trash anything in the `dist`, `node_modules`, and `coverage` directories.
+By choosing one subpackage, `initialize` will build up to that one.
+
+To build the repository disregarding previous actions run:
+
+```shell
+yarn initialize --cleanup
+```
+
+### Shortcuts
+
+Yarn allows to invoke scripts onto subpackages in a `workspaces` environment. Such commands might
+become soon verbose since to build a subpackage the command would be like:
+
+```shell
+yarn workspace @micro-lc/orchestrator build
+```
+
+hence we enforced some shortcuts:
+
+1. `workspace @micro-lc/interfaces` -> `i`
+2. `workspace @micro-lc/iconic` -> `c`
+3. `workspace @micro-lc/composer` -> `m`
+4. `workspace @micro-lc/orchestrator` -> `o`
+5. `workspace @micro-lc/layout` -> `l`
+
+hence the command above would become:
+
+```shell
+yarn o build
+```
+
+also the documentation has a shortcut
+
+6. `workspace @micro-lc/documentation` -> `d`
+
+### Test
+
+To run tests ensure some CommonJS to ESM conversion on dependencies by running
+
+```shell
+yarn prepare-test
+```
+
+then simply run
+
+```shell
+yarn test
+```
+
+or
+
+```shell
+yarn coverage
+```
+
+### Components Playground
+
+`layout` is a webcomponents repository and provides a storybook environment.
+Remind to build dependencies as prompted [before](#build) and then run:
+
+```shell
+yarn l storybook
+```
+
 ## Contributing
 
 We are thankful for any contributions from the community, read our [contributing guide](./CONTRIBUTING.md) to learn
