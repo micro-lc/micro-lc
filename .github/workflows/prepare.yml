@@ -22,7 +22,7 @@ jobs:
       - name: Extract branch name
         id: extract_branch
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
 
       - name: Use Node.js ${{ inputs.node-version }}
         uses: actions/setup-node@v3
