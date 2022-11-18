@@ -154,16 +154,12 @@ will be
 
 In order to avoid writing repeating values multiple times in your configurations, Servo supports references resolutions
 following [JSON schema specification](https://json-schema.org/understanding-json-schema/structuring.html#ref). In
-particular, if you need to repeat the same value in various places of your configuration, you can **define it once** in a
-dedicated top-level key of your choice (e.g., `definitions`), and then **references it** wherever you like using the
-keyword `$ref` (e.g., `{ "dataSchema": { "$ref": "#/definitions/dataSchema" }}`).
+particular, if you need to repeat the same value in various places of your configuration, you can **define it once** in
+the dedicated top-level key `definitions`, and then **references it** wherever you like using the keyword `$ref` (e.g.,
+`{ "dataSchema": { "$ref": "#/definitions/dataSchema" }}`).
 
-:::tip
-Even if the key containing your definitions can be named as you wish (as long as you avoid JSON schema reserved keywords,
-like `$ref`), we advise using `definitions` or `$defs` to keep compliant with JSON schema specification.
-:::
-
-Unlike [ACL expressions](#acl-application), Servo will keep the definitions key in the response.
+Servo will resolve references in files and will remove the key `definitions` (if any) before serving them. Keep in mind
+that Servo **will throw** if some references cannot be resolved.
 
 #### Example
 
