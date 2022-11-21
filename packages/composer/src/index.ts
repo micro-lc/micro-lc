@@ -23,7 +23,7 @@ import type { Observable } from 'rxjs'
 import { BehaviorSubject, ReplaySubject } from 'rxjs'
 
 import type { ComposerApi, ReplaySubjectPool } from './lib'
-import { premount, createComposerContext } from './lib'
+import { render, premount, createComposerContext } from './lib'
 
 interface MultipleSchemas {
     id: string
@@ -132,24 +132,6 @@ function createPool<T>(): ReplaySubjectPool<T> {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return Reflect.get(target, property, receiver)
     },
-  })
-}
-
-async function render(
-  config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown>
-): Promise<null> {
-  // const { ReplaySubject } = await import(/* @vite-ignore */'rxjs')
-  const appenderPromise = createComposerContext(
-    config.content,
-    {
-      context,
-      extraProperties: new Set(Object.keys(context)),
-    }
-  )
-
-  return appenderPromise.then((appender) => {
-    appender(container)
-    return null
   })
 }
 

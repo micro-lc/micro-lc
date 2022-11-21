@@ -12,16 +12,18 @@ provides the same dynamic capability for [mounting HTML subtrees](../docs/concep
 itself uses under the hood.
 
 The composer API is an object with two methods:
+
 - `premount` which flattens polymorphic configurations and injects import maps, and
 - `createComposerContext` which builds an appender that can be called by assigning a root HTML DOM appending the
 dynamically configured HTML DOM as subtree of the root.
+- `render` wraps `lit-html` `render` method and injects a [context](../docs/guides/applications/compose.md#properties-injection)
 
 ### `premount`
 
 ```typescript
 interface ComposerApi {
   // ... rest of the API
-  premount: (config: PluginConfiguration) => Promise<ResolvedConfig>
+  premount: (config: PluginConfiguration, proxyWindow?: ImportShimContext) => Promise<ResolvedConfig>
 }
 ```
 
@@ -36,6 +38,18 @@ interface ResolvedConfig {
     importmap?: ImportMap
     uris: string[]
   }
+}
+```
+
+the optional `proxyWindow` which defaults to the current `window` must implement the `importShim` interface, allows
+to override the importmap features, namely to set a no-op behaviour or select an iframe window. Notice that the
+interface is equivalent to
+
+```typescript
+interface ImportShimContext {
+  importShim<D, E extends Record<string, unknown>>(
+    uri: string, parentUrl?: string
+  ): Promise<{ default: D } & E>
 }
 ```
 
@@ -67,3 +81,19 @@ refer to optional features provided by the [`lit-html` `render` method](https://
 Finally, `options` in `createComposerContext` is the object to interact with when the compiler needs to be
 instructed to recognize some properties as special context. This feature allows to inject JS context avoiding eval and
 works according to the [composability principles](../docs/guides/applications/compose.md#interpolated-properties).
+
+### `render`
+
+```typescript
+interface ComposerApi {
+  // ... rest of the API
+  render: (
+    config: ResolvedConfig,
+    container: HTMLElement,
+    context: Record<string, unknown> = {}
+  ) => Promise<ComposerContextAppender>
+}
+```
+
+Alternatively, if the use case requires to append a `ResolvedConfig` to a `container` html element
+and inject a `context` of properties, `render` provides a useful shortcut.

@@ -15,7 +15,7 @@
 */
 import type { Content, PluginConfiguration, ImportMap } from '@micro-lc/interfaces/v2'
 import type { RenderOptions } from 'lit-html'
-import { html, render } from 'lit-html'
+import { html, render as litRender } from 'lit-html'
 import type { ReplaySubject } from 'rxjs'
 
 import { interpolate } from './compiler'
@@ -61,10 +61,14 @@ export async function createComposerContext(
   const template = await lexer(htmlBuffer)
   const variables = interpolate(template.variables, context)
   const htmlTemplate = html(template.literals, ...variables)
-  return (container, options) => render(htmlTemplate, container, options)
+  return (container, options) => litRender(htmlTemplate, container, options)
 }
 
-export async function premount(config: PluginConfiguration): Promise<ResolvedConfig> {
+interface ImportShimContext {
+  importShim: typeof importShim
+}
+
+export async function premount(config: PluginConfiguration, proxyWindow: ImportShimContext = window): Promise<ResolvedConfig> {
   let uris: string[] = []
   let importmap: ImportMap | undefined
 
@@ -76,7 +80,7 @@ export async function premount(config: PluginConfiguration): Promise<ResolvedCon
       : {}
 
     try {
-      importShim.addImportMap(importmap)
+      proxyWindow.importShim.addImportMap(importmap)
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
         console.error(err)
@@ -87,7 +91,7 @@ export async function premount(config: PluginConfiguration): Promise<ResolvedCon
 
     if (uris.length > 0) {
       await Promise.all(uris.map(
-        (uri) => (importShim(uri)).catch((err) => { console.error(err) })
+        (uri) => (proxyWindow.importShim(uri)).catch((err) => { console.error(err) })
       ))
     }
   }
@@ -95,5 +99,22 @@ export async function premount(config: PluginConfiguration): Promise<ResolvedCon
   return Promise.resolve({
     content: config.content,
     sources: { importmap, uris },
+  })
+}
+
+export async function render(
+  config: ResolvedConfig, container: HTMLElement, context: Record<string, unknown> = {}
+): Promise<null> {
+  const appenderPromise = createComposerContext(
+    config.content,
+    {
+      context,
+      extraProperties: new Set(Object.keys(context)),
+    }
+  )
+
+  return appenderPromise.then((appender) => {
+    appender(container)
+    return null
   })
 }

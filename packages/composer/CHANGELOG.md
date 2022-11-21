@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- api expanded to include `render` method
+
 ### Versioning
 
 - Development dependencies version bumps
