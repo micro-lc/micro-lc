@@ -3,6 +3,9 @@ const lightCodeTheme = require('prism-react-renderer/themes/github')
 
 const pluginContentDocsConfig = {
   breadcrumbs: true,
+  editUrl: ({versionDocsDirPath, docPath}) => {
+    return `https://github.com/micro-lc/micro-lc/edit/v2/main/packages/documentation/${versionDocsDirPath}/${docPath}`
+  },
   lastVersion: 'current',
   path: 'docs',
   routeBasePath: '/',
