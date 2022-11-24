@@ -2,23 +2,14 @@
 .yarn/*
 
 dist/
-**/build/
 node_modules/
 playground/
-.docusaurus/
 coverage/
 mocks/
 
 .vscode/
 .idea/
 
-# This file has to be a module with .js extension otherwise Docusaurus will not recognize it. Eslint fails at parsing it
-# since it expect js files to be commonJS
-**/packages/documentation/src/theme/MDXComponents.js
-
 # there's an experimental assert
 **/packages/composer/web-test-runner.config.mjs
 **/packages/interfaces/scripts/build-cli.mjs
-
-# docs static assets
-**/packages/documentation/static/
