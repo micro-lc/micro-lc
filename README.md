@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://micro-lc.io"><img src="https://micro-lc.github.io/micro-lc/img/logo-light.png" alt="micro-lc"></a>
+  <a href="https://micro-lc.io"><img src="https://micro-lc.github.io/documentation/img/logo-light.png" alt="micro-lc"></a>
 </h1>
 
 <p align="center">
@@ -9,9 +9,9 @@
 ## Introduction
 
 micro-lc is an open source micro-frontend orchestrator for building flexible, multi-tenant frontend applications.
-And [much more](https://micro-lc.github.io/micro-lc/docs)!
+And [much more](https://micro-lc.github.io/documentation/docs)!
 
-**Tip**: use the official **[playground](https://micro-lc.github.io/micro-lc/playground/)** to try micro-lc immediately.
+**Tip**: use the official **[playground](https://micro-lc.github.io/documentation/playground/)** to try micro-lc immediately.
 
 An introduction about micro frontend and how micro-lc works:
 
@@ -24,14 +24,14 @@ An introduction about micro frontend and how micro-lc works:
 micro-lc is shipped as an ES module **CDN bundle** and can be imported in any HTML page. Moreover, a **dockerized 
 webserver** is available on Docker Hub.
 
-[Read the docs](https://micro-lc.github.io/micro-lc/docs/getting-started) to learn how you can use micro-lc in your
+[Read the docs](https://micro-lc.github.io/documentation/docs/getting-started) to learn how you can use micro-lc in your
 next project!
 
 ## Handle the repo
 
 ### Build
 
-This repository is made of 5 subpackages plus the documentation package. The dependencies can be sketched as follows:
+This repository is made of 5 subpackages. The dependencies can be sketched as follows:
 
 ```
   `interfaces` `iconic`
@@ -85,10 +85,6 @@ hence the command above would become:
 ```shell
 yarn o build
 ```
-
-also the documentation has a shortcut
-
-6. `workspace @micro-lc/documentation` -> `d`
 
 ### Test
 

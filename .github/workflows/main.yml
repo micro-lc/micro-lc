@@ -40,42 +40,6 @@ jobs:
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-pages:
-    needs:
-      - prepare
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use ${{ inputs.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.node-version }}
-
-      - name: Yarn Cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: |
-            ./.yarn/cache
-            ./.yarn/unplugged
-            ./.yarn/install-state.gz
-            ./.pnp.cjs
-            ./.pnp.loader.mjs
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Install
-        run: yarn install --immutable
-
-      - name: Build
-        run: yarn workspace @micro-lc/documentation build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./packages/documentation/build
-
   release-docker:
     needs:
       - tests
