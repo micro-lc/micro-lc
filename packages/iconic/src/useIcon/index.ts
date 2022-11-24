@@ -41,7 +41,7 @@ function iconSvgCompose({ attrs, children = [] }: SvgComponent, { ref, ...props 
 export function useIcon(
   selector: string, resource: ResourceObject, errorHandler?: (msg: string) => void
 ): LazyExoticComponent<ForwardRefExoticComponent<SVGProps & RefAttributes<HTMLElement>>> {
-  const defaultReturnValue = { default: forwardRef((props: SVGProps, ref: ForwardedRef<HTMLElement>) => createElement('svg', { props, ref })) }
+  const defaultReturnValue = { default: forwardRef((props: SVGProps, ref: ForwardedRef<HTMLElement>) => createElement('svg', { ...props, ref })) }
   return lazy(() => importIcon(selector, resource)
     .then((icon) => (
       { default: forwardRef((props: SVGProps, ref: ForwardedRef<HTMLElement>) => iconSvgCompose(icon as SvgComponent, { ...props, ref })) }

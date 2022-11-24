@@ -119,6 +119,19 @@ Remind to build dependencies as prompted [before](#build) and then run:
 yarn l storybook
 ```
 
+A local playground is also available. Run:
+
+```shell
+yarn playground
+```
+
+to start the playground, and:
+
+```shell
+yarn playground-stop
+```
+to stop it.
+
 ## Contributing
 
 We are thankful for any contributions from the community, read our [contributing guide](./CONTRIBUTING.md) to learn
