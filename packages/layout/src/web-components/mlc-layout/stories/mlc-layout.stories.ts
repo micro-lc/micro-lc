@@ -226,3 +226,22 @@ CustomLocale.args = {
   mode: 'fixedSideBar',
   userMenu,
 }
+
+export const BrokenIcon = Template.bind({}) as Story<MlcLayout>
+BrokenIcon.storyName = 'With unresolved icon'
+BrokenIcon.args = {
+  helpMenu: { helpHref: 'https://docs.mia-platform.eu/' },
+  logo,
+  menuItems: [
+    ...menuItems,
+    {
+      icon: { library: '@ant-design/icons-svg', selector: 'unk' },
+      id: 'broken_icon',
+      label: { en: 'Unresolved icon', it: 'Icona non risolta' },
+      type: 'application',
+    },
+  ],
+  microlcApi,
+  mode: 'fixedSideBar',
+  userMenu,
+}

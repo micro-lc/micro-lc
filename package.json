@@ -27,6 +27,7 @@
     "test": "yarn workspaces foreach --all run test",
     "coverage": "yarn node ./scripts/repo-scripts.mjs coverage",
     "playground": "yarn node playground.mjs",
+    "playground-stop": "docker-compose --file playground/docker-compose.yml down",
     "serve": " python3 ./scripts/server.py -p 8000 -d .",
     "postinstall": "husky install"
   },
