@@ -36,8 +36,8 @@ This repository is made of 5 subpackages. The dependencies can be sketched as fo
 ```
   `interfaces` `iconic`
          |      |
-        `composer`
-            |
+    `composer`  |
+         |      |
       `orchestrator`
             |
          `layout`
