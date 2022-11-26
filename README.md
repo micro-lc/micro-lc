@@ -34,13 +34,13 @@ next project!
 This repository is made of 5 subpackages. The dependencies can be sketched as follows:
 
 ```
-  `interfaces` `iconic`
-         |      |
-    `composer`  |
-         |      |
-      `orchestrator`
-            |
-         `layout`
+  `interfaces`
+           |
+    `composer`
+           |
+`orchestrator` `iconic`
+           |    |
+          `layout`
 ```
 
 to build the packages there's a script which can be invoked after install as
