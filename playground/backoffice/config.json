@@ -78,6 +78,11 @@
               "type": "href"
             },
             {
+              "id": "srcdoc",
+              "label": "SRCDOC",
+              "type": "application"
+            },
+            {
               "children": [
                 {
                   "id": "composer_new",
@@ -128,6 +133,15 @@
       "integrationMode": "iframe",
       "route": "./main",
       "src": "https://wikipedia.org"
+    },
+    "srcdoc": {
+      "integrationMode": "iframe",
+      "route": "./srcdoc",
+      "srcdoc": "<!DOCTYPE><html><head></head><body>IFrame Content</body></html>"
+    },
+    "emptyFrame": {
+      "integrationMode": "iframe",
+      "route": "./empty-frame"
     },
     "react": {
       "integrationMode": "parcel",

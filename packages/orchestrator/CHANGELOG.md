@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Support for `srcdoc` attributes on iframes
+- `playground` has an example of direct use of composer in browser
+- `playground` has an example of programmatic use of `micro-lc` tag mount as the result of a composition
+
 ### Versioning
 
 - Development dependencies version bumps

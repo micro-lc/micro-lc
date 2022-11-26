@@ -156,6 +156,23 @@ const buildComposer = (mode: Application['integrationMode'], extraProperties: Re
   }
 }
 
+const getExtraIFrameAttributes = (app: {attributes?: Record<string, string>; src?: string; srcdoc?: string}) => {
+  const extraIframeAttributes: Record<string, string> = {}
+  if (typeof app.attributes?.src === 'string') {
+    extraIframeAttributes.src = app.attributes.src
+  }
+  if (typeof app.src === 'string') {
+    extraIframeAttributes.src = app.src
+  }
+  if (typeof app.attributes?.srcdoc === 'string') {
+    extraIframeAttributes.srcdoc = app.attributes.srcdoc
+  }
+  if (typeof app.srcdoc === 'string') {
+    extraIframeAttributes.srcdoc = app.srcdoc
+  }
+  return extraIframeAttributes
+}
+
 export async function updateApplications<T extends BaseExtension>(this: Microlc<T>): Promise<void> {
   const {
     _config: {
@@ -205,7 +222,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
                     height: inherit;
                     border: none;`,
             ...app.attributes,
-            src: app.src,
+            ...getExtraIFrameAttributes(app),
           },
           content: {
             content: 'Your browser does not support iframes',
