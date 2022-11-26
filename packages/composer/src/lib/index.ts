@@ -97,7 +97,7 @@ export async function premount(config: PluginConfiguration, proxyWindow: ImportS
   }
 
   return Promise.resolve({
-    content: config.content,
+    ...config,
     sources: { importmap, uris },
   })
 }

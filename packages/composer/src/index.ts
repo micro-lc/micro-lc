@@ -234,7 +234,7 @@ export async function mount(
           eventBus: createPool<Event>(),
         }
       ).then(() => {
-        container.replaceChildren(...virtualContainer.children)
+        container.replaceChildren(...virtualContainer.childNodes)
       }).catch(console.error)
     }
   })

@@ -20,6 +20,7 @@
     }
   },
   "scripts": {
+    "cleanup": "yarn run -T rimraf dist node_modules coverage",
     "check:types": "tsc --project ./scripts/tsconfig.build.json && echo \"✓ check types\"",
     "build:lib": "ts-node ./scripts/compile.esm.ts",
     "build:dev": "vite build --mode development",
