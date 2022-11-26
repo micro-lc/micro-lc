@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Versioning
+
+- Development dependencies version bumps
+
 ### Fixed
 
 - Default `<svg>` returned if icon is not found now correctly receives props 

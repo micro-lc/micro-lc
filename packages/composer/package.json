@@ -55,7 +55,7 @@
     "chai-string": "^1.5.0",
     "cobertura-merge": "^1.0.3",
     "es-module-shims": "^1.6.2",
-    "esbuild": "^0.15.14",
+    "esbuild": "^0.15.15",
     "glob": "^8.0.3",
     "mocha": "^10.1.0",
     "nyc": "^15.1.0",
