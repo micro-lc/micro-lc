@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.4.1] - 2022-11-26
+
 ### Added
 
 - composer releases a ES module bundle at `/dist/bundle/index.min.js`
