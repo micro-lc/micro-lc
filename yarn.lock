@@ -47,6 +47,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ant-design/icons@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "@ant-design/icons@npm:4.8.0"
+  dependencies:
+    "@ant-design/colors": ^6.0.0
+    "@ant-design/icons-svg": ^4.2.1
+    "@babel/runtime": ^7.11.2
+    classnames: ^2.2.6
+    rc-util: ^5.9.4
+  peerDependencies:
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: d569dae9f84245a90fb5152af4c4e6e9f1bce9d638b5831f3e9d126ff654c9477e3c9d9192c6b3f349ade39c9e0bc85605cad5d8c2e401e632dbd6190b638ad3
+  languageName: node
+  linkType: hard
+
 "@ant-design/react-slick@npm:~0.29.1":
   version: 0.29.2
   resolution: "@ant-design/react-slick@npm:0.29.2"
@@ -2244,7 +2260,7 @@ __metadata:
   resolution: "@micro-lc/layout@workspace:packages/layout"
   dependencies:
     "@ant-design/colors": ^6.0.0
-    "@ant-design/icons": ^4.7.0
+    "@ant-design/icons": ^4.8.0
     "@ant-design/icons-svg": ^4.2.1
     "@babel/core": ^7.20.2
     "@ctrl/tinycolor": ^3.4.1
@@ -2306,6 +2322,7 @@ __metadata:
     vite: ^3.2.4
     vite-plugin-banner: ^0.6.1
     vite-plugin-dynamic-import: ^1.2.4
+    vite-plugin-monaco-editor: ^1.1.0
     vite-plugin-replace: ^0.1.1
     vite-tsconfig-paths: ^3.6.0
   languageName: unknown
@@ -20877,6 +20894,15 @@ __metadata:
   dependencies:
     fast-glob: ~3.2.12
   checksum: d41a6943b6c9c32d983926b72c8e059a274b5bdac219c65758fadd10f7da36f63efe8a8a616c33f0cb1f1334f4a161cb61d2458b582b3d9417a18657244279d3
+  languageName: node
+  linkType: hard
+
+"vite-plugin-monaco-editor@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "vite-plugin-monaco-editor@npm:1.1.0"
+  peerDependencies:
+    monaco-editor: ">=0.33.0"
+  checksum: 9b3d3010d2c2c6ed92e58dd17a04f13eb1fe28ba521eda3d38d4dfe8f3654d9a511dfbbb83614496a64c03a6f6a8d123363dcd408ae0b405d29eae9c68b9c376
   languageName: node
   linkType: hard
 

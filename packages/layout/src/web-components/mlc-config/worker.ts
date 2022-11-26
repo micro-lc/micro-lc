@@ -13,29 +13,24 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker&inline'
-import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker&inline'
-import YamlWorker from 'monaco-yaml/yaml.worker?worker&inline'
+// This must be excluded in storybook 👇
 
-import './monaco-contrib'
+(function injectMonacoEnvironment() {
+  const workers: Record<'default' | 'json' | 'yaml', () => Promise<Worker>> = {
+    default: () => import('monaco-editor/esm/vs/editor/editor.worker?worker&inline').then(({ default: Worker }) => new Worker()),
+    json: () => import('monaco-editor/esm/vs/language/json/json.worker?worker&inline').then(({ default: Worker }) => new Worker()),
+    yaml: () => import('monaco-yaml/yaml.worker?worker&inline').then(({ default: Worker }) => new Worker()),
+  }
 
-type ITextModel = monaco.editor.ITextModel
-type IEditorAction = monaco.editor.IEditorAction
-type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor
+  window.MonacoEnvironment = {
+    async getWorker(_, label) {
+      if (label === 'json' || label === 'yaml') {
+        return workers[label]()
+      }
 
-window.MonacoEnvironment = {
-  getWorker(_, label) {
-    if (label === 'json') {
-      return new JsonWorker()
-    }
-    if (label === 'yaml') {
-      return new YamlWorker()
-    }
-    return new EditorWorker()
-  },
-}
+      return workers.default()
+    },
+  }
+}())
 
-export type { IStandaloneCodeEditor, IEditorAction, ITextModel }
-export const { editor, languages, KeyCode, KeyMod, Uri } = monaco
-export const schema = 'https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json'
+// end 👆

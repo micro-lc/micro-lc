@@ -15,9 +15,9 @@
 */
 import jsYaml from 'js-yaml'
 
-import { Uri } from './worker'
+import * as monaco from './monaco'
 
-export const modelUri = Uri.parse('a://b/foo.yaml')
+export const modelUri = monaco.Uri.parse('a://b/foo.yaml')
 export const yaml = {
   ...jsYaml,
   dump: (text: string): string => {
