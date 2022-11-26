@@ -1,6 +1,11 @@
 declare module '*.less'
 declare module '*.less?inline'
 
+declare module '*.json?url' {
+  const url: string
+  export default url
+}
+
 declare module 'monaco-editor/esm/vs/editor/editor.worker?worker&inline' {
   export default class EditorWorker extends Worker {
     constructor()

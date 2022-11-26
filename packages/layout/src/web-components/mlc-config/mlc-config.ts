@@ -19,10 +19,9 @@ import { unsafeCSS, css, html, LitElement } from 'lit'
 import { property, query, state } from 'lit/decorators.js'
 
 import monacoStyle from './mlc-config.css'
-import type { IStandaloneCodeEditor, IEditorAction, ITextModel } from './worker'
-import * as monaco from './worker'
-import { schema } from './worker'
-import { modelUri, yaml } from './yaml-support'
+import type { Editor } from './monaco'
+import * as monaco from './monaco'
+import { yaml } from './yaml-support'
 
 interface Resizable extends HTMLElement {
   _w: number
@@ -56,7 +55,6 @@ function mouseDownHandler(this: Resizable, event: MouseEvent): void {
   const borderDelta = Math.abs(event.clientX - this._w)
 
   if (borderDelta < borderWidth) {
-    console.log('here')
     this.addEventListener('mousemove', this.mouseMoveHandler)
     this.addEventListener('mouseup', this.mouseUpHandler)
   }
@@ -96,6 +94,26 @@ const bubbleIframeEvents = (iframe: HTMLIFrameElement) => {
       iframe.dispatchEvent(fakeEvent)
     }
   )
+}
+
+const openExternal = (/*
+  href: string, ctx: { preferredOpenerId?: string; sourceUri: monaco.UriComponents }, token: monaco.CancellationToken
+*/): Promise<boolean> => {
+  return Promise.resolve(true)
+}
+
+const overrideOpenExternal = (editor: Editor.IStandaloneCodeEditor): void => {
+  const linkDetector = editor.getContribution('editor.linkDetector')
+  if (linkDetector) {
+    // SAFETY: it refers to the following contribution:
+    //   ==> https://github.com/microsoft/vscode/blob/bd32dd5c8fae9c19cc7cd2455d32ccf41cb74b45/src/vs/editor/contrib/links/browser/links.ts
+    //   ==> https://github.com/microsoft/vscode/blob/bd32dd5c8fae9c19cc7cd2455d32ccf41cb74b45/src/vs/platform/opener/common/opener.ts#L74
+    //   ==> https://github.com/microsoft/vscode/blob/bd32dd5c8fae9c19cc7cd2455d32ccf41cb74b45/src/vs/platform/opener/common/opener.ts#L61
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    linkDetector.openerService._defaultExternalOpener.openExternal = openExternal
+  }
 }
 
 function handleSlotChange(this: MlcConfig, { target }: Event) {
@@ -236,7 +254,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
   @state() editorFormat: EditorFormat = EditorFormat.JSON
 
   @state() private _content = JSON.stringify(defaultConfig)
-  private _editor?: IStandaloneCodeEditor | undefined
+  private _editor?: Editor.IStandaloneCodeEditor | undefined
 
   @property() width = 'inherit'
 
@@ -272,7 +290,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
   handleFormatChange = handleFormatChange.bind(this)
   ctrlEnterClickHandler = ctrlEnterClickHandler.bind<(event: KeyboardEvent) => void>(this)
   microlcApi?: Partial<MicrolcApi<BaseExtension>> | undefined
-  models: Partial<Record<EditorFormat, ITextModel>> = {}
+  models: Partial<Record<EditorFormat, Editor.ITextModel>> = {}
 
   protected createRenderRoot(): ShadowRoot {
     const shadowRoot = super.createRenderRoot() as ShadowRoot
@@ -303,7 +321,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
   protected setupSchemaValidation() {
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
       enableSchemaRequest: true,
-      schemas: [{ uri: schema }],
+      schemas: [{ uri: monaco.schemaUrl }],
       validate: true,
     })
   }
@@ -317,8 +335,15 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
       value: this._content,
     })
 
-    this.models.json = monaco.editor.createModel(this._content, 'json')
-    this.models.yaml = monaco.editor.createModel(yaml.dump(this._content), 'yaml', modelUri)
+    overrideOpenExternal(this._editor)
+
+    const { location: { pathname } } = window
+    const { href: noTrailingSlashHref } = new URL(pathname.replace(/\/$/, ''), window.location.href)
+    const jsonUri = monaco.Uri.parse(`${noTrailingSlashHref}.json`)
+    const yamlUri = monaco.Uri.parse(`${noTrailingSlashHref}.yaml`)
+
+    this.models.json = monaco.editor.createModel(this._content, 'json', jsonUri)
+    this.models.yaml = monaco.editor.createModel(yaml.dump(this._content), 'yaml', yamlUri)
 
     this.models.json.onDidChangeContent(() => {
       const newContent = this._editor?.getValue()
@@ -345,11 +370,9 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     if (!(iframe instanceof HTMLIFrameElement)) {
       iframe = this.ownerDocument.querySelector(this.iframeSelector)
     }
-    console.log(_, iframe)
 
     if (this._editor) {
       const content = this._editor.getValue()
-      console.log(content)
       const value = this.editorFormat === EditorFormat.JSON
         ? content
         : JSON.stringify(yaml.load(content))
@@ -358,7 +381,7 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
   }
 
   protected async formatText(): Promise<void> {
-    const formatAction = this._editor?.getAction('editor.action.formatDocument') as IEditorAction | null
+    const formatAction = this._editor?.getAction('editor.action.formatDocument')
     return formatAction?.run()
   }
 

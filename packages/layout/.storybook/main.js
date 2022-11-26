@@ -2,6 +2,7 @@ const rollupNodePolyFill = require('rollup-plugin-node-polyfills')
 const {mergeConfig} = require('vite')
 const {default: tsconfigPaths} = require('vite-tsconfig-paths')
 const {default: dynamicImport} = require('vite-plugin-dynamic-import')
+const {default: monacoEditorPlugin} = require('vite-plugin-monaco-editor')
 const {replaceCodePlugin} = require('vite-plugin-replace')
 const {default: postcssAntDynamicTheme} = require('@micro-lc/interfaces/postcss-ant-dynamic-theme')
 
@@ -27,9 +28,13 @@ module.exports = {
             {
               from: './lang',
               to: './../../../../lang'
-            }
+            },
           ]
-        })
+        }),
+        monacoEditorPlugin({
+          customWorkers: [{ entry: require.resolve('monaco-yaml/yaml.worker'), label: 'yaml' }],
+          languageWorkers: ['editorWorkerService', 'json'],
+        }),
       ],
       css: {
         preprocessorOptions: {
@@ -48,6 +53,17 @@ module.exports = {
         }
       },
       esbuild: {target: 'ES2020'},
+      optimizeDeps: {
+        needsInterop: [
+          'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/documentSymbols.js',
+          'monaco-editor/esm/vs/editor/contrib/format/browser/formatActions.js',
+          'monaco-editor/esm/vs/editor/contrib/inPlaceReplace/browser/inPlaceReplace.js',
+          'monaco-editor/esm/vs/editor/contrib/stickyScroll/browser/stickyScroll.js',
+          'monaco-editor/esm/vs/editor/contrib/viewportSemanticTokens/browser/viewportSemanticTokens.js',
+          'monaco-editor/esm/vs/editor/standalone/browser/accessibilityHelp/accessibilityHelp.js',
+          'monaco-editor/esm/vs/editor/standalone/browser/inspectTokens/inspectTokens.js',
+        ],
+      },
       build: {
         dynamicImportVarsOptions: {
           exclude: [
@@ -61,6 +77,7 @@ module.exports = {
       },
       resolve: {
         alias: {
+          './worker': require.resolve('./worker.js'),
           path: 'rollup-plugin-node-polyfills/polyfills/path',
           'process.env.NODE_ENV': JSON.stringify('development'),
         },
@@ -68,6 +85,7 @@ module.exports = {
           '@storybook/client-api',
           'react',
           'react-dom',
+          'monaco-editor',
         ]
       },
       server: {
