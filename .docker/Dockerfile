@@ -85,9 +85,9 @@ LABEL name="micro-lc" \
       eu.mia-platform.url="https://www.mia-platform.eu" \
       eu.mia-platform.version=${VERSION}
 
-COPY docker/etc/nginx /etc/nginx
-COPY docker/usr/static /usr/static
-COPY dist /usr/static
+COPY packages/orchestrator/dist /usr/static
+COPY .docker/etc/nginx /etc/nginx
+COPY .docker/usr/static /usr/static
 
 RUN touch ./off \
   && chmod o+rw ./off \

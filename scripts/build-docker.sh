@@ -1,5 +1,5 @@
 docker build \
-  -f docker/Dockerfile \
+  -f .docker/Dockerfile \
   --tag microlc/micro-lc:latest \
   --build-arg COMMIT_SHA='1' \
   --build-arg DESCRIPTION='test' \
