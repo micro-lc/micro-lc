@@ -1,6 +1,6 @@
 {
-  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json",
-  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Config",
   "description": "Version 2 of micro-lc configuration",
   "definitions": {
@@ -160,16 +160,27 @@
         },
         "src": {
           "description": "iFrame src attribute value",
-          "type": "string"
+          "type": "string",
+          "examples": [
+            "/frame.html", "https://mydomain.com/"
+          ]
+        },
+        "srcdoc": {
+          "description": "iFrame html content",
+          "type": "string",
+          "examples": [
+            "<!DOCTYPE><html><head></head><body>IFrame Content</body></html>"
+          ]
         },
         "route": {
           "description": "Path on which the iFrame will be rendered",
           "type": "string"
         },
         "attributes": {
-          "$comment": "TODO: should we list all possible properties?",
+          "$comment": "Attributes `src` and `srcdoc` are overridden by the `iframe` integrationMode properties",
           "description": "Valid attributes of iframe HTML element",
-          "type": "object"
+          "type": "object",
+          "additionalProperties": {"type": "string"}
         }
       },
       "additionalProperties": false
@@ -358,7 +369,7 @@
         {
           "$ref": "#/definitions/iframeApplication",
           "type": "object",
-          "required": ["integrationMode", "src", "route"]
+          "required": ["integrationMode", "route"]
         },
         {
           "$ref": "#/definitions/composableApplication",

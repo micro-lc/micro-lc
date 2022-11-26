@@ -1,6 +1,6 @@
 {
-  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json",
-  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "PluginConfiguration",
   "definitions": {
     "importmap": {

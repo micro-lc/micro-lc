@@ -13,7 +13,7 @@ describe('iconic web-component tests', () => {
         ></mlc-iconic>
     `)
 
-    await waitUntil(() => container.querySelector('svg[viewBox]') !== null)
+    await waitUntil(() => container.querySelector('svg[viewBox]') !== null, 'waited too much', { timeout: 20000 })
 
     // expect(container.querySelector('svg')).to.have.attribute('viewBox')
     // expect(container.querySelector('path')).to.have.attribute('d')
@@ -54,7 +54,7 @@ describe('iconic web-component tests', () => {
       ></mlc-iconic>
     `)
 
-    await waitUntil(() => container.querySelector('svg[viewBox]') !== null)
+    await waitUntil(() => container.querySelector('svg[viewBox]') !== null, 'waited too much', { timeout: 20000 })
 
     expect(container.querySelector('svg')).to.have.attribute('viewBox')
     expect(container.querySelector('path')).to.have.attribute('d')

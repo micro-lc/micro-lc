@@ -217,6 +217,10 @@ export interface IFrameApplication {
    */
   src: string
   /**
+   * iFrame html content
+   */
+  srcdoc?: string
+  /**
    * Path on which the iFrame will be rendered
    */
   route?: string
@@ -224,7 +228,7 @@ export interface IFrameApplication {
    * Valid attributes of iframe HTML element
    */
   attributes?: {
-    [k: string]: unknown
+    [k: string]: string
   }
 }
 export interface ComposableApplication {
@@ -380,6 +384,10 @@ export interface IFrameApplication1 {
    */
   src: string
   /**
+   * iFrame html content
+   */
+  srcdoc?: string
+  /**
    * Path on which the iFrame will be rendered
    */
   route?: string
@@ -387,7 +395,7 @@ export interface IFrameApplication1 {
    * Valid attributes of iframe HTML element
    */
   attributes?: {
-    [k: string]: unknown
+    [k: string]: string
   }
 }
 export interface ComposableApplication1 {
@@ -456,7 +464,11 @@ export interface IFrameApplication2 {
   /**
    * iFrame src attribute value
    */
-  src: string
+  src?: string
+  /**
+   * iFrame html content
+   */
+  srcdoc?: string
   /**
    * Path on which the iFrame will be rendered
    */
@@ -465,7 +477,7 @@ export interface IFrameApplication2 {
    * Valid attributes of iframe HTML element
    */
   attributes?: {
-    [k: string]: unknown
+    [k: string]: string
   }
 }
 export interface ComposableApplication2 {

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- v2 schemas `$id`'s updated to support trailing `#`
+- v2 schemas `integrationMode` iframe: fixed types for attributes which must be a key value map string to string + added examples
+
 ### Versioning
 
 - Development dependencies version bumps
