@@ -94,6 +94,12 @@ export const SideBar: React.FC<SideBarProps> = ({
         getPopupContainer={getPopupContainer}
         items={antMenuItems}
         mode='inline'
+        onClick={(info) => {
+          // kick in only when we attempt to move on a subset of selected keys. Won't trump on `onSelect`
+          if (selectedKeys && selectedKeys.findIndex((selectedKey) => selectedKey === info.key) > 0) {
+            onSelect?.({ ...info, key: selectedKeys[0], selectedKeys })
+          }
+        }}
         onSelect={onSelect}
         selectedKeys={selectedKeys}
       />

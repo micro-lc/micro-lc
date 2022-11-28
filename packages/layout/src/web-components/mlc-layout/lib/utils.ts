@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { MenuItem } from '../types'
+import type { GroupMenuItem, MenuItem } from '../types'
 
 export enum Theme {
   DARK = 'dark',
@@ -25,7 +25,8 @@ export const findMenuItemById = (
   id: string
 ): Partial<MenuItem> | undefined => {
   for (const menuItem of menuItems) {
-    if (menuItem.id === id) { return menuItem }
+    const { alsoOn = [] } = menuItem as GroupMenuItem
+    if (menuItem.id === id || alsoOn.includes(id)) { return menuItem }
 
     if ('children' in menuItem) {
       const foundInChildren = findMenuItemById(menuItem.children ?? [], id)

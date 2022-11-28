@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - url pattern matching extended to parametric values
+- layout sidebar accepts multiple applications per item to mock a SPA folder structure
 
 ### Versioning
 

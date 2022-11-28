@@ -96,6 +96,8 @@ export interface CategoryMenuItem {
 }
 
 export interface GroupMenuItem {
+  alsoOn?: string[]
+
   children?: MenuItem[]
 
   /** Unique identifier of the group */
