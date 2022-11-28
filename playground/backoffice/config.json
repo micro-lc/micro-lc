@@ -86,7 +86,7 @@
               "children": [
                 {
                   "id": "plain",
-                  "alsoOn": ["plain_details", "plain_about"],
+                  "selectedAlsoOn": ["plain_details", "plain_about"],
                   "label": "Inline",
                   "type": "application"
                 },

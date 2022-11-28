@@ -25,8 +25,8 @@ export const findMenuItemById = (
   id: string
 ): Partial<MenuItem> | undefined => {
   for (const menuItem of menuItems) {
-    const { alsoOn = [] } = menuItem as ApplicationMenuItem
-    if (menuItem.id === id || alsoOn.includes(id)) { return menuItem }
+    const { selectedAlsoOn = [] } = menuItem as ApplicationMenuItem
+    if (menuItem.id === id || selectedAlsoOn.includes(id)) { return menuItem }
 
     if ('children' in menuItem) {
       const foundInChildren = findMenuItemById(menuItem.children ?? [], id)

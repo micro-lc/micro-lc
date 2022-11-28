@@ -70,14 +70,14 @@ export interface HrefMenuItem {
 }
 
 export interface ApplicationMenuItem {
-  alsoOn?: string[]
-
   icon?: Icon
 
   /** Unique identifier of the corresponding micro-lc application  */
   id: string
 
   label?: LocalizedText
+
+  selectedAlsoOn?: string[]
 
   /** Type of the item: micro-lc application */
   type: 'application'
