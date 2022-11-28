@@ -70,6 +70,8 @@ export interface HrefMenuItem {
 }
 
 export interface ApplicationMenuItem {
+  alsoOn?: string[]
+
   icon?: Icon
 
   /** Unique identifier of the corresponding micro-lc application  */
