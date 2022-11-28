@@ -77,6 +77,8 @@ export interface ApplicationMenuItem {
 
   label?: LocalizedText
 
+  selectedAlsoOn?: string[]
+
   /** Type of the item: micro-lc application */
   type: 'application'
 }

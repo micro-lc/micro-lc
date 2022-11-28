@@ -85,6 +85,12 @@
             {
               "children": [
                 {
+                  "id": "plain",
+                  "selectedAlsoOn": ["plain_details", "plain_about"],
+                  "label": "Inline",
+                  "type": "application"
+                },
+                {
                   "id": "composer_new",
                   "label": "Composer V2",
                   "type": "application"
@@ -161,6 +167,21 @@
           "properties": { "textContent": "Ciao Main" }
         }
       }
+    },
+    "plain": {
+      "integrationMode": "compose",
+      "route": "./ingredients/",
+      "config": {"content": {"tag": "strong", "content": "Home 🏠"}}
+    },
+    "plain_details": {
+      "integrationMode": "compose",
+      "route": "./ingredients/details/",
+      "config": {"content": {"tag": "div", "content": "Hello 👋"}}
+    },
+    "plain_about": {
+      "integrationMode": "compose",
+      "route": "./ingredients/about/",
+      "config": {"content": {"tag": "div", "content": "About 📓"}}
     },
     "composer_new": {
       "integrationMode": "compose",

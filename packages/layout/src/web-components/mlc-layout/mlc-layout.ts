@@ -26,7 +26,7 @@ import { error } from '../commons/logger'
 import { getFromLocalStorage } from './lib/local-storage'
 import { DEFAULT_LANGUAGE } from './lib/translation-loader'
 import { Theme } from './lib/utils'
-import { createProps, loadLocale, retrieveUser } from './mlc-layout.lib'
+import { createProps, loadLocale, retrieveUser, updateSelectedKeys } from './mlc-layout.lib'
 import type { MlcApi, User, Head, HelpMenu, Logo, MenuItem, Mode, UserMenu } from './types'
 
 export class MlcLayout extends MlcComponent<WrapperProps> {
@@ -70,7 +70,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
 
     if (this._wasDisconnected) {
       this._currentApplicationSub = this.microlcApi?.currentApplication$
-        ?.subscribe(currApplicationId => { if (currApplicationId) { this._selectedKeys = [currApplicationId] } })
+        ?.subscribe(updateSelectedKeys.bind(this))
     }
 
     this._wasDisconnected = false
@@ -93,7 +93,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
     retrieveUser.call(this).catch(error)
 
     this._currentApplicationSub = this.microlcApi?.currentApplication$
-      ?.subscribe(currApplicationId => { this._selectedKeys = currApplicationId ? [currApplicationId] : [] })
+      ?.subscribe(updateSelectedKeys.bind(this))
 
     this._sideBarCollapsed = getFromLocalStorage('@microlc:fixedSidebarState') === 'collapsed'
     this._theme = getFromLocalStorage('@microlc:currentTheme') ?? Theme.LIGHT

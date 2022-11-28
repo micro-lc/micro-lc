@@ -78,6 +78,14 @@ function onSelect(this: MlcLayout, id: string) {
   }
 }
 
+export function updateSelectedKeys(this: MlcLayout, currApplicationId: string | undefined): void {
+  this._selectedKeys = currApplicationId ? [currApplicationId] : []
+  if (currApplicationId) {
+    const { id } = findMenuItemById(this.menuItems ?? [], currApplicationId) ?? {}
+    id !== undefined && this._selectedKeys.push(id)
+  }
+}
+
 async function logout(this: MlcLayout) {
   const { logout: conf } = this.userMenu ?? {}
 
