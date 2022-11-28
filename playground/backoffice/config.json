@@ -146,7 +146,7 @@
     "react": {
       "integrationMode": "parcel",
       "injectBase": true,
-      "route": "./react/",
+      "route": "./:app/react/",
       "entry": "http://localhost:8003/"
     },
     "main2": {
@@ -164,7 +164,7 @@
     },
     "composer_new": {
       "integrationMode": "compose",
-      "route": "./ingredients",
+      "route": "./:app/ingredients/",
       "config": "./ingredients_v2.json"
     },
     "composer_old": {
