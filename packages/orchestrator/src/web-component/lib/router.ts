@@ -24,6 +24,7 @@ import type { RoutingError } from './handler'
 import { getPublicPath, errorMap, RoutingErrorMessage, postProcessTemplate, microlcFetch } from './handler'
 import type { LoadedAppUpdate, QiankunApi, QiankunMicroApp } from './qiankun'
 import type { ComposableApplicationProperties } from './update'
+import { effectiveRouteLength, urlMatch } from './url-matcher'
 
 type MatchingRoute = LoadableApp<ComposableApplicationProperties>
 
@@ -144,6 +145,43 @@ function getIFramePathname(win = window, baseURI: string): URL {
   return new URL(completeHref, baseURI)
 }
 
+const updateCountersAndResults = (
+  pathname: string,
+  route: string,
+  defaultUrl: string,
+  baseURI: string,
+  args: LoadableApp<ComposableApplicationProperties>,
+  counters: number[],
+  result: MatchingRouteReturnType
+) => {
+  const { pathname: routePathname } = new URL(route, baseURI)
+
+  const exact = urlMatch(pathname, routePathname)
+  const routePathnameLength = effectiveRouteLength(routePathname)
+  if (exact && routePathnameLength > counters[0]) {
+    counters[0] = routePathnameLength
+    result[0] = args
+  }
+
+  const { pathname: routeWtsPathname } = new URL(route.replace(/\/$/, ''), baseURI)
+
+  const wts = urlMatch(pathname, routeWtsPathname)
+  const routeWtsPathnameLength = effectiveRouteLength(routeWtsPathname)
+  if (wts && routeWtsPathnameLength > counters[1]) {
+    counters[1] = routeWtsPathnameLength
+    result[1] = args
+  }
+
+  const { pathname: defaultPathname } = new URL(defaultUrl, baseURI)
+  // const def = defaultPathname.match(new RegExp(`^${routePathname}`))
+  const def = urlMatch(defaultPathname, routePathname)
+  // const routeWtsPathnameLength = effectiveRouteLength(routeWtsPathname)
+  if (def && routePathnameLength > counters[2]) {
+    counters[2] = routePathnameLength
+    result[2] = args
+  }
+}
+
 function getNextMatchingRoute(
   this: RouterContainer, url?: string | undefined
 ): MatchingRouteReturnType {
@@ -168,28 +206,33 @@ function getNextMatchingRoute(
       continue
     }
 
-    const { pathname: routePathname } = new URL(route, baseURI)
+    updateCountersAndResults(
+      pathname, route, defaultUrl, baseURI, args, counters, result
+    )
+    // const { pathname: routePathname } = new URL(route, baseURI)
 
-    const exact = pathname.match(new RegExp(`^${routePathname}`))
-    if (exact && routePathname.length > counters[0]) {
-      counters[0] = routePathname.length
-      result[0] = args
-    }
+    // const exact = urlMatch(pathname, routePathname)
+    // const routePathnameLength = effectiveRouteLength(routePathname)
+    // if (exact && routePathnameLength > counters[0]) {
+    //   counters[0] = routePathnameLength
+    //   result[0] = args
+    // }
 
-    const { pathname: routeWtsPathname } = new URL(route.replace(/\/$/, ''), baseURI)
+    // const { pathname: routeWtsPathname } = new URL(route.replace(/\/$/, ''), baseURI)
 
-    const wts = pathname.match(new RegExp(`^${routeWtsPathname}`))
-    if (wts && routeWtsPathname.length > counters[1]) {
-      counters[1] = routeWtsPathname.length
-      result[1] = args
-    }
+    // const wts = urlMatch(pathname, routeWtsPathname)
+    // const routeWtsPathnameLength = effectiveRouteLength(routeWtsPathname)
+    // if (wts && routeWtsPathnameLength > counters[1]) {
+    //   counters[1] = routeWtsPathnameLength
+    //   result[1] = args
+    // }
 
-    const { pathname: defaultPathname } = new URL(defaultUrl, baseURI)
-    const def = defaultPathname.match(new RegExp(`^${routePathname}`))
-    if (def && routePathname.length > counters[2]) {
-      counters[2] = routePathname.length
-      result[2] = args
-    }
+    // const { pathname: defaultPathname } = new URL(defaultUrl, baseURI)
+    // const def = defaultPathname.match(new RegExp(`^${routePathname}`))
+    // if (def && routePathname.length > counters[2]) {
+    //   counters[2] = routePathname.length
+    //   result[2] = args
+    // }
   }
 
   url !== undefined
@@ -218,6 +261,7 @@ function isSameError(first: RoutingError, second: RoutingError): boolean {
 async function flushAndGo(
   this: RouterContainer,
   nextMatch: MatchingRoute,
+  url?: string,
   incomingError?: RoutingError | undefined,
   previousIncomingError?: RoutingError | undefined
 ): Promise<LoadedAppUpdate> {
@@ -246,7 +290,7 @@ async function flushAndGo(
           baseURI: this.ownerDocument.baseURI,
           injectBase: nextMatch.props?.injectBase,
           name: nextMatch.name,
-          routes: this.loadedRoutes,
+          url: url ?? window.location.href,
         }),
     })
 
@@ -272,7 +316,7 @@ async function flushAndGo(
       error = { ...error, message, status }
 
       if (errorRoute) {
-        await flushAndGo.call(this, errorRoute, error, incomingError).then((update) => update?.({ message, reason }))
+        await flushAndGo.call(this, errorRoute, url, error, incomingError).then((update) => update?.({ message, reason }))
       }
 
       return undefined
@@ -290,7 +334,7 @@ export async function rerouteToError(this: RouterContainer, statusCode?: number,
     return Promise.reject(new TypeError(`no ${code} page available`))
   }
 
-  return flushAndGo.call(this, nextMatch, { message: errorMap[code], reason, status: code })
+  return flushAndGo.call(this, nextMatch, undefined, { message: errorMap[code], reason, status: code })
     .then(async (update) => {
       await update?.({ message: 'Oops! Something went wrong', reason })
       return undefined
@@ -354,7 +398,7 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
   }
 
   return (nextMatch.name !== currentApplication)
-    ? flushAndGo.call(this, nextMatch, error).then(async (update) => { await update?.({ ...error }) })
+    ? flushAndGo.call(this, nextMatch, url, error).then(async (update) => { await update?.({ ...error }) })
     : Promise.resolve()
 }
 

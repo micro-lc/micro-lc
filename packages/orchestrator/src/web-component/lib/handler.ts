@@ -54,7 +54,7 @@ interface PostProcessTemplateOptions {
   baseURI?: string | undefined
   injectBase?: boolean
   name: string
-  routes: Map<string, string>
+  url: string
 }
 
 export function postProcessTemplate(tplResult: TemplateResult, opts: PostProcessTemplateOptions): TemplateResult {
@@ -64,7 +64,7 @@ export function postProcessTemplate(tplResult: TemplateResult, opts: PostProcess
     const head = document.querySelector('head')
     const base = document.querySelector('base')
     if (base === null) {
-      const { pathname: route } = new URL(opts.routes.get(opts.name) ?? '', opts.baseURI)
+      const { pathname: route } = new URL(opts.url, opts.baseURI)
       head?.appendChild(
         Object.assign(document.createElement('base'), {
           href: route,
