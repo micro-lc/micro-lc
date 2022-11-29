@@ -20,10 +20,10 @@ import type {
 } from '@micro-lc/interfaces/v2'
 import type { SchemaObject } from 'ajv'
 import type { Observable } from 'rxjs'
-import { BehaviorSubject, ReplaySubject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 
-import type { ComposerApi, ReplaySubjectPool } from './lib'
-import { render, premount, createComposerContext } from './lib'
+import type { ComposerApi } from './lib'
+import { render, premount, createComposerContext, createPool } from './lib'
 
 interface MultipleSchemas {
     id: string
@@ -93,46 +93,6 @@ declare global {
       MODE: 'development' | 'production'
     }
   }
-}
-
-interface Event {
-  label: string
-  meta?: Record<string, unknown>
-  payload: Record<string, unknown>
-}
-
-function createPool<T>(): ReplaySubjectPool<T> {
-  const array: ReplaySubject<T>[] = []
-
-  const pool = new Proxy<Record<string, ReplaySubject<T>>>({}, {
-    get(target, property, receiver) {
-      if (typeof property === 'string' && !Object.prototype.hasOwnProperty.call(target, property)) {
-        target[property] = new ReplaySubject<T>()
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return Reflect.get(target, property, receiver)
-    },
-  })
-
-  return new Proxy(new ReplaySubject() as ReplaySubjectPool<T>, {
-    get(target, property, receiver) {
-      if (property === 'pool') {
-        return pool
-      }
-
-      const idx = typeof property === 'string' ? Number.parseInt(property, 10) : Number.NaN
-      if (!Number.isNaN(idx)) {
-        if (array.at(idx) === undefined) {
-          array[idx] = new ReplaySubject<T>()
-        }
-        return array[idx]
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return Reflect.get(target, property, receiver)
-    },
-  })
 }
 
 const composerConfig = new Map<string, ResolvedConfig>()
@@ -231,7 +191,7 @@ export async function mount(
           ...composerApi?.context,
           composerApi: { context: composerApi?.context, createComposerContext, premount },
           currentUser: user,
-          eventBus: createPool<Event>(),
+          eventBus: createPool(),
         }
       ).then(() => {
         container.replaceChildren(...virtualContainer.childNodes)
