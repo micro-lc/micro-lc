@@ -347,9 +347,6 @@
           "description": "parcel activeRule",
           "type": "string"
         },
-        "container": {
-          "$comment": "TODO: do we need this?"
-        },
         "properties": {
           "description": "Data passed to the plugin",
           "type": "object"

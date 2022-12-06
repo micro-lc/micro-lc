@@ -360,9 +360,6 @@ export interface ParcelApplication {
    * parcel activeRule
    */
   route?: string
-  container?: {
-    [k: string]: unknown
-  }
   /**
    * Data passed to the plugin
    */
@@ -435,9 +432,6 @@ export interface ParcelApplication1 {
    * parcel activeRule
    */
   route?: string
-  container?: {
-    [k: string]: unknown
-  }
   /**
    * Data passed to the plugin
    */
@@ -517,9 +511,6 @@ export interface ParcelApplication2 {
    * parcel activeRule
    */
   route: string
-  container?: {
-    [k: string]: unknown
-  }
   /**
    * Data passed to the plugin
    */
