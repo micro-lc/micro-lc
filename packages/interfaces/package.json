@@ -1,0 +1,54 @@
+{
+  "name": "@micro-lc/interfaces",
+  "version": "0.5.0",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "postcss-ant-dynamic-theme",
+    "schemas",
+    "v1",
+    "v2",
+    "package.json"
+  ],
+  "scripts": {
+    "make-types-from-schemas": "node ./scripts/make-types.mjs",
+    "make-types": "yarn tsc --project ./scripts/tsconfig.types.json",
+    "check:types": "yarn run -T run-s make-types-from-schemas make-types",
+    "build:es": "ts-node scripts/compile.esm.ts",
+    "build:cjs": "ts-node scripts/compile.cjs.ts",
+    "build": "yarn run -T run-s check:types build:es build:cjs",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
+    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/eslint": "^8.4.10",
+    "@types/glob": "^8.0.0",
+    "@types/mkdirp": "^1.0.2",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.11.9",
+    "ajv": "^8.11.2",
+    "ajv-formats": "^2.1.1",
+    "axios": "^1.2.0",
+    "chai": "^4.3.7",
+    "esbuild": "^0.15.15",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "json-schema-to-typescript": "^11.0.2",
+    "mkdirp": "^1.0.4",
+    "mocha": "^10.1.0",
+    "nyc": "^15.1.0",
+    "postcss": "^8.4.19",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  },
+  "engines": {
+    "node": ">=16.17.0"
+  },
+  "peerDependencies": {
+    "postcss": "*"
+  }
+}

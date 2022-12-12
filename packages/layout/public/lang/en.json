@@ -1,0 +1,9 @@
+{
+  "$schema": "../../src/lang/lang.schema.json",
+  "MLC-LAYOUT": {
+    "collapse": "Collapse",
+    "light": "Light",
+    "dark": "Dark",
+    "logout": "Logout"
+  }
+}

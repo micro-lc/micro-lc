@@ -1,0 +1,353 @@
+{
+  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PluginConfiguration",
+  "definitions": {
+    "importmap": {
+      "title": "ImportMap",
+      "type": "object",
+      "examples": [
+        {
+          "imports": {
+            "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.development.min.js",
+            "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.development.min.js"
+          }
+        },
+        {
+          "imports": {
+            "react": "https://esm.sh/react@next",
+            "react-dom": "https://esm.sh/react-dom@next"
+          },
+          "scopes": {
+            "https://esm.sh/react-dom@next": {
+              "/client": "https://esm.sh/react-dom@next/client"
+            }
+          }
+        },
+        {
+          "imports": {
+            "a": "/a-1.mjs",
+            "b": "/b-1.mjs",
+            "c": "/c-1.mjs"
+          },
+          "scopes": {
+            "/scope2/": {
+              "a": "/a-2.mjs"
+            },
+            "/scope2/scope3/": {
+              "b": "/b-3.mjs"
+            }
+          }
+        }
+      ],
+      "properties": {
+        "imports": {
+          "title": "Imports",
+          "description": "Allows control over what URLs get fetched by JavaScript import statements and import() expressions.",
+          "type": "object",
+          "examples": [
+            {
+              "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react@17.0.2-fix.1/esm/react.development.min.js",
+              "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom@17.0.2-fix.0/esm/react-dom.development.min.js"
+            }
+          ],
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri-reference"
+          }
+        },
+        "scopes": {
+          "title": "Scopes",
+          "description": "It is often the case that you want to use the same import specifier to refer to multiple versions of a single library, depending on who is importing them. This encapsulates the versions of each dependency in use, and avoids dependency hell. We support this use case in import maps by allowing you to change the meaning of a specifier within a given scope.",
+          "type": "object",
+          "examples": [
+            {
+              "/scope2/": {
+                "a": "/a-2.mjs"
+              },
+              "/scope2/scope3/": {
+                "b": "/b-3.mjs"
+              }
+            }
+          ],
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "format": "uri-reference"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "sources": {
+      "description": "Global sources",
+      "examples": [
+        "https://my-web-components-source",
+        [
+          "https://my-web-components-source-1",
+          "https://my-web-components-source-2"
+        ],
+        {
+          "uris": "https://my-web-components-source"
+        },
+        {
+          "uris": [
+            "https://my-web-components-source-1",
+            "https://my-web-components-source-2"
+          ]
+        },
+        {
+          "uris": "https://my-web-components-source",
+          "importmap": {
+            "imports": {
+              "a": "/a-1.mjs",
+              "b": "/b-1.mjs",
+              "c": "/c-1.mjs"
+            },
+            "scopes": {
+              "/scope2/": {
+                "a": "/a-2.mjs"
+              },
+              "/scope2/scope3/": {
+                "b": "/b-3.mjs"
+              }
+            }
+          }
+        }
+      ],
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri-reference"
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "uris": {
+              "description": "A single source uri or a list of source uris",
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "uri-reference"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri-reference"
+                  }
+                }
+              ]
+            },
+            "importmap": {
+              "$ref": "#/definitions/importmap",
+              "description": "Specific import map for the component"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["uris"]
+        }
+      ]
+    },
+
+    "text-content": {
+      "description": "An HTML number or text content node",
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+
+    "component": {
+      "examples": [
+        {
+          "tag": "link",
+          "attributes": {
+            "rel": "stylesheet",
+            "href": "./style.css"
+          }
+        },
+        {
+          "tag": "div",
+          "content": "hello!"
+        },
+        {
+          "tag": "span",
+          "attributes": {
+            "style": "padding: 8px;"
+          },
+          "content": [
+            {
+              "tag": "p",
+              "content": "hello"
+            },
+            " world!"
+          ]
+        },
+        {
+          "tag": "button",
+          "properties": {
+            "textContent": "Don't click me!"
+          },
+          "booleanAttributes": ["disabled"]
+        },
+        {
+          "tag": "my-custom-button"
+        }
+      ],
+      "oneOf": [
+        {
+          "title": "Component",
+          "description": "An HTML node",
+          "type": "object",
+          "properties": {
+            "tag": {
+              "description": "HTML node tag name",
+              "oneOf": [
+                {
+                  "description": "Custom tag name",
+                  "type": "string",
+                  "pattern": "^[^-](([a-z]+)-)+([a-z]+)$"
+                },
+                {
+                  "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/html-tag.schema.json#/definitions/html-tag"
+                }
+              ]
+            },
+            "attributes": {
+              "description": "HTML5 attribute applied using setAttribute API",
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "booleanAttributes": {
+              "description": "HTML5 boolean attribute applied using setAttribute API",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "properties": {
+              "description": "DOM element property applied as object property after creating an element",
+              "type": "object"
+            },
+            "content": {
+              "$ref": "#/definitions/content",
+              "description": "HTML node children"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["tag"]
+        },
+        {
+          "title": "VoidComponent",
+          "description": "An HTML void node",
+          "type": "object",
+          "properties": {
+            "tag": {
+              "description": "HTML node tag name",
+              "oneOf": [
+                {
+                  "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/html-tag.schema.json#/definitions/html-void-tag"
+                }
+              ]
+            },
+            "attributes": {
+              "description": "HTML5 attribute applied using setAttribute API",
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+
+            "booleanAttributes": {
+              "description": "HTML5 boolean attribute applied using setAttribute API",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "properties": {
+              "description": "DOM element property applied as object property after creating an element",
+              "type": "object"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["tag"]
+        }
+      ]
+    },
+
+    "array-content": {
+      "description": "An HTML array node",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/component"
+          },
+          {
+            "$ref": "#/definitions/text-content"
+          }
+        ]
+      }
+    },
+
+    "content": {
+      "title": "Content",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/array-content"
+        },
+        {
+          "$ref": "#/definitions/component"
+        },
+        {
+          "$ref": "#/definitions/text-content"
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "sources": {
+      "$ref": "#/definitions/sources"
+    },
+
+    "content": {
+      "$ref": "#/definitions/content"
+    }
+  },
+  "required": ["content"]
+}

@@ -1,0 +1,281 @@
+{
+  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v1/config.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Config",
+  "definitions": {
+    "internal-plugin": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the plugin",
+          "type": "string"
+        },
+        "order": {
+          "description": "Plugin registration order",
+          "type": "integer"
+        },
+        "integrationMode": {
+          "description": "Way in which the plugin is integrated.",
+          "type": "string",
+          "enum": ["href", "qiankun", "iframe"]
+        },
+        "pluginRoute": {
+          "description": "Path on which the plugin will be rendered",
+          "type": "string"
+        },
+        "pluginUrl": {
+          "description": "Entry of the plugin",
+          "type": "string"
+        },
+        "props": {
+          "description": "Data passed to the plugin",
+          "type": "object",
+          "additionalProperties": true
+        },
+        "externalLink": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "Url of the external application",
+              "type": "string"
+            },
+            "sameWindow": {
+              "description": "States if the link should be opened in a new window",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["url", "sameWindow"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["id"]
+    },
+
+    "plugin": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the plugin",
+          "type": "string"
+        },
+        "order": {
+          "description": "Plugin registration order",
+          "type": "integer"
+        },
+        "integrationMode": {
+          "description": "Way in which the plugin is integrated.",
+          "type": "string",
+          "enum": ["href", "qiankun", "iframe"]
+        },
+        "pluginRoute": {
+          "description": "Path on which the plugin will be rendered",
+          "type": "string"
+        },
+        "pluginUrl": {
+          "description": "Entry of the plugin",
+          "type": "string"
+        },
+        "props": {
+          "description": "Data passed to the plugin",
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "configurationName": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "configuration": {
+                  "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v1/component.schema.json#/definitions/component"
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
+        },
+        "externalLink": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "Url of the external application",
+              "type": "string"
+            },
+            "sameWindow": {
+              "description": "States if the link should be opened in a new window",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["url", "sameWindow"]
+        },
+        "label": {
+          "description": "Label visualized in the side menu",
+          "type": "string"
+        },
+        "icon": {
+          "description": "Icon visualized in the side menu",
+          "type": "string"
+        },
+        "category": {
+          "description": "Sub-menu category in which insert the plugin",
+          "type": "string"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/plugin"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": ["id", "label"]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "theming": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "properties": {
+            "pageTitle": {
+              "type": "string"
+            },
+            "favicon": {
+              "type": "string"
+            }
+          }
+        },
+        "logo": {
+          "type": "object",
+          "properties": {
+            "url_light_image": {
+              "description": "Light logo image url",
+              "type": "string"
+            },
+            "url_dark_image": {
+              "description": "Dark logo image url",
+              "type": "string"
+            },
+            "alt": {
+              "description": "Logo alt",
+              "type": "string"
+            },
+            "navigation_url": {
+              "description": "Link to the navigation page reached when the logo is clicked",
+              "type": "string"
+            }
+          },
+          "required": ["url_light_image", "alt"]
+        },
+        "variables": {
+          "type": "object",
+          "properties": {
+            "primaryColor": {
+              "description": "Main theme color",
+              "type": "string"
+            }
+          }
+        },
+        "menuLocation": {
+          "type": "string",
+          "default": "sideBar",
+          "enum": ["sideBar", "topBar", "fixedSideBar"]
+        },
+        "enableDarkMode": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "required": ["logo", "variables"]
+    },
+    "shared": {
+      "type": "object",
+      "properties": {
+        "props": {
+          "type": "object"
+        }
+      }
+    },
+    "plugins": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/plugin"
+      }
+    },
+    "internalPlugins": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/internal-plugin"
+      }
+    },
+    "analytics": {
+      "type": "object",
+      "properties": {
+        "privacyLink": {
+          "description": "Url to the privacy information page",
+          "type": "string"
+        },
+        "disclaimer": {
+          "description": "Informative message inside the banner",
+          "type": "string"
+        },
+        "gtmId": {
+          "description": "Google tag manager id of the current user needed to instaciate analytics",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["privacyLink", "disclaimer", "gtmId"]
+    },
+    "helpMenu": {
+      "type": "object",
+      "properties": {
+        "helpLink": {
+          "description": "Link to the help page",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["helpLink"]
+    },
+    "rightMenu": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entry": {
+            "description": "Entry point of the web component",
+            "type": "string"
+          },
+          "tag": {
+            "description": "Tag that will be used to mount the web component inside the DOM",
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false,
+        "required": ["tag", "entry"]
+      }
+    }
+  }
+}

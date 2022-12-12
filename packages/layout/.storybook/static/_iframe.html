@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    html, body, textarea {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <textarea></textarea>
+  <script>
+    window.addEventListener('message', function (event) {
+      document.querySelector('textarea').textContent = event.data
+    })
+  </script>
+</body>
+</html>

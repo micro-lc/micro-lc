@@ -1,141 +1,139 @@
-<div align="center">
+<h1 align="center">
+  <a href="https://micro-lc.io"><img src="https://micro-lc.github.io/documentation/img/logo-light.png" alt="micro-lc"></a>
+</h1>
 
-# micro-lc
+<p align="center">
+    <a href="https://mia-platform.eu/?utm_source=referral&utm_medium=github&utm_campaign=micro-lc"><img src="https://img.shields.io/badge/Supported%20by-Mia--Platform-green?style=for-the-badge&link=https://mia-platform.eu/&color=DE0D92&labelColor=214147" alt="Mia-Platform" /></a>
+</p>
 
-[![Build Status][github-actions-svg]][github-actions]
-[![javascript style guide][standard-mia-svg]][standard-mia]
-[![Coverage Status][coverall-svg]][coverall-io]
-[![Docker fe pull][docker-frontend-pull-svg]][docker-frontend-pull]
-[![Docker be pull][docker-backend-pull-svg]][docker-backend-pull]
-[![Mia-Platform](https://img.shields.io/badge/Supported%20by-Mia--Platform-green?style=for-the-badge&link=https://mia-platform.eu/&color=DE0D92&labelColor=214147)](https://mia-platform.eu/?utm_source=referral&utm_medium=github&utm_campaign=micro-lc)
+## Introduction
 
-</div>
+micro-lc is an open source micro-frontend orchestrator for building flexible, multi-tenant frontend applications.
+And [much more](https://micro-lc.github.io/documentation/docs)!
 
-**The Mia-Platform micro frontend solution**
-
-**micro-lc** enables you to create modular applications composed by multiple, independent [micro frontends][micro-frontends]
-called _plugins_ integrated at runtime. `micro-lc` consists of a core interface that loads, embeds, and orchestrates plugins, while
-providing configuration options and useful out-of-the-box features.
-
-The core components are written in Typescript and React, `micro-lc` is technology-agnostic, which means that it integrates
-seamlessly with your favourite toolkit, being it Angular, React, Vue, or anything else you like.
-
-You can consult [here][micro-lc-doc] the full documentation.
+**Tip**: use the official **[playground](https://micro-lc.github.io/documentation/playground/)** to try micro-lc immediately.
 
 An introduction about micro frontend and how micro-lc works:
 
-[![micro-lc introduction][micro-lc-youtube-snap]][micro-lc-youtube-video]
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=QumadjC2krU"><img src="https://img.youtube.com/vi/QumadjC2krU/0.jpg" alt="micro-lc introduction"></a>
+</div>
 
-## Horizontal micro-frontend
-Are you interested in horizontal split micro-frontends?
+## Installation
 
-Take also a look at [micro-lc-element-composer][micro-lc-element-composer]!
+micro-lc is shipped as an ES module **CDN bundle** and can be imported in any HTML page. Moreover, a **dockerized 
+webserver** is available on Docker Hub.
 
-# Getting Started
+[Read the docs](https://micro-lc.github.io/documentation/docs/getting-started) to learn how you can use micro-lc in your
+next project!
 
-The project is a monorepo built with [yarn workspaces][workspaces] and [lerna][lerna]. All workspaces can be found under
-the `packages` folder. Each package has its own readme file which contains detailed information about its content.
+## Handle the repo
 
-### Set up the local environment
+### Build
 
-To develop the service locally you need:
+This repository is made of 5 subpackages. The dependencies can be sketched as follows:
 
-- Node.js v12 or later,
-- Yarn 1.x.x
-
-To set up node.js, we suggest using [nvm][nvm], so you can manage multiple versions easily. Once you have installed nvm,
-you can go inside the directory of the project and simply run `nvm install`, the `.nvmrc` file will install and select
-the correct version if you don’t already have it.
-
-To install Yarn, run `npm install --global yarn`.
-
-Once you have all the dependency in place, you can launch:
-
-```shell
-yarn install
+```
+  `interfaces`
+           |
+    `composer`
+           |
+`orchestrator` `iconic`
+           |    |
+          `layout`
 ```
 
-This command will install the dependencies for every workspace and will trigger a build of the [core](./packages/core/README.md)
-workspace.
-
-### Start the project
-
-In order to try `micro-lc` on your machine with mocked configurations, you have to execute only the `dev` script, using the following command:
+to build the packages there's a script which can be invoked after install as
 
 ```shell
-yarn dev
+yarn initialize [OPTIONS]
 ```
 
-### Run a package script
+where `OPTIONS` are
 
-To run a script in a workspace, you can run `yarn workspace PACKAGE_NAME SCRIPT_NAME`. For example, to run tests in
-[fe-container](./packages/fe-container/README.md) you should run:
+1. `-c` or `--cleanup`
+2. one of the subpackages: `interfaces`, `iconic`, `composer`, `orchestrator`, and `layout` (default)
+
+By using `cleanup` you require `initialize` to trash anything in the `dist`, `node_modules`, and `coverage` directories.
+By choosing one subpackage, `initialize` will build up to that one.
+
+To build the repository disregarding previous actions run:
 
 ```shell
-yarn workspace fe-container test
+yarn initialize --cleanup
 ```
 
-or you can use the shortcut:
+### Shortcuts
+
+Yarn allows to invoke scripts onto subpackages in a `workspaces` environment. Such commands might
+become soon verbose since to build a subpackage the command would be like:
 
 ```shell
-yarn fe-container test
+yarn workspace @micro-lc/orchestrator build
 ```
 
-### Run tests e2e
+hence we enforced some shortcuts:
 
-To run the e2e tests on your local code, you should first build the front-end and back-end images: otherwise you can use the images uploaded on Docker Hub.
+1. `workspace @micro-lc/interfaces` -> `i`
+2. `workspace @micro-lc/iconic` -> `c`
+3. `workspace @micro-lc/composer` -> `m`
+4. `workspace @micro-lc/orchestrator` -> `o`
+5. `workspace @micro-lc/layout` -> `l`
 
-#### Build `fe-container` image
-
-Run inside the `fe-container` directory the commands
+hence the command above would become:
 
 ```shell
-yarn build
-docker build -t miaplatform/microlc .
+yarn o build
 ```
 
-#### Build `be-config` image
+### Test
 
-Run inside the `root` directory
+To run tests ensure some CommonJS to ESM conversion on dependencies by running
 
 ```shell
-yarn be-config build
-docker build -f packages/be-config/Dockerfile -t miaplatform/microlc-config-manager .
+yarn prepare-test
 ```
 
-#### Run e2e tests
-
-Run inside the `e2e` directory the command
+then simply run
 
 ```shell
-docker-compose up
+yarn test
 ```
 
-to spin-up the `e2e` environment, and then
+or
 
 ```shell
-yarn e2e
+yarn coverage
 ```
 
-to run your tests
+### Components Playground
 
-[micro-frontends]: https://micro-frontends.org/
-[workspaces]: https://classic.yarnpkg.com/en/docs/workspaces/
-[lerna]: https://github.com/lerna/lerna
-[nvm]: https://github.com/creationix/nvm
-[mock-server]: https://github.com/staticdeploy/mock-server
-[standard-mia-svg]: https://img.shields.io/badge/code_style-standard--mia-orange.svg
-[standard-mia]: https://github.com/mia-platform/eslint-config-mia
-[coverall-svg]: https://coveralls.io/repos/github/micro-lc/micro-lc/badge.svg
-[coverall-io]: https://coveralls.io/github/micro-lc/micro-lc
-[docker-frontend-pull]: https://hub.docker.com/r/miaplatform/microlc
-[docker-frontend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc?label=Frontend%20pulls
-[docker-backend-pull]: https://hub.docker.com/r/miaplatform/microlc-config-manager
-[docker-backend-pull-svg]: https://img.shields.io/docker/pulls/miaplatform/microlc-config-manager?label=Backend%20pulls
-[github-actions]: https://github.com/micro-lc/micro-lc/actions
-[github-actions-svg]: https://img.shields.io/github/workflow/status/micro-lc/micro-lc/Node.js%20fe-container%20CI
-[micro-lc-doc]: https://micro-lc.io/documentation/docs/micro-lc/overview
-[micro-lc-youtube-snap]: https://img.youtube.com/vi/QumadjC2krU/0.jpg
-[micro-lc-youtube-video]: https://www.youtube.com/watch?v=QumadjC2krU
-[micro-lc-element-composer]: https://github.com/micro-lc/micro-lc-element-composer
+`layout` is a webcomponents repository and provides a storybook environment.
+Remind to build dependencies as prompted [before](#build) and then run:
 
+```shell
+yarn l storybook
+```
+
+A local playground is also available. Run:
+
+```shell
+yarn playground
+```
+
+to start the playground, and:
+
+```shell
+yarn playground-stop
+```
+to stop it.
+
+## Contributing
+
+We are thankful for any contributions from the community, read our [contributing guide](./CONTRIBUTING.md) to learn
+about our development process, how to propose bugfixes and improvements, and how to build and test your changes to
+micro-lc.
+
+## Licence
+
+micro-lc is [Apache 2.0 licensed](https://www.apache.org/licenses/LICENSE-2.0).

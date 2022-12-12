@@ -1,0 +1,110 @@
+{
+  "name": "@micro-lc/orchestrator",
+  "version": "0.3.0",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./dist/es/index.js",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./micro-lc.development.js": {
+      "default": "./dist/micro-lc.development.js"
+    },
+    "./micro-lc.production.js": {
+      "default": "./dist/micro-lc.production.js"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "check:types": "tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
+    "prepare-test": "ts-node scripts/pre-bundle.ts",
+    "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' NODE_ENV=development ts-mocha",
+    "coverage:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' NODE_ENV=development nyc ts-mocha",
+    "test:browser": "wtr --node-resolve",
+    "coverage:browser": "yarn test:browser --coverage",
+    "coverage:cobertura:merge": "cobertura-merge -o coverage/cobertura-coverage.xml package1=coverage/unit/cobertura-coverage.xml package2=coverage/browser/cobertura-coverage.xml",
+    "coverage:lcov:merge": "yarn dlx lcov-result-merger 'coverage/*/lcov.info' coverage/lcov.info",
+    "test": "yarn run -T run-s test:unit test:browser",
+    "coverage": "yarn run -T run-s coverage:unit coverage:browser coverage:cobertura:merge coverage:lcov:merge",
+    "build:es": "ts-node scripts/compile.esm.ts",
+    "build:cjs": "ts-node scripts/compile.cjs.ts",
+    "build:prod": "vite build --mode production",
+    "build:dev": "vite build --mode development",
+    "build": "yarn run -T run-s check:types build:es build:cjs build:dev build:prod",
+    "cleanup": "yarn run -T rimraf ./dist ./.nyc_output ./coverage ./node_modules stats.html",
+    "test:chromium": "wtr --node-resolve --playwright --browsers chromium",
+    "test:firefox": "wtr --node-resolve --playwright --browsers firefox",
+    "test:webkit": "wtr --node-resolve --playwright --browsers webkit",
+    "esm": "ts-node scripts/esm-url-generator.ts",
+    "serve": "wds --node-resolve"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.20.1",
+    "@micro-lc/composer": "workspace:*",
+    "@micro-lc/interfaces": "workspace:*",
+    "@open-wc/testing": "^3.1.7",
+    "@rollup/plugin-alias": "^4.0.2",
+    "@rollup/plugin-json": "^5.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-replace": "^5.0.1",
+    "@types/chai": "^4.3.4",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/chai-string": "^1.4.2",
+    "@types/glob": "^8.0.0",
+    "@types/js-yaml": "^4.0.5",
+    "@types/lodash-es": "^4.17.6",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.11.9",
+    "@types/node-fetch": "^2.6.2",
+    "@types/sinon": "^10.0.13",
+    "@types/sinon-chai": "^3.2.9",
+    "@web/dev-server": "^0.1.35",
+    "@web/dev-server-esbuild": "^0.3.3",
+    "@web/dev-server-import-maps": "^0.0.7",
+    "@web/dev-server-rollup": "^0.3.19",
+    "@web/test-runner": "^0.15.0",
+    "@web/test-runner-playwright": "^0.9.0",
+    "ajv": "^8.11.2",
+    "ajv-formats": "^2.1.1",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "chai-string": "^1.5.0",
+    "cobertura-merge": "^1.0.3",
+    "es-module-shims": "^1.6.2",
+    "esbuild": "^0.15.15",
+    "glob": "^8.0.3",
+    "lit-html": "^2.4.0",
+    "lodash-es": "^4.17.21",
+    "mocha": "^10.1.0",
+    "node-fetch": "^2.6.1",
+    "nyc": "^15.1.0",
+    "rollup-plugin-visualizer": "^5.8.3",
+    "sinon": "^14.0.2",
+    "sinon-chai": "^3.7.0",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3",
+    "vite": "^3.2.4",
+    "vite-plugin-banner": "^0.6.1"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "qiankun": "^2.8.4",
+    "rxjs": "^7.5.7"
+  },
+  "peerDependencies": {
+    "ajv": ">=8.11.0",
+    "ajv-format": ">=2.1.1",
+    "es-module-shims": ">=1.5.3"
+  },
+  "engines": {
+    "node": ">=16.17.0"
+  }
+}

@@ -1,0 +1,17 @@
+.layout-header {
+  position: fixed;
+  z-index: @zindex-header;
+  width: 100%;
+  padding: 0 @padding-lg !important;
+  background: @white !important;
+  border-bottom: 1px solid @border-color-base;
+}
+
+.layout-main {
+  height: calc(100% - @layout-header-height);
+  margin-top: @layout-header-height;
+
+  & .layout-content {
+    overflow: auto;
+  }
+}

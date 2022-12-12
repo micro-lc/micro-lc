@@ -1,0 +1,11 @@
+{
+  "include": [
+    "src"
+  ],
+  "report-dir": "./coverage",
+  "reporter": ["text", "cobertura", "lcov"],
+  "lines": 80,
+  "statements": 80,
+  "functions": 70,
+  "branches": 80
+}

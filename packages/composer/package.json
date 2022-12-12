@@ -1,0 +1,80 @@
+{
+  "name": "@micro-lc/composer",
+  "version": "0.4.2",
+  "module": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "exports": {
+    ".": {
+      "default": "./dist/lib/index.js",
+      "types": "./dist/lib/index.d.ts"
+    },
+    "./composer.development": {
+      "default": "./dist/composer.development.js"
+    },
+    "./composer.production": {
+      "default": "./dist/composer.production.js"
+    }
+  },
+  "scripts": {
+    "cleanup": "yarn run -T rimraf dist node_modules coverage",
+    "check:types": "tsc --project ./scripts/tsconfig.build.json && echo \"✓ check types\"",
+    "build:lib": "ts-node ./scripts/compile.esm.ts",
+    "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "build": "yarn run -T run-s check:types build:lib build:dev build:prod",
+    "test:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
+    "coverage:unit": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha",
+    "test:browser": "wtr --node-resolve test/**/*.test.ts --playwright --browsers chromium firefox webkit",
+    "coverage:browser": "wtr --node-resolve test/**/*.test.ts --playwright --browsers chromium firefox webkit --coverage",
+    "coverage:cobertura:merge": "cobertura-merge -o coverage/cobertura-coverage.xml package1=coverage/unit/cobertura-coverage.xml package2=coverage/browser/cobertura-coverage.xml",
+    "coverage:lcov:merge": "yarn dlx lcov-result-merger 'coverage/*/lcov.info' coverage/lcov.info",
+    "test": "yarn run -T run-s test:unit test:browser",
+    "coverage": "yarn run -T run-s coverage:unit coverage:browser coverage:cobertura:merge coverage:lcov:merge"
+  },
+  "devDependencies": {
+    "@micro-lc/interfaces": "workspace:*",
+    "@open-wc/testing": "^3.1.7",
+    "@rollup/plugin-replace": "^5.0.1",
+    "@types/chai": "^4.3.4",
+    "@types/chai-string": "^1.4.2",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.11.9",
+    "@types/sinon": "^10.0.13",
+    "@types/sinon-chai": "^3.2.9",
+    "@web/dev-server-esbuild": "^0.3.3",
+    "@web/dev-server-rollup": "^0.3.19",
+    "@web/test-runner": "^0.15.0",
+    "@web/test-runner-playwright": "^0.9.0",
+    "ajv": "^8.11.2",
+    "chai": "^4.3.7",
+    "chai-string": "^1.5.0",
+    "cobertura-merge": "^1.0.3",
+    "es-module-shims": "^1.6.2",
+    "esbuild": "^0.15.15",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "nyc": "^15.1.0",
+    "rollup-plugin-visualizer": "^5.8.3",
+    "sinon": "^14.0.2",
+    "sinon-chai": "^3.7.0",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "vite": "^3.2.4",
+    "vite-plugin-banner": "^0.6.1"
+  },
+  "dependencies": {
+    "lit-html": "^2.4.0",
+    "rxjs": "^7.5.7"
+  },
+  "peerDependencies": {
+    "es-module-shims": "*"
+  },
+  "engines": {
+    "node": ">=16.17.0"
+  }
+}

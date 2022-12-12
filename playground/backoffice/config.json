@@ -1,0 +1,200 @@
+{
+  "$schema": "../../packages/interfaces/schemas/v2/config.schema.json",
+  "version": 2,
+  "shared": {
+    "properties": {
+      "headers": {
+        "key": "value"
+      }
+    }
+  },
+  "settings": {
+    "defaultUrl": "./home"
+  },
+  "importmap": {
+    "imports": {
+      "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@7.5.6/esm/es2015/rxjs.min.js"
+    }
+  },
+  "layout": {
+    "sources": {
+      "importmap": {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom": "https://esm.sh/react-dom@18.2.0"
+        },
+        "scopes": {
+          "https://esm.sh/react-dom@next": {
+            "/client": "https://esm.sh/react-dom@18.2.0/client"
+          }
+        }
+      },
+      "uris": [
+        "/packages/layout/dist/mlc-layout.min.js",
+        "/packages/layout/dist/mlc-antd-theme-manager.min.js"
+      ]
+    },
+    "content": [
+      {
+        "tag": "mlc-antd-theme-manager",
+        "attributes": {
+          "primary-color": "#cd1c8c"
+        },
+        "properties": {
+          "varsPrefix": ["micro-lc", "back-kit", "microlc"]
+        }
+      },
+      {
+        "tag": "mlc-layout",
+        "content": {
+          "tag": "div",
+          "content": "PE$",
+          "attributes": { "slot": "top-bar" }
+        },
+        "properties": {
+          "userMenu": {
+            "userInfoUrl": "./userinfo.json"
+          },
+          "logo": {
+            "url": "/packages/orchestrator/public/favicon.png",
+            "onClickHref": "/playground/backoffice/home"
+          },
+          "mode": "fixedSideBar",
+          "menuItems": [
+            {
+              "icon": {
+                "library": "@ant-design/icons-svg",
+                "selector": "BugOutlined"
+              },
+              "id": "main",
+              "label": { "en": "Application 1", "it": "Applicazione 1" },
+              "type": "application"
+            },
+            {
+              "href": "https://docs.mia-platform.eu",
+              "id": "href_1",
+              "label": "Link 1",
+              "target": "_blank",
+              "type": "href"
+            },
+            {
+              "id": "srcdoc",
+              "label": "SRCDOC",
+              "type": "application"
+            },
+            {
+              "children": [
+                {
+                  "id": "plain",
+                  "selectedAlsoOn": ["plain_details", "plain_about"],
+                  "label": "Inline",
+                  "type": "application"
+                },
+                {
+                  "id": "composer_new",
+                  "label": "Composer V2",
+                  "type": "application"
+                },
+                {
+                  "id": "composer_old",
+                  "label": "Composer V1",
+                  "type": "application"
+                },
+                {
+                  "children": [
+                    {
+                      "id": "react",
+                      "label": "React",
+                      "type": "application"
+                    },
+                    {
+                      "href": "./www.google.com",
+                      "id": "href_2",
+                      "label": "Link 2",
+                      "target": "_blank",
+                      "type": "href"
+                    }
+                  ],
+                  "id": "group_1",
+                  "label": { "en": "Group 1", "it": "Gruppo 1" },
+                  "type": "group"
+                }
+              ],
+              "id": "category_1",
+              "label": { "en": "Category 1", "it": "Categoria 1" },
+              "type": "category"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "applications": {
+    "home": {
+      "integrationMode": "iframe",
+      "route": "./home",
+      "src": "https://docs.mia-platform.eu"
+    },
+    "main": {
+      "integrationMode": "iframe",
+      "route": "./main",
+      "src": "https://wikipedia.org"
+    },
+    "srcdoc": {
+      "integrationMode": "iframe",
+      "route": "./srcdoc",
+      "srcdoc": "<!DOCTYPE><html><head></head><body>IFrame Content</body></html>"
+    },
+    "emptyFrame": {
+      "integrationMode": "iframe",
+      "route": "./empty-frame"
+    },
+    "react": {
+      "integrationMode": "parcel",
+      "injectBase": true,
+      "route": "./:app/react/",
+      "entry": "http://localhost:8003/"
+    },
+    "main2": {
+      "integrationMode": "compose",
+      "route": "./main2",
+      "config": {
+        "sources": {
+          "uris": "data:text/javascript;base64,CmltcG9ydCB7UmVwbGF5U3ViamVjdH0gZnJvbSAncnhqcycKCmNvbnNvbGUubG9nKFJlcGxheVN1YmplY3QpCg=="
+        },
+        "content": {
+          "tag": "div",
+          "properties": { "textContent": "Ciao Main" }
+        }
+      }
+    },
+    "plain": {
+      "integrationMode": "compose",
+      "route": "./ingredients/",
+      "config": {"content": {"tag": "strong", "content": "Home 🏠"}}
+    },
+    "plain_details": {
+      "integrationMode": "compose",
+      "route": "./ingredients/details/",
+      "config": {"content": {"tag": "div", "content": "Hello 👋"}}
+    },
+    "plain_about": {
+      "integrationMode": "compose",
+      "route": "./ingredients/about/",
+      "config": {"content": {"tag": "div", "content": "About 📓"}}
+    },
+    "composer_new": {
+      "integrationMode": "compose",
+      "route": "./:app/ingredients/",
+      "config": "./ingredients_v2.json"
+    },
+    "composer_old": {
+      "integrationMode": "parcel",
+      "entry": "/element-composer/",
+      "route": "./ingredients_old",
+      "properties": {
+        "configurationName": "../../../../ingredients_v1"
+      }
+    }
+  }
+}

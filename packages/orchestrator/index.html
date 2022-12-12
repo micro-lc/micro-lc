@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/.dev/favicon.png" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https: http:;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' blob:;
+    connect-src 'self' data: https://cdn.jsdelivr.net/npm/@esm-bundle/;
+    object-src 'none';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: https: http:;
+    font-src 'self';
+    worker-src 'self' blob:;
+  "/>
+  <style>
+    html, body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    micro-lc {
+      display: inline-block;
+      position: relative;
+      height: inherit;
+      width: inherit;
+    }
+  </style>
+  <script type="module" src="/src/micro-lc.ts"></script>
+</head>
+<body>
+  <micro-lc></micro-lc>
+  <script>
+    const _ = document.querySelector('micro-lc')
+    _.config = {
+      version: 2,
+      layout: {content: {tag: 'div', content: ["Hello", {tag: 'slot'}]}},
+      applications: {
+        home: {
+          route: '/home',
+          entry: 'localhost:8080',
+          integrationMode: 'qiankun'
+        }
+      },
+      settings: {
+        defaultUrl: '/home'
+      }
+    }
+  </script>
+</body>
+</html>

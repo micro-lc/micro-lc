@@ -1,0 +1,459 @@
+{
+  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Config",
+  "description": "Version 2 of micro-lc configuration",
+  "definitions": {
+    "settings": {
+      "title": "Settings",
+      "type": "object",
+      "properties": {
+        "4xx": {
+          "type": "object",
+          "patternProperties": {
+            "^4\\d{2}$": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/iframeApplication",
+                  "type": "object",
+                  "required": ["integrationMode", "src"]
+                },
+                {
+                  "$ref": "#/definitions/composableApplication",
+                  "type": "object",
+                  "required": ["integrationMode", "config"]
+                },
+                {
+                  "$ref": "#/definitions/parcelApplication",
+                  "type": "object",
+                  "required": ["integrationMode", "entry"]
+                }
+              ]
+            }
+          }
+        },
+        "5xx": {
+          "type": "object",
+          "default": {
+            "500": {
+              "entry": "./500.html",
+              "integrationMode": "parcel"
+            }
+          },
+          "patternProperties": {
+            "^5\\d{2}$": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/iframeApplication",
+                  "type": "object",
+                  "required": ["integrationMode", "src"]
+                },
+                {
+                  "$ref": "#/definitions/composableApplication",
+                  "type": "object",
+                  "required": ["integrationMode", "config"]
+                },
+                {
+                  "$ref": "#/definitions/parcelApplication",
+                  "type": "object",
+                  "required": ["integrationMode", "entry"]
+                }
+              ]
+            }
+          }
+        },
+        "composerUri": {
+          "description": "The URI where the composer plugin can be found, if needed",
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "mountPoint": {
+          "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#/definitions/content"
+        },
+        "mountPointSelector": {
+          "description": "Query selector to plugins mounting DOM element",
+          "type": "string",
+          "default": "#__MICRO_LC_MOUNT_POINT",
+          "examples": [
+            "#my-plugin-container",
+            "body micro-lc custom-layout div#plugin-container"
+          ]
+        },
+        "defaultUrl": {
+          "description": "Landing URL",
+          "type": "string",
+          "default": "/",
+          "examples": ["/my-awesome-plugin"],
+          "format": "uri-reference"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "css": {
+      "title": "CSSConfig",
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "description": "A map matching CSS selectors to rules",
+          "type": "object",
+          "examples": [
+            {
+              ":host": {
+                "width": "100%"
+              }
+            }
+          ],
+          "patternProperties": {
+            ".*": {
+              "description": "A valid CSS selector",
+              "type": "object",
+              "patternProperties": {
+                ".*": {
+                  "description": "A valid CSS property",
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "global": {
+          "description": "Standard CSS variables globally available scoped with prefix '--micro-lc-'",
+          "type": "object",
+          "properties": {
+            "primary-color": {
+              "type": "string"
+            },
+            "font-family": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "iframeApplication": {
+      "title": "IFrameApplication",
+      "type": "object",
+      "examples": [
+        {
+          "integrationMode": "iframe",
+          "src": "www.google.com",
+          "route": "/embedded-google-page",
+          "attributes": {
+            "allow": "fullscreen"
+          }
+        }
+      ],
+      "properties": {
+        "integrationMode": {
+          "description": "Type of the application: nested browsing context",
+          "const": "iframe"
+        },
+        "src": {
+          "description": "iFrame src attribute value",
+          "type": "string",
+          "examples": [
+            "/frame.html", "https://mydomain.com/"
+          ]
+        },
+        "srcdoc": {
+          "description": "iFrame html content",
+          "type": "string",
+          "examples": [
+            "<!DOCTYPE><html><head></head><body>IFrame Content</body></html>"
+          ]
+        },
+        "route": {
+          "description": "Path on which the iFrame will be rendered",
+          "type": "string"
+        },
+        "attributes": {
+          "$comment": "Attributes `src` and `srcdoc` are overridden by the `iframe` integrationMode properties",
+          "description": "Valid attributes of iframe HTML element",
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "composableApplication": {
+      "title": "ComposableApplication",
+      "type": "object",
+      "examples": [
+        {
+          "integrationMode": "compose",
+          "config": "./page-configuration.json",
+          "route": "/composed-page"
+        },
+        {
+          "integrationMode": "compose",
+          "config": {
+            "content": {
+              "tag": "div"
+            }
+          },
+          "route": "/composed-page"
+        }
+      ],
+      "properties": {
+        "integrationMode": {
+          "description": "Type of the application: composition of HTML tags",
+          "const": "compose"
+        },
+        "config": {
+          "oneOf": [
+            {
+              "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#",
+              "description": "Composer configuration. It can be an url or an in-line configuration"
+            },
+            {
+              "type": "string",
+              "format": "uri-reference"
+            }
+          ]
+        },
+        "route": {
+          "description": "Path on which the plugin will be rendered",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "parcelApplication": {
+      "title": "ParcelApplication",
+      "type": "object",
+      "examples": [
+        {
+          "integrationMode": "parcel",
+          "route": "/parcel-plugin",
+          "entry": "https://my-micro-frontend.com",
+          "properties": {
+            "foo": "bar"
+          }
+        }
+      ],
+      "properties": {
+        "integrationMode": {
+          "description": "Type of the application: micro front-end loaded using parcels",
+          "const": "parcel"
+        },
+        "entry": {
+          "$comment": "TODO: complete the description",
+          "description": "Entry of the plugin",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "scripts": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          },
+                          "minItems": 1
+                        }
+                      ]
+                    },
+                    "styles": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          }
+                        }
+                      ]
+                    },
+                    "html": {
+                      "type": "string",
+                      "format": "uri-reference"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["scripts"]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "scripts": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          }
+                        }
+                      ]
+                    },
+                    "styles": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "uri-reference"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri-reference"
+                          }
+                        }
+                      ]
+                    },
+                    "html": {
+                      "type": "string",
+                      "format": "uri-reference"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["html"]
+                }
+              ]
+            }
+          ]
+        },
+        "route": {
+          "description": "parcel activeRule",
+          "type": "string"
+        },
+        "properties": {
+          "description": "Data passed to the plugin",
+          "type": "object"
+        },
+        "injectBase": {
+          "description": "Whether to inject a base tag according to the application given route. Can be used when an hash router is not available",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "application": {
+      "title": "Application",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/iframeApplication",
+          "type": "object",
+          "required": ["integrationMode", "route"]
+        },
+        {
+          "$ref": "#/definitions/composableApplication",
+          "type": "object",
+          "required": ["integrationMode", "config", "route"]
+        },
+        {
+          "$ref": "#/definitions/parcelApplication",
+          "type": "object",
+          "required": ["integrationMode", "entry", "route"]
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 2
+    },
+
+    "settings": {
+      "$ref": "#/definitions/settings",
+      "description": "Global micro-lc settings"
+    },
+
+    "shared": {
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "object"
+        }
+      }
+    },
+
+    "importmap": {
+      "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#/definitions/importmap",
+      "title": "GlobalImportMap",
+      "description": "Global import map"
+    },
+
+    "applications": {
+      "description": "List of mounted applications",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/application"
+      }
+    },
+
+    "layout": {
+      "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#",
+      "description": "Orchestrator main page layout DOM configuration",
+      "default": {
+        "content": {
+          "tag": "div",
+          "attributes": {
+            "id": "__MICRO_LC_MOUNT_POINT"
+          }
+        }
+      },
+      "examples": [
+        {
+          "content": {
+            "tag": "div",
+            "attributes": {
+              "id": "my-plugin-container"
+            }
+          }
+        },
+        {
+          "sources": "./my-static.js",
+          "content": [
+            {
+              "tag": "my-custom-menu"
+            },
+            {
+              "tag": "div",
+              "attributes": {
+                "id": "__MICRO_LC_MOUNT_POINT"
+              }
+            },
+            {
+              "tag": "my-custom-footer"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "required": ["version"]
+}

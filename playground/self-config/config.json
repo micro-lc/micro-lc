@@ -1,0 +1,25 @@
+{
+  "$schema": "../../packages/interfaces/schemas/v2/config.schema.json",
+  "version": 2,
+  "settings": {
+    "defaultUrl": "./"
+  },
+  "layout": {
+    "sources": "/packages/layout/dist/mlc-config.js",
+    "content": [
+      {
+        "tag": "mlc-config",
+        "properties": {
+          "width": "75%"
+        }
+      }
+    ]
+  },
+  "applications": {
+    "micro-lc": {
+      "integrationMode": "iframe",
+      "route": "./",
+      "src": "./micro-lc.html"
+    }
+  }
+}
