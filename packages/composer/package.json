@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/composer",
-  "version": "0.4.2",
+  "version": "2.0.0",
   "module": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
   "files": [
