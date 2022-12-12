@@ -13,12 +13,12 @@ on:
 
 jobs:
   prepare:
-    uses: micro-lc/micro-lc/.github/workflows/prepare.yml@v2/main
+    uses: micro-lc/micro-lc/.github/workflows/prepare.yml@main
 
   checks:
     needs:
       - prepare
-    uses: micro-lc/micro-lc/.github/workflows/checks.yml@v2/main
+    uses: micro-lc/micro-lc/.github/workflows/checks.yml@main
 
   tests:
     needs:
@@ -32,7 +32,7 @@ jobs:
           - interfaces
           - layout
           - orchestrator
-    uses: micro-lc/micro-lc/.github/workflows/tests.yml@v2/main
+    uses: micro-lc/micro-lc/.github/workflows/tests.yml@main
     with:
       package: ${{ matrix.package }}
     secrets:
