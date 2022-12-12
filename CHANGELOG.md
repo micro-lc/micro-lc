@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### New Release
+
+- to migrate from v1 to v2 check out the [guide](https://micro-lc.io/docs/migrating-from-v1)
+
 ## [1.0.0] 2022-11-03
 
 ## [0.9.0]
