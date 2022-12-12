@@ -9,7 +9,8 @@ env:
 on:
   push:
     tags:
-      - '**'
+      - '@micro-lc/**'
+      - 'v2**'
 
 jobs:
   next-version:
