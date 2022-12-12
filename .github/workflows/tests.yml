@@ -1,0 +1,81 @@
+name: Tests
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        default: 16.x
+        required: false
+        type: string
+      package:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      ## Yarn Install State
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            ./.yarn/cache
+            ./.yarn/unplugged
+            ./.yarn/install-state.gz
+            ./.pnp.cjs
+            ./.pnp.loader.mjs
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Build Cache
+        uses: actions/cache@v3
+        id: build-cache
+        with:
+          path: |
+            ./node_modules
+            ./packages/**/dist
+            ./packages/**/node_modules
+          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
+
+      - name: Playwright Cache
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            /home/runner/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Reinstall
+        if: ${{ inputs.package != 'interfaces' && steps.playwright-cache.outputs.cache-hit != 'true' }} 
+        run: rm -rf ./.yarn/install-state.gz && yarn install --immutable
+
+      - name: 'Install Playwright'
+        run: npx playwright install-deps
+
+      - name: Tests
+        run: yarn workspace @micro-lc/${{ inputs.package }} run coverage
+
+      - name: Collect coveralls coverage
+        if: ${{ inputs.package != 'interfaces' }}
+        uses: coverallsapp/github-action@master
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.token }}
+          path-to-lcov: './packages/${{ inputs.package }}/coverage/lcov.info'
