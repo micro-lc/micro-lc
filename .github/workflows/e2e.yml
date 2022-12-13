@@ -12,7 +12,7 @@ on:
 
 jobs:
   e2e:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/v1/main' }}
     steps:
       - uses: actions/checkout@v2
