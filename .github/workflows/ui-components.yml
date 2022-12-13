@@ -5,14 +5,8 @@ env:
 
 on:
   push:
-    branches:
-      - v1/main
-    tags-ignore:
-      - 'v*'
-      - '@micro-lc/*'
-  pull_request:
-    branches:
-      - v1/main
+    tags:
+      - 'v1**'
 
 jobs:
   test:
@@ -25,13 +19,7 @@ jobs:
           node-version: 16.x
       - run: yarn ui-components install --frozen-lockfile
       - run: yarn ui-components coverage
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        continue-on-error: true
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: "${{ env.context }}coverage/lcov.info"
-          base-path: "${{ env.context }}"
+
       - name: Compile file and build
         run: yarn ui-components build
       - uses: JS-DevTools/npm-publish@v1

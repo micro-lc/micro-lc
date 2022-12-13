@@ -9,9 +9,8 @@ on:
   push:
     branches:
      - v1/main
-    tags-ignore:
-      - 'v*'
-      - '@micro-lc/*'
+    tags:
+      - 'v1**'
   pull_request:
     branches:
       - v1/main
@@ -31,26 +30,19 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --frozen-lockfile
       - run: yarn be-config coverage
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        continue-on-error: true
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: '${{ env.context-be }}coverage/lcov.info'
-          base-path: '${{ env.context-be }}'
 
       - name: Compile file and build
-        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '16.x' }}
+        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/v1/main' || github.base_ref == 'v1/main') && matrix.node-version == '16.x' }}
         run: yarn be-config build
 
       - name: Cache BE build
-        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '16.x' }}
+        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/v1/main' || github.base_ref == 'v1/main') && matrix.node-version == '16.x' }}
         uses: actions/cache@v2
         with:
           path: ${{ env.context-be }}dist
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}-be
       - name: Cache core build
-        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.base_ref == 'main') && matrix.node-version == '16.x' }}
+        if: ${{ (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/v1/main' || github.base_ref == 'v1/main') && matrix.node-version == '16.x' }}
         uses: actions/cache@v2
         with:
           path: ${{ env.context-core }}dist
@@ -60,7 +52,7 @@ jobs:
     name: Build docker
     needs: test
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
 
     steps:
       - name: Checkout code
@@ -70,16 +62,10 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=microlc/micro-lc-config-manager
-          VERSION=latest
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
-            VERSION=$(echo ${VERSION} | sed s/^v//)
-          elif [[ $GITHUB_REF == refs/heads/main ]]; then
-            VERSION=latest
-          fi
-          TAGS="${DOCKER_IMAGE}:${VERSION}"
-          echo ::set-output name=tags::${TAGS}
-          echo ::set-output name=image::${DOCKER_IMAGE}
+          VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=$(echo ${VERSION} | sed s/^v//)
+          echo "tags=${DOCKER_IMAGE}:${VERSION}" >> $GITHUB_OUTPUT
+          echo "image=${DOCKER_IMAGE}" >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -109,8 +95,5 @@ jobs:
         with:
           context: './'
           file: 'packages/be-config/Dockerfile'
-          pull: true
           push: true
-          cache-from: type=registry,ref=${{ steps.prep.outputs.image }}:latest
-          cache-to: type=inline
           tags: ${{ steps.prep.outputs.tags }}
