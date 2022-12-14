@@ -1,0 +1,182 @@
+name: Node.js e2e CI
+
+env:
+  context: './'
+  node-version: 16.x
+
+on:
+  push:
+    tags:
+      - 'v1**'
+  pull_request:
+    branches:
+      - v1/main
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+      
+      - name: Install
+        run: yarn install --frozen-lockfile
+  
+  build-fe:
+    runs-on: ubuntu-latest
+    needs:
+      - install
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+          cache: yarn
+      
+      - name: Install
+        run: yarn install --frozen-lockfile
+      
+      - name: Compile file and build
+        run: yarn fe-container build
+  
+  build-be:
+    runs-on: ubuntu-latest
+    needs:
+      - install
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+          cache: yarn
+      
+      - name: Install
+        run: yarn install --frozen-lockfile
+      
+      - name: Compile file and build
+        run: yarn be-config build
+
+  e2e:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+          cache: yarn
+      
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      - name: 'Install Playwright'
+        run: npx playwright install
+      - name: 'Install Playwright dependencies'
+        run: npx playwright install-deps
+      - name: 'Wait for status checks'
+        id: waitforstatuschecks
+        uses: "WyriHaximus/github-action-wait-for-status@v2"
+        with:
+          ignoreActions: e2e
+          checkInterval: 30
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Overwrite Dockerfile for fe-container
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: ${{ env.context }}packages/fe-container/Dockerfile
+          write-mode: overwrite
+          contents: |
+            FROM nginx:1.22.0-alpine as build
+
+            LABEL name="mia-microlc-website" \
+                  description="The Mia-Platform micro fontend solution" \
+                  eu.mia-platform.url="https://www.mia-platform.eu" \
+                  eu.mia-platform.version="1.0.0"
+
+            COPY ./packages/fe-container/nginx /etc/nginx
+
+            COPY ./packages/fe-container/start-scripts/* /docker-entrypoint.d/
+
+            RUN touch ./off \
+              && chmod o+rw ./off \
+              && echo "mia-microlc: $COMMIT_SHA" >> /etc/nginx/commit.sha \
+              && chmod +x ./docker-entrypoint.d/*.sh \
+              && chown nginx /etc/nginx/conf.d
+
+            WORKDIR /usr/static
+
+            COPY ./packages/fe-container/build .
+
+            USER nginx
+
+
+      - name: Overwrite docker-compose.yml
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: ${{ env.context }}e2e/docker-compose.yml
+          write-mode: overwrite
+          contents: |
+            version: "3"
+            services:
+              reverse-proxy:
+                image: traefik:v2.4
+                command: --api.insecure=true --providers.docker
+                ports:
+                  - 80:80
+                  - 8080:8080
+                volumes:
+                  - /var/run/docker.sock:/var/run/docker.sock
+              fe-container:
+                build:
+                  context: '.'
+                  dockerfile: 'packages/fe-container/Dockerfile'
+                labels:
+                  - "traefik.http.routers.fecontainer.rule=Host(`localhost`)"
+                  - "traefik.http.services.fecontainer.loadbalancer.server.port=8080"
+              be-config:
+                build:
+                  context: '.'
+                  dockerfile: 'packages/be-config/Dockerfile'
+                environment:
+                  SERVICE_PREFIX: /api/v1/microlc/
+                  AUTHENTICATION_CONFIGURATION_PATH: /microlc/auth.json
+                  MICROLC_CONFIGURATION_PATH: /microlc/config.json
+                  USERID_HEADER_KEY: miauserid
+                  GROUPS_HEADER_KEY: miausergroups
+                  CLIENTTYPE_HEADER_KEY: client-type
+                  BACKOFFICE_HEADER_KEY: isbackoffice
+                  USER_PROPERTIES_HEADER_KEY: miauserproperties
+                  MICROSERVICE_GATEWAY_SERVICE_NAME: microservice-gateway
+                labels:
+                  - "traefik.http.routers.beconfig.rule=PathPrefix(`/api`)"
+                  - "traefik.http.services.beconfig.loadbalancer.server.port=3000"
+                volumes:
+                  - ./e2e/config/auth.json:/microlc/auth.json
+                  - ./e2e/config/microlcConfig.json:/microlc/config.json
+              plugin:
+                build: ./example
+                labels:
+                  - "traefik.http.routers.plugin.rule=Host(`127.0.0.1`)"
+                  - "traefik.http.services.plugin.loadbalancer.server.port=8080"
+
+      - name: 'Bootstrap microlc'
+        if: steps.waitforstatuschecks.outputs.status == 'success'
+        run: docker-compose -f e2e/docker-compose.yml up -d
+      - name: 'Run PlayWright'
+        if: steps.waitforstatuschecks.outputs.status == 'success'
+        run: yarn e2e
