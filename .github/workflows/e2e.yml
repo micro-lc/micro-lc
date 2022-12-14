@@ -13,25 +13,8 @@ on:
       - v1/main
 
 jobs:
-  install:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: yarn
-      
-      - name: Install
-        run: yarn install --frozen-lockfile
-  
   build-fe:
     runs-on: ubuntu-latest
-    needs:
-      - install
     
     steps:
       - uses: actions/checkout@v3
@@ -50,8 +33,6 @@ jobs:
   
   build-be:
     runs-on: ubuntu-latest
-    needs:
-      - install
     
     steps:
       - uses: actions/checkout@v3
@@ -179,7 +160,7 @@ jobs:
 
       - name: 'Bootstrap microlc'
         if: steps.waitforstatuschecks.outputs.status == 'success'
-        run: docker-compose -f e2e/docker-compose.yml up -d
+        run: docker-compose --project-directory '.' --file e2e/docker-compose.yml up --build -d
       - name: 'Run PlayWright'
         if: steps.waitforstatuschecks.outputs.status == 'success'
         run: yarn e2e
