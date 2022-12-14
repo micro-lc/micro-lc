@@ -13,46 +13,7 @@ on:
       - v1/main
 
 jobs:
-  build-fe:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
-          cache: yarn
-      
-      - name: Install
-        run: yarn install --frozen-lockfile
-      
-      - name: Compile file and build
-        run: yarn fe-container build
-  
-  build-be:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
-          cache: yarn
-      
-      - name: Install
-        run: yarn install --frozen-lockfile
-      
-      - name: Compile file and build
-        run: yarn be-config build
-
   e2e:
-    needs:
-      - build-fe
-      - build-be
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -68,6 +29,12 @@ jobs:
 
       - name: 'Install Playwright'
         run: npx playwright install
+      
+      - name: Build
+        run: |
+          yarn fe-container build
+          yarn be-config build
+      
       - name: 'Install Playwright dependencies'
         run: npx playwright install-deps
       - name: 'Wait for status checks'
