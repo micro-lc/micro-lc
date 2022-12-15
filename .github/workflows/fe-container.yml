@@ -45,7 +45,7 @@ jobs:
     name: Build docker
     needs: test
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/v1/main' }}
 
     steps:
       - name: Checkout code
@@ -55,8 +55,11 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=microlc/micro-lc
-          VERSION=${GITHUB_REF#refs/tags/}
-          VERSION=$(echo ${VERSION} | sed s/^v//)
+          VERSION=v1-latest
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+            VERSION=$(echo ${VERSION} | sed s/^v//)
+          fi
           echo "tags=${DOCKER_IMAGE}:${VERSION}" >> $GITHUB_OUTPUT
           echo "image=${DOCKER_IMAGE}" >> $GITHUB_OUTPUT
 
