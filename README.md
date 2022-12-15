@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://micro-lc.io"><img src="https://micro-lc.github.io/documentation/img/logo-light.png" alt="micro-lc"></a>
+  <a href="https://micro-lc.io"><img src="https://micro-lc.io/img/logo-light.png" alt="micro-lc"></a>
 </h1>
 
 <p align="center">
