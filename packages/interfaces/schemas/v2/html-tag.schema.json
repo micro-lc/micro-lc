@@ -1,5 +1,5 @@
 {
-  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/html-tag.schema.json#",
+  "$id": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/html-tag.schema.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "html-void-tag": {
