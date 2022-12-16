@@ -6,6 +6,8 @@ env:
 
 on:
   push:
+    branches:
+      - v1/main
     tags:
       - 'v1**'
   pull_request:
