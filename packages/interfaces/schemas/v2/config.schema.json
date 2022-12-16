@@ -1,5 +1,5 @@
 {
-  "$id": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/config.schema.json#",
+  "$id": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/config.schema.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Config",
   "description": "Version 2 of micro-lc configuration",
@@ -68,7 +68,7 @@
           "format": "uri-reference"
         },
         "mountPoint": {
-          "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#/definitions/content"
+          "$ref": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/plugin.schema.json#/definitions/content"
         },
         "mountPointSelector": {
           "description": "Query selector to plugins mounting DOM element",
@@ -212,7 +212,7 @@
         "config": {
           "oneOf": [
             {
-              "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#",
+              "$ref": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/plugin.schema.json#",
               "description": "Composer configuration. It can be an url or an in-line configuration"
             },
             {
@@ -402,7 +402,7 @@
     },
 
     "importmap": {
-      "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#/definitions/importmap",
+      "$ref": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/plugin.schema.json#/definitions/importmap",
       "title": "GlobalImportMap",
       "description": "Global import map"
     },
@@ -416,7 +416,7 @@
     },
 
     "layout": {
-      "$ref": "https://cdn.jsdelivr.net/npm/@micro-lc/interfaces@latest/schemas/v2/plugin.schema.json#",
+      "$ref": "https://raw.githubusercontent.com/micro-lc/micro-lc/main/packages/interfaces/schemas/v2/plugin.schema.json#",
       "description": "Orchestrator main page layout DOM configuration",
       "default": {
         "content": {

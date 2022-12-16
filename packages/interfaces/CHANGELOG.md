@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- V2 schemas are referenced to `github` raw cdn resources and their `$id`s were modified accordingly
+
+### Versioning
+
+- Development dependencies updated
+- Typescript is set to `4.9.3` due to yarn berry temporary incompatibility
+
 ## [1.0.0] - 2022-12-12
 
 ## [0.5.0] - 2022-12-06
