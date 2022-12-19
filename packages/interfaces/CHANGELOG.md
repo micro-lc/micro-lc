@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - V2 schemas are referenced to `github` raw cdn resources and their `$id`s were modified accordingly
+- missing `main` tag in `html-tag.schema.json` has been added
 
 ### Versioning
 

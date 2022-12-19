@@ -69,6 +69,7 @@ export type HTMLTag =
   | "layer"
   | "legend"
   | "li"
+  | "main"
   | "map"
   | "mark"
   | "marquee"
