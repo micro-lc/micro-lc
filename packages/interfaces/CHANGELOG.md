@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.0.1] - 2022-12-19
+
 ### Fixed
 
 - V2 schemas are referenced to `github` raw cdn resources and their `$id`s were modified accordingly
