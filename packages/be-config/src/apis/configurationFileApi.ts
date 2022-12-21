@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {extname} from 'path'
 
 import {DecoratedFastify, Handler} from '@mia-platform/custom-plugin-lib'
 
@@ -43,6 +44,26 @@ export const configurationFileApiHandlerBuilder: (fastifyInstance: DecoratedFast
       const configurationName: string = request.params[CONFIGURATION_NAME]
       const retrieveFunction = configurationName.endsWith('.json') ? retrieveJsonConfiguration : retrieveRawConfiguration
       const fileContent = await retrieveFunction(instanceConfig, configurationName, request.getGroups(), getPermissions(request, userPropertiesHeader))
+
+      let contentType: string
+      const ext = extname(configurationName)
+
+      switch (ext) {
+      case '.js':
+        contentType = 'application/javascript'
+        break
+      case '.html':
+        contentType = 'text/html'
+        break
+      case '.json':
+        contentType = 'application/json'
+        break
+      default:
+        contentType = 'text/plain'
+        break
+      }
+
+      reply.header('Content-Type', contentType)
       reply.send(fileContent)
     } else {
       reply.status(404).send()

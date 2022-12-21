@@ -36,6 +36,7 @@ describe('Configuration api tests', () => {
   }
 
   const replySendMock = jest.fn()
+  const replyHeaderMock = jest.fn()
 
   // @ts-ignore
   const requestBuilderMock = (fileName): DecoratedRequest => ({
@@ -50,6 +51,7 @@ describe('Configuration api tests', () => {
 
   // @ts-ignore
   const replyMock: fastify.FastifyReply<http.ServerResponse> = {
+    header: replyHeaderMock,
     send: replySendMock,
   }
 
@@ -58,6 +60,7 @@ describe('Configuration api tests', () => {
     // @ts-ignore
     await handler(requestBuilderMock('validMicrolcConfig.json'), replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
+    expect(replyHeaderMock).toHaveBeenCalledWith('Content-Type', 'application/json')
   })
 
   it('Correctly handle valid json with empty header', async() => {
@@ -65,6 +68,7 @@ describe('Configuration api tests', () => {
     // @ts-ignore
     await handler({headers: {}, params: {configurationName: 'validMicrolcConfig.json'}, getGroups: () => []}, replyMock)
     expect(replySendMock).toHaveBeenCalledWith(validMicrolcConfig)
+    expect(replyHeaderMock).toHaveBeenCalledWith('Content-Type', 'application/json')
   })
 
   it('Correctly create handler for non json file', async() => {
@@ -74,6 +78,27 @@ describe('Configuration api tests', () => {
     await handler(requestBuilderMock(desiredFile), replyMock)
     const testFileContent = (await fs.promises.readFile(path.join(__dirname, `../../__tests__/${desiredFile}`))).toString('utf-8')
     expect(replySendMock).toHaveBeenCalledWith(testFileContent)
+    expect(replyHeaderMock).toHaveBeenCalledWith('Content-Type', 'text/plain')
+  })
+
+  it('Correctly create handler for javascript file', async() => {
+    const desiredFile = 'micro-lc-base.js'
+    const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder('/../'))
+    // @ts-ignore
+    await handler(requestBuilderMock(desiredFile), replyMock)
+    const testFileContent = (await fs.promises.readFile(path.join(__dirname, `../../__tests__/${desiredFile}`))).toString('utf-8')
+    expect(replySendMock).toHaveBeenCalledWith(testFileContent)
+    expect(replyHeaderMock).toHaveBeenCalledWith('Content-Type', 'application/javascript')
+  })
+
+  it('Correctly create handler for html file', async() => {
+    const desiredFile = 'index.html'
+    const handler = configurationFileApiHandlerBuilder(fastifyInstanceBuilder('/../'))
+    // @ts-ignore
+    await handler(requestBuilderMock(desiredFile), replyMock)
+    const testFileContent = (await fs.promises.readFile(path.join(__dirname, `../../__tests__/${desiredFile}`))).toString('utf-8')
+    expect(replySendMock).toHaveBeenCalledWith(testFileContent)
+    expect(replyHeaderMock).toHaveBeenCalledWith('Content-Type', 'text/html')
   })
 
   it('Correctly handle not existent file', async() => {

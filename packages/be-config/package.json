@@ -6,7 +6,7 @@
     "coverage": "yarn test --coverage --watchAll=false --collectCoverageFrom=src/**/*.{ts,tsx}",
     "lint": "eslint src --ext .js,.ts,.tsx",
     "start": "lc39 dist/index.js",
-    "start:local": "yarn start -- --env-path ./default.env",
+    "start:local": "yarn start --env-path ./default.env",
     "test": "yarn lint && yarn unit",
     "update-docker-version": "sed -i.bck \"s|version=\\\"[0-9]*\\.[0-9]*\\.[0-9]*.*\\\"|version=\\\"${npm_package_version}\\\"|\" Dockerfile",
     "update-changelog": "node ./scripts/update-changelog.js ${npm_package_version}",

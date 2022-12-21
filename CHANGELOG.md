@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Fixed manifest authentication issue, which by design does not send credentials
+- `be-config` returns proper `content-type` header on files retrieved from `PLUGINS_CONFIGURATION_PATH` endpoint
 
 ## [1.0.0] 2022-11-03
 
