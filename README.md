@@ -11,7 +11,7 @@
 micro-lc is an open source micro-frontend orchestrator for building flexible, multi-tenant frontend applications.
 And [much more](https://micro-lc.github.io/documentation/docs)!
 
-**Tip**: use the official **[playground](https://micro-lc.github.io/documentation/playground/)** to try micro-lc immediately.
+**Tip**: use the official **[playground](https://micro-lc.io/playground/)** to try micro-lc immediately.
 
 An introduction about micro frontend and how micro-lc works:
 
