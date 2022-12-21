@@ -18,7 +18,7 @@ import type { PropertyValueMap } from 'lit'
 import { unsafeCSS, css, html, LitElement } from 'lit'
 import { property, query, state } from 'lit/decorators.js'
 
-import monacoStyle from './mlc-config.css'
+import monacoStyle from './mlc-config.css?inline'
 import type { Editor } from './monaco'
 import * as monaco from './monaco'
 import { yaml } from './yaml-support'
@@ -318,14 +318,6 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     window.removeEventListener('keypress', this.ctrlEnterClickHandler)
   }
 
-  protected setupSchemaValidation() {
-    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-      enableSchemaRequest: true,
-      schemas: [{ uri: monaco.schemaUrl }],
-      validate: true,
-    })
-  }
-
   protected firstUpdated(_changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(_changedProperties)
     this._editor = monaco.editor.create(this.container, {
@@ -361,8 +353,6 @@ export class MlcConfig extends LitElement implements Resizable, Submittable {
     this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
       window.dispatchEvent(new KeyboardEvent('keypress', { ctrlKey: true, key: 'Enter' }))
     })
-
-    this.setupSchemaValidation()
   }
 
   protected handleSubmit(_: MouseEvent | HTMLIFrameElement): void {

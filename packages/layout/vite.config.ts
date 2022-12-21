@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => ({
       ],
     },
     emptyOutDir: false,
-    manifest: true,
+    manifest: `manifest${mode === 'min' ? '.min' : ''}.json`,
     outDir: 'dist',
     rollupOptions: {
       external: mode === 'min' ? ['react', 'react-dom'] : [],

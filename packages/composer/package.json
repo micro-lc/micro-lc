@@ -38,12 +38,12 @@
   "devDependencies": {
     "@micro-lc/interfaces": "workspace:*",
     "@open-wc/testing": "^3.1.7",
-    "@rollup/plugin-replace": "^5.0.1",
+    "@rollup/plugin-replace": "^5.0.2",
     "@types/chai": "^4.3.4",
     "@types/chai-string": "^1.4.2",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18.11.15",
+    "@types/node": "^18.11.17",
     "@types/sinon": "^10.0.13",
     "@types/sinon-chai": "^3.2.9",
     "@web/dev-server-esbuild": "^0.3.3",
@@ -55,7 +55,7 @@
     "chai-string": "^1.5.0",
     "cobertura-merge": "^1.0.4",
     "es-module-shims": "^1.6.2",
-    "esbuild": "^0.16.7",
+    "esbuild": "^0.16.10",
     "glob": "^8.0.3",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
@@ -64,12 +64,12 @@
     "sinon-chai": "^3.7.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
-    "vite": "^4.0.1",
+    "vite": "^4.0.2",
     "vite-plugin-banner": "^0.7.0"
   },
   "dependencies": {
     "lit-html": "^2.5.0",
-    "rxjs": "^7.6.0"
+    "rxjs": "^7.8.0"
   },
   "peerDependencies": {
     "es-module-shims": "*"

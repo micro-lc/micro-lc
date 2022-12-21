@@ -30,7 +30,7 @@ monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
   enableSchemaRequest: true,
   schemas: [
     {
-      fileMatch: ['*.json'],
+      fileMatch: ['**/*.json'],
       uri: `${schemaUrl}#`,
     },
   ],
@@ -41,11 +41,10 @@ setDiagnosticsOptions({
   enableSchemaRequest: true,
   schemas: [
     {
-      fileMatch: ['*.yaml', '*.yml'],
+      fileMatch: ['**/*.yaml', '**/*.yml'],
       uri: `${schemaUrl}#`,
     },
   ],
 })
 
-export { schemaUrl }
 export * from 'monaco-editor/esm/vs/editor/editor.api'
