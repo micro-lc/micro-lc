@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Versioning
 
 - Development dependencies updated
+- Typescript set to `^4.9.4` with yarn `3.3.1`
 - Typescript is set to `4.9.3` due to yarn berry temporary incompatibility
 - Direct dependencies `lit-html` was updated and deduped due to this [issue](https://github.com/lit/lit/issues/3241)
 - Direct dependencies `rxjs` was updated

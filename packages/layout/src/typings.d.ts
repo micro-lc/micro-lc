@@ -1,5 +1,6 @@
 declare module '*.less'
 declare module '*.less?inline'
+declare module '*.css?inline'
 
 declare module '*.json?url' {
   const url: string
