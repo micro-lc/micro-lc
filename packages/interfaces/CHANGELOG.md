@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- in `schemas/v2/config.schema.js` the parcel application entry has its own separate definition
+
 ### Versioning
 
 - Development dependencies updated

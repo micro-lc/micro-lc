@@ -152,6 +152,23 @@ export type HTMLVoidTag =
  * An HTML array node
  */
 export type ArrayContent = ((Component | VoidComponent) | (number | string))[]
+/**
+ * Entry of the plugin
+ */
+export type ParcelApplicationEntry =
+  | string
+  | (
+      | {
+          scripts: string | [string, ...string[]]
+          styles?: string | string[]
+          html?: string
+        }
+      | {
+          scripts?: string | string[]
+          styles?: string | string[]
+          html: string
+        }
+    )
 export type Application = IFrameApplication2 | ComposableApplication2 | ParcelApplication2
 
 /**
@@ -340,23 +357,7 @@ export interface ParcelApplication {
    * Type of the application: micro front-end loaded using parcels
    */
   integrationMode: "parcel"
-  /**
-   * Entry of the plugin
-   */
-  entry:
-    | string
-    | (
-        | {
-            scripts: string | [string, ...string[]]
-            styles?: string | string[]
-            html?: string
-          }
-        | {
-            scripts?: string | string[]
-            styles?: string | string[]
-            html: string
-          }
-      )
+  entry: ParcelApplicationEntry
   /**
    * parcel activeRule
    */
@@ -412,23 +413,7 @@ export interface ParcelApplication1 {
    * Type of the application: micro front-end loaded using parcels
    */
   integrationMode: "parcel"
-  /**
-   * Entry of the plugin
-   */
-  entry:
-    | string
-    | (
-        | {
-            scripts: string | [string, ...string[]]
-            styles?: string | string[]
-            html?: string
-          }
-        | {
-            scripts?: string | string[]
-            styles?: string | string[]
-            html: string
-          }
-      )
+  entry: ParcelApplicationEntry
   /**
    * parcel activeRule
    */
@@ -491,23 +476,7 @@ export interface ParcelApplication2 {
    * Type of the application: micro front-end loaded using parcels
    */
   integrationMode: "parcel"
-  /**
-   * Entry of the plugin
-   */
-  entry:
-    | string
-    | (
-        | {
-            scripts: string | [string, ...string[]]
-            styles?: string | string[]
-            html?: string
-          }
-        | {
-            scripts?: string | string[]
-            styles?: string | string[]
-            html: string
-          }
-      )
+  entry: ParcelApplicationEntry
   /**
    * parcel activeRule
    */

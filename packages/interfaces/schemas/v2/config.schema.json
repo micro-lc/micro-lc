@@ -161,9 +161,7 @@
         "src": {
           "description": "iFrame src attribute value",
           "type": "string",
-          "examples": [
-            "/frame.html", "https://mydomain.com/"
-          ]
+          "examples": ["/frame.html", "https://mydomain.com/"]
         },
         "srcdoc": {
           "description": "iFrame html content",
@@ -180,7 +178,7 @@
           "$comment": "Attributes `src` and `srcdoc` are overridden by the `iframe` integrationMode properties",
           "description": "Valid attributes of iframe HTML element",
           "type": "object",
-          "additionalProperties": {"type": "string"}
+          "additionalProperties": { "type": "string" }
         }
       },
       "additionalProperties": false
@@ -229,6 +227,103 @@
       "additionalProperties": false
     },
 
+    "parcelApplicationEntry": {
+      "title": "ParcelApplicationEntry",
+      "description": "Entry of the plugin",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "scripts": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "uri-reference"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "uri-reference"
+                      },
+                      "minItems": 1
+                    }
+                  ]
+                },
+                "styles": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "uri-reference"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "uri-reference"
+                      }
+                    }
+                  ]
+                },
+                "html": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              },
+              "additionalProperties": false,
+              "required": ["scripts"]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "scripts": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "uri-reference"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "uri-reference"
+                      }
+                    }
+                  ]
+                },
+                "styles": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "uri-reference"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "uri-reference"
+                      }
+                    }
+                  ]
+                },
+                "html": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              },
+              "additionalProperties": false,
+              "required": ["html"]
+            }
+          ]
+        }
+      ]
+    },
+
     "parcelApplication": {
       "title": "ParcelApplication",
       "type": "object",
@@ -248,100 +343,7 @@
           "const": "parcel"
         },
         "entry": {
-          "$comment": "TODO: complete the description",
-          "description": "Entry of the plugin",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "oneOf": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "scripts": {
-                      "oneOf": [
-                        {
-                          "type": "string",
-                          "format": "uri-reference"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string",
-                            "format": "uri-reference"
-                          },
-                          "minItems": 1
-                        }
-                      ]
-                    },
-                    "styles": {
-                      "oneOf": [
-                        {
-                          "type": "string",
-                          "format": "uri-reference"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string",
-                            "format": "uri-reference"
-                          }
-                        }
-                      ]
-                    },
-                    "html": {
-                      "type": "string",
-                      "format": "uri-reference"
-                    }
-                  },
-                  "additionalProperties": false,
-                  "required": ["scripts"]
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "scripts": {
-                      "oneOf": [
-                        {
-                          "type": "string",
-                          "format": "uri-reference"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string",
-                            "format": "uri-reference"
-                          }
-                        }
-                      ]
-                    },
-                    "styles": {
-                      "oneOf": [
-                        {
-                          "type": "string",
-                          "format": "uri-reference"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string",
-                            "format": "uri-reference"
-                          }
-                        }
-                      ]
-                    },
-                    "html": {
-                      "type": "string",
-                      "format": "uri-reference"
-                    }
-                  },
-                  "additionalProperties": false,
-                  "required": ["html"]
-                }
-              ]
-            }
-          ]
+          "$ref": "#/definitions/parcelApplicationEntry"
         },
         "route": {
           "description": "parcel activeRule",
