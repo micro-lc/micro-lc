@@ -12,7 +12,7 @@ services:
     extra_hosts:
         - host.docker.internal:host-gateway
   back-kit:
-    image: microlc/bk-web-components:${BACK_KIT_VERSION:-1.1.0}
+    image: microlc/bk-web-components:${BACK_KIT_VERSION:-unstable}
     networks:
         - ring
   element-composer:

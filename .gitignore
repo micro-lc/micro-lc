@@ -1,5 +1,6 @@
 .idea/
 
+lcov.info
 node_modules/
 dist/
 
