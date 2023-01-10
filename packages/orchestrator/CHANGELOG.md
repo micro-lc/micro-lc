@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- `compose` integration mode is scoped to allow the presence of a `qiankun-head` tag
+
 ### Versioning
 
 - Development dependencies updated

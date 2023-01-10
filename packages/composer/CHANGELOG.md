@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `composer` is allowed to further scope its container when `qiankun` provides an application name
+
 ### Versioning
 
 - Development dependencies updated

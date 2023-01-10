@@ -206,9 +206,20 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     let entry: Entry
     let config: string | PluginConfiguration | undefined
     let properties: Record<string, unknown> | undefined
+    const name = `${id}-${window.crypto.randomUUID()}`
     switch (app.integrationMode) {
     case 'compose':
-      entry = { scripts: [composerUri] }
+      entry = {
+        html: `
+          <!DOCTYPE html>
+          <html>
+          <head></head>
+          <body><div id="${name}"></div></body>
+          </html>
+        `,
+        scripts: [composerUri],
+        styles: [],
+      }
       config = typeof app.config === 'string'
         ? app.config
         : { ...app.config }
@@ -245,7 +256,6 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     }
 
     let idScopedByInstance = id
-    const name = `${id}-${window.crypto.randomUUID()}`
     if (idx < errorPages.length) {
       idScopedByInstance = `${this._instance}-${id}`
       acc.mapping.set(name, idScopedByInstance)

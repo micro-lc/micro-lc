@@ -173,7 +173,8 @@ export async function mount(
   }: MountProps
 ): Promise<null> {
   logger(name, 'starting mounting...')
-  parent.set(name, container)
+  const root: HTMLElement = parent.get(name) ?? container.querySelector(`[id="${name}"]`) ?? container
+  parent.set(name, root)
 
   let done = Promise.resolve<void | null>(null)
 
@@ -194,7 +195,7 @@ export async function mount(
           eventBus: createPool(),
         }
       ).then(() => {
-        container.replaceChildren(...virtualContainer.childNodes)
+        root.replaceChildren(...virtualContainer.childNodes)
       }).catch(console.error)
     }
   })
