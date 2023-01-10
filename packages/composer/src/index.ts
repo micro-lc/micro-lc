@@ -95,6 +95,7 @@ declare global {
   }
 }
 
+let assets: Promise<void> = Promise.resolve()
 const composerConfig = new Map<string, ResolvedConfig>()
 const parent = new Map<string, HTMLElement | null>()
 
@@ -161,7 +162,7 @@ export async function bootstrap({
   }
 
   logger(name, 'bootstrap has finished...')
-  return Promise.resolve(null)
+  return null
 }
 
 export async function mount(
@@ -176,8 +177,6 @@ export async function mount(
   const root: HTMLElement = parent.get(name) ?? container.querySelector(`[id="${name}"]`) ?? container
   parent.set(name, root)
 
-  let done = Promise.resolve<void | null>(null)
-
   const observer = new BehaviorSubject<EventWithUser>({})
   const { subscribe = observer.subscribe.bind(observer) } = microlcApi ?? {}
 
@@ -185,7 +184,7 @@ export async function mount(
     const config = composerConfig.get(name)
     if (config) {
       const virtualContainer = document.createElement('div')
-      done = render(
+      assets.then(() => render(
         config,
         virtualContainer,
         {
@@ -194,14 +193,15 @@ export async function mount(
           currentUser: user,
           eventBus: createPool(),
         }
-      ).then(() => {
+      )).then(() => {
         root.replaceChildren(...virtualContainer.childNodes)
+        root.dispatchEvent(new Event('load'))
       }).catch(console.error)
     }
   })
 
   logger(name, 'mount has finished...')
-  return done.then(() => null)
+  return null
 }
 
 export async function unmount({ name }: {name: string}) {

@@ -18,20 +18,43 @@ import { property, state } from 'lit/decorators.js'
 
 interface LoadableElement extends HTMLElement {
   _loading: boolean
+  _resolves: (() => void)[]
+  loadingMode: 'race' | 'all'
+}
+
+interface LoadResolves {
+  promises: Promise<void>[]
+  resolves: (() => void)[]
 }
 
 function handleSlotChange(this: LoadableElement, { target }: Event): void {
   if (target instanceof HTMLSlotElement) {
-    target.assignedElements().forEach((element) => {
-      if (element instanceof HTMLElement) {
-        const previousDisplay = element.style.display
-        element.style.display = 'none'
-        element.onload = () => {
-          this._loading = false
-          element.style.display = previousDisplay
+    const unload = () => {this._loading = false}
+    const {promises, resolves} = target
+      .assignedElements()
+      .reduce<LoadResolves>(({promises, resolves}, element, i) => {
+        if (element instanceof HTMLElement) {
+          const originalDisplay = element.style.display
+          promises.push(
+            new Promise<void>((resolve) => {resolves[i] = resolve})
+              .then(() => {element.style.display = originalDisplay})
+          )
+          element.style.display = 'none'
+          element.onload = () => {
+            resolves[i]()
+          }
         }
-      }
-    })
+
+        return {promises, resolves}
+      }, {promises: [], resolves: []})
+
+    this._resolves = resolves
+
+    if(this.loadingMode === 'all') {
+      Promise.all(promises).finally(unload)
+    } else {
+      Promise.race(promises).finally(unload)
+    }
   }
 }
 
@@ -156,9 +179,16 @@ export class MlcLoadingAnimation extends LitElement implements LoadableElement {
     }
   `
 
-  @state() _loading = true
+  @state()
+  _loading = true
+  
+  _resolves: (() => void)[] = []
 
   protected _handleSlotChanges = handleSlotChange.bind(this)
+
+  protected _loadListener = () => {
+    this._resolves.forEach((resolve) => resolve())
+  }
 
   @property({ attribute: 'primary-color', reflect: true })
   set primaryColor(color: unknown) {
@@ -166,6 +196,19 @@ export class MlcLoadingAnimation extends LitElement implements LoadableElement {
   }
   get primaryColor(): string {
     return this.style.fill
+  }
+
+  @property({ attribute: 'loading-mode', reflect: true })
+  loadingMode: 'race' | 'all' = 'race'
+
+  connectedCallback(): void {
+    super.connectedCallback()
+    this.addEventListener('load', this._loadListener)
+  }
+
+  disconnectedCallback(): void {
+    this.removeEventListener('load', this._loadListener)
+    super.disconnectedCallback()
   }
 
   protected render(): unknown {

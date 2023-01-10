@@ -9,7 +9,15 @@
     }
   },
   "settings": {
-    "defaultUrl": "./home"
+    "defaultUrl": "./home",
+    "mountPointSelector": "#__custom_micro_lc",
+    "mountPoint": {
+      "tag": "mlc-loading-animation",
+      "attributes": {
+        "id": "__custom_micro_lc",
+        "primary-color": "#cd1c8c"
+      }
+    }
   },
   "importmap": {
     "imports": {
