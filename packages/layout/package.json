@@ -54,7 +54,7 @@
     "@ant-design/icons-svg": "^4.2.1",
     "@ctrl/tinycolor": "^3.5.0",
     "@micro-lc/iconic": "workspace:*",
-    "antd": "4.24.1",
+    "antd": "^4.24.7",
     "js-yaml": "^4.1.0",
     "lit": "^2.5.0",
     "monaco-editor": "^0.34.1",
