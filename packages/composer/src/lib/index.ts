@@ -62,7 +62,11 @@ interface ImportShimContext {
   importShim: typeof importShim
 }
 
-export async function premount(config: PluginConfiguration, proxyWindow: ImportShimContext = window): Promise<ResolvedConfig> {
+export async function premount(
+  config: PluginConfiguration,
+  proxyWindow: ImportShimContext = window,
+  reporter: (err: unknown) => void = console.error
+): Promise<ResolvedConfig> {
   let uris: string[] = []
   let importmap: ImportMap | undefined
 
@@ -75,17 +79,15 @@ export async function premount(config: PluginConfiguration, proxyWindow: ImportS
 
     try {
       proxyWindow.importShim.addImportMap(importmap)
-    } catch (err: Error | unknown) {
-      if (err instanceof Error) {
-        console.error(err)
-      }
+    } catch (err) {
+      reporter(err)
     }
 
     uris = parseSources(sources)
 
     if (uris.length > 0) {
       await Promise.all(uris.map(
-        (uri) => (proxyWindow.importShim(uri)).catch((err) => { console.error(err) })
+        (uri) => (proxyWindow.importShim(uri)).catch(reporter)
       ))
     }
   }
