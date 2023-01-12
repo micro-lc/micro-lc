@@ -60,5 +60,6 @@ jobs:
             COMMIT_SHA=${GITHUB_SHA}
             DESCRIPTION="The Mia-Platform micro frontend solution"
             VERSION=${VERSION}
+          pull: true
           push: true
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
