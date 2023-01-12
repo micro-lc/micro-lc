@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.0.1] - 2023-01-12
+
 ### Added
 
 - `premount` allows to collect errors via a `reporter` optional parameter which defaults to `console.error`
