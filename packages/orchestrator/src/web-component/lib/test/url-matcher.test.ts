@@ -2,7 +2,29 @@ import { expect } from 'chai'
 
 import { effectiveRouteLength, urlMatch } from '../url-matcher'
 
-describe('url-matcher tests', () => {
+describe('urlMatch tests', () => {
+  const tests: [string, string, boolean][] = [
+    ['/customers', '/customers', true],
+    ['/customers/', '/customers', true],
+    ['/customersplusextrastring', '/customers', false],
+    ['/customers/subpath', '/customers', true],
+    ['/customers?foo=bar', '/customers', true],
+    ['/customers/?foo=bar', '/customers', true],
+    ['/customers#foo=bar', '/customers', true],
+    ['/customers/#foo=bar', '/customers', true],
+    ['/customer', '/customers', false],
+  ]
+
+  tests.forEach(([pathname, against, expected]) => {
+    it(`should match ${pathname} against ${against}`, () => {
+      const match = urlMatch(pathname, against)
+
+      expect(match !== null).to.equal(expected)
+    })
+  })
+})
+
+describe('url-matcher integration tests', () => {
   const tests: [string, string, number, RegExpMatchArray | null][] = [
     ['/', '/', 1, Object.assign<RegExpMatchArray, {index: number}>(['/'], { index: 0 })],
     ['/app1', '/:appname', 1, Object.assign<RegExpMatchArray, {index: number}>(['/app1'], { index: 0 })],
@@ -26,8 +48,9 @@ describe('url-matcher tests', () => {
         return
       }
 
+      // '/123/app1/subpath', 0
       expected.forEach((nthMatch, idx) => {
-        expect(nthMatch).to.equal(match?.[idx])
+        expect(match?.[idx]).to.equal(nthMatch)
       })
       expect(match?.index).to.equal(expected.index)
     })
