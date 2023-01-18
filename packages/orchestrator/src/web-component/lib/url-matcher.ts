@@ -10,3 +10,8 @@ export function urlMatch(pathname: string, against: string) {
 export function effectiveRouteLength(route: string): number {
   return route.replace(/\/:([a-zA-Z]+)/g, '/').length
 }
+
+export const computeAbsoluteRoute = (document: Document, route: string): string => {
+  const { baseURI, location: { href } } = document
+  return new URL(route, new URL(baseURI, href)).pathname
+}
