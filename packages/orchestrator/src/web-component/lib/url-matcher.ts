@@ -1,6 +1,10 @@
 export function urlMatch(pathname: string, against: string) {
   const regex = against.replace(/\/:([a-zA-Z]+)/g, '/([^/?#]+)')
-  return pathname.match(new RegExp(`^${regex}(.*)`))
+  const queryParamRegex = '\\?.*'
+  const anchorRegex = '#.*'
+  const subPathRegex = '/.*'
+  const suffixRegex = regex.endsWith('/') ? '.*' : `$|${subPathRegex}|${queryParamRegex}|${anchorRegex}`
+  return pathname.match(new RegExp(`^${regex}(?:${suffixRegex})`))
 }
 
 export function effectiveRouteLength(route: string): number {
