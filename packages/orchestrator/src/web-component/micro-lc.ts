@@ -97,7 +97,7 @@ export class Microlc<
 
       this._handlePropertyUpdate(
         'config',
-        mergeConfig(value as Config),
+        mergeConfig(this.ownerDocument, value as Config),
       )
       break
     case 'configSrc':
@@ -290,7 +290,7 @@ export class Microlc<
           this.getApi().getExtensions().language?.getLanguage()
         )
         const config = await fetchConfig(this._configSrc, { headers })
-        this._config = mergeConfig(config)
+        this._config = mergeConfig(this.ownerDocument, config)
       }
 
       // 1 => import-map 💹

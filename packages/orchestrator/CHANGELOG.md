@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
 - `compose` integration mode is scoped to allow the presence of a `qiankun-head` tag
+- applications `route` and `config` fields, when representing URLs, are computed wrt `document.baseURI`
+
+### Fixed
+
+- fixed bug on route matching
 
 ### Versioning
 

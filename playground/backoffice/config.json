@@ -180,7 +180,7 @@
     },
     "plain_about": {
       "integrationMode": "compose",
-      "route": "./ingredients/about/",
+      "route": "./ingredients/about",
       "config": {"content": {"tag": "div", "content": "About 📓"}}
     },
     "composer_new": {

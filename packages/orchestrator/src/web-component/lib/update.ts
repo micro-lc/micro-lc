@@ -258,12 +258,11 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     let idScopedByInstance = id
     if (idx < errorPages.length) {
       idScopedByInstance = `${this._instance}-${id}`
-      acc.mapping.set(name, idScopedByInstance)
-    } else {
-      acc.mapping.set(name, idScopedByInstance)
-      app.route && acc.routes.set(name, app.route)
+    } else if (app.route !== undefined) {
+      acc.routes.set(name, app.route)
     }
 
+    acc.mapping.set(name, idScopedByInstance)
     acc.apps.set(idScopedByInstance, [app.route, {
       container: getContainer.call<Microlc<T>, [string | undefined], HTMLElement>(this, mountPointSelector),
       entry,
