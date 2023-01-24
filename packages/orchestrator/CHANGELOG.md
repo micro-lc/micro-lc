@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - fixed bug on route matching
+- assets renaming removed hash for error pages (401, 404, and 500) + composer application bundle
 
 ### Versioning
 

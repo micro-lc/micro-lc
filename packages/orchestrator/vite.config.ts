@@ -16,6 +16,18 @@ export default defineConfig(({ mode }) => ({
         'micro-lc': 'src/micro-lc.ts',
       },
       output: {
+        assetFileNames: ({ name }) => {
+          console.log(name)
+          if (name === undefined) {
+            return `assets/[hash].[ext]`
+          } else if (['401.html', '404.html', '500.html'].includes(name)) {
+            return `assets/${name.replace(/\.html$/, '')}.[ext]`
+          } else if (name === 'composer.production.js') {
+            return `assets/composer.[ext]`
+          }
+
+          return `assets/${name}-[hash].[ext]`
+        },
         entryFileNames: ({ name }) => `${name}.${mode}.js`,
         manualChunks: (id) => {
           if (mode !== 'production' && id.match(/qiankun/)) {
