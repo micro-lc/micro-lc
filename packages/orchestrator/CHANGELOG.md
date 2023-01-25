@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- `compose` applications live in a body made by a `div` tag with CSS class `composer-body`
+
 ## [2.0.1] - 2023-01-24
 
 ### Added

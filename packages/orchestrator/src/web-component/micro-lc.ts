@@ -29,6 +29,7 @@ import type {
   RouterContainer,
   QiankunApi } from './lib'
 import {
+  COMPOSER_BODY_CLASS,
   handleUpdateError,
   getUnmount,
   currentApplication$,
@@ -228,6 +229,12 @@ export class Microlc<
           }
 
           div#__micro_lc > :first-child {
+            width: inherit;
+            height: inherit;
+            overflow: hidden
+          }
+
+          div#__micro_lc > :first-child > div.${COMPOSER_BODY_CLASS} {
             width: inherit;
             height: inherit;
             overflow: hidden

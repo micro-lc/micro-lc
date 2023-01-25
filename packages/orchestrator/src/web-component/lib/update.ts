@@ -37,6 +37,8 @@ const defaultInitOptions: Partial<ESMSInitOptions> = {
   shimMode: true,
 }
 
+export const COMPOSER_BODY_CLASS = 'composer-body'
+
 export async function initImportMapSupport(): Promise<void> {
   const { esmsInitOptions } = window
   !esmsInitOptions
@@ -214,7 +216,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
           <!DOCTYPE html>
           <html>
           <head></head>
-          <body><div id="${name}"></div></body>
+          <body><div class="${COMPOSER_BODY_CLASS}" id="${name}"></div></body>
           </html>
         `,
         scripts: [composerUri],
