@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [2.0.1] - 2023-01-25
+
 ### Versioning
 
 - fixes `qiankun-head` faulty behavior with composer `v2.0.1`
