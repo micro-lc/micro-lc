@@ -13,6 +13,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+import type { MlcLayout } from '../mlc-layout'
+
 import type { Theme } from './utils'
 
 export interface LocalStorage {
@@ -20,10 +22,10 @@ export interface LocalStorage {
   '@microlc:fixedSidebarState': 'expanded' | 'collapsed'
 }
 
-export const getFromLocalStorage = <K extends keyof LocalStorage>(key: K): LocalStorage[K] | undefined => {
-  return (localStorage.getItem(key) ?? undefined) as LocalStorage[K] | undefined
+export function getFromLocalStorage<K extends keyof LocalStorage>(this: MlcLayout, key: K): LocalStorage[K] | undefined {
+  return (this.proxyWindow.localStorage.getItem(key) ?? undefined) as LocalStorage[K] | undefined
 }
 
-export const setInLocalStorage = <K extends keyof LocalStorage>(key: K, val: LocalStorage[K]) => {
-  localStorage.setItem(key, val)
+export function setInLocalStorage<K extends keyof LocalStorage>(this: MlcLayout, key: K, val: LocalStorage[K]) {
+  this.proxyWindow.localStorage.setItem(key, val)
 }
