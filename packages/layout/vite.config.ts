@@ -18,9 +18,7 @@ const input = (mode: string): Record<string, string> => {
   }
   if (mode !== 'min') {
     return {
-      index: 'src/index.ts',
       ...minInput,
-      'mlc-config': 'src/web-components/mlc-config/index.ts',
       'mlc-iconic': 'src/web-components/mlc-iconic/index.ts',
       'mlc-url': 'src/web-components/mlc-url/index.ts',
     }
