@@ -18,9 +18,7 @@ const input = (mode: string): Record<string, string> => {
   }
   if (mode !== 'min') {
     return {
-      index: 'src/index.ts',
       ...minInput,
-      'mlc-config': 'src/web-components/mlc-config/index.ts',
       'mlc-iconic': 'src/web-components/mlc-iconic/index.ts',
       'mlc-url': 'src/web-components/mlc-url/index.ts',
     }
@@ -82,15 +80,6 @@ export default defineConfig(({ mode }) => ({
         NodeModulesPolyfillPlugin(),
       ],
     },
-    needsInterop: [
-      'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/documentSymbols.js',
-      'monaco-editor/esm/vs/editor/contrib/format/browser/formatActions.js',
-      'monaco-editor/esm/vs/editor/contrib/inPlaceReplace/browser/inPlaceReplace.js',
-      'monaco-editor/esm/vs/editor/contrib/stickyScroll/browser/stickyScroll.js',
-      'monaco-editor/esm/vs/editor/contrib/viewportSemanticTokens/browser/viewportSemanticTokens.js',
-      'monaco-editor/esm/vs/editor/standalone/browser/accessibilityHelp/accessibilityHelp.js',
-      'monaco-editor/esm/vs/editor/standalone/browser/inspectTokens/inspectTokens.js',
-    ],
   },
   plugins: [
     dynamicImport({
@@ -107,6 +96,6 @@ export default defineConfig(({ mode }) => ({
       path: 'rollup-plugin-node-polyfills/polyfills/path',
       'process.env.NODE_ENV': JSON.stringify(mode),
     },
-    dedupe: ['react', 'react-dom', 'monaco-editor'],
+    dedupe: ['react', 'react-dom'],
   },
 }))

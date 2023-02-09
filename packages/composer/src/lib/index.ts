@@ -69,6 +69,7 @@ export async function premount(
 ): Promise<ResolvedConfig> {
   let uris: string[] = []
   let importmap: ImportMap | undefined
+  let done: Promise<unknown> = Promise.resolve()
 
   if (config.sources) {
     const { sources } = config
@@ -86,16 +87,16 @@ export async function premount(
     uris = parseSources(sources)
 
     if (uris.length > 0) {
-      await Promise.all(uris.map(
+      done = Promise.all(uris.map(
         (uri) => (proxyWindow.importShim(uri)).catch(reporter)
       ))
     }
   }
 
-  return Promise.resolve({
+  return done.then(() => ({
     ...config,
     sources: { importmap, uris },
-  })
+  }))
 }
 
 export async function render(

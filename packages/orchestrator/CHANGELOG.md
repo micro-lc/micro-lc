@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `onload` of `micro-lc` is called after a successful reroute
+
 ## [2.0.2] - 2023-02-09
 
 ### Fixed

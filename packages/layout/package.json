@@ -55,10 +55,7 @@
     "@ctrl/tinycolor": "^3.5.0",
     "@micro-lc/iconic": "workspace:*",
     "antd": "^4.24.7",
-    "js-yaml": "^4.1.0",
     "lit": "^2.5.0",
-    "monaco-editor": "^0.34.1",
-    "monaco-yaml": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -87,7 +84,6 @@
     "@storybook/web-components": "^6.5.15",
     "@types/babel__core": "^7.1.20",
     "@types/glob": "^8.0.0",
-    "@types/js-yaml": "^4.0.5",
     "@types/json-schema": "^7.0.11",
     "@types/lodash-es": "^4.17.6",
     "@types/mocha": "^10.0.1",
@@ -114,7 +110,6 @@
     "vite": "^4.0.4",
     "vite-plugin-banner": "^0.7.0",
     "vite-plugin-dynamic-import": "^1.2.4",
-    "vite-plugin-monaco-editor": "^1.1.0",
     "vite-plugin-replace": "^0.1.1",
     "vite-tsconfig-paths": "^4.0.3"
   },

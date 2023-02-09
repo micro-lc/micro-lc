@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- refactor to `premount` API in order to better follow the promise lifecycle
+
 ## [2.0.1] - 2023-01-12
 
 ### Added

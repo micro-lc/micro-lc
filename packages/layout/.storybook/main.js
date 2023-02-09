@@ -2,7 +2,6 @@ const rollupNodePolyFill = require('rollup-plugin-node-polyfills')
 const {mergeConfig} = require('vite')
 const {default: tsconfigPaths} = require('vite-tsconfig-paths')
 const {default: dynamicImport} = require('vite-plugin-dynamic-import')
-const {default: monacoEditorPlugin} = require('vite-plugin-monaco-editor')
 const {replaceCodePlugin} = require('vite-plugin-replace')
 const {default: postcssAntDynamicTheme} = require('@micro-lc/interfaces/postcss-ant-dynamic-theme')
 
@@ -30,10 +29,6 @@ module.exports = {
               to: './../../../../lang'
             },
           ]
-        }),
-        monacoEditorPlugin({
-          customWorkers: [{ entry: require.resolve('monaco-yaml/yaml.worker'), label: 'yaml' }],
-          languageWorkers: ['editorWorkerService', 'json'],
         }),
       ],
       css: {

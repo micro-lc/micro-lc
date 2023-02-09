@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### BREAKING CHANGES
+
+- `mlc-config` has been **removed**
+- `mlc-loading-animation` unloads only when all children fired an `onload` event
+
+### Added
+
+- `mlc-url` restyle and support to back button
+
 ## [1.0.1] - 2023-02-09
 
 ### Fixed
