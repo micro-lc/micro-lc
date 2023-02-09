@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 
 import { ESLint } from 'eslint'
 import { compileFromFile } from 'json-schema-to-typescript'
-import mkdirp from 'mkdirp'
+import { mkdirp } from 'mkdirp'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const schemasDirPath = resolve(__dirname, '../schemas')

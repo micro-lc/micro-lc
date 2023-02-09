@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Versioning
+
+- Development dependencies updated
+- Typescript set to `^4.9.5` with yarn `3.4.1`
+- `qiankun` to `^2.9.1`
+
 ### Added
 
 - `onload` of `micro-lc` is called after a successful reroute
