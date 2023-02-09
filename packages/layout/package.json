@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/layout",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "types": "./dist/types/index.d.ts",
   "module": "./dist/index.js",
   "exports": {
