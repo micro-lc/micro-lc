@@ -1,4 +1,4 @@
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing'
+import { elementUpdated, expect, fixture, html, waitUntil } from '@open-wc/testing'
 import { LitElement } from 'lit'
 // import { createSandbox } from 'sinon'
 
@@ -35,6 +35,7 @@ describe('mlc-loading-animation', () => {
     expect(loadable.style).to.have.property('display', 'none')
 
     loadable.click()
+    await waitUntil(() => loadable.style.display === '')
     expect(loadable.style).to.have.property('display', '')
 
     await elementUpdated(el)
