@@ -20,18 +20,41 @@ interface LoadableElement extends HTMLElement {
   _loading: boolean
 }
 
+type Callback = () => void
+
 function handleSlotChange(this: LoadableElement, { target }: Event): void {
   if (target instanceof HTMLSlotElement) {
-    target.assignedElements().forEach((element) => {
+    Promise.allSettled(target.assignedElements().reduce<Promise<Callback>[]>((promises, element) => {
+      let innerResolve: ((displayReset: Callback) => void) | undefined
+      let innerReject: ((reason?: unknown) => void) | undefined
+      const promise = new Promise<Callback>((resolve, reject) => {
+        innerResolve = resolve
+        innerReject = reject
+      })
       if (element instanceof HTMLElement) {
         const previousDisplay = element.style.display
         element.style.display = 'none'
         element.onload = () => {
-          this._loading = false
-          element.style.display = previousDisplay
+          innerResolve?.(() => { element.style.display = previousDisplay })
+        }
+        element.onerror = (error) => {
+          innerReject?.(error)
         }
       }
-    })
+
+      promises.push(promise)
+      return promises
+    }, []))
+      .then((values) => {
+        values.forEach(({ status, ...rest }) => {
+          if (status === 'fulfilled') {
+            const { value } = rest as {value: Callback}
+            value()
+          }
+        })
+      })
+      .then(() => { this._loading = false })
+      .catch(() => { /* no-op */ })
   }
 }
 

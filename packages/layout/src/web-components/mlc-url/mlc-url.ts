@@ -101,7 +101,6 @@ export class MlcUrl extends LitElement {
       const { origin, href } = new URL(_value)
       const nextOrigin = origin.includes(matcher as string) ? this.origin as string : origin
       const nextHref = href.replace(origin, nextOrigin)
-      console.log('here', nextHref)
       try {
         this._value = new URL(nextHref).href
       } catch {

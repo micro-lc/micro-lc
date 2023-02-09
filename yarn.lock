@@ -2352,7 +2352,6 @@ __metadata:
     vite: ^4.0.4
     vite-plugin-banner: ^0.7.0
     vite-plugin-dynamic-import: ^1.2.4
-    vite-plugin-monaco-editor: ^1.1.0
     vite-plugin-replace: ^0.1.1
     vite-tsconfig-paths: ^4.0.3
   languageName: unknown
@@ -20342,15 +20341,6 @@ __metadata:
   dependencies:
     fast-glob: ~3.2.12
   checksum: d41a6943b6c9c32d983926b72c8e059a274b5bdac219c65758fadd10f7da36f63efe8a8a616c33f0cb1f1334f4a161cb61d2458b582b3d9417a18657244279d3
-  languageName: node
-  linkType: hard
-
-"vite-plugin-monaco-editor@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "vite-plugin-monaco-editor@npm:1.1.0"
-  peerDependencies:
-    monaco-editor: ">=0.33.0"
-  checksum: 9b3d3010d2c2c6ed92e58dd17a04f13eb1fe28ba521eda3d38d4dfe8f3654d9a511dfbbb83614496a64c03a6f6a8d123363dcd408ae0b405d29eae9c68b9c376
   languageName: node
   linkType: hard
 

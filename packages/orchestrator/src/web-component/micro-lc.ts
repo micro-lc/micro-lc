@@ -146,13 +146,17 @@ export class Microlc<
           if (done) {
             // rerouting
             this.matchCache.invalidateCache()
-            this._reroute().catch(rerouteErrorHandler)
-
-            // signal webcomponent end of update
-            this._completeUpdate()
-
+            return this._reroute()
+              .then(() => done)
+              .catch(rerouteErrorHandler)
+          }
+        })
+        .then((done) => {
+          if (done) {
             // signal load finished
             this.onload?.call(window, new Event('load'))
+            // signal webcomponent end of update
+            this._completeUpdate()
           }
         })
         .catch((err: TypeError) => handleUpdateError(currentApplication$, err))
