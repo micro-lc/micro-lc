@@ -30,6 +30,8 @@ export class MlcComponent<P = { children?: React.ReactNode }> extends LitElement
   root?: Root
   _adoptedStyleSheets: CSSResultOrNative[] = []
 
+  @property() proxyWindow: Window = window
+
   @property()
   set stylesheet(sheet: string | undefined) {
     this.dynamicStyleSheet = sheet

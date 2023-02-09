@@ -95,8 +95,9 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
     this._currentApplicationSub = this.microlcApi?.currentApplication$
       ?.subscribe(updateSelectedKeys.bind(this))
 
-    this._sideBarCollapsed = getFromLocalStorage('@microlc:fixedSidebarState') === 'collapsed'
-    this._theme = getFromLocalStorage('@microlc:currentTheme') ?? Theme.LIGHT
+    this._sideBarCollapsed = getFromLocalStorage.call(this, '@microlc:fixedSidebarState') === 'collapsed'
+    this._theme = getFromLocalStorage
+      .call<MlcLayout, ['@microlc:currentTheme'], Theme | undefined>(this, '@microlc:currentTheme') ?? Theme.LIGHT
   }
 
   disconnectedCallback() {

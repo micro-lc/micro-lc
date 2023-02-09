@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - vite warning on inline css import resolved
 - json schema import fixed for `mlc-config` web component
+- `mlc-layout` supports `proxyWindow` when calling `localStorage`
 
 ### Versioning
 

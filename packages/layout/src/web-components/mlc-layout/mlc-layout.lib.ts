@@ -61,7 +61,7 @@ function onLogoClick(this: MlcLayout) {
 function onSelect(this: MlcLayout, id: string) {
   if (id === COLLAPSE_KEY) {
     this._sideBarCollapsed = !this._sideBarCollapsed
-    setInLocalStorage('@microlc:fixedSidebarState', this._sideBarCollapsed ? 'collapsed' : 'expanded')
+    setInLocalStorage.call(this, '@microlc:fixedSidebarState', this._sideBarCollapsed ? 'collapsed' : 'expanded')
     return
   }
 
@@ -109,7 +109,7 @@ function onUserMenuClick(this: MlcLayout, id: string) {
 function onThemeChange(this: MlcLayout, value: Theme) {
   this._theme = value
 
-  setInLocalStorage('@microlc:currentTheme', value)
+  setInLocalStorage.call(this, '@microlc:currentTheme', value)
   this.microlcApi?.set?.({ theme: value })
 }
 
