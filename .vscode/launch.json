@@ -26,6 +26,18 @@
         "test/**/${fileBasename}"
       ],
       "console": "integratedTerminal",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "version cli",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": [
+        "bump",
+        "orchestrator",
+        "patch"
+      ],
+      "console": "integratedTerminal"
     }
   ]
 }
