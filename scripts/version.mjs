@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import { exec as childProcessExec } from 'child_process'
 import { readFile, writeFile } from 'fs/promises'
 import { dirname, resolve as pathResolve } from 'path'
@@ -11,7 +12,7 @@ logger.setDate(() => '')
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const packages = [
-  'micro-lc',
+  // 'micro-lc',
   'interfaces',
   'iconic',
   'composer',
@@ -166,14 +167,14 @@ async function main() {
 
   const queue = new PromiseQueue()
 
-  let workingDir = pathResolve(__dirname, '..')
-  let tagScope = 'micro-lc'
-  let tagPrefix = 'v'
-  if (ctx.package !== 'micro-lc') {
-    workingDir = pathResolve(__dirname, `../packages/${ctx.package}`)
-    tagScope = `@micro-lc/${ctx.package}`
-    tagPrefix = `${tagScope}@`
-  }
+  // let workingDir = pathResolve(__dirname, '..')
+  // let tagScope = 'micro-lc'
+  // let tagPrefix = 'v'
+  // if (ctx.package !== 'micro-lc') {
+  const workingDir = pathResolve(__dirname, `../packages/${ctx.package}`)
+  const tagScope = `@micro-lc/${ctx.package}`
+  const tagPrefix = `${tagScope}@`
+  // }
 
   await queue.add('version', () => exec('version', `(cd ${workingDir} ; yarn version ${ctx.version})`))
 
@@ -183,21 +184,42 @@ async function main() {
   }
 
   queue.add('reset-stage', () => exec('reset-stage', 'git reset'))
-  queue.add('add-to-stage', () => exec('add-to-stage', `git add ${pathResolve(workingDir, 'package.json')} ${pathResolve(workingDir, 'CHANGELOG.md')} ${pathResolve(__dirname, '..', '.yarn', 'versions')}`))
+  queue.add('add-to-stage', () => exec('add-to-stage', `git add ${pathResolve(workingDir, 'package.json')} ${pathResolve(workingDir, 'CHANGELOG.md')} ${pathResolve(__dirname, '..', '.yarn/versions')}`))
+
+  if (ctx.package === 'orchestrator') {
+    const packageWorkingDir = pathResolve(__dirname, '..')
+    await queue.add('version', () => exec('version', `yarn version ${ctx.version}`))
+    const packageNewSemVersion = await querySemVer(packageWorkingDir)
+    if (packageNewSemVersion !== undefined) {
+      queue.add('update-changelog', () => updateChangelog(packageWorkingDir, packageNewSemVersion))
+    }
+
+    queue.add('add-to-stage', () => exec('add-to-stage', `git add ${pathResolve(packageWorkingDir, 'package.json')} ${pathResolve(packageWorkingDir, 'CHANGELOG.md')} ${pathResolve(packageWorkingDir, '.yarn/versions')}`))
+  }
 
   const newVersion = await queryVersion(workingDir)
   queue.add('commit', () => exec('commit', `git commit -nm "${tagScope} tagged at version: ${newVersion}"`))
 
+  const tags = []
   const tag = `${tagPrefix}${newVersion}`
   queue.add('commit', () => exec('tag', `git tag -a "${tag}" -m "${tagScope} tagged at version: ${newVersion}"`))
 
-  return queue.get().then(() => tag)
+  tags.push(tag)
+  if (ctx.package === 'orchestrator') {
+    const packageTag = `v${newVersion}`
+    queue.add('commit', () => exec('tag', `git tag -a "${packageTag}" -m "micro-lc tagged at version: ${newVersion}"`))
+    tags.push(packageTag)
+  }
+
+  return queue.get().then(() => tags)
 }
 
 main()
-  .then((tag) => {
+  .then((tags) => {
     logger.color('green').log('\n\tpush both branch and tag:')
-    logger.color('magenta').log(`\n\tgit push && git push origin ${tag}`)
+
+    const tagString = tags.map((tag) => `git push origin ${tag}`)
+    logger.color('magenta').log(`\n\tgit push && ${tagString.join(' && ')}`)
   })
   .catch((err) => {
     console.error(`[error boundary]: ${err}`)
