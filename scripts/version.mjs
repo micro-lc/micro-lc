@@ -166,14 +166,9 @@ async function main() {
 
   const queue = new PromiseQueue()
 
-  // let workingDir = pathResolve(__dirname, '..')
-  // let tagScope = 'micro-lc'
-  // let tagPrefix = 'v'
-  // if (ctx.package !== 'micro-lc') {
   const workingDir = pathResolve(__dirname, `../packages/${ctx.package}`)
   const tagScope = `@micro-lc/${ctx.package}`
   const tagPrefix = `${tagScope}@`
-  // }
 
   await queue.add('version', () => exec('version', `(cd ${workingDir} ; yarn version ${ctx.version})`))
 
