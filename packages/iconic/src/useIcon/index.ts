@@ -25,8 +25,8 @@ import type {
   PropsWithoutRef,
 } from 'react'
 
-import { importIcon, toArray } from '../import-icon'
 import type { ResourceObject, PathComponent, SvgComponent } from '../import-icon'
+import { importIcon, toArray } from '../import-icon/index.js'
 
 export type SVGProps = ReactSVGProps<HTMLElement>
 

@@ -3,7 +3,7 @@ import {
 } from 'path'
 
 import { build } from 'esbuild'
-import glob from 'glob'
+import { globSync } from 'glob'
 
 import settings from '../../../settings.json'
 
@@ -25,8 +25,8 @@ const mapping: Record<LibKey, string> = {
 
 const __fasDir = dirname(require.resolve('@fortawesome/free-solid-svg-icons'))
 const __farDir = dirname(require.resolve('@fortawesome/free-regular-svg-icons'))
-const fas = reduceToFiles(glob.sync(`${__fasDir}/*.js`))
-const far = reduceToFiles(glob.sync(`${__farDir}/*.js`))
+const fas = reduceToFiles(globSync(`${__fasDir}/*.js`))
+const far = reduceToFiles(globSync(`${__farDir}/*.js`))
 
 Promise.all(Object.entries({ far, fas }).map(([key, files]) => {
   const mappingKey = key as LibKey

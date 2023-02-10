@@ -12,3 +12,4 @@ dist/
 !.yarn/versions
 
 .pnp.*
+playwright-report/

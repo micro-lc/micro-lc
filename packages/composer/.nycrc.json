@@ -2,7 +2,6 @@
   "include": [
     "src/lib"
   ],
-  "report-dir": "./coverage/unit",
   "reporter": ["text", "cobertura", "lcov"],
   "lines": 80,
   "statements": 80,

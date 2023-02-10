@@ -6,7 +6,7 @@ import type { SchemaObject } from 'ajv'
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
 import { expect } from 'chai'
-import { glob } from 'glob'
+import { globSync } from 'glob'
 
 import { loadSchemas } from './utils'
 
@@ -21,7 +21,7 @@ describe('Test schemas', () => {
   schemasDirectoriesNames.forEach(schemasDirectoryName => {
     describe(`/schemas/${schemasDirectoryName}/config.schema.json`, () => {
       const directoryAbsPath = resolve(schemasDirPath, schemasDirectoryName)
-      const schemasAbsolutePaths = glob.sync(`${directoryAbsPath}/**/*.schema.json`)
+      const schemasAbsolutePaths = globSync(`${directoryAbsPath}/**/*.schema.json`)
 
       const loadedSchemas = loadSchemas(schemasAbsolutePaths)
 
@@ -36,7 +36,7 @@ describe('Test schemas', () => {
 
       const validate = ajv.compile(configSchema as SchemaObject)
 
-      const testFilesAbsolutePaths = glob.sync(`${directoryAbsPath}/__tests__/*.json`)
+      const testFilesAbsolutePaths = globSync(`${directoryAbsPath}/__tests__/*.json`)
 
       testFilesAbsolutePaths.forEach(testFilePath => {
         const testFileName = testFilePath.replace(`${directoryAbsPath}/__tests__/`, '')
