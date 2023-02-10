@@ -12,7 +12,6 @@ logger.setDate(() => '')
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const packages = [
-  // 'micro-lc',
   'interfaces',
   'iconic',
   'composer',
