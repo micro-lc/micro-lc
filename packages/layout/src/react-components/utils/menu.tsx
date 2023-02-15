@@ -81,7 +81,7 @@ export const buildAntMenuItems = (configItems: Partial<MenuItem>[], mode: Mode, 
       const rightIcon = mode !== 'topBar' ? undefined : <DownOutlined className='menu-item-icon-right menu-item-icon-right-sm'/>
 
       const atnMenuItem: AntMenuItem = {
-        children: buildAntMenuItems(configItem.children ?? [], mode),
+        children: buildAntMenuItems(configItem.children ?? [], mode, lang),
         icon: <DynamicIcon defaultSelector='ContainerOutlined' iconConfig={configItem.icon}/>,
         key: configItem.id,
         label: (<MenuItemLabel label={label} rightIcon={rightIcon}/>),
@@ -93,7 +93,7 @@ export const buildAntMenuItems = (configItems: Partial<MenuItem>[], mode: Mode, 
 
     case 'group': {
       const atnMenuItem: AntMenuItem = {
-        children: buildAntMenuItems(configItem.children ?? [], mode),
+        children: buildAntMenuItems(configItem.children ?? [], mode, lang),
         key: configItem.id,
         label,
         type: 'group',
