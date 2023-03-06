@@ -1,5 +1,4 @@
-import glob from 'glob'
+import { globSync } from 'glob'
 
-export default glob
-  .sync('src/lib/**/*[^d].{j,t}s?(x)')
+export default globSync('src/lib/**/*[^d].{j,t}s?(x)')
   .filter((name) => !name.match(/(stories|test)\.(j|t)sx?$/))

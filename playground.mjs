@@ -5,12 +5,11 @@ import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 
 import { startDevServer } from '@web/dev-server'
-import glob from 'glob'
+import { globSync } from 'glob'
 
 const dir = dirname(fileURLToPath(import.meta.url))
 
-const folders = glob
-  .sync(`${resolve(dir, 'playground')}/*`)
+const folders = globSync(`${resolve(dir, 'playground')}/*`)
   .filter((path) => lstatSync(path).isDirectory())
   .map((path) => `/playground${path.split('/playground')[1]}`)
 

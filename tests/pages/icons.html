@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script type="importmap">
+        <!-- "prop-types": "https://esm.sh/prop-types@next", -->
+  <script type="importmap-shim">
     {
       "imports": {
-        "prop-types": "https://esm.sh/prop-types@next",
         "react": "https://esm.sh/react@next",
-        "react-dom/client": "https://esm.sh/react-dom@next/client"
+        "react-dom/client": "https://esm.sh/react-dom@next/client",
+        "@micro-lc/iconic": "/packages/iconic/dist/index.js"
       }
     }
   </script>
-  <script type="module">
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+  <script async type="module-shim">
     import React, {createElement, Suspense} from 'react'
     import {createRoot} from 'react-dom/client'
-    import {useIcon} from '/src/useIcon/index.ts'
+    import {useIcon} from '@micro-lc/iconic'
 
     function App() {
       const AntdIcon = useIcon('AccountBookFilled', '@ant-design/icons-svg', console.error)
@@ -40,7 +42,7 @@
     createReactApp(document)
   </script>
 </head>
-<body style="width: 64px;">
+<body>
   <div id="root"></div>
 </body>
 </html>

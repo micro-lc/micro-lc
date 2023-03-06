@@ -4,7 +4,7 @@ import { resolve } from 'path'
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
 import { expect } from 'chai'
-import { glob } from 'glob'
+import { globSync } from 'glob'
 
 import type { SchemaWithDefinitions } from './utils'
 import { loadSchemas } from './utils'
@@ -52,7 +52,7 @@ describe('Validate schemas examples', () => {
   schemasDirectoriesNames.forEach(schemasDirectoryName => {
     describe(`/schemas/${schemasDirectoryName}`, () => {
       const directoryAbsPath = resolve(schemasDirPath, schemasDirectoryName)
-      const schemasAbsolutePaths = glob.sync(`${directoryAbsPath}/**/*.schema.json`)
+      const schemasAbsolutePaths = globSync(`${directoryAbsPath}/**/*.schema.json`)
 
       const loadedSchemas = loadSchemas(schemasAbsolutePaths)
 

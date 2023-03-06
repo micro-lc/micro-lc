@@ -13,5 +13,5 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-export * from './import-icon'
-export * from './useIcon'
+export * from './import-icon/index.js'
+export * from './useIcon/index.js'

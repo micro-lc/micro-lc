@@ -209,30 +209,6 @@ function getNextMatchingRoute(
     updateCountersAndResults(
       pathname, route, defaultUrl, baseURI, args, counters, result
     )
-    // const { pathname: routePathname } = new URL(route, baseURI)
-
-    // const exact = urlMatch(pathname, routePathname)
-    // const routePathnameLength = effectiveRouteLength(routePathname)
-    // if (exact && routePathnameLength > counters[0]) {
-    //   counters[0] = routePathnameLength
-    //   result[0] = args
-    // }
-
-    // const { pathname: routeWtsPathname } = new URL(route.replace(/\/$/, ''), baseURI)
-
-    // const wts = urlMatch(pathname, routeWtsPathname)
-    // const routeWtsPathnameLength = effectiveRouteLength(routeWtsPathname)
-    // if (wts && routeWtsPathnameLength > counters[1]) {
-    //   counters[1] = routeWtsPathnameLength
-    //   result[1] = args
-    // }
-
-    // const { pathname: defaultPathname } = new URL(defaultUrl, baseURI)
-    // const def = defaultPathname.match(new RegExp(`^${routePathname}`))
-    // if (def && routePathname.length > counters[2]) {
-    //   counters[2] = routePathname.length
-    //   result[2] = args
-    // }
   }
 
   url !== undefined

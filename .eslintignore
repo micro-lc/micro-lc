@@ -6,6 +6,8 @@ node_modules/
 playground/
 coverage/
 mocks/
+playwright-report/
+.nyc_output/
 
 .vscode/
 .idea/
@@ -13,3 +15,5 @@ mocks/
 # there's an experimental assert
 **/packages/composer/web-test-runner.config.mjs
 **/packages/interfaces/scripts/build-cli.mjs
+
+packages/**/test/*.test.ts

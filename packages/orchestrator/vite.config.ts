@@ -28,11 +28,22 @@ export default defineConfig(({ mode }) => ({
 
           return `assets/${name}-[hash].[ext]`
         },
+        chunkFileNames: ({ name }) => `assets/${name}.js`,
         entryFileNames: ({ name }) => `${name}.${mode}.js`,
         manualChunks: (id) => {
           if (mode !== 'production' && id.match(/qiankun/)) {
             return 'qiankun'
           }
+
+          if (id.match(/es-module-shims/)) {
+            return 'es-module-shims'
+          }
+
+          if (id.match(/js-yaml/)) {
+            return 'js-yaml'
+          }
+
+          return 'micro-lc'
         },
       },
       plugins: [visualizer()],
@@ -60,5 +71,22 @@ export default defineConfig(({ mode }) => ({
       { find: /^.+\/lodash\/once.js/, replacement: require.resolve('lodash-es/once.js') },
       { find: /^.+\/lodash\/snakeCase.js/, replacement: require.resolve('lodash-es/snakeCase.js') },
     ],
+  },
+  server: {
+    port: 5173,
+    proxy: {
+      '/src/error-lifecycle.js': {
+        rewrite(path) {
+          return path.replace('/src', '')
+        },
+        target: 'http://localhost:5173',
+      },
+      '/src/error-style.css': {
+        rewrite(path) {
+          return path.replace('/src', '')
+        },
+        target: 'http://localhost:5173',
+      },
+    },
   },
 }))
