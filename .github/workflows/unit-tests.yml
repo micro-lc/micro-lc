@@ -1,4 +1,4 @@
-name: Checks
+name: Unit Tests
 
 on:
   workflow_call:
@@ -9,9 +9,8 @@ on:
         type: string
 
 jobs:
-  checks:
+  unit-tests:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
@@ -19,13 +18,13 @@ jobs:
         id: extract_branch
         shell: bash
         run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-
+      
       - name: Use Node.js ${{ inputs.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.node-version }}
           cache: yarn
-
+      
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
@@ -36,5 +35,5 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - name: Linting
-        run: yarn lint
+      - name: Run unit tests
+        run: yarn coverage

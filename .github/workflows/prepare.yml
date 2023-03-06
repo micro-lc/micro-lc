@@ -28,18 +28,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.node-version }}
-
-      - name: Yarn Cache
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: |
-            ./.yarn/cache
-            ./.yarn/unplugged
-            ./.yarn/install-state.gz
-            ./.pnp.cjs
-            ./.pnp.loader.mjs
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          cache: yarn
 
       - name: Build Cache
         uses: actions/cache@v3
@@ -51,24 +40,8 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
-      - name: Playwright Cache
-        uses: actions/cache@v3
-        id: playwright-cache
-        with:
-          path: |
-            /home/runner/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Reinstall
-        if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }}
-        run: rm -rf ./.yarn/install-state.gz && yarn install --immutable
-
       - name: Install
-        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --immutable
 
       - name: Build
         run: yarn initialize --cleanup
-
-      - name: Prepare Test
-        run: yarn prepare-test

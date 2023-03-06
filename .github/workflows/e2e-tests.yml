@@ -1,0 +1,86 @@
+name: Playwright Tests
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        default: 16.x
+        required: false
+        type: string
+
+jobs:
+  file-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      diff: ${{ steps.filter.outputs.diff }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            diff:
+              - yarn.lock
+              - '.github/**'
+              - 'tests/**'
+              - 'packages/**/src/**'
+
+  e2e-tests:
+    needs:
+      - file-changes
+    if: needs.file-changes.outputs.diff == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(yarn dep-version @playwright/test)" >> $GITHUB_ENV
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Install Playwright Dependencies
+        run: yarn dlx playwright install-deps
+
+      - name: Install Playwright
+        run: yarn dlx playwright install
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+
+      - name: Build Cache
+        uses: actions/cache@v3
+        id: build-cache
+        with:
+          path: |
+            ./node_modules
+            ./packages/**/dist
+            ./packages/**/node_modules
+          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
+      
+      - name: Build
+        run: yarn initialize --cleanup
+        if: steps.build-cache.outputs.cache-hit != 'true'
+
+      - name: Run tests
+        run: yarn test:e2e
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report
