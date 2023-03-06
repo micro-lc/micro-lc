@@ -35,5 +35,8 @@ jobs:
             ./packages/**/node_modules
           key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
 
+      - name: Install
+        run: yarn install --immutable
+
       - name: Run unit tests
         run: yarn coverage
