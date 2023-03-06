@@ -61,6 +61,11 @@ jobs:
         run: yarn dlx playwright install
         if: steps.playwright-cache.outputs.cache-hit != 'true'
 
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+
       - name: Build Cache
         uses: actions/cache@v3
         id: build-cache
