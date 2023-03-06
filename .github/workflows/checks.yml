@@ -15,11 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-
       - name: Use Node.js ${{ inputs.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -34,7 +29,7 @@ jobs:
             ./node_modules
             ./packages/**/dist
             ./packages/**/node_modules
-          key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-build-${{ github.sha }}
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: Install
         run: yarn install --immutable
