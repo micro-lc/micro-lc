@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Versioning
+
+- `nginx` alpine bumped to v1.23.3
+- `devel-kit` bumped to v0.3.2
+
 ### Fixed
 
 - `qiankun` is not bundled as its own chunk, to prevent faulty behavior on resources loading
+- `libcurl` CVEs mitigation
 
 ## [2.0.3] - 2023-03-07
 

@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 
-ARG NGINX_VERSION="1.23.2"
+ARG NGINX_VERSION="1.23.3"
 
 ###########################################
 # nginx is enhanced with security modules #
@@ -22,7 +22,7 @@ ARG NGINX_VERSION="1.23.2"
 
 FROM nginx:${NGINX_VERSION}-alpine AS builder
 
-ARG NGINX_DEVEL_KIT_VERSION="0.3.1"
+ARG NGINX_DEVEL_KIT_VERSION="0.3.2"
 ARG NGINX_SET_MISC_MODULE_VERSION="0.33"
 
 RUN wget "https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" && \
@@ -72,6 +72,12 @@ RUN CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') \
 ###########################################
 
 FROM nginx:${NGINX_VERSION}-alpine
+
+# - stop vulnerabilities:package CRITICAL Vulnerability found in os package type (APKG) - curl (fixed in: 7.87.0-r2)(CVE-2023-23914 - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-23914)
+# - stop vulnerabilities:package HIGH Vulnerability found in os package type (APKG) - curl (fixed in: 7.87.0-r2)(CVE-2023-23916 - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-23916)
+# - stop vulnerabilities:package CRITICAL Vulnerability found in os package type (APKG) - libcurl (fixed in: 7.87.0-r2)(CVE-2023-23914 - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-23914)
+# - stop vulnerabilities:package HIGH Vulnerability found in os package type (APKG) - libcurl (fixed in: 7.87.0-r2)(CVE-2023-23916 - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-23916)
+RUN apk add --no-cache --upgrade curl libcurl
 
 COPY --from=builder /usr/lib/nginx/modules/ndk_http_module.so /etc/nginx/modules/ndk_http_module.so
 COPY --from=builder /usr/lib/nginx/modules/ngx_http_set_misc_module.so /etc/nginx/modules/ngx_http_set_misc_module.so
