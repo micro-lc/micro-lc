@@ -33,7 +33,18 @@ jobs:
       - name: Install
         run: yarn install --immutable
 
+      - name: Build Cache
+        uses: actions/cache@v3
+        id: build-cache
+        with:
+          path: |
+            ./node_modules
+            ./packages/**/dist
+            ./packages/**/node_modules
+          key: ${{ runner.os }}-build-${{ github.sha }}
+
       - name: Build
+        if: steps.build-cache.outputs.cache-hit != 'true'
         run: yarn initialize --cleanup orchestrator
 
       - name: Prepare
