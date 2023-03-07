@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Versioning
+
+- Development dependencies updated
+- `@ctrl/tinycolor` to version `^3.6.0`
+
 ## [2.0.1] - 2023-02-15
 
 ### Versioning

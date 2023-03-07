@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- imports are module-like with a trailing `.js` to allow import on a browser
+
 ### Versioning
 
 - Development dependencies updated
