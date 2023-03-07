@@ -7,6 +7,18 @@ import completeConfig, { base, goto } from './complete-config'
 
 test(`
   [config injection]
+  [development mode]
+  empty config should go to 404 error page
+`, async ({ page }) => {
+  const config: Config = { version: 2 }
+  await goto(page, config, `http://localhost:3000/dev/`)
+
+  await expect(page.getByText('Application cannot be found')).toBeVisible()
+  await expect(page.getByText('Page /dev/ cannot be found')).toBeVisible()
+})
+
+test(`
+  [config injection]
   empty config should go to 404 error page
 `, async ({ page }) => {
   const config: Config = { version: 2 }
