@@ -7,6 +7,7 @@ const app = express()
 app.use('/playground', express.static('playground'))
 app.use('/packages', express.static('packages'))
 app.use('/', express.static('tests'))
+app.use('/dev/*', express.static('tests/dev'))
 app.use('/pages/*', express.static('tests/pages'))
 
 app.use('/configurations', (req, res) => {
