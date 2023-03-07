@@ -18,23 +18,30 @@ export default defineConfig(({ mode }) => ({
       output: {
         assetFileNames: ({ name }) => {
           console.log(name)
+          let prefix = ''
+          if (mode !== 'production') {
+            prefix = 'dev/'
+          }
+
           if (name === undefined) {
-            return `assets/[hash].[ext]`
+            return `${prefix}assets/[hash].[ext]`
           } else if (['401.html', '404.html', '500.html'].includes(name)) {
             return `assets/${name.replace(/\.html$/, '')}.[ext]`
           } else if (name === 'composer.production.js') {
-            return `assets/composer.[ext]`
+            return `${prefix}assets/composer.[ext]`
           }
 
-          return `assets/${name}-[hash].[ext]`
+          return `${prefix}assets/${name}-[hash].[ext]`
         },
-        chunkFileNames: ({ name }) => `assets/${name}.js`,
+        chunkFileNames: ({ name }) => {
+          let prefix = ''
+          if (mode !== 'production') {
+            prefix = 'dev/'
+          }
+          return `${prefix}assets/${name}.js`
+        },
         entryFileNames: ({ name }) => `${name}.${mode}.js`,
         manualChunks: (id) => {
-          if (mode !== 'production' && id.match(/qiankun/)) {
-            return 'qiankun'
-          }
-
           if (id.match(/es-module-shims/)) {
             return 'es-module-shims'
           }
