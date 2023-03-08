@@ -138,3 +138,46 @@ test(`
 
   expect(bearer).toEqual('Bearer 1234')
 })
+
+test(`
+  [composition]
+  context persistence across mounts
+`, async ({ page }) => {
+  // file is served by ./tests/server.ts
+  const config = {
+    applications: {
+      home: {
+        config: { content: { attributes: { id: 'test' }, content: 'Hello', tag: 'div' } },
+        integrationMode: 'compose' as const,
+        route: './',
+      },
+      other: {
+        integrationMode: 'iframe' as const,
+        route: './example',
+        src: 'https://example.com',
+      },
+    },
+    shared: {
+      properties: {
+        header: {
+          Authentication: 'Bearer 1234',
+        },
+      },
+    },
+    version: 2 as const,
+  }
+
+  await goto(page, config)
+
+  await page.waitForFunction(() => document.getElementById('test') && 'microlcApi' in document.getElementById('test'))
+
+  await page.evaluate(() => window.history.pushState('', '', '/example'))
+  const frame = page.frameLocator('iframe')
+  await expect(frame.getByRole('heading', { name: 'Example Domain' })).toBeVisible()
+
+  await page.evaluate(() => window.history.pushState('', '', '/'))
+
+  await page.waitForFunction(() => document.getElementById('test') && 'microlcApi' in document.getElementById('test'))
+})
+
+

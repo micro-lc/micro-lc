@@ -97,6 +97,7 @@ declare global {
 
 const composerConfig = new Map<string, ResolvedConfig>()
 const parent = new Map<string, HTMLElement | null>()
+const props: Pick<MountProps, 'composerApi' | 'microlcApi'> = {}
 
 const logger = (name: string, ...args: string[]) => {
   if (import.meta.env.MODE === 'development') {
@@ -178,8 +179,18 @@ export async function mount(
 
   let done = Promise.resolve<void | null>(null)
 
+  // set props
+  if (composerApi !== undefined) {
+    props.composerApi = composerApi
+  }
+  if (microlcApi !== undefined) {
+    props.microlcApi = microlcApi
+  }
+
+  const currentComposerApi = composerApi ?? props.composerApi
+  const currentMicrolcApi = microlcApi ?? props.microlcApi
   const observer = new BehaviorSubject<EventWithUser>({})
-  const { subscribe = observer.subscribe.bind(observer) } = microlcApi ?? {}
+  const { subscribe = observer.subscribe.bind(observer) } = currentMicrolcApi ?? {}
 
   subscribe(({ user }) => {
     const config = composerConfig.get(name)
@@ -189,8 +200,8 @@ export async function mount(
         config,
         virtualContainer,
         {
-          ...composerApi?.context,
-          composerApi: { context: composerApi?.context, createComposerContext, premount },
+          ...currentComposerApi?.context,
+          composerApi: { context: currentComposerApi?.context, createComposerContext, premount },
           currentUser: user,
           eventBus: createPool(),
         }
