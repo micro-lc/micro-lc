@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.0.5] - 2023-03-09
+
 ### Fixed
 
 - `shared` properties and microlcApi extensions are persisted in `compose` applications across mount and unmount cycles
