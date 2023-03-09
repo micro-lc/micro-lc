@@ -16,13 +16,27 @@ const mainApplicationCode = `
   window.rxjs = rxjs
 `
 
-const esm = (literals: TemplateStringsArray, ...vars: string[]): string => {
+const js = (literals: TemplateStringsArray, ...vars: string[]): string => {
   if (literals.raw.length === 0) {
     return ''
   }
 
   const [first] = literals.raw
   const output = (inject: string) => `data:text/javascript;base64,${Buffer.from(inject).toString('base64')}`
+  const code = literals.raw.slice(1).reduce((template, el, idx) => {
+    return template.concat(`${el}${vars[idx]}`)
+  }, first)
+
+  return output(code)
+}
+
+const json = (literals: TemplateStringsArray, ...vars: string[]): string => {
+  if (literals.raw.length === 0) {
+    return ''
+  }
+
+  const [first] = literals.raw
+  const output = (inject: string) => `data:applicaation/json;base64,${Buffer.from(inject).toString('base64')}`
   const code = literals.raw.slice(1).reduce((template, el, idx) => {
     return template.concat(`${el}${vars[idx]}`)
   }, first)
@@ -60,7 +74,7 @@ const config: Config = {
           properties: { textContent: 'Ciao Main' },
           tag: 'div',
         },
-        sources: esm`${mainApplicationCode}`,
+        sources: js`${mainApplicationCode}`,
       },
       integrationMode: 'compose',
       route: './main',
@@ -254,5 +268,5 @@ const data = (literals: TemplateStringsArray): string => {
   return `data:text/javascript;base64,${Buffer.from(first).toString('base64')}`
 }
 
-export { base, goto, data }
+export { base, goto, data, js, json }
 export default config

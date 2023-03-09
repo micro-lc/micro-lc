@@ -1,6 +1,6 @@
 import test, { expect } from '@playwright/test'
 
-import { goto, data } from './complete-config'
+import { goto, data, js, json } from './complete-config'
 
 test(`
   [composition]
@@ -169,7 +169,10 @@ test(`
 
   await goto(page, config)
 
-  await page.waitForFunction(() => document.getElementById('test') && 'microlcApi' in document.getElementById('test'))
+  await page.waitForFunction(() => {
+    const item = document.getElementById('test')
+    return item !== null && 'microlcApi' in item
+  })
 
   await page.evaluate(() => window.history.pushState('', '', '/example'))
   const frame = page.frameLocator('iframe')
@@ -177,7 +180,139 @@ test(`
 
   await page.evaluate(() => window.history.pushState('', '', '/'))
 
-  await page.waitForFunction(() => document.getElementById('test') && 'microlcApi' in document.getElementById('test'))
+  await page.waitForFunction(() => {
+    const item = document.getElementById('test')
+    return item !== null && 'microlcApi' in item
+  })
 })
 
+test(`
+  [composition]
+  [currentUser]
+  currentUser persisted
+`, async ({ page }) => {
+  const parcel = js`
+    let container
+    let composerApi
+    let context
+    (function(global, factory) {
+      typeof exports === "object" && typeof module !== "undefined"
+        ? factory(exports)
+        : typeof define === "function" && define.amd
+          ? define(["exports"], factory)
+          : (
+            global = typeof globalThis !== "undefined"
+              ? globalThis
+              : global || self, factory(global.__parcel = {})
+          )
+    })(this, function(exports) {
+      exports.bootstrap = () => Promise.resolve(null)
+      exports.mount = (props) => {
+        console.log(props)
+        container = props.container
+        if(props.composerApi) {
+          context = props.composerApi.context
+          microlcApi = props.composerApi.context.microlcApi
+        }
 
+        if(microlcApi) {
+          microlcApi.subscribe(({user}) => {
+            const { document } = self
+            const div1 = Object.assign(
+              document.createElement('div'),
+              {
+                textContent: user.user,
+              }
+            )
+            const div2 = Object.assign(
+              document.createElement('div'),
+              {
+                textContent: context.headers['Accept'],
+              }
+            )
+            container.replaceChildren(div1, div2)
+          })
+        }
+        return Promise.resolve(null)
+      }
+      exports.unmount = () => Promise.resolve(null)
+
+      Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+    })
+  `
+  const userInfoUrl = json`
+    {"user": "Pe$"}
+  `
+  const config = {
+    applications: {
+      home: {
+        integrationMode: 'iframe' as const,
+        route: './example',
+        src: 'https://example.com',
+      },
+      parcel: {
+        entry: { scripts: parcel },
+        integrationMode: 'parcel' as const,
+        route: './parcel',
+      },
+    },
+    layout: {
+      content: {
+        properties: {
+          menuItems: [
+            {
+              icon: {
+                library: '@ant-design/icons-svg',
+                selector: 'MessageOutlined',
+              },
+              id: 'parcel',
+              label: 'Parcel',
+              type: 'application',
+            },
+            {
+              icon: {
+                library: '@ant-design/icons-svg',
+                selector: 'ShoppingOutlined',
+              },
+              id: 'home',
+              label: 'Example',
+              type: 'application',
+            },
+          ],
+          mode: 'fixedSideBar',
+          userMenu: {
+            userInfoUrl,
+          },
+        },
+        tag: 'mlc-layout',
+      },
+      sources: '/packages/layout/dist/mlc-layout.js',
+    },
+    settings: {
+      defaultUrl: './parcel',
+    },
+    shared: {
+      properties: {
+        headers: {
+          Accept: 'application/pdf',
+        },
+      },
+    },
+    version: 2 as const,
+  }
+
+  await goto(page, config)
+
+  await expect(page.getByText('Pe$', { exact: true })).toBeVisible()
+  await expect(page.getByText('application/pdf', { exact: true })).toBeVisible()
+
+  // move to parcel
+  await page.getByText('Example').click()
+  const frame = page.frameLocator('iframe')
+  await expect(frame.getByRole('heading', { name: 'Example Domain' })).toBeVisible()
+
+  // move back to parcel
+  await page.getByText('Parcel').click()
+  await expect(page.getByText('Pe$', { exact: true })).toBeVisible()
+  await expect(page.getByText('application/pdf', { exact: true })).toBeVisible()
+})
