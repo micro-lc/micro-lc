@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Versioning
+
+- Dev dependencies updated
+
 ### Fixed
 
 - `shared` properties and microlcApi extensions are persisted in `compose` applications across mount and unmount cycles
