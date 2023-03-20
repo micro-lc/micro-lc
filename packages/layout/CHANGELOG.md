@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Versioning
 
 - Development dependencies updated
+- Typescript set to `^5.0.2` with yarn `3.5.0`
 - `@ctrl/tinycolor` to version `^3.6.0`
 
 ## [2.0.1] - 2023-02-15

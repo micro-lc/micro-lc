@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Versioning
+
+- Development dependencies updated
+- Typescript set to `^5.0.2` with yarn `3.5.0`
+
 ## [2.0.5] - 2023-03-09
 
 ### Fixed

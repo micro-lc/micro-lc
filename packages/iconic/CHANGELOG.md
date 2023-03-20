@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Typescript set to `^4.9.5` with yarn `3.4.1`
 - Typescript set to `^4.9.4` with yarn `3.3.1`
 - Typescript is set to `4.9.3` due to yarn berry temporary incompatibility
+- Typescript set to `^5.0.2` with yarn `3.5.0`
 
 ## [1.0.0] - 2022-12-12
 
