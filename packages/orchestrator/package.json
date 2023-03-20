@@ -64,7 +64,7 @@
     "lit-html": "^2.6.1",
     "lodash-es": "^4.17.21",
     "mocha": "^10.2.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.3.1",
     "nyc": "^15.1.0",
     "rollup-plugin-visualizer": "^5.9.0",
     "sinon": "^15.0.2",
