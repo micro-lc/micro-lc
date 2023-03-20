@@ -10,6 +10,8 @@ updates:
     schedule:
       interval: "daily"
     ignore:
+      - dependency-name: node-fetch
+        update-types: ["version-update:semver-major"]
       - dependency-name: qiankun
         update-types: ["version-update:semver-minor"]
       - dependency-name: antd
