@@ -2236,7 +2236,7 @@ __metadata:
     "@types/chai-string": ^1.4.2
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
-    "@types/node": ^18.15.3
+    "@types/node": ^18.15.5
     "@types/sinon": ^10.0.13
     "@types/sinon-chai": ^3.2.9
     ajv: ^8.12.0
@@ -2244,7 +2244,7 @@ __metadata:
     chai-string: ^1.5.0
     es-module-shims: ^1.7.0
     esbuild: ^0.17.12
-    glob: ^9.3.0
+    glob: ^9.3.1
     lit-html: ^2.6.1
     mocha: ^10.2.0
     nyc: ^15.1.0
@@ -2273,7 +2273,7 @@ __metadata:
     "@rollup/plugin-alias": ^4.0.3
     "@rollup/plugin-replace": ^5.0.2
     "@types/glob": ^8.1.0
-    "@types/node": ^18.15.3
+    "@types/node": ^18.15.5
     "@types/prop-types": ^15.7.5
     "@types/react": ^18.0.28
     "@types/react-dom": ^18.0.11
@@ -2283,7 +2283,7 @@ __metadata:
     "@web/dev-server-import-maps": ^0.0.8
     "@web/dev-server-rollup": ^0.4.0
     esbuild: ^0.17.12
-    glob: ^9.3.0
+    glob: ^9.3.1
     prop-types: ^15.8.1
     react-test-renderer: ^18.2.0
     ts-node: ^10.9.1
@@ -2301,14 +2301,14 @@ __metadata:
     "@types/eslint": ^8.21.3
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
-    "@types/node": ^18.15.3
+    "@types/node": ^18.15.5
     ajv: ^8.12.0
     ajv-formats: ^2.1.1
     axios: ^1.3.4
     chai: ^4.3.7
     esbuild: ^0.17.12
     eslint: ^8.36.0
-    glob: ^9.3.0
+    glob: ^9.3.1
     json-schema-to-typescript: ^12.0.0
     mkdirp: ^2.1.5
     mocha: ^10.2.0
@@ -2364,7 +2364,7 @@ __metadata:
     antd: ^4.24.7
     cssnano: ^5.1.15
     esbuild: ^0.17.12
-    glob: ^9.3.0
+    glob: ^9.3.1
     json-schema-to-typescript: ^12.0.0
     less: ^4.1.3
     lit: ^2.6.1
@@ -2402,7 +2402,7 @@ __metadata:
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.7
     "@types/mocha": ^10.0.1
-    "@types/node": ^18.15.3
+    "@types/node": ^18.15.5
     "@types/node-fetch": ^2.6.2
     "@types/sinon": ^10.0.13
     "@types/sinon-chai": ^3.2.9
@@ -2414,7 +2414,7 @@ __metadata:
     cobertura-merge: ^1.0.4
     es-module-shims: ^1.7.0
     esbuild: ^0.17.12
-    glob: ^9.3.0
+    glob: ^9.3.1
     js-yaml: ^4.1.0
     lit-html: ^2.6.1
     lodash-es: ^4.17.21
@@ -4338,7 +4338,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.15.3":
+"@types/node@npm:*":
   version: 18.15.3
   resolution: "@types/node@npm:18.15.3"
   checksum: 31b1d92475a82c30de29aa6c0771b18a276552d191283b4423ba2d61b3f01159bf0d02576c0b7cc834b043997893800db6bb47f246083ed85aa45e79c80875d7
@@ -4349,6 +4349,13 @@ __metadata:
   version: 16.18.3
   resolution: "@types/node@npm:16.18.3"
   checksum: 6b8ba2ea5d842f7986e366cb9184c54d273d492784dc62e08fd5afeae938d9b61aec6e4222d2541cd18f9b1412ba361bbcb3f4204fb003608af80a2a6af959f9
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.15.5":
+  version: 18.15.5
+  resolution: "@types/node@npm:18.15.5"
+  checksum: 5fbf3453bd5ce1402bb2964e55d928fc8a8a7de5451b1b0fe66587fecb8a3eb86854ca9cefa5076a5971e2cff00e1773ceeb5d872a54f6c6ddfbbc1064b4e91a
   languageName: node
   linkType: hard
 
@@ -10474,7 +10481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^9.2.0, glob@npm:^9.3.0":
+"glob@npm:^9.2.0":
   version: 9.3.0
   resolution: "glob@npm:9.3.0"
   dependencies:
@@ -10483,6 +10490,18 @@ __metadata:
     minipass: ^4.2.4
     path-scurry: ^1.6.1
   checksum: 9beb4f1cdc9585412efd991a9786c1ee6816dfd0537494fd552c333fa3d4b041fce5681bce21d14651e41479f60866e10a35a2ce2571fd40b7cf73842ea12192
+  languageName: node
+  linkType: hard
+
+"glob@npm:^9.3.1":
+  version: 9.3.1
+  resolution: "glob@npm:9.3.1"
+  dependencies:
+    fs.realpath: ^1.0.0
+    minimatch: ^7.4.1
+    minipass: ^4.2.4
+    path-scurry: ^1.6.1
+  checksum: 2d25c0f5afda4364ea590feeb763b55deec4fa980054ff8ec68016d41d7fee38074b55ced07ad4786c44f9ef50d0fae1c3f83592c6d6b100270e0c0473a6b9a0
   languageName: node
   linkType: hard
 
@@ -13468,7 +13487,7 @@ __metadata:
     eslint-plugin-typescript-sort-keys: ^2.3.0
     eslint-visitor-keys: ^3.3.0
     express: ^4.18.2
-    glob: ^9.3.0
+    glob: ^9.3.1
     husky: ^8.0.3
     jsonc-eslint-parser: ^2.2.0
     lit-html: ^2.6.1
