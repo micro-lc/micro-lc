@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- fix to `cve-2022-3970` in docker container by updating `tiff` dependency
+
 ### Versioning
 
 - Development dependencies updated
