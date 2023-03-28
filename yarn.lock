@@ -2166,6 +2166,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit-labs/ssr-dom-shim@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@lit-labs/ssr-dom-shim@npm:1.1.0"
+  checksum: 7d6f2331418164ee65816db0670b0a958572c6b91c95e3b41bc1874c6f1465febbe8ac88d4f8367d69fbaba44820d7b255c5e384beab61fa7ee4135d1694b603
+  languageName: node
+  linkType: hard
+
 "@lit/reactive-element@npm:^1.0.0, @lit/reactive-element@npm:^1.3.0, @lit/reactive-element@npm:^1.6.0":
   version: 1.6.1
   resolution: "@lit/reactive-element@npm:1.6.1"
@@ -2245,12 +2252,12 @@ __metadata:
     es-module-shims: ^1.7.0
     esbuild: ^0.17.12
     glob: ^9.3.2
-    lit-html: ^2.6.1
+    lit-html: ^2.7.0
     mocha: ^10.2.0
     nyc: ^15.1.0
     rollup-plugin-visualizer: ^5.9.0
     rxjs: ^7.8.0
-    sinon: ^15.0.2
+    sinon: ^15.0.3
     sinon-chai: ^3.7.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
@@ -2275,7 +2282,7 @@ __metadata:
     "@types/glob": ^8.1.0
     "@types/node": ^18.15.5
     "@types/prop-types": ^15.7.5
-    "@types/react": ^18.0.28
+    "@types/react": ^18.0.29
     "@types/react-dom": ^18.0.11
     "@types/requirejs": ^2.1.34
     "@web/dev-server": ^0.1.36
@@ -2358,7 +2365,7 @@ __metadata:
     "@types/json-schema": ^7.0.11
     "@types/lodash-es": ^4.17.7
     "@types/mocha": ^10.0.1
-    "@types/react": ^18.0.28
+    "@types/react": ^18.0.29
     "@types/react-dom": ^18.0.11
     "@types/sinon": ^10.0.13
     antd: ^4.24.7
@@ -2367,14 +2374,14 @@ __metadata:
     glob: ^9.3.2
     json-schema-to-typescript: ^12.0.0
     less: ^4.1.3
-    lit: ^2.6.1
+    lit: ^2.7.0
     mocha: ^10.2.0
     postcss: ^8.4.21
     react: ^18.2.0
     react-dom: ^18.2.0
     rollup-plugin-node-polyfills: ^0.2.1
     rollup-plugin-visualizer: ^5.9.0
-    sinon: ^15.0.2
+    sinon: ^15.0.3
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.0.2
@@ -2416,7 +2423,7 @@ __metadata:
     esbuild: ^0.17.12
     glob: ^9.3.2
     js-yaml: ^4.1.0
-    lit-html: ^2.6.1
+    lit-html: ^2.7.0
     lodash-es: ^4.17.21
     mocha: ^10.2.0
     node-fetch: ^2.6.1
@@ -2424,7 +2431,7 @@ __metadata:
     qiankun: 2.9.3
     rollup-plugin-visualizer: ^5.9.0
     rxjs: ^7.8.0
-    sinon: ^15.0.2
+    sinon: ^15.0.3
     sinon-chai: ^3.7.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
@@ -2743,14 +2750,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinonjs/samsam@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "@sinonjs/samsam@npm:7.0.1"
+"@sinonjs/samsam@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@sinonjs/samsam@npm:8.0.0"
   dependencies:
     "@sinonjs/commons": ^2.0.0
     lodash.get: ^4.4.2
     type-detect: ^4.0.8
-  checksum: 291efb158d54c67dee23ddabcb28873d22063449b692aaa3b2a4f1826d2f79d38695574063c92e9c17573cc805cd6acbf0ab0c66c9f3aed7afd0f12a2b905615
+  checksum: 95e40d0bb9f7288e27c379bee1b03c3dc51e7e78b9d5ea6aef66a690da7e81efc4715145b561b449cefc5361a171791e3ce30fb1a46ab247d4c0766024c60a60
   languageName: node
   linkType: hard
 
@@ -4438,7 +4445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.28":
+"@types/react@npm:*":
   version: 18.0.28
   resolution: "@types/react@npm:18.0.28"
   dependencies:
@@ -4446,6 +4453,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: e752df961105e5127652460504785897ca6e77259e0da8f233f694f9e8f451cde7fa0709d4456ade0ff600c8ce909cfe29f9b08b9c247fa9b734e126ec53edd7
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.0.29":
+  version: 18.0.29
+  resolution: "@types/react@npm:18.0.29"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 75f56f81d80a1c15ee3fcd2039bdc5f7a70f49cf69827ee0fc8beece9809b234f245dd62552e91018d8f25792986bd513b44caf054554d5c5eb979a5f9460214
   languageName: node
   linkType: hard
 
@@ -12737,7 +12755,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:^2.0.0, lit-html@npm:^2.2.0, lit-html@npm:^2.6.0, lit-html@npm:^2.6.1":
+"lit-element@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "lit-element@npm:3.3.0"
+  dependencies:
+    "@lit-labs/ssr-dom-shim": ^1.1.0
+    "@lit/reactive-element": ^1.3.0
+    lit-html: ^2.7.0
+  checksum: 5a483c34dd55412599978e02858d841a932199dedca0b86ec54639096bc36c301f57915c0ee0463d8a57ac265d57f3468c8378224816c732c73df641a2549d62
+  languageName: node
+  linkType: hard
+
+"lit-html@npm:^2.0.0, lit-html@npm:^2.2.0, lit-html@npm:^2.6.0":
   version: 2.6.1
   resolution: "lit-html@npm:2.6.1"
   dependencies:
@@ -12746,7 +12775,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:^2.0.0, lit@npm:^2.6.1":
+"lit-html@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "lit-html@npm:2.7.0"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+  checksum: 8a0f83c0f6110f8d02484803c2b309c6d21011bd03681cb790c5303e4a6e4f94956cb2dcb05e67f6c4066f382193a7e5c8987ab0ca244f2fe6e85b99e2feecdd
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.0.0":
   version: 2.6.1
   resolution: "lit@npm:2.6.1"
   dependencies:
@@ -12754,6 +12792,17 @@ __metadata:
     lit-element: ^3.2.0
     lit-html: ^2.6.0
   checksum: 74f2813152a48f195784f01b6b4ff7e4e7d8fa90ac272b725d1953fa3e1d6c9dca60b77da435f34144fcdd38705480889a8ea986835676932a8559c897cea517
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "lit@npm:2.7.0"
+  dependencies:
+    "@lit/reactive-element": ^1.6.0
+    lit-element: ^3.3.0
+    lit-html: ^2.7.0
+  checksum: 916f459ded2e9700fe695070963dcb2edcea2dd1d127db6885cf10e94766d5ca9f438ebf659dca264c6402708254927b0ffed6595b6bcaac422e6f203dbbf6ee
   languageName: node
   linkType: hard
 
@@ -13445,7 +13494,7 @@ __metadata:
     glob: ^9.3.2
     husky: ^8.0.3
     jsonc-eslint-parser: ^2.2.0
-    lit-html: ^2.6.1
+    lit-html: ^2.7.0
     node-color-log: ^10.0.2
     npm-run-all: ^4.1.5
     postcss: ^8.4.21
@@ -17927,17 +17976,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sinon@npm:^15.0.2":
-  version: 15.0.2
-  resolution: "sinon@npm:15.0.2"
+"sinon@npm:^15.0.3":
+  version: 15.0.3
+  resolution: "sinon@npm:15.0.3"
   dependencies:
     "@sinonjs/commons": ^3.0.0
     "@sinonjs/fake-timers": ^10.0.2
-    "@sinonjs/samsam": ^7.0.1
+    "@sinonjs/samsam": ^8.0.0
     diff: ^5.1.0
     nise: ^5.1.4
     supports-color: ^7.2.0
-  checksum: 98eb555442db3985d7fe0d90e23f081f3df71adffa0a50b049bcd2abbf5c2d71a43aeaa1e3c02500164cff5233d2f102f777356ebe8bfc257cb7059c1b2778b0
+  checksum: fb9401e44215c7a7904d2df3032c56369cb4f2fd9c708460e1b980c6032de8e13bd8c4d90039074f9383e5219702a5e0755b7bea94bd4c090b8c1e583f137c3d
   languageName: node
   linkType: hard
 
