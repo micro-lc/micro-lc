@@ -13450,7 +13450,7 @@ __metadata:
     npm-run-all: ^4.1.5
     postcss: ^8.4.21
     postcss-less: ^6.0.0
-    rimraf: ^4.4.0
+    rimraf: ^4.4.1
     stylelint: ^15.3.0
     stylelint-config-rational-order: ^0.1.2
     stylelint-config-standard: ^31.0.0
@@ -17390,14 +17390,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "rimraf@npm:4.4.0"
+"rimraf@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "rimraf@npm:4.4.1"
   dependencies:
     glob: ^9.2.0
   bin:
     rimraf: dist/cjs/src/bin.js
-  checksum: 0cedaf9d138589d1bb0ab851f05804c6d30827aa66563472b04ab76245f83537e23e7b94f1f79ea6c368c0d84a18fcde6a756fca3a44c967e08792671b3a0a6e
+  checksum: b786adc02651e2e24bbedb04bbdea80652fc9612632931ff2d9f898c5e4708fe30956186597373c568bd5230a4dc2fadfc816ccacba8a1daded3a006a6b74f1a
   languageName: node
   linkType: hard
 
