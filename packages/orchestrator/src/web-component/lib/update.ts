@@ -15,7 +15,14 @@
 */
 import type { ComposerOptions, ComposerApi } from '@micro-lc/composer'
 import { premount, createComposerContext } from '@micro-lc/composer'
-import type { Application, Config, Content, GlobalImportMap, PluginConfiguration } from '@micro-lc/interfaces/v2'
+import type {
+  Application,
+  Config,
+  Content,
+  GlobalImportMap,
+  PluginConfiguration,
+  ParcelApplication,
+} from '@micro-lc/interfaces/v2'
 import type { Entry } from 'qiankun'
 import type { Observable } from 'rxjs'
 import { take } from 'rxjs'
@@ -175,6 +182,24 @@ const getExtraIFrameAttributes = (app: {attributes?: Record<string, string>; src
   return extraIframeAttributes
 }
 
+const getParcelEntry = ({ entry }: ParcelApplication): Entry => {
+  if (typeof entry === 'string') {
+    return entry
+  }
+
+  const scripts = toArray(entry.scripts ?? [])
+  const styles = toArray(entry.styles ?? [])
+  if (typeof entry.html === 'string' && scripts.length === 0) {
+    return entry.html
+  }
+
+  return {
+    ...entry,
+    scripts,
+    styles,
+  }
+}
+
 export async function updateApplications<T extends BaseExtension>(this: Microlc<T>): Promise<void> {
   const {
     _config: {
@@ -248,11 +273,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     case 'parcel':
     default:
       injectBase = app.injectBase
-      entry = typeof app.entry === 'string' ? app.entry : {
-        html: app.entry.html,
-        scripts: toArray(app.entry.scripts) as string[],
-        styles: toArray(app.entry.styles ?? []),
-      }
+      entry = getParcelEntry(app)
       properties = app.properties
       break
     }
