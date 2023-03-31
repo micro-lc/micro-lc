@@ -164,3 +164,28 @@ test(`
   await page.evaluate((microlc) => microlc.getApi().router.goToApplication('react'), microlcHandle)
   await expect(page.getByRole('link', { name: 'Go To About Page' })).toBeVisible()
 })
+
+test(`
+  [config injection]
+  parcel config as {"html": "<path>"}
+`, async ({ page }) => {
+  await goto(page, {
+    applications: {
+      react: {
+        entry: { html: 'https://micro-lc.io/applications/react-browser-router/' },
+        injectBase: true,
+        integrationMode: 'parcel',
+        route: './react/',
+      },
+    },
+    settings: {
+      defaultUrl: './react/',
+    },
+    version: 2,
+  })
+
+  const microlcHandle = await page.evaluateHandle<Microlc>('document.querySelector(\'micro-lc\')')
+
+  await page.evaluate((microlc) => microlc.getApi().router.goToApplication('react'), microlcHandle)
+  await expect(page.getByRole('link', { name: 'Go To About Page' })).toBeVisible()
+})
