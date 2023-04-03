@@ -105,8 +105,14 @@ export function mergeConfig(document: Document, input: Config): CompleteConfig {
       content: input.layout?.content ?? def.layout.content,
     },
     settings: {
-      '4xx': input.settings?.['4xx'] ?? def.settings['4xx'],
-      '5xx': input.settings?.['5xx'] ?? def.settings['5xx'],
+      '4xx': {
+        ...def.settings['4xx'],
+        ...input.settings?.['4xx'] 
+      },
+      '5xx': {
+        ...def.settings['5xx'],
+        ...input.settings?.['5xx'] 
+      },
       composerUri: input.settings?.composerUri ?? def.settings.composerUri,
       defaultUrl,
       mountPoint: input.settings?.mountPoint ?? def.settings.mountPoint,
