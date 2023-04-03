@@ -26,7 +26,7 @@
 <!-- TODO: Include update for the CONTRIBUTING file up-to-date regarding information about the commit -->
 - [ ] The commit message follows our guidelines included in the [CONTRIBUTING.md](../CONTRIBUTING.md#how-to-submit-a-pr)
 - [ ] Tests for the changes have been added (for bug fixes / features)
-- [ ] Docs have been added / updated (for bug fixes / features)
+- [ ] Relevant CHANGELOG (`packages/<package>/CHANGELOG.md`) is updated
 
 ## Does this PR introduce a breaking change?
 

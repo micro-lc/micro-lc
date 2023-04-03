@@ -20,6 +20,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@ant-design/icons-svg"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "@storybook/*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "docker"
     directory: "/"
     schedule:

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- error page customization does not override all error codes defaults
+
+## [2.0.7] - 2023-04-03
+
+### Fixed
+
+- `parcel` application settings can be written as `{"html": "<path>"}` construct
+
+### Versioning
+
+- Development dependencies updated
+
 ## [2.0.6] - 2023-03-28
 
 ### Fixed

@@ -14,6 +14,31 @@ on:
       - 'packages/**'
 
 jobs:
+  dispatch-updated-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Verify CHANGELOG Updates
+        uses: tj-actions/changed-files@v35
+        id: changelog-updates
+        with:
+          since_last_remote_commit: 'true'
+          files: packages/orchestrator/*.md
+
+      - name: Trigger 'micro-lc.github.io' Updates
+        if: steps.changelog-updates.outputs.any_changed == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.PAT_DOCS_TOKEN }}
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: 'micro-lc.github.io',
+              workflow_id: 'main.yml',
+              ref: 'main'
+            })
+
   prepare:
     uses: micro-lc/micro-lc/.github/workflows/prepare.yml@main
 
