@@ -201,9 +201,9 @@ test(`
         '4xx': {
           400: {
             integrationMode: 'iframe',
-            src: 'https://example.com'
-          }
-        }
+            src: 'https://example.com',
+          },
+        },
       },
     },
     version: 2,
