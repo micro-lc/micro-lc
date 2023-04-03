@@ -7,13 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-<!-- TODO: remove me -->
-
 ## [2.0.7] - 2023-04-03
 
 ### Fixed
 
-- `parcel` application can be set using the `{"html": "<path>"}` construct
+- `parcel` application settings can be written as `{"html": "<path>"}` construct
 
 ### Versioning
 
