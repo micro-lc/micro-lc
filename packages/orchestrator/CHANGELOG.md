@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `parcel` application can be set using the `{"html": "<path>"}` construct
 
+### Versioning
+
+- Development dependencies updated
+
 ## [2.0.6] - 2023-03-28
 
 ### Fixed
