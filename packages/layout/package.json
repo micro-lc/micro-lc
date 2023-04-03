@@ -72,7 +72,7 @@
     "@storybook/addon-backgrounds": "^6.5.16",
     "@storybook/addon-docs": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
+    "@storybook/addon-links": "^7.0.2",
     "@storybook/addon-measure": "^6.5.16",
     "@storybook/addon-outline": "^6.5.16",
     "@storybook/addons": "^6.5.16",
