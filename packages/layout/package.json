@@ -107,7 +107,7 @@
     "vite-plugin-banner": "^0.7.0",
     "vite-plugin-dynamic-import": "^1.2.7",
     "vite-plugin-replace": "^0.1.1",
-    "vite-tsconfig-paths": "^4.0.7"
+    "vite-tsconfig-paths": "^4.0.8"
   },
   "engines": {
     "node": ">=16.17.0"
