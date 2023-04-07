@@ -92,13 +92,13 @@ test(`
         route: './',
       },
       'react-browser': {
-        entry: 'https://micro-lc.io/applications/react-browser-router/',
+        entry: 'https://www.micro-lc.io/applications/react-browser-router/',
         injectBase: true,
         integrationMode: 'parcel',
         route: '/react-browser-router',
       },
       'react-hash': {
-        entry: 'https://micro-lc.io/applications/react-hash-router/',
+        entry: 'https://www.micro-lc.io/applications/react-hash-router/',
         integrationMode: 'parcel',
         route: '/react-hash-router',
       },
@@ -172,7 +172,7 @@ test(`
   await goto(page, {
     applications: {
       react: {
-        entry: { html: 'https://micro-lc.io/applications/react-browser-router/' },
+        entry: { html: 'https://www.micro-lc.io/applications/react-browser-router/' },
         injectBase: true,
         integrationMode: 'parcel',
         route: './react/',
@@ -196,15 +196,13 @@ test(`
 `, async ({ page }) => {
   await goto(page, {
     settings: {
-      defaultUrl: '/home',
-      errorPages: {
-        '4xx': {
-          400: {
-            integrationMode: 'iframe',
-            src: 'https://example.com',
-          },
+      '4xx': {
+        400: {
+          integrationMode: 'iframe',
+          src: 'https://example.com',
         },
       },
+      defaultUrl: '/home',
     },
     version: 2,
   })

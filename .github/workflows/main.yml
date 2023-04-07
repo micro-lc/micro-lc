@@ -12,6 +12,7 @@ on:
       - main
     paths:
       - 'packages/**'
+      - 'tests/**'
 
 jobs:
   dispatch-updated-changelog:
