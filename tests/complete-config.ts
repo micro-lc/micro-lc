@@ -95,7 +95,7 @@ const config: Config = {
       route: './plain/details/',
     },
     react: {
-      entry: 'https://micro-lc.io/applications/react-browser-router/',
+      entry: 'https://www.micro-lc.io/applications/react-browser-router/',
       injectBase: true,
       integrationMode: 'parcel',
       route: './react/',
