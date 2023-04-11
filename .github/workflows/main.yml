@@ -7,10 +7,13 @@ env:
   node-version: 16.x
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
+      - '.github/workflows/**'
+      - './package.json'
       - 'packages/**'
       - 'tests/**'
 

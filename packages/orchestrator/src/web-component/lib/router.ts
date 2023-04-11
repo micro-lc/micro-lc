@@ -268,6 +268,8 @@ async function flushAndGo(
           name: nextMatch.name,
           url: url ?? window.location.href,
         }),
+      // TODO: remove when https://github.com/umijs/qiankun/pull/2450 is merged
+      sandbox: { speedy: false },
     })
 
     applicationHandlers.set(nextMatch.name, handlers)

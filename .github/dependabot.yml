@@ -12,8 +12,6 @@ updates:
     ignore:
       - dependency-name: node-fetch
         update-types: ["version-update:semver-major"]
-      - dependency-name: qiankun
-        update-types: ["version-update:semver-minor"]
       - dependency-name: antd
         update-types: ["version-update:semver-major"]
       - dependency-name: "@ant-design/icons"
