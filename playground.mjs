@@ -26,7 +26,7 @@ const logger = (error, stdout, stderr) => {
 }
 
 const main = async () => {
-  exec('docker-compose --file playground/docker-compose.yml up -d --build --force-recreate', logger)
+  exec('docker compose --file playground/docker-compose.yml up -d --build --force-recreate', logger)
 
   await startDevServer({
     config: {
@@ -91,6 +91,6 @@ const main = async () => {
 main()
   .then(() => {
     console.log('\n\tRemind dropping docker-compose environment\n')
-    console.log('\n\tRun: `docker-compose --file playground/docker-compose.yml down`\n')
+    console.log('\n\tRun: `docker compose --file playground/docker-compose.yml down`\n')
   })
   .catch(console.error)
