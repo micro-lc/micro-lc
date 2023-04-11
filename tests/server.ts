@@ -9,6 +9,7 @@ app.use('/packages', express.static('packages'))
 app.use('/', express.static('tests'))
 app.use('/dev/*', express.static('tests/dev'))
 app.use('/pages/*', express.static('tests/pages'))
+app.use('/applications/*', express.static('tests/applications'))
 
 app.use('/configurations', (req, res) => {
   const { url } = req

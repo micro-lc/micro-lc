@@ -30,6 +30,10 @@ jobs:
       - file-changes
     if: needs.file-changes.outputs.diff == 'true'
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
     steps:
       - uses: actions/checkout@v3
       
@@ -76,7 +80,7 @@ jobs:
         if: steps.build-cache.outputs.cache-hit != 'true'
 
       - name: Run tests
-        run: yarn test:e2e
+        run: yarn test:e2e --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
       - name: Upload test results
         if: always()
