@@ -8,6 +8,8 @@ coverage/
 mocks/
 playwright-report/
 .nyc_output/
+tests/applications/
+tests/applications/
 
 .vscode/
 .idea/
