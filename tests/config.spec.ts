@@ -92,13 +92,13 @@ test(`
         route: './',
       },
       'react-browser': {
-        entry: 'https://www.micro-lc.io/applications/react-browser-router/',
+        entry: '/applications/react-browser-router/',
         injectBase: true,
         integrationMode: 'parcel',
         route: '/react-browser-router',
       },
       'react-hash': {
-        entry: 'https://www.micro-lc.io/applications/react-hash-router/',
+        entry: '/applications/react-hash-router/',
         integrationMode: 'parcel',
         route: '/react-hash-router',
       },
@@ -172,7 +172,7 @@ test(`
   await goto(page, {
     applications: {
       react: {
-        entry: { html: 'https://www.micro-lc.io/applications/react-browser-router/' },
+        entry: { html: '/applications/react-browser-router/' },
         injectBase: true,
         integrationMode: 'parcel',
         route: './react/',
