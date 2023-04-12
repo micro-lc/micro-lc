@@ -39,7 +39,7 @@
     "@web/dev-server-esbuild": "^0.3.6",
     "@web/dev-server-import-maps": "^0.0.8",
     "@web/dev-server-rollup": "^0.4.0",
-    "esbuild": "^0.17.12",
+    "esbuild": "^0.17.16",
     "glob": "^9.3.2",
     "prop-types": "^15.8.1",
     "react-test-renderer": "^18.2.0",
