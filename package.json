@@ -68,7 +68,7 @@
     "rimraf": "^4.4.1",
     "stylelint": "^15.3.0",
     "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-config-standard": "^31.0.0",
+    "stylelint-config-standard": "^32.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.7.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
