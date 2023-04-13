@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.0.8] - 2023-04-11
+
+### Versioning
+
+- Development dependencies updated
+
 ### Fixed
 
 - error page customization does not override all error codes defaults
