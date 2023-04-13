@@ -57,7 +57,7 @@
     "vite-plugin-banner": "^0.7.0"
   },
   "dependencies": {
-    "lit-html": "^2.7.0",
+    "lit-html": "^2.7.2",
     "rxjs": "^7.8.0"
   },
   "peerDependencies": {
