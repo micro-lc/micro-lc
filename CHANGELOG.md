@@ -1,23 +1,47 @@
 # CHANGELOG
 
+👉 This file is a copy of the micro-lc orchestrator [CHANGELOG](./packages/orchestrator/CHANGELOG.md)
+
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
 ## [2.0.8] - 2023-04-11
 
+### Versioning
+
+- Development dependencies updated
+
+### Fixed
+
+- error page customization does not override all error codes defaults
+- excluding speedy sandbox allows to bump `qiankun` up to current latest
+
 ## [2.0.7] - 2023-04-03
 
-## [2.0.6] - 2023-03-28
+### Fixed
 
-## [2.0.5] - 2023-03-09
+- `parcel` application settings can be written as `{"html": "<path>"}` construct
 
 ### Versioning
 
-- Dev dependencies updated
+- Development dependencies updated
+
+## [2.0.6] - 2023-03-28
+
+### Fixed
+
+- fix to `cve-2022-3970` in docker container by updating `tiff` dependency
+
+### Versioning
+
+- Development dependencies updated
+- Typescript set to `^5.0.2` with yarn `3.5.0`
+
+## [2.0.5] - 2023-03-09
 
 ### Fixed
 
@@ -25,7 +49,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.0.4] - 2023-03-07
 
+### Versioning
+
+- `nginx` alpine bumped to v1.23.3
+- `devel-kit` bumped to v0.3.2
+
+### Fixed
+
+- `qiankun` is not bundled as its own chunk, to prevent faulty behavior on resources loading
+- `libcurl` CVEs mitigation
+
 ## [2.0.3] - 2023-03-07
+
+### Fixed
+
+- assets naming do not include a hash
+
+### Versioning
+
+- Development dependencies updated
+- Typescript set to `^4.9.5` with yarn `3.4.1`
+- `qiankun` to `^2.9.3`
+- `qiankun` to `^2.9.1`
+
+### Added
+
+- `onload` of `micro-lc` is called after a successful reroute
 
 ## [2.0.2] - 2023-02-09
 
@@ -33,147 +82,48 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - `compose` applications live in a body made by a `div` tag with CSS class `composer-body`
 
-## [2.0.1] - 2023-01-25
+## [2.0.1] - 2023-01-24
+
+### Added
+
+- `compose` integration mode is scoped to allow the presence of a `qiankun-head` tag
+- applications `route` and `config` fields, when representing URLs, are computed wrt `document.baseURI`
+
+### Fixed
+
+- fixed bug on route matching
+- assets renaming removed hash for error pages (401, 404, and 500) + composer application bundle
 
 ### Versioning
 
-- fixes `qiankun-head` faulty behavior with composer `v2.0.1`
-- fixes absolute path resolution with orchestrator `v2.0.1`
+- Development dependencies updated
+- Typescript set to `^4.9.4` with yarn `3.3.1`
+- Typescript is set to `4.9.3` due to yarn berry temporary incompatibility
+- Direct dependencies `rxjs` was updated
 
 ## [2.0.0] - 2022-12-12
 
-### New Release
-
-- to migrate from v1 to v2 check out the [guide](https://micro-lc.io/docs/migrating-from-v1)
-
-## [1.0.0] 2022-11-03
-
-## [0.9.0]
+## [0.3.0] - 2022-11-28
 
 ### Added
 
-- user's permissions evaluation based on user's properties in USER_PROPERTIES_HEADER_KEY request header
+- url pattern matching extended to parametric values
+- layout sidebar accepts multiple applications per item to mock a SPA folder structure
 
-## [0.8.1]
+### Versioning
 
-### Fixed
+- Development dependencies version bumps
 
-- CSP evaluation
-
-## [0.8.0]
-
-### Added
-
-- base html tag in index.html
-- dynamic configuration script in index.html
-
-### Changed
-
-- now micro-lc can be exposed on a different path then /
-
-### BREAKING CHANGES
-
-- config file API now is able to return something that is not a JSON
-
-## [0.7.0]
+## [0.2.5] - 2022-11-26
 
 ### Added
 
-- full support for Angular 2+, thanks to zone import
+- Support for `srcdoc` attributes on iframes
+- `playground` has an example of direct use of composer in browser
+- `playground` has an example of programmatic use of `micro-lc` tag mount as the result of a composition
 
-### Changed
+### Versioning
 
-- tobBar restyling
+- Development dependencies version bumps
 
-### Updated
-
-- Dependencies
-
-## [0.6.2]
-
-### Fixed
-
-- favicon import url
-
-## [0.6.1]
-
-### Fixed
-
-- topBar menu with content
-- fixedSideBar tooltip style
-
-### Updated
-
-- Dependencies
-
-## [0.6.0]
-
-### Added
-
-- rightMenu section, composed of web-components
-
-### Fixed
-
-- topBarMenu icon behaviour when using different FontAwesome versions
-
-### Updated
-
-- Dependencies
-
-## [0.5.0]
-
-### Added
-
-- Support for multiple back-end
-
-## [0.4.0]
-
-### Fixed
-
-- Issue #273
-- iframe div that occupy half page
-
-### Updated
-
-- custom plugin lib to version 4.2.0
-- general dependencies
-
-## [0.3.1]
-
-### Fixed
-
-- ACL expression evaluator now does not modify the initial json to filter
-
-### Updated
-
-- Dependencies
-
-## [0.3.0]
-
-### Added
-
-- Internal plugins
-
-### Updated
-
-- Dependencies
-
-## [0.1.1]
-
-### Updated
-
-- nginx version of fe-container to version 1.20.0
-
-### Fixed
-
-- 404 page flash on first load
-
-## [0.1.0]
-
-### Added
-
-- micro-lc is now ready to be considered stable
-
-### Changed
-
-- extracted common components to be used inside the plugins
+## [0.2.4] - 2022-11-11
