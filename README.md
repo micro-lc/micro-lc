@@ -16,6 +16,9 @@
   <a href="https://badge.fury.io/js/@micro-lc%2Forchestrator">
     <img src="https://badge.fury.io/js/@micro-lc%2Forchestrator.svg" alt="npm version" height="20">
   </a>
+  <a href="">
+    <img href="https://img.shields.io/npm/dm/@micro-lc/orchestrator.svg" alt="npm downloads" />
+  </a>
   <a href="https://opensource.org/licenses/Apache-2.0">
     <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" />
   </a>
