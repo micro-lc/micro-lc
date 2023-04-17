@@ -6,8 +6,10 @@
     <a href="https://mia-platform.eu/?utm_source=referral&utm_medium=github&utm_campaign=micro-lc"><img src="https://img.shields.io/badge/Supported%20by-Mia--Platform-green?style=for-the-badge&link=https://mia-platform.eu/&color=DE0D92&labelColor=214147" alt="Mia-Platform" /></a>
 </p>
 
+<p align="center">
 [![](https://data.jsdelivr.com/v1/package/npm/@micro-lc/orchestrator/badge)](https://www.jsdelivr.com/package/npm/@micro-lc/orchestrator)
 ![](https://github.com/micro-lc/micro-lc/actions/workflows/main.yml/badge.svg?branch=main)
+</p>
 
 ## Introduction
 
