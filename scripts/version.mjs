@@ -185,7 +185,16 @@ async function main() {
     await queue.add('version', () => exec('version', `yarn version ${ctx.version}`))
     const packageNewSemVersion = await querySemVer(packageWorkingDir)
     if (packageNewSemVersion !== undefined) {
-      queue.add('update-changelog', () => updateChangelog(packageWorkingDir, packageNewSemVersion))
+      queue.add('copy-changelog', async () => {
+        const buffer = await readFile(pathResolve(packageWorkingDir, 'packages/orchestrator/CHANGELOG.md'))
+        const content = buffer.toString().replace(
+          '# CHANGELOG\n',
+          '# CHANGELOG\n'
+            + '\n'
+            + '👉 This file is a copy of the micro-lc orchestrator [CHANGELOG](./packages/orchestrator/CHANGELOG.md)\n'
+        )
+        return writeFile(pathResolve(packageWorkingDir, 'CHANGELOG.md'), content)
+      })
     }
 
     queue.add('add-to-stage', () => exec('add-to-stage', `git add ${pathResolve(packageWorkingDir, 'package.json')} ${pathResolve(packageWorkingDir, 'CHANGELOG.md')} ${pathResolve(packageWorkingDir, '.yarn/versions')}`))
