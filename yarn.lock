@@ -2452,7 +2452,7 @@ __metadata:
     "@web/dev-server": ^0.1.38
     "@web/dev-server-esbuild": ^0.3.6
     "@web/dev-server-import-maps": ^0.0.8
-    "@web/dev-server-rollup": ^0.4.0
+    "@web/dev-server-rollup": ^0.4.1
     esbuild: ^0.17.16
     glob: ^9.3.2
     prop-types: ^15.8.1
@@ -5135,20 +5135,6 @@ __metadata:
     parse5: ^6.0.1
     picomatch: ^2.2.2
   checksum: f5b2f40938a918bb71bae54c81b67805aebe74053942ef2e19b3a9a1212dc66f5baa055e533f6abc0670dfd12ce6020dfc3805905e518050c750709a995c8d39
-  languageName: node
-  linkType: hard
-
-"@web/dev-server-rollup@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@web/dev-server-rollup@npm:0.4.0"
-  dependencies:
-    "@rollup/plugin-node-resolve": ^13.0.4
-    "@web/dev-server-core": ^0.4.0
-    nanocolors: ^0.2.1
-    parse5: ^6.0.1
-    rollup: ^2.67.0
-    whatwg-url: ^11.0.0
-  checksum: e9ad742108a02f8e6c78c17a9769d28b54129d7bacefa89bf72ea55202a4f7ab03e24be51c5bbaf90302393f0832a3fc37c6932d014df7f039ff1ec0562f229d
   languageName: node
   linkType: hard
 
