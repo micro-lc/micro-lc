@@ -7,8 +7,12 @@
 </p>
 
 <p align="center">
-[![](https://data.jsdelivr.com/v1/package/npm/@micro-lc/orchestrator/badge)](https://www.jsdelivr.com/package/npm/@micro-lc/orchestrator)
-![](https://github.com/micro-lc/micro-lc/actions/workflows/main.yml/badge.svg?branch=main)
+  <a href="https://www.jsdelivr.com/package/npm/@micro-lc/orchestrator">
+    ![](https://data.jsdelivr.com/v1/package/npm/@micro-lc/orchestrator/badge)
+  </a>
+  <a href="">
+    ![](https://github.com/micro-lc/micro-lc/actions/workflows/main.yml/badge.svg?branch=main)
+  </a>
 </p>
 
 ## Introduction
