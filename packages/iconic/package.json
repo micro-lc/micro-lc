@@ -44,7 +44,7 @@
     "prop-types": "^15.8.1",
     "react-test-renderer": "^18.2.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.4"
   },
   "peerDependencies": {
     "react": ">=17"
