@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://www.jsdelivr.com/package/npm/@micro-lc/orchestrator">
-    <img src="https://data.jsdelivr.com/v1/package/npm/@micro-lc/orchestrator/badge" alt="" />
+    <img src="https://data.jsdelivr.com/v1/package/npm/@micro-lc/orchestrator/badge?style=rounded" alt="" />
   </a>
   <a href="">
     <img src="https://github.com/micro-lc/micro-lc/actions/workflows/main.yml/badge.svg?branch=main" alt="" />
