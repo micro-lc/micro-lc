@@ -17,7 +17,7 @@
     <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" />
   </a>
   <a href="https://badge.fury.io/js/@micro-lc%2Forchestrator">
-    <img src="https://badge.fury.io/js/@micro-lc%2Forchestrator.svg" alt="npm version" height="18">
+    <img src="https://badge.fury.io/js/@micro-lc%2Forchestrator.svg" alt="npm version" height="20">
   </a>
 </p>
 
