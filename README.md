@@ -8,10 +8,10 @@
 
 <p align="center">
   <a href="https://www.jsdelivr.com/package/npm/@micro-lc/orchestrator">
-    ![](https://data.jsdelivr.com/v1/package/npm/@micro-lc/orchestrator/badge)
+    <img src="https://data.jsdelivr.com/v1/package/npm/@micro-lc/orchestrator/badge" alt="" />
   </a>
   <a href="">
-    ![](https://github.com/micro-lc/micro-lc/actions/workflows/main.yml/badge.svg?branch=main)
+    <img src="https://github.com/micro-lc/micro-lc/actions/workflows/main.yml/badge.svg?branch=main" alt="" />
   </a>
 </p>
 
