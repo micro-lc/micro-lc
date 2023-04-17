@@ -2458,7 +2458,7 @@ __metadata:
     prop-types: ^15.8.1
     react-test-renderer: ^18.2.0
     ts-node: ^10.9.1
-    typescript: ^5.0.2
+    typescript: ^5.0.4
   peerDependencies:
     react: ">=17"
   languageName: unknown
@@ -2487,7 +2487,7 @@ __metadata:
     postcss: ^8.4.21
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^5.0.2
+    typescript: ^5.0.4
   peerDependencies:
     postcss: "*"
   languageName: unknown
@@ -2548,7 +2548,7 @@ __metadata:
     sinon: ^15.0.3
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^5.0.2
+    typescript: ^5.0.4
     vite: ^4.2.1
     vite-plugin-banner: ^0.7.0
     vite-plugin-dynamic-import: ^1.2.7
@@ -2599,7 +2599,7 @@ __metadata:
     sinon-chai: ^3.7.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^5.0.2
+    typescript: ^5.0.4
     vite: ^4.2.1
     vite-plugin-banner: ^0.7.0
   peerDependencies:
@@ -13770,7 +13770,7 @@ __metadata:
     stylelint-config-standard: ^32.0.0
     stylelint-declaration-block-no-ignored-properties: ^2.7.0
     ts-node: ^10.9.1
-    typescript: ^5.0.2
+    typescript: ^5.0.4
     vite: ^4.2.1
   languageName: unknown
   linkType: soft
@@ -19789,23 +19789,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "typescript@npm:5.0.2"
+"typescript@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "typescript@npm:5.0.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bef1dcd166acfc6934b2ec4d72f93edb8961a5fab36b8dd2aaf6f4f4cd5c0210f2e0850aef4724f3b4913d5aef203a94a28ded731b370880c8bcff7e4ff91fc1
+  checksum: 82b94da3f4604a8946da585f7d6c3025fff8410779e5bde2855ab130d05e4fd08938b9e593b6ebed165bda6ad9292b230984f10952cf82f0a0ca07bbeaa08172
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.0.2#~builtin<compat/typescript>":
-  version: 5.0.2
-  resolution: "typescript@patch:typescript@npm%3A5.0.2#~builtin<compat/typescript>::version=5.0.2&hash=85af82"
+"typescript@patch:typescript@^5.0.4#~builtin<compat/typescript>":
+  version: 5.0.4
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: b63cb742fbb9aeb3085e002ad8f10d5fd963606aa4d6b3b65b4e76c396ff09739f03b5dbae08e1698c3bce9d5619d3f67aeb7ee470ed4016bd345b3cfe37b54a
+  checksum: bb309d320c59a26565fb3793dba550576ab861018ff3fd1b7fccabbe46ae4a35546bc45f342c0a0b6f265c801ccdf64ffd68f548f117ceb7f0eac4b805cd52a9
   languageName: node
   linkType: hard
 
