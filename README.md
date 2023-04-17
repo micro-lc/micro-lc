@@ -13,6 +13,9 @@
   <a href="">
     <img src="https://github.com/micro-lc/micro-lc/actions/workflows/main.yml/badge.svg?branch=main" alt="" />
   </a>
+  <a href="https://opensource.org/licenses/Apache-2.0">
+    <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" />
+  </a>
 </p>
 
 ## Introduction
