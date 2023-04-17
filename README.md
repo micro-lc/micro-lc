@@ -20,7 +20,7 @@
     <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" />
   </a>
   <a href="">
-    <img alt="ts" src="https://flat.badgen.net/badge/-/TypeScript/blue?icon=typescript&label" />
+    <img alt="ts" src="https://badgen.net/badge/-/TypeScript/blue?icon=typescript&label" />
   </a>
 </p>
 
