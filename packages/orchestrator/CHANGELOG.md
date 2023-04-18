@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `Symbol.observable` polyfill is available at `dist/polyfills/symbol-observable.js` as side-effect script
+
 ### Versioning
 
 - `lit-html` to `2.7.2`
