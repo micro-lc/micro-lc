@@ -27,6 +27,7 @@
 - [ ] The commit message follows our guidelines included in the [CONTRIBUTING.md](../CONTRIBUTING.md#how-to-submit-a-pr)
 - [ ] Tests for the changes have been added (for bug fixes / features)
 - [ ] Relevant CHANGELOG (`packages/<package>/CHANGELOG.md`) is updated
+- [ ]  Documentation was updated or a PR to the [docs](https://github.com/micro-lc/micro-lc.github.io/pulls) is on its way (link it pls)
 
 ## Does this PR introduce a breaking change?
 
