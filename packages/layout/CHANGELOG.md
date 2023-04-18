@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `@ctrl/tinycolor` to version `^3.6.0`
 - `lit` from `^2.6.1` to `^2.7.0`
 - `lit-html` from `^2.6.1` to `^2.7.0`
+- `cssnano` to version `6.0.0`
 - Typescript set to `^5.0.4`
 
 ## [2.0.1] - 2023-02-15
