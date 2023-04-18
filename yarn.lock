@@ -2247,7 +2247,7 @@ __metadata:
   resolution: "@micro-lc/composer@workspace:packages/composer"
   dependencies:
     "@micro-lc/interfaces": "workspace:*"
-    "@open-wc/testing": ^3.1.7
+    "@open-wc/testing": ^3.1.8
     "@rollup/plugin-replace": ^5.0.2
     "@types/chai": ^4.3.4
     "@types/chai-string": ^1.4.2
@@ -2287,7 +2287,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": ^6.3.0
     "@fortawesome/free-solid-svg-icons": ^6.4.0
     "@fortawesome/react-fontawesome": ^0.2.0
-    "@open-wc/testing": ^3.1.7
+    "@open-wc/testing": ^3.1.8
     "@rollup/plugin-alias": ^5.0.0
     "@rollup/plugin-replace": ^5.0.2
     "@types/glob": ^8.1.0
@@ -2355,7 +2355,7 @@ __metadata:
     "@micro-lc/iconic": "workspace:*"
     "@micro-lc/interfaces": "workspace:*"
     "@micro-lc/orchestrator": "workspace:*"
-    "@open-wc/testing": ^3.1.7
+    "@open-wc/testing": ^3.1.8
     "@rollup/plugin-replace": ^5.0.2
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-backgrounds": ^6.5.16
@@ -2411,7 +2411,7 @@ __metadata:
     "@babel/runtime": ^7.21.0
     "@micro-lc/composer": "workspace:*"
     "@micro-lc/interfaces": "workspace:*"
-    "@open-wc/testing": ^3.1.7
+    "@open-wc/testing": ^3.1.8
     "@rollup/plugin-node-resolve": ^15.0.1
     "@types/chai": ^4.3.4
     "@types/chai-as-promised": ^7.1.5
@@ -2584,30 +2584,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/testing-helpers@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "@open-wc/testing-helpers@npm:2.1.4"
+"@open-wc/testing-helpers@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@open-wc/testing-helpers@npm:2.2.1"
   dependencies:
     "@open-wc/scoped-elements": ^2.1.3
     lit: ^2.0.0
     lit-html: ^2.0.0
-  checksum: ec4bf3aa01777528c83edd1594738fb8990992dc0ad4e91e4be1377b56019636569c89144718ff31a12f831f76ea5aadaef412189c5ad19a61e9e417563eb414
+  checksum: 92fcff763d7deb761c2853ee96b6873a553dc29bfc0ed54e0a20ccc8c93fd341d34a4d144c6940283e148e5f1e42341753758866e1b8e53da9d7c00560a13a6a
   languageName: node
   linkType: hard
 
-"@open-wc/testing@npm:^3.1.7":
-  version: 3.1.7
-  resolution: "@open-wc/testing@npm:3.1.7"
+"@open-wc/testing@npm:^3.1.8":
+  version: 3.1.8
+  resolution: "@open-wc/testing@npm:3.1.8"
   dependencies:
     "@esm-bundle/chai": ^4.3.4-fix.0
     "@open-wc/chai-dom-equals": ^0.12.36
     "@open-wc/semantic-dom-diff": ^0.19.7
-    "@open-wc/testing-helpers": ^2.1.4
+    "@open-wc/testing-helpers": ^2.2.1
     "@types/chai": ^4.2.11
-    "@types/chai-dom": ^0.0.12
+    "@types/chai-dom": ^1.11.0
     "@types/sinon-chai": ^3.2.3
     chai-a11y-axe: ^1.3.2
-  checksum: a0ccf6bcf0349384580cb666e628492df9614f1a67a68d1037a84fdd303daa119ba2246d9df46e99d72f67794cc3bd8c98bcc1c2ff67f8f2f28cdcd9cd06f681
+  checksum: e1e86bb448b4485bfc7f177a02701adc5959808a11e03b57f61acf2329678b8bad1338d822c6be4dcd46bcd13a9f72000b428679a0a722411f0034d28f383d44
   languageName: node
   linkType: hard
 
@@ -4018,12 +4018,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai-dom@npm:^0.0.12":
-  version: 0.0.12
-  resolution: "@types/chai-dom@npm:0.0.12"
+"@types/chai-dom@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "@types/chai-dom@npm:1.11.0"
   dependencies:
     "@types/chai": "*"
-  checksum: 60bc19ca03bfc49026690c2d5d8d3153ea50d909b757301da1a81733d8a4e6171b2af3eeaef5208efe4b8804de314f4660ea6f992f636e12c8aae02a87074b44
+  checksum: 32fb10c04ee43a277a98f8b1440b10222a19e16b14648ed655e0b8bbdee57aea02c29a67a2ff0aa33c0d2cbc5547b7013b77285941a1d5d9fefa1b7a05bf8f9f
   languageName: node
   linkType: hard
 
