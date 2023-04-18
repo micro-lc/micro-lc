@@ -90,7 +90,7 @@
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@types/sinon": "^10.0.13",
-    "cssnano": "^5.1.15",
+    "cssnano": "^6.0.0",
     "esbuild": "^0.17.16",
     "glob": "^9.3.2",
     "json-schema-to-typescript": "^12.0.0",
