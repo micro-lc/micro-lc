@@ -16,6 +16,9 @@
     },
     "./micro-lc.production.js": {
       "default": "./dist/micro-lc.production.js"
+    },
+    "./polyfills/symbol-observable": {
+      "default": "./dist/polyfills/symbol-observable.js"
     }
   },
   "files": [
@@ -31,7 +34,8 @@
     "build:cjs": "ts-node scripts/compile.cjs.ts",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
-    "build": "yarn run -T run-s check:types build:es build:cjs build:dev build:prod",
+    "build:polyfills": "ts-node scripts/build-polyfills.ts",
+    "build": "yarn run -T run-s check:types build:es build:cjs build:dev build:prod build:polyfills",
     "esm": "ts-node scripts/esm-url-generator.ts",
     "serve": "vite dev"
   },
