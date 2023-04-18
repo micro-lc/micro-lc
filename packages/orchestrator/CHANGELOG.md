@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Versioning
+
+- `lit-html` to `2.7.2`
+- `es-module-shims` to `1.7.1`
+- Development dependencies updated
+- Typescript set to `^5.0.4`
+
+## [2.0.8] - 2023-04-11
+
+### Versioning
+
+- Development dependencies updated
+
 ### Fixed
 
 - error page customization does not override all error codes defaults
