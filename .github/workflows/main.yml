@@ -64,10 +64,6 @@ jobs:
     uses: micro-lc/micro-lc/.github/workflows/e2e-tests.yml@main
 
   release-docker:
-    needs:
-      - checks
-      - unit-tests
-      - e2e-tests
     if: ${{ startsWith(github.ref, 'refs/heads/main') }}
     uses: micro-lc/micro-lc/.github/workflows/release-docker.yml@main
     with:

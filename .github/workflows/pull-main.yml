@@ -43,6 +43,7 @@ jobs:
           filters: |
             diff:
               - '.docker/**'
+              - '.github/**'
 
   test-docker:
     needs:
