@@ -33,6 +33,7 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     uses: micro-lc/micro-lc/.github/workflows/release-docker.yml@main
     with:
+      push: true
       version: ${{ needs.next-version.outputs.version }}
     secrets:
       username: ${{ secrets.BOT_DOCKER_USERNAME }}
