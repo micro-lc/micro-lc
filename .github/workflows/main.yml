@@ -16,6 +16,7 @@ on:
       - './package.json'
       - 'packages/**'
       - 'tests/**'
+      - '.docker/**'
 
 jobs:
   dispatch-updated-changelog:
@@ -71,6 +72,7 @@ jobs:
     uses: micro-lc/micro-lc/.github/workflows/release-docker.yml@main
     with:
       version: latest
+      push: true
     secrets:
       username: ${{ secrets.BOT_DOCKER_USERNAME }}
       token: ${{ secrets.BOT_DOCKER_TOKEN }}

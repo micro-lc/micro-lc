@@ -3,6 +3,10 @@ name: Docker container release
 on:
   workflow_call:
     inputs:
+      push:
+        default: false
+        required: false
+        type: boolean
       node-version:
         default: 16.x
         required: false
@@ -62,8 +66,8 @@ jobs:
           username: ${{ secrets.username }}
           password: ${{ secrets.token }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v3
+      - name: Build and export to Docker
+        uses: docker/build-push-action@v4
         with:
           context: ./
           file: ./.docker/Dockerfile
@@ -71,6 +75,35 @@ jobs:
             COMMIT_SHA=${GITHUB_SHA}
             DESCRIPTION="The Mia-Platform micro frontend solution"
             VERSION=${VERSION}
-          pull: true
+          load: true
+          tags: ${{ steps.prepare-docker-container.outputs.tag }}
+
+      - name: Test
+        run: |
+          echo '**CSP_NONCE**' > csp.html
+          
+          export CONTAINER_NAME=microlc
+          docker run \
+            -d \
+            -p 8080:8080 \
+            --name $CONTAINER_NAME \
+            -v `pwd`/csp.html:/usr/static/csp.html \
+            ${{ steps.prepare-docker-container.outputs.tag }}
+          docker exec $CONTAINER_NAME sh -c 'curl --fail "http://0.0.0.0:8080/index.html"' > /dev/null
+          export CSP=$(docker exec $CONTAINER_NAME sh -c 'curl --fail "http://0.0.0.0:8080/csp.html"')
+          
+          docker stop $CONTAINER_NAME
+          [[ "$CSP" != "**CSP_NONCE**" ]] && exit 0 || exit 1
+
+      - name: Build and push
+        if: ${{ inputs.push }}
+        uses: docker/build-push-action@v4
+        with:
+          context: ./
+          file: ./.docker/Dockerfile
+          build-args: |
+            COMMIT_SHA=${GITHUB_SHA}
+            DESCRIPTION="The Mia-Platform micro frontend solution"
+            VERSION=${VERSION}
           push: true
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
