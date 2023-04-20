@@ -29,3 +29,31 @@ jobs:
     needs:
       - prepare
     uses: micro-lc/micro-lc/.github/workflows/e2e-tests.yml@main
+
+  file-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      diff: ${{ steps.filter.outputs.diff }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            diff:
+              - '.docker/**'
+              - '.github/**'
+
+  test-docker:
+    needs:
+      - prepare
+      - file-changes
+    if: needs.file-changes.outputs.diff == 'true'
+    uses: micro-lc/micro-lc/.github/workflows/release-docker.yml@main
+    with:
+      version: latest
+      push: false
+    secrets:
+      username: ${{ secrets.BOT_DOCKER_USERNAME }}
+      token: ${{ secrets.BOT_DOCKER_TOKEN }}
