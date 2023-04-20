@@ -89,8 +89,8 @@ jobs:
             --name $CONTAINER_NAME \
             -v `pwd`/csp.html:/usr/static/csp.html \
             ${{ steps.prepare-docker-container.outputs.tag }}
-          docker exec $CONTAINER_NAME sh -c 'curl --fail "http://0.0.0.0:8080/index.html"' > /dev/null
-          export CSP=$(docker exec $CONTAINER_NAME sh -c 'curl --fail "http://0.0.0.0:8080/csp.html"')
+          docker exec $CONTAINER_NAME sh -c 'curl --retry 5 --retry-max-time 120 --retry-connrefused --fail "http://0.0.0.0:8080/index.html"' > /dev/null
+          export CSP=$(docker exec $CONTAINER_NAME sh -c 'curl --retry 5 --retry-max-time 120 --retry-connrefused --fail "http://0.0.0.0:8080/csp.html"')
           
           docker stop $CONTAINER_NAME
           [[ "$CSP" != "**CSP_NONCE**" ]] && exit 0 || exit 1
