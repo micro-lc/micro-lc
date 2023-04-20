@@ -4449,18 +4449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
-  version: 18.0.33
-  resolution: "@types/react@npm:18.0.33"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 4fbd2b2b6a26378bdfde121081a6406ec2d39e4ba87ea5f6897ab7bb2198713165e6fd703ad4ed7ba1d4f23ef54a4c9f108f3105c7ed8e136411ee6bdebc5669
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^18.0.37":
+"@types/react@npm:*, @types/react@npm:^18.0.37":
   version: 18.0.37
   resolution: "@types/react@npm:18.0.37"
   dependencies:
@@ -4528,16 +4517,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon@npm:*":
-  version: 10.0.13
-  resolution: "@types/sinon@npm:10.0.13"
-  dependencies:
-    "@types/sinonjs__fake-timers": "*"
-  checksum: 46a14c888db50f0098ec53d451877e0111d878ec4a653b9e9ed7f8e54de386d6beb0e528ddc3e95cd3361a8ab9ad54e4cca33cd88d45b9227b83e9fc8fb6688a
-  languageName: node
-  linkType: hard
-
-"@types/sinon@npm:^10.0.14":
+"@types/sinon@npm:*, @types/sinon@npm:^10.0.14":
   version: 10.0.14
   resolution: "@types/sinon@npm:10.0.14"
   dependencies:

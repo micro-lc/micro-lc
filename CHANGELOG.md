@@ -9,10 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
-
-- `base` tag `href` attribute of a `parcel` application, when `injectBase` is true must be equal to the configured `route`
-
 ## [2.0.8] - 2023-04-11
 
 ### Versioning
