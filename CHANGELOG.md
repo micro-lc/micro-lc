@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.0.9] - 2023-04-20
+
+### Added
+
+- `Symbol.observable` polyfill is available at `dist/polyfills/symbol-observable.js` as side-effect script
+
+### Fixed
+
+- `base` tag `href` attribute of a `parcel` application, when `injectBase` is true must be equal to the configured `route`
+
+### Versioning
+
+- `lit-html` to `2.7.2`
+- `es-module-shims` to `1.7.1`
+- Development dependencies updated
+- Typescript set to `^5.0.4`
+- `nginx` to `1.24.0` on support docker container
+
 ## [2.0.8] - 2023-04-11
 
 ### Versioning
