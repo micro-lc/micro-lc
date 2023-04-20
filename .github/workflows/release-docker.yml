@@ -84,15 +84,15 @@ jobs:
           
           export CONTAINER_NAME=microlc
           docker run \
-            -d
+            -d \
             -p 8080:8080 \
             --name $CONTAINER_NAME \
             -v `pwd`/csp.html:/usr/static/csp.html \
             ${{ steps.prepare-docker-container.outputs.tag }}
+
+          curl --fail "http://0.0.0.0:8080/index.html" --connect-timeout 5 --retry 5
           
-          curl --fail "http://localhost:8080/index.html" --connect-timeout 2
-          
-          CSP=$(curl --fail "http://localhost:8080/csp.html" --connect-timeout 2)
+          CSP=$(curl --fail "http://0.0.0.0:8080/csp.html" --connect-timeout 2)
 
           docker stop $CONTAINER_NAME
 
