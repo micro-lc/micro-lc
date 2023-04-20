@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>micro-lc</title>
+    <link rel="icon" href="/packages/orchestrator/dist/favicon.png" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+    </style>
+    <script
+      async
+      type="module"
+      src="/packages/orchestrator/dist/micro-lc.production.js"
+    ></script>
+  </head>
+  <body>
+    <micro-lc></micro-lc>
+    <script>
+      customElements.whenDefined("micro-lc").then(() => {
+        const config = {
+          applications: {
+            react: {
+              entry: "/applications/react-browser-router/",
+              injectBase: true,
+              integrationMode: "parcel",
+              route: "/__reverse/react/",
+            },
+          },
+          settings: {
+            defaultUrl: "/__reverse/react/about",
+          },
+          version: 2,
+        };
+        Object.assign(document.querySelector('micro-lc'), {config})
+      });
+    </script>
+  </body>
+</html>
