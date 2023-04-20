@@ -255,19 +255,24 @@ async function flushAndGo(
   // ⛰️ ATTEMPTING LOADING
   let handlers = applicationHandlers.get(nextMatch.name)
   if (handlers === undefined) {
-    handlers = this.qiankun.loadMicroApp(nextMatch as LoadableApp<Record<string, unknown>>, {
+    const appConfigName = this.applicationMapping.get(currentApplication)
+    const [route] = (appConfigName !== undefined ? this.loadedApps.get(appConfigName) : appConfigName) ?? []
+    const application = nextMatch as LoadableApp<Record<string, unknown>>
+    handlers = this.qiankun.loadMicroApp(application, {
       fetch: (input, init) => microlcFetch(input, init, error).then(([res, outgoingError]) => {
         error = outgoingError
         return res
       }),
       getPublicPath,
-      postProcessTemplate: (tplResult) =>
-        postProcessTemplate(tplResult, {
+      postProcessTemplate: (tplResult) => {
+        console.log(url, window.location.href, this.ownerDocument.baseURI)
+        return postProcessTemplate(tplResult, {
           baseURI: this.ownerDocument.baseURI,
           injectBase: nextMatch.props?.injectBase,
           name: nextMatch.name,
-          url: url ?? window.location.href,
-        }),
+          url: route ?? url ?? window.location.href,
+        })
+      },
       // TODO: remove when https://github.com/umijs/qiankun/pull/2450 is merged
       sandbox: { speedy: false },
     })

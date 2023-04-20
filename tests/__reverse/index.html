@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base target="_blank" href="/__reverse/" />
     <title>micro-lc</title>
     <link rel="icon" href="/packages/orchestrator/dist/favicon.png" />
     <style>
@@ -27,11 +28,16 @@
               entry: "/applications/react-browser-router/",
               injectBase: true,
               integrationMode: "parcel",
-              route: "/__reverse/react/",
+              route: "./react/",
             },
+            example: {
+              integrationMode: 'iframe',
+              src: 'https://example.com',
+              route: './example'
+            }
           },
           settings: {
-            defaultUrl: "/__reverse/react/about",
+            defaultUrl: "./react/about",
           },
           version: 2,
         };
