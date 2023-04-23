@@ -2261,7 +2261,7 @@ __metadata:
     chai-string: ^1.5.0
     es-module-shims: ^1.7.1
     esbuild: ^0.17.16
-    glob: ^9.3.2
+    glob: ^10.2.1
     lit-html: ^2.7.2
     mocha: ^10.2.0
     nyc: ^15.1.0
@@ -2301,7 +2301,7 @@ __metadata:
     "@web/dev-server-import-maps": ^0.0.8
     "@web/dev-server-rollup": ^0.4.1
     esbuild: ^0.17.16
-    glob: ^9.3.2
+    glob: ^10.2.1
     prop-types: ^15.8.1
     react-test-renderer: ^18.2.0
     ts-node: ^10.9.1
@@ -2326,7 +2326,7 @@ __metadata:
     chai: ^4.3.7
     esbuild: ^0.17.16
     eslint: ^8.36.0
-    glob: ^9.3.2
+    glob: ^10.2.1
     json-schema-to-typescript: ^12.0.0
     mkdirp: ^3.0.0
     mocha: ^10.2.0
@@ -2382,7 +2382,7 @@ __metadata:
     antd: ^4.24.7
     cssnano: ^6.0.0
     esbuild: ^0.17.16
-    glob: ^9.3.2
+    glob: ^10.2.1
     json-schema-to-typescript: ^12.0.0
     less: ^4.1.3
     lit: ^2.7.0
@@ -2432,7 +2432,7 @@ __metadata:
     cobertura-merge: ^1.0.4
     es-module-shims: ^1.7.1
     esbuild: ^0.17.16
-    glob: ^9.3.2
+    glob: ^10.2.1
     js-yaml: ^4.1.0
     lit-html: ^2.7.2
     lodash-es: ^4.17.21
@@ -2608,6 +2608,13 @@ __metadata:
     "@types/sinon-chai": ^3.2.3
     chai-a11y-axe: ^1.3.2
   checksum: e1e86bb448b4485bfc7f177a02701adc5959808a11e03b57f61acf2329678b8bad1338d822c6be4dcd46bcd13a9f72000b428679a0a722411f0034d28f383d44
+  languageName: node
+  linkType: hard
+
+"@pkgjs/parseargs@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@pkgjs/parseargs@npm:0.11.0"
+  checksum: 6ad6a00fc4f2f2cfc6bff76fb1d88b8ee20bc0601e18ebb01b6d4be583733a860239a521a7fbca73b612e66705078809483549d2b18f370eb346c5155c8e4a0f
   languageName: node
   linkType: hard
 
@@ -7169,7 +7176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cliui@npm:^7.0.2":
+"cliui@npm:^7.0.2, cliui@npm:^7.0.4":
   version: 7.0.4
   resolution: "cliui@npm:7.0.4"
   dependencies:
@@ -10067,6 +10074,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"foreground-child@npm:^3.1.0":
+  version: 3.1.1
+  resolution: "foreground-child@npm:3.1.1"
+  dependencies:
+    cross-spawn: ^7.0.0
+    signal-exit: ^4.0.1
+  checksum: 139d270bc82dc9e6f8bc045fe2aae4001dc2472157044fdfad376d0a3457f77857fa883c1c8b21b491c6caade9a926a4bed3d3d2e8d3c9202b151a4cbbd0bcd5
+  languageName: node
+  linkType: hard
+
 "fork-ts-checker-webpack-plugin@npm:^4.1.6":
   version: 4.1.6
   resolution: "fork-ts-checker-webpack-plugin@npm:4.1.6"
@@ -10517,6 +10534,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:^10.2.1":
+  version: 10.2.1
+  resolution: "glob@npm:10.2.1"
+  dependencies:
+    foreground-child: ^3.1.0
+    fs.realpath: ^1.0.0
+    jackspeak: ^2.0.3
+    minimatch: ^9.0.0
+    minipass: ^5.0.0
+    path-scurry: ^1.7.0
+  bin:
+    glob: dist/cjs/src/bin.js
+  checksum: 760a624138e7bbc49179859ba314a8547b114de2324cf571d43dc4ce3379be297034099b36857f966ec5445b30cbd558d0be90c9992ef186671aca53b1bde7a0
+  languageName: node
+  linkType: hard
+
 "glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.2.0":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
@@ -10544,7 +10577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^9.2.0, glob@npm:^9.3.2":
+"glob@npm:^9.2.0":
   version: 9.3.2
   resolution: "glob@npm:9.3.2"
   dependencies:
@@ -12294,6 +12327,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jackspeak@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "jackspeak@npm:2.0.3"
+  dependencies:
+    "@pkgjs/parseargs": ^0.11.0
+    cliui: ^7.0.4
+  dependenciesMeta:
+    "@pkgjs/parseargs":
+      optional: true
+  checksum: f58c7e1a0a57d04c4280057d32edef00da4e1f1f1798b8fbe7eb8fd2c0f885449d8165dd495c9883742ab0f43347fb64fe692f4845d6d3daf0c352aefcdeea42
+  languageName: node
+  linkType: hard
+
 "jest-haste-map@npm:^26.6.2":
   version: 26.6.2
   resolution: "jest-haste-map@npm:26.6.2"
@@ -13132,6 +13178,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^9.0.0":
+  version: 9.1.0
+  resolution: "lru-cache@npm:9.1.0"
+  checksum: 97b46faa2e8195b75b1c48a5515f8e458b8f6a0d0933c0484a4e45b6aa67406dcc5f6c8774fef206fd918dce6a4b4a6f627541fbdf74f8e6b3c71f688f43041e
+  languageName: node
+  linkType: hard
+
 "lru-queue@npm:^0.1.0":
   version: 0.1.0
   resolution: "lru-queue@npm:0.1.0"
@@ -13553,7 +13606,7 @@ __metadata:
     eslint-plugin-typescript-sort-keys: ^2.3.0
     eslint-visitor-keys: ^3.4.0
     express: ^4.18.2
-    glob: ^9.3.2
+    glob: ^10.2.1
     husky: ^8.0.3
     jsonc-eslint-parser: ^2.2.0
     lit-html: ^2.7.2
@@ -13729,6 +13782,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "minimatch@npm:9.0.0"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 7bd57899edd1d1b0560f50b5b2d1ea4ad2a366c5a2c8e0a943372cf2f200b64c256bae45a87a80915adbce27fa36526264296ace0da57b600481fe5ea3e372e5
+  languageName: node
+  linkType: hard
+
 "minimist-options@npm:4.1.0":
   version: 4.1.0
   resolution: "minimist-options@npm:4.1.0"
@@ -13821,6 +13883,13 @@ __metadata:
   version: 4.2.4
   resolution: "minipass@npm:4.2.4"
   checksum: c664f2ae4401408d1e7a6e4f50aca45f87b1b0634bc9261136df5c378e313e77355765f73f59c4a5abcadcdf43d83fcd3eb14e4a7cdcce8e36508e2290345753
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "minipass@npm:5.0.0"
+  checksum: 425dab288738853fded43da3314a0b5c035844d6f3097a8e3b5b29b328da8f3c1af6fc70618b32c29ff906284cf6406b6841376f21caaadd0793c1d5a6a620ea
   languageName: node
   linkType: hard
 
@@ -15038,6 +15107,16 @@ __metadata:
     lru-cache: ^7.14.1
     minipass: ^4.0.2
   checksum: 7ba57e823cb7bb879669a4e5e05a283cde1bb9e81b6d806b2609f8d8026d0aef08f4b655b17fc86b21c9c32807851bba95ca715db5ab0605fb13c7a3e9172e42
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "path-scurry@npm:1.7.0"
+  dependencies:
+    lru-cache: ^9.0.0
+    minipass: ^5.0.0
+  checksum: 4e86df0fa6848cef1ba672d4a332b8dbd0297c42d5123bcc419d714c34b25ee6775b0d2e66dd5e698a38e9bcd808f8fc47333e3a3357307cada98e16bfae8b98
   languageName: node
   linkType: hard
 
@@ -18003,6 +18082,13 @@ __metadata:
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: a2f098f247adc367dffc27845853e9959b9e88b01cb301658cfe4194352d8d2bb32e18467c786a7fe15f1d44b233ea35633d076d5e737870b7139949d1ab6318
+  languageName: node
+  linkType: hard
+
+"signal-exit@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "signal-exit@npm:4.0.1"
+  checksum: 832043367dca23e61ab6033e8b41c595fc805119bfe4fee63dea201cdc809a8b086bc54597bbbc1b2cde1a63c7dd554d1295ed2cca92db598233834a0b59b281
   languageName: node
   linkType: hard
 
