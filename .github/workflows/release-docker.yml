@@ -115,8 +115,7 @@ jobs:
       - name: Get checksum
         id: docker-container-id
         run: |
-          CHECKSUM=$(docker images --digests --format '{{.Digest}}' microlc/micro-lc:${{ inputs.version }})
-          echo $CHECKSUM
+          CHECKSUM=$(docker inspect --format '{{.Id}}' "microlc/micro-lc:${{ inputs.version }}")
           echo "checksum=$CHECKSUM" >> GITHUB_OUTPUT
 
   security-checks:
