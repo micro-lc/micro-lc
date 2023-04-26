@@ -111,6 +111,8 @@ jobs:
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
 
   security-checks:
+    needs:
+      - release-docker
     name: Triggers security checks
     runs-on: ubuntu-latest
 
