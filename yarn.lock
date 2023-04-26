@@ -2321,7 +2321,7 @@ __metadata:
     eslint: ^8.36.0
     glob: ^10.2.1
     json-schema-to-typescript: ^12.0.0
-    mkdirp: ^3.0.0
+    mkdirp: ^3.0.1
     mocha: ^10.2.0
     nyc: ^15.1.0
     postcss: ^8.4.23
@@ -13932,12 +13932,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mkdirp@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "mkdirp@npm:3.0.0"
+"mkdirp@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "mkdirp@npm:3.0.1"
   bin:
     mkdirp: dist/cjs/src/bin.js
-  checksum: a17062c41d10ee91a25127c594d919767517ba08e547aeaa4272ec0c03a0c6d7a07a2d5a5aa1ba8621716df57b5f09a4c9ec0dfbda81b8aad166daf744fb04b6
+  checksum: 972deb188e8fb55547f1e58d66bd6b4a3623bf0c7137802582602d73e6480c1c2268dcbafbfb1be466e00cc7e56ac514d7fd9334b7cf33e3e2ab547c16f83a8d
   languageName: node
   linkType: hard
 
