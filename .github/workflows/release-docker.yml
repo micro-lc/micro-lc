@@ -19,6 +19,8 @@ on:
         required: true
       token:
         required: true
+      security_checks_token:
+        required: true
 
 jobs:
   release-docker:
@@ -107,3 +109,18 @@ jobs:
             VERSION=${VERSION}
           push: true
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
+
+  security-checks:
+    name: Triggers security checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Invoke API
+        if: ${{ inputs.push }}
+        run: |
+          curl --request POST \
+            --form token=${{ secrets.security_checks_token }} \
+            --form ref=main \
+            --form "variables[VERSION]=${{ inputs.version }}" \
+            "https://git.tools.mia-platform.eu/api/v4/projects/75704/trigger/pipeline"
+
