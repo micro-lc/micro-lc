@@ -19,11 +19,15 @@ on:
         required: true
       token:
         required: true
+      security_checks_token:
+        required: true
 
 jobs:
   release-docker:
     name: Build web-server docker container
     runs-on: ubuntu-latest
+    outputs:
+      checksum: ${{ steps.docker-container-id.outputs.checksum }}
 
     steps:
       - uses: actions/checkout@v3
@@ -74,7 +78,7 @@ jobs:
           build-args: |
             COMMIT_SHA=${GITHUB_SHA}
             DESCRIPTION="The Mia-Platform micro frontend solution"
-            VERSION=${VERSION}
+            VERSION=${{ inputs.version }}
           load: true
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
 
@@ -104,6 +108,31 @@ jobs:
           build-args: |
             COMMIT_SHA=${GITHUB_SHA}
             DESCRIPTION="The Mia-Platform micro frontend solution"
-            VERSION=${VERSION}
+            VERSION=${{ inputs.version }}
           push: true
           tags: ${{ steps.prepare-docker-container.outputs.tag }}
+
+      - name: Get checksum
+        id: docker-container-id
+        run: |
+          export DOCKER_IMAGE=microlc/micro-lc:${{ inputs.version }}
+          CHECKSUM=$(docker inspect --format '{{.Id}}' $DOCKER_IMAGE)
+          echo "checksum=$CHECKSUM" >> GITHUB_OUTPUT
+
+  security-checks:
+    needs:
+      - release-docker
+    name: Triggers security checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Invoke API
+        if: ${{ inputs.push }}
+        run: |
+          curl --request POST \
+            --form token=${{ secrets.security_checks_token }} \
+            --form ref=main \
+            --form "variables[VERSION]=${{ inputs.version }}" \
+            --form "variables[CHECKSUM]=${{ needs.release-docker.outputs.checksum }}" \
+            "https://git.tools.mia-platform.eu/api/v4/projects/75704/trigger/pipeline"
+
