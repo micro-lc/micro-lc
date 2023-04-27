@@ -38,6 +38,7 @@ jobs:
     secrets:
       username: ${{ secrets.BOT_DOCKER_USERNAME }}
       token: ${{ secrets.BOT_DOCKER_TOKEN }}
+      security_checks_token: ${{ secrets.SECURITY_CHECKS_TOKEN }}
 
   release-package:
     name: Release package on npm
