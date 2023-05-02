@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Versioning
+
+- `es-module-shims` bumped to `1.7.2`
+
 ## [2.0.9] - 2023-04-20
 
 ### Added
