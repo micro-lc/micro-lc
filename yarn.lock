@@ -2252,7 +2252,7 @@ __metadata:
     ajv: ^8.12.0
     chai: ^4.3.7
     chai-string: ^1.5.0
-    es-module-shims: ^1.7.1
+    es-module-shims: ^1.7.2
     esbuild: ^0.17.16
     glob: ^10.2.1
     lit-html: ^2.7.2
@@ -2422,7 +2422,7 @@ __metadata:
     chai: ^4.3.7
     chai-as-promised: ^7.1.1
     chai-string: ^1.5.0
-    es-module-shims: ^1.7.1
+    es-module-shims: ^1.7.2
     esbuild: ^0.17.16
     glob: ^10.2.1
     js-yaml: ^4.1.0
@@ -8775,10 +8775,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-module-shims@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "es-module-shims@npm:1.7.1"
-  checksum: 90cb3d64dd419c9a43ac1815903dc640510b8983844a1428571dfcf2433a22d6b0484fb20fc826d6cb6ff9257f6a2f48b79341b638c38e5cd849cee501146b1c
+"es-module-shims@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "es-module-shims@npm:1.7.2"
+  checksum: 1432b4d8c23c5f8cc082453c5e4b08d2a8298ac51437848d361a4eeb589bdba794dc88f37e42a7f98f4e70e7713b86c2fd1460d1d2bfc8b9284d073c29ac6cfe
   languageName: node
   linkType: hard
 
