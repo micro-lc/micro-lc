@@ -81,7 +81,7 @@
   "dependencies": {
     "js-yaml": "^4.1.0",
     "qiankun": "^2.10.5",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.1"
   },
   "peerDependencies": {
     "ajv": ">=8.11.0",

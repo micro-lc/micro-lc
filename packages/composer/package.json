@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "lit-html": "^2.7.2",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.1"
   },
   "peerDependencies": {
     "es-module-shims": "*"
