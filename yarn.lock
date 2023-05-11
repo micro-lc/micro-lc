@@ -2292,7 +2292,7 @@ __metadata:
     "@web/dev-server": ^0.1.38
     "@web/dev-server-esbuild": ^0.3.6
     "@web/dev-server-import-maps": ^0.1.1
-    "@web/dev-server-rollup": ^0.4.1
+    "@web/dev-server-rollup": ^0.5.0
     esbuild: ^0.17.16
     glob: ^10.2.1
     prop-types: ^15.8.1
@@ -4957,7 +4957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server-core@npm:^0.5.1":
+"@web/dev-server-core@npm:^0.5.0, @web/dev-server-core@npm:^0.5.1":
   version: 0.5.1
   resolution: "@web/dev-server-core@npm:0.5.1"
   dependencies:
@@ -5021,6 +5021,20 @@ __metadata:
     rollup: ^2.67.0
     whatwg-url: ^11.0.0
   checksum: a0c3566f67b5a5ead3822431302ddcaa9d043b18fdcf1190056a4e0539e5d5b545ebfecaf6021412eb4b5b6e074c2b1eff35c71e859195623c7c07e065f9df58
+  languageName: node
+  linkType: hard
+
+"@web/dev-server-rollup@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@web/dev-server-rollup@npm:0.5.0"
+  dependencies:
+    "@rollup/plugin-node-resolve": ^15.0.1
+    "@web/dev-server-core": ^0.5.0
+    nanocolors: ^0.2.1
+    parse5: ^6.0.1
+    rollup: ^3.15.0
+    whatwg-url: ^11.0.0
+  checksum: c86623c9675b7d44c6ca00297e8706ab16703f66cd6ab80c1d8430d424972e4a7e24226f59ad247fa5b21c073230c6662792bd949c42983a78dbec67085ab91f
   languageName: node
   linkType: hard
 
@@ -17601,6 +17615,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^3.15.0":
+  version: 3.21.6
+  resolution: "rollup@npm:3.21.6"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: bb6786ee0d755f253d3aa3820b05806a482abe9c9fd6dad14df83b386a370d48af20c4be66f732a15b5e89c0ae6269a7b82736b64f34ae61552c58de0eecedeb
   languageName: node
   linkType: hard
 
