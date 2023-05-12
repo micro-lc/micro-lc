@@ -45,7 +45,7 @@ An introduction about micro frontend and how micro-lc works:
 micro-lc is shipped as an ES module **CDN bundle** and can be imported in any HTML page. Moreover, a **dockerized 
 webserver** is available on Docker Hub.
 
-[Read the docs](https://micro-lc.github.io/documentation/docs/getting-started) to learn how you can use micro-lc in your
+[Read the docs](https://micro-lc.github.io/docs/getting-started) to learn how you can use micro-lc in your
 next project!
 
 ## Handle the repo
