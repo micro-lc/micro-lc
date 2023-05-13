@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `lit-html` to `2.7.2`
 - `es-module-shims` to `1.7.1`
 - `es-module-shims` to `1.7.2`
+- `rxjs` bumped to `7.8.1`
 - Typescript set to `^5.0.2` with yarn `3.5.0`
 - Development dependencies updated
 
