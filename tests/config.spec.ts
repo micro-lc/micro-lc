@@ -143,6 +143,7 @@ test(`
     -> with history
     -> with micro-lc api
   4. render a react parcel
+  5. render an angular12 parcel
 `, async ({ page }) => {
   await goto(page, completeConfig)
 
@@ -162,6 +163,9 @@ test(`
   await expect(page.getByText('Hello')).toBeVisible()
 
   await page.evaluate((microlc) => microlc.getApi().router.goToApplication('react'), microlcHandle)
+  await expect(page.getByRole('link', { name: 'Go To About Page' })).toBeVisible()
+
+  await page.evaluate((microlc) => microlc.getApi().router.goToApplication('angular12'), microlcHandle)
   await expect(page.getByRole('link', { name: 'Go To About Page' })).toBeVisible()
 })
 

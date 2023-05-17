@@ -46,6 +46,12 @@ const json = (literals: TemplateStringsArray, ...vars: string[]): string => {
 
 const config: Config = {
   applications: {
+    angular12: {
+      entry: '/applications/angular12/',
+      injectBase: true,
+      integrationMode: 'parcel',
+      route: './angular12/',
+    },
     // composer_new: {
     //   config: './ingredients_v2.json',
     //   integrationMode: 'compose',
@@ -154,6 +160,15 @@ const config: Config = {
               label: 'React Parcel',
               type: 'application',
             },
+            {
+              icon: {
+                library: '@ant-design/icons-svg',
+                selector: 'MessageOutlined',
+              },
+              id: 'angular12',
+              label: 'Angular 12 Parcel',
+              type: 'application',
+            },
             // {
             //   href: 'https://docs.mia-platform.eu',
             //   id: 'href_1',
@@ -254,11 +269,12 @@ const base = `http://localhost:3000`
 const goto = async (page: Page, cc: Config, url = base): Promise<ElementHandle<Microlc>> => {
   await page.goto(url, { waitUntil: 'commit' })
 
-  const microlc = await page.evaluateHandle(() => window.document.querySelector('micro-lc') as Microlc)
-  await page.evaluate(async ([mlc, conf]) => {
+  await page.evaluate(async (conf) => {
     await window.customElements.whenDefined('micro-lc')
+    const mlc = window.document.querySelector('micro-lc') as Microlc
     mlc.config = conf
-  }, [microlc, cc])
+  }, cc)
+  const microlc = await page.evaluateHandle(() => window.document.querySelector('micro-lc') as Microlc)
 
   return microlc
 }
