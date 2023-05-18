@@ -36,8 +36,8 @@ test(`
   [react/angular routing]
   react and angular apps should move to their relative /about page and back
 `, async ({ page }) => {
-  const microlcHandle = await goto(page, completeConfig)
-  await page.waitForFunction(() => window.location.href.endsWith('/home'))
+  const microlcHandle = await goto(page, completeConfig, 'http://localhost:3000/zoned/')
+  await page.waitForFunction(() => window.location.href.endsWith('/zoned/home'))
   const frame = page.frameLocator('iframe')
   await expect(frame.getByRole('heading', { name: 'Example Domain' })).toBeVisible()
 
