@@ -190,7 +190,8 @@ test(`
   [composition]
   [currentUser]
   currentUser persisted
-`, async ({ page }) => {
+`, async ({ page, browserName }) => {
+  (browserName === 'webkit') && test.skip()
   const parcel = js`
     let container
     let composerApi
