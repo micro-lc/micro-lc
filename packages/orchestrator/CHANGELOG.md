@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - in browser tests to validate support to angular 12, 13, and 14
+- added support to `linux/arm64` in docker container `microlc/micro-lc`
 
 ### Versioning
 
