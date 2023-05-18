@@ -52,23 +52,18 @@ const config: Config = {
       integrationMode: 'parcel',
       route: './angular12/',
     },
-    // composer_new: {
-    //   config: './ingredients_v2.json',
-    //   integrationMode: 'compose',
-    //   route: './:app/ingredients/',
-    // },
-    // composer_old: {
-    //   entry: '/element-composer/',
-    //   integrationMode: 'parcel',
-    //   properties: {
-    //     configurationName: '../../../../ingredients_v1',
-    //   },
-    //   route: './ingredients_old',
-    // },
-    // emptyFrame: {
-    //   integrationMode: 'iframe',
-    //   route: './empty-frame',
-    // },
+    angular13: {
+      entry: '/applications/angular13/',
+      injectBase: true,
+      integrationMode: 'parcel',
+      route: './angular13/',
+    },
+    angular14: {
+      entry: '/applications/angular14/',
+      injectBase: true,
+      integrationMode: 'parcel',
+      route: './angular14/',
+    },
     home: {
       integrationMode: 'iframe',
       route: './home',
@@ -106,11 +101,6 @@ const config: Config = {
       integrationMode: 'parcel',
       route: './react/',
     },
-    // srcdoc: {
-    //   integrationMode: 'iframe',
-    //   route: './srcdoc',
-    //   srcdoc: '<!DOCTYPE><html><head></head><body>IFrame Content</body></html>',
-    // },
   },
   importmap: {
     imports: {
@@ -169,65 +159,26 @@ const config: Config = {
               label: 'Angular 12 Parcel',
               type: 'application',
             },
-            // {
-            //   href: 'https://docs.mia-platform.eu',
-            //   id: 'href_1',
-            //   label: 'Link 1',
-            //   target: '_blank',
-            //   type: 'href',
-            // },
-            // {
-            //   id: 'srcdoc',
-            //   label: 'SRCDOC',
-            //   type: 'application',
-            // },
-            // {
-            //   children: [
-            //     {
-            //       id: 'plain',
-            //       label: 'Inline',
-            //       selectedAlsoOn: ['plain_details', 'plain_about'],
-            //       type: 'application',
-            //     },
-            //     {
-            //       id: 'composer_new',
-            //       label: 'Composer V2',
-            //       type: 'application',
-            //     },
-            //     {
-            //       id: 'composer_old',
-            //       label: 'Composer V1',
-            //       type: 'application',
-            //     },
-            //     {
-            //       children: [
-            //         {
-            //           id: 'react',
-            //           label: 'React',
-            //           type: 'application',
-            //         },
-            //         {
-            //           href: './www.google.com',
-            //           id: 'href_2',
-            //           label: 'Link 2',
-            //           target: '_blank',
-            //           type: 'href',
-            //         },
-            //       ],
-            //       id: 'group_1',
-            //       label: { en: 'Group 1', it: 'Gruppo 1' },
-            //       type: 'group',
-            //     },
-            //   ],
-            //   id: 'category_1',
-            //   label: { en: 'Category 1', it: 'Categoria 1' },
-            //   type: 'category',
-            // },
+            {
+              icon: {
+                library: '@ant-design/icons-svg',
+                selector: 'HeatMapOutlined',
+              },
+              id: 'angular13',
+              label: 'Angular 13 Parcel',
+              type: 'application',
+            },
+            {
+              icon: {
+                library: '@ant-design/icons-svg',
+                selector: 'ApiOutlined',
+              },
+              id: 'angular14',
+              label: 'Angular 14 Parcel',
+              type: 'application',
+            },
           ],
           mode: 'fixedSideBar',
-          // userMenu: {
-          //   userInfoUrl: './userinfo.json',
-          // },
         },
         tag: 'mlc-layout',
       },

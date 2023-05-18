@@ -12862,16 +12862,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:^2.0.0, lit-html@npm:^2.7.0":
-  version: 2.7.2
-  resolution: "lit-html@npm:2.7.2"
-  dependencies:
-    "@types/trusted-types": ^2.0.2
-  checksum: 885309bd72a9b6eb6c488ae901595c44b270023e02cafebca774b3ad14c1ec34dbe35a69d7ad22362e4ba3e7c2600662c003145db412cd9d61ecea91a93227ac
-  languageName: node
-  linkType: hard
-
-"lit-html@npm:^2.7.4":
+"lit-html@npm:^2.0.0, lit-html@npm:^2.7.0, lit-html@npm:^2.7.4":
   version: 2.7.4
   resolution: "lit-html@npm:2.7.4"
   dependencies:

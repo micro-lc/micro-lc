@@ -54,4 +54,18 @@ test(`
   await expect(page.getByRole('link', { name: 'Go Home' })).toBeVisible()
   await page.getByRole('link', { name: 'Go Home' }).click()
   expect(page.url()).toMatch(/\/angular12\/$/)
+
+  await page.evaluate((microlc) => microlc.getApi().router.goToApplication('angular13'), microlcHandle)
+  await expect(page.getByRole('link', { name: 'Go To About Page' })).toBeVisible()
+  await page.getByRole('link', { name: 'Go To About Page' }).click()
+  await expect(page.getByRole('link', { name: 'Go Home' })).toBeVisible()
+  await page.getByRole('link', { name: 'Go Home' }).click()
+  expect(page.url()).toMatch(/\/angular13\/$/)
+
+  await page.evaluate((microlc) => microlc.getApi().router.goToApplication('angular14'), microlcHandle)
+  await expect(page.getByRole('link', { name: 'Go To About Page' })).toBeVisible()
+  await page.getByRole('link', { name: 'Go To About Page' }).click()
+  await expect(page.getByRole('link', { name: 'Go Home' })).toBeVisible()
+  await page.getByRole('link', { name: 'Go Home' }).click()
+  expect(page.url()).toMatch(/\/angular14\/$/)
 })
