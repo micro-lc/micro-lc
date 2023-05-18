@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- in browser tests to validate support to angular 12, 13, and 14
+
 ### Versioning
 
 - `lit-html` to `2.7.4`
