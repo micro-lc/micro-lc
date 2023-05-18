@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Versioning
 
+- `lit-html` to `2.7.4`
 - `rxjs` bumped to `7.8.1`
 - `es-module-shims` bumped to `1.7.2`
 
