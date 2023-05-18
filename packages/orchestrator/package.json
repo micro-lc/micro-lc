@@ -64,7 +64,7 @@
     "es-module-shims": "^1.7.2",
     "esbuild": "^0.17.16",
     "glob": "^10.2.1",
-    "lit-html": "^2.7.2",
+    "lit-html": "^2.7.4",
     "lodash-es": "^4.17.21",
     "mocha": "^10.2.0",
     "node-fetch": "^2.6.1",
