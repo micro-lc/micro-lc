@@ -40,7 +40,7 @@
     "serve": "vite dev"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.21.5",
     "@micro-lc/composer": "workspace:*",
     "@micro-lc/interfaces": "workspace:*",
     "@open-wc/testing": "^3.1.8",
