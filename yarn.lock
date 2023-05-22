@@ -12953,7 +12953,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonc-eslint-parser@npm:^2.0.4, jsonc-eslint-parser@npm:^2.2.0":
+"jsonc-eslint-parser@npm:^2.0.4":
   version: 2.2.0
   resolution: "jsonc-eslint-parser@npm:2.2.0"
   dependencies:
@@ -12962,6 +12962,18 @@ __metadata:
     espree: ^9.0.0
     semver: ^7.3.5
   checksum: aac6509850ba8a893956e00d862d488de9c7f32a352d612f361f43635b3a3426c2ed8b457bdef8188d4ea210b2d7ebcab225caef2d445a92c30cb9be7bb9b8ef
+  languageName: node
+  linkType: hard
+
+"jsonc-eslint-parser@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "jsonc-eslint-parser@npm:2.3.0"
+  dependencies:
+    acorn: ^8.5.0
+    eslint-visitor-keys: ^3.0.0
+    espree: ^9.0.0
+    semver: ^7.3.5
+  checksum: e9343fee870a16f04fdb811b58a9469134c54a03edd58aa5654a888ebae63952cbff3ea3dcad3973465009a275282c6c0dd513e8c3850f7f485a164180085a8b
   languageName: node
   linkType: hard
 
@@ -13993,7 +14005,7 @@ __metadata:
     express: ^4.18.2
     glob: ^10.2.1
     husky: ^8.0.3
-    jsonc-eslint-parser: ^2.2.0
+    jsonc-eslint-parser: ^2.3.0
     lit-html: ^2.7.4
     node-color-log: ^10.0.2
     npm-run-all: ^4.1.5
