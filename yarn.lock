@@ -1656,12 +1656,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.10.4, @babel/runtime@npm:^7.10.5, @babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.10.4, @babel/runtime@npm:^7.10.5, @babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4":
   version: 7.21.0
   resolution: "@babel/runtime@npm:7.21.0"
   dependencies:
     regenerator-runtime: ^0.13.11
   checksum: 7b33e25bfa9e0e1b9e8828bb61b2d32bdd46b41b07ba7cb43319ad08efc6fda8eb89445193e67d6541814627df0ca59122c0ea795e412b99c5183a0540d338ab
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.22.0":
+  version: 7.22.0
+  resolution: "@babel/runtime@npm:7.22.0"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: fa60a963f33de98baf55179b8b4b986d7ed4b97ec4f725e976fd3ecd6f3005096d9df4ef3cd4a6ce46105d619c7cb086567bcf272e4596a63e66ef9b36463bcb
   languageName: node
   linkType: hard
 
@@ -2709,7 +2718,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@micro-lc/orchestrator@workspace:packages/orchestrator"
   dependencies:
-    "@babel/runtime": ^7.21.0
+    "@babel/runtime": ^7.22.0
     "@micro-lc/composer": "workspace:*"
     "@micro-lc/interfaces": "workspace:*"
     "@open-wc/testing": ^3.1.8
