@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- A list of available icons for each supported library is now available in final bundle
+
 ### Versioning
 
 - Development dependencies updated
