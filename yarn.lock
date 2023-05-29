@@ -2373,7 +2373,7 @@ __metadata:
     "@types/react": ^18.2.6
     "@types/react-dom": ^18.2.0
     "@types/sinon": ^10.0.14
-    antd: ^4.24.9
+    antd: ^4.24.10
     cssnano: ^6.0.1
     esbuild: ^0.17.19
     glob: ^10.2.1
@@ -5599,9 +5599,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"antd@npm:^4.24.9":
-  version: 4.24.9
-  resolution: "antd@npm:4.24.9"
+"antd@npm:^4.24.10":
+  version: 4.24.10
+  resolution: "antd@npm:4.24.10"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@ant-design/icons": ^4.7.0
@@ -5649,7 +5649,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 357c9ff317714d1ed108f1c99abebc3a780e6906c790d80437fe962e6639d673b53e1207748ddbceab1379518398ae8523a20b8460235bf73f743112aafea5f7
+  checksum: eca8a3a4adac4ea81817190280209ab3396fa60a6b8475b8f7c75d6e1cb2895e5e23dba04626ee5be763145a2514ca19a90e1dedbb3187837093e90b1ab27041
   languageName: node
   linkType: hard
 
@@ -9229,17 +9229,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-scope@npm:^7.1.0":
-  version: 7.1.1
-  resolution: "eslint-scope@npm:7.1.1"
-  dependencies:
-    esrecurse: ^4.3.0
-    estraverse: ^5.2.0
-  checksum: 9f6e974ab2db641ca8ab13508c405b7b859e72afe9f254e8131ff154d2f40c99ad4545ce326fd9fde3212ff29707102562a4834f1c48617b35d98c71a97fbf3e
-  languageName: node
-  linkType: hard
-
-"eslint-scope@npm:^7.2.0":
+"eslint-scope@npm:^7.1.0, eslint-scope@npm:^7.2.0":
   version: 7.2.0
   resolution: "eslint-scope@npm:7.2.0"
   dependencies:
@@ -9292,7 +9282,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^3.0.0, eslint-visitor-keys@npm:^3.1.0, eslint-visitor-keys@npm:^3.3.0, eslint-visitor-keys@npm:^3.4.0, eslint-visitor-keys@npm:^3.4.1":
+"eslint-visitor-keys@npm:^3.0.0, eslint-visitor-keys@npm:^3.1.0, eslint-visitor-keys@npm:^3.3.0, eslint-visitor-keys@npm:^3.4.1":
   version: 3.4.1
   resolution: "eslint-visitor-keys@npm:3.4.1"
   checksum: f05121d868202736b97de7d750847a328fcfa8593b031c95ea89425333db59676ac087fa905eba438d0a3c5769632f828187e0c1a0d271832a2153c1d3661c2c
@@ -9465,18 +9455,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"espree@npm:^9.0.0, espree@npm:^9.2.0, espree@npm:^9.4.0":
-  version: 9.5.1
-  resolution: "espree@npm:9.5.1"
-  dependencies:
-    acorn: ^8.8.0
-    acorn-jsx: ^5.3.2
-    eslint-visitor-keys: ^3.4.0
-  checksum: cdf6e43540433d917c4f2ee087c6e987b2063baa85a1d9cdaf51533d78275ebd5910c42154e7baf8e3e89804b386da0a2f7fad2264d8f04420e7506bf87b3b88
-  languageName: node
-  linkType: hard
-
-"espree@npm:^9.5.2":
+"espree@npm:^9.0.0, espree@npm:^9.2.0, espree@npm:^9.4.0, espree@npm:^9.5.2":
   version: 9.5.2
   resolution: "espree@npm:9.5.2"
   dependencies:
@@ -12892,18 +12871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:^2.0.0":
-  version: 2.7.0
-  resolution: "lit@npm:2.7.0"
-  dependencies:
-    "@lit/reactive-element": ^1.6.0
-    lit-element: ^3.3.0
-    lit-html: ^2.7.0
-  checksum: 916f459ded2e9700fe695070963dcb2edcea2dd1d127db6885cf10e94766d5ca9f438ebf659dca264c6402708254927b0ffed6595b6bcaac422e6f203dbbf6ee
-  languageName: node
-  linkType: hard
-
-"lit@npm:^2.7.4":
+"lit@npm:^2.0.0, lit@npm:^2.7.4":
   version: 2.7.4
   resolution: "lit@npm:2.7.4"
   dependencies:
