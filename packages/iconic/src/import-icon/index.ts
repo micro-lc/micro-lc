@@ -41,7 +41,7 @@ export interface SvgComponent extends IconComponent {
 }
 
 interface AntdIconDefaultImport {
-  icon: IconComponent
+  icon: IconComponent | ((primaryColor?: string, secondaryColor?: string) => IconComponent)
 }
 
 interface FontAwesomeIconImport { default: { definition: FontawesomeIconDefinition } }
@@ -81,7 +81,9 @@ export async function importIcon(selector: string, resource: ResourceObject): Pr
   // SAFETY: library check is already enforced
   switch (library) {
   case '@ant-design/icons-svg':
-    return import(uri).then(({ default: { icon } }: { default: AntdIconDefaultImport }) => icon)
+    return import(uri)
+      .then(({ default: { icon } }: { default: AntdIconDefaultImport }) => icon)
+      .then((icon) => (typeof icon === 'function' ? icon('currentColor', 'white') : icon))
   case '@fortawesome/free-regular-svg-icons':
   case '@fortawesome/free-solid-svg-icons':
     return import(uri).then(({ default: { definition } }: FontAwesomeIconImport) => {

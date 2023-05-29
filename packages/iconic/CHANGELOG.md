@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- "Two tone" Ant Design icons are now loaded correctly
+
 ## [1.1.0] - 2023-05-29
 
 ### Added
