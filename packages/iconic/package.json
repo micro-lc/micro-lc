@@ -13,15 +13,17 @@
     "check:types": "tsc --project scripts/tsconfig.types.json && echo \"✓ check types\"",
     "bundle:dependencies": "ts-node ./scripts/pre-bundle.ts",
     "bundle:icons": "ts-node ./scripts/bundle-icons.ts",
+    "list:icons":  "ts-node ./scripts/list-icons.ts",
     "prepare": "yarn run -T run-p bundle:dependencies bundle:icons",
     "test": "echo 'OK'",
     "coverage": "echo 'OK'",
     "build:es": "ts-node ./scripts/compile.esm.ts",
-    "build": "yarn run -T run-s check:types bundle:icons build:es",
+    "build": "yarn run -T run-s check:types bundle:icons build:es && yarn list:icons",
     "cleanup": "yarn run -T rimraf node_modules dist coverage",
     "serve": "wds --node-resolve --watch"
   },
   "devDependencies": {
+    "@ant-design/icons-svg": "^4.2.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
