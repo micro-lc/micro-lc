@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `rxjs` bumped to `7.8.1`
 - `es-module-shims` bumped to `1.7.2`
 
+### Fixed
+
+- routing towards a `parcel` application which is registered as `/app/` takes the precedence when calling the URL `/app`
+- public assets on a `parcel` application are served on a path which ends by a trailing slash
+- removed `console.log` statements
+
 ## [2.0.9] - 2023-04-20
 
 ### Added

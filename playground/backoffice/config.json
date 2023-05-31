@@ -152,8 +152,10 @@
     "react": {
       "integrationMode": "parcel",
       "injectBase": true,
-      "route": "./:app/react/",
-      "entry": "http://localhost:8003/"
+      "route": "./react/",
+      "entry": {
+        "html": "https://raw.githubusercontent.com/micro-lc/micro-lc.github.io/gh-pages/applications/react-browser-router/index.html"
+      }
     },
     "main2": {
       "integrationMode": "compose",

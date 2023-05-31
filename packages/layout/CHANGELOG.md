@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development dependencies updated
 - Typescript set to `^5.0.2` with yarn `3.5.0`
 - `@ctrl/tinycolor` to version `^3.6.0`
-- `lit` from `^2.6.1` to `^2.7.0`
+- `lit` from `^2.6.1` to `^2.7.4`
 - `lit-html` from `^2.6.1` to `^2.7.0`
 - `cssnano` to version `6.0.0`
 - Typescript set to `^5.0.4`
