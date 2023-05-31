@@ -32,6 +32,17 @@ test('base tag => on `injectBase` href base attribute must be computed according
   await expect(page.getByText('About')).toBeVisible()
 })
 
+test('trailing slash should win on exact on route when trailing slash route is longer', async ({ page }) => {
+  await page.goto('http://localhost:3000/__reverse/react')
+
+  await expect(page.getByText('Go to about page')).toBeVisible()
+  expect(page.url()).toEqual('http://localhost:3000/__reverse/react/')
+
+  await page.getByRole('link', { name: 'Go To About Page' }).click()
+
+  await expect(page.getByText('About')).toBeVisible()
+})
+
 test(`
   [react/angular routing]
   react and angular apps should move to their relative /about page and back
