@@ -1540,12 +1540,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.22.0":
-  version: 7.22.0
-  resolution: "@babel/runtime@npm:7.22.0"
+"@babel/runtime@npm:^7.22.3":
+  version: 7.22.3
+  resolution: "@babel/runtime@npm:7.22.3"
   dependencies:
     regenerator-runtime: ^0.13.11
-  checksum: fa60a963f33de98baf55179b8b4b986d7ed4b97ec4f725e976fd3ecd6f3005096d9df4ef3cd4a6ce46105d619c7cb086567bcf272e4596a63e66ef9b36463bcb
+  checksum: 8fc50785ca4cba749fed90bffca7e6fd52d4709755654e95b8d2a945fc034b56fb8c2e8a0183fea7c4abb86bf5fa77678c0ea35163b6920649833d180c34c234
   languageName: node
   linkType: hard
 
@@ -2411,7 +2411,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@micro-lc/orchestrator@workspace:packages/orchestrator"
   dependencies:
-    "@babel/runtime": ^7.22.0
+    "@babel/runtime": ^7.22.3
     "@micro-lc/composer": "workspace:*"
     "@micro-lc/interfaces": "workspace:*"
     "@open-wc/testing": ^3.1.8
