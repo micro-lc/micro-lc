@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 
-ARG NGINX_VERSION="1.24.0"
+ARG NGINX_VERSION="1.25.0"
 
 ###########################################
 # nginx is enhanced with security modules #
