@@ -80,5 +80,5 @@ export function postProcessTemplate(tplResult: TemplateResult, opts: PostProcess
 export const getPublicPath = (entry: Entry): string => {
   const path = (typeof entry === 'string' ? entry : (entry.html ?? ''))
   const { origin, pathname } = new URL(path, window.document.baseURI)
-  return `${origin}${pathname}`
+  return `${origin}${pathname}`.replace(/\/?([^/]+)$/, '/')
 }

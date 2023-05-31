@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /**
   Copyright 2022 Mia srl
 
@@ -184,7 +185,7 @@ const updateCountersAndResults = (
 
 function getNextMatchingRoute(
   this: RouterContainer, url?: string | undefined
-): MatchingRouteReturnType {
+): {counters: [number, number, number]; result: MatchingRouteReturnType} {
   const {
     config: {
       settings: {
@@ -215,7 +216,10 @@ function getNextMatchingRoute(
     ? this.matchCache.set(url, result)
     : this.matchCache.setDefault(result[2])
 
-  return result
+  return {
+    counters,
+    result,
+  }
 }
 
 function isSameError(first: RoutingError, second: RoutingError): boolean {
@@ -264,15 +268,13 @@ async function flushAndGo(
         return res
       }),
       getPublicPath,
-      postProcessTemplate: (tplResult) => {
-        console.log(url, window.location.href, this.ownerDocument.baseURI)
-        return postProcessTemplate(tplResult, {
+      postProcessTemplate: (tplResult) =>
+        postProcessTemplate(tplResult, {
           baseURI: this.ownerDocument.baseURI,
           injectBase: nextMatch.props?.injectBase,
           name: nextMatch.name,
           url: route ?? url ?? window.location.href,
-        })
-      },
+        }),
       // TODO: remove when https://github.com/umijs/qiankun/pull/2450 is merged
       sandbox: { speedy: false },
     })
@@ -332,6 +334,7 @@ function isDefault(url: string, baseURI: string): boolean {
 export async function reroute(this: RouterContainer, url?: string | undefined): Promise<LoadedAppUpdate | void> {
   // get matching result via cache when available
   let matchingResults = Array(3).fill(undefined) as MatchingRouteReturnType
+  let counters = Array(3).fill(0) as [number, number, number]
   const isDefaultCached = this.matchCache.getDefault()
   const cachedMatch = url !== undefined ? this.matchCache.get(url) : undefined
 
@@ -344,7 +347,9 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
     // matched the base path (i.e., no plugin was mounted on root)
     // router redirects on default route if any
     // const [exactMatch, nextMatchWithTrailingSlash, defaultMatch]
-    matchingResults = getNextMatchingRoute.call(this, url)
+    const nextMatch = getNextMatchingRoute.call(this, url)
+    matchingResults = nextMatch.result
+    counters = nextMatch.counters
   }
 
   const [exactMatch, nextMatchWithTrailingSlash, defaultMatch] = matchingResults
@@ -352,7 +357,7 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
   let nextMatch = exactMatch
   let error: RoutingError | undefined
 
-  if (!exactMatch && nextMatchWithTrailingSlash) {
+  if ((nextMatchWithTrailingSlash && counters[1] > counters[0]) || (!exactMatch && nextMatchWithTrailingSlash)) {
     // 🎢 SOMETHING WEIRD ==> we are pusthing from ./route ==> ./route/ and this does not
     // create a popstate event!!!
     // 🔽 we change the url without creating an event
