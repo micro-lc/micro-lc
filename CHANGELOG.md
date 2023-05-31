@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.0.10] - 2023-05-31
+
+### Added
+
+- in browser tests to validate support to angular 12, 13, and 14
+- added support to `linux/arm64` in docker container `microlc/micro-lc`
+
+### Versioning
+
+- `lit-html` to `2.7.4`
+- `rxjs` bumped to `7.8.1`
+- `es-module-shims` bumped to `1.7.2`
+
+### Fixed
+
+- routing towards a `parcel` application which is registered as `/app/` takes the precedence when calling the URL `/app`
+- public assets on a `parcel` application are served on a path which ends by a trailing slash
+- removed `console.log` statements
+
 ## [2.0.9] - 2023-04-20
 
 ### Added

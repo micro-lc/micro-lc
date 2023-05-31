@@ -1,6 +1,6 @@
 {
   "name": "micro-lc",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "The micro frontend solution by Mia-Platform",
   "license": "SEE LICENSE IN LICENSE",
   "packageManager": "yarn@3.5.0",

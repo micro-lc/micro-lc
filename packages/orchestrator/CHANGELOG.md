@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.0.10] - 2023-05-31
+
 ### Added
 
 - in browser tests to validate support to angular 12, 13, and 14
