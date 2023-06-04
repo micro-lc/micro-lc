@@ -23,7 +23,7 @@
     "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.4",
+    "@types/chai": "^4.3.5",
     "@types/eslint": "^8.40.0",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
