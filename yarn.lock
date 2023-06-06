@@ -2288,7 +2288,7 @@ __metadata:
     "@types/node": ^18.15.11
     "@types/prop-types": ^15.7.5
     "@types/react": ^18.2.6
-    "@types/react-dom": ^18.2.0
+    "@types/react-dom": ^18.2.4
     "@types/requirejs": ^2.1.34
     "@web/dev-server": ^0.1.38
     "@web/dev-server-esbuild": ^0.3.6
@@ -2371,7 +2371,7 @@ __metadata:
     "@types/lodash-es": ^4.17.7
     "@types/mocha": ^10.0.1
     "@types/react": ^18.2.6
-    "@types/react-dom": ^18.2.0
+    "@types/react-dom": ^18.2.4
     "@types/sinon": ^10.0.14
     antd: ^4.24.10
     cssnano: ^6.0.1
@@ -4447,12 +4447,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "@types/react-dom@npm:18.2.0"
+"@types/react-dom@npm:^18.2.4":
+  version: 18.2.4
+  resolution: "@types/react-dom@npm:18.2.4"
   dependencies:
     "@types/react": "*"
-  checksum: 9212b3793707a763f10e2c608f6ccb5f729029da6cb84204f333634d3d7baafbc1b20b7faf7cf788a8fd385050a1fb579902031f9462473ef10607116f33f33c
+  checksum: 8301f35cf1cbfec8c723e9477aecf87774e3c168bd457d353b23c45064737213d3e8008b067c6767b7b08e4f2b3823ee239242a6c225fc91e7f8725ef8734124
   languageName: node
   linkType: hard
 
