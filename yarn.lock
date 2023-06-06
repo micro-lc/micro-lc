@@ -2283,7 +2283,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.0.4
-    vite: ^4.2.1
+    vite: ^4.2.3
     vite-plugin-banner: ^0.7.0
   peerDependencies:
     es-module-shims: "*"
@@ -2408,7 +2408,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.0.4
-    vite: ^4.2.1
+    vite: ^4.2.3
     vite-plugin-banner: ^0.7.0
     vite-plugin-dynamic-import: ^1.2.7
     vite-plugin-replace: ^0.1.1
@@ -2458,7 +2458,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.0.4
-    vite: ^4.2.1
+    vite: ^4.2.3
     vite-plugin-banner: ^0.7.0
   peerDependencies:
     ajv: ">=8.11.0"
@@ -13643,7 +13643,7 @@ __metadata:
     stylelint-declaration-block-no-ignored-properties: ^2.7.0
     ts-node: ^10.9.1
     typescript: ^5.0.4
-    vite: ^4.2.1
+    vite: ^4.2.3
   dependenciesMeta:
     "@ant-design/icons-svg@4.2.1":
       unplugged: true
@@ -17682,7 +17682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.15.0, rollup@npm:^3.18.0":
+"rollup@npm:^3.15.0":
   version: 3.21.6
   resolution: "rollup@npm:3.21.6"
   dependencies:
@@ -17693,6 +17693,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: bb6786ee0d755f253d3aa3820b05806a482abe9c9fd6dad14df83b386a370d48af20c4be66f732a15b5e89c0ae6269a7b82736b64f34ae61552c58de0eecedeb
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^3.21.0":
+  version: 3.23.1
+  resolution: "rollup@npm:3.23.1"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 4b3b3bbfd490b41ec5473d1141fe2beb0c86f600b56378fce97e0485192818256f8cbf4d43450b097ee7042e6629fb0187488807e2d15050860718f458c44685
   languageName: node
   linkType: hard
 
@@ -20338,15 +20352,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.2.1":
-  version: 4.2.1
-  resolution: "vite@npm:4.2.1"
+"vite@npm:^4.2.3":
+  version: 4.3.9
+  resolution: "vite@npm:4.3.9"
   dependencies:
     esbuild: ^0.17.5
     fsevents: ~2.3.2
-    postcss: ^8.4.21
-    resolve: ^1.22.1
-    rollup: ^3.18.0
+    postcss: ^8.4.23
+    rollup: ^3.21.0
   peerDependencies:
     "@types/node": ">= 14"
     less: "*"
@@ -20372,7 +20385,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 70eb162ffc299017a3c310e3adc95e9661def6b17aafd1f8e5e02e516766060435590dbe3df1e4e95acc3583c728a76e91f07c546221d1e701f1b2b021293f45
+  checksum: 8c45a516278d1e0425fac00c0877336790f71484a851a318346a70e0d2aef9f3b9651deb2f9f002c791ceb920eda7d6a3cda753bdefd657321c99f448b02dd25
   languageName: node
   linkType: hard
 
