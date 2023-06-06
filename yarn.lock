@@ -2272,7 +2272,7 @@ __metadata:
     chai-string: ^1.5.0
     es-module-shims: ^1.7.2
     esbuild: ^0.17.19
-    glob: ^10.2.1
+    glob: ^10.2.6
     lit-html: ^2.7.4
     mocha: ^10.2.0
     nyc: ^15.1.0
@@ -2313,7 +2313,7 @@ __metadata:
     "@web/dev-server-import-maps": ^0.1.1
     "@web/dev-server-rollup": ^0.5.0
     esbuild: ^0.17.19
-    glob: ^10.2.1
+    glob: ^10.2.6
     prop-types: ^15.8.1
     react-test-renderer: ^18.2.0
     ts-node: ^10.9.1
@@ -2338,7 +2338,7 @@ __metadata:
     chai: ^4.3.7
     esbuild: ^0.17.19
     eslint: ^8.41.0
-    glob: ^10.2.1
+    glob: ^10.2.6
     json-schema-to-typescript: ^13.0.1
     mkdirp: ^3.0.1
     mocha: ^10.2.0
@@ -2394,7 +2394,7 @@ __metadata:
     antd: ^4.24.10
     cssnano: ^6.0.1
     esbuild: ^0.17.19
-    glob: ^10.2.1
+    glob: ^10.2.6
     json-schema-to-typescript: ^13.0.1
     less: ^4.1.3
     lit: ^2.7.4
@@ -2443,7 +2443,7 @@ __metadata:
     chai-string: ^1.5.0
     es-module-shims: ^1.7.2
     esbuild: ^0.17.19
-    glob: ^10.2.1
+    glob: ^10.2.6
     js-yaml: ^4.1.0
     lit-html: ^2.7.4
     lodash-es: ^4.17.21
@@ -10579,22 +10579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.1":
-  version: 10.2.2
-  resolution: "glob@npm:10.2.2"
-  dependencies:
-    foreground-child: ^3.1.0
-    jackspeak: ^2.0.3
-    minimatch: ^9.0.0
-    minipass: ^5.0.0
-    path-scurry: ^1.7.0
-  bin:
-    glob: dist/cjs/src/bin.js
-  checksum: 33cbbbea74deb605107715f2ee51937953271ff2f6ce712b57d95a714e2f1bf272fa2c2b0c5101097bf98d3e5d40856941af498b05bce07567aca1a6e3cc7ae9
-  languageName: node
-  linkType: hard
-
-"glob@npm:^10.2.5":
+"glob@npm:^10.2.5, glob@npm:^10.2.6":
   version: 10.2.6
   resolution: "glob@npm:10.2.6"
   dependencies:
@@ -13628,7 +13613,7 @@ __metadata:
     eslint-plugin-typescript-sort-keys: ^2.3.0
     eslint-visitor-keys: ^3.4.1
     express: ^4.18.2
-    glob: ^10.2.1
+    glob: ^10.2.6
     husky: ^8.0.3
     jsonc-eslint-parser: ^2.3.0
     lit-html: ^2.7.4
@@ -13799,15 +13784,6 @@ __metadata:
   dependencies:
     brace-expansion: ^2.0.1
   checksum: 15ce53d31a06361e8b7a629501b5c75491bc2b59712d53e802b1987121d91b433d73fcc5be92974fde66b2b51d8fb28d75a9ae900d249feb792bb1ba2a4f0a90
-  languageName: node
-  linkType: hard
-
-"minimatch@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "minimatch@npm:9.0.0"
-  dependencies:
-    brace-expansion: ^2.0.1
-  checksum: 7bd57899edd1d1b0560f50b5b2d1ea4ad2a366c5a2c8e0a943372cf2f200b64c256bae45a87a80915adbce27fa36526264296ace0da57b600481fe5ea3e372e5
   languageName: node
   linkType: hard
 

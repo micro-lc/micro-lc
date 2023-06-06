@@ -42,7 +42,7 @@
     "@web/dev-server-import-maps": "^0.1.1",
     "@web/dev-server-rollup": "^0.5.0",
     "esbuild": "^0.17.19",
-    "glob": "^10.2.1",
+    "glob": "^10.2.6",
     "prop-types": "^15.8.1",
     "react-test-renderer": "^18.2.0",
     "ts-node": "^10.9.1",
