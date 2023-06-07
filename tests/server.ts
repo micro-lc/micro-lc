@@ -1,3 +1,4 @@
+/* eslint-disable no-sync */
 
 import fs from 'fs'
 import path from 'path'
@@ -18,6 +19,17 @@ const notFound = (res: Response) => {
 app.use('/playground', express.static('playground'))
 app.use('/packages', express.static('packages'))
 app.use('/', express.static('tests'))
+app.use('/home', (req, res, next) => {
+  const { url } = req
+  if (fs.existsSync(path.join(__dirname, url))) {
+    express.static('tests', { index: true })(req, res, next)
+    return
+  }
+
+  res.statusCode = 200
+  res.setHeader('content-type', 'text/html')
+  res.send(fs.readFileSync(path.resolve(__dirname, 'index.html')))
+})
 app.use('/dev/*', express.static('tests/dev'))
 app.use('/pages/*', express.static('tests/pages'))
 app.use('/applications/*', express.static('tests/applications'))

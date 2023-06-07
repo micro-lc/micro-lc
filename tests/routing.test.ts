@@ -80,3 +80,33 @@ test(`
   await page.getByRole('link', { name: 'Go Home' }).click()
   expect(page.url()).toMatch(/\/angular14\/$/)
 })
+
+test(`
+  [defaultUrl routing]
+  absence of a base href should not tamper
+  with the application routing
+`, async ({ page }) => {
+  const pConfig = {
+    applications: {
+      home: {
+        config: {
+          content: {
+            content: 'Hello',
+            tag: 'div',
+          },
+        },
+        integrationMode: 'compose' as const,
+        route: '/home',
+      },
+    },
+    settings: {
+      defaultUrl: '/home',
+    },
+    version: 2 as const,
+  }
+  await goto(page, pConfig, 'http://localhost:3000/home/1324')
+
+  expect(page.url()).toEqual('http://localhost:3000/home/1324')
+
+  await page.pause()
+})
