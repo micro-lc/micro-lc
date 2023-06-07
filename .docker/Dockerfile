@@ -75,6 +75,24 @@ ARG NGINX_VERSION
 
 FROM nginx:${NGINX_VERSION}-alpine
 
+#    Vulnerability    Severity Package                                  Type     Fix version      URL
+#  - CVE-2023-28319   High     curl-7.88.1-r1                           APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28319
+#  - CVE-2023-28320   Medium   curl-7.88.1-r1                           APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28320
+#  - CVE-2023-28321   High     curl-7.88.1-r1                           APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28321
+#  - CVE-2023-28322   Critical curl-7.88.1-r1                           APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28322
+#  - CVE-2023-1255    Medium   libcrypto3-3.0.8-r3                      APKG     3.0.8-r4         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-1255
+#  - CVE-2023-2650    High     libcrypto3-3.0.8-r3                      APKG     3.0.9-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-2650
+#  - CVE-2023-28319   High     libcurl-7.88.1-r1                        APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28319
+#  - CVE-2023-28320   Medium   libcurl-7.88.1-r1                        APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28320
+#  - CVE-2023-28321   High     libcurl-7.88.1-r1                        APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28321
+#  - CVE-2023-28322   Critical libcurl-7.88.1-r1                        APKG     8.1.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28322
+#  - CVE-2023-1255    Medium   libssl3-3.0.8-r3                         APKG     3.0.8-r4         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-1255
+#  - CVE-2023-2650    High     libssl3-3.0.8-r3                         APKG     3.0.9-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-2650
+#  - CVE-2023-1999    Unknown  libwebp-1.2.4-r1                         APKG     1.2.4-r2         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-1999
+#  - CVE-2023-29491   High     ncurses-libs-6.3_p20221119-r0            APKG     6.3_p20221119-r1 https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-29491
+#  - CVE-2023-29491   High     ncurses-terminfo-base-6.3_p20221119-r0   APKG     6.3_p20221119-r1 https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-29491
+RUN apk add --no-cache --upgrade curl libcurl libcrypto3 libssl3 libwebp ncurses-libs
+
 COPY --from=builder /usr/lib/nginx/modules/ndk_http_module.so /etc/nginx/modules/ndk_http_module.so
 COPY --from=builder /usr/lib/nginx/modules/ngx_http_set_misc_module.so /etc/nginx/modules/ngx_http_set_misc_module.so
 
