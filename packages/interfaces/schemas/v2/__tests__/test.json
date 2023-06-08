@@ -1,6 +1,16 @@
 {
   "$schema": "../config.schema.json",
   "version": 2,
+  "applications": {
+    "parcel": {
+      "integrationMode": "parcel",
+      "route": "/route",
+      "entry": {
+        "html": "index.html",
+        "scripts": ["asd"]
+      }
+    }
+  },
   "importmap": {
     "imports": {
       "a": "/a-1.mjs",
