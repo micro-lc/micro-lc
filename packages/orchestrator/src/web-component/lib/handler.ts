@@ -52,19 +52,22 @@ export const microlcFetch = async (input: RequestInfo | URL, init?: RequestInit,
 
 interface PostProcessTemplateOptions {
   baseURI?: string | undefined
-  injectBase?: boolean
+  injectBase?: boolean | 'override'
   name: string
   url: string
 }
 
 export function postProcessTemplate(tplResult: TemplateResult, opts: PostProcessTemplateOptions): TemplateResult {
-  if (opts.injectBase) {
+  const { injectBase } = opts
+  if (injectBase) {
     const parser = new DOMParser()
     const document = parser.parseFromString(tplResult.template, 'text/html')
     const head = document.querySelector('head')
-    const base = document.querySelector('base')
-    if (base === null) {
+    const bases = head?.querySelectorAll('base')
+
+    if (bases?.length === 0 || injectBase === 'override') {
       const { pathname: route } = new URL(opts.url, opts.baseURI)
+      bases?.forEach((base) => base.remove())
       head?.appendChild(
         Object.assign(document.createElement('base'), {
           href: route,

@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Typescript set to `^5.0.2` with yarn `3.5.0`
 - Typescript set to `^5.0.4`
 
+### Added
+
+- `micro-lc` json config schema allows to enforce `injectBase` `override` to remove incoming base tags hardcoded on parcel entrypoint
+
 ## [1.0.2] - 2023-01-12
 
 ### Added

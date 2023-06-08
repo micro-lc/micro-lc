@@ -112,7 +112,7 @@ export async function updateGlobalImportMap(importmap: GlobalImportMap): Promise
 export interface ComposableApplicationProperties<T extends BaseExtension = BaseExtension> {
   composerApi: Partial<ComposerApi>
   config: string | PluginConfiguration | undefined
-  injectBase: boolean | undefined
+  injectBase: boolean | 'override' | undefined
   microlcApi: Partial<MicrolcApi<T>>
   schema: SchemaOptions | undefined
 }
@@ -229,7 +229,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
   const schema = await getApplicationSchema()
 
   pages.reduce((acc, [id, app], idx) => {
-    let injectBase: boolean | undefined = false
+    let injectBase: boolean | 'override' | undefined = false
     let entry: Entry
     let config: string | PluginConfiguration | undefined
     let properties: Record<string, unknown> | undefined

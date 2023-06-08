@@ -8,7 +8,19 @@
       "entry": {
         "html": "index.html",
         "scripts": ["asd"]
-      }
+      },
+      "injectBase": "override"
+    },
+    "parcel2": {
+      "integrationMode": "parcel",
+      "route": "/route2",
+      "entry": "index.html",
+      "injectBase": true
+    },
+    "parcel3": {
+      "integrationMode": "parcel",
+      "route": "/route2",
+      "entry": "index.html"
     }
   },
   "importmap": {
