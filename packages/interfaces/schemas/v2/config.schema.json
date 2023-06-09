@@ -235,7 +235,7 @@
           "type": "string"
         },
         {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "object",
               "properties": {
@@ -355,8 +355,18 @@
         },
         "injectBase": {
           "description": "Whether to inject a base tag according to the application given route. Can be used when an hash router is not available",
-          "type": "boolean",
-          "default": false
+          "default": false,
+          "oneOf": [
+            {
+              "description": "When true it will attempt to inject a base tag if not already present",
+              "type": "boolean",
+              "default": false
+            },
+            {
+              "description": "Injects a base tag removing other base tags",
+              "const": "override"
+            }
+          ]
         }
       },
       "additionalProperties": false

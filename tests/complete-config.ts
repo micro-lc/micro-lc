@@ -44,6 +44,20 @@ const json = (literals: TemplateStringsArray, ...vars: string[]): string => {
   return output(code)
 }
 
+const html = (literals: TemplateStringsArray, ...vars: string[]): string => {
+  if (literals.raw.length === 0) {
+    return ''
+  }
+
+  const [first] = literals.raw
+  const output = (inject: string) => `data:text/html;base64,${Buffer.from(inject).toString('base64')}`
+  const code = literals.raw.slice(1).reduce((template, el, idx) => {
+    return template.concat(`${el}${vars[idx]}`)
+  }, first)
+
+  return output(code)
+}
+
 const config: Config = {
   applications: {
     angular12: {
@@ -79,6 +93,37 @@ const config: Config = {
       },
       integrationMode: 'compose',
       route: './main',
+    },
+    'override-base': {
+      entry: html`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <base href="/another-place/" target="_blank" />
+            <script entry>
+              window['override-base'] = {
+                bootstrap: () => Promise.resolve(),
+                mount: () => Promise.resolve(),
+                unmount: () => Promise.resolve()
+              }
+            </script>
+          </head>
+          <body>
+            <button>Go To About Page</button>
+            <script async defer>
+              const button = document.querySelector('button')
+              button.onclick = () => {
+                const href = document.querySelector('qiankun-head base')?.href ?? window.location.href
+                console.log(href)
+                window.history.pushState(null, '', new URL('./about', href).href)
+              }
+            </script>
+          </body>
+        </html>
+      `,
+      injectBase: 'override',
+      integrationMode: 'parcel',
+      route: './override-base/',
     },
     plain: {
       config: { content: { content: 'Home', tag: 'strong' } },
@@ -175,6 +220,11 @@ const config: Config = {
               },
               id: 'angular14',
               label: 'Angular 14 Parcel',
+              type: 'application',
+            },
+            {
+              id: 'override-base',
+              label: 'Override Base',
               type: 'application',
             },
           ],

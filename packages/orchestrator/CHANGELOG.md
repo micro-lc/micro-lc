@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `micro-lc` config supports `injectBase` -> `override` const value to instruct the app loader to optionally remove any existing base from an incoming parcel entrypoint
+
 ### Versioning
 
 - Development dependencies updated

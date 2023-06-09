@@ -80,3 +80,21 @@ test(`
   await page.getByRole('link', { name: 'Go Home' }).click()
   expect(page.url()).toMatch(/\/angular14\/$/)
 })
+
+test(`
+  [override injectBase routing]
+  a parcel application with an existing
+  base tag and marked for injectBase "override"
+  must see its base tag to be removed and a new one to be injected
+  according with the current page location
+`, async ({ page }) => {
+  await goto(page, completeConfig, 'http://localhost:3000/zoned/')
+  await page.waitForFunction(() => window.location.href.endsWith('/zoned/home'))
+  await expect(page.frameLocator('iframe').getByRole('heading', { name: 'Example Domain' })).toBeVisible()
+
+  await page.getByText('Override Base').click()
+
+  await page.waitForFunction(() => window.location.href.endsWith('/zoned/override-base/'))
+  await page.getByText('Go To About Page', { exact: true }).click()
+  await page.waitForFunction(() => window.location.href.endsWith('/zoned/override-base/about'))
+})

@@ -371,7 +371,7 @@ export interface ParcelApplication {
   /**
    * Whether to inject a base tag according to the application given route. Can be used when an hash router is not available
    */
-  injectBase?: boolean
+  injectBase?: boolean | "override"
 }
 export interface IFrameApplication1 {
   /**
@@ -427,7 +427,7 @@ export interface ParcelApplication1 {
   /**
    * Whether to inject a base tag according to the application given route. Can be used when an hash router is not available
    */
-  injectBase?: boolean
+  injectBase?: boolean | "override"
 }
 /**
  * Global import map
@@ -490,7 +490,7 @@ export interface ParcelApplication2 {
   /**
    * Whether to inject a base tag according to the application given route. Can be used when an hash router is not available
    */
-  injectBase?: boolean
+  injectBase?: boolean | "override"
 }
 /**
  * Orchestrator main page layout DOM configuration
