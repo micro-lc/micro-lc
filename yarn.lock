@@ -9127,16 +9127,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsonc@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "eslint-plugin-jsonc@npm:2.7.0"
+"eslint-plugin-jsonc@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "eslint-plugin-jsonc@npm:2.8.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     jsonc-eslint-parser: ^2.0.4
     natural-compare: ^1.4.0
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: d5426d69f4279b0fd95943afaa2f583900640f2c12a88bdf34cc1e7f571f8f821fb45edac7fe56fa0474ac62214faedb4b8239b28c003a5b0808e4395d08df12
+  checksum: 5ca1e7c7142f7cf0712f62973cc817717e88ac69c498e0bc93f9e719b07f06b4bb1e7fd6d050c9043ee1338a2dbe0222eefebf60a17b52058dda4e5dcb054e80
   languageName: node
   linkType: hard
 
@@ -13648,7 +13648,7 @@ __metadata:
     eslint: ^8.41.0
     eslint-config-esnext: ^4.1.0
     eslint-plugin-import: ^2.27.5
-    eslint-plugin-jsonc: ^2.7.0
+    eslint-plugin-jsonc: ^2.8.0
     eslint-plugin-jsx-a11y: ^6.7.1
     eslint-plugin-mocha: ^10.1.0
     eslint-plugin-n: ^16.0.0
