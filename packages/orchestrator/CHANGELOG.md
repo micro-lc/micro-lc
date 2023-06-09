@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `micro-lc` config supports `injectBase` -> `override` const value to instruct the app loader to optionally remove any existing base from an incoming parcel entrypoint
 
+### Versioning
+
+- Development dependencies updated
+
 ### Fixes
 
 - security updates / vulnerability fixes in `.docker/Dockerfile` related with `nginx:1.24.0-alpine`
