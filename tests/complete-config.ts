@@ -146,6 +146,12 @@ const config: Config = {
       integrationMode: 'parcel',
       route: './react/',
     },
+    vue3: {
+      entry: '/applications/vue3/',
+      injectBase: true,
+      integrationMode: 'parcel',
+      route: './vue3/',
+    },
   },
   importmap: {
     imports: {
@@ -220,6 +226,15 @@ const config: Config = {
               },
               id: 'angular14',
               label: 'Angular 14 Parcel',
+              type: 'application',
+            },
+            {
+              icon: {
+                library: '@ant-design/icons-svg',
+                selector: 'AppstoreOutlined',
+              },
+              id: 'vue3',
+              label: 'Vue3',
               type: 'application',
             },
             {

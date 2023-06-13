@@ -79,6 +79,13 @@ test(`
   await expect(page.getByRole('link', { name: 'Go Home' })).toBeVisible()
   await page.getByRole('link', { name: 'Go Home' }).click()
   expect(page.url()).toMatch(/\/angular14\/$/)
+
+  await page.evaluate((microlc) => microlc.getApi().router.goToApplication('vue3'), microlcHandle)
+  await expect(page.getByText('You did it!')).toBeVisible()
+  await page.getByRole('link', { name: 'About' }).click()
+  await expect(page.getByText('This is an about page')).toBeVisible()
+  await page.getByRole('link', { name: 'Home' }).click()
+  expect(page.url()).toMatch(/\/vue3\/$/)
 })
 
 test(`
