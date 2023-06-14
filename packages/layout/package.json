@@ -60,7 +60,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.8",
+    "@babel/core": "^7.22.5",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -82,7 +82,7 @@
     "@storybook/core-common": "^6.5.16",
     "@storybook/theming": "^6.5.16",
     "@storybook/web-components": "^6.5.16",
-    "@types/babel__core": "^7.20.0",
+    "@types/babel__core": "^7.20.1",
     "@types/glob": "^8.1.0",
     "@types/json-schema": "^7.0.11",
     "@types/lodash-es": "^4.17.7",
