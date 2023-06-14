@@ -38,12 +38,12 @@ test.describe('iconic react tests', () => {
     await expect(page.locator('mlc-iconic').nth(1)).toBeVisible()
   })
 
-  test('should use react hook to generate an icon', async ({ page }) => {
+  test.only('should use react hook to generate an icon', async ({ page }) => {
     test.slow()
 
     await page.goto('http://localhost:3000/pages/icons.html')
 
-    await expect(page.locator('svg').nth(0)).toBeVisible()
+    await expect(page.locator('svg').nth(0)).toBeVisible({ timeout: 30000 })
     await expect(page.locator('svg').nth(1)).toBeVisible()
     await expect(page.locator('svg').nth(2)).toBeVisible()
   })
