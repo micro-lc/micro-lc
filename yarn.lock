@@ -2467,7 +2467,7 @@ __metadata:
   resolution: "@micro-lc/composer@workspace:packages/composer"
   dependencies:
     "@micro-lc/interfaces": "workspace:*"
-    "@open-wc/testing": ^3.1.8
+    "@open-wc/testing": ^3.2.0
     "@rollup/plugin-replace": ^5.0.2
     "@types/chai": ^4.3.5
     "@types/chai-string": ^1.4.2
@@ -2508,7 +2508,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": ^6.4.0
     "@fortawesome/free-solid-svg-icons": ^6.4.0
     "@fortawesome/react-fontawesome": ^0.2.0
-    "@open-wc/testing": ^3.1.8
+    "@open-wc/testing": ^3.2.0
     "@rollup/plugin-alias": ^5.0.0
     "@rollup/plugin-replace": ^5.0.2
     "@types/glob": ^8.1.0
@@ -2576,7 +2576,7 @@ __metadata:
     "@micro-lc/iconic": "workspace:*"
     "@micro-lc/interfaces": "workspace:*"
     "@micro-lc/orchestrator": "workspace:*"
-    "@open-wc/testing": ^3.1.8
+    "@open-wc/testing": ^3.2.0
     "@rollup/plugin-replace": ^5.0.2
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-backgrounds": ^6.5.16
@@ -2632,7 +2632,7 @@ __metadata:
     "@babel/runtime": ^7.22.3
     "@micro-lc/composer": "workspace:*"
     "@micro-lc/interfaces": "workspace:*"
-    "@open-wc/testing": ^3.1.8
+    "@open-wc/testing": ^3.2.0
     "@rollup/plugin-node-resolve": ^15.1.0
     "@types/chai": ^4.3.5
     "@types/chai-as-promised": ^7.1.5
@@ -2770,20 +2770,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/dedupe-mixin@npm:^1.3.0":
-  version: 1.3.1
-  resolution: "@open-wc/dedupe-mixin@npm:1.3.1"
-  checksum: f0771906242cfd506531f3de65d44dbb069b0b61388612f91ad16b91838d216347d71144e4718dfaf9890a33ab0c7b625b0e6d979e09a288f81acb09f239f55d
+"@open-wc/dedupe-mixin@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@open-wc/dedupe-mixin@npm:1.4.0"
+  checksum: 25ae5d1c76ffecec74cb38948ee093e8b9fcfdde274ad176e288070370c4fe8182880d50e42b0403ac5449f12a9ebfa508df42772b15910c19177a0a63f47010
   languageName: node
   linkType: hard
 
-"@open-wc/scoped-elements@npm:^2.1.3":
-  version: 2.1.3
-  resolution: "@open-wc/scoped-elements@npm:2.1.3"
+"@open-wc/scoped-elements@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@open-wc/scoped-elements@npm:2.2.0"
   dependencies:
     "@lit/reactive-element": ^1.0.0
-    "@open-wc/dedupe-mixin": ^1.3.0
-  checksum: 90a7c82a2873dbfa1a718bae914d6ae7dcee734a08c2996ef3227616dccc1f2fb6fdc2654196088c953495af558f0332f1b57828b17ffd3bf5d7b8a15e48f188
+    "@open-wc/dedupe-mixin": ^1.4.0
+  checksum: 145dc35b672491e400a534970bfbc3770f32cd4362adf2e7a995e33cfdb9028e15ff90d36e74c9cb9c50ca7c85fb057a9ce8e1774558c34b29dfb686396674e7
   languageName: node
   linkType: hard
 
@@ -2794,40 +2794,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/semantic-dom-diff@npm:^0.19.7":
-  version: 0.19.7
-  resolution: "@open-wc/semantic-dom-diff@npm:0.19.7"
+"@open-wc/semantic-dom-diff@npm:^0.20.0":
+  version: 0.20.0
+  resolution: "@open-wc/semantic-dom-diff@npm:0.20.0"
   dependencies:
     "@types/chai": ^4.3.1
-    "@web/test-runner-commands": ^0.6.1
-  checksum: 8cdd3c914f3323cdc006abd8be728bd4cef9a430cc31c06eb0229e457bf52a247fa5fba1b576a12e80b55a2955707cd2eb1bd6c0ff94a160d764607bd0f606be
+    "@web/test-runner-commands": ^0.7.0
+  checksum: 4cbc67285cacca30ffffaa9cef4210fc795a7c722c50719af248224cced49e13f038635b16063a6b026bc274b5e5be26360c3ba44bbe47d443db6bba02134876
   languageName: node
   linkType: hard
 
-"@open-wc/testing-helpers@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@open-wc/testing-helpers@npm:2.2.1"
+"@open-wc/testing-helpers@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@open-wc/testing-helpers@npm:2.3.0"
   dependencies:
-    "@open-wc/scoped-elements": ^2.1.3
+    "@open-wc/scoped-elements": ^2.2.0
     lit: ^2.0.0
     lit-html: ^2.0.0
-  checksum: 92fcff763d7deb761c2853ee96b6873a553dc29bfc0ed54e0a20ccc8c93fd341d34a4d144c6940283e148e5f1e42341753758866e1b8e53da9d7c00560a13a6a
+  checksum: 59b76d89f9e7e9e69f20c111dc7acc646b8fb813a4f2ac8aa435ece47afc960373e00b0c62df4d68b9d314695009631f4ad08508397b60e4982b02cfd6a26748
   languageName: node
   linkType: hard
 
-"@open-wc/testing@npm:^3.1.8":
-  version: 3.1.8
-  resolution: "@open-wc/testing@npm:3.1.8"
+"@open-wc/testing@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@open-wc/testing@npm:3.2.0"
   dependencies:
     "@esm-bundle/chai": ^4.3.4-fix.0
     "@open-wc/chai-dom-equals": ^0.12.36
-    "@open-wc/semantic-dom-diff": ^0.19.7
-    "@open-wc/testing-helpers": ^2.2.1
+    "@open-wc/semantic-dom-diff": ^0.20.0
+    "@open-wc/testing-helpers": ^2.3.0
     "@types/chai": ^4.2.11
     "@types/chai-dom": ^1.11.0
     "@types/sinon-chai": ^3.2.3
-    chai-a11y-axe: ^1.3.2
-  checksum: e1e86bb448b4485bfc7f177a02701adc5959808a11e03b57f61acf2329678b8bad1338d822c6be4dcd46bcd13a9f72000b428679a0a722411f0034d28f383d44
+    chai-a11y-axe: ^1.5.0
+  checksum: f59283eed37b7959a4b71ba220d5d0ec4f115c3321950230f0840d59a24032ec316f51117f60f70e6591a5a4aa761085ee6c2cbe735ecd7120db430c022d553e
   languageName: node
   linkType: hard
 
@@ -4303,10 +4303,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/convert-source-map@npm:^1.5.1":
-  version: 1.5.2
-  resolution: "@types/convert-source-map@npm:1.5.2"
-  checksum: 39ab9185ab45567a47cdaa2262fdc55aaf79a6658574eb514f2b90195505fa026b03c7f9147e61100ed21eb71adbb350997e24c9ddd9512408dcb9820d6c5e9a
+"@types/convert-source-map@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/convert-source-map@npm:2.0.0"
+  checksum: 012497f7495d67204950eeebe10e94b7ab3508bf8659214ad430b527514e0611260d3ac41c47b88212b9de55aa7a9ee18b2fad2d03eb16234b66101150f74017
   languageName: node
   linkType: hard
 
@@ -5070,12 +5070,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/browser-logs@npm:^0.2.1":
-  version: 0.2.5
-  resolution: "@web/browser-logs@npm:0.2.5"
+"@web/browser-logs@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@web/browser-logs@npm:0.3.2"
   dependencies:
     errorstacks: ^2.2.0
-  checksum: 09ab2d6559b33830c649a6e6c1940b48203e7513626653e75d0283df606c4cd015c568617577a229a2ccfcfad0d26f3158707590fdcea56e8f3c5125c486d97b
+  checksum: 6a25c7199cca91dd370ce7c5a4665c1db27853cd89e6bd03e9aafd617d2f5f8eb3cca224a87964b927771517ff1cf23531fe57db9dee90816fb20c2a5e8a6604
   languageName: node
   linkType: hard
 
@@ -5085,32 +5085,6 @@ __metadata:
   dependencies:
     semver: ^7.3.4
   checksum: 278554bd00b757eaf296ba904a224c61d4698df1a5d6c04931c40bc6bb308e81e767055cbf283b763cc530aae6b200bb950aa19eb41aa8979a3a2b29e5f0ac7a
-  languageName: node
-  linkType: hard
-
-"@web/dev-server-core@npm:^0.3.18":
-  version: 0.3.19
-  resolution: "@web/dev-server-core@npm:0.3.19"
-  dependencies:
-    "@types/koa": ^2.11.6
-    "@types/ws": ^7.4.0
-    "@web/parse5-utils": ^1.2.0
-    chokidar: ^3.4.3
-    clone: ^2.1.2
-    es-module-lexer: ^1.0.0
-    get-stream: ^6.0.0
-    is-stream: ^2.0.0
-    isbinaryfile: ^4.0.6
-    koa: ^2.13.0
-    koa-etag: ^4.0.0
-    koa-send: ^5.0.1
-    koa-static: ^5.0.0
-    lru-cache: ^6.0.0
-    mime-types: ^2.1.27
-    parse5: ^6.0.1
-    picomatch: ^2.2.2
-    ws: ^7.4.2
-  checksum: 00b3cafc7d9c25806ae4af824d34d44928b09e039c7cf87e66ddc7b2f7d3198ab667f860282f8f8287cf26aeea1e8f4b348609eba4e05259cc52f4a7451c174f
   languageName: node
   linkType: hard
 
@@ -5246,7 +5220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/parse5-utils@npm:^1.2.0, @web/parse5-utils@npm:^1.3.1":
+"@web/parse5-utils@npm:^1.3.1":
   version: 1.3.1
   resolution: "@web/parse5-utils@npm:1.3.1"
   dependencies:
@@ -5266,33 +5240,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-commands@npm:^0.6.1":
-  version: 0.6.5
-  resolution: "@web/test-runner-commands@npm:0.6.5"
+"@web/test-runner-commands@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@web/test-runner-commands@npm:0.7.0"
   dependencies:
-    "@web/test-runner-core": ^0.10.27
+    "@web/test-runner-core": ^0.11.0
     mkdirp: ^1.0.4
-  checksum: 93c29cdfa627a60fba7e90d3fe53f36ac1a1b1d144df7e7e3f8a89d1d225f1e656a0fade709e6b02dfc9fb09b8dd87171a35576d809ff84018c61112b31faa96
+  checksum: ed931f5581b7f328d36d5edf6e25cc35a1c33aa980730f222c96c5290a3e543bae4ac2abda57de9447b1abee3085881b873d30db22dc521ca430c794bb609cd9
   languageName: node
   linkType: hard
 
-"@web/test-runner-core@npm:^0.10.27":
-  version: 0.10.27
-  resolution: "@web/test-runner-core@npm:0.10.27"
+"@web/test-runner-core@npm:^0.11.0":
+  version: 0.11.2
+  resolution: "@web/test-runner-core@npm:0.11.2"
   dependencies:
     "@babel/code-frame": ^7.12.11
     "@types/babel__code-frame": ^7.0.2
     "@types/co-body": ^6.1.0
-    "@types/convert-source-map": ^1.5.1
+    "@types/convert-source-map": ^2.0.0
     "@types/debounce": ^1.2.0
     "@types/istanbul-lib-coverage": ^2.0.3
     "@types/istanbul-reports": ^3.0.0
-    "@web/browser-logs": ^0.2.1
-    "@web/dev-server-core": ^0.3.18
+    "@web/browser-logs": ^0.3.2
+    "@web/dev-server-core": ^0.5.1
     chokidar: ^3.4.3
     cli-cursor: ^3.1.0
     co-body: ^6.1.0
-    convert-source-map: ^1.7.0
+    convert-source-map: ^2.0.0
     debounce: ^1.2.0
     dependency-graph: ^0.11.0
     globby: ^11.0.1
@@ -5306,7 +5280,7 @@ __metadata:
     open: ^8.0.2
     picomatch: ^2.2.2
     source-map: ^0.7.3
-  checksum: 8a204a156d836846e8dd992c43ca11a3b2ea55d7cd4ca4b7206e63069746f14a2c49f4ef0f4e923b7d284a8d000b6663c5f6a29f6c78818cc29cf9442fcef037
+  checksum: 1a0fb3c26500200535d2a0c438ed4515f8d2137272803724c758bb3b92310f95819e2d7928f10e47928fe99767be03bd1045eca7e11c360f0446b71f45445540
   languageName: node
   linkType: hard
 
@@ -7110,12 +7084,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai-a11y-axe@npm:^1.3.2":
-  version: 1.4.0
-  resolution: "chai-a11y-axe@npm:1.4.0"
+"chai-a11y-axe@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "chai-a11y-axe@npm:1.5.0"
   dependencies:
     axe-core: ^4.3.3
-  checksum: 5e42287236f6e1aa0bdcf31fbdcc3730bf8697484f9f9fd162e4c490cf131b04718788eb2655a7ae6f836cb4537eac0a7ac3ba5a614dbcb505ba222087152f84
+  checksum: b2c259dbbb01a7c541c1bf2f331917f249a6cc978aae780263cb49f3030f9a00ae88b4da78bf47e2ab1d04e79415805295a2ae1048f5221fc1947388f89319d1
   languageName: node
   linkType: hard
 
@@ -7722,6 +7696,13 @@ __metadata:
   version: 1.9.0
   resolution: "convert-source-map@npm:1.9.0"
   checksum: dc55a1f28ddd0e9485ef13565f8f756b342f9a46c4ae18b843fe3c30c675d058d6a4823eff86d472f187b176f0adf51ea7b69ea38be34be4a63cbbf91b0593c8
+  languageName: node
+  linkType: hard
+
+"convert-source-map@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "convert-source-map@npm:2.0.0"
+  checksum: 63ae9933be5a2b8d4509daca5124e20c14d023c820258e484e32dc324d34c2754e71297c94a05784064ad27615037ef677e3f0c00469fb55f409d2bb21261035
   languageName: node
   linkType: hard
 
@@ -12332,13 +12313,6 @@ __metadata:
   version: 2.0.5
   resolution: "isarray@npm:2.0.5"
   checksum: bd5bbe4104438c4196ba58a54650116007fa0262eccef13a4c55b2e09a5b36b59f1e75b9fcc49883dd9d4953892e6fc007eef9e9155648ceea036e184b0f930a
-  languageName: node
-  linkType: hard
-
-"isbinaryfile@npm:^4.0.6":
-  version: 4.0.10
-  resolution: "isbinaryfile@npm:4.0.10"
-  checksum: a6b28db7e23ac7a77d3707567cac81356ea18bd602a4f21f424f862a31d0e7ab4f250759c98a559ece35ffe4d99f0d339f1ab884ffa9795172f632ab8f88e686
   languageName: node
   linkType: hard
 
