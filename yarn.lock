@@ -2339,7 +2339,7 @@ __metadata:
     esbuild: ^0.17.19
     eslint: ^8.42.0
     glob: ^10.2.7
-    json-schema-to-typescript: ^13.0.1
+    json-schema-to-typescript: ^13.0.2
     mkdirp: ^3.0.1
     mocha: ^10.2.0
     nyc: ^15.1.0
@@ -2395,7 +2395,7 @@ __metadata:
     cssnano: ^6.0.1
     esbuild: ^0.17.19
     glob: ^10.2.7
-    json-schema-to-typescript: ^13.0.1
+    json-schema-to-typescript: ^13.0.2
     less: ^4.1.3
     lit: ^2.7.4
     mocha: ^10.2.0
@@ -12511,9 +12511,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-schema-to-typescript@npm:^13.0.1":
-  version: 13.0.1
-  resolution: "json-schema-to-typescript@npm:13.0.1"
+"json-schema-to-typescript@npm:^13.0.2":
+  version: 13.0.2
+  resolution: "json-schema-to-typescript@npm:13.0.2"
   dependencies:
     "@bcherny/json-schema-ref-parser": 10.0.5-fork
     "@types/json-schema": ^7.0.11
@@ -12531,7 +12531,7 @@ __metadata:
     prettier: ^2.6.2
   bin:
     json2ts: dist/src/cli.js
-  checksum: 8e95510628b159fdde37092a04bfb8cc1f35a7abd752965f724bd6a913d3ce9eb3c776884f67244ea3c7968ccabb8fac9bd17aed525644b2379a6c0fe899eecb
+  checksum: 2d9871d2c9391dddfb59e3d188fc6bd9f25241b62b06bac0a415bb4a86676388a28c231c4f151a5dbe05ef3c73211b14fb80d0adf804f66e5f8938fcbf4c822c
   languageName: node
   linkType: hard
 

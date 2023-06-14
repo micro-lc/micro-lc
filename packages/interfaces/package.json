@@ -35,7 +35,7 @@
     "esbuild": "^0.17.19",
     "eslint": "^8.42.0",
     "glob": "^10.2.7",
-    "json-schema-to-typescript": "^13.0.1",
+    "json-schema-to-typescript": "^13.0.2",
     "mkdirp": "^3.0.1",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
