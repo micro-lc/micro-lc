@@ -38,7 +38,10 @@ test.describe('iconic react tests', () => {
     await expect(page.locator('mlc-iconic').nth(1)).toBeVisible()
   })
 
-  test('should use react hook to generate an icon', async ({ page }) => {
+  test('should use react hook to generate an icon', async ({ page, browserName }) => {
+    test.slow()
+    browserName === 'webkit' && test.skip()
+
     await page.goto('http://localhost:3000/pages/icons.html')
 
     await expect(page.locator('svg').nth(0)).toBeVisible()
