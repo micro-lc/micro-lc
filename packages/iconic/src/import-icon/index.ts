@@ -17,6 +17,7 @@ import type { IconDefinition as FontawesomeIconDefinition } from '@fortawesome/f
 
 export type Library =
   | '@ant-design/icons-svg'
+  | '@fortawesome/free-brands-svg-icons'
   | '@fortawesome/free-regular-svg-icons'
   | '@fortawesome/free-solid-svg-icons'
 
@@ -47,7 +48,8 @@ interface AntdIconDefaultImport {
 interface FontAwesomeIconImport { default: { definition: FontawesomeIconDefinition } }
 
 const resources: Resources = {
-  '@ant-design/icons-svg': 'https://cdn.jsdelivr.net/npm/@ant-design/icons-svg@latest/es/asn/',
+  '@ant-design/icons-svg': 'https://cdn.jsdelivr.net/npm/@ant-design/icons-svg@4.2.1/es/asn/',
+  '@fortawesome/free-brands-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/fab/',
   '@fortawesome/free-regular-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/far/',
   '@fortawesome/free-solid-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/fas/',
 }
@@ -84,6 +86,7 @@ export async function importIcon(selector: string, resource: ResourceObject): Pr
     return import(uri)
       .then(({ default: { icon } }: { default: AntdIconDefaultImport }) => icon)
       .then((icon) => (typeof icon === 'function' ? icon('currentColor', 'white') : icon))
+  case '@fortawesome/free-brands-svg-icons':
   case '@fortawesome/free-regular-svg-icons':
   case '@fortawesome/free-solid-svg-icons':
     return import(uri).then(({ default: { definition } }: FontAwesomeIconImport) => {

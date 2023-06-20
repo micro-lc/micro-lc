@@ -16,25 +16,28 @@ const reduceToFiles = (globs: string[]) => globs.reduce<string[]>((names, name) 
   return names
 }, [])
 
-type LibKey = 'fas' | 'far'
+type LibKey = 'fab' | 'fas' | 'far'
 
 const mapping: Record<LibKey, string> = {
+  fab: '@fortawesome/free-brands-svg-icons',
   far: '@fortawesome/free-regular-svg-icons',
   fas: '@fortawesome/free-solid-svg-icons',
 }
 
+const __fabDir = dirname(require.resolve('@fortawesome/free-brands-svg-icons'))
 const __fasDir = dirname(require.resolve('@fortawesome/free-solid-svg-icons'))
 const __farDir = dirname(require.resolve('@fortawesome/free-regular-svg-icons'))
+const fab = reduceToFiles(globSync(`${__fabDir}/*.js`))
 const fas = reduceToFiles(globSync(`${__fasDir}/*.js`))
 const far = reduceToFiles(globSync(`${__farDir}/*.js`))
 
-Promise.all(Object.entries({ far, fas }).map(([key, files]) => {
+Promise.all(Object.entries({ fab, far, fas }).map(([key, files]) => {
   const mappingKey = key as LibKey
   console.log(`bundling ${key} folder from icons in ${mapping[mappingKey]}`)
   return build({
     banner: {
       js: `
-        /* Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com
+        /* Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com
         License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
         Copyright 2022 Fonticons, Inc.*/
     ` },
