@@ -19,6 +19,7 @@
 
     function App() {
       const AntdIcon = useIcon('AccountBookFilled', '@ant-design/icons-svg', console.error)
+      const FabIcon = useIcon('faReact', {library: '@fortawesome/free-brands-svg-icons', src: '/dist/fab'}, console.error)
       const FarIcon = useIcon('faAddressBook', {library: '@fortawesome/free-regular-svg-icons', src: '/dist/far'}, console.error)
       const FasIcon = useIcon('faAdd', {library: '@fortawesome/free-solid-svg-icons', src: '/dist/fas'}, console.error)
       return createElement(
@@ -27,6 +28,7 @@
           fallback: React.createElement('div', undefined, 'Loading...')
         },
         createElement(AntdIcon),
+        createElement(FabIcon),
         createElement(FarIcon),
         createElement(FasIcon),
       )
