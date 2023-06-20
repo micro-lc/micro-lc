@@ -45,7 +45,7 @@ export type LocalizedText = string | Record<string, string>
 /** Definition of a dynamically loaded icon */
 export interface Icon {
   /** Library from witch the icon is pulled */
-  library: '@ant-design/icons-svg' | '@fortawesome/free-regular-svg-icons' | '@fortawesome/free-solid-svg-icons'
+  library: '@ant-design/icons-svg' | '@fortawesome/free-brands-svg-icons' | '@fortawesome/free-regular-svg-icons' | '@fortawesome/free-solid-svg-icons'
 
   /** Name of the icon according to the chosen library */
   selector: string
