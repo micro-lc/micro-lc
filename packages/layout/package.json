@@ -91,7 +91,7 @@
     "@types/react-dom": "^18.2.4",
     "@types/sinon": "^10.0.14",
     "cssnano": "^6.0.1",
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.18.6",
     "glob": "^10.2.7",
     "json-schema-to-typescript": "^13.0.2",
     "less": "^4.1.3",
