@@ -38,7 +38,7 @@ export class MlcLayout extends MlcComponent<WrapperProps> {
   private _wasDisconnected = false
 
   @property({ attribute: 'mode' }) mode: Mode = 'overlaySideBar'
-  @property({ attribute: 'enable-dark-mode' }) enableDarkMode = false
+  @property({ attribute: 'enable-dark-mode', type: Boolean }) enableDarkMode = false
   @property({ attribute: false }) logo?: Partial<Logo>
   @property({ attribute: false }) menuItems?: Partial<MenuItem>[]
   @property({ attribute: false }) helpMenu?: Partial<HelpMenu>

@@ -25,14 +25,17 @@ const main = async () => {
   const dict: Record<string, LibraryData> = {}
 
   const __antDir = `${dirname(require.resolve('@ant-design/icons-svg'))}/asn`
+  const __fabDir = dirname(require.resolve('@fortawesome/free-brands-svg-icons'))
   const __fasDir = dirname(require.resolve('@fortawesome/free-solid-svg-icons'))
   const __farDir = dirname(require.resolve('@fortawesome/free-regular-svg-icons'))
 
   const antd = reduceToFiles(globSync(`${__antDir}/*.js`)).sort()
+  const fab = reduceToFiles(globSync(`${__fabDir}/*.js`)).filter((iconName) => iconName.startsWith('fa')).sort()
   const fas = reduceToFiles(globSync(`${__fasDir}/*.js`)).filter((iconName) => iconName.startsWith('fa')).sort()
   const far = reduceToFiles(globSync(`${__farDir}/*.js`)).filter((iconName) => iconName.startsWith('fa')).sort()
 
   dict['@ant-design/icons-svg'] = { icons: antd, meta: { name: 'Ant Design' } }
+  dict['@fortawesome/free-brands-svg-icons'] = { icons: fab, meta: { name: 'Font Awesome Brands' } }
   dict['@fortawesome/free-regular-svg-icons'] = { icons: far, meta: { name: 'Font Awesome Regular' } }
   dict['@fortawesome/free-solid-svg-icons'] = { icons: fas, meta: { name: 'Font Awesome Solid' } }
 

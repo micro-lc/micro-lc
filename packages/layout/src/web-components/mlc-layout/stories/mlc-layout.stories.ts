@@ -83,6 +83,7 @@ const menuItems: MlcLayout['menuItems'] = [
   {
     children: [
       {
+        icon: { library: '@fortawesome/free-brands-svg-icons', selector: 'faReact' },
         id: 'application_2',
         label: { en: 'Application 2', it: 'Applicazione 2' },
         type: 'application',

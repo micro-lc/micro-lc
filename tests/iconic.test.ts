@@ -23,6 +23,13 @@ test.describe('iconic react tests', () => {
                 },
                 tag: 'mlc-iconic',
               },
+              {
+                attributes: {
+                  library: '@fortawesome/free-brands-svg-icons',
+                  selector: 'faReact',
+                },
+                tag: 'mlc-iconic',
+              },
             ],
             sources: '/packages/layout/dist/mlc-iconic.js',
           },
@@ -36,6 +43,7 @@ test.describe('iconic react tests', () => {
 
     await expect(page.locator('mlc-iconic').nth(0)).toBeVisible()
     await expect(page.locator('mlc-iconic').nth(1)).toBeVisible()
+    await expect(page.locator('mlc-iconic').nth(2)).toBeVisible()
   })
 
   test('should use react hook to generate an icon', async ({ page, browserName }) => {
@@ -47,6 +55,7 @@ test.describe('iconic react tests', () => {
     await expect(page.locator('svg').nth(0)).toBeVisible()
     await expect(page.locator('svg').nth(1)).toBeVisible()
     await expect(page.locator('svg').nth(2)).toBeVisible()
+    await expect(page.locator('svg').nth(3)).toBeVisible()
   })
 
   test('should render an icon embedded in mlc-iconic custom webcomponent', async ({ page }) => {

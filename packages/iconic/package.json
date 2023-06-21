@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/iconic",
-  "version": "1.1.1",
+  "version": "1.2.0-rc1",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@ant-design/icons-svg": "^4.2.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -53,5 +54,6 @@
   },
   "engines": {
     "node": ">=16.17.0"
-  }
+  },
+  "stableVersion": "1.1.1"
 }
