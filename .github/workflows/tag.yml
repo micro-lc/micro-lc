@@ -41,7 +41,7 @@ jobs:
       security_checks_token: ${{ secrets.SECURITY_CHECKS_TOKEN }}
 
   release-package:
-    name: Release package on npm
+    name: Release package on npm / cdn
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
 
@@ -74,3 +74,10 @@ jobs:
       - name: Publish
         working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
         run: yarn npm publish
+        
+      - name: Install CDN Publish CLI
+        run: npm i -g @mia-platform/cdn-publish
+        
+      - name: Publish to Mia CDN
+        working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
+        run: cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s ${{ secrets.CDN_STORAGE_ZONE_NAME }}
