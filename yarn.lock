@@ -2416,7 +2416,7 @@ __metadata:
     chai-string: ^1.5.0
     es-module-shims: ^1.7.3
     esbuild: ^0.18.6
-    glob: ^10.2.7
+    glob: ^10.3.1
     lit-html: ^2.7.4
     mocha: ^10.2.0
     nyc: ^15.1.0
@@ -2458,7 +2458,7 @@ __metadata:
     "@web/dev-server-import-maps": ^0.1.1
     "@web/dev-server-rollup": ^0.5.1
     esbuild: ^0.18.6
-    glob: ^10.2.7
+    glob: ^10.3.1
     prop-types: ^15.8.1
     react-test-renderer: ^18.2.0
     ts-node: ^10.9.1
@@ -2483,7 +2483,7 @@ __metadata:
     chai: ^4.3.7
     esbuild: ^0.18.6
     eslint: ^8.43.0
-    glob: ^10.2.7
+    glob: ^10.3.1
     json-schema-to-typescript: ^13.0.2
     mkdirp: ^3.0.1
     mocha: ^10.2.0
@@ -2539,7 +2539,7 @@ __metadata:
     antd: ^4.24.10
     cssnano: ^6.0.1
     esbuild: ^0.18.6
-    glob: ^10.2.7
+    glob: ^10.3.1
     json-schema-to-typescript: ^13.0.2
     less: ^4.1.3
     lit: ^2.7.4
@@ -2588,7 +2588,7 @@ __metadata:
     chai-string: ^1.5.0
     es-module-shims: ^1.7.3
     esbuild: ^0.18.6
-    glob: ^10.2.7
+    glob: ^10.3.1
     js-yaml: ^4.1.0
     lit-html: ^2.7.4
     lodash-es: ^4.17.21
@@ -10673,7 +10673,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.5, glob@npm:^10.2.7":
+"glob@npm:^10.2.5":
   version: 10.2.7
   resolution: "glob@npm:10.2.7"
   dependencies:
@@ -10685,6 +10685,21 @@ __metadata:
   bin:
     glob: dist/cjs/src/bin.js
   checksum: 555205a74607d6f8d9874ba888924b305b5ea1abfaa2e9ccb11ac713d040aac7edbf7d8702a2f4a1cd81b2d7666412170ce7ef061d33cddde189dae8c1a1a054
+  languageName: node
+  linkType: hard
+
+"glob@npm:^10.3.1":
+  version: 10.3.1
+  resolution: "glob@npm:10.3.1"
+  dependencies:
+    foreground-child: ^3.1.0
+    jackspeak: ^2.0.3
+    minimatch: ^9.0.1
+    minipass: ^5.0.0 || ^6.0.2
+    path-scurry: ^1.10.0
+  bin:
+    glob: dist/cjs/src/bin.js
+  checksum: 19c8c2805658b1002fecf0722cd609a33153d756a0d5260676bd0e9c5e6ef889ec9cce6d3dac0411aa90bce8de3d14f25b6f5589a3292582cccbfeddd0e98cc4
   languageName: node
   linkType: hard
 
@@ -13270,6 +13285,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^9.1.1 || ^10.0.0":
+  version: 10.0.0
+  resolution: "lru-cache@npm:10.0.0"
+  checksum: 18f101675fe283bc09cda0ef1e3cc83781aeb8373b439f086f758d1d91b28730950db785999cd060d3c825a8571c03073e8c14512b6655af2188d623031baf50
+  languageName: node
+  linkType: hard
+
 "lru-queue@npm:^0.1.0":
   version: 0.1.0
   resolution: "lru-queue@npm:0.1.0"
@@ -13691,7 +13713,7 @@ __metadata:
     eslint-plugin-typescript-sort-keys: ^2.3.0
     eslint-visitor-keys: ^3.4.1
     express: ^4.18.2
-    glob: ^10.2.7
+    glob: ^10.3.1
     husky: ^8.0.3
     jsonc-eslint-parser: ^2.3.0
     lit-html: ^2.7.4
@@ -15169,6 +15191,16 @@ __metadata:
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
   checksum: 49abf3d81115642938a8700ec580da6e830dde670be21893c62f4e10bd7dd4c3742ddc603fe24f898cba7eb0c6bc1777f8d9ac14185d34540c6d4d80cd9cae8a
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "path-scurry@npm:1.10.0"
+  dependencies:
+    lru-cache: ^9.1.1 || ^10.0.0
+    minipass: ^5.0.0 || ^6.0.2
+  checksum: 3b66a4a6ab66e45755b577c966ecf0da92d3e068b3c992d8f69aa2cc908ef4eda9358253e9b4f86cad43d3ad810ec445be164105975f5cb3fdab68459c59dc6e
   languageName: node
   linkType: hard
 
