@@ -2426,7 +2426,7 @@ __metadata:
     sinon-chai: ^3.7.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^5.0.4
+    typescript: ^5.1.6
     vite: ^4.2.3
     vite-plugin-banner: ^0.7.0
   peerDependencies:
@@ -2462,7 +2462,7 @@ __metadata:
     prop-types: ^15.8.1
     react-test-renderer: ^18.2.0
     ts-node: ^10.9.1
-    typescript: ^5.0.4
+    typescript: ^5.1.6
   peerDependencies:
     react: ">=17"
   languageName: unknown
@@ -2491,7 +2491,7 @@ __metadata:
     postcss: ^8.4.23
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^5.0.4
+    typescript: ^5.1.6
   peerDependencies:
     postcss: "*"
   languageName: unknown
@@ -2552,7 +2552,7 @@ __metadata:
     sinon: ^15.0.4
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^5.0.4
+    typescript: ^5.1.6
     vite: ^4.2.3
     vite-plugin-banner: ^0.7.0
     vite-plugin-dynamic-import: ^1.2.7
@@ -2602,7 +2602,7 @@ __metadata:
     sinon-chai: ^3.7.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^5.0.4
+    typescript: ^5.1.6
     vite: ^4.2.3
     vite-plugin-banner: ^0.7.0
   peerDependencies:
@@ -10673,22 +10673,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.5":
-  version: 10.2.7
-  resolution: "glob@npm:10.2.7"
-  dependencies:
-    foreground-child: ^3.1.0
-    jackspeak: ^2.0.3
-    minimatch: ^9.0.1
-    minipass: ^5.0.0 || ^6.0.2
-    path-scurry: ^1.7.0
-  bin:
-    glob: dist/cjs/src/bin.js
-  checksum: 555205a74607d6f8d9874ba888924b305b5ea1abfaa2e9ccb11ac713d040aac7edbf7d8702a2f4a1cd81b2d7666412170ce7ef061d33cddde189dae8c1a1a054
-  languageName: node
-  linkType: hard
-
-"glob@npm:^10.3.1":
+"glob@npm:^10.2.5, glob@npm:^10.3.1":
   version: 10.3.1
   resolution: "glob@npm:10.3.1"
   dependencies:
@@ -13289,13 +13274,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^9.0.0":
-  version: 9.1.0
-  resolution: "lru-cache@npm:9.1.0"
-  checksum: 97b46faa2e8195b75b1c48a5515f8e458b8f6a0d0933c0484a4e45b6aa67406dcc5f6c8774fef206fd918dce6a4b4a6f627541fbdf74f8e6b3c71f688f43041e
-  languageName: node
-  linkType: hard
-
 "lru-cache@npm:^9.1.1 || ^10.0.0":
   version: 10.0.0
   resolution: "lru-cache@npm:10.0.0"
@@ -13738,7 +13716,7 @@ __metadata:
     stylelint-config-standard: ^32.0.0
     stylelint-declaration-block-no-ignored-properties: ^2.7.0
     ts-node: ^10.9.1
-    typescript: ^5.0.4
+    typescript: ^5.1.6
     vite: ^4.2.3
   dependenciesMeta:
     "@ant-design/icons-svg@4.2.1":
@@ -13992,13 +13970,6 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: f89f02bcaa0e0e4bb4c44ec796008e69fbca62db0aba6ead1bc57d25bdaefdf42102130f4f9ecb7d9c6b6cd35ff7b0c7b97d001d3435da8e629fb68af3aea57e
-  languageName: node
-  linkType: hard
-
-"minipass@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "minipass@npm:5.0.0"
-  checksum: 425dab288738853fded43da3314a0b5c035844d6f3097a8e3b5b29b328da8f3c1af6fc70618b32c29ff906284cf6406b6841376f21caaadd0793c1d5a6a620ea
   languageName: node
   linkType: hard
 
@@ -14329,21 +14300,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
-  version: 2.6.11
-  resolution: "node-fetch@npm:2.6.11"
-  dependencies:
-    whatwg-url: ^5.0.0
-  peerDependencies:
-    encoding: ^0.1.0
-  peerDependenciesMeta:
-    encoding:
-      optional: true
-  checksum: 249d0666a9497553384d46b5ab296ba223521ac88fed4d8a17d6ee6c2efb0fc890f3e8091cafe7f9fba8151a5b8d925db2671543b3409a56c3cd522b468b47b3
-  languageName: node
-  linkType: hard
-
-"node-fetch@npm:^2.6.12":
+"node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7":
   version: 2.6.12
   resolution: "node-fetch@npm:2.6.12"
   dependencies:
@@ -15226,16 +15183,6 @@ __metadata:
     lru-cache: ^9.1.1 || ^10.0.0
     minipass: ^5.0.0 || ^6.0.2
   checksum: 3b66a4a6ab66e45755b577c966ecf0da92d3e068b3c992d8f69aa2cc908ef4eda9358253e9b4f86cad43d3ad810ec445be164105975f5cb3fdab68459c59dc6e
-  languageName: node
-  linkType: hard
-
-"path-scurry@npm:^1.7.0":
-  version: 1.7.0
-  resolution: "path-scurry@npm:1.7.0"
-  dependencies:
-    lru-cache: ^9.0.0
-    minipass: ^5.0.0
-  checksum: 4e86df0fa6848cef1ba672d4a332b8dbd0297c42d5123bcc419d714c34b25ee6775b0d2e66dd5e698a38e9bcd808f8fc47333e3a3357307cada98e16bfae8b98
   languageName: node
   linkType: hard
 
@@ -19758,23 +19705,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.0.4":
-  version: 5.0.4
-  resolution: "typescript@npm:5.0.4"
+"typescript@npm:^5.1.6":
+  version: 5.1.6
+  resolution: "typescript@npm:5.1.6"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 82b94da3f4604a8946da585f7d6c3025fff8410779e5bde2855ab130d05e4fd08938b9e593b6ebed165bda6ad9292b230984f10952cf82f0a0ca07bbeaa08172
+  checksum: b2f2c35096035fe1f5facd1e38922ccb8558996331405eb00a5111cc948b2e733163cc22fab5db46992aba7dd520fff637f2c1df4996ff0e134e77d3249a7350
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.0.4#~builtin<compat/typescript>":
-  version: 5.0.4
-  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"
+"typescript@patch:typescript@^5.1.6#~builtin<compat/typescript>":
+  version: 5.1.6
+  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bb309d320c59a26565fb3793dba550576ab861018ff3fd1b7fccabbe46ae4a35546bc45f342c0a0b6f265c801ccdf64ffd68f548f117ceb7f0eac4b805cd52a9
+  checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
   languageName: node
   linkType: hard
 
