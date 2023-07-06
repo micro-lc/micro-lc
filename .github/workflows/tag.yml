@@ -110,4 +110,4 @@ jobs:
         working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
         run: |
           npm i -g @mia-platform/cdn-publish@0.4.0
-          cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s "mia-platform"
+          cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s "mia-platform" -b 20
