@@ -10,6 +10,15 @@ interface IconComponent {
   tag: string
 }
 
+interface LibraryData {
+  icons: string[]
+  meta: {
+    name: string
+  }
+}
+
+type Dict = Record<string, LibraryData>
+
 const rootDir = path.resolve(__dirname, '..')
 const workingDir = path.resolve(rootDir, 'assets')
 const distPhDir = path.resolve(rootDir, 'dist/ph')
@@ -67,4 +76,34 @@ const bundlePhosphorIcons = async () =>
     })
   })
 
+const capitalize = (input: string) => `${input.charAt(0).toUpperCase()}${input.substring(1)}`
+
+const listPhosphorIcons = async () =>
+  new Promise<Dict>((resolve, reject) => {
+    fs.readFile(phosphorIconsLocalPathname, (err, data) => {
+      if (!err) {
+        const zip = new JSZip()
+        zip.loadAsync(data).then((contents) =>
+          resolve(
+            Object.entries(contents.files)
+              .filter(([key, entry]) => key.startsWith('2.0.0/SVGs/') && !entry.dir && entry.name.endsWith('.svg'))
+              .reduce<Dict>((dict, [, { name }]) => {
+                const [libPostFix, iconName] = name.replace('2.0.0/SVGs/', '').split('/')
+
+                const lib = `phosphor/${libPostFix}`
+
+                const current = (dict[lib] as LibraryData | undefined) ?? { icons: [], meta: { name: `Phosphor ${capitalize(libPostFix)}` } }
+                current.icons.push(iconName.replace(/\.svg$/, ''))
+
+                dict[lib] = current
+
+                return dict
+              }, {})
+          )
+        ).catch(reject)
+      }
+    })
+  })
+
+export { listPhosphorIcons }
 export default bundlePhosphorIcons
