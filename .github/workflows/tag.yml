@@ -40,8 +40,8 @@ jobs:
       token: ${{ secrets.BOT_DOCKER_TOKEN }}
       security_checks_token: ${{ secrets.SECURITY_CHECKS_TOKEN }}
 
-  release-package:
-    name: Release package on npm / cdn
+  release-npm-package:
+    name: Release package on npm
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
 
@@ -74,10 +74,40 @@ jobs:
       - name: Publish
         working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
         run: yarn npm publish
-        
-      - name: Install CDN Publish CLI
-        run: npm i -g @mia-platform/cdn-publish
-        
+  
+  release-cdn-package:
+    name: Release package on cdn.mia-platform.eu
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Extract tag name
+        id: extract_tag
+        shell: bash
+        run: echo "tag=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
+
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Prepare NPM
+        id: prepare-npm-package
+        run: |
+          TAGS=${{ steps.extract_tag.outputs.tag }}
+          echo "package=$(echo $TAGS | sed 's/^\(@micro-lc\/\)//' | sed 's/@.*$//')" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: yarn initialize --cleanup ${{ steps.prepare-npm-package.outputs.package }}
+
       - name: Publish to Mia CDN
         working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
-        run: cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s "mia-platform"
+        run: |
+          npm i -g @mia-platform/cdn-publish@0.4.0
+          cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s "mia-platform" -b 20
