@@ -7,6 +7,8 @@ import { globSync } from 'glob'
 
 import settings from '../../../settings.json'
 
+import bundlePhosphorIcons from './bundle-phosphor-icons'
+
 const reduceToFiles = (globs: string[]) => globs.reduce<string[]>((names, name) => {
   const filename = basename(name, '.js')
   if (filename) {
@@ -35,7 +37,7 @@ const fas = reduceToFiles(globSync(`${__fasDir}/*.js`))
 const far = reduceToFiles(globSync(`${__farDir}/*.js`))
 const ant = reduceToFiles(globSync(`${__antDir}/*.js`))
 
-Promise.all(Object.entries({ ant, fab, far, fas }).map(([key, files]) => {
+Promise.all([bundlePhosphorIcons(), ...Object.entries({ ant, fab, far, fas }).map(([key, files]) => {
   const mappingKey = key as LibKey
   console.log(`bundling ${key} folder from icons in ${mapping[mappingKey]}`)
   return build({
@@ -54,8 +56,8 @@ Promise.all(Object.entries({ ant, fab, far, fas }).map(([key, files]) => {
     outdir: resolve(__dirname, `../dist/${key}`),
     target: settings.target,
   })
-})).then(() => {
-  Object.values(mapping).forEach((lib) => {
+})]).then(() => {
+  Object.values({ ...mapping, ph: 'phosphor' }).forEach((lib) => {
     console.log(`✓ ${lib}`)
   })
 }).catch(console.error)
