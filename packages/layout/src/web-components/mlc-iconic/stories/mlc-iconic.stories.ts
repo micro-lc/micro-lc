@@ -43,10 +43,9 @@ Ant.args = {
   selector: 'MessageOutlined',
 }
 
-// export const FontAwesome = Template.bind({}) as Story<MlcIconic>
-// FontAwesome.storyName = 'Font Awesome Icons'
-// FontAwesome.args = {
-//   library: '@fortawesome/free-regular-svg-icons',
-//   selector: 'faCommentDots',
-//   src: '../../../../../iconic/dist/far',
-// }
+export const Ph = Template.bind({}) as Story<MlcIconic>
+Ph.storyName = 'Phosphor Icons'
+Ph.args = {
+  library: 'phosphor/fill',
+  selector: 'address-book-fill',
+}

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added support for [`phosphor` icons](https://phosphoricons.com/), which are now bundled as part of the published content
+
+## [1.2.1] - 2023-07-05
+
+### Added
+
+- Ant Design icons are now bundled
+
 ## [1.2.0] - 2023-06-21
 
 ### Added

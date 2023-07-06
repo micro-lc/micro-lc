@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `mlc-iconic` supports [`phosphor` icons](https://phosphoricons.com/), which are now bundled as part of the published content of `@micro-lc/iconic`
+- `mlc-layout` supports [`phosphor` icons](https://phosphoricons.com/)
+
 ### Versioning
 
 - Development dependencies updated
