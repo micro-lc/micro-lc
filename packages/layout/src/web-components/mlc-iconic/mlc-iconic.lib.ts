@@ -35,7 +35,9 @@ function iconCompose({ tag, attrs, children }: IconComponent, style?: CSSStyleDe
       return props
     }, [])
 
-  if (!children) { return `<${tag} ${properties.join(' ')}></${tag}>` }
+  if (!children || (Array.isArray(children) && children.length === 0)) {
+    return `<${tag} ${properties.join(' ')}></${tag}>`
+  }
 
   const mapper = (cc: IconComponent[]) => cc
     .filter(Boolean)

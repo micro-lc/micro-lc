@@ -94,4 +94,16 @@ test.describe('iconic react tests', () => {
 
     await expect(page.locator('svg[viewBox]')).toBeVisible()
   })
+
+  test('should show a phosphor regular icon', async ({ page }) => {
+    await page.goto('http://localhost:3000/pages/mlc-icons.html')
+    const iconHandle = await page.evaluateHandle(() => document.querySelector('mlc-iconic') as HTMLElement)
+
+    await page.evaluate((iconic) => {
+      iconic.setAttribute('library', 'phosphor/fill')
+      iconic.setAttribute('selector', 'address-book-fill')
+    }, iconHandle)
+
+    await expect(page.locator('svg[viewBox]')).toBeVisible()
+  })
 })

@@ -3,6 +3,8 @@ import { basename, dirname, resolve } from 'path'
 
 import { globSync } from 'glob'
 
+import { listPhosphorIcons } from './bundle-phosphor-icons'
+
 interface LibraryData {
   icons: string[]
   meta: {
@@ -39,7 +41,9 @@ const main = async () => {
   dict['@fortawesome/free-regular-svg-icons'] = { icons: far, meta: { name: 'Font Awesome Regular' } }
   dict['@fortawesome/free-solid-svg-icons'] = { icons: fas, meta: { name: 'Font Awesome Solid' } }
 
-  await writeFile(`${distDir}/icons-list.json`, JSON.stringify(dict, null, 2))
+  const phDict = await listPhosphorIcons()
+
+  await writeFile(`${distDir}/icons-list.json`, JSON.stringify({ ...dict, ...phDict }, null, 2))
 }
 
 main()

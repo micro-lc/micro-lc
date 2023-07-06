@@ -91,6 +91,10 @@ const menuItems: MlcLayout['menuItems'] = [
       {
         children: [
           {
+            icon: {
+              library: 'phosphor/fill',
+              selector: 'address-book-fill',
+            },
             id: 'application_3',
             label: { en: 'Application 1', it: 'Applicazione 1' },
             type: 'application',

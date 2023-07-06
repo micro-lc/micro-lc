@@ -20,6 +20,12 @@ export type Library =
   | '@fortawesome/free-brands-svg-icons'
   | '@fortawesome/free-regular-svg-icons'
   | '@fortawesome/free-solid-svg-icons'
+  | 'phosphor/bold'
+  | 'phosphor/duotone'
+  | 'phosphor/fill'
+  | 'phosphor/light'
+  | 'phosphor/regular'
+  | 'phosphor/thin'
 
 export type ResourceObject = string | { library: Library; src: string }
 
@@ -45,6 +51,10 @@ interface AntdIconDefaultImport {
   icon: IconComponent | ((primaryColor?: string, secondaryColor?: string) => IconComponent)
 }
 
+interface PhosphorDefaultImport {
+  icon: IconComponent
+}
+
 interface FontAwesomeIconImport { default: { definition: FontawesomeIconDefinition } }
 
 const resources: Resources = {
@@ -52,6 +62,12 @@ const resources: Resources = {
   '@fortawesome/free-brands-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/fab/',
   '@fortawesome/free-regular-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/far/',
   '@fortawesome/free-solid-svg-icons': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/fas/',
+  'phosphor/bold': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/ph/bold/',
+  'phosphor/duotone': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/ph/duotone/',
+  'phosphor/fill': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/ph/fill/',
+  'phosphor/light': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/ph/light/',
+  'phosphor/regular': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/ph/regular/',
+  'phosphor/thin': 'https://cdn.jsdelivr.net/npm/@micro-lc/iconic@latest/dist/ph/thin/',
 }
 
 const resourceKeys = Object.keys(resources)
@@ -109,6 +125,13 @@ export async function importIcon(selector: string, resource: ResourceObject): Pr
         tag: 'svg',
       }
     })
+  case 'phosphor/bold':
+  case 'phosphor/duotone':
+  case 'phosphor/fill':
+  case 'phosphor/light':
+  case 'phosphor/regular':
+  case 'phosphor/thin':
+    return import(uri).then(({ default: { icon } }: {default: PhosphorDefaultImport}) => icon)
   }
 }
 
