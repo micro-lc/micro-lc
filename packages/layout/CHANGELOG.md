@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Development dependencies updated
 - `lit` to `^2.7.5`
+- `antd` to version `^4.24.12`
 
 ## [2.1.0] - 2023-06-21
 
