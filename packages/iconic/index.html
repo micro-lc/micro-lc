@@ -20,6 +20,7 @@
       const FabIcon = useIcon('faReact', {library: '@fortawesome/free-brands-svg-icons', src: '/dist/fab'}, console.error)
       const FarIcon = useIcon('faAddressBook', {library: '@fortawesome/free-regular-svg-icons', src: '/dist/far'}, console.error)
       const FasIcon = useIcon('faAdd', {library: '@fortawesome/free-solid-svg-icons', src: '/dist/fas'}, console.error)
+      const PhIcon = useIcon('address-book-fill', {library: 'phosphor/fill', src: '/dist/ph/fill'}, console.error)
       return createElement(
         Suspense,
         {
@@ -29,6 +30,7 @@
         createElement(FabIcon),
         createElement(FarIcon),
         createElement(FasIcon),
+        createElement(PhIcon),
       )
     }
 

@@ -4,6 +4,7 @@ import { goto } from './complete-config'
 
 test.describe('iconic react tests', () => {
   test('should render an antd icon', async ({ page }) => {
+    test.slow()
     const config = {
       applications: {
         icon: {
@@ -59,6 +60,7 @@ test.describe('iconic react tests', () => {
   })
 
   test('should render an icon embedded in mlc-iconic custom webcomponent', async ({ page }) => {
+    test.slow()
     await page.goto('http://localhost:3000/pages/mlc-icons.html')
     const iconHandle = await page.evaluateHandle(() => document.querySelector('mlc-iconic') as HTMLElement)
 
@@ -72,6 +74,7 @@ test.describe('iconic react tests', () => {
   })
 
   test('should fail fetching an icon and keep the fallback', async ({ page }) => {
+    test.slow()
     await page.goto('http://localhost:3000/pages/mlc-icons.html')
     const iconHandle = await page.evaluateHandle(() => document.querySelector('mlc-iconic') as HTMLElement)
 
@@ -84,12 +87,26 @@ test.describe('iconic react tests', () => {
   })
 
   test('should show a fontawesome regular icon', async ({ page }) => {
+    test.slow()
     await page.goto('http://localhost:3000/pages/mlc-icons.html')
     const iconHandle = await page.evaluateHandle(() => document.querySelector('mlc-iconic') as HTMLElement)
 
     await page.evaluate((iconic) => {
       iconic.setAttribute('library', '@fortawesome/free-regular-svg-icons')
       iconic.setAttribute('selector', 'faAddressBook')
+    }, iconHandle)
+
+    await expect(page.locator('svg[viewBox]')).toBeVisible()
+  })
+
+  test('should show a phosphor regular icon', async ({ page }) => {
+    test.slow()
+    await page.goto('http://localhost:3000/pages/mlc-icons.html')
+    const iconHandle = await page.evaluateHandle(() => document.querySelector('mlc-iconic') as HTMLElement)
+
+    await page.evaluate((iconic) => {
+      iconic.setAttribute('library', 'phosphor/fill')
+      iconic.setAttribute('selector', 'address-book-fill')
     }, iconHandle)
 
     await expect(page.locator('svg[viewBox]')).toBeVisible()
