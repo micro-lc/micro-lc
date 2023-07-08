@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixes
+
+- security updates / vulnerability fixes in `.docker/Dockerfile` related with `nginx:1.24.0-alpine` for `CVE-2023-3138` and `CVE-2023-3316`
+
 ### Versioning
 
 - Development dependencies updated
