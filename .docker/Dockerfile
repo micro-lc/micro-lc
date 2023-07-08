@@ -91,7 +91,9 @@ FROM nginx:${NGINX_VERSION}-alpine
 #  - CVE-2023-1999    Unknown  libwebp-1.2.4-r1                         APKG     1.2.4-r2         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-1999
 #  - CVE-2023-29491   High     ncurses-libs-6.3_p20221119-r0            APKG     6.3_p20221119-r1 https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-29491
 #  - CVE-2023-29491   High     ncurses-terminfo-base-6.3_p20221119-r0   APKG     6.3_p20221119-r1 https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-29491
-RUN apk add --no-cache --upgrade curl libcurl libcrypto3 libssl3 libwebp ncurses-libs
+#  - CVE-2023-3138    High     libx11-1.8.4-r0                          APKG     1.8.4-r1         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-3138
+#  - CVE-2023-3316    Medium   tiff-4.4.0-r3                            APKG     4.4.0-r4         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-3316
+RUN apk add --no-cache --upgrade curl libcurl libcrypto3 libssl3 libwebp ncurses-libs tiff libx11
 
 COPY --from=builder /usr/lib/nginx/modules/ndk_http_module.so /etc/nginx/modules/ndk_http_module.so
 COPY --from=builder /usr/lib/nginx/modules/ngx_http_set_misc_module.so /etc/nginx/modules/ngx_http_set_misc_module.so
