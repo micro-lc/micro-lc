@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.35.1",
-    "@types/eslint": "^8.40.2",
+    "@types/eslint": "^8.44.0",
     "@types/express": "^4.17.17",
     "@types/glob": "^8.1.0",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
@@ -44,7 +44,7 @@
     "commander": "^11.0.0",
     "confusing-browser-globals": "^1.0.11",
     "esbuild": "^0.18.11",
-    "eslint": "^8.43.0",
+    "eslint": "^8.44.0",
     "eslint-config-esnext": "^4.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsonc": "^2.9.0",
