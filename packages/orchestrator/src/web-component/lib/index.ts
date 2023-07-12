@@ -15,6 +15,7 @@
 */
 export * from './api'
 export * from './extensions'
+export * from './mfe-loader'
 export * from './qiankun'
 export * from './router'
 export * from './update'

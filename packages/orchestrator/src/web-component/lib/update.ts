@@ -13,17 +13,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { ComposerOptions, ComposerApi } from '@micro-lc/composer'
-import { premount, createComposerContext } from '@micro-lc/composer'
+import type { ComposerApi } from '@micro-lc/composer'
 import type {
   Application,
   Config,
-  Content,
   GlobalImportMap,
   PluginConfiguration,
-  ParcelApplication,
 } from '@micro-lc/interfaces/v2'
-import type { Entry } from 'qiankun'
 import type { Observable } from 'rxjs'
 import { take } from 'rxjs'
 
@@ -31,13 +27,13 @@ import { take } from 'rxjs'
 import { defaultConfig } from '../../config'
 import type { ErrorCodes } from '../../logger'
 import logger from '../../logger'
-import { toArray } from '../../utils/array'
 import type { SchemaOptions } from '../../utils/json'
 import { invalidJsonCatcher, jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../../utils/json'
 import type { Microlc } from '../micro-lc'
 
-import type { MicrolcApi } from './api'
+import type { MicrolcApi, MicrolcEvent } from './api'
 import type { BaseExtension } from './extensions'
+import { prepareApplicationConfig } from './mfe-loader'
 
 const defaultInitOptions: Partial<ESMSInitOptions> = {
   mapOverrides: true,
@@ -109,11 +105,11 @@ export async function updateGlobalImportMap(importmap: GlobalImportMap): Promise
   return Promise.resolve()
 }
 
-export interface ComposableApplicationProperties<T extends BaseExtension = BaseExtension> {
+export interface ComposableApplicationProperties<T extends BaseExtension = BaseExtension, E extends MicrolcEvent = MicrolcEvent> extends Record<string, unknown> {
   composerApi: Partial<ComposerApi>
   config: string | PluginConfiguration | undefined
   injectBase: boolean | 'override' | undefined
-  microlcApi: Partial<MicrolcApi<T>>
+  microlcApi: Partial<MicrolcApi<T, E>>
   schema: SchemaOptions | undefined
 }
 
@@ -129,78 +125,14 @@ export async function getApplicationSchema(): Promise<SchemaOptions | undefined>
   return schema
 }
 
-function getContainer<T extends BaseExtension>(this: Microlc<T>, selector: string | undefined): HTMLElement {
+function getContainer<T extends BaseExtension, _ extends MicrolcEvent>(this: Microlc<T, _>, selector: string | undefined): HTMLElement {
   const selected = selector
     ? this.querySelector<HTMLElement>(selector)
     : this._container
   return selected ?? this._container
 }
 
-const buildComposer = (mode: Application['integrationMode'], extraProperties: Record<string, unknown>): Partial<ComposerApi> => {
-  const defaultComposerApi: ComposerApi = {
-    context: extraProperties,
-    createComposerContext,
-    premount,
-  }
-  switch (mode) {
-  case 'iframe':
-    return {
-      ...defaultComposerApi,
-      createComposerContext: (content: Content, opts: ComposerOptions | undefined) => createComposerContext(content, {
-        context: {
-          ...opts?.context,
-          onload() {
-          /** noop */
-          },
-        },
-        extraProperties: new Set([...(opts?.extraProperties ?? []), 'onload']),
-      }),
-      premount,
-    }
-  case 'compose':
-    return { context: defaultComposerApi.context }
-  case 'parcel':
-  default:
-    return defaultComposerApi
-  }
-}
-
-const getExtraIFrameAttributes = (app: {attributes?: Record<string, string>; src?: string; srcdoc?: string}) => {
-  const extraIframeAttributes: Record<string, string> = {}
-  if (typeof app.attributes?.src === 'string') {
-    extraIframeAttributes.src = app.attributes.src
-  }
-  if (typeof app.src === 'string') {
-    extraIframeAttributes.src = app.src
-  }
-  if (typeof app.attributes?.srcdoc === 'string') {
-    extraIframeAttributes.srcdoc = app.attributes.srcdoc
-  }
-  if (typeof app.srcdoc === 'string') {
-    extraIframeAttributes.srcdoc = app.srcdoc
-  }
-  return extraIframeAttributes
-}
-
-const getParcelEntry = ({ entry }: ParcelApplication): Entry => {
-  if (typeof entry === 'string') {
-    return entry
-  }
-
-  const scripts = toArray(entry.scripts ?? [])
-  const styles = toArray(entry.styles ?? [])
-  if (typeof entry.html === 'string' && scripts.length === 0) {
-    return entry.html
-  }
-
-  return {
-    ...entry,
-    scripts,
-    styles,
-  }
-}
-
-export async function updateApplications<T extends BaseExtension>(this: Microlc<T>): Promise<void> {
+export async function updateApplications<T extends BaseExtension, E extends MicrolcEvent>(this: Microlc<T, E>): Promise<void> {
   const {
     _config: {
       settings: {
@@ -226,57 +158,9 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     ...Object.entries(applications),
   ]
 
-  const schema = await getApplicationSchema()
-
   pages.reduce((acc, [id, app], idx) => {
-    let injectBase: boolean | 'override' | undefined = false
-    let entry: Entry
-    let config: string | PluginConfiguration | undefined
-    let properties: Record<string, unknown> | undefined
-    const name = `${id}-${window.crypto.randomUUID()}`
-    switch (app.integrationMode) {
-    case 'compose':
-      entry = {
-        html: `
-          <!DOCTYPE html>
-          <html>
-          <head></head>
-          <body><div class="${COMPOSER_BODY_CLASS}" id="${name}"></div></body>
-          </html>
-        `,
-        scripts: [composerUri],
-        styles: [],
-      }
-      config = typeof app.config === 'string'
-        ? app.config
-        : { ...app.config }
-      break
-    case 'iframe':
-      entry = { scripts: [composerUri] }
-      config = {
-        content: {
-          attributes: {
-            style: `width: inherit;
-                    height: inherit;
-                    border: none;`,
-            ...app.attributes,
-            ...getExtraIFrameAttributes(app),
-          },
-          content: {
-            content: 'Your browser does not support iframes',
-            tag: 'p',
-          },
-          tag: 'iframe',
-        },
-      }
-      break
-    case 'parcel':
-    default:
-      injectBase = app.injectBase
-      entry = getParcelEntry(app)
-      properties = app.properties
-      break
-    }
+    const { name, makeConfig } = prepareApplicationConfig<T, E>(id, app as Application, composerUri)
+    const container = getContainer.call<Microlc<T, E>, [string | undefined], HTMLElement>(this, mountPointSelector)
 
     let idScopedByInstance = id
     if (idx < errorPages.length) {
@@ -286,23 +170,7 @@ export async function updateApplications<T extends BaseExtension>(this: Microlc<
     }
 
     acc.mapping.set(name, idScopedByInstance)
-    acc.apps.set(idScopedByInstance, [app.route, {
-      container: getContainer.call<Microlc<T>, [string | undefined], HTMLElement>(this, mountPointSelector),
-      entry,
-      name,
-      props: {
-        composerApi: buildComposer(app.integrationMode, {
-          microlcApi: this.getApi(),
-          ...sharedProperties,
-        }),
-        config,
-        injectBase,
-        microlcApi: this.getApi() as Partial<MicrolcApi<BaseExtension>>,
-        schema,
-        ...sharedProperties,
-        ...properties,
-      },
-    }])
+    acc.apps.set(idScopedByInstance, [app.route, makeConfig(container, this.getApi(), sharedProperties)])
 
     return acc
   }, {

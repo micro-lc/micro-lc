@@ -34,8 +34,9 @@
     "build:cjs": "ts-node scripts/compile.cjs.ts",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
+    "build:mfe-loader": "esbuild --platform=browser --format=esm --outfile=dist/microfrontend-loader.js --minify --bundle src/microfrontend-loader.ts",
     "build:polyfills": "ts-node scripts/build-polyfills.ts",
-    "build": "yarn run -T run-s check:types build:es build:cjs build:dev build:prod build:polyfills",
+    "build": "yarn run -T run-s check:types build:es build:cjs build:dev build:prod build:polyfills build:mfe-loader",
     "esm": "ts-node scripts/esm-url-generator.ts",
     "serve": "vite dev"
   },

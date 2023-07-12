@@ -21,30 +21,33 @@ import type { CompleteConfig } from '../../config'
 import type { ErrorCodes } from '../../logger'
 import logger from '../../logger'
 
+import type { MicrolcApi, MicrolcEvent } from './api'
+import type { BaseExtension } from './extensions'
 import type { RoutingError } from './handler'
 import { getPublicPath, errorMap, RoutingErrorMessage, postProcessTemplate, microlcFetch } from './handler'
+import type { LoadableAppContext } from './mfe-loader'
 import type { LoadedAppUpdate, QiankunApi, QiankunMicroApp } from './qiankun'
-import type { ComposableApplicationProperties } from './update'
 import { effectiveRouteLength, urlMatch } from './url-matcher'
 
-type MatchingRoute = LoadableApp<ComposableApplicationProperties>
+type MatchingRoute<T extends BaseExtension, E extends MicrolcEvent> = LoadableAppContext<T, E>
 
-type MatchingRouteReturnType = [
-  MatchingRoute | undefined, MatchingRoute | undefined, MatchingRoute | undefined
+type MatchingRouteReturnType<T extends BaseExtension, E extends MicrolcEvent> = [
+  MatchingRoute<T, E> | undefined, MatchingRoute<T, E> | undefined, MatchingRoute<T, E> | undefined
 ]
 
-type LoadedAppsMap = Map<
+type LoadedAppsMap<T extends BaseExtension, E extends MicrolcEvent> = Map<
   string,
-  [string | undefined, LoadableApp<ComposableApplicationProperties>]
+  [string | undefined, LoadableAppContext<T, E>]
 >
 
-export interface RouterContainer {
+export interface RouterContainer<T extends BaseExtension = BaseExtension, E extends MicrolcEvent = MicrolcEvent> {
   applicationMapping: Map<string, string>
   config: CompleteConfig
+  getApi: () => MicrolcApi<T, E>
   readonly instance: string
-  loadedApps: LoadedAppsMap
+  loadedApps: LoadedAppsMap<T, E>
   loadedRoutes: Map<string, string>
-  matchCache: MatchCache
+  matchCache: MatchCache<T, E>
   ownerDocument: Document
   readonly qiankun: QiankunApi
 }
@@ -54,7 +57,8 @@ let currentApplication: string | undefined
 let currentApplicationBus = new BehaviorSubject<string | undefined>(undefined)
 let applicationHandlers = new Map<string, QiankunMicroApp>()
 
-export const currentApplication$ = currentApplicationBus.asObservable()
+const currentApplication$ = currentApplicationBus.asObservable()
+
 
 function getMount(name: string, shouldMountByLoading = false): (() => Promise<null>) | undefined {
   const app = name && applicationHandlers.get(name)
@@ -65,7 +69,7 @@ function getMount(name: string, shouldMountByLoading = false): (() => Promise<nu
   }
 }
 
-export function getUnmount(name = currentApplication): (() => Promise<null>) | undefined {
+function getUnmount(name = currentApplication): (() => Promise<null>) | undefined {
   const app = name && applicationHandlers.get(name)
   if (app) {
     if (app.getStatus() !== 'UNMOUNTING') {
@@ -94,7 +98,7 @@ function getUpdate(name = currentApplication): ((props: Record<string, unknown>)
   return update
 }
 
-export function getCurrentApplicationAssets(): {handlers: QiankunMicroApp | undefined; id: string} | undefined {
+function getCurrentApplicationAssets(): {handlers: QiankunMicroApp | undefined; id: string} | undefined {
   if (currentApplication === undefined) {
     return
   }
@@ -112,12 +116,12 @@ export function getCurrentApplicationAssets(): {handlers: QiankunMicroApp | unde
 }
 
 // caching utils
-export class MatchCache extends Map<string, MatchingRouteReturnType> {
-  _default: MatchingRouteReturnType | undefined
-  setDefault(match: MatchingRoute | undefined) {
+class MatchCache<T extends BaseExtension, E extends MicrolcEvent> extends Map<string, MatchingRouteReturnType<T, E>> {
+  _default: MatchingRouteReturnType<T, E> | undefined
+  setDefault(match: MatchingRoute<T, E> | undefined) {
     this._default = [undefined, undefined, match]
   }
-  getDefault(): MatchingRouteReturnType | undefined {
+  getDefault(): MatchingRouteReturnType<T, E> | undefined {
     return this._default
   }
   invalidateCache() {
@@ -127,7 +131,7 @@ export class MatchCache extends Map<string, MatchingRouteReturnType> {
 }
 
 // 🚦 ROUTING
-export function rerouteErrorHandler(err: TypeError): null {
+function rerouteErrorHandler(err: TypeError): null {
   logger.error('51' as ErrorCodes.UpdateError, err.message)
   return null
 }
@@ -143,14 +147,14 @@ function getIFramePathname(win = window, baseURI: string): URL {
   return new URL(completeHref, baseURI)
 }
 
-const updateCountersAndResults = (
+const updateCountersAndResults = <T extends BaseExtension, E extends MicrolcEvent>(
   pathname: string,
   route: string,
   defaultUrl: string,
   baseURI: string,
-  args: LoadableApp<ComposableApplicationProperties>,
+  args: LoadableAppContext<T, E>,
   counters: number[],
-  result: MatchingRouteReturnType
+  result: MatchingRouteReturnType<T, E>
 ) => {
   const { pathname: routePathname } = new URL(route, baseURI)
 
@@ -180,9 +184,9 @@ const updateCountersAndResults = (
   }
 }
 
-function getNextMatchingRoute(
-  this: RouterContainer, url?: string | undefined
-): {counters: [number, number, number]; result: MatchingRouteReturnType} {
+function getNextMatchingRoute<T extends BaseExtension, E extends MicrolcEvent>(
+  this: RouterContainer<T, E>, url?: string | undefined
+): {counters: [number, number, number]; result: MatchingRouteReturnType<T, E>} {
   const {
     config: {
       settings: {
@@ -194,7 +198,7 @@ function getNextMatchingRoute(
     },
   } = this
 
-  const result = Array(3).fill(undefined) as MatchingRouteReturnType
+  const result = Array(3).fill(undefined) as MatchingRouteReturnType<T, E>
   const counters = Array(3).fill(0) as [number, number, number]
 
   const { pathname } = url ? new URL(url, baseURI) : getIFramePathname(window, baseURI)
@@ -235,13 +239,15 @@ function isSameError(first: RoutingError, second: RoutingError): boolean {
   return true
 }
 
-async function flushAndGo(
-  this: RouterContainer,
-  nextMatch: MatchingRoute,
+async function flushAndGo<T extends BaseExtension, E extends MicrolcEvent>(
+  this: RouterContainer<T, E>,
+  nextMatch: MatchingRoute<T, E>,
   url?: string,
   incomingError?: RoutingError | undefined,
   previousIncomingError?: RoutingError | undefined
 ): Promise<LoadedAppUpdate> {
+  const recursiveFlushAndGo = flushAndGo
+    .bind<(nextMatch: MatchingRoute<T, E>, url?: string, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
   if (previousIncomingError && incomingError && isSameError(previousIncomingError, incomingError)) {
     return undefined
   }
@@ -278,7 +284,6 @@ async function flushAndGo(
           name: nextMatch.name,
           url: route ?? url ?? window.location.href,
         }),
-      // TODO: remove when https://github.com/umijs/qiankun/pull/2450 is merged
       sandbox: { speedy: false },
     })
 
@@ -303,7 +308,7 @@ async function flushAndGo(
       error = { ...error, message, status }
 
       if (errorRoute) {
-        await flushAndGo.call(this, errorRoute, url, error, incomingError).then((update) => update?.({ message, reason }))
+        await recursiveFlushAndGo(errorRoute, url, error, incomingError).then((update) => update?.({ message, reason }))
       }
 
       return undefined
@@ -312,7 +317,7 @@ async function flushAndGo(
   return getUpdate()
 }
 
-export async function rerouteToError(this: RouterContainer, statusCode?: number, reason?: string): Promise<LoadedAppUpdate> {
+async function rerouteToError<T extends BaseExtension, E extends MicrolcEvent>(this: RouterContainer<T, E>, statusCode?: number, reason?: string): Promise<LoadedAppUpdate> {
   const code = statusCode ?? 404
   const nextMatch = this.loadedApps.get(`${this.instance}-${code}`)?.[1]
 
@@ -321,7 +326,10 @@ export async function rerouteToError(this: RouterContainer, statusCode?: number,
     return Promise.reject(new TypeError(`no ${code} page available`))
   }
 
-  return flushAndGo.call(this, nextMatch, undefined, { message: errorMap[code], reason, status: code })
+  const recursiveFlushAndGo = flushAndGo
+    .bind<(nextMatch: MatchingRoute<T, E>, url?: string, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
+
+  return recursiveFlushAndGo(nextMatch, undefined, { message: errorMap[code], reason, status: code })
     .then(async (update) => {
       await update?.({ message: 'Oops! Something went wrong', reason })
       return undefined
@@ -333,9 +341,9 @@ function isDefault(url: string, baseURI: string): boolean {
   return pathname.replace(/\/$/, '') === new URL(baseURI, window.document.baseURI).pathname.replace(/\/$/, '')
 }
 
-export async function reroute(this: RouterContainer, url?: string | undefined): Promise<LoadedAppUpdate | void> {
+async function reroute<T extends BaseExtension, E extends MicrolcEvent>(this: RouterContainer<T, E>, url?: string | undefined): Promise<LoadedAppUpdate | void> {
   // get matching result via cache when available
-  let matchingResults = Array(3).fill(undefined) as MatchingRouteReturnType
+  let matchingResults = Array(3).fill(undefined) as MatchingRouteReturnType<T, E>
   let counters = Array(3).fill(0) as [number, number, number]
   const isDefaultCached = this.matchCache.getDefault()
   const cachedMatch = url !== undefined ? this.matchCache.get(url) : undefined
@@ -349,7 +357,9 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
     // matched the base path (i.e., no plugin was mounted on root)
     // router redirects on default route if any
     // const [exactMatch, nextMatchWithTrailingSlash, defaultMatch]
-    const nextMatch = getNextMatchingRoute.call(this, url)
+    const recursiveGetNextMatchingRoute = getNextMatchingRoute
+      .bind<(url?: string | undefined) => ReturnType<typeof getNextMatchingRoute<T, E>>>(this)
+    const nextMatch = recursiveGetNextMatchingRoute(url)
     matchingResults = nextMatch.result
     counters = nextMatch.counters
   }
@@ -366,7 +376,9 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
     const route = this.loadedRoutes.get(nextMatchWithTrailingSlash.name) as string
     window.history.replaceState(window.history.state, '', route)
     // 🧑‍🦰 and we reroute manually
-    return reroute.call(this, route)
+    const recursiveReroute = reroute
+      .bind<(url?: string) => ReturnType<typeof reroute>>(this)
+    return recursiveReroute(route)
   }
 
   if (!exactMatch && isDefault(url ?? window.location.href, this.ownerDocument.baseURI)) {
@@ -387,8 +399,10 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
     return Promise.reject(new TypeError('no 404 page available'))
   }
 
+  const recursiveFlushAndGo = flushAndGo
+    .bind<(nextMatch: MatchingRoute<T, E>, url?: string, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
   return (nextMatch.name !== currentApplication)
-    ? flushAndGo.call(this, nextMatch, url, error).then(async (update) => { await update?.({ ...error }) })
+    ? recursiveFlushAndGo(nextMatch, url, error).then(async (update) => { await update?.({ ...error }) })
     : Promise.resolve()
 }
 
@@ -396,27 +410,41 @@ export async function reroute(this: RouterContainer, url?: string | undefined): 
 let popstate: ((ev: PopStateEvent) => unknown) | undefined
 let domcontent: ((ev: Event) => unknown) | undefined
 
-function popStateListener(this: RouterContainer, event: PopStateEvent): void {
+function popStateListener<T extends BaseExtension, E extends MicrolcEvent>(this: RouterContainer<T, E>, event: PopStateEvent): void {
   const target = (event.target ?? window) as Window
-  reroute.call(this, target.location.href).catch(rerouteErrorHandler)
+  const recursiveReroute = reroute
+    .bind<(url?: string) => ReturnType<typeof reroute>>(this)
+  recursiveReroute(target.location.href).catch(rerouteErrorHandler)
 }
 
 function domContentLoaded(this: Window, event: Event) {
   console.warn('[micro-lc] unhandled DOMContentLoaded event', event)
 }
 
-export function createRouter(this: RouterContainer) {
-  popstate = popStateListener.bind(this)
+function createRouter<T extends BaseExtension, E extends MicrolcEvent>(this: RouterContainer<T, E>) {
+  popstate = popStateListener.bind<(event: PopStateEvent) => void>(this)
   domcontent = domContentLoaded.bind(window)
   window.addEventListener('popstate', popstate)
   window.addEventListener('DOMContentLoaded', domContentLoaded)
 }
 
-export function removeRouter() {
+function removeRouter() {
   currentApplication = undefined
   currentApplicationBus = new BehaviorSubject<string | undefined>(undefined)
   applicationHandlers = new Map<string, QiankunMicroApp>()
 
   popstate && window.removeEventListener('popstate', popstate)
   domcontent && window.removeEventListener('DOMContentLoaded', domcontent)
+}
+
+export {
+  currentApplication$,
+  getUnmount,
+  getCurrentApplicationAssets,
+  MatchCache,
+  reroute,
+  rerouteToError,
+  rerouteErrorHandler,
+  createRouter,
+  removeRouter,
 }

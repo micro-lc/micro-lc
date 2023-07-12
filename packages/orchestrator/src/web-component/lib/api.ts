@@ -20,14 +20,16 @@ import type { CompleteConfig } from '../../config'
 import type { Microlc } from '../micro-lc'
 
 import type { BaseExtension } from './extensions'
+import { MFELoader } from './mfe-loader'
 import type { QiankunMicroApp } from './qiankun'
 import { currentApplication$, getCurrentApplicationAssets } from './router'
 
 export type MicrolcEvent = Record<string, unknown>
 
 export interface MicrolcApi<
-  T extends BaseExtension, E extends MicrolcEvent = MicrolcEvent
+  T extends BaseExtension = BaseExtension, E extends MicrolcEvent = MicrolcEvent
 > {
+  readonly createLoader: () => MFELoader<T, E> | undefined
   readonly currentApplication$: Observable<string | undefined>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
@@ -48,19 +50,23 @@ export interface MicrolcApi<
   readonly subscribe: (next: (value: Partial<E>) => void) => Subscription
 }
 
-export function createMicrolcApiInstance<Extensions extends BaseExtension, Event extends MicrolcEvent>(
-  this: Microlc<Extensions>
-): () => MicrolcApi<Extensions, Event> {
-  const currentState: Partial<Event> = {}
-  const bus = new BehaviorSubject<Partial<Event>>(currentState)
+export function createMicrolcApiInstance<T extends BaseExtension, E extends MicrolcEvent>(
+  this: Microlc<T, E>
+): () => MicrolcApi<T, E> {
+  const { qiankun } = this
+  const currentState: Partial<E> = {}
+  const bus = new BehaviorSubject<Partial<E>>(currentState)
 
   return () => Object.freeze({
+    createLoader(this: MicrolcApi<T, E>) {
+      return new MFELoader(this.getCurrentConfig(), () => this, qiankun)
+    },
     currentApplication$,
     getApplications: () => Object.freeze({ ...this._config.applications }),
     getCurrentApplication: () => Object.freeze({ ...getCurrentApplicationAssets() }),
     getCurrentConfig: () => Object.freeze({ ...this._config }),
     getExtensions: () => Object.freeze({ ...this._extensions }),
-    next: (value: Partial<Event>) => bus.next(value),
+    next: (value: Partial<E>) => bus.next(value),
     router: {
       goTo: (url: string | URL | undefined) => {
         if (url !== undefined) {
@@ -97,16 +103,16 @@ export function createMicrolcApiInstance<Extensions extends BaseExtension, Event
       replaceState: (data: unknown, unused: string, url?: string | URL | null | undefined) =>
         window.history.replaceState(data, unused, url),
     },
-    set: (event: Partial<Event>) => {
+    set: (event: Partial<E>) => {
       const newState = Object.assign(currentState, event)
       bus.next(newState)
     },
     setCurrentConfig: (newConfig: CompleteConfig) => { this.config = newConfig },
-    setExtension: (key: keyof Extensions, value: Extensions[keyof Extensions]) => {
+    setExtension: (key: keyof T, value: T[keyof T]) => {
       this._extensions[key] = value
       return Object.freeze({ ...this._extensions })
     },
-    subscribe: (next: (value: Partial<Event>) => void) =>
+    subscribe: (next: (value: Partial<E>) => void) =>
       bus.asObservable().subscribe(next),
   })
 }

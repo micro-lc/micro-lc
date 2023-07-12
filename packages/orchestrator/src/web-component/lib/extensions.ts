@@ -19,6 +19,7 @@ import type { SchemaOptions } from '../../utils/json'
 import { jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../../utils/json'
 import type { Microlc } from '../micro-lc'
 
+import type { MicrolcEvent } from './api'
 import { currentApplication$, rerouteErrorHandler } from './router'
 import { handleUpdateError } from './update'
 
@@ -48,7 +49,7 @@ export type BaseExtension = Record<string, unknown> & {
   }
 }
 
-export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSConfig): void {
+export function updateCSS<T extends BaseExtension, E extends MicrolcEvent>(this: Microlc<T, E>, css: CSSConfig): void {
   this._styleElements.forEach((style) => { style.remove() })
 
   /**
@@ -72,7 +73,7 @@ export function updateCSS<T extends BaseExtension>(this: Microlc<T>, css: CSSCon
   }
 }
 
-function initLanguageExtension<T extends BaseExtension>(this: Microlc<T>) {
+function initLanguageExtension<T extends BaseExtension, E extends MicrolcEvent>(this: Microlc<T, E>) {
   let currentLanguage = window.navigator.language
   return {
     getLanguage(): string {
@@ -96,11 +97,11 @@ function initLanguageExtension<T extends BaseExtension>(this: Microlc<T>) {
   }
 }
 
-export function initBaseExtensions<T extends BaseExtension>(this: Microlc<T>): T {
+export function initBaseExtensions<T extends BaseExtension, E extends MicrolcEvent>(this: Microlc<T, E>): T {
   return {
     css: {
       setStyle: (css: CSSConfig) => {
-        updateCSS.call<Microlc<T>, [CSSConfig], void>(this, css)
+        updateCSS.call<Microlc<T, E>, [CSSConfig], void>(this, css)
       },
     },
     head: {
@@ -133,6 +134,6 @@ export function initBaseExtensions<T extends BaseExtension>(this: Microlc<T>): T
           )
       },
     },
-    language: initLanguageExtension.call<Microlc<T>, [], BaseExtension['language']>(this),
+    language: initLanguageExtension.call<Microlc<T, E>, [], BaseExtension['language']>(this),
   } as T
 }

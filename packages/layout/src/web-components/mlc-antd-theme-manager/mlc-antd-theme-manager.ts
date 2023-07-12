@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { MicrolcApi, BaseExtension } from '@micro-lc/orchestrator'
+import type { MicrolcApi } from '@micro-lc/orchestrator'
 import type { PropertyValues } from 'lit'
 import { LitElement } from 'lit'
 import { property } from 'lit/decorators.js'
@@ -22,7 +22,7 @@ import { createVariables } from './mlc-antd-theme-manager.lib'
 import type { VarsPrefix } from './types'
 
 export class MlcAntdThemeManager extends LitElement {
-  microlcApi?: Partial<MicrolcApi<BaseExtension>>
+  microlcApi?: Partial<MicrolcApi>
 
   @property({ attribute: false }) varsPrefix: VarsPrefix = 'micro-lc'
   @property({ attribute: false }) nodes: Record<string, Record<string, string | number>> = {}
