@@ -2443,7 +2443,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.2.3
+    vite: ^4.4.3
     vite-plugin-banner: ^0.7.0
   peerDependencies:
     es-module-shims: "*"
@@ -2572,7 +2572,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.2.3
+    vite: ^4.4.3
     vite-plugin-banner: ^0.7.0
     vite-plugin-dynamic-import: ^1.2.7
     vite-plugin-replace: ^0.1.1
@@ -2622,7 +2622,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.2.3
+    vite: ^4.4.3
     vite-plugin-banner: ^0.7.0
   peerDependencies:
     ajv: ">=8.11.0"
@@ -9022,7 +9022,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.16 || ^0.17, esbuild@npm:^0.17.5":
+"esbuild@npm:^0.16 || ^0.17":
   version: 0.17.19
   resolution: "esbuild@npm:0.17.19"
   dependencies:
@@ -9099,7 +9099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.18.11":
+"esbuild@npm:^0.18.10, esbuild@npm:^0.18.11":
   version: 0.18.11
   resolution: "esbuild@npm:0.18.11"
   dependencies:
@@ -13912,7 +13912,7 @@ __metadata:
     stylelint-declaration-block-no-ignored-properties: ^2.7.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.2.3
+    vite: ^4.4.3
   dependenciesMeta:
     "@ant-design/icons-svg@4.2.1":
       unplugged: true
@@ -16172,7 +16172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.23, postcss@npm:^8.4.24":
+"postcss@npm:^8.4.24":
   version: 8.4.24
   resolution: "postcss@npm:8.4.24"
   dependencies:
@@ -18000,7 +18000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.15.0, rollup@npm:^3.21.0":
+"rollup@npm:^3.15.0":
   version: 3.23.1
   resolution: "rollup@npm:3.23.1"
   dependencies:
@@ -18011,6 +18011,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 4b3b3bbfd490b41ec5473d1141fe2beb0c86f600b56378fce97e0485192818256f8cbf4d43450b097ee7042e6629fb0187488807e2d15050860718f458c44685
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^3.25.2":
+  version: 3.26.2
+  resolution: "rollup@npm:3.26.2"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 7186beeba0e6fd33b37aa33ede7157e77af0a0be4b75d345a51dab4be5962a8e7a1c5ec8868e7c4cd361b456eb1b47bdb75e5db32ab37a546bed383d06b40384
   languageName: node
   linkType: hard
 
@@ -20713,17 +20727,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.2.3":
-  version: 4.3.9
-  resolution: "vite@npm:4.3.9"
+"vite@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "vite@npm:4.4.3"
   dependencies:
-    esbuild: ^0.17.5
+    esbuild: ^0.18.10
     fsevents: ~2.3.2
-    postcss: ^8.4.23
-    rollup: ^3.21.0
+    postcss: ^8.4.25
+    rollup: ^3.25.2
   peerDependencies:
     "@types/node": ">= 14"
     less: "*"
+    lightningcss: ^1.21.0
     sass: "*"
     stylus: "*"
     sugarss: "*"
@@ -20736,6 +20751,8 @@ __metadata:
       optional: true
     less:
       optional: true
+    lightningcss:
+      optional: true
     sass:
       optional: true
     stylus:
@@ -20746,7 +20763,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 8c45a516278d1e0425fac00c0877336790f71484a851a318346a70e0d2aef9f3b9651deb2f9f002c791ceb920eda7d6a3cda753bdefd657321c99f448b02dd25
+  checksum: 2f7c90de35c840ed7f33000d65006053885c0342aa7c19cee7369d7b3d92473a9bae790f910eb3e9900bdb7ca89559a772ee4782f35636ec4e6bd10717e7f5ff
   languageName: node
   linkType: hard
 
