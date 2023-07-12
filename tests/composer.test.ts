@@ -316,3 +316,41 @@ test(`
   await expect(page.getByText('Pe$', { exact: true })).toBeVisible()
   await expect(page.getByText('application/pdf', { exact: true })).toBeVisible()
 })
+
+test(`
+  [composition]
+  check that compose/iframe applications are mounted once
+`, async ({ page }) => {
+  let mounts = 0
+  // file is served by ./tests/server.ts
+  const config = {
+    applications: {
+      home: {
+        config: { content: { attributes: { id: 'test' }, content: 'Hello', tag: 'div' } },
+        integrationMode: 'compose' as const,
+        route: './',
+      },
+    },
+    settings: {
+      composerUri: '/packages/composer/dist/composer.development.js',
+      defaultUrl: './',
+    },
+    version: 2 as const,
+  }
+
+  page.on('console', (message) => {
+    if (message.type() === 'log' || message.type() === 'info') {
+      if (/\[micro-lc\]\[composer\]: home-.*starting mounting.../.test(message.text())) {
+        mounts += 1
+      }
+    }
+  })
+
+  await goto(page, config)
+
+  await expect(page.getByText('Hello')).toBeVisible()
+
+  await page.waitForTimeout(500)
+
+  expect(mounts).toEqual(1)
+})
