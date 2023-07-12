@@ -56,15 +56,12 @@ let applicationHandlers = new Map<string, QiankunMicroApp>()
 
 export const currentApplication$ = currentApplicationBus.asObservable()
 
-function getMount(name = currentApplication): (() => Promise<null>) | undefined {
+function getMount(name: string, shouldMountByLoading = false): (() => Promise<null>) | undefined {
   const app = name && applicationHandlers.get(name)
   if (app) {
-    if (app.getStatus() !== 'MOUNTING') {
-      return () => app.loadPromise
-        .then(() => app.bootstrapPromise)
-        .then(() => app.mount())
-    }
-    return () => app.mountPromise
+    return () => app.loadPromise
+      .then(() => app.bootstrapPromise)
+      .then(() => (app.getStatus() === 'NOT_MOUNTED' && !shouldMountByLoading ? app.mount() : app.mountPromise))
   }
 }
 
@@ -258,7 +255,13 @@ async function flushAndGo(
 
   // ⛰️ ATTEMPTING LOADING
   let handlers = applicationHandlers.get(nextMatch.name)
-  if (handlers === undefined) {
+
+  // 🐛 when qiankun loads a micro app
+  // it calls the bootstrap and mount
+  // making the first call on load too fast when called
+  // by `getMount` to be seen just by calling the mount state
+  const shouldMountByLoading = handlers === undefined
+  if (shouldMountByLoading) {
     const appConfigName = this.applicationMapping.get(currentApplication)
     const [route] = (appConfigName !== undefined ? this.loadedApps.get(appConfigName) : appConfigName) ?? []
     const application = nextMatch as LoadableApp<Record<string, unknown>>
@@ -290,8 +293,7 @@ async function flushAndGo(
     currentApplicationBus.next(undefined)
   }
 
-  const mount = getMount()
-  await mount?.()
+  await getMount(currentApplication, shouldMountByLoading)?.()
     .catch(async (err) => {
       const message = error?.message ?? RoutingErrorMessage.INTERNAL_SERVER_ERROR
       const status = error?.status ?? 500
