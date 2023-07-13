@@ -1,9 +1,11 @@
-import type { MicrolcApi, MFELoader, RoutelessApplication } from './web-component/lib'
+import type { MicrolcApi, MFELoader, RoutelessApplication } from './web-component'
 
 interface State {
   application: RoutelessApplication | undefined
   loader: MFELoader | undefined
 }
+
+const COMPOSER_BODY_CLASS = 'composer-body'
 
 const isSameApplication = (current: RoutelessApplication | undefined, next: RoutelessApplication | undefined) => {
   if (current === undefined && next === undefined) {
@@ -41,6 +43,10 @@ class MicrofrontendLoader extends HTMLElement {
     }
   }
 
+  get application(): RoutelessApplication | undefined {
+    return this.state.application
+  }
+
   connectedCallback() {
     let renderRoot: HTMLElement | ShadowRoot = this
     const disableShadowDom = this.getAttribute('disable-shadow-dom') !== null
@@ -61,13 +67,19 @@ class MicrofrontendLoader extends HTMLElement {
           div#${id} {
             width: 100%;
             height: 100%;
-            overflow: hidden
+            overflow: hidden;
           }
 
           div#${id} > :first-child {
             width: inherit;
             height: inherit;
-            overflow: hidden
+            overflow: hidden;
+          }
+
+          div#${id} > :first-child > div.${COMPOSER_BODY_CLASS} {
+            width: inherit;
+            height: inherit;
+            overflow: hidden;
           }
         `,
       }
