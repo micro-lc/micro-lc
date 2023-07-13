@@ -2574,7 +2574,7 @@ __metadata:
     "@types/react": ^18.2.14
     "@types/react-dom": ^18.2.6
     "@types/requirejs": ^2.1.34
-    "@web/dev-server": ^0.2.3
+    "@web/dev-server": ^0.3.0
     "@web/dev-server-esbuild": ^0.4.1
     "@web/dev-server-import-maps": ^0.1.1
     "@web/dev-server-rollup": ^0.5.1
@@ -5228,9 +5228,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:^0.2.3":
-  version: 0.2.3
-  resolution: "@web/dev-server@npm:0.2.3"
+"@web/dev-server@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@web/dev-server@npm:0.3.0"
   dependencies:
     "@babel/code-frame": ^7.12.11
     "@types/command-line-args": ^5.0.0
@@ -5249,7 +5249,7 @@ __metadata:
   bin:
     wds: dist/bin.js
     web-dev-server: dist/bin.js
-  checksum: 7fc938feb690f952199b5a0418eac282d6f5a8a6f65603b6d8d4681656a57f6ed220f05da3039bf982d2bdb46b82b2f81fb474685515b7fcf0d05502ccc200d0
+  checksum: a26bd0b89585f5812713724f85fb2d86adadc22d8a6111e9956faf3f35dc1de7075b74cdfd4de57fd3f2cd9e414617d6dd924dcf48fbfced80990ec4cd580e3b
   languageName: node
   linkType: hard
 
@@ -14035,7 +14035,7 @@ __metadata:
     "@types/glob": ^8.1.0
     "@typescript-eslint/eslint-plugin": ^5.61.0
     "@typescript-eslint/parser": ^5.61.0
-    "@web/dev-server": ^0.2.3
+    "@web/dev-server": ^0.3.0
     "@web/dev-server-esbuild": ^0.4.1
     commander: ^11.0.0
     confusing-browser-globals: ^1.0.11
