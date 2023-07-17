@@ -2745,7 +2745,7 @@ __metadata:
     mocha: ^10.2.0
     node-fetch: ^2.6.12
     nyc: ^15.1.0
-    qiankun: ^2.10.9
+    qiankun: ^2.10.11
     rollup-plugin-visualizer: ^5.9.2
     rxjs: ^7.8.1
     sinon: ^15.2.0
@@ -16713,15 +16713,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qiankun@npm:^2.10.9":
-  version: 2.10.9
-  resolution: "qiankun@npm:2.10.9"
+"qiankun@npm:^2.10.11":
+  version: 2.10.11
+  resolution: "qiankun@npm:2.10.11"
   dependencies:
     "@babel/runtime": ^7.10.5
     import-html-entry: ^1.14.5
     lodash: ^4.17.11
     single-spa: ^5.9.2
-  checksum: b914bce74883c4cc5227632a351fcf68f301009147bae99db5679cafcb116e51b61d53bdc3cc768f5004ce34f285087e0af6f6c818dba8e1b1e7e5b96833dec1
+  checksum: 6fedc94731e0774231efec290308877c3ab3a8ca8c6f4ebba835abd29209675f1fb938a3445246949b16ca4d46bf5ea39ebb6abcd5b239ecde794fe75f2243ea
   languageName: node
   linkType: hard
 
