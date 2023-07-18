@@ -71,6 +71,8 @@ const tsConfigs = {
     'sort-imports': 'off',
     'no-use-before-define': 'off',
 
+    '@typescript-eslint/no-redundant-type-constituents': 'off',
+    '@typescript-eslint/no-unsafe-enum-comparison': 'off',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/member-delimiter-style': [
       2,

@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "description": "The micro frontend solution by Mia-Platform",
   "license": "SEE LICENSE IN LICENSE",
-  "packageManager": "yarn@3.6.0",
+  "packageManager": "yarn@3.6.1",
   "workspaces": [
     "packages/*"
   ],
@@ -44,7 +44,7 @@
     "commander": "^11.0.0",
     "confusing-browser-globals": "^1.0.11",
     "esbuild": "^0.18.11",
-    "eslint": "^8.44.0",
+    "eslint": "^8.45.0",
     "eslint-config-esnext": "^4.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsonc": "^2.9.0",
