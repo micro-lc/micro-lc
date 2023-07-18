@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Versioning
 
+- `Dockerfile` from `nginx:1.25.1-alpine`
 - Development dependencies updated
 - `qiankun` to `^2.10.11`,
 - `es-module-shims` from 1.7.2 to 1.7.3
