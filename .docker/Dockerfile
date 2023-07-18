@@ -75,6 +75,12 @@ ARG NGINX_VERSION
 
 FROM nginx:${NGINX_VERSION}-alpine
 
+# - CVE-2023-2975    Unknown  libcrypto3-3.0.9-r1                      APKG     3.0.9-r2         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-2975
+# - CVE-2023-2975    Unknown  libssl3-3.0.9-r1                         APKG     3.0.9-r2         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-2975
+# - CVE-2023-3138    High     libx11-1.8.4-r0                          APKG     1.8.4-r1         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-3138
+# - CVE-2023-3316    Medium   tiff-4.4.0-r3                            APKG     4.4.0-r4         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-3316
+RUN apk add --no-cache --upgrade libcrypto3 libssl3 libx11 tiff
+
 COPY --from=builder /usr/lib/nginx/modules/ndk_http_module.so /etc/nginx/modules/ndk_http_module.so
 COPY --from=builder /usr/lib/nginx/modules/ngx_http_set_misc_module.so /etc/nginx/modules/ngx_http_set_misc_module.so
 
