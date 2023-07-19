@@ -2574,7 +2574,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.4.3
+    vite: ^4.4.4
     vite-plugin-banner: ^0.7.0
   peerDependencies:
     es-module-shims: "*"
@@ -2703,7 +2703,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.4.3
+    vite: ^4.4.4
     vite-plugin-banner: ^0.7.0
     vite-plugin-dynamic-import: ^1.2.7
     vite-plugin-replace: ^0.1.1
@@ -2753,7 +2753,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.4.3
+    vite: ^4.4.4
     vite-plugin-banner: ^0.7.0
   peerDependencies:
     ajv: ">=8.11.0"
@@ -14113,7 +14113,7 @@ __metadata:
     stylelint-declaration-block-no-ignored-properties: ^2.7.0
     ts-node: ^10.9.1
     typescript: ^5.1.6
-    vite: ^4.4.3
+    vite: ^4.4.4
   dependenciesMeta:
     "@ant-design/icons-svg@4.2.1":
       unplugged: true
@@ -21006,9 +21006,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.4.3":
-  version: 4.4.3
-  resolution: "vite@npm:4.4.3"
+"vite@npm:^4.4.4":
+  version: 4.4.4
+  resolution: "vite@npm:4.4.4"
   dependencies:
     esbuild: ^0.18.10
     fsevents: ~2.3.2
@@ -21042,7 +21042,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 2f7c90de35c840ed7f33000d65006053885c0342aa7c19cee7369d7b3d92473a9bae790f910eb3e9900bdb7ca89559a772ee4782f35636ec4e6bd10717e7f5ff
+  checksum: 51c208e53680fa46f7166e49b037625ae43d507f85f1fd3da7e290263bccb77d5f8c466fe82746285927620afeeff949ac3b8e1b6a7b4fe7bfe11419729256b4
   languageName: node
   linkType: hard
 
