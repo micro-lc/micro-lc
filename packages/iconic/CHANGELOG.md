@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- ignore symbols `/* @vite-ignore */` and `/* webpackIgnore: true */` added to dynamic imports to suppress warnings
+
 ## [1.3.0] - 2023-07-06
 
 ### Added

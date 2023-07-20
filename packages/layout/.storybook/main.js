@@ -16,10 +16,9 @@ module.exports = {
       plugins: [
         tsconfigPaths(),
         dynamicImport({
-          viteIgnore: (_, id) => {
+          filter(id) {
             const matches = [/iconic\/dist\/import-icon/]
-            const checks = matches.reduce((acc, match) => acc || id.match(match) !== null, false)
-            return checks ? true : undefined
+            return !matches.reduce((acc, match) => acc || id.match(match) !== null, false)
           }
         }),
         replaceCodePlugin({

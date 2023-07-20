@@ -4,7 +4,7 @@ import {create} from '@storybook/theming'
 const theme = create({
   brandTitle: 'micro-lc',
   brandUrl: 'https://example.co',
-  brandImage: 'https://avatars.githubusercontent.com/u/92730708?s=200&v=4',
+  brandImage: '/favicon.png',//'https://avatars.githubusercontent.com/u/92730708?s=200&v=4',
   brandTarget: '_blank',
 })
 
