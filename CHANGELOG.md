@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.2.0] - 2023-07-20
+
+## Added
+
+- `microfrontend-loader` webcomponent which wraps the `micro-lc` loading API to reuse MFE loading inside compose applications
+- extraction of the application configuration maker which is now shared with `microfrontend-loader`
+
+### Fixes
+
+- security updates / vulnerability fixes in `.docker/Dockerfile` related with `nginx:1.25.1-alpine` for `CVE-2023-2975`, `CVE-2023-3138`, and `CVE-2023-3316`
+- `compose` are not anymore mounted twice at startup: fixed a race condition between qiankun `loadMicroApp` load and our router `mount` call
+
+### Versioning
+
+- `Dockerfile` to `nginx:1.25.1-alpine`
+- Development dependencies updated
+- `qiankun` to `^2.10.11`,
+- `es-module-shims` from `1.7.2` to `^1.8.0`
+- `lit-html` to `v2.7.5`
+
 ## [2.1.0] - 2023-06-09
 
 ### Added
