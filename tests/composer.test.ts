@@ -1,6 +1,6 @@
 import test, { expect } from '@playwright/test'
 
-import { goto, data, js, json } from './complete-config'
+import { goto, data, js, json, base } from './complete-config'
 
 test(`
   [composition]
@@ -353,4 +353,73 @@ test(`
   await page.waitForTimeout(500)
 
   expect(mounts).toEqual(1)
+})
+
+test(`
+  [composition]
+  multiple MFEs in a single compose page
+`, async ({ page }) => {
+  const config = {
+    applications: {
+      home: {
+        config: {
+          content: {
+            attributes: {
+              style: 'display: flex;',
+            },
+            content: [
+              {
+                attributes: {
+                  style: 'width: 50%;',
+                },
+                booleanAttributes: ['disable-shadow-dom'],
+                properties: {
+                  application: {
+                    entry: {
+                      html: '/applications/react-memory-router/',
+                    },
+                    integrationMode: 'parcel',
+                  },
+                },
+                tag: 'microfrontend-loader',
+              },
+              {
+                attributes: {
+                  style: 'width: 50%; height: inherit',
+                },
+                properties: {
+                  application: {
+                    integrationMode: 'iframe',
+                    src: 'https://example.com',
+                  },
+                },
+                tag: 'microfrontend-loader',
+              },
+            ],
+            tag: 'div',
+          },
+          sources: '/packages/orchestrator/dist/microfrontend-loader.js',
+        },
+        integrationMode: 'compose' as const,
+        route: './home',
+      },
+    },
+    settings: {
+      composerUri: '/packages/composer/dist/composer.development.js',
+      defaultUrl: './home',
+    },
+    version: 2 as const,
+  }
+
+  await goto(page, config)
+
+  await expect(page.getByText('Go To About Page')).toBeVisible()
+  await expect(page.frameLocator('iframe').getByText('Example Domain')).toBeVisible()
+
+  await page.getByRole('link', { name: 'Go To About Page' }).click()
+
+  expect(page.url()).toEqual(`${base}/home`)
+
+  await expect(page.getByText('Go Home')).toBeVisible()
+  await expect(page.frameLocator('iframe').getByText('Example Domain')).toBeVisible()
 })

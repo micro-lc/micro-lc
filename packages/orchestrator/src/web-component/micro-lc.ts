@@ -16,18 +16,11 @@
 import { createComposerContext, premount } from '@micro-lc/composer'
 import type { Config, Content } from '@micro-lc/interfaces/v2'
 import { camelCase, kebabCase } from 'lodash-es'
-import type { LoadableApp } from 'qiankun'
 
 import type { CompleteConfig } from '../config'
 import { mergeConfig, defaultConfig } from '../config'
 import { craftLanguageHeader } from '../utils/lang'
 
-import type {
-  MicrolcApi,
-  ComposableApplicationProperties,
-  BaseExtension,
-  RouterContainer,
-  QiankunApi } from './lib'
 import {
   COMPOSER_BODY_CLASS,
   handleUpdateError,
@@ -48,6 +41,14 @@ import {
   initBaseExtensions,
   createQiankunInstance,
 } from './lib'
+import type {
+  MicrolcApi,
+  BaseExtension,
+  RouterContainer,
+  QiankunApi,
+  MicrolcEvent,
+  LoadableAppContext,
+} from './lib'
 
 type ObservedAttributes =
   | 'config-src'
@@ -57,8 +58,9 @@ type ObservedProperties =
 
 
 export class Microlc<
-  E extends BaseExtension = BaseExtension
-> extends HTMLElement implements RouterContainer {
+  T extends BaseExtension = BaseExtension,
+  E extends MicrolcEvent = MicrolcEvent
+> extends HTMLElement implements RouterContainer<T, E> {
   static get observedAttributes() { return ['config-src'] }
 
   private _wasDisconnected = false
@@ -70,8 +72,10 @@ export class Microlc<
   protected _config!: CompleteConfig
   protected _configSrc: string | null | undefined
   protected _disableShadowDom: boolean | undefined
-  protected _reroute = reroute.bind(this)
-  protected _rerouteToError = rerouteToError.bind(this)
+  protected _reroute = reroute
+    .bind<(url?: string) => ReturnType<typeof reroute>>(this)
+  protected _rerouteToError = rerouteToError
+    .bind<(statusCode?: number | undefined, reason?: string | undefined) => ReturnType<typeof rerouteToError>>(this)
   protected _qiankun = createQiankunInstance()
 
   // queries
@@ -117,10 +121,10 @@ export class Microlc<
     }
   }
 
-  protected _handlePropertyUpdate<T>(
+  protected _handlePropertyUpdate<S>(
     name: ObservedProperties,
     newValue: unknown,
-    checkType: (input: unknown) => input is Exclude<T, undefined> = (_: unknown): _ is Exclude<T, undefined> => true
+    checkType: (input: unknown) => input is Exclude<S, undefined> = (_: unknown): _ is Exclude<S, undefined> => true
   ): void {
     const nextValue = checkType(newValue) ? newValue : undefined
 
@@ -191,10 +195,10 @@ export class Microlc<
 
 
   // 🚥 router
-  loadedApps = new Map<string, [string | undefined, LoadableApp<ComposableApplicationProperties>]>()
+  loadedApps = new Map<string, [string | undefined, LoadableAppContext<T, E>]>()
   loadedRoutes = new Map<string, string>()
   applicationMapping = new Map<string, string>()
-  matchCache = new MatchCache()
+  matchCache = new MatchCache<T, E>()
   get qiankun(): QiankunApi {
     return this._qiankun
   }
@@ -203,10 +207,10 @@ export class Microlc<
   }
 
   // 🐝 api
-  protected _extensions: E = initBaseExtensions.call<Microlc<E>, [], E>(this)
+  protected _extensions: T = initBaseExtensions.call<Microlc<T, E>, [], T>(this)
 
-  getApi: () => MicrolcApi<E> = createMicrolcApiInstance
-    .call<Microlc<E>, [], () => MicrolcApi<E>>(this)
+  getApi: () => MicrolcApi<T, E> = createMicrolcApiInstance
+    .call<Microlc<T, E>, [], () => MicrolcApi<T, E>>(this)
 
 
   // DOM
@@ -264,7 +268,7 @@ export class Microlc<
       })
     }
 
-    createRouter.call<Microlc<E>, [], void>(this)
+    createRouter.call<Microlc<T, E>, [], void>(this)
 
     this._wasDisconnected = false
   }
@@ -314,7 +318,7 @@ export class Microlc<
       await this.render()
 
       // 3 => applications 🍎
-      await updateApplications.call<Microlc<E>, [], Promise<void>>(this)
+      await updateApplications.call<Microlc<T, E>, [], Promise<void>>(this)
 
       return Promise.resolve(true)
     }
@@ -397,7 +401,7 @@ export class Microlc<
     })
 
     // disconnect event listeners
-    removeRouter.call<Microlc<E>, [], void>(this)
+    removeRouter.call<Microlc<T, E>, [], void>(this)
 
     // notify in case of re-connection
     this._wasDisconnected = true
