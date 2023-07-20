@@ -2564,7 +2564,7 @@ __metadata:
     es-module-shims: ^1.8.0
     esbuild: ^0.18.11
     glob: ^10.3.3
-    lit-html: ^2.7.4
+    lit-html: ^2.7.5
     mocha: ^10.2.0
     nyc: ^15.1.0
     rollup-plugin-visualizer: ^5.9.2
@@ -2740,7 +2740,7 @@ __metadata:
     esbuild: ^0.18.11
     glob: ^10.3.3
     js-yaml: ^4.1.0
-    lit-html: ^2.7.4
+    lit-html: ^2.7.5
     lodash-es: ^4.17.21
     mocha: ^10.2.0
     node-fetch: ^2.6.12
@@ -13406,12 +13406,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:^2.0.0, lit-html@npm:^2.7.0, lit-html@npm:^2.7.4":
+"lit-html@npm:^2.0.0, lit-html@npm:^2.7.0":
   version: 2.7.4
   resolution: "lit-html@npm:2.7.4"
   dependencies:
     "@types/trusted-types": ^2.0.2
   checksum: 3809d62d8b8e66c047a582fe62d430384c63af8c8444da4ca565b41d03e0295be2ce3eaa3c03b58d35a5d74fd8c98976585902204fc28006cfb9adf29fc1761e
+  languageName: node
+  linkType: hard
+
+"lit-html@npm:^2.7.5":
+  version: 2.7.5
+  resolution: "lit-html@npm:2.7.5"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+  checksum: 7a54399f78c02f21ee5584fd9ff21b3edad8416df0aca22964bc5b221f0b57ba74d7bd98ad076acea2403b53b2ea87cc3eb47ba8395f371a645e3d584f2c1e49
   languageName: node
   linkType: hard
 
@@ -14146,7 +14155,7 @@ __metadata:
     glob: ^10.3.3
     husky: ^8.0.3
     jsonc-eslint-parser: ^2.3.0
-    lit-html: ^2.7.4
+    lit-html: ^2.7.5
     node-color-log: ^10.0.2
     npm-run-all: ^4.1.5
     postcss: ^8.4.26
