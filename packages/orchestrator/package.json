@@ -51,7 +51,7 @@
     "@types/chai-string": "^1.4.2",
     "@types/glob": "^8.1.0",
     "@types/js-yaml": "^4.0.5",
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.8",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.4.2",
     "@types/node-fetch": "^2.6.4",
