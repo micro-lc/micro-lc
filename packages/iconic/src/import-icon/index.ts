@@ -99,13 +99,13 @@ export async function importIcon(selector: string, resource: ResourceObject): Pr
   // SAFETY: library check is already enforced
   switch (library) {
   case '@ant-design/icons-svg':
-    return import(uri)
+    return import(/* @vite-ignore */ /* webpackIgnore: true */uri)
       .then(({ default: { icon } }: { default: AntdIconDefaultImport }) => icon)
       .then((icon) => (typeof icon === 'function' ? icon('currentColor', 'white') : icon))
   case '@fortawesome/free-brands-svg-icons':
   case '@fortawesome/free-regular-svg-icons':
   case '@fortawesome/free-solid-svg-icons':
-    return import(uri).then(({ default: { definition } }: FontAwesomeIconImport) => {
+    return import(/* @vite-ignore */ /* webpackIgnore: true */uri).then(({ default: { definition } }: FontAwesomeIconImport) => {
       const { icon: [width, height, _1, _2, paths] } = definition
       return {
         attrs: {
@@ -131,7 +131,7 @@ export async function importIcon(selector: string, resource: ResourceObject): Pr
   case 'phosphor/light':
   case 'phosphor/regular':
   case 'phosphor/thin':
-    return import(uri).then(({ default: { icon } }: {default: PhosphorDefaultImport}) => icon)
+    return import(/* @vite-ignore */ /* webpackIgnore: true */uri).then(({ default: { icon } }: {default: PhosphorDefaultImport}) => icon)
   }
 }
 
