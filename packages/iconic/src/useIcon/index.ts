@@ -25,17 +25,17 @@ import type {
   PropsWithoutRef,
 } from 'react'
 
-import type { ResourceObject, PathComponent, SvgComponent } from '../import-icon'
+import type { ResourceObject, ChildComponent, SvgComponent } from '../import-icon'
 import { importIcon, toArray } from '../import-icon/index.js'
 
 export type SVGProps = ReactSVGProps<HTMLElement>
 
-function iconPathCompose({ attrs }: PathComponent, { key, ref }: PropsWithoutRef<{key: Key}> & RefAttributes<Element>) {
-  return createElement('path', { ...attrs, key, ref })
+function iconChildCompose({ attrs, tag }: ChildComponent, { key, ref }: PropsWithoutRef<{key: Key}> & RefAttributes<Element>) {
+  return createElement(tag, { ...attrs, key, ref })
 }
 
 function iconSvgCompose({ attrs, children = [] }: SvgComponent, { ref, ...props }: SVGProps & RefAttributes<Element>): ReactElement {
-  return createElement('svg', { ...attrs, ...props, ref }, ...toArray(children).map((path, key) => iconPathCompose(path, { key })))
+  return createElement('svg', { ...attrs, ...props, ref }, ...toArray(children).map((child, key) => iconChildCompose(child, { key })))
 }
 
 export function useIcon(
