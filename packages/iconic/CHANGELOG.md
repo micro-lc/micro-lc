@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - ignore symbols `/* @vite-ignore */` and `/* webpackIgnore: true */` added to dynamic imports to suppress warnings
+- SVG elements different from `svg` and `path` are now correctly rendered
 
 ## [1.3.0] - 2023-07-06
 

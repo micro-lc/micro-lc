@@ -35,15 +35,15 @@ export interface IconComponent {
   attrs?: Record<string, unknown>
   children?: IconComponent | IconComponent[]
   key?: number
-  tag: 'svg' | 'path'
+  tag: 'svg' | 'path' | 'rect' | 'circle'
 }
 
-export interface PathComponent extends Omit<IconComponent, 'children'> {
-  tag: 'path'
+export interface ChildComponent extends Omit<IconComponent, 'children'> {
+  tag: 'path' | 'rect' | 'circle'
 }
 
 export interface SvgComponent extends IconComponent {
-  children?: PathComponent | PathComponent[]
+  children?: ChildComponent | ChildComponent[]
   tag: 'svg'
 }
 
