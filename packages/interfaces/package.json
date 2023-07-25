@@ -32,7 +32,7 @@
     "ajv-formats": "^2.1.1",
     "axios": "^1.4.0",
     "chai": "^4.3.7",
-    "esbuild": "^0.18.15",
+    "esbuild": "^0.18.16",
     "eslint": "^8.45.0",
     "glob": "^10.3.3",
     "json-schema-to-typescript": "^13.0.2",
