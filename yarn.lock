@@ -2643,7 +2643,7 @@ __metadata:
   resolution: "@micro-lc/interfaces@workspace:packages/interfaces"
   dependencies:
     "@types/chai": ^4.3.5
-    "@types/eslint": ^8.44.0
+    "@types/eslint": ^8.44.1
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
     "@types/node": ^20.4.4
@@ -4406,13 +4406,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:^8.44.0":
-  version: 8.44.0
-  resolution: "@types/eslint@npm:8.44.0"
+"@types/eslint@npm:^8.44.1":
+  version: 8.44.1
+  resolution: "@types/eslint@npm:8.44.1"
   dependencies:
     "@types/estree": "*"
     "@types/json-schema": "*"
-  checksum: 2655f409a4ecdd64bb9dd9eb6715e7a2ac30c0e7f902b414e10dbe9d6d497baa5a0f13105e1f7bd5ad7a913338e2ab4bed1faf192a7a0d27d1acd45ba79d3f69
+  checksum: 8b45be72d3c22a1ee0b1cc7e7fb0e34e32bbf959e6b7e0e46d160c17894aedf159c1db5c85750f10068884c741eebc37a1cc7ea659de23a8df0c9a3203e2ff9d
   languageName: node
   linkType: hard
 
@@ -14067,7 +14067,7 @@ __metadata:
   resolution: "micro-lc@workspace:."
   dependencies:
     "@playwright/test": ^1.36.1
-    "@types/eslint": ^8.44.0
+    "@types/eslint": ^8.44.1
     "@types/express": ^4.17.17
     "@types/glob": ^8.1.0
     "@typescript-eslint/eslint-plugin": ^6.1.0
