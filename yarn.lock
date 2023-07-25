@@ -2575,7 +2575,7 @@ __metadata:
     "@types/chai-string": ^1.4.2
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
-    "@types/node": ^20.4.2
+    "@types/node": ^20.4.4
     "@types/sinon": ^10.0.15
     "@types/sinon-chai": ^3.2.9
     ajv: ^8.12.0
@@ -2616,7 +2616,7 @@ __metadata:
     "@rollup/plugin-replace": ^5.0.2
     "@types/glob": ^8.1.0
     "@types/jsdom": ^21.1.1
-    "@types/node": ^20.4.2
+    "@types/node": ^20.4.4
     "@types/prop-types": ^15.7.5
     "@types/react": ^18.2.14
     "@types/react-dom": ^18.2.7
@@ -2646,7 +2646,7 @@ __metadata:
     "@types/eslint": ^8.44.0
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
-    "@types/node": ^20.4.2
+    "@types/node": ^20.4.4
     ajv: ^8.12.0
     ajv-formats: ^2.1.1
     axios: ^1.4.0
@@ -2747,7 +2747,7 @@ __metadata:
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.8
     "@types/mocha": ^10.0.1
-    "@types/node": ^20.4.2
+    "@types/node": ^20.4.4
     "@types/node-fetch": ^2.6.4
     "@types/sinon": ^10.0.15
     "@types/sinon-chai": ^3.2.9
@@ -4664,7 +4664,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.4.2":
+"@types/node@npm:*":
   version: 20.4.2
   resolution: "@types/node@npm:20.4.2"
   checksum: 99e544ea7560d51f01f95627fc40394c24a13da8f041121a0da13e4ef0a2aa332932eaf9a5e8d0e30d1c07106e96a183be392cbba62e8cf0bf6a085d5c0f4149
@@ -4675,6 +4675,13 @@ __metadata:
   version: 16.18.3
   resolution: "@types/node@npm:16.18.3"
   checksum: 6b8ba2ea5d842f7986e366cb9184c54d273d492784dc62e08fd5afeae938d9b61aec6e4222d2541cd18f9b1412ba361bbcb3f4204fb003608af80a2a6af959f9
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.4.4":
+  version: 20.4.4
+  resolution: "@types/node@npm:20.4.4"
+  checksum: 43f3c4a8acc38ae753e15a0e79bae0447d255b3742fa87f8e065d7b9d20ecb0e03d6c5b46c00d5d26f4552160381a00255f49205595a8ee48c2423e00263c930
   languageName: node
   linkType: hard
 
