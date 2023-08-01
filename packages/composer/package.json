@@ -44,7 +44,7 @@
     "chai": "^4.3.7",
     "chai-string": "^1.5.0",
     "es-module-shims": "^1.8.0",
-    "esbuild": "^0.18.16",
+    "esbuild": "^0.18.17",
     "glob": "^10.3.3",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
