@@ -4,7 +4,7 @@ env:
   context: './'
   cache-name: cache-release
   NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-  node-version: 16.x
+  node-version: 18.x
 
 on:
   workflow_dispatch:

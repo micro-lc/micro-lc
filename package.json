@@ -3,7 +3,7 @@
   "version": "2.2.0",
   "description": "The micro frontend solution by Mia-Platform",
   "license": "SEE LICENSE IN LICENSE",
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@3.6.3",
   "workspaces": [
     "packages/*"
   ],
@@ -75,7 +75,7 @@
     "vite": "^4.4.8"
   },
   "engines": {
-    "node": ">=16.17.0"
+    "node": ">=18"
   },
   "dependenciesMeta": {
     "@ant-design/icons-svg@4.2.1": {

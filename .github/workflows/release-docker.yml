@@ -8,7 +8,7 @@ on:
         required: false
         type: boolean
       node-version:
-        default: 16.x
+        default: 18.x
         required: false
         type: string
       version:
