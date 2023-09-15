@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.5",
-    "@types/eslint": "^8.44.1",
+    "@types/eslint": "^8.44.2",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.5.9",
@@ -33,7 +33,7 @@
     "axios": "^1.4.0",
     "chai": "^4.3.7",
     "esbuild": "^0.18.17",
-    "eslint": "^8.45.0",
+    "eslint": "^8.49.0",
     "glob": "^10.3.3",
     "json-schema-to-typescript": "^13.0.2",
     "mkdirp": "^3.0.1",
