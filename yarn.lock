@@ -2425,7 +2425,7 @@ __metadata:
     "@micro-lc/interfaces": "workspace:*"
     "@open-wc/testing": ^3.2.0
     "@rollup/plugin-replace": ^5.0.2
-    "@types/chai": ^4.3.5
+    "@types/chai": ^4.3.6
     "@types/chai-string": ^1.4.2
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
@@ -2433,7 +2433,7 @@ __metadata:
     "@types/sinon": ^10.0.16
     "@types/sinon-chai": ^3.2.9
     ajv: ^8.12.0
-    chai: ^4.3.7
+    chai: ^4.3.8
     chai-string: ^1.5.0
     es-module-shims: ^1.8.0
     esbuild: ^0.18.17
@@ -2496,7 +2496,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@micro-lc/interfaces@workspace:packages/interfaces"
   dependencies:
-    "@types/chai": ^4.3.5
+    "@types/chai": ^4.3.6
     "@types/eslint": ^8.44.2
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
@@ -2504,7 +2504,7 @@ __metadata:
     ajv: ^8.12.0
     ajv-formats: ^2.1.1
     axios: ^1.4.0
-    chai: ^4.3.7
+    chai: ^4.3.8
     esbuild: ^0.18.17
     eslint: ^8.49.0
     glob: ^10.3.3
@@ -2594,7 +2594,7 @@ __metadata:
     "@micro-lc/interfaces": "workspace:*"
     "@open-wc/testing": ^3.2.0
     "@rollup/plugin-node-resolve": ^15.1.0
-    "@types/chai": ^4.3.5
+    "@types/chai": ^4.3.6
     "@types/chai-as-promised": ^7.1.5
     "@types/chai-string": ^1.4.2
     "@types/glob": ^8.1.0
@@ -2607,7 +2607,7 @@ __metadata:
     "@types/sinon-chai": ^3.2.9
     ajv: ^8.12.0
     ajv-formats: ^2.1.1
-    chai: ^4.3.7
+    chai: ^4.3.8
     chai-as-promised: ^7.1.1
     chai-string: ^1.5.0
     es-module-shims: ^1.8.0
@@ -4194,10 +4194,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:*, @types/chai@npm:^4.1.7, @types/chai@npm:^4.2.11, @types/chai@npm:^4.2.12, @types/chai@npm:^4.3.1, @types/chai@npm:^4.3.5":
+"@types/chai@npm:*, @types/chai@npm:^4.1.7, @types/chai@npm:^4.2.11, @types/chai@npm:^4.2.12, @types/chai@npm:^4.3.1":
   version: 4.3.5
   resolution: "@types/chai@npm:4.3.5"
   checksum: c8f26a88c6b5b53a3275c7f5ff8f107028e3cbb9ff26795fff5f3d9dea07106a54ce9e2dce5e40347f7c4cc35657900aaf0c83934a25a1ae12e61e0f5516e431
+  languageName: node
+  linkType: hard
+
+"@types/chai@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "@types/chai@npm:4.3.6"
+  checksum: 32a6c18bf53fb3dbd89d1bfcadb1c6fd45cc0007c34e436393cc37a0a5a556f9e6a21d1e8dd71674c40cc36589d2f30bf4d9369d7787021e54d6e997b0d7300a
   languageName: node
   linkType: hard
 
@@ -7051,9 +7058,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^4.3.7":
-  version: 4.3.7
-  resolution: "chai@npm:4.3.7"
+"chai@npm:^4.3.8":
+  version: 4.3.8
+  resolution: "chai@npm:4.3.8"
   dependencies:
     assertion-error: ^1.1.0
     check-error: ^1.0.2
@@ -7062,7 +7069,7 @@ __metadata:
     loupe: ^2.3.1
     pathval: ^1.1.1
     type-detect: ^4.0.5
-  checksum: 0bba7d267848015246a66995f044ce3f0ebc35e530da3cbdf171db744e14cbe301ab913a8d07caf7952b430257ccbb1a4a983c570a7c5748dc537897e5131f7c
+  checksum: 29e0984ed13308319cadc35437c8ef0a3e271544d226c991bf7e3b6d771bf89707321669e11d05e362bc0ad0bd26585079b989d1032f3c106e3bb95d7f079cce
   languageName: node
   linkType: hard
 
