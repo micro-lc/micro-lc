@@ -74,18 +74,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ant-design/react-slick@npm:~0.29.1":
-  version: 0.29.2
-  resolution: "@ant-design/react-slick@npm:0.29.2"
+"@ant-design/react-slick@npm:~1.0.0":
+  version: 1.0.2
+  resolution: "@ant-design/react-slick@npm:1.0.2"
   dependencies:
     "@babel/runtime": ^7.10.4
     classnames: ^2.2.5
     json2mq: ^0.2.0
-    lodash: ^4.17.21
     resize-observer-polyfill: ^1.5.1
+    throttle-debounce: ^5.0.0
   peerDependencies:
     react: ">=16.9.0"
-  checksum: a7031466714303d123321cac56fb7fc00ba7702bedbfdac1c7f9dda177dd8a4c34757c4e2d5a9dc7dd118e362e9b8b6f5b6c33557bc1234215336d5eb69081c0
+  checksum: c2a2d14270b3551c1af16c4cc8c63e29ee7f08e4203191d834df61211235102fd5d8e4325adfa41ada1c5212e4388849ec0d23fcb980bf69790b565f363e2d1f
   languageName: node
   linkType: hard
 
@@ -2553,7 +2553,7 @@ __metadata:
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
     "@types/sinon": ^10.0.16
-    antd: ^4.24.12
+    antd: ^4.24.14
     cssnano: ^6.0.1
     esbuild: ^0.18.17
     glob: ^10.3.3
@@ -5684,13 +5684,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"antd@npm:^4.24.12":
-  version: 4.24.12
-  resolution: "antd@npm:4.24.12"
+"antd@npm:^4.24.14":
+  version: 4.24.14
+  resolution: "antd@npm:4.24.14"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@ant-design/icons": ^4.7.0
-    "@ant-design/react-slick": ~0.29.1
+    "@ant-design/react-slick": ~1.0.0
     "@babel/runtime": ^7.18.3
     "@ctrl/tinycolor": ^3.4.0
     classnames: ^2.2.6
@@ -5729,12 +5729,12 @@ __metadata:
     rc-tree-select: ~5.5.0
     rc-trigger: ^5.2.10
     rc-upload: ~4.3.0
-    rc-util: ^5.22.5
+    rc-util: ^5.35.1
     scroll-into-view-if-needed: ^2.2.25
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 99869361317217b4972b7150c11646175bfb61d7800a22d17f3f603c3c3cbcfa714a6bb8a490012f4ae5ba7576c8164e94b182710983800656944a5137bcc7b9
+  checksum: 36436d9e8b6cad33c9b437ef67dfbf2848d0c81ac0eed7ec91f537b090694d155c1988ed0b3d9d578ab8541bb6df5ca9a061e223d5faa526e8d956625f33f91e
   languageName: node
   linkType: hard
 
@@ -17051,6 +17051,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rc-util@npm:^5.35.1":
+  version: 5.37.0
+  resolution: "rc-util@npm:5.37.0"
+  dependencies:
+    "@babel/runtime": ^7.18.3
+    react-is: ^16.12.0
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 0a72644f0924235044eb20bbc73081356c1fb98459f6cce0f4b75807c82cb71c050e5f36cf6d82f8a8a07b5955632e1198b8884cd96fe2d8d92f2289f9058a7e
+  languageName: node
+  linkType: hard
+
 "rc-virtual-list@npm:^3.2.0, rc-virtual-list@npm:^3.4.8":
   version: 3.4.11
   resolution: "rc-virtual-list@npm:3.4.11"
@@ -19523,6 +19536,13 @@ __metadata:
   dependencies:
     any-promise: ^1.0.0
   checksum: 84e1b804bfec49f3531215f17b4a6e50fd4397b5f7c1bccc427b9c656e1ecfb13ea79d899930184f78bc2f57285c54d9a50a590c8868f4f0cef5c1d9f898b05e
+  languageName: node
+  linkType: hard
+
+"throttle-debounce@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "throttle-debounce@npm:5.0.0"
+  checksum: aa8bf25828b4f8645ce863589de05d6807ea3debc147ce7d89624638ff8a16792d6d0baa0f8a32a260f0b163444d74020c6087b713ae561fde594b97b6e51f28
   languageName: node
   linkType: hard
 

@@ -54,7 +54,7 @@
     "@ant-design/icons-svg": "^4.2.1",
     "@ctrl/tinycolor": "^3.6.0",
     "@micro-lc/iconic": "workspace:*",
-    "antd": "^4.24.12",
+    "antd": "^4.24.14",
     "lit": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
