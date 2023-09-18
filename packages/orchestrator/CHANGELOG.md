@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development dependencies updated
 - `qiankun` to `^2.10.11`,
 - `es-module-shims` from `1.7.2` to `^1.8.0`
-- `lit-html` to `v2.7.5`
+- `lit-html` to `v2.8.0`
 
 ## [2.1.0] - 2023-06-09
 
