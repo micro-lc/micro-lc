@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       node-version:
-        default: 16.x
+        default: 18.x
         required: false
         type: string
 
@@ -35,7 +35,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Install
-        run: yarn install --immutable
+        run: yarn check:types
 
       - name: Linting
         run: yarn lint
