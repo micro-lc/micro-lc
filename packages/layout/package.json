@@ -63,7 +63,7 @@
     "@babel/core": "^7.22.9",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@micro-lc/interfaces": "workspace:*",
     "@micro-lc/orchestrator": "workspace:*",
     "@open-wc/testing": "^3.2.0",
