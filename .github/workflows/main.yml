@@ -72,6 +72,8 @@ jobs:
       version: latest
       push: true
     secrets:
-      username: ${{ secrets.BOT_DOCKER_USERNAME }}
-      token: ${{ secrets.BOT_DOCKER_TOKEN }}
+      docker_username: ${{ secrets.BOT_DOCKER_USERNAME }}
+      docker_token: ${{ secrets.BOT_DOCKER_TOKEN }}
+      nexus_username: ${{ secrets.NEXUS_USER }}
+      nexus_token: ${{ secrets.NEXUS_TOKEN }}
       security_checks_token: ${{ secrets.SECURITY_CHECKS_TOKEN }}

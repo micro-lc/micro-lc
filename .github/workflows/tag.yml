@@ -18,7 +18,7 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     outputs:
       version: ${{ steps.get-version.outputs.version }}
-    
+
     steps:
       - name: Compute tag version
         id: get-version
@@ -36,8 +36,10 @@ jobs:
       push: true
       version: ${{ needs.next-version.outputs.version }}
     secrets:
-      username: ${{ secrets.BOT_DOCKER_USERNAME }}
-      token: ${{ secrets.BOT_DOCKER_TOKEN }}
+      docker_username: ${{ secrets.BOT_DOCKER_USERNAME }}
+      docker_token: ${{ secrets.BOT_DOCKER_TOKEN }}
+      nexus_username: ${{ secrets.NEXUS_USER }}
+      nexus_token: ${{ secrets.NEXUS_TOKEN }}
       security_checks_token: ${{ secrets.SECURITY_CHECKS_TOKEN }}
 
   release-npm-package:
@@ -74,7 +76,7 @@ jobs:
       - name: Publish
         working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
         run: yarn npm publish
-  
+
   release-cdn-package:
     name: Release package on cdn.mia-platform.eu
     runs-on: ubuntu-latest
