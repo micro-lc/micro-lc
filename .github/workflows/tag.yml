@@ -3,7 +3,7 @@ name: Tag CI
 env:
   context: './'
   cache-name: cache-release
-  node-version: 16.x
+  node-version: 18.x
   NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 on:

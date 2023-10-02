@@ -50,12 +50,12 @@
   },
   "dependencies": {
     "@ant-design/colors": "^7.0.0",
-    "@ant-design/icons": "^4.8.0",
+    "@ant-design/icons": "^4.8.1",
     "@ant-design/icons-svg": "^4.2.1",
     "@ctrl/tinycolor": "^3.6.0",
     "@micro-lc/iconic": "workspace:*",
     "antd": "^4.24.12",
-    "lit": "^2.7.6",
+    "lit": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -87,7 +87,7 @@
     "@types/json-schema": "^7.0.12",
     "@types/lodash-es": "^4.17.8",
     "@types/mocha": "^10.0.1",
-    "@types/react": "^18.2.18",
+    "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@types/sinon": "^10.0.16",
     "cssnano": "^6.0.1",
