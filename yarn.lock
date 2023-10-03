@@ -2449,7 +2449,7 @@ __metadata:
     ts-node: ^10.9.1
     typescript: ^5.1.6
     vite: ^4.4.8
-    vite-plugin-banner: ^0.7.0
+    vite-plugin-banner: ^0.7.1
   peerDependencies:
     es-module-shims: "*"
   languageName: unknown
@@ -2578,7 +2578,7 @@ __metadata:
     ts-node: ^10.9.1
     typescript: ^5.1.6
     vite: ^4.4.8
-    vite-plugin-banner: ^0.7.0
+    vite-plugin-banner: ^0.7.1
     vite-plugin-dynamic-import: ^1.5.0
     vite-plugin-replace: ^0.1.1
     vite-tsconfig-paths: ^4.2.0
@@ -2628,7 +2628,7 @@ __metadata:
     ts-node: ^10.9.1
     typescript: ^5.1.6
     vite: ^4.4.8
-    vite-plugin-banner: ^0.7.0
+    vite-plugin-banner: ^0.7.1
   peerDependencies:
     ajv: ">=8.11.0"
     ajv-format: ">=2.1.1"
@@ -21004,10 +21004,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-banner@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "vite-plugin-banner@npm:0.7.0"
-  checksum: 4078b10bc1acb2eec2c730f4c6ed966e9c81c5053b462bf6120c6ac48a0efe1a0ba3cadea117114e5a19073322f907549bfcd5e6be88779b4bb0fde4dc684908
+"vite-plugin-banner@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "vite-plugin-banner@npm:0.7.1"
+  checksum: 29c0c8c6422651f258b8e3be728fcab25c7d521c8b2a5badd6919b1fb153fcf7111b80c8aeac5445948fba5032d6cb4fd792c858553e1792d2b656354be0d1d9
   languageName: node
   linkType: hard
 
