@@ -40,6 +40,12 @@ type LoadedAppsMap<T extends BaseExtension, E extends MicrolcEvent> = Map<
   [string | undefined, LoadableAppContext<T, E>]
 >
 
+interface PushArgs {
+  data?: unknown
+  method?: 'push' | 'replace'
+  url?: string | undefined
+}
+
 export interface RouterContainer<T extends BaseExtension = BaseExtension, E extends MicrolcEvent = MicrolcEvent> {
   applicationMapping: Map<string, string>
   config: CompleteConfig
@@ -242,12 +248,12 @@ function isSameError(first: RoutingError, second: RoutingError): boolean {
 async function flushAndGo<T extends BaseExtension, E extends MicrolcEvent>(
   this: RouterContainer<T, E>,
   nextMatch: MatchingRoute<T, E>,
-  url?: string,
+  args: PushArgs = {},
   incomingError?: RoutingError | undefined,
   previousIncomingError?: RoutingError | undefined
 ): Promise<LoadedAppUpdate> {
   const recursiveFlushAndGo = flushAndGo
-    .bind<(nextMatch: MatchingRoute<T, E>, url?: string, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
+    .bind<(nextMatch: MatchingRoute<T, E>, args: PushArgs, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
   if (previousIncomingError && incomingError && isSameError(previousIncomingError, incomingError)) {
     return undefined
   }
@@ -258,6 +264,15 @@ async function flushAndGo<T extends BaseExtension, E extends MicrolcEvent>(
   currentApplication = nextMatch.name
 
   await unmount?.().catch(rerouteErrorHandler)
+
+  const { url, method = 'push', data } = args ?? {}
+  if (url !== undefined) {
+    if (method === 'push') {
+      window.history.pushState(data, '', url)
+    } else {
+      window.history.replaceState(data, '', url)
+    }
+  }
 
   // ⛰️ ATTEMPTING LOADING
   let handlers = applicationHandlers.get(nextMatch.name)
@@ -308,7 +323,7 @@ async function flushAndGo<T extends BaseExtension, E extends MicrolcEvent>(
       error = { ...error, message, status }
 
       if (errorRoute) {
-        await recursiveFlushAndGo(errorRoute, url, error, incomingError).then((update) => update?.({ message, reason }))
+        await recursiveFlushAndGo(errorRoute, args, error, incomingError).then((update) => update?.({ message, reason }))
       }
 
       return undefined
@@ -327,9 +342,9 @@ async function rerouteToError<T extends BaseExtension, E extends MicrolcEvent>(t
   }
 
   const recursiveFlushAndGo = flushAndGo
-    .bind<(nextMatch: MatchingRoute<T, E>, url?: string, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
+    .bind<(nextMatch: MatchingRoute<T, E>, args: PushArgs, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
 
-  return recursiveFlushAndGo(nextMatch, undefined, { message: errorMap[code], reason, status: code })
+  return recursiveFlushAndGo(nextMatch, {}, { message: errorMap[code], reason, status: code })
     .then(async (update) => {
       await update?.({ message: 'Oops! Something went wrong', reason })
       return undefined
@@ -341,7 +356,11 @@ function isDefault(url: string, baseURI: string): boolean {
   return pathname.replace(/\/$/, '') === new URL(baseURI, window.document.baseURI).pathname.replace(/\/$/, '')
 }
 
-async function reroute<T extends BaseExtension, E extends MicrolcEvent>(this: RouterContainer<T, E>, url?: string | undefined): Promise<LoadedAppUpdate | void> {
+async function reroute<T extends BaseExtension, E extends MicrolcEvent>(
+  this: RouterContainer<T, E>, args: PushArgs = {}
+): Promise<LoadedAppUpdate | void> {
+  let { url, data, method = 'push' } = args
+
   // get matching result via cache when available
   let matchingResults = Array(3).fill(undefined) as MatchingRouteReturnType<T, E>
   let counters = Array(3).fill(0) as [number, number, number]
@@ -374,15 +393,17 @@ async function reroute<T extends BaseExtension, E extends MicrolcEvent>(this: Ro
     // create a popstate event!!!
     // 🔽 we change the url without creating an event
     const route = this.loadedRoutes.get(nextMatchWithTrailingSlash.name) as string
-    window.history.replaceState(window.history.state, '', route)
     // 🧑‍🦰 and we reroute manually
     const recursiveReroute = reroute
-      .bind<(url?: string) => ReturnType<typeof reroute>>(this)
-    return recursiveReroute(route)
+      .bind<(args?: PushArgs) => ReturnType<typeof reroute>>(this)
+    return recursiveReroute({ data: window.history.state, method: 'replace', url: route })
   }
 
   if (!exactMatch && isDefault(url ?? window.location.href, this.ownerDocument.baseURI)) {
-    window.history.replaceState(window.history.state, '', this.config.settings.defaultUrl)
+    url = this.config.settings.defaultUrl
+    data = window.history.state
+    method = 'replace'
+    // window.history.replaceState(window.history.state, '', this.config.settings.defaultUrl)
     nextMatch = defaultMatch
   }
 
@@ -400,9 +421,14 @@ async function reroute<T extends BaseExtension, E extends MicrolcEvent>(this: Ro
   }
 
   const recursiveFlushAndGo = flushAndGo
-    .bind<(nextMatch: MatchingRoute<T, E>, url?: string, incomingError?: RoutingError | undefined, previousIncomingError?: RoutingError | undefined) => ReturnType<typeof flushAndGo>>(this)
+    .bind<(
+      nextMatch: MatchingRoute<T, E>,
+      args: PushArgs,
+      incomingError?: RoutingError | undefined,
+      previousIncomingError?: RoutingError | undefined,
+    ) => ReturnType<typeof flushAndGo>>(this)
   return (nextMatch.name !== currentApplication)
-    ? recursiveFlushAndGo(nextMatch, url, error).then(async (update) => { await update?.({ ...error }) })
+    ? recursiveFlushAndGo(nextMatch, { data, method, url }, error).then(async (update) => { await update?.({ ...error }) })
     : Promise.resolve()
 }
 
@@ -413,8 +439,8 @@ let domcontent: ((ev: Event) => unknown) | undefined
 function popStateListener<T extends BaseExtension, E extends MicrolcEvent>(this: RouterContainer<T, E>, event: PopStateEvent): void {
   const target = (event.target ?? window) as Window
   const recursiveReroute = reroute
-    .bind<(url?: string) => ReturnType<typeof reroute>>(this)
-  recursiveReroute(target.location.href).catch(rerouteErrorHandler)
+    .bind<(args?: PushArgs) => ReturnType<typeof reroute>>(this)
+  recursiveReroute({ url: target.location.href }).catch(rerouteErrorHandler)
 }
 
 function domContentLoaded(this: Window, event: Event) {
@@ -437,6 +463,7 @@ function removeRouter() {
   domcontent && window.removeEventListener('DOMContentLoaded', domcontent)
 }
 
+export type { PushArgs }
 export {
   currentApplication$,
   getUnmount,
