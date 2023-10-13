@@ -2429,7 +2429,7 @@ __metadata:
     "@types/chai-string": ^1.4.2
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
-    "@types/node": ^20.5.9
+    "@types/node": ^20.8.5
     "@types/sinon": ^10.0.16
     "@types/sinon-chai": ^3.2.9
     ajv: ^8.12.0
@@ -2470,7 +2470,7 @@ __metadata:
     "@rollup/plugin-replace": ^5.0.2
     "@types/glob": ^8.1.0
     "@types/jsdom": ^21.1.1
-    "@types/node": ^20.5.9
+    "@types/node": ^20.8.5
     "@types/prop-types": ^15.7.5
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
@@ -2500,7 +2500,7 @@ __metadata:
     "@types/eslint": ^8.44.2
     "@types/glob": ^8.1.0
     "@types/mocha": ^10.0.1
-    "@types/node": ^20.5.9
+    "@types/node": ^20.8.5
     ajv: ^8.12.0
     ajv-formats: ^2.1.1
     axios: ^1.5.1
@@ -2601,7 +2601,7 @@ __metadata:
     "@types/js-yaml": ^4.0.7
     "@types/lodash-es": ^4.17.8
     "@types/mocha": ^10.0.1
-    "@types/node": ^20.5.9
+    "@types/node": ^20.8.5
     "@types/node-fetch": ^2.6.4
     "@types/sinon": ^10.0.16
     "@types/sinon-chai": ^3.2.9
@@ -4518,7 +4518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.5.9":
+"@types/node@npm:*":
   version: 20.5.9
   resolution: "@types/node@npm:20.5.9"
   checksum: 717490e94131722144878b4ca1a963ede1673bb8f2ef78c2f5b50b918df6dc9b35e7f8283e5c2a7a9f137730f7c08dc6228e53d4494a94c9ee16881e6ce6caed
@@ -4529,6 +4529,15 @@ __metadata:
   version: 16.18.3
   resolution: "@types/node@npm:16.18.3"
   checksum: 6b8ba2ea5d842f7986e366cb9184c54d273d492784dc62e08fd5afeae938d9b61aec6e4222d2541cd18f9b1412ba361bbcb3f4204fb003608af80a2a6af959f9
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.8.5":
+  version: 20.8.5
+  resolution: "@types/node@npm:20.8.5"
+  dependencies:
+    undici-types: ~5.25.1
+  checksum: 4bca4e4f6307a6f5dc78812015eca9c5a998b35fcf3ba4058c9851d3dde2b22c914fa25a85b804eab5af2ab95375d15943dce8e9ba5e01d15f4bf516ca0d2816
   languageName: node
   linkType: hard
 
@@ -20237,6 +20246,13 @@ __metadata:
     has-symbols: ^1.0.3
     which-boxed-primitive: ^1.0.2
   checksum: b7a1cf5862b5e4b5deb091672ffa579aa274f648410009c81cca63fed3b62b610c4f3b773f912ce545bb4e31edc3138975b5bc777fc6e4817dca51affb6380e9
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.25.1":
+  version: 5.25.3
+  resolution: "undici-types@npm:5.25.3"
+  checksum: ec9d2cc36520cbd9fbe3b3b6c682a87fe5be214699e1f57d1e3d9a2cb5be422e62735f06e0067dc325fd3dd7404c697e4d479f9147dc8a804e049e29f357f2ff
   languageName: node
   linkType: hard
 
