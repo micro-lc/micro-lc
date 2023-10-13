@@ -2,13 +2,7 @@ import type { ElementHandle, Page } from '@playwright/test'
 
 import type { Config } from '../packages/interfaces/schemas/v2'
 import type Microlc from '../packages/orchestrator/src/web-component'
-
-/**
- * applications:
- *  --> home https://example.com as iframe
- *  --> main (test importmap) /main as compose
- *  --> plain (as application made of compose pages) as compose
- */
+import type { BaseExtension } from '../packages/orchestrator/src/web-component'
 
 const mainApplicationCode = `
   import * as rxjs from 'rxjs'
@@ -282,7 +276,7 @@ const config: Config = {
 
 const base = `http://localhost:3000`
 
-const goto = async (page: Page, cc: Config, url = base): Promise<ElementHandle<Microlc>> => {
+const goto = async <B extends BaseExtension = BaseExtension>(page: Page, cc: Config, url = base): Promise<ElementHandle<Microlc<B>>> => {
   await page.goto(url, { waitUntil: 'commit' })
 
   await page.evaluate(async (conf) => {
@@ -292,7 +286,7 @@ const goto = async (page: Page, cc: Config, url = base): Promise<ElementHandle<M
   }, cc)
   const microlc = await page.evaluateHandle(() => window.document.querySelector('micro-lc') as Microlc)
 
-  return microlc
+  return microlc as ElementHandle<Microlc<B>>
 }
 
 const data = (literals: TemplateStringsArray): string => {

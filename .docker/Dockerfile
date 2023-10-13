@@ -80,7 +80,9 @@ FROM nginx:${NGINX_VERSION}-alpine
 # - CVE-2023-3138    High     libx11-1.8.4-r0                          APKG     1.8.4-r1         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-3138
 # - CVE-2023-3316    Medium   tiff-4.4.0-r3                            APKG     4.4.0-r4         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-3316
 # - CVE-2023-35945   High     nghttp2-libs-1.51.0-r0                   APKG     1.51.0-r1        https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-35945
-RUN apk add --no-cache --upgrade libcrypto3 libssl3 libx11 tiff nghttp2-libs
+# - CVE-2023-38039   High     curl-8.2.1-r0                            APKG     8.3.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-38039
+# - CVE-2023-38039   High     libcurl-8.2.1-r0                         APKG     8.3.0-r0         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-38039
+RUN apk add --no-cache --upgrade libcrypto3 libssl3 libx11 tiff nghttp2-libs curl libcurl
 
 COPY --from=builder /usr/lib/nginx/modules/ndk_http_module.so /etc/nginx/modules/ndk_http_module.so
 COPY --from=builder /usr/lib/nginx/modules/ngx_http_set_misc_module.so /etc/nginx/modules/ngx_http_set_misc_module.so

@@ -1,6 +1,7 @@
 import test, { expect } from '@playwright/test'
 
 import type Microlc from '../packages/orchestrator/src/web-component'
+import type { BaseExtension } from '../packages/orchestrator/src/web-component'
 
 import completeConfig, { goto } from './complete-config'
 
@@ -104,4 +105,162 @@ test(`
   await page.waitForFunction(() => window.location.href.endsWith('/zoned/override-base/'))
   await page.getByText('Go To About Page', { exact: true }).click()
   await page.waitForFunction(() => window.location.href.endsWith('/zoned/override-base/about'))
+})
+
+test(`
+  [mount/unmount on routing]
+  parcels with a router must be completely unmounted
+  before to push a new URL and thus
+  before mounting the destination parcel
+`, async ({ page }) => {
+  const customElements = `
+    customElements.define('go-to-button', class extends HTMLElement {
+      connectedCallback() {
+        const shadowDom = this.attachShadow({mode: 'open'})
+        const slot = this.ownerDocument.createElement('slot')
+        const button = this.ownerDocument.createElement('button')
+
+        button.onclick = () => this.microlcApi.router.goToApplication(this.application)
+
+        button.appendChild(slot)
+        shadowDom.appendChild(button)
+      }
+    })
+    customElements.define('state-holder', class extends HTMLElement {
+      connectedCallback() {
+        this.microlcApi.setExtension('state', {states: [], push(next) {this.states.push(next)}})
+      }
+    })
+  `
+  const appFactory = (name: string) => `
+function popStateListener(event) {
+  const target = event.target ?? window
+  this.microlcApi.getExtensions().state.push(\`app ${name}: \${target.location.href}\`)
+}
+;(() => {
+  const exports = {}
+  window['${name}'] = exports
+
+  let root = null
+  let router = null
+
+  exports.bootstrap = async () => null
+  exports.mount = async ({container, microlcApi}) => {
+    const pop = popStateListener.bind({microlcApi})
+    const nextRouter = {
+      listen: () => window.addEventListener('popstate', pop),
+      unlisten: () => window.removeEventListener('popstate', pop)
+    }
+    nextRouter.listen()
+    container.appendChild(
+      Object.assign(
+        document.createElement('div'),
+        {
+          textContent: 'content of ${name}'
+        }
+      )
+    )
+    router = nextRouter
+    root = container
+    return null
+  }
+  exports.unmount = async () => {
+    router?.unlisten()
+    root?.removeChildren()
+    router = null
+    root = null
+
+    return null
+  }
+})()
+  `
+  const data = (input: string) => `data:text/javascript;base64,${Buffer.from(input).toString('base64')}`
+  type Extensions = BaseExtension & {
+    state: {
+      push(next: string): void
+      states: string[]
+    }
+  }
+  const microlcHandle = await goto<Extensions>(page, {
+    applications: {
+      app1: {
+        entry: {
+          scripts: [data(appFactory('app1'))],
+        },
+        integrationMode: 'parcel',
+        route: '/app1/',
+      },
+      app2: {
+        entry: {
+          scripts: [data(appFactory('app2'))],
+        },
+        integrationMode: 'parcel',
+        route: '/app2/',
+      },
+    },
+    layout: {
+      content: [
+        {
+          content: [
+            {
+              content: [
+                {
+                  content: 'app1',
+                  properties: {
+                    application: 'app1',
+                  },
+                  tag: 'go-to-button',
+                },
+                {
+                  content: 'app2',
+                  properties: {
+                    application: 'app2',
+                  },
+                  tag: 'go-to-button',
+                },
+              ],
+              tag: 'div',
+            },
+            {
+              tag: 'state-holder',
+            },
+            {
+              tag: 'slot',
+            },
+          ],
+          tag: 'div',
+        },
+      ],
+      sources: [
+        data(customElements),
+      ],
+    },
+    settings: {
+      defaultUrl: '/app1/',
+    },
+    version: 2 as const,
+  })
+  await page.waitForFunction(() => window.location.href.endsWith('/app1/'))
+  await expect(page.getByText('content of app1', { exact: true })).toBeVisible()
+
+  await page.evaluate(() => window.history.pushState('', '', '/app1/ciao'))
+
+  let first = await page.evaluate((microlc) => microlc.getApi().getExtensions().state?.states[0], microlcHandle)
+  let len = await page.evaluate((microlc) => microlc.getApi().getExtensions().state?.states.length, microlcHandle)
+  expect(first).toEqual('app app1: http://localhost:3000/app1/ciao')
+  expect(len).toEqual(1)
+
+  await page.getByRole('button').nth(1).click()
+
+  first = await page.evaluate((microlc) => microlc.getApi().getExtensions().state?.states[0], microlcHandle)
+  len = await page.evaluate((microlc) => microlc.getApi().getExtensions().state?.states.length, microlcHandle)
+  expect(first).toEqual('app app1: http://localhost:3000/app1/ciao')
+  expect(len).toEqual(1)
+
+  await page.getByRole('button').nth(0).click()
+
+  first = await page.evaluate((microlc) => microlc.getApi().getExtensions().state?.states[0], microlcHandle)
+  len = await page.evaluate((microlc) => microlc.getApi().getExtensions().state?.states.length, microlcHandle)
+  expect(first).toEqual('app app1: http://localhost:3000/app1/ciao')
+  expect(len).toEqual(1)
 })

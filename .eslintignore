@@ -7,6 +7,7 @@ playground/
 coverage/
 mocks/
 playwright-report/
+test-results/
 .nyc_output/
 tests/applications/
 tests/applications/
