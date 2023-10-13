@@ -90,8 +90,7 @@ export function createMicrolcApiInstance<T extends BaseExtension, E extends Micr
         }
 
         const route = this.loadedApps.get(_id)?.[0]
-        window.history.pushState(data, '', route)
-        return Promise.resolve()
+        return this._reroute({ data, url: route }).then(() => { /* no-op */ })
       },
       goToErrorPage: async (statusCode?: number, reason?: string): Promise<void> => {
         return this._rerouteToError(statusCode, reason).then(() => { /* noop */ })

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - fix to `cve-2023-38039` in docker container by updating `curl` and `libcurl` dependency
+- fix to `goToApplication` API: correct order of actions is taken 1. unmount 2. url push 3. mount
 
 ## [2.2.1] - 2023-10-04
 
