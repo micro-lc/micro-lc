@@ -266,6 +266,9 @@ async function flushAndGo<T extends BaseExtension, E extends MicrolcEvent>(
   await unmount?.().catch(rerouteErrorHandler)
 
   const { url, method = 'push', data } = args ?? {}
+  // in case of error this is not triggered since
+  // args is an empty object and url is undefined
+  // ⚾ this behavior must be kept!
   if (url !== undefined) {
     if (method === 'push') {
       window.history.pushState(data, '', url)
