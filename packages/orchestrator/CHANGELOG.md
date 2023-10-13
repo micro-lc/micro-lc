@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.2.2] - 2023-10-13
+
 ### Fixed
 
 - fix to `cve-2023-38039` in docker container by updating `curl` and `libcurl` dependency

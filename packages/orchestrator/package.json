@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/orchestrator",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
