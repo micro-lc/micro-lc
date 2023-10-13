@@ -32,7 +32,7 @@
   "devDependencies": {
     "@micro-lc/interfaces": "workspace:*",
     "@open-wc/testing": "^3.2.0",
-    "@rollup/plugin-replace": "^5.0.2",
+    "@rollup/plugin-replace": "^5.0.3",
     "@types/chai": "^4.3.8",
     "@types/chai-string": "^1.4.3",
     "@types/glob": "^8.1.0",
