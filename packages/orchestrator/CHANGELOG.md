@@ -7,9 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- fix to `cve-2023-38039` in docker container by updating `curl` and `libcurl` dependency
+- fix to `goToApplication` API: correct order of actions is taken 1. unmount 2. url push 3. mount
+
+## [2.2.1] - 2023-10-04
+
+### Versioning
+
+- `qiankun` to `^2.10.13`
+
 ## [2.2.0] - 2023-07-20
 
-## Added
+### Added
 
 - `microfrontend-loader` webcomponent which wraps the `micro-lc` loading API to reuse MFE loading inside compose applications
 - extraction of the application configuration maker which is now shared with `microfrontend-loader`
