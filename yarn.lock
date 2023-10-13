@@ -2598,7 +2598,7 @@ __metadata:
     "@types/chai-as-promised": ^7.1.5
     "@types/chai-string": ^1.4.2
     "@types/glob": ^8.1.0
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.7
     "@types/lodash-es": ^4.17.8
     "@types/mocha": ^10.0.1
     "@types/node": ^20.5.9
@@ -4391,10 +4391,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-yaml@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "@types/js-yaml@npm:4.0.5"
-  checksum: 7dcac8c50fec31643cc9d6444b5503239a861414cdfaa7ae9a38bc22597c4d850c4b8cec3d82d73b3fbca408348ce223b0408d598b32e094470dfffc6d486b4d
+"@types/js-yaml@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "@types/js-yaml@npm:4.0.7"
+  checksum: e02eca876f3f19dbba62a26a18e59ec5df4e29300b99808fb0b4ca980cbfbb60e4a2c7d75d521728f5b2a3b92a0da5b9343497b2acf621b8ea019d48b40bbd78
   languageName: node
   linkType: hard
 

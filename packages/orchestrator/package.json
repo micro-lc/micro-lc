@@ -50,7 +50,7 @@
     "@types/chai-as-promised": "^7.1.5",
     "@types/chai-string": "^1.4.2",
     "@types/glob": "^8.1.0",
-    "@types/js-yaml": "^4.0.5",
+    "@types/js-yaml": "^4.0.7",
     "@types/lodash-es": "^4.17.8",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.5.9",
