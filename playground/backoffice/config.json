@@ -154,7 +154,7 @@
       "injectBase": true,
       "route": "./react/",
       "entry": {
-        "html": "https://raw.githubusercontent.com/micro-lc/micro-lc.github.io/gh-pages/applications/react-browser-router/index.html"
+        "html": "https://cdn.mia-platform.eu/micro-lc/examples/0.1.3/static/parcels/react-browser-router/index.html"
       }
     },
     "main2": {
