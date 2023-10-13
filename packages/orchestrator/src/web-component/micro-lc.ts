@@ -48,6 +48,7 @@ import type {
   QiankunApi,
   MicrolcEvent,
   LoadableAppContext,
+  PushArgs,
 } from './lib'
 
 type ObservedAttributes =
@@ -73,7 +74,7 @@ export class Microlc<
   protected _configSrc: string | null | undefined
   protected _disableShadowDom: boolean | undefined
   protected _reroute = reroute
-    .bind<(url?: string) => ReturnType<typeof reroute>>(this)
+    .bind<(args?: PushArgs) => ReturnType<typeof reroute>>(this)
   protected _rerouteToError = rerouteToError
     .bind<(statusCode?: number | undefined, reason?: string | undefined) => ReturnType<typeof rerouteToError>>(this)
   protected _qiankun = createQiankunInstance()
