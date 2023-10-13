@@ -3,7 +3,7 @@
   "version": "2.2.1",
   "description": "The micro frontend solution by Mia-Platform",
   "license": "SEE LICENSE IN LICENSE",
-  "packageManager": "yarn@3.6.3",
+  "packageManager": "yarn@3.6.4",
   "workspaces": [
     "packages/*"
   ],
@@ -72,7 +72,7 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.7.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
-    "vite": "^4.4.8"
+    "vite": "^4.4.11"
   },
   "engines": {
     "node": ">=18"
