@@ -2472,7 +2472,7 @@ __metadata:
     "@types/jsdom": ^21.1.1
     "@types/node": ^20.5.9
     "@types/prop-types": ^15.7.5
-    "@types/react": ^18.2.20
+    "@types/react": ^18.2.28
     "@types/react-dom": ^18.2.7
     "@types/requirejs": ^2.1.34
     "@web/dev-server": ^0.3.3
@@ -2557,7 +2557,7 @@ __metadata:
     "@types/json-schema": ^7.0.13
     "@types/lodash-es": ^4.17.8
     "@types/mocha": ^10.0.1
-    "@types/react": ^18.2.20
+    "@types/react": ^18.2.28
     "@types/react-dom": ^18.2.7
     "@types/sinon": ^10.0.16
     antd: ^4.24.14
@@ -4618,7 +4618,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.20":
+"@types/react@npm:*":
   version: 18.2.20
   resolution: "@types/react@npm:18.2.20"
   dependencies:
@@ -4626,6 +4626,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 30f699c60e5e4bfef273ce64d320651cdd60f5c6a08361c6c7eca8cebcccda1ac953d2ee57c9f321b5ae87f8a62c72b6d35ca42df0e261d337849952daab2141
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.28":
+  version: 18.2.28
+  resolution: "@types/react@npm:18.2.28"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 81381bedeba83278f4c9febb0b83e0bd3f42a25897a50b9cb36ef53651d34b3d50f87ebf11211ea57ea575131f85d31e93e496ce46478a00b0f9bf7b26b5917a
   languageName: node
   linkType: hard
 
