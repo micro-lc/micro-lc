@@ -2578,7 +2578,7 @@ __metadata:
     "@types/react-dom": ^18.2.13
     "@types/requirejs": ^2.1.35
     "@web/dev-server": ^0.3.3
-    "@web/dev-server-esbuild": ^0.4.1
+    "@web/dev-server-esbuild": ^0.4.3
     "@web/dev-server-import-maps": ^0.1.1
     "@web/dev-server-rollup": ^0.5.2
     esbuild: ^0.18.17
@@ -5192,16 +5192,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server-esbuild@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@web/dev-server-esbuild@npm:0.4.1"
+"@web/dev-server-core@npm:^0.6.2":
+  version: 0.6.3
+  resolution: "@web/dev-server-core@npm:0.6.3"
+  dependencies:
+    "@types/koa": ^2.11.6
+    "@types/ws": ^7.4.0
+    "@web/parse5-utils": ^2.0.2
+    chokidar: ^3.4.3
+    clone: ^2.1.2
+    es-module-lexer: ^1.0.0
+    get-stream: ^6.0.0
+    is-stream: ^2.0.0
+    isbinaryfile: ^5.0.0
+    koa: ^2.13.0
+    koa-etag: ^4.0.0
+    koa-send: ^5.0.1
+    koa-static: ^5.0.0
+    lru-cache: ^8.0.4
+    mime-types: ^2.1.27
+    parse5: ^6.0.1
+    picomatch: ^2.2.2
+    ws: ^7.4.2
+  checksum: 98ba42df5eb865828c223bd1de098d013efd8e89983efff28e26ecd9d08c8b35fd29b4c1256ed08b05ecb365abe1aa80d2854e1953bdebbbe230a7e2a597dd8f
+  languageName: node
+  linkType: hard
+
+"@web/dev-server-esbuild@npm:^0.4.3":
+  version: 0.4.3
+  resolution: "@web/dev-server-esbuild@npm:0.4.3"
   dependencies:
     "@mdn/browser-compat-data": ^4.0.0
-    "@web/dev-server-core": ^0.5.1
+    "@web/dev-server-core": ^0.6.2
     esbuild: ^0.16 || ^0.17
     parse5: ^6.0.1
     ua-parser-js: ^1.0.33
-  checksum: d6c00308e15efa120eefe35d26f370b9638633ea810c8bc821a5ff882c3f433a56faf1fb60591906874c5e9e1c19bf9835f058073924f4a7ff8613030e808425
+  checksum: 6e56eab4a1b89deaa8b1074a0c8c94a8b8c99ebf23d5acbf472a6bf009aab7fd0feb8525f0e0b5b465b1ef30166c87c507c6f26c9fffae6b156edc660b3c67c7
   languageName: node
   linkType: hard
 
@@ -5265,6 +5291,16 @@ __metadata:
     "@types/parse5": ^6.0.1
     parse5: ^6.0.1
   checksum: 3f8d67380aa335e8b4ad9bc447780cc5c068cb749feb2e5adc1dabe51445483c3ead598c75d58e619bed1944fe2c92b55fdbf19212939cc3aebca143d3a7fa70
+  languageName: node
+  linkType: hard
+
+"@web/parse5-utils@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@web/parse5-utils@npm:2.0.2"
+  dependencies:
+    "@types/parse5": ^6.0.1
+    parse5: ^6.0.1
+  checksum: 9f392883a4f0ab556ece6980257ec85c74f24597746607834847fbbec05dcd182c9547f069552310381e65b7d5f32a301eb7d2a324838ca97d20bf95fc612c5f
   languageName: node
   linkType: hard
 
@@ -14157,7 +14193,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^6.7.0
     "@typescript-eslint/parser": ^6.6.0
     "@web/dev-server": ^0.3.3
-    "@web/dev-server-esbuild": ^0.4.1
+    "@web/dev-server-esbuild": ^0.4.3
     commander: ^11.0.0
     confusing-browser-globals: ^1.0.11
     esbuild: ^0.18.17

@@ -40,7 +40,7 @@
     "@types/react-dom": "^18.2.13",
     "@types/requirejs": "^2.1.35",
     "@web/dev-server": "^0.3.3",
-    "@web/dev-server-esbuild": "^0.4.1",
+    "@web/dev-server-esbuild": "^0.4.3",
     "@web/dev-server-import-maps": "^0.1.1",
     "@web/dev-server-rollup": "^0.5.2",
     "esbuild": "^0.18.17",
