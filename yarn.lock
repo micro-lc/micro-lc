@@ -2533,7 +2533,7 @@ __metadata:
     "@types/mocha": ^10.0.2
     "@types/node": ^20.8.5
     "@types/sinon": ^10.0.19
-    "@types/sinon-chai": ^3.2.10
+    "@types/sinon-chai": ^3.2.12
     ajv: ^8.12.0
     chai: ^4.3.8
     chai-string: ^1.5.0
@@ -2706,7 +2706,7 @@ __metadata:
     "@types/node": ^20.8.5
     "@types/node-fetch": ^2.6.6
     "@types/sinon": ^10.0.19
-    "@types/sinon-chai": ^3.2.10
+    "@types/sinon-chai": ^3.2.12
     ajv: ^8.12.0
     ajv-formats: ^2.1.1
     chai: ^4.3.8
@@ -4759,7 +4759,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon-chai@npm:^3.2.10, @types/sinon-chai@npm:^3.2.3":
+"@types/sinon-chai@npm:^3.2.12":
+  version: 3.2.12
+  resolution: "@types/sinon-chai@npm:3.2.12"
+  dependencies:
+    "@types/chai": "*"
+    "@types/sinon": "*"
+  checksum: d906f2f766613534c5e9fe1437ec740fb6a9a550f02d1a0abe180c5f18fe73a99f0c12935195404d42f079f5f72a371e16b81e2aef963a6ef0ee0ed9d5d7f391
+  languageName: node
+  linkType: hard
+
+"@types/sinon-chai@npm:^3.2.3":
   version: 3.2.10
   resolution: "@types/sinon-chai@npm:3.2.10"
   dependencies:
