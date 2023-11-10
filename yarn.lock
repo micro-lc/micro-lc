@@ -50,10 +50,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ant-design/icons-svg@npm:^4.2.1, @ant-design/icons-svg@npm:^4.3.0":
+"@ant-design/icons-svg@npm:^4.3.0":
   version: 4.3.0
   resolution: "@ant-design/icons-svg@npm:4.3.0"
   checksum: 32804d9e38caa45271f0905edc26cda730bd08bdc311a1509bca386bd170accd6b141f6ebaf65d74f6726112677f871f4ef8ff1bfd13472302a43d1c965ae2e3
+  languageName: node
+  linkType: hard
+
+"@ant-design/icons-svg@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "@ant-design/icons-svg@npm:4.3.1"
+  checksum: 47f0474277366fb3b8bacfeb1691be35052c3f9b28811be7fb25ad219100533d0e31c2eec00a8dee744c34381a4cda7f39b39403e160811a8fd5d33b861e77aa
   languageName: node
   linkType: hard
 
@@ -2561,7 +2568,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@micro-lc/iconic@workspace:packages/iconic"
   dependencies:
-    "@ant-design/icons-svg": ^4.2.1
+    "@ant-design/icons-svg": ^4.3.1
     "@fortawesome/fontawesome-svg-core": ^6.4.2
     "@fortawesome/free-brands-svg-icons": ^6.4.0
     "@fortawesome/free-regular-svg-icons": ^6.4.0
@@ -2629,7 +2636,7 @@ __metadata:
   dependencies:
     "@ant-design/colors": ^7.0.0
     "@ant-design/icons": ^4.8.1
-    "@ant-design/icons-svg": ^4.2.1
+    "@ant-design/icons-svg": ^4.3.1
     "@babel/core": ^7.22.9
     "@ctrl/tinycolor": ^3.6.0
     "@esbuild-plugins/node-globals-polyfill": ^0.2.3
