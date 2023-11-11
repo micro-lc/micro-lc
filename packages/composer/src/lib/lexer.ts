@@ -13,135 +13,159 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-/* eslint-disable max-statements */
 import type { ErrorCodes } from './logger'
 import logger from './logger'
 
-enum LexerMode {
-  String,
-  Normal,
-  PossiblyNormal
+interface Append {
+  append: (char: string) => void
+  flush: () => void
 }
 
-export interface LexerResult {
+type VariableBuffers = string[] & Append
+
+type LiteralBuffers = [string, ...string[]] & Append
+
+enum LexerMode {
+  String,
+  PossiblyNormal,
+  Normal,
+}
+
+interface Context {
+  braceCnt: number
+  literals: LiteralBuffers
+  mode: LexerMode
+  variables: VariableBuffers
+}
+
+interface LexerResult {
   literals: TemplateStringsArray
   variables: string[]
 }
 
-class Lexer {
-  private _i = 0
-  private _s: string
-  private _l: number
+const createBuffer = (): VariableBuffers => {
+  const buffer: string[] = []
 
-  private _d = false
-  private _m = LexerMode.String
-  private _st: string[] = []
-  private _n = 0
-  private _li: string[] = []
-  private _v: string[] = []
-
-  constructor(input: string) {
-    this._s = input
-    this._l = input.length
-
-    if (input.length === 0) {
-      this._d = true
+  return Object.assign(
+    buffer,
+    {
+      append: (char: string) => {
+        buffer[buffer.length - 1] += char
+      },
+      flush: () => {
+        buffer.push('')
+      },
     }
+  )
+}
+
+const createLiteralBuffer = (): LiteralBuffers => {
+  const buffer: [string, ...string[]] = ['']
+
+  return Object.assign(
+    buffer,
+    {
+      append: (char: string) => {
+        buffer[buffer.length - 1] += char
+      },
+      flush: () => {
+        buffer.push('')
+      },
+    }
+  )
+}
+
+const createLiteralsTemplate = (li: [string, ...string[]], variables: string[]) => {
+  const value: ReadonlyArray<string> & {raw?: string[]} = [...li]
+
+  return {
+    literals: Object.defineProperty(value, 'raw', { get: () => value }) as TemplateStringsArray,
+    variables: [...variables],
   }
+}
+const createContext = (): Context => ({
+  braceCnt: 0,
+  literals: createLiteralBuffer(),
+  mode: LexerMode.String,
+  variables: createBuffer(),
+})
 
-  private _sw(mode: LexerMode) {
-    this._m = mode
-  }
+const createLexer = (input: string) => {
+  const parse = () => {
+    const parsed = Array.from(input).reduce((acc, next) => {
+      switch (acc.mode) {
+      case LexerMode.Normal: {
+        if (next === '}' && acc.braceCnt === 0) {
+          acc.mode = LexerMode.String
+          break
+        }
 
-  private _fst() {
-    this._st = []
-  }
+        if (next === '{') {
+          acc.braceCnt += 1
+        } else if (next === '}' && acc.braceCnt > 0) {
+          acc.braceCnt -= 1
+        }
 
-  private _fn() {
-    this._v.push(this._st.join(''))
-    this._fst()
-  }
-
-  private _fs() {
-    this._li.push(this._st.join(''))
-    this._fst()
-  }
-
-  private _fpn() {
-    this._li.push(this._st.slice(0, -1).join(''))
-    this._fst()
-  }
-
-  private _nx(): void {
-    const current = this._s.charAt(this._i)
-
-    switch (this._m) {
-    case LexerMode.Normal: {
-      if (current === '{') {
-        this._n += 1
-        this._st.push(current)
-      } else if (current === '}' && this._n === 0) {
-        this._fn()
-        this._sw(LexerMode.String)
-      } else if (current === '}' && this._n > 0) {
-        this._st.push(current)
-        this._n -= 1
-      } else {
-        this._st.push(current)
+        acc.variables.append(next)
+        break
       }
-      break
-    }
-    case LexerMode.PossiblyNormal: {
-      if (current === '{') {
-        this._fpn()
-        this._sw(LexerMode.Normal)
-      } else {
-        this._sw(LexerMode.String)
-        this._st.push(current)
+      case LexerMode.PossiblyNormal: {
+        acc.literals.append(next)
+
+        if (next === '{') {
+          acc.literals.flush()
+          acc.variables.flush()
+          acc.mode = LexerMode.Normal
+        } else {
+          acc.mode = LexerMode.String
+        }
+        break
       }
+      case LexerMode.String:
+      default: {
+        if (next === '$') {
+          acc.mode = LexerMode.PossiblyNormal
+        }
 
-      break
-    }
-    case LexerMode.String:
-    default: {
-      if (current === '$') {
-        this._sw(LexerMode.PossiblyNormal)
+        acc.literals.append(next)
       }
-
-      this._st.push(current)
-      break
-    }
-    }
-
-    this._i += 1
-    if (this._i === this._l) {
-      if (this._m === LexerMode.PossiblyNormal) {
-        this._sw(LexerMode.String)
-      } else if (this._m === LexerMode.Normal) {
-        throw new TypeError('41' as ErrorCodes.LexerAnalysisEndedInNormalMode, { cause: `${this._i}` })
       }
 
-      this._fs()
-      this._d = true
+      return acc
+    }, createContext())
+
+    if (parsed.mode === LexerMode.Normal) {
+      parsed.literals.pop()
+      // SAFETY: it must be present due to the
+      // fact it was pushed in when switching to normal mode
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      parsed.literals.append(parsed.variables.pop()!)
     }
+
+    parsed.literals.forEach((value, index, literals) => {
+      if (index < literals.length - 1) {
+        literals[index] = value.slice(0, -2)
+      }
+    })
+
+    return parsed
   }
 
-  private _c(): LexerResult {
-    const rawLiterals = [...this._li]
-    const literals = Object.assign([], rawLiterals)
-    Object.defineProperty(literals, 'raw', { value: rawLiterals, writable: false })
-    return {
-      literals: literals as unknown as TemplateStringsArray,
-      variables: this._v,
-    }
-  }
+  let done = input.length === 0
 
-  run(): LexerResult {
-    while (!this._d) {
-      this._nx()
-    }
+  return {
+    run: () => {
+      let context: Context | undefined
 
-    return this._c()
+      if (!done) {
+        context = parse()
+        done = true
+      }
+
+      const { literals, variables } = context ?? createContext()
+
+      return createLiteralsTemplate(literals, variables)
+    },
   }
 }
 
@@ -153,26 +177,14 @@ const digest = async (input: string, algorithm: AlgorithmIdentifier = 'SHA-1') =
 
 const cache = new Map<ArrayBuffer, LexerResult>()
 
-export async function lexer(input: string): Promise<LexerResult> {
+const lexer = async (input: string): Promise<LexerResult> => {
   const hash = await digest(input).catch((err: TypeError) => {
     logger.error('40' as ErrorCodes.DigestError, input, err.message)
   })
 
   if (!hash || !cache.has(hash)) {
-    let result: LexerResult
-
-    try {
-      result = new Lexer(input).run()
-      hash && cache.set(hash, result)
-    } catch (err: TypeError | unknown) {
-      if (err instanceof TypeError) {
-        logger.error(err.message, input, err.cause as string)
-      }
-
-      const literals: string[] = []
-      Object.defineProperty(literals, 'raw', { value: literals, writable: false })
-      result = { literals: literals as unknown as TemplateStringsArray, variables: [] }
-    }
+    const result = createLexer(input).run()
+    hash && cache.set(hash, result)
 
     return result
   }
@@ -181,3 +193,6 @@ export async function lexer(input: string): Promise<LexerResult> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return cache.get(hash)!
 }
+
+export type { LexerResult }
+export { lexer }
