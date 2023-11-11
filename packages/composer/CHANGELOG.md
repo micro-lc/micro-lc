@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- compose lexer was wrongly throwing when exiting in normal mode
+- refactor to pre-minified version of the compose lexer
+
 ### Versioning
 
 - `lit-html` to `^2.8.0`
