@@ -3,7 +3,7 @@
   "version": "2.2.2",
   "description": "The micro frontend solution by Mia-Platform",
   "license": "SEE LICENSE IN LICENSE",
-  "packageManager": "yarn@3.6.4",
+  "packageManager": "yarn@4.0.2",
   "workspaces": [
     "packages/*"
   ],
