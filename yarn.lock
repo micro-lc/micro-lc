@@ -2766,7 +2766,7 @@ __metadata:
     "@types/node": "npm:^20.8.5"
     ajv: "npm:^8.12.0"
     ajv-formats: "npm:^2.1.1"
-    axios: "npm:^1.5.1"
+    axios: "npm:^1.6.6"
     chai: "npm:^4.3.8"
     esbuild: "npm:^0.18.17"
     eslint: "npm:^8.51.0"
@@ -6645,14 +6645,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "axios@npm:1.5.1"
+"axios@npm:^1.6.6":
+  version: 1.6.6
+  resolution: "axios@npm:1.6.6"
   dependencies:
-    follow-redirects: "npm:^1.15.0"
+    follow-redirects: "npm:^1.15.4"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 67633db5867c789a6edb6e5229884501bef89584a6718220c243fd5a64de4ea7dcdfdf4f8368a672d582db78aaa9f8d7b619d39403b669f451e1242bbd4c7ee2
+  checksum: 499401107e237e6fe91db3f68122a4d83496bc8da325aefc97f1fa4a0624333423262eb55b9e1f9a2ec50804a74bc47377fe15bf689f435e68ade9b0bff5399b
   languageName: node
   linkType: hard
 
@@ -10895,13 +10895,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0":
-  version: 1.15.4
-  resolution: "follow-redirects@npm:1.15.4"
+"follow-redirects@npm:^1.15.4":
+  version: 1.15.5
+  resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 2e8f5f259a6b02dfa8dc199e08431848a7c3beed32eb4c19945966164a52c89f07b86c3afcc32ebe4279cf0a960520e45a63013d6350309c5ec90133c5d9351a
+  checksum: d467f13c1c6aa734599b8b369cd7a625b20081af358f6204ff515f6f4116eb440de9c4e0c49f10798eeb0df26c95dd05d5e0d9ddc5786ab1a8a8abefe92929b4
   languageName: node
   linkType: hard
 
