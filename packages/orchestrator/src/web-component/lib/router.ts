@@ -444,7 +444,7 @@ function popStateListener<T extends BaseExtension, E extends MicrolcEvent>(this:
   const target = (event.target ?? window) as Window
   const recursiveReroute = reroute
     .bind<(args?: PushArgs) => ReturnType<typeof reroute>>(this)
-  recursiveReroute({ url: target.location.href }).catch(rerouteErrorHandler)
+  recursiveReroute({ url: target.location.href, data: target.history.state }).catch(rerouteErrorHandler)
 }
 
 function domContentLoaded(this: Window, event: Event) {
