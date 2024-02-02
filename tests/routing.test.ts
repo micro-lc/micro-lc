@@ -1,9 +1,77 @@
 import test, { expect } from '@playwright/test'
 
+import type { Config } from '../packages/interfaces/schemas/v2'
 import type Microlc from '../packages/orchestrator/src/web-component'
 import type { BaseExtension } from '../packages/orchestrator/src/web-component'
 
-import completeConfig, { goto } from './complete-config'
+import completeConfig, { data, goto } from './complete-config'
+
+test('reroute includes window.history.state context', async ({ page }) => {
+  const script = data`
+    class CustomButton extends HTMLElement {
+      connectedCallback() {
+        this.appendChild(
+          Object.assign(this.ownerDocument.createElement('button'), {
+            onclick: () => window.history.pushState({test: 'hello'}, '', '/about'),
+            textContent: "Click Me!"
+          })
+        )
+      }
+    }
+
+    class CustomReceiver extends HTMLElement {
+      connectedCallback() {
+        window.__state__ = window.history.state
+        this.appendChild(
+          Object.assign(this.ownerDocument.createElement('span'), {
+            textContent: "Hi from the custom-receiver :)"
+          })
+        )
+      }
+    }
+
+    customElements.define('custom-receiver', CustomReceiver)
+    customElements.define('custom-button', CustomButton)
+  `
+
+  const config: Config = {
+    applications: {
+      about: {
+        config: {
+          content: {
+            tag: 'custom-receiver',
+          },
+        },
+        integrationMode: 'compose',
+        route: '/about',
+      },
+      home: {
+        config: {
+          content: {
+            tag: 'custom-button',
+          },
+        },
+        integrationMode: 'compose',
+        route: '/',
+      },
+    },
+    layout: {
+      content: { tag: 'slot' },
+      sources: [script],
+    },
+    settings: {
+      defaultUrl: '/',
+    },
+    version: 2,
+  }
+  await goto(page, config)
+  await page.getByText('Click Me!').click()
+  await page.pause()
+
+  await expect(page.getByText('Hi from the custom-receiver :)')).toBeVisible()
+
+  expect(await page.evaluate(() => (window as unknown as Window & {__state__: unknown}).__state__)).toStrictEqual({ test: 'hello' })
+})
 
 test('base tag => on `injectBase` href base attribute must be computed according to the application route', async ({ page }) => {
   await page.goto('http://localhost:3000/__reverse/')
@@ -174,7 +242,8 @@ function popStateListener(event) {
   }
 })()
   `
-  const data = (input: string) => `data:text/javascript;base64,${Buffer.from(input).toString('base64')}`
+
+  const script = (input: string) => `data:text/javascript;base64,${Buffer.from(input).toString('base64')}`
   type Extensions = BaseExtension & {
     state: {
       push(next: string): void
@@ -185,14 +254,14 @@ function popStateListener(event) {
     applications: {
       app1: {
         entry: {
-          scripts: [data(appFactory('app1'))],
+          scripts: [script(appFactory('app1'))],
         },
         integrationMode: 'parcel',
         route: '/app1/',
       },
       app2: {
         entry: {
-          scripts: [data(appFactory('app2'))],
+          scripts: [script(appFactory('app2'))],
         },
         integrationMode: 'parcel',
         route: '/app2/',
@@ -232,7 +301,7 @@ function popStateListener(event) {
         },
       ],
       sources: [
-        data(customElements),
+        script(customElements),
       ],
     },
     settings: {
