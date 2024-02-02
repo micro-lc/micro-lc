@@ -1,9 +1,67 @@
 import test, { expect } from '@playwright/test'
 
+import type { Config } from '../packages/interfaces/schemas/v2'
 import type Microlc from '../packages/orchestrator/src/web-component'
 import type { BaseExtension } from '../packages/orchestrator/src/web-component'
 
-import completeConfig, { goto } from './complete-config'
+import completeConfig, { data, goto } from './complete-config'
+
+test.only('reroute includes window.history.state context', async ({ page }) => {
+  const script = data`
+    class CustomButton extends HTMLElement {
+      connectedCallback() {
+        this.appendChild(
+          Object.assign(this.ownerDocument.createElement('button'), {
+            onclick: () => window.history.pushState({test: 'hello'}, '', '/about'),
+            textContent: "Click Me!"
+          })
+        )
+      }
+    }
+
+
+
+    customElements.define('custom-button', CustomButton)
+  `
+
+  const config: Config = {
+    applications: {
+      about: {
+        config: {
+          content: {
+            attributes: {
+              href: 'https://google.com',
+            },
+            tag: 'a',
+          },
+        },
+        integrationMode: 'compose',
+        route: '/about',
+      },
+      home: {
+        config: {
+          content: {
+            tag: 'custom-button',
+          },
+        },
+        integrationMode: 'compose',
+        route: '/',
+      },
+    },
+    layout: {
+      content: { tag: 'slot' },
+      sources: [script],
+    },
+    settings: {
+      defaultUrl: '/',
+    },
+    version: 2,
+  }
+  await goto(page, config)
+  await page.pause()
+
+  await page.evaluate()
+})
 
 test('base tag => on `injectBase` href base attribute must be computed according to the application route', async ({ page }) => {
   await page.goto('http://localhost:3000/__reverse/')
