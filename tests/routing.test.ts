@@ -6,7 +6,7 @@ import type { BaseExtension } from '../packages/orchestrator/src/web-component'
 
 import completeConfig, { data, goto } from './complete-config'
 
-test.only('reroute includes window.history.state context', async ({ page }) => {
+test('reroute includes window.history.state context', async ({ page }) => {
   const script = data`
     class CustomButton extends HTMLElement {
       connectedCallback() {
@@ -19,8 +19,18 @@ test.only('reroute includes window.history.state context', async ({ page }) => {
       }
     }
 
+    class CustomReceiver extends HTMLElement {
+      connectedCallback() {
+        window.__state__ = window.history.state
+        this.appendChild(
+          Object.assign(this.ownerDocument.createElement('span'), {
+            textContent: "Hi from the custom-receiver :)"
+          })
+        )
+      }
+    }
 
-
+    customElements.define('custom-receiver', CustomReceiver)
     customElements.define('custom-button', CustomButton)
   `
 
@@ -29,10 +39,7 @@ test.only('reroute includes window.history.state context', async ({ page }) => {
       about: {
         config: {
           content: {
-            attributes: {
-              href: 'https://google.com',
-            },
-            tag: 'a',
+            tag: 'custom-receiver',
           },
         },
         integrationMode: 'compose',
@@ -58,9 +65,12 @@ test.only('reroute includes window.history.state context', async ({ page }) => {
     version: 2,
   }
   await goto(page, config)
+  await page.getByText('Click Me!').click()
   await page.pause()
 
-  await page.evaluate()
+  await expect(page.getByText('Hi from the custom-receiver :)')).toBeVisible()
+
+  expect(await page.evaluate(() => (window as unknown as Window & {__state__: unknown}).__state__)).toStrictEqual({ test: 'hello' })
 })
 
 test('base tag => on `injectBase` href base attribute must be computed according to the application route', async ({ page }) => {
@@ -232,7 +242,8 @@ function popStateListener(event) {
   }
 })()
   `
-  const data = (input: string) => `data:text/javascript;base64,${Buffer.from(input).toString('base64')}`
+
+  const script = (input: string) => `data:text/javascript;base64,${Buffer.from(input).toString('base64')}`
   type Extensions = BaseExtension & {
     state: {
       push(next: string): void
@@ -243,14 +254,14 @@ function popStateListener(event) {
     applications: {
       app1: {
         entry: {
-          scripts: [data(appFactory('app1'))],
+          scripts: [script(appFactory('app1'))],
         },
         integrationMode: 'parcel',
         route: '/app1/',
       },
       app2: {
         entry: {
-          scripts: [data(appFactory('app2'))],
+          scripts: [script(appFactory('app2'))],
         },
         integrationMode: 'parcel',
         route: '/app2/',
@@ -290,7 +301,7 @@ function popStateListener(event) {
         },
       ],
       sources: [
-        data(customElements),
+        script(customElements),
       ],
     },
     settings: {
