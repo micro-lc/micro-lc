@@ -2796,7 +2796,7 @@ __metadata:
     "@types/babel__core": "npm:^7.20.2"
     "@types/glob": "npm:^8.1.0"
     "@types/json-schema": "npm:^7.0.13"
-    "@types/lodash-es": "npm:^4.17.9"
+    "@types/lodash-es": "npm:^4.17.12"
     "@types/mocha": "npm:^10.0.2"
     "@types/react": "npm:^18.2.28"
     "@types/react-dom": "npm:^18.2.13"
@@ -2840,7 +2840,7 @@ __metadata:
     "@types/chai-string": "npm:^1.4.3"
     "@types/glob": "npm:^8.1.0"
     "@types/js-yaml": "npm:^4.0.7"
-    "@types/lodash-es": "npm:^4.17.9"
+    "@types/lodash-es": "npm:^4.17.12"
     "@types/mocha": "npm:^10.0.2"
     "@types/node": "npm:^20.8.5"
     "@types/node-fetch": "npm:^2.6.6"
@@ -4789,12 +4789,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.9":
-  version: 4.17.9
-  resolution: "@types/lodash-es@npm:4.17.9"
+"@types/lodash-es@npm:^4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
   dependencies:
     "@types/lodash": "npm:*"
-  checksum: 5e3a8a74134e67c37f1b8eb4a2897c88038f1b1bd7f508feec9e5561b52787d7efcc30c18981e9c6edec2b894f127b60312a431d98b84e12e785bea9cb5d1d40
+  checksum: 56b9a433348b11c31051c6fa9028540a033a08fb80b400c589d740446c19444d73b217cf1471d4036448ef686a83e8cf2a35d1fadcb3f2105f26701f94aebb07
   languageName: node
   linkType: hard
 
