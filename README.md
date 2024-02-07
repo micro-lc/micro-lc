@@ -149,6 +149,30 @@ yarn playground-stop
 ```
 to stop it.
 
+## Tag
+
+To create a tag, a custom script is provided. Given the library/package you'd like to tag:
+
+- `orchestrator`
+- `composer`
+- `layout`
+- `iconic`
+- `interfaces`
+
+just run
+
+```shell
+yarn bump <PACKAGE> [major|minor|patch|<VERSION>]
+```
+
+which will:
+
+1. update the changelog moving the unreleased entries to the tagged version
+2. create the appropriate tags for npm libraries and docker containers
+
+Notice that `orchestrator` release, on tag, both the npm library and a docker container,
+hence carries 2 tags simultaneously.
+
 ## Contributing
 
 We are thankful for any contributions from the community, read our [contributing guide](./CONTRIBUTING.md) to learn
