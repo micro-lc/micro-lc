@@ -17,10 +17,10 @@ import type { Content, PluginConfiguration, ImportMap } from '@micro-lc/interfac
 import type { RenderOptions } from 'lit-html'
 import { html, render as litRender } from 'lit-html'
 
-import { interpolate } from './compiler'
-import { parseSources } from './importmap'
-import { jsonToHtml } from './json'
-import { lexer } from './lexer'
+import { interpolate } from './compiler.js'
+import { parseSources } from './importmap.js'
+import { jsonToHtml } from './json.js'
+import { lexer } from './lexer.js'
 
 export interface ComposerApi {
   context: ComposerOptions['context']
@@ -116,4 +116,4 @@ export async function render(
   })
 }
 
-export * from './pool'
+export * from './pool.js'

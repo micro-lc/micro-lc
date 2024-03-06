@@ -5,7 +5,7 @@ import { createSandbox } from 'sinon'
 import sinonChai from 'sinon-chai'
 
 import { lexer } from '../lexer'
-import logger from '../logger'
+import Logger from '../logger'
 
 use(sinonChai)
 
@@ -139,7 +139,7 @@ describe('digest throws', () => {
   })
   it('should return cached value on second call', async () => {
     const sandbox = createSandbox()
-    const loggerError = sandbox.stub(logger, 'error')
+    const loggerError = sandbox.stub(Logger.logger, 'error')
 
     const result = await lexer('${a}')
 

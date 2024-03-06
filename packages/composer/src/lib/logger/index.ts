@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import * as logger from './logger'
+import * as logger from './logger.js'
 
-export * from './errors'
+export * from './errors.js'
 export default logger

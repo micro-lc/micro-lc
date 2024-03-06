@@ -15,7 +15,7 @@
 */
 import type { ArrayContent, Component, Content, VoidComponent } from '@micro-lc/interfaces/v2'
 
-import { toArray } from './to-array'
+import { toArray } from './to-array.js'
 
 const voidTags = [
   'area',

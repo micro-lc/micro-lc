@@ -15,7 +15,7 @@
 */
 import type { PluginConfiguration, ImportMap } from '@micro-lc/interfaces/v2'
 
-import { toArray } from './to-array'
+import { toArray } from './to-array.js'
 
 export function parseSources(sources: Exclude<PluginConfiguration['sources'], undefined>): string[] {
   const arrayOrObject:
