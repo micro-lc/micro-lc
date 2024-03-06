@@ -1,8 +1,11 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 import { JSDOM } from 'jsdom'
 import JSZip from 'jszip'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 interface IconComponent {
   attrs: Record<string, unknown>

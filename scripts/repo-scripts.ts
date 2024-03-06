@@ -58,10 +58,10 @@ const commands = {
   },
 }
 
-const exec = async (step, command, callback) => {
-  let innerResolve
-  let innerReject
-  const promise = new Promise((resolve, reject) => {
+const exec = async (step: string, command: string, callback?: (error: unknown, stdout: string, stderr: string) => void) => {
+  let innerResolve: () => void
+  let innerReject: (reason?: unknown) => void
+  const promise = new Promise<void>((resolve, reject) => {
     innerResolve = resolve
     innerReject = reject
   })
@@ -84,15 +84,14 @@ const exec = async (step, command, callback) => {
       message = stdout
     }
 
-    return callback
-      ? callback(error, stdout, stderr)
-      : logger.bgColor(color).log(`[${step}]`)
-        .joint()
-        .color('white')
-        .log(` ▶ ${message}`)
+    // @ts-expect-error cannot import `types.COLOR`
+    return logger.bgColor(color).log(`[${step}]`)
+      .joint()
+      .color('white')
+      .log(` ▶ ${message}`)
   })
   proc.on('spawn', () => logger.color('cyan').bold().underscore()
-    .log(`\t\t${step}  ${icons[step]} \n`))
+    .log(`\t\t${step}  ${icons[step as keyof typeof icons]} \n`))
   proc.on('exit', (code) => {
     code === 0
       ? innerResolve()
@@ -103,6 +102,7 @@ const exec = async (step, command, callback) => {
 }
 
 class PromiseQueue {
+  queue: Promise<unknown>
   constructor() {
     this.queue = Promise.resolve()
   }
@@ -111,7 +111,7 @@ class PromiseQueue {
     return this.queue
   }
 
-  add(step, operation) {
+  add(step: string, operation: () => Promise<unknown>) {
     this.queue = this.queue
       .then(operation)
       .then(() => {
@@ -130,7 +130,7 @@ class PromiseQueue {
   }
 }
 
-const listOfCommands = (routine, subargv) => {
+const listOfCommands = (routine: keyof typeof steps, subargv: string[]) => {
   let runningSteps = steps[routine]
   let [until] = subargv
   const [, next] = subargv
@@ -146,8 +146,6 @@ const listOfCommands = (routine, subargv) => {
     runningSteps = cleanup ? runningSteps : runningSteps.slice(1)
   } else if (routine === 'coverage') {
     /* noop */
-  } else {
-    throw new TypeError(`${routine} does not exist`)
   }
 
   if (until && !runningSteps.includes(until)) {
@@ -160,12 +158,12 @@ const listOfCommands = (routine, subargv) => {
   return runningSteps.slice(0, lastStep + 1)
 }
 
-async function main(routine, subargv) {
+async function main(routine: keyof typeof steps, subargv: string[]) {
   logger.log('\n')
   const queue = new PromiseQueue()
   const runningSteps = listOfCommands(routine, subargv)
   runningSteps.forEach((step) => {
-    queue.add(step, () => exec(step, commands[routine][step]))
+    queue.add(step, () => exec(step, (commands[routine] as Record<string, string>)[step])).catch((err) => Promise.reject(err))
   })
 
   await queue.get()
@@ -175,10 +173,13 @@ const argv = process.argv.slice(2)
 const [routine, ...subargv] = argv
 
 const routines = ['initialize', 'coverage']
-if (!routines.includes(routine)) {
+
+const isRoutine = (arg: string): arg is keyof typeof steps => routine.includes(arg)
+
+if (!isRoutine(routine)) {
   console.error(`${routine} is not valid. Must be one of ${routines.join(', ')}.`)
 }
 
-main(routine, subargv).catch((err) => {
+main(routine as keyof typeof steps, subargv).catch((err) => {
   console.error(`[error boundary]: ${err}`)
 })

@@ -1,3 +1,4 @@
+/* eslint-disable n/no-unpublished-require */
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 const path = require('path')
 

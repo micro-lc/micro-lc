@@ -13,9 +13,9 @@ const folders = globSync(`${resolve(dir, 'playground')}/*`)
   .filter((path) => lstatSync(path).isDirectory())
   .map((path) => `/playground${path.split('/playground')[1]}`)
 
-const logger = (error, stdout, stderr) => {
+const logger = (error: unknown, stdout: string, stderr: string) => {
   if (error) {
-    console.log(`[docker-compose] error: ${error.message}`)
+    console.log(`[docker-compose] error: ${(error as Error).message}`)
     return
   }
   if (stderr) {
@@ -41,7 +41,7 @@ const main = async () => {
           return next()
         },
         async function rewriteIndex(ctx, next) {
-          const [oneOfThem, playgroundScope] = folders.reduce(([oneOtThem, prevFolder], folder) => {
+          const [oneOfThem, playgroundScope] = folders.reduce<[boolean, string | undefined]>(([oneOtThem, prevFolder], folder) => {
             return [oneOtThem || ctx.url.includes(folder), ctx.url.includes(folder) ? folder : prevFolder]
           }, [false, undefined])
 
@@ -52,7 +52,7 @@ const main = async () => {
               .catch(() => playgroundScope)
 
             // eslint-disable-next-line require-atomic-updates
-            ctx.url = url
+            ctx.url = url as string
 
             return next()
           }
@@ -69,7 +69,7 @@ const main = async () => {
         {
           name: 'nonce',
           transform(ctx) {
-            function randomString(length) {
+            function randomString(length: number) {
               let text = ''
               const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
               for (let i = 0; i < length; i++) {
@@ -79,7 +79,7 @@ const main = async () => {
             }
             const nonce = randomString(32)
             if (ctx.response.is('html')) {
-              return { body: ctx.body.replace(/\*\*CSP_NONCE\*\*/g, nonce) }
+              return { body: (ctx.body as string).replace(/\*\*CSP_NONCE\*\*/g, nonce) }
             }
           },
         },
