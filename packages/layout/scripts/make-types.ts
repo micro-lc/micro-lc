@@ -14,10 +14,13 @@
   limitations under the License.
 */
 import { writeFile } from 'fs/promises'
-import { resolve } from 'path'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
 import type { Options } from 'json-schema-to-typescript'
 import { compileFromFile } from 'json-schema-to-typescript'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const TYPES_FILE_NAME = 'index.d.ts'
 

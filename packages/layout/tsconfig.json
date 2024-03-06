@@ -13,10 +13,5 @@
     "useDefineForClassFields": false,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true
-  },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
   }
 }

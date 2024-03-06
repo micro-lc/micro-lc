@@ -1,5 +1,6 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
+import postcssAntDynamicTheme from '@micro-lc/interfaces/postcss-ant-dynamic-theme'
 import cssnano from 'cssnano'
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -7,7 +8,7 @@ import { defineConfig } from 'vite'
 import banner from 'vite-plugin-banner'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
-import settings from '../../settings.json'
+import settings from '../../settings.json' assert {type: 'json'}
 
 const input = (mode: string): Record<string, string> => {
   const minInput = {
@@ -26,15 +27,14 @@ const input = (mode: string): Record<string, string> => {
 }
 
 // @ts-expect-error supported
-export default defineConfig(async ({ mode }) => {
-  const { default: postcssAntDynamicTheme } = await import('@micro-lc/interfaces/postcss-ant-dynamic-theme')
+export default defineConfig(({ mode }) => {
   return {
     base: './',
     build: {
       chunkSizeWarningLimit: 3000,
       dynamicImportVarsOptions: {
         exclude: [
-          require.resolve('@micro-lc/iconic/dist/import-icon/index.js'),
+          '@micro-lc/iconic/dist/import-icon/index.js',
         ],
       },
       emptyOutDir: false,

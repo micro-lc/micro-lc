@@ -1,6 +1,7 @@
 {
   "name": "@micro-lc/layout",
   "version": "2.2.0",
+  "type": "module",
   "types": "./dist/types/index.d.ts",
   "module": "./dist/index.js",
   "exports": {
@@ -39,9 +40,9 @@
   ],
   "scripts": {
     "cleanup": "yarn run -T rimraf dist node_modules coverage",
-    "make-types": "ts-node ./scripts/make-types.ts",
+    "make-types": "node --no-warnings --loader=ts-node/esm ./scripts/make-types.ts",
     "check:types": "yarn make-types && yarn tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
-    "storybook": "start-storybook -p 6007",
+    "storybook": "NODE_OPTIONS=--openssl-legacy-provider yarn start-storybook -p 6007",
     "build:prod": "vite build --mode production",
     "build:min": "vite build --mode min",
     "build": "yarn run -T run-s check:types build:prod build:min",
@@ -100,7 +101,6 @@
     "rollup-plugin-node-polyfills": "^0.2.1",
     "rollup-plugin-visualizer": "^5.9.2",
     "sinon": "^17.0.1",
-    "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",

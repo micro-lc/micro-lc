@@ -1,6 +1,5 @@
+import type { MlcLoadingAnimation } from '@micro-lc/layout'
 import test, { expect } from '@playwright/test'
-
-import type { MlcLoadingAnimation } from '../packages/layout/dist/types/web-components/mlc-loading-animation'
 
 test('mlc-loading-animation: should send configuration to micro-lc API with default values', async ({ page }) => {
   await page.goto('http://localhost:3000/pages/')
