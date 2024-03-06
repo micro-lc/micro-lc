@@ -1,6 +1,7 @@
 {
   "name": "@micro-lc/orchestrator",
   "version": "2.2.3",
+  "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
@@ -28,16 +29,15 @@
   "scripts": {
     "cleanup": "yarn run -T rimraf ./dist ./.nyc_output ./coverage ./node_modules stats.html",
     "check:types": "tsc --project ./scripts/tsconfig.types.json && echo \"✓ check types\"",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' NODE_ENV=development ts-mocha",
-    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' NODE_ENV=development nyc ts-mocha",
-    "build:es": "ts-node scripts/compile.esm.ts",
-    "build:cjs": "ts-node scripts/compile.cjs.ts",
+    "test": "NODE_ENV=development mocha 'src/**/test/**/*.test.ts'",
+    "coverage": "NODE_ENV=development c8 yarn test",
+    "build:es": "node --no-warnings --loader=ts-node/esm scripts/compile.esm.ts",
     "build:prod": "vite build --mode production",
     "build:dev": "vite build --mode development",
     "build:mfe-loader": "esbuild --platform=browser --format=esm --outfile=dist/microfrontend-loader.js --minify --bundle src/microfrontend-loader.ts",
-    "build:polyfills": "ts-node scripts/build-polyfills.ts",
-    "build": "yarn run -T run-s check:types build:es build:cjs build:dev build:prod build:polyfills build:mfe-loader",
-    "esm": "ts-node scripts/esm-url-generator.ts",
+    "build:polyfills": "node --no-warnings --loader=ts-node/esm scripts/build-polyfills.ts",
+    "build": "yarn run -T run-s check:types build:es build:dev build:prod build:polyfills build:mfe-loader",
+    "esm": "node --no-warnings --loader=ts-node/esm scripts/esm-url-generator.ts",
     "serve": "vite dev"
   },
   "devDependencies": {
@@ -59,6 +59,7 @@
     "@types/sinon-chai": "^3.2.12",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
+    "c8": "^9.1.0",
     "chai": "^4.3.8",
     "chai-as-promised": "^7.1.1",
     "chai-string": "^1.5.0",
@@ -75,7 +76,7 @@
     "sinon-chai": "^3.7.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6",
+    "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-plugin-banner": "^0.7.1"
   },

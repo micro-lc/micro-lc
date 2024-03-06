@@ -24,6 +24,10 @@
     "./composer.development": {
       "default": "./dist/composer.development.js",
       "import": "./dist/composer.production.js"
+    },
+    "./composer.production?url": {
+      "default": "./dist/composer.production.js",
+      "import": "./dist/composer.production.js"
     }
   },
   "scripts": {
@@ -59,7 +63,7 @@
     "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6",
+    "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-plugin-banner": "^0.7.1"
   },

@@ -20,9 +20,9 @@ import type { CompleteConfig } from '../../config'
 import type { Microlc } from '../micro-lc'
 
 import type { BaseExtension } from './extensions'
-import { MFELoader } from './mfe-loader'
+import { MFELoader } from './mfe-loader.js'
 import type { QiankunMicroApp } from './qiankun'
-import { currentApplication$, getCurrentApplicationAssets } from './router'
+import { currentApplication$, getCurrentApplicationAssets } from './router.js'
 
 export type MicrolcEvent = Record<string, unknown>
 

@@ -26,7 +26,7 @@ import type {
 import page401Url from './assets/401.html?url'
 import page404Url from './assets/404.html?url'
 import page500Url from './assets/500.html?url'
-import { computeAbsoluteRoute } from './web-component/lib'
+import { computeAbsoluteRoute } from './web-component/lib/index.js'
 
 export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 

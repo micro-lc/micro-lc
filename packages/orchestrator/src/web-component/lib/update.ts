@@ -77,7 +77,7 @@ export async function fetchConfig(url: string, init?: RequestInit): Promise<Conf
       if (process.env.NODE_ENV === 'development') {
         return Promise.all<[unknown, SchemaOptions]>([
           Promise.resolve(json),
-          import('../../utils/schemas').then<SchemaOptions | undefined>((schemas) => ({
+          import('../../utils/schemas.js').then<SchemaOptions | undefined>((schemas) => ({
             id: schemas.configSchema.$id,
             parts: schemas,
           })),
@@ -116,7 +116,7 @@ export interface ComposableApplicationProperties<T extends BaseExtension = BaseE
 export async function getApplicationSchema(): Promise<SchemaOptions | undefined> {
   let schema: SchemaOptions | undefined
   if (process.env.NODE_ENV === 'development') {
-    schema = await import('../../utils/schemas').then<SchemaOptions>((schemas) => ({
+    schema = await import('../../utils/schemas.js').then<SchemaOptions>((schemas) => ({
       id: schemas.pluginSchema.$id,
       parts: schemas,
     }))

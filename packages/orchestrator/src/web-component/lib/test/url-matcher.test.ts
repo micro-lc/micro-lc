@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { effectiveRouteLength, urlMatch } from '../url-matcher'
+import { effectiveRouteLength, urlMatch } from '../url-matcher.js'
 
 describe('urlMatch tests', () => {
   const tests: [string, string, boolean][] = [

@@ -10,7 +10,7 @@ import type { SchemaOptions } from '../../utils/json'
 
 import type { MicrolcApi, MicrolcEvent } from './api'
 import type { BaseExtension } from './extensions'
-import { getPublicPath } from './handler'
+import { getPublicPath } from './handler.js'
 import type { QiankunApi, QiankunMicroApp } from './qiankun'
 import type { ComposableApplicationProperties } from './update'
 
@@ -88,7 +88,7 @@ const getParcelEntry = ({ entry }: ParcelApplication): Entry => {
 async function getApplicationSchema(): Promise<SchemaOptions | undefined> {
   let schema: SchemaOptions | undefined
   if (process.env.NODE_ENV === 'development') {
-    schema = await import('../../utils/schemas').then<SchemaOptions>((schemas) => ({
+    schema = await import('../../utils/schemas.js').then<SchemaOptions>((schemas) => ({
       id: schemas.pluginSchema.$id,
       parts: schemas,
     }))

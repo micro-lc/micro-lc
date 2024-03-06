@@ -13,10 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-export * from './api'
-export * from './extensions'
-export * from './mfe-loader'
-export * from './qiankun'
-export * from './router'
-export * from './update'
-export * from './url-matcher'
+export * from './api.js'
+export * from './extensions.js'
+export * from './mfe-loader.js'
+export * from './qiankun.js'
+export * from './router.js'
+export * from './update.js'
+export * from './url-matcher.js'

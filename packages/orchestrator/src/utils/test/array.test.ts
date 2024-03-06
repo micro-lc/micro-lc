@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { toArray } from '../array'
+import { toArray } from '../array.js'
 
 describe('array utils tests', () => {
   it('should return an array', () => {

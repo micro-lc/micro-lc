@@ -17,7 +17,7 @@ import { loadMicroApp } from 'qiankun'
 import type { MicroApp as QiankunMicroApp } from 'qiankun'
 
 import type { ErrorCodes } from '../../logger'
-import logger from '../../logger'
+import logger from '../../logger/index.js'
 import type { SchemaOptions } from '../../utils/json'
 
 export type { QiankunMicroApp }

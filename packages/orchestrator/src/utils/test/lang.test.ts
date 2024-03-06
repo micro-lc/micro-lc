@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { craftLanguageHeader } from '../lang'
+import { craftLanguageHeader } from '../lang.js'
 
 describe('language header tests', () => {
   before(() => {

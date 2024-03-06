@@ -19,15 +19,15 @@ import { BehaviorSubject } from 'rxjs'
 
 import type { CompleteConfig } from '../../config'
 import type { ErrorCodes } from '../../logger'
-import logger from '../../logger'
+import logger from '../../logger/index.js'
 
 import type { MicrolcApi, MicrolcEvent } from './api'
 import type { BaseExtension } from './extensions'
 import type { RoutingError } from './handler'
-import { getPublicPath, errorMap, RoutingErrorMessage, postProcessTemplate, microlcFetch } from './handler'
+import { getPublicPath, errorMap, RoutingErrorMessage, postProcessTemplate, microlcFetch } from './handler.js'
 import type { LoadableAppContext } from './mfe-loader'
 import type { LoadedAppUpdate, QiankunApi, QiankunMicroApp } from './qiankun'
-import { effectiveRouteLength, urlMatch } from './url-matcher'
+import { effectiveRouteLength, urlMatch } from './url-matcher.js'
 
 type MatchingRoute<T extends BaseExtension, E extends MicrolcEvent> = LoadableAppContext<T, E>
 
