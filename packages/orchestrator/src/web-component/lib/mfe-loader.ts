@@ -5,7 +5,7 @@ import type { Application, ComposableApplication, Content, IFrameApplication, Pa
 import type { Entry, LoadableApp } from 'qiankun'
 
 import type { CompleteConfig } from '../../config'
-import { toArray } from '../../utils/array'
+import { toArray } from '../../utils/array.js'
 import type { SchemaOptions } from '../../utils/json'
 
 import type { MicrolcApi, MicrolcEvent } from './api'

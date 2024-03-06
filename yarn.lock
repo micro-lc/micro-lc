@@ -2447,7 +2447,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@micro-lc/composer@workspace:*, @micro-lc/composer@workspace:packages/composer":
+"@micro-lc/composer@file:../composer::locator=%40micro-lc%2Forchestrator%40workspace%3Apackages%2Forchestrator":
+  version: 2.0.3
+  resolution: "@micro-lc/composer@file:../composer#../composer::hash=f98c9e&locator=%40micro-lc%2Forchestrator%40workspace%3Apackages%2Forchestrator"
+  dependencies:
+    lit-html: "npm:^2.8.0"
+    rxjs: "npm:^7.8.1"
+  peerDependencies:
+    es-module-shims: "*"
+  checksum: 10/3d877d2a0bc0106ed74c3e83c5e029dab4b676df56aab89313bcf1cc0b4c34ea2d358d52f997a3c440a6c90d1bc6c4d45bf8931f4792865eff159802a9c44ca6
+  languageName: node
+  linkType: hard
+
+"@micro-lc/composer@workspace:packages/composer":
   version: 0.0.0-use.local
   resolution: "@micro-lc/composer@workspace:packages/composer"
   dependencies:
@@ -2518,6 +2530,15 @@ __metadata:
     react: ">=17"
   languageName: unknown
   linkType: soft
+
+"@micro-lc/interfaces@file:../interfaces::locator=%40micro-lc%2Forchestrator%40workspace%3Apackages%2Forchestrator":
+  version: 1.1.0
+  resolution: "@micro-lc/interfaces@file:../interfaces#../interfaces::hash=5317a1&locator=%40micro-lc%2Forchestrator%40workspace%3Apackages%2Forchestrator"
+  peerDependencies:
+    postcss: "*"
+  checksum: 10/c1f736ac39ea73f692a0e853374530fb38775e0b7811b02687bc0bf4bae604bb217a627444ce415f513946cc7f9c5e9f85dd61a026e5fcc6c3a94e26fcaff269
+  languageName: node
+  linkType: hard
 
 "@micro-lc/interfaces@workspace:*, @micro-lc/interfaces@workspace:packages/interfaces":
   version: 0.0.0-use.local
@@ -2615,8 +2636,8 @@ __metadata:
   resolution: "@micro-lc/orchestrator@workspace:packages/orchestrator"
   dependencies:
     "@babel/runtime": "npm:^7.22.6"
-    "@micro-lc/composer": "workspace:*"
-    "@micro-lc/interfaces": "workspace:*"
+    "@micro-lc/composer": "file:../composer"
+    "@micro-lc/interfaces": "file:../interfaces"
     "@open-wc/testing": "npm:^3.2.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@types/chai": "npm:^4.3.8"

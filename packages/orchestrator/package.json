@@ -9,7 +9,6 @@
     ".": {
       "default": "./dist/es/index.js",
       "import": "./dist/es/index.js",
-      "require": "./dist/cjs/index.js",
       "types": "./dist/types/index.d.ts"
     },
     "./micro-lc.development.js": {
@@ -20,6 +19,11 @@
     },
     "./polyfills/symbol-observable": {
       "default": "./dist/polyfills/symbol-observable.js"
+    },
+    "./mfe-loader": {
+      "default": "./dist/es/web-component/lib/mfe-loader.js",
+      "import": "./dist/es/web-component/lib/mfe-loader.js",
+      "types": "./dist/types/web-component/lib/mfe-loader.d.ts"
     }
   },
   "files": [
@@ -42,8 +46,6 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.22.6",
-    "@micro-lc/composer": "workspace:*",
-    "@micro-lc/interfaces": "workspace:*",
     "@open-wc/testing": "^3.2.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/chai": "^4.3.8",
@@ -80,6 +82,8 @@
     "vite-plugin-banner": "^0.7.1"
   },
   "dependencies": {
+    "@micro-lc/composer": "file:../composer",
+    "@micro-lc/interfaces": "file:../interfaces",
     "js-yaml": "^4.1.0",
     "qiankun": "^2.10.13",
     "rxjs": "^7.8.1"
