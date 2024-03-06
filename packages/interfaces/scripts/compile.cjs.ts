@@ -1,8 +1,8 @@
 import { build } from 'esbuild'
 
-import settings from '../../../settings.json'
+import settings from '../../../settings.json' assert {type: 'json'}
 
-import entryPoints from './glob'
+import entryPoints from './glob.js'
 
 build({
   banner: {

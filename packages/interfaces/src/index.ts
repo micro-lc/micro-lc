@@ -13,4 +13,4 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-export * from './postcss-ant-dynamic-theme'
+export * from './postcss-ant-dynamic-theme.js'
