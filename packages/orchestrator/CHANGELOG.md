@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - refactor of ESM lib end exposing `MFELoader` class to embed `micro-lc` in a JS browser application
+- `loadApp` function in `./mfe-loader`
 
 ### Changed
 

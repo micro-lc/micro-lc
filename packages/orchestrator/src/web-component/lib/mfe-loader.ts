@@ -11,7 +11,8 @@ import type { SchemaOptions } from '../../utils/json'
 import type { MicrolcApi, MicrolcEvent } from './api'
 import type { BaseExtension } from './extensions'
 import { getPublicPath } from './handler.js'
-import type { QiankunApi, QiankunMicroApp } from './qiankun'
+import type { LoaderApi, LoaderConfiguration, LoaderLifeCycles, RoutelessMicroApp } from './qiankun'
+import { createQiankunInstance } from './qiankun.js'
 import type { ComposableApplicationProperties } from './update'
 
 type RoutelessApplication =
@@ -100,13 +101,41 @@ async function getApplicationSchema(): Promise<SchemaOptions | undefined> {
 const prepareApplicationConfig = <T extends BaseExtension, E extends MicrolcEvent>(
   id: string, app: Application | RoutelessApplication, composerUri: string
 ) => {
+  const name = `${id}-${window.crypto.randomUUID()}`
+  const contextMaker = prepareRoutelessApp(name, app, composerUri)
+
+  return {
+    makeConfig: (
+      container: HTMLElement | ShadowRoot,
+      microlcApi: MicrolcApi<T, E>,
+      sharedProperties: Record<string, unknown>
+    ): LoadableAppContext<T, E> => {
+      const context = contextMaker(container, { ...sharedProperties, microlcApi })
+
+      return {
+        ...context,
+        props: {
+          ...context.props,
+          schema: getApplicationSchema(),
+        },
+      }
+    },
+    name,
+  }
+}
+
+const prepareRoutelessApp = (
+  name: string, app: Application | RoutelessApplication, composerUri?: string
+) => {
   let injectBase: boolean | 'override' | undefined = false
   let entry: Entry
   let config: string | PluginConfiguration | undefined
   let properties: Record<string, unknown> | undefined
-  const name = `${id}-${window.crypto.randomUUID()}`
   switch (app.integrationMode) {
   case 'compose':
+    if (!composerUri) {
+      throw new TypeError('Missing composer uri')
+    }
     entry = {
       html: `
           <!DOCTYPE html>
@@ -123,6 +152,9 @@ const prepareApplicationConfig = <T extends BaseExtension, E extends MicrolcEven
       : { ...app.config }
     break
   case 'iframe':
+    if (!composerUri) {
+      throw new TypeError('Missing composer uri')
+    }
     entry = { scripts: [composerUri] }
     config = {
       content: {
@@ -149,33 +181,24 @@ const prepareApplicationConfig = <T extends BaseExtension, E extends MicrolcEven
     break
   }
 
-  return {
-    makeConfig: (
-      container: HTMLElement | ShadowRoot,
-      microlcApi: MicrolcApi<T, E>,
-      sharedProperties: Record<string, unknown>
-    ): LoadableAppContext<T, E> => ({
-      // @ts-expect-error qiankun typing is
-      // not precise here since a shadow root does
-      // work as container of a mfe
-      container,
-      entry,
-      name,
-      props: {
-        composerApi: buildComposer(app.integrationMode, {
-          microlcApi,
-          ...sharedProperties,
-        }),
-        config,
-        injectBase,
-        microlcApi,
-        schema: getApplicationSchema(),
-        ...sharedProperties,
-        ...properties,
-      },
-    }),
+  return <P extends Record<string, unknown>>(
+    container: HTMLElement | ShadowRoot,
+    sharedProperties: P
+  ) => ({
+    // qiankun typing is
+    // not precise here since a shadow root does
+    // work as container of a mfe
+    container: container as HTMLElement,
+    entry,
     name,
-  }
+    props: {
+      composerApi: buildComposer(app.integrationMode, sharedProperties),
+      config,
+      injectBase,
+      ...sharedProperties,
+      ...properties,
+    },
+  })
 }
 
 class MFELoader<T extends BaseExtension = BaseExtension, E extends MicrolcEvent = MicrolcEvent> {
@@ -183,10 +206,10 @@ class MFELoader<T extends BaseExtension = BaseExtension, E extends MicrolcEvent 
   static COMPOSER_BODY_CLASS = 'composer-body'
 
   private getApi: () => MicrolcApi<T, E>
-  private qiankun: QiankunApi
+  private loader: LoaderApi
   private composerUri: string
   private sharedProperties: Record<string, unknown>
-  private handlers: QiankunMicroApp | undefined
+  private handlers: RoutelessMicroApp | undefined
 
   private getMount(shouldMountByLoading = false): (() => Promise<null>) | undefined {
     const app = this.handlers
@@ -227,9 +250,9 @@ class MFELoader<T extends BaseExtension = BaseExtension, E extends MicrolcEvent 
   constructor(
     config: CompleteConfig,
     getApi: () => MicrolcApi<T, E>,
-    qiankun: QiankunApi
+    loader: LoaderApi
   ) {
-    this.qiankun = qiankun
+    this.loader = loader
     this.composerUri = config.settings.composerUri
     this.sharedProperties = config.shared.properties
     this.getApi = getApi
@@ -241,7 +264,7 @@ class MFELoader<T extends BaseExtension = BaseExtension, E extends MicrolcEvent 
     if (shouldMountByLoading) {
       const { makeConfig } = prepareApplicationConfig<T, E>(MFELoader.ID, app, this.composerUri)
       const loadableApp = makeConfig(container, this.getApi(), this.sharedProperties)
-      this.handlers = this.qiankun.loadMicroApp(loadableApp, { getPublicPath, sandbox: { speedy: false } })
+      this.handlers = this.loader.loadMicroApp(loadableApp, { getPublicPath, sandbox: { speedy: false } })
     }
 
     await this.getMount(shouldMountByLoading)?.()
@@ -254,5 +277,34 @@ class MFELoader<T extends BaseExtension = BaseExtension, E extends MicrolcEvent 
   }
 }
 
+/**
+ * Loader meant for external usage.
+ *
+ * By hiding `qiankun` complexity behind a wrapper allows to mount
+ * a microfrontend application within a given DOM context
+ * @param name {string} the name of the application
+ * @param app {RoutelessApplication} context and integration mode of the application
+ * @param container {HTMLElement | ShadowRoot} DOM container
+ * @param lifeCycles {LoaderLifeCycles} before/after mount/unmount hooks
+ * @param configuration {LoaderConfiguration} setup for sandboxing and encapsulation
+ * @param loader {LoaderApi} override loader
+ * @returns {RoutelessMicroApp} the context and handlers for a microfrontend application ready for mount
+ */
+const loadApp = (
+  name: string,
+  app: RoutelessApplication,
+  container: HTMLElement | ShadowRoot,
+  lifeCycles: LoaderLifeCycles,
+  {
+    composerUri,
+    ...configuration
+  }: LoaderConfiguration,
+  loader: LoaderApi = createQiankunInstance()
+): RoutelessMicroApp => {
+  const makeConfig = prepareRoutelessApp(name, app, composerUri)
+  const loadableApp = makeConfig(container, {})
+  return loader.loadMicroApp(loadableApp, configuration, lifeCycles)
+}
+
 export type { LoadableAppContext, RoutelessApplication }
-export { MFELoader, prepareApplicationConfig }
+export { MFELoader, loadApp, prepareApplicationConfig }

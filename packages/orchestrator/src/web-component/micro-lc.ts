@@ -25,7 +25,7 @@ import type {
   MicrolcApi,
   BaseExtension,
   RouterContainer,
-  QiankunApi,
+  LoaderApi,
   MicrolcEvent,
   LoadableAppContext,
   PushArgs,
@@ -77,7 +77,7 @@ export class Microlc<
     .bind<(args?: PushArgs) => ReturnType<typeof reroute>>(this)
   protected _rerouteToError = rerouteToError
     .bind<(statusCode?: number | undefined, reason?: string | undefined) => ReturnType<typeof rerouteToError>>(this)
-  protected _qiankun = createQiankunInstance()
+  protected _microfrontendLoader = createQiankunInstance()
 
   // queries
   protected _styleElements: HTMLStyleElement[] = []
@@ -200,8 +200,8 @@ export class Microlc<
   loadedRoutes = new Map<string, string>()
   applicationMapping = new Map<string, string>()
   matchCache = new MatchCache<T, E>()
-  get qiankun(): QiankunApi {
-    return this._qiankun
+  get microfrontendLoader(): LoaderApi {
+    return this._microfrontendLoader
   }
   get instance(): string {
     return this._instance

@@ -26,7 +26,7 @@ import type { BaseExtension } from './extensions'
 import type { RoutingError } from './handler'
 import { getPublicPath, errorMap, RoutingErrorMessage, postProcessTemplate, microlcFetch } from './handler.js'
 import type { LoadableAppContext } from './mfe-loader'
-import type { LoadedAppUpdate, QiankunApi, QiankunMicroApp } from './qiankun'
+import type { LoadedAppUpdate, LoaderApi, RoutelessMicroApp } from './qiankun'
 import { effectiveRouteLength, urlMatch } from './url-matcher.js'
 
 type MatchingRoute<T extends BaseExtension, E extends MicrolcEvent> = LoadableAppContext<T, E>
@@ -54,14 +54,14 @@ export interface RouterContainer<T extends BaseExtension = BaseExtension, E exte
   loadedApps: LoadedAppsMap<T, E>
   loadedRoutes: Map<string, string>
   matchCache: MatchCache<T, E>
+  readonly microfrontendLoader: LoaderApi
   ownerDocument: Document
-  readonly qiankun: QiankunApi
 }
 
 // module global state
 let currentApplication: string | undefined
 let currentApplicationBus = new BehaviorSubject<string | undefined>(undefined)
-let applicationHandlers = new Map<string, QiankunMicroApp>()
+let applicationHandlers = new Map<string, RoutelessMicroApp>()
 
 const currentApplication$ = currentApplicationBus.asObservable()
 
@@ -104,7 +104,7 @@ function getUpdate(name = currentApplication): ((props: Record<string, unknown>)
   return update
 }
 
-function getCurrentApplicationAssets(): {handlers: QiankunMicroApp | undefined; id: string} | undefined {
+function getCurrentApplicationAssets(): {handlers: RoutelessMicroApp | undefined; id: string} | undefined {
   if (currentApplication === undefined) {
     return
   }
@@ -289,7 +289,7 @@ async function flushAndGo<T extends BaseExtension, E extends MicrolcEvent>(
     const appConfigName = this.applicationMapping.get(currentApplication)
     const [route] = (appConfigName !== undefined ? this.loadedApps.get(appConfigName) : appConfigName) ?? []
     const application = nextMatch as LoadableApp<Record<string, unknown>>
-    handlers = this.qiankun.loadMicroApp(application, {
+    handlers = this.microfrontendLoader.loadMicroApp(application, {
       // @ts-expect-error wrong typing added in @types/node@20.8.5
       fetch: (input, init) => microlcFetch(input, init, error).then(([res, outgoingError]) => {
         error = outgoingError
@@ -461,7 +461,7 @@ function createRouter<T extends BaseExtension, E extends MicrolcEvent>(this: Rou
 function removeRouter() {
   currentApplication = undefined
   currentApplicationBus = new BehaviorSubject<string | undefined>(undefined)
-  applicationHandlers = new Map<string, QiankunMicroApp>()
+  applicationHandlers = new Map<string, RoutelessMicroApp>()
 
   popstate && window.removeEventListener('popstate', popstate)
   domcontent && window.removeEventListener('DOMContentLoaded', domcontent)

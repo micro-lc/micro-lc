@@ -21,7 +21,7 @@ import type { Microlc } from '../micro-lc'
 
 import type { BaseExtension } from './extensions'
 import { MFELoader } from './mfe-loader.js'
-import type { QiankunMicroApp } from './qiankun'
+import type { RoutelessMicroApp } from './qiankun'
 import { currentApplication$, getCurrentApplicationAssets } from './router.js'
 
 export type MicrolcEvent = Record<string, unknown>
@@ -32,7 +32,7 @@ export interface MicrolcApi<
   readonly createLoader: () => MFELoader<T, E> | undefined
   readonly currentApplication$: Observable<string | undefined>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
-  readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
+  readonly getCurrentApplication: () => Readonly<Partial<{handlers: RoutelessMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
   /**
    * @returns a frozen object containing all set extension. Can be modified by `setExtension` api method
@@ -79,13 +79,13 @@ export interface MicrolcApi<
 export function createMicrolcApiInstance<T extends BaseExtension, E extends MicrolcEvent>(
   this: Microlc<T, E>
 ): () => MicrolcApi<T, E> {
-  const { qiankun } = this
+  const { microfrontendLoader } = this
   const currentState: Partial<E> = {}
   const bus = new BehaviorSubject<Partial<E>>(currentState)
 
   return () => Object.freeze({
     createLoader(this: MicrolcApi<T, E>) {
-      return new MFELoader(this.getCurrentConfig(), () => this, qiankun)
+      return new MFELoader(this.getCurrentConfig(), () => this, microfrontendLoader)
     },
     currentApplication$,
     getApplications: () => Object.freeze({ ...this._config.applications }),
