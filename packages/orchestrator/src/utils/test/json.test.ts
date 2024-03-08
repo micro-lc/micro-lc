@@ -5,8 +5,8 @@ import type { SinonStub } from 'sinon'
 import { createSandbox } from 'sinon'
 import sinonChai from 'sinon-chai'
 
-import { jsonFetcher, jsonToObject } from '../json'
-import * as schemas from '../schemas'
+import { jsonFetcher, jsonToObject } from '../json.js'
+import * as schemas from '../schemas.js'
 
 
 use(sinonChai)

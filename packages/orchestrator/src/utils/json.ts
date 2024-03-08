@@ -17,9 +17,9 @@ import type { Config } from '@micro-lc/interfaces/v2'
 import type { ErrorObject, JSONSchemaType, SchemaObject, ValidateFunction } from 'ajv'
 
 import type { ErrorCodes } from '../logger'
-import logger from '../logger'
+import logger from '../logger/index.js'
 
-import { toArray } from './array'
+import { toArray } from './array.js'
 
 interface MultipleSchemas {
   id: string

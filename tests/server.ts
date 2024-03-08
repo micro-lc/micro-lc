@@ -1,6 +1,6 @@
-
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 import type { Response } from 'express'
 import express from 'express'
@@ -8,6 +8,7 @@ import express from 'express'
 const port = 3000
 
 const app = express()
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const notFound = (res: Response) => {
   res.statusCode = 404

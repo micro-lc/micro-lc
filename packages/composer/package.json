@@ -1,6 +1,7 @@
 {
   "name": "@micro-lc/composer",
   "version": "2.0.3",
+  "type": "module",
   "module": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
   "files": [
@@ -12,22 +13,32 @@
       "default": "./dist/lib/index.js",
       "types": "./dist/lib/index.d.ts"
     },
-    "./composer.development": {
-      "default": "./dist/composer.development.js"
+    "./composer": {
+      "default": "./dist/bundle/index.min.js",
+      "import": "./dist/bundle/index.min.js"
     },
     "./composer.production": {
-      "default": "./dist/composer.production.js"
+      "default": "./dist/composer.production.js",
+      "import": "./dist/composer.production.js"
+    },
+    "./composer.development": {
+      "default": "./dist/composer.development.js",
+      "import": "./dist/composer.production.js"
+    },
+    "./composer.production?url": {
+      "default": "./dist/composer.production.js",
+      "import": "./dist/composer.production.js"
     }
   },
   "scripts": {
     "cleanup": "yarn run -T rimraf dist node_modules coverage",
     "check:types": "tsc --project ./scripts/tsconfig.build.json && echo \"✓ check types\"",
-    "build:lib": "ts-node ./scripts/compile.esm.ts",
+    "build:lib": "node --no-warnings --loader=ts-node/esm ./scripts/compile.esm.ts",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "build": "yarn run -T run-s check:types build:lib build:dev build:prod",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' ts-mocha",
-    "coverage": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"CommonJS\" }' nyc ts-mocha"
+    "test": "mocha 'src/**/test/**/*.test.ts'",
+    "coverage": "c8 yarn test"
   },
   "devDependencies": {
     "@micro-lc/interfaces": "workspace:*",
@@ -41,20 +52,19 @@
     "@types/sinon": "^17.0.3",
     "@types/sinon-chai": "^3.2.12",
     "ajv": "^8.12.0",
+    "c8": "^9.1.0",
     "chai": "^4.3.8",
     "chai-string": "^1.5.0",
     "es-module-shims": "^1.8.0",
     "esbuild": "^0.18.17",
     "glob": "^10.3.3",
     "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
-    "rollup-plugin-visualizer": "^5.9.2",
+    "rollup-plugin-visualizer": "^5.12.0",
     "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
-    "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6",
-    "vite": "^5.0.12",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.5",
     "vite-plugin-banner": "^0.7.1"
   },
   "dependencies": {

@@ -1,13 +1,19 @@
+import { createRequire } from 'module'
 import {
   basename, dirname, resolve,
 } from 'path'
+import { fileURLToPath } from 'url'
 
 import { build } from 'esbuild'
 import { globSync } from 'glob'
 
-import settings from '../../../settings.json'
+import settings from '../../../settings.json' assert {type: 'json'}
 
-import bundlePhosphorIcons from './bundle-phosphor-icons'
+import bundlePhosphorIcons from './bundle-phosphor-icons.js'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const require = createRequire(import.meta.url)
 
 const reduceToFiles = (globs: string[]) => globs.reduce<string[]>((names, name) => {
   const filename = basename(name, '.js')

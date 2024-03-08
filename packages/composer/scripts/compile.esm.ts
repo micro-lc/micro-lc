@@ -1,10 +1,13 @@
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
 import { build } from 'esbuild'
 
-import settings from '../../../settings.json'
+import settings from '../../../settings.json' assert {type: 'json'}
 
-import entryPoints from './glob'
+import entryPoints from './glob.js'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 build({
   banner: {

@@ -1,8 +1,5 @@
+import type { Microlc, BaseExtension, MicrolcConfig } from '@micro-lc/orchestrator'
 import test, { expect } from '@playwright/test'
-
-import type { Config } from '../packages/interfaces/schemas/v2'
-import type Microlc from '../packages/orchestrator/src/web-component'
-import type { BaseExtension } from '../packages/orchestrator/src/web-component'
 
 import completeConfig, { data, goto } from './complete-config'
 
@@ -34,7 +31,7 @@ test('reroute includes window.history.state context', async ({ page }) => {
     customElements.define('custom-button', CustomButton)
   `
 
-  const config: Config = {
+  const config: MicrolcConfig = {
     applications: {
       about: {
         config: {

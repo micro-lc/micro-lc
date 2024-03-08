@@ -1,7 +1,5 @@
+import type { Microlc, MicrolcConfig } from '@micro-lc/orchestrator'
 import test, { expect } from '@playwright/test'
-
-import type { Config } from '../packages/interfaces/schemas/v2'
-import type Microlc from '../packages/orchestrator/src/web-component'
 
 import completeConfig, { base, goto } from './complete-config'
 
@@ -10,7 +8,7 @@ test(`
   [development mode]
   empty config should go to 404 error page
 `, async ({ page }) => {
-  const config: Config = { version: 2 }
+  const config: MicrolcConfig = { version: 2 }
   await goto(page, config, `http://localhost:3000/dev/`)
 
   await expect(page.getByText('Application cannot be found')).toBeVisible()
@@ -21,7 +19,7 @@ test(`
   [config injection]
   empty config should go to 404 error page
 `, async ({ page }) => {
-  const config: Config = { version: 2 }
+  const config: MicrolcConfig = { version: 2 }
   await goto(page, config)
 
   await expect(page.getByText('Application cannot be found')).toBeVisible()
@@ -33,7 +31,7 @@ test(`
   empty config with custom 404 error page
   should show the custom page
 `, async ({ page }) => {
-  const config: Config = {
+  const config: MicrolcConfig = {
     settings: {
       '4xx': {
         404: {
@@ -54,7 +52,7 @@ test(`
   [config injection]
   should use default url
 `, async ({ page }) => {
-  const config: Config = {
+  const config: MicrolcConfig = {
     applications: {
       example: {
         integrationMode: 'iframe',
@@ -77,7 +75,7 @@ test(`
   [config injection]
   should mount each type of application
 `, async ({ page }) => {
-  const config: Config = {
+  const config: MicrolcConfig = {
     applications: {
       example: {
         integrationMode: 'iframe',

@@ -1,4 +1,3 @@
-// eslint-disable-next-line valid-jsdoc
 /**
   Copyright 2022 Mia srl
 

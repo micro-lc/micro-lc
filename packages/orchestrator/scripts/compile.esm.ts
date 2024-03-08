@@ -1,8 +1,10 @@
+import fs from 'fs/promises'
+
 import { build } from 'esbuild'
 
-import settings from '../../../settings.json'
+import settings from '../../../settings.json' assert {type: 'json'}
 
-import entryPoints from './glob'
+import entryPoints from './glob.js'
 
 build({
   banner: {
@@ -14,4 +16,8 @@ build({
   target: settings.target,
 }).then(() => {
   console.log('✓ es module')
-}).catch(console.error)
+}).then(async () => {
+  await fs.cp('src/assets', 'dist/es/assets', { recursive: true })
+  console.log('✓ asset copied')
+})
+  .catch(console.error)

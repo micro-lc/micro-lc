@@ -14,31 +14,55 @@
   limitations under the License.
 */
 import { loadMicroApp } from 'qiankun'
-import type { MicroApp as QiankunMicroApp } from 'qiankun'
+import type {
+  LoadableApp,
+  PrefetchStrategy,
+  MicroApp as QiankunMicroApp,
+  FrameworkLifeCycles,
+} from 'qiankun'
 
 import type { ErrorCodes } from '../../logger'
-import logger from '../../logger'
+import logger from '../../logger/index.js'
 import type { SchemaOptions } from '../../utils/json'
 
-export type { QiankunMicroApp }
+type LoadedAppUpdate = ((customProps: Record<string, unknown>) => Promise<null>) | undefined
 
-export type LoadedAppUpdate = ((customProps: Record<string, unknown>) => Promise<null>) | undefined
-
-export type MicroApp = QiankunMicroApp & {
+type MicroApp = QiankunMicroApp & {
   route: string
 }
 
-export interface QiankunApi {
+type LoaderLifeCycles = FrameworkLifeCycles<Record<string, unknown>>
+
+interface QiankunApi {
   loadMicroApp: typeof loadMicroApp<Record<string, unknown>>
   schema?: SchemaOptions
 }
 
-export function updateErrorHandler(app: string, err: TypeError): void {
+export const updateErrorHandler = (app: string, err: TypeError): void => {
   logger.error('50' as ErrorCodes.UpdateError, app, err.message)
 }
 
-export function createQiankunInstance(): QiankunApi {
+export const createQiankunInstance = (): QiankunApi => {
   return {
     loadMicroApp,
   }
+}
+
+interface LoaderConfiguration {
+  composerUri?: string
+  prefetch?: PrefetchStrategy
+  sandbox?: boolean | {
+    speedy?: boolean
+    strictStyleIsolation?: boolean
+  }
+  singular?: boolean | ((app: LoadableApp<Record<string, unknown>>) => Promise<boolean>)
+}
+
+export type {
+  QiankunMicroApp as RoutelessMicroApp,
+  MicroApp,
+  LoadedAppUpdate,
+  QiankunApi as LoaderApi,
+  LoaderConfiguration,
+  LoaderLifeCycles,
 }

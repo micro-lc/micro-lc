@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import composerUrl from '@micro-lc/composer/composer.production?url'
+import composerUri from '@micro-lc/composer/composer.production?url'
 import type {
   Application,
   Config,
@@ -26,7 +26,7 @@ import type {
 import page401Url from './assets/401.html?url'
 import page404Url from './assets/404.html?url'
 import page500Url from './assets/500.html?url'
-import { computeAbsoluteRoute } from './web-component/lib'
+import { computeAbsoluteRoute } from './web-component/lib/index.js'
 
 export const MICRO_LC_MOUNT_POINT = '__MICRO_LC_MOUNT_POINT'
 
@@ -60,7 +60,7 @@ export const defaultConfig: CompleteConfig = {
         integrationMode: 'parcel',
       },
     },
-    composerUri: composerUrl,
+    composerUri,
     defaultUrl: './',
   },
   shared: { properties: {} },

@@ -1,6 +1,9 @@
 import { readFile } from 'fs/promises'
+import { createRequire } from 'module'
 
 import { Command } from 'commander'
+
+const require = createRequire(import.meta.url)
 
 function getArgs() {
   const program = new Command()

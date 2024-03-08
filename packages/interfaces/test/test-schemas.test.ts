@@ -1,6 +1,7 @@
 /* This routine will test the JSON files inside of schemas folders against the corresponded schema */
 import { readdirSync, readFileSync } from 'fs'
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
 import type { SchemaObject } from 'ajv'
 import Ajv from 'ajv'
@@ -8,9 +9,10 @@ import addFormats from 'ajv-formats'
 import { expect } from 'chai'
 import { globSync } from 'glob'
 
-import { loadSchemas } from './utils'
+import { loadSchemas } from './utils.js'
 
 const CONFIG_SCHEMA_NAME = 'config.schema.json'
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('Test schemas', () => {
   const schemasDirPath = resolve(__dirname, '..', 'schemas')

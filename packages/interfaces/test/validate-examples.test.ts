@@ -1,5 +1,5 @@
 import { readdirSync } from 'fs'
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
 
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
@@ -7,7 +7,10 @@ import { expect } from 'chai'
 import { globSync } from 'glob'
 
 import type { SchemaWithDefinitions } from './utils'
-import { loadSchemas } from './utils'
+import { loadSchemas } from './utils.js'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 interface TestCase {
   example: unknown

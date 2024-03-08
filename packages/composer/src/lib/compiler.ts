@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { ErrorCodes } from './logger'
+import type { ErrorCodes } from './logger/index.js'
 
 const isString = (value: string): boolean => {
   const i = value.charAt(0)

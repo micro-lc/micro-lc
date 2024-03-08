@@ -1,9 +1,15 @@
 import { writeFile } from 'fs/promises'
+import { createRequire } from 'module'
 import { basename, dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
 import { globSync } from 'glob'
 
-import { listPhosphorIcons } from './bundle-phosphor-icons'
+import { listPhosphorIcons } from './bundle-phosphor-icons.js'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const require = createRequire(import.meta.url)
 
 interface LibraryData {
   icons: string[]

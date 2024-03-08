@@ -20,9 +20,9 @@ import type { CompleteConfig } from '../../config'
 import type { Microlc } from '../micro-lc'
 
 import type { BaseExtension } from './extensions'
-import { MFELoader } from './mfe-loader'
-import type { QiankunMicroApp } from './qiankun'
-import { currentApplication$, getCurrentApplicationAssets } from './router'
+import { MFELoader } from './mfe-loader.js'
+import type { RoutelessMicroApp } from './qiankun'
+import { currentApplication$, getCurrentApplicationAssets } from './router.js'
 
 export type MicrolcEvent = Record<string, unknown>
 
@@ -32,9 +32,16 @@ export interface MicrolcApi<
   readonly createLoader: () => MFELoader<T, E> | undefined
   readonly currentApplication$: Observable<string | undefined>
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
-  readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
+  readonly getCurrentApplication: () => Readonly<Partial<{handlers: RoutelessMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
+  /**
+   * @returns a frozen object containing all set extension. Can be modified by `setExtension` api method
+   */
   readonly getExtensions: () => Readonly<Partial<T>>
+  /**
+   * @param value {Partial<E>} next value to be pushed in the current state bus
+   * @returns
+   */
   readonly next: (value: E) => void
   readonly router: {
     goTo: (url: string | URL | undefined) => void
@@ -44,8 +51,27 @@ export interface MicrolcApi<
     pushState: typeof window.history.pushState
     replaceState: typeof window.history.replaceState
   }
+  /**
+   * @deprecated
+   * @param event {Partial<E>} new state to be embedded with `micro-lc` and sent to the bus
+   * @returns
+   */
   readonly set: (event: Partial<E>) => void
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
+  /**
+   * Adds an extension to `micro-lc` like a Redux store, a language
+   * context, a proxied fetch/http client, and so on...
+   * @example
+   * import { createStore } from 'redux'
+   * const store = createStore(todos, ['Use Redux'])
+   *
+   * var api: MicrolcApi<BaseExtension & {store?: typeof store}> // 👈 `micro-lc` api
+   * api.setExtension('store', store)
+   *
+   * @param key {keyof T} the name of the extension of type T
+   * @param value {T[keyof T]} the value of the extension
+   * @returns a frozen object containing all set extension
+   */
   readonly setExtension: (key: keyof T, value: T[keyof T]) => Readonly<T>
   readonly subscribe: (next: (value: Partial<E>) => void) => Subscription
 }
@@ -53,13 +79,13 @@ export interface MicrolcApi<
 export function createMicrolcApiInstance<T extends BaseExtension, E extends MicrolcEvent>(
   this: Microlc<T, E>
 ): () => MicrolcApi<T, E> {
-  const { qiankun } = this
+  const { microfrontendLoader } = this
   const currentState: Partial<E> = {}
   const bus = new BehaviorSubject<Partial<E>>(currentState)
 
   return () => Object.freeze({
     createLoader(this: MicrolcApi<T, E>) {
-      return new MFELoader(this.getCurrentConfig(), () => this, qiankun)
+      return new MFELoader(this.getCurrentConfig(), () => this, microfrontendLoader)
     },
     currentApplication$,
     getApplications: () => Object.freeze({ ...this._config.applications }),

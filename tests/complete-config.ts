@@ -1,8 +1,5 @@
+import type { BaseExtension, Microlc, MicrolcConfig } from '@micro-lc/orchestrator'
 import type { ElementHandle, Page } from '@playwright/test'
-
-import type { Config } from '../packages/interfaces/schemas/v2'
-import type Microlc from '../packages/orchestrator/src/web-component'
-import type { BaseExtension } from '../packages/orchestrator/src/web-component'
 
 const mainApplicationCode = `
   import * as rxjs from 'rxjs'
@@ -52,7 +49,7 @@ const html = (literals: TemplateStringsArray, ...vars: string[]): string => {
   return output(code)
 }
 
-const config: Config = {
+const config: MicrolcConfig = {
   applications: {
     angular12: {
       entry: '/applications/angular12/',
@@ -276,7 +273,7 @@ const config: Config = {
 
 const base = `http://localhost:3000`
 
-const goto = async <B extends BaseExtension = BaseExtension>(page: Page, cc: Config, url = base): Promise<ElementHandle<Microlc<B>>> => {
+const goto = async <B extends BaseExtension = BaseExtension>(page: Page, cc: MicrolcConfig, url = base): Promise<ElementHandle<Microlc<B>>> => {
   await page.goto(url, { waitUntil: 'commit' })
 
   await page.evaluate(async (conf) => {

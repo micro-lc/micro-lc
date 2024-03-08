@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- package is now a `module`
+- removed `nyc` for `c8`
+
 ### Fixed
 
 - compose lexer was wrongly throwing when exiting in normal mode
 - refactor to pre-minified version of the compose lexer
+  several exports explicitly added in `package.json`
 
 ### Versioning
 
@@ -18,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `es-module-shims` to `^1.8.0`
 - `rxjs` bumped to `^7.8.1`
 - Typescript set to `^5.1.6` with yarn `3.6.1`
+- Typescript set to `^5.3.3` with yarn `4.1.0`
 - Development dependencies updated
 
 ## [2.0.3] - 2023-03-09

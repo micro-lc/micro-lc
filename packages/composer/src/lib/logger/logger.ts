@@ -13,10 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import type { ErrorCodes, ErrorHandler } from './errors'
+import type { ErrorCodes, ErrorHandler } from './errors.js'
 
-export function error(message: ErrorCodes | string, ...args: string[]) {
-  import('./errors').then(({ default: errorMap }) => {
+const error = (message: ErrorCodes | string, ...args: string[]) => {
+  import('./errors.js').then(({ default: errorMap }) => {
     const handler = errorMap[message as ErrorCodes] as ErrorHandler | undefined
     handler
       ? console.error(handler(...args))
@@ -28,8 +28,12 @@ export function error(message: ErrorCodes | string, ...args: string[]) {
   })
 }
 
-export function dynamicImportError(name: string): (err: TypeError) => void {
-  return (err: TypeError) => {
+const dynamicImportError = (name: string): (err: TypeError) => void =>
+  (err: TypeError) => {
     error('0' as ErrorCodes.DynamicImportError, name, err.message)
   }
+
+export const logger = {
+  dynamicImportError,
+  error,
 }

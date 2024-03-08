@@ -23,7 +23,7 @@ import type { Observable } from 'rxjs'
 import { BehaviorSubject } from 'rxjs'
 
 import type { ComposerApi } from './lib'
-import { render, premount, createComposerContext, createPool } from './lib'
+import { render, premount, createComposerContext, createPool } from './lib/index.js'
 
 interface MultipleSchemas {
     id: string

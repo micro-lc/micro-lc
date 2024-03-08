@@ -18,9 +18,18 @@ import type { Config, Content } from '@micro-lc/interfaces/v2'
 import { camelCase, kebabCase } from 'lodash-es'
 
 import type { CompleteConfig } from '../config'
-import { mergeConfig, defaultConfig } from '../config'
-import { craftLanguageHeader } from '../utils/lang'
+import { mergeConfig, defaultConfig } from '../config.js'
+import { craftLanguageHeader } from '../utils/lang.js'
 
+import type {
+  MicrolcApi,
+  BaseExtension,
+  RouterContainer,
+  LoaderApi,
+  MicrolcEvent,
+  LoadableAppContext,
+  PushArgs,
+} from './lib'
 import {
   COMPOSER_BODY_CLASS,
   handleUpdateError,
@@ -40,16 +49,7 @@ import {
   updateGlobalImportMap,
   initBaseExtensions,
   createQiankunInstance,
-} from './lib'
-import type {
-  MicrolcApi,
-  BaseExtension,
-  RouterContainer,
-  QiankunApi,
-  MicrolcEvent,
-  LoadableAppContext,
-  PushArgs,
-} from './lib'
+} from './lib/index.js'
 
 type ObservedAttributes =
   | 'config-src'
@@ -77,7 +77,7 @@ export class Microlc<
     .bind<(args?: PushArgs) => ReturnType<typeof reroute>>(this)
   protected _rerouteToError = rerouteToError
     .bind<(statusCode?: number | undefined, reason?: string | undefined) => ReturnType<typeof rerouteToError>>(this)
-  protected _qiankun = createQiankunInstance()
+  protected _microfrontendLoader = createQiankunInstance()
 
   // queries
   protected _styleElements: HTMLStyleElement[] = []
@@ -200,8 +200,8 @@ export class Microlc<
   loadedRoutes = new Map<string, string>()
   applicationMapping = new Map<string, string>()
   matchCache = new MatchCache<T, E>()
-  get qiankun(): QiankunApi {
-    return this._qiankun
+  get microfrontendLoader(): LoaderApi {
+    return this._microfrontendLoader
   }
   get instance(): string {
     return this._instance

@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import './randomuuid-polyfill'
-import Microlc from './web-component'
+import './randomuuid-polyfill.js'
+import { Microlc } from './web-component/index.js'
 
 customElements.define('micro-lc', Microlc)

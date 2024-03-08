@@ -3,7 +3,6 @@ const {mergeConfig} = require('vite')
 const {default: tsconfigPaths} = require('vite-tsconfig-paths')
 const {default: dynamicImport} = require('vite-plugin-dynamic-import')
 const {replaceCodePlugin} = require('vite-plugin-replace')
-const {default: postcssAntDynamicTheme} = require('@micro-lc/interfaces/postcss-ant-dynamic-theme')
 
 /** @type {import('@storybook/core-common').StorybookConfig} */
 module.exports = {
@@ -12,7 +11,9 @@ module.exports = {
   framework: '@storybook/web-components',
   core: { builder: '@storybook/builder-vite', disableTelemetry: true },
   staticDirs: ['./static'],
-  viteFinal: (config) => mergeConfig(config, {
+  viteFinal: async (config) => {
+    const {default: postcssAntDynamicTheme} = await import('@micro-lc/interfaces/postcss-ant-dynamic-theme')
+    return mergeConfig(config, {
       plugins: [
         tsconfigPaths(),
         dynamicImport({
@@ -71,7 +72,6 @@ module.exports = {
       },
       resolve: {
         alias: {
-          './worker': require.resolve('./worker.js'),
           path: 'rollup-plugin-node-polyfills/polyfills/path',
           'process.env.NODE_ENV': JSON.stringify('development'),
         },
@@ -88,4 +88,5 @@ module.exports = {
         }
       }
     })
+  }
 }

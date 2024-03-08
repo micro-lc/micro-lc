@@ -14,7 +14,7 @@
   limitations under the License.
 */
 import type { ErrorCodes } from './logger'
-import logger from './logger'
+import Logger from './logger/index.js'
 
 interface Append {
   append: (char: string) => void
@@ -179,7 +179,7 @@ const cache = new Map<ArrayBuffer, LexerResult>()
 
 const lexer = async (input: string): Promise<LexerResult> => {
   const hash = await digest(input).catch((err: TypeError) => {
-    logger.error('40' as ErrorCodes.DigestError, input, err.message)
+    Logger.logger.error('40' as ErrorCodes.DigestError, input, err.message)
   })
 
   if (!hash || !cache.has(hash)) {

@@ -1,8 +1,6 @@
+import type { Microlc, CSSConfig } from '@micro-lc/orchestrator'
 import type { ElementHandle, JSHandle } from '@playwright/test'
 import test, { expect } from '@playwright/test'
-
-import type { CSSConfig } from '../packages/orchestrator/src/dom-manipulation/css'
-import type Microlc from '../packages/orchestrator/src/web-component'
 
 import { goto } from './complete-config'
 

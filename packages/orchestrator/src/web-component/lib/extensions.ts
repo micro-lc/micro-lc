@@ -14,14 +14,14 @@
   limitations under the License.
 */
 import type { CSSConfig } from '../../dom-manipulation'
-import { createCSSStyleSheets, injectStyleToElements } from '../../dom-manipulation'
+import { createCSSStyleSheets, injectStyleToElements } from '../../dom-manipulation/index.js'
 import type { SchemaOptions } from '../../utils/json'
-import { jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../../utils/json'
+import { jsonFetcher, jsonToObject, jsonToObjectCatcher } from '../../utils/json.js'
 import type { Microlc } from '../micro-lc'
 
 import type { MicrolcEvent } from './api'
-import { currentApplication$, rerouteErrorHandler } from './router'
-import { handleUpdateError } from './update'
+import { currentApplication$, rerouteErrorHandler } from './router.js'
+import { handleUpdateError } from './update.js'
 
 type HTTPClient = typeof window.fetch
 

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- package is now a `module`
+- removed `nyc` for `c8`
+
+### Versioning
+
+- Development dependencies updated
+
 ## [1.3.1] - 2023-07-21
 
 ### Fixed

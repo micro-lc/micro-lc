@@ -13,11 +13,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import Microlc from './web-component'
-
 export type { Config as MicrolcConfig } from '@micro-lc/interfaces/v2'
-export type { CompleteConfig as MicrolcDefaultConfig } from './config'
-export { defaultConfig } from './config'
-export * from './web-component'
-export * from './dom-manipulation'
-export default Microlc
+export type { CompleteConfig as MicrolcDefaultConfig } from './config.js'
+export { defaultConfig } from './config.js'
+export * from './web-component/index.js'
+export * from './dom-manipulation/index.js'

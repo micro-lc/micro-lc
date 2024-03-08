@@ -13,9 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import configSchema from '@micro-lc/interfaces/schemas/v2/config.schema.json'
-import htmlTagSchema from '@micro-lc/interfaces/schemas/v2/html-tag.schema.json'
-import pluginSchema from '@micro-lc/interfaces/schemas/v2/plugin.schema.json'
+import configSchema from '@micro-lc/interfaces/schemas/v2/config.schema.json' assert {type: 'json'}
+import htmlTagSchema from '@micro-lc/interfaces/schemas/v2/html-tag.schema.json' assert {type: 'json'}
+import pluginSchema from '@micro-lc/interfaces/schemas/v2/plugin.schema.json' assert {type: 'json'}
 
 export {
   configSchema,

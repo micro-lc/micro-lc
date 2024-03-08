@@ -13,7 +13,5 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-export * from './lib'
-
-import { Microlc } from './micro-lc'
-export default Microlc
+export * from './lib/index.js'
+export { Microlc } from './micro-lc.js'
