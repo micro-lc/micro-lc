@@ -5,6 +5,7 @@ import cssnano from 'cssnano'
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
+import type { PluginOption } from 'vite'
 import banner from 'vite-plugin-banner'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
@@ -26,7 +27,6 @@ const input = (mode: string): Record<string, string> => {
   return minInput
 }
 
-// @ts-expect-error supported
 export default defineConfig(({ mode }) => {
   return {
     base: './',
@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
         output: {
           entryFileNames: ({ name }) => (mode !== 'min' ? `${name}.js` : `${name}.${mode}.js`),
         },
-        plugins: [visualizer(), rollupNodePolyFill()],
+        plugins: [visualizer(), rollupNodePolyFill() as PluginOption],
       },
     },
     css: {

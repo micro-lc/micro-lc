@@ -59,7 +59,7 @@
     "esbuild": "^0.18.17",
     "glob": "^10.3.3",
     "mocha": "^10.2.0",
-    "rollup-plugin-visualizer": "^5.9.2",
+    "rollup-plugin-visualizer": "^5.12.0",
     "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.9.1",
