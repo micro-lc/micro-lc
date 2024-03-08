@@ -513,7 +513,6 @@ module.exports = {
     'template-tag-spacing': 'error',
     'unicode-bom': ['error', 'never'],
     'use-isnan': 'error',
-    'valid-jsdoc': 'error',
     'valid-typeof': ['error', { requireStringLiterals: true }],
     'vars-on-top': 'error',
     'wrap-iife': 'error',

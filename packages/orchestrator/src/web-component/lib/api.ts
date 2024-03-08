@@ -34,7 +34,14 @@ export interface MicrolcApi<
   readonly getApplications: () => Readonly<CompleteConfig['applications']>
   readonly getCurrentApplication: () => Readonly<Partial<{handlers: QiankunMicroApp | undefined; id: string}>>
   readonly getCurrentConfig: () => Readonly<CompleteConfig>
+  /**
+   * @returns a frozen object containing all set extension. Can be modified by `setExtension` api method
+   */
   readonly getExtensions: () => Readonly<Partial<T>>
+  /**
+   * @param value {Partial<E>} next value to be pushed in the current state bus
+   * @returns
+   */
   readonly next: (value: E) => void
   readonly router: {
     goTo: (url: string | URL | undefined) => void
@@ -44,8 +51,27 @@ export interface MicrolcApi<
     pushState: typeof window.history.pushState
     replaceState: typeof window.history.replaceState
   }
+  /**
+   * @deprecated
+   * @param event {Partial<E>} new state to be embedded with `micro-lc` and sent to the bus
+   * @returns
+   */
   readonly set: (event: Partial<E>) => void
   readonly setCurrentConfig: (newConfig: CompleteConfig) => void
+  /**
+   * Adds an extension to `micro-lc` like a Redux store, a language
+   * context, a proxied fetch/http client, and so on...
+   * @example
+   * import { createStore } from 'redux'
+   * const store = createStore(todos, ['Use Redux'])
+   *
+   * var api: MicrolcApi<BaseExtension & {store?: typeof store}> // 👈 `micro-lc` api
+   * api.setExtension('store', store)
+   *
+   * @param key {keyof T} the name of the extension of type T
+   * @param value {T[keyof T]} the value of the extension
+   * @returns a frozen object containing all set extension
+   */
   readonly setExtension: (key: keyof T, value: T[keyof T]) => Readonly<T>
   readonly subscribe: (next: (value: Partial<E>) => void) => Subscription
 }
