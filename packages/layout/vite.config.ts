@@ -1,5 +1,3 @@
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
-import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 import postcssAntDynamicTheme from '@micro-lc/interfaces/postcss-ant-dynamic-theme'
 import cssnano from 'cssnano'
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
@@ -74,13 +72,6 @@ export default defineConfig(({ mode }) => {
         define: {
           global: 'globalThis',
         },
-        plugins: [
-          NodeGlobalsPolyfillPlugin({
-            buffer: true,
-            process: true,
-          }),
-          NodeModulesPolyfillPlugin(),
-        ],
       },
     },
     plugins: [

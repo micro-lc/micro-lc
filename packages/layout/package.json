@@ -13,10 +13,6 @@
       "import": "./dist/mlc-antd-theme-manager.js",
       "types": "./dist/types/mlc-antd-theme-manager.d.ts"
     },
-    "./mlc-config": {
-      "import": "./dist/mlc-config.js",
-      "types": "./dist/types/mlc-config.d.ts"
-    },
     "./mlc-iconic": {
       "import": "./dist/mlc-iconic.js",
       "types": "./dist/types/mlc-iconic.d.ts"
@@ -62,8 +58,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
-    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@micro-lc/interfaces": "workspace:*",
     "@micro-lc/orchestrator": "workspace:*",
