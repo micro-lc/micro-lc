@@ -45,7 +45,7 @@
     "serve": "vite dev"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.22.6",
+    "@babel/runtime": "^7.24.0",
     "@open-wc/testing": "^3.2.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/chai": "^4.3.8",
