@@ -62,7 +62,7 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vite": "^5.1.5",
     "vite-plugin-banner": "^0.7.1"
