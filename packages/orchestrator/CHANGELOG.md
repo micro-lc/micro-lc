@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - add an injection prop param for `loadApp` in `compose` integration mode
+- removed `@ts-ignore-error` directive on proxied fetch due to type fix
+
+### Versioning
+
+- Development dependencies updated
 
 ## [2.3.0] - 2024-03-08
 

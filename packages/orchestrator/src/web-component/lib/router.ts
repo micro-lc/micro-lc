@@ -290,7 +290,6 @@ async function flushAndGo<T extends BaseExtension, E extends MicrolcEvent>(
     const [route] = (appConfigName !== undefined ? this.loadedApps.get(appConfigName) : appConfigName) ?? []
     const application = nextMatch as LoadableApp<Record<string, unknown>>
     handlers = this.microfrontendLoader.loadMicroApp(application, {
-      // @ts-expect-error wrong typing added in @types/node@20.8.5
       fetch: (input, init) => microlcFetch(input, init, error).then(([res, outgoingError]) => {
         error = outgoingError
         return res
