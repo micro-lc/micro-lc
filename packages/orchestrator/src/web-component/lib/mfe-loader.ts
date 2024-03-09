@@ -292,7 +292,7 @@ class MFELoader<T extends BaseExtension = BaseExtension, E extends MicrolcEvent 
  */
 const loadApp = (
   name: string,
-  app: RoutelessApplication,
+  app: RoutelessApplication & {properties?: Record<string, unknown>},
   container: HTMLElement | ShadowRoot,
   lifeCycles: LoaderLifeCycles,
   {
@@ -302,7 +302,7 @@ const loadApp = (
   loader: LoaderApi = createQiankunInstance()
 ): RoutelessMicroApp => {
   const makeConfig = prepareRoutelessApp(name, app, composerUri)
-  const loadableApp = makeConfig(container, {})
+  const loadableApp = makeConfig(container, app.properties ?? {})
   return loader.loadMicroApp(loadableApp, configuration, lifeCycles)
 }
 
