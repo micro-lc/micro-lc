@@ -3,7 +3,7 @@ name: Tag CI
 env:
   context: './'
   cache-name: cache-release
-  node-version: 18.x
+  node-version: 20.x
   NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 on:
@@ -48,7 +48,7 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Extract tag name
         id: extract_tag
@@ -56,7 +56,7 @@ jobs:
         run: echo "tag=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
 
       - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node-version }}
           cache: yarn
@@ -83,7 +83,7 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Extract tag name
         id: extract_tag
@@ -91,7 +91,7 @@ jobs:
         run: echo "tag=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
 
       - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node-version }}
           cache: yarn

@@ -4,7 +4,7 @@ env:
   context: './'
   cache-name: cache-release
   NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-  node-version: 18.x
+  node-version: 20.x
 
 on:
   workflow_dispatch:
@@ -22,10 +22,10 @@ jobs:
   dispatch-updated-changelog:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Verify CHANGELOG Updates
-        uses: tj-actions/changed-files@v41
+        uses: tj-actions/changed-files@v42
         id: changelog-updates
         with:
           since_last_remote_commit: 'true'
@@ -33,7 +33,7 @@ jobs:
 
       - name: Trigger 'micro-lc.github.io' Updates
         if: steps.changelog-updates.outputs.any_changed == 'true'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_DOCS_TOKEN }}
           script: |

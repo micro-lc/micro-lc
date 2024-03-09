@@ -8,7 +8,7 @@ on:
         required: false
         type: boolean
       node-version:
-        default: 18.x
+        default: 20.x
         required: false
         type: string
       version:
@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ inputs.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
           cache: yarn
@@ -46,7 +46,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: build-cache
         with:
           path: |

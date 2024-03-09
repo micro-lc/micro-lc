@@ -4,7 +4,7 @@ env:
   context: './'
   cache-name: cache-release
   NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-  node-version: 18.x
+  node-version: 20.x
 
 on:
   pull_request:
@@ -33,9 +33,9 @@ jobs:
     outputs:
       diff: ${{ steps.filter.outputs.diff }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
