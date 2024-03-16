@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- added support for direct CJS imports via tools like `jest`
+
 ### Fixed
 
 - add an injection prop param for `loadApp` in `compose` integration mode
