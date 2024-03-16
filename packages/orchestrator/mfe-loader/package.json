@@ -1,0 +1,6 @@
+{
+  "name": "@micro-lc/orchestrator/mfe-loader",
+  "types": "../dist/types/web-component/lib/mfe-loader.d.ts",
+  "module": "../dist/es/web-component/lib/mfe-loader.js",
+  "main": "../dist/cjs/web-component/lib/mfe-loader.js"
+}
