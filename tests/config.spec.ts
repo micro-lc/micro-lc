@@ -49,30 +49,38 @@ test(`
 })
 
 // todo better description of the test
-test.only('[attributes] language test', async ({ page }) => {
+test(`
+  [attributes]
+  Accept-Language should contain fallback language
+`, async ({ page }) => {
   await page.route(`${base}/pages/api/config.json`, async (route) => {
     const request = route.request()
     const acceptLanguage = await request.headerValue('Accept-Language')
-    console.log('1', acceptLanguage)
+    expect(acceptLanguage).toEqual('en-US, en;q=0.5, fr;q=0.1')
+    console.log('BBB')
     await route.fulfill({ json: { version: 2 } })
-  })
+  }, { times: 1 })
+
+  await page.route(`${base}/pages/api/config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    expect(acceptLanguage).toEqual('en-US, en;q=0.5, jp;q=0.1')
+    console.log('AAA')
+    await route.fulfill({ json: { version: 2 } })
+  }, { times: 1 })
 
   await page.goto(`${base}/pages/language.html`)
-  // todo remove
-  await page.pause()
-
-  await page.route(`${base}/pages/api/config.json`, async (route) => {
-    const request = route.request()
-    const acceptLanguage = await request.headerValue('Accept-Language')
-    console.log('2', acceptLanguage)
-    await route.fulfill({ json: { version: 2 } })
-  })
+  await page.waitForTimeout(300)
 
   await page.evaluate(() => {
     const mlc = window.document.querySelector('micro-lc') as Microlc
     mlc.fallbackLanguage = 'fr'
   })
-  await page.pause()
+  await page.waitForTimeout(300)
+  // let promiseResolve: (value: unknown) => void
+  // const promise = new Promise((resolve) => { promiseResolve = resolve })
+  // promiseResolve(true)
+  // await promise2
 })
 
 test(`
