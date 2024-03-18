@@ -48,6 +48,33 @@ test(`
   await expect(frame.getByRole('heading', { name: 'Example Domain' })).toBeVisible()
 })
 
+// todo better description of the test
+test.only('[attributes] language test', async ({ page }) => {
+  await page.route(`${base}/pages/api/config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    console.log('1', acceptLanguage)
+    await route.fulfill({ json: { version: 2 } })
+  })
+
+  await page.goto(`${base}/pages/language.html`)
+  // todo remove
+  await page.pause()
+
+  await page.route(`${base}/pages/api/config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    console.log('2', acceptLanguage)
+    await route.fulfill({ json: { version: 2 } })
+  })
+
+  await page.evaluate(() => {
+    const mlc = window.document.querySelector('micro-lc') as Microlc
+    mlc.fallbackLanguage = 'fr'
+  })
+  await page.pause()
+})
+
 test(`
   [config injection]
   should use default url
