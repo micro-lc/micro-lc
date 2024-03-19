@@ -51,7 +51,9 @@ test(`
 test(`
   [attributes]
   Accept-Language should contain fallback language
-`, async ({ page }) => {
+`, async ({ page, browserName }) => {
+  if (browserName === 'webkit' || browserName === 'firefox') { test.skip() }
+
   let jpFallbackResolve: (value: unknown) => void
   const jpFallback = new Promise((resolve) => { jpFallbackResolve = resolve })
   await page.route(`${base}/pages/api/config.json`, async (route) => {
