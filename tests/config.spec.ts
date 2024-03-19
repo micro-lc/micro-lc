@@ -52,6 +52,7 @@ test(`
   [attributes]
   Accept-Language should contain fallback language
 `, async ({ page, browserName }) => {
+  // SAFETY: verified locally on firefox and epiphany
   if (browserName === 'webkit' || browserName === 'firefox') { test.skip() }
 
   let jpFallbackResolve: (value: unknown) => void
