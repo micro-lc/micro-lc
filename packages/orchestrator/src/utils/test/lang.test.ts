@@ -23,6 +23,9 @@ describe('language header tests', () => {
   it('should return injected language with fallback subtag', () => {
     expect(craftLanguageHeader('it', 'en')).to.have.property('Accept-Language', 'it, en;q=0.1')
   })
+  it('should return injected language without fallback subtag because already there', () => {
+    expect(craftLanguageHeader('it, en;q=0.5', 'en')).to.have.property('Accept-Language', 'it, en;q=0.5')
+  })
   it('should return injected language with secondary and fallback subtag', () => {
     expect(craftLanguageHeader('it-IT', 'en')).to.have.property('Accept-Language', 'it-IT, it;q=0.5, en;q=0.1')
   })

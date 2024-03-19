@@ -7,7 +7,13 @@ export function craftLanguageHeader(language = window.navigator.language, fallba
   }
 
   if (fallback) {
-    acceptLanguage = `${acceptLanguage}, ${fallback};q=0.1`
+    const containsFallback = acceptLanguage.split(',')
+      .map(tag => tag.split(';')[0])
+      .map(tag => tag.trim())
+      .includes(fallback)
+    if (!containsFallback) {
+      acceptLanguage = `${acceptLanguage}, ${fallback};q=0.1`
+    }
   }
 
   return {
