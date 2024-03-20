@@ -49,6 +49,82 @@ test(`
 })
 
 test(`
+  [attributes]
+  Accept-Language should contain fallback language
+`, async ({ page, browserName }) => {
+  // SAFETY: Playwright API testing does not work fine with firefox and webkit/epiphany due to fuzzy interplay with service workers
+  if (browserName === 'webkit' || browserName === 'firefox') { test.skip() }
+
+  let jpFallbackResolve: (value: unknown) => void
+  const jpFallback = new Promise((resolve) => { jpFallbackResolve = resolve })
+  await page.route(`${base}/pages/api/config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    route.fulfill({ json: { version: 2 } })
+      .then(() => jpFallbackResolve(acceptLanguage))
+      .catch(console.error)
+  }, { times: 1 })
+
+  await page.goto(`${base}/pages/language.html`)
+  expect(await jpFallback).toEqual('en-US, en;q=0.5, jp;q=0.1')
+
+  // //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  await page.waitForTimeout(300)
+  let frFallbackResolve: (value: unknown) => void
+  const frFallback = new Promise((resolve) => { frFallbackResolve = resolve })
+  await page.route(`${base}/pages/api/config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    route.fulfill({ json: { version: 2 } })
+      .then(() => frFallbackResolve(acceptLanguage))
+      .catch(console.error)
+  }, { times: 1 })
+
+  await page.evaluate(() => {
+    const mlc = window.document.querySelector('micro-lc') as Microlc
+    mlc.fallbackLanguage = 'fr'
+  })
+  expect(await frFallback).toEqual('en-US, en;q=0.5, fr;q=0.1')
+
+  // //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  let noDuplicateFallbackResolve: (value: unknown) => void
+  const noDuplicateFallback = new Promise((resolve) => { noDuplicateFallbackResolve = resolve })
+  await page.route(`${base}/pages/api/config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    route.fulfill({ json: { version: 2 } })
+      .then(() => noDuplicateFallbackResolve(acceptLanguage))
+      .catch(console.error)
+  }, { times: 1 })
+
+  await page.evaluate(() => {
+    const mlc = window.document.querySelector('micro-lc') as Microlc
+    mlc.fallbackLanguage = 'en'
+  })
+  expect(await noDuplicateFallback).toEqual('en-US, en;q=0.5')
+
+  // //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  let noFallbackResolve: (value: unknown) => void
+  const noFallback = new Promise((resolve) => { noFallbackResolve = resolve })
+  await page.route(`${base}/pages/api/config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    route.fulfill({ json: { version: 2 } })
+      .then(() => noFallbackResolve(acceptLanguage))
+      .catch(console.error)
+  }, { times: 1 })
+
+  await page.evaluate(() => {
+    const mlc = window.document.querySelector('micro-lc') as Microlc
+    mlc.fallbackLanguage = null
+  })
+  expect(await noFallback).toEqual('en-US, en;q=0.5')
+})
+
+test(`
   [config injection]
   should use default url
 `, async ({ page }) => {
