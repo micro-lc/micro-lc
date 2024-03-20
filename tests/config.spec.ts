@@ -52,7 +52,7 @@ test(`
   [attributes]
   Accept-Language should contain fallback language
 `, async ({ page, browserName }) => {
-  // SAFETY: verified locally on firefox and epiphany
+  // SAFETY: Playwright API testing does not work fine with firefox and webkit/epiphany due to fuzzy interplay with service workers
   if (browserName === 'webkit' || browserName === 'firefox') { test.skip() }
 
   let jpFallbackResolve: (value: unknown) => void
