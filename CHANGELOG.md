@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.4.0] - 2024-03-22
+
+### Added
+
+- `fallback-language` property in micro-lc web component
+
 ## [2.3.1] - 2024-03-16
 
 ### Added
