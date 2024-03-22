@@ -2629,7 +2629,7 @@ __metadata:
     mocha: "npm:^10.2.0"
     node-fetch: "npm:^2.6.12"
     nyc: "npm:^15.1.0"
-    qiankun: "npm:^2.10.13"
+    qiankun: "npm:^2.10.16"
     rollup-plugin-visualizer: "npm:^5.12.0"
     rxjs: "npm:^7.8.1"
     sinon: "npm:^17.0.1"
@@ -11914,12 +11914,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-html-entry@npm:^1.14.6":
-  version: 1.15.1
-  resolution: "import-html-entry@npm:1.15.1"
+"import-html-entry@npm:^1.15.1":
+  version: 1.15.2
+  resolution: "import-html-entry@npm:1.15.2"
   dependencies:
     "@babel/runtime": "npm:^7.7.2"
-  checksum: 10/70d10a733a2a7085c937e882fd35550929763a1d6b7b4e6da95984ceb4f94f8373563a9dae62c1e1efada4739144d48f1f81294cec0d089df15afae93f55323c
+  checksum: 10/54a7da676f0a0aa5a0262168a7d0d7506c9e311b20bfcba1eaaca62a5aaef94a604d543affc02be3e37aaa40aaa9edcdef2d6ebdd8e3c8b9731e57957d4fd277
   languageName: node
   linkType: hard
 
@@ -16774,15 +16774,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qiankun@npm:^2.10.13":
-  version: 2.10.13
-  resolution: "qiankun@npm:2.10.13"
+"qiankun@npm:^2.10.16":
+  version: 2.10.16
+  resolution: "qiankun@npm:2.10.16"
   dependencies:
     "@babel/runtime": "npm:^7.10.5"
-    import-html-entry: "npm:^1.14.6"
+    import-html-entry: "npm:^1.15.1"
     lodash: "npm:^4.17.11"
     single-spa: "npm:^5.9.2"
-  checksum: 10/1d08bd8fffdc51780d441e8a9185cd198c92381227f868bdeae0bf717ff22a3e65fb9d070d8bcf643af7738f51ef4269ab9ccdf5b34925ec7e762bfe6ad21e46
+  checksum: 10/06c7a9270dbc91c7df5e6d3efc02da00d77b31e93f16f83b7675fbd7feb8769f84f6c486f61b9efd0a3c305dbe5c7d77bec44bbe55f606d0be4b2d29be37fc56
   languageName: node
   linkType: hard
 
