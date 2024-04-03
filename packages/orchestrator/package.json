@@ -78,7 +78,7 @@
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "vite": "^5.1.5",
+    "vite": "^5.1.7",
     "vite-plugin-banner": "^0.7.1"
   },
   "dependencies": {
