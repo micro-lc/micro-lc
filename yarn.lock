@@ -2461,7 +2461,7 @@ __metadata:
     sinon: "npm:^17.0.1"
     sinon-chai: "npm:^3.7.0"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.3.3"
+    typescript: "npm:^5.4.4"
     vite: "npm:^5.1.5"
     vite-plugin-banner: "npm:^0.7.1"
   peerDependencies:
@@ -2499,7 +2499,7 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react-test-renderer: "npm:^18.2.0"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.3.3"
+    typescript: "npm:^5.4.4"
   peerDependencies:
     react: ">=17"
   languageName: unknown
@@ -2527,7 +2527,7 @@ __metadata:
     mocha: "npm:^10.2.0"
     postcss: "npm:^8.4.35"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.3.3"
+    typescript: "npm:^5.4.4"
   peerDependencies:
     postcss: "*"
   languageName: unknown
@@ -2585,7 +2585,7 @@ __metadata:
     rollup-plugin-visualizer: "npm:^5.12.0"
     sinon: "npm:^17.0.1"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.3.3"
+    typescript: "npm:^5.4.4"
     vite: "npm:^5.1.5"
     vite-plugin-banner: "npm:^0.7.1"
     vite-plugin-dynamic-import: "npm:^1.5.0"
@@ -2635,7 +2635,7 @@ __metadata:
     sinon: "npm:^17.0.1"
     sinon-chai: "npm:^3.7.0"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.3.3"
+    typescript: "npm:^5.4.4"
     vite: "npm:^5.1.5"
     vite-plugin-banner: "npm:^0.7.1"
   peerDependencies:
@@ -14275,7 +14275,7 @@ __metadata:
     stylelint-config-standard: "npm:^36.0.0"
     stylelint-declaration-block-no-ignored-properties: "npm:^2.8.0"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.3.3"
+    typescript: "npm:^5.4.4"
     vite: "npm:^5.1.5"
   languageName: unknown
   linkType: soft
@@ -20477,23 +20477,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.3.3":
-  version: 5.3.3
-  resolution: "typescript@npm:5.3.3"
+"typescript@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "typescript@npm:5.4.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/6e4e6a14a50c222b3d14d4ea2f729e79f972fa536ac1522b91202a9a65af3605c2928c4a790a4a50aa13694d461c479ba92cedaeb1e7b190aadaa4e4b96b8e18
+  checksum: 10/bade322d88fd93c8179e262aca9ba7f7b4417c09117879819c87946578c782ab123e3acb4733046a6e38714c47ef927360045a1f9292a1bff3a05a6577d27ca2
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
-  version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
+"typescript@patch:typescript@npm%3A^5.4.4#optional!builtin<compat/typescript>":
+  version: 5.4.4
+  resolution: "typescript@patch:typescript@npm%3A5.4.4#optional!builtin<compat/typescript>::version=5.4.4&hash=d69c25"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/c93786fcc9a70718ba1e3819bab56064ead5817004d1b8186f8ca66165f3a2d0100fee91fa64c840dcd45f994ca5d615d8e1f566d39a7470fc1e014dbb4cf15d
+  checksum: 10/65e8bff94e2588cd45f6349fed214863840ead79f2206be185ff9ed3e880ce9e1ef51390ab65c16506a5b1e9e65a1eb566278afb158e7b6c5ceb651a30f17ece
   languageName: node
   linkType: hard
 
