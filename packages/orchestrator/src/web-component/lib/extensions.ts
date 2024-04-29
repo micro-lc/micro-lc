@@ -44,6 +44,7 @@ export type BaseExtension = Record<string, unknown> & {
     validator: <S>(json: unknown, schema: SchemaOptions, opts?: JsonCatcherOptions<S>) => Promise<S>
   }
   language: {
+    getFallbackLanguage: () => string | null | undefined
     getLanguage: () => string
     setLanguage: (lang: string) => void
   }
@@ -76,6 +77,9 @@ export function updateCSS<T extends BaseExtension, E extends MicrolcEvent>(this:
 function initLanguageExtension<T extends BaseExtension, E extends MicrolcEvent>(this: Microlc<T, E>) {
   let currentLanguage = window.navigator.language
   return {
+    getFallbackLanguage: (): string | null | undefined => {
+      return this._fallbackLanguage
+    },
     getLanguage(): string {
       return currentLanguage
     },
