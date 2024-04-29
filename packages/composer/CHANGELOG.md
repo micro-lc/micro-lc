@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - compose lexer was wrongly throwing when exiting in normal mode
 - refactor to pre-minified version of the compose lexer
   several exports explicitly added in `package.json`
+- use `fallback-language` inherited by micro-lc web component
 
 ### Versioning
 
