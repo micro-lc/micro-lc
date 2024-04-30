@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- `fallback-language` value made available to composer via extension
+- `fallback-language` value made available via new language API extension
 
 ## [2.4.0] - 2024-03-22
 

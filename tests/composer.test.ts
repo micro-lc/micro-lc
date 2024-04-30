@@ -141,6 +141,37 @@ test(`
 
 test(`
   [composition]
+  should fetch config from url using micro-lc api
+  and then mount it. Accept-Language should contain fallback
+`, async ({ page }) => {
+  // file is served by ./tests/server.ts
+  const config = {
+    applications: {
+      home: {
+        config: '/configurations/home.config.json',
+        integrationMode: 'compose' as const,
+        route: './',
+      },
+    },
+    version: 2 as const,
+  }
+
+  let acceptLanguangeResolve: (value: unknown) => void
+  const acceptLanguagePromise = new Promise((resolve) => { acceptLanguangeResolve = resolve })
+  await page.route(`${base}/configurations/home.config.json`, async (route) => {
+    const request = route.request()
+    const acceptLanguage = await request.headerValue('Accept-Language')
+    acceptLanguangeResolve(acceptLanguage)
+    await route.continue()
+  }, { times: 1 })
+
+  await goto(page, config, `${base}/pages/language.html`)
+
+  expect(await acceptLanguagePromise).toEqual('en-US, en;q=0.5, jp;q=0.1')
+})
+
+test(`
+  [composition]
   context persistence across mounts
 `, async ({ page }) => {
   // file is served by ./tests/server.ts
