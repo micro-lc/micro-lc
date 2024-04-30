@@ -48,6 +48,7 @@ interface MicrolcApi extends Observable<EventWithUser> {
       validator?: <S>(json: unknown, schema: SchemaOptions, opts?: JsonCatcherOptions<S>) => Promise<S>
     }
     language?: {
+      getFallbackLanguage?: () => string | null | undefined
       getLanguage?: () => string
     }
   }
@@ -107,17 +108,26 @@ const logger = (name: string, ...args: string[]) => {
   }
 }
 
-export function craftLanguageHeader(lang: string | undefined, win = window): Record<'Accept-Language', string> {
-  const language = lang ?? win.navigator.language
+export function craftLanguageHeader(language = window.navigator.language, fallback: string | null | undefined): Record<'Accept-Language', string> {
+  let acceptLanguage = language
+
   const [main, secondary] = language.split('-') as [string, string | undefined]
   if (secondary !== undefined) {
-    return {
-      'Accept-Language': `${language}, ${main};q=0.5`,
+    acceptLanguage = `${acceptLanguage}, ${main};q=0.5`
+  }
+
+  if (fallback) {
+    const containsFallback = acceptLanguage.split(',')
+      .map(tag => tag.split(';')[0])
+      .map(tag => tag.trim())
+      .includes(fallback)
+    if (!containsFallback) {
+      acceptLanguage = `${acceptLanguage}, ${fallback};q=0.1`
     }
   }
 
   return {
-    'Accept-Language': language,
+    'Accept-Language': acceptLanguage,
   }
 }
 
@@ -135,7 +145,8 @@ export async function bootstrap({
   const fetcher = microlcApi?.getExtensions?.().json?.fetcher
     ?? (() => Promise.reject(new TypeError('[micro-lc][composer] no fetcher was provided on micro-lc API')))
   const headers = craftLanguageHeader(
-    microlcApi?.getExtensions?.().language?.getLanguage?.()
+    microlcApi?.getExtensions?.().language?.getLanguage?.(),
+    microlcApi?.getExtensions?.().language?.getFallbackLanguage?.()
   )
 
   if (typeof config === 'string') {

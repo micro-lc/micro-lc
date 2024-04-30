@@ -328,7 +328,7 @@ export class Microlc<
       if (typeof this._configSrc === 'string') {
         const headers = craftLanguageHeader(
           this.getApi().getExtensions().language?.getLanguage(),
-          this._fallbackLanguage
+          this.getApi().getExtensions().language?.getFallbackLanguage()
         )
         const config = await fetchConfig(this._configSrc, { headers })
         this._config = mergeConfig(this.ownerDocument, config)
