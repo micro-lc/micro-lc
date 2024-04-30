@@ -143,8 +143,10 @@ test(`
   [composition]
   should fetch config from url using micro-lc api
   and then mount it. Accept-Language should contain fallback
-`, async ({ page }) => {
-  // file is served by ./tests/server.ts
+`, async ({ page, browserName }) => {
+  // SAFETY: Playwright API testing does not work fine with firefox and webkit/epiphany due to fuzzy interplay with service workers
+  if (browserName === 'webkit' || browserName === 'firefox') { test.skip() }
+
   const config = {
     applications: {
       home: {
