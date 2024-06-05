@@ -53,16 +53,18 @@ import {
 
 type ObservedAttributes =
   | 'config-src'
+  | 'fallback-language'
 type ObservedProperties =
   | 'config'
   | 'configSrc'
+  | 'fallbackLanguage'
 
 
 export class Microlc<
   T extends BaseExtension = BaseExtension,
   E extends MicrolcEvent = MicrolcEvent
 > extends HTMLElement implements RouterContainer<T, E> {
-  static get observedAttributes() { return ['config-src'] }
+  static get observedAttributes() { return ['config-src', 'fallback-language'] }
 
   private _wasDisconnected = false
   private _updateComplete = true
@@ -72,6 +74,7 @@ export class Microlc<
 
   protected _config!: CompleteConfig
   protected _configSrc: string | null | undefined
+  protected _fallbackLanguage: string | null | undefined
   protected _disableShadowDom: boolean | undefined
   protected _reroute = reroute
     .bind<(args?: PushArgs) => ReturnType<typeof reroute>>(this)
@@ -112,6 +115,17 @@ export class Microlc<
 
         this._handlePropertyUpdate(
           'configSrc',
+          value,
+          (input): input is string => typeof input === 'string'
+        )
+      }
+      break
+    case 'fallbackLanguage':
+      if (value !== this._fallbackLanguage) {
+        this._prepareForUpdate()
+
+        this._handlePropertyUpdate(
+          'fallbackLanguage',
           value,
           (input): input is string => typeof input === 'string'
         )
@@ -184,6 +198,16 @@ export class Microlc<
   }
   set configSrc(src: unknown) {
     this._handlePropertyChange('configSrc', src)
+  }
+
+  /**
+   * @observedProperty --> mirrored by `fallback-language`
+   */
+  get fallbackLanguage(): string | null | undefined {
+    return this._fallbackLanguage
+  }
+  set fallbackLanguage(lang: unknown) {
+    this._handlePropertyChange('fallbackLanguage', lang)
   }
 
   get updateComplete(): boolean {
@@ -303,7 +327,8 @@ export class Microlc<
       // ⛏️ get config file
       if (typeof this._configSrc === 'string') {
         const headers = craftLanguageHeader(
-          this.getApi().getExtensions().language?.getLanguage()
+          this.getApi().getExtensions().language?.getLanguage(),
+          this.getApi().getExtensions().language?.getFallbackLanguage()
         )
         const config = await fetchConfig(this._configSrc, { headers })
         this._config = mergeConfig(this.ownerDocument, config)
