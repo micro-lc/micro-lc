@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/orchestrator",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
@@ -77,8 +77,8 @@
     "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3",
-    "vite": "^5.1.5",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.8",
     "vite-plugin-banner": "^0.7.1"
   },
   "dependencies": {
