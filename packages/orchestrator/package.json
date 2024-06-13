@@ -90,7 +90,7 @@
   },
   "peerDependencies": {
     "ajv": ">=8.11.0",
-    "ajv-format": ">=2.1.1",
+    "ajv-formats": ">=2.1.1",
     "es-module-shims": ">=1.5.3"
   },
   "engines": {
