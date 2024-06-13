@@ -85,12 +85,12 @@
     "@micro-lc/composer": "workspace:*",
     "@micro-lc/interfaces": "workspace:*",
     "js-yaml": "^4.1.0",
-    "qiankun": "^2.10.13",
+    "qiankun": "^2.10.16",
     "rxjs": "^7.8.1"
   },
   "peerDependencies": {
     "ajv": ">=8.11.0",
-    "ajv-format": ">=2.1.1",
+    "ajv-formats": ">=2.1.1",
     "es-module-shims": ">=1.5.3"
   },
   "engines": {
