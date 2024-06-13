@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- typo in `@micro-lc/orchestrator` package.json `peer-dependencies` section preventing installation
+
 ### Added
 
 - remove 3rd party modules to generate nonce and bump nginx to v1.25.5
