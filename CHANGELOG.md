@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.4.2] - 2024-06-13
+
+### Fixed
+
+- typo in `@micro-lc/orchestrator` package.json `peer-dependencies` section preventing installation
+
+### Added
+
+- remove 3rd party modules to generate nonce and bump nginx to v1.25.5
+
+### Versioning
+
+- Development dependencies updated
+- `qiankun` to version `2.10.16`
+
 ## [2.4.1] - 2024-04-30
 
 ### Fixed
