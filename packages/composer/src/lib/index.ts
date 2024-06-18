@@ -37,6 +37,9 @@ export interface ResolvedConfig {
   content: Content
   sources: {
     importmap?: ImportMap
+    modules: {
+      [uri: string]: { default: unknown } & object
+    }
     uris: string[]
   }
 }
@@ -88,7 +91,9 @@ export async function premount(
 
     if (uris.length > 0) {
       done = Promise.all(uris.map(
-        (uri) => (proxyWindow.importShim(uri)).catch(reporter)
+        (uri) => (proxyWindow.importShim(uri))
+          .then((module) => {})
+          .catch(reporter)
       ))
     }
   }
