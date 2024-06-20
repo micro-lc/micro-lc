@@ -2124,15 +2124,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/react-fontawesome@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@fortawesome/react-fontawesome@npm:0.2.0"
+"@fortawesome/react-fontawesome@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@fortawesome/react-fontawesome@npm:0.2.2"
   dependencies:
     prop-types: "npm:^15.8.1"
   peerDependencies:
     "@fortawesome/fontawesome-svg-core": ~1 || ~6
     react: ">=16.3"
-  checksum: 10/9b574daaf4413ae202dc8e4ff500726ea58d0a5cf6bdca9ad992f57956625f3750596852fd511600ed5b547025fc8af1cf6cf5a25a807b5c0f49af24b3e00efe
+  checksum: 10/05537fd7c34d43e0d8823df0195cb6fd935ff78e296e2d362e668bcf75f13d71c70c7fd6d596dff4e37b5f27e0ae43b98cb4732e0d91570f30b8a5581bbe2704
   languageName: node
   linkType: hard
 
@@ -2478,7 +2478,7 @@ __metadata:
     "@fortawesome/free-brands-svg-icons": "npm:^6.4.0"
     "@fortawesome/free-regular-svg-icons": "npm:^6.4.0"
     "@fortawesome/free-solid-svg-icons": "npm:^6.4.0"
-    "@fortawesome/react-fontawesome": "npm:^0.2.0"
+    "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@open-wc/testing": "npm:^3.2.0"
     "@rollup/plugin-replace": "npm:^5.0.5"
     "@types/glob": "npm:^8.1.0"
