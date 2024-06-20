@@ -33,10 +33,15 @@ export interface ComposerOptions {
   extraProperties?: Set<string> | string[]
 }
 
+export interface Modules {
+  [uri: string]: { default: unknown } & object
+}
+
 export interface ResolvedConfig {
   content: Content
   sources: {
     importmap?: ImportMap
+    modules: Modules
     uris: string[]
   }
 }
@@ -69,6 +74,7 @@ export async function premount(
 ): Promise<ResolvedConfig> {
   let uris: string[] = []
   let importmap: ImportMap | undefined
+  let modules: Modules = {}
   let done: Promise<unknown> = Promise.resolve()
 
   if (config.sources) {
@@ -88,14 +94,21 @@ export async function premount(
 
     if (uris.length > 0) {
       done = Promise.all(uris.map(
-        (uri) => (proxyWindow.importShim(uri)).catch(reporter)
+        (uri) => (proxyWindow.importShim(uri))
+          .then((module) => {
+            modules = {
+              ...modules,
+              [uri]: module,
+            }
+          })
+          .catch(reporter)
       ))
     }
   }
 
   return done.then(() => ({
     ...config,
-    sources: { importmap, uris },
+    sources: { importmap, modules, uris },
   }))
 }
 
