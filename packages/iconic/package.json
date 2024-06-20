@@ -24,7 +24,7 @@
     "serve": "wds --node-resolve --watch"
   },
   "devDependencies": {
-    "@ant-design/icons-svg": "^4.2.1",
+    "@ant-design/icons-svg": "^4.4.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
