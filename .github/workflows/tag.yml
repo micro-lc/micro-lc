@@ -1,9 +1,6 @@
 name: Tag CI
 
 env:
-  context: './'
-  cache-name: cache-release
-  node-version: 20.x
   NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 on:
@@ -13,103 +10,66 @@ on:
       - 'v2**'
 
 jobs:
-  next-version:
-    runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    outputs:
-      version: ${{ steps.get-version.outputs.version }}
 
-    steps:
-      - name: Compute tag version
-        id: get-version
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          echo "version=$(echo ${VERSION} | sed s/^v//)" >> $GITHUB_OUTPUT
+  prepare:
+    uses: ./.github/workflows/prepare.yml
 
   release-docker:
     needs:
-      - next-version
-
+    - prepare
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    uses: micro-lc/micro-lc/.github/workflows/release-docker.yml@main
+    uses: ./.github/workflows/release-docker.yml
     with:
       push: true
-      version: ${{ needs.next-version.outputs.version }}
     secrets:
       docker_username: ${{ secrets.BOT_DOCKER_USERNAME }}
       docker_token: ${{ secrets.BOT_DOCKER_TOKEN }}
       nexus_username: ${{ secrets.NEXUS_USER }}
       nexus_token: ${{ secrets.NEXUS_TOKEN }}
-      security_checks_token: ${{ secrets.SECURITY_CHECKS_TOKEN }}
+      sysdig_token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
+      kms_gcp_project: ${{ secrets.MIA_PLATFORM_KMS_GCP_PROJECT }}
+      gcp_wif: ${{ secrets.MIA_PLATFORM_WIF }}
+      cosign_key: ${{ secrets.MIA_PLATFORM_KEY_KMS }}
 
-  release-npm-package:
-    name: Release package on npm
+  release-package:
+    needs:
+    - prepare
+    name: Release Package on NPM and CDN
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
-
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Extract tag name
-        id: extract_tag
-        shell: bash
-        run: echo "tag=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
-
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node-version }}
-          cache: yarn
-
-      - name: Install
-        run: yarn install --immutable
-
-      - name: Prepare NPM
-        id: prepare-npm-package
-        run: |
-          TAGS=${{ steps.extract_tag.outputs.tag }}
-          echo "package=$(echo $TAGS | sed 's/^\(@micro-lc\/\)//' | sed 's/@.*$//')" >> $GITHUB_OUTPUT
-
-      - name: Build
-        run: yarn initialize --cleanup ${{ steps.prepare-npm-package.outputs.package }}
-
-      - name: Publish
-        working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
-        run: yarn npm publish
-
-  release-cdn-package:
-    name: Release package on cdn.mia-platform.eu
-    runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/@micro-lc/') }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Extract tag name
-        id: extract_tag
-        shell: bash
-        run: echo "tag=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
-
-      - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node-version }}
-          cache: yarn
-
-      - name: Install
-        run: yarn install --immutable
-
-      - name: Prepare NPM
-        id: prepare-npm-package
-        run: |
-          TAGS=${{ steps.extract_tag.outputs.tag }}
-          echo "package=$(echo $TAGS | sed 's/^\(@micro-lc\/\)//' | sed 's/@.*$//')" >> $GITHUB_OUTPUT
-
-      - name: Build
-        run: yarn initialize --cleanup ${{ steps.prepare-npm-package.outputs.package }}
-
-      - name: Publish to Mia CDN
-        working-directory: ./packages/${{ steps.prepare-npm-package.outputs.package }}
-        run: |
-          npm i -g @mia-platform/cdn-publish@0.5.0
-          cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s "mia-platform" -b 20
+    - name: Extract Package Name
+      id: package
+      shell: bash
+      run: |
+        echo "name=$(echo ${TAG_NAME} | sed 's/^\(@micro-lc\/\)//' | sed 's/@.*$//')" >> $GITHUB_OUTPUT
+      env:
+        TAG_NAME: ${{ github.ref_name }}
+    - name: Checkout Repository
+      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      with:
+        show-progress: false
+    - name: Setup Node.js
+      uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
+      with:
+        node-version-file: .nvmrc
+        check-latest: true
+        cache: yarn
+    - name: Install Dependencies
+      run: yarn install --immutable
+    - name: Download Build Artifacts
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      with:
+        name: packages-build
+        path: packages/
+    - name: Build
+      run: yarn initialize --cleanup ${{ steps.package.outputs.name }}
+    - name: Publish to NPM
+      working-directory: ./packages/${{ steps.package.outputs.name }}
+      run: yarn npm publish
+    - name: Publish to Mia CDN
+      working-directory: ./packages/${{ steps.package.outputs.name }}
+      run: |
+        yarn dlx @mia-platform/cdn-publish@0.5.0 publish -k "${CDN_KEY}" -s "mia-platform" -b 20
+      env:
+        CDN_KEY: ${{ secrets.CDN_STORAGE_ACCESS_KEY }}

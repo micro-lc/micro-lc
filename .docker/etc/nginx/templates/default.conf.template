@@ -1,0 +1,36 @@
+# Copyright 2022 Mia srl
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+server {
+    listen  ${HTTP_PORT} default_server;
+
+    root    /usr/static;
+    include /etc/nginx/gzip_settings.conf;
+    include /etc/nginx/cache.d/cache_control.${MODE}.conf;
+
+    location ~ (^/|^${BASE_PATH}) {
+        rewrite          ^${BASE_PATH}$ /index.html break;
+        rewrite          ^${BASE_PATH}/?(.*) /$1 break;
+
+        sub_filter_once  off;
+        sub_filter       '**MICRO_LC_BASE_PATH**' '${BASE_PATH}';
+        sub_filter       '**MICRO_LC_MODE**' '${MODE}';
+        sub_filter       '**MICRO_LC_CONFIG_SRC**' '${CONFIG_SRC}';
+        sub_filter       '**CSP_NONCE**' $request_id;
+
+        expires          -1;
+        try_files        $uri $uri/index.html /index.html =404;
+    }
+}

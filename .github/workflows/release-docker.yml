@@ -7,13 +7,6 @@ on:
         default: false
         required: false
         type: boolean
-      node-version:
-        default: 20.x
-        required: false
-        type: string
-      version:
-        required: true
-        type: string
     secrets:
       docker_username:
         required: true
@@ -23,8 +16,14 @@ on:
         required: true
       nexus_token:
         required: true
-      security_checks_token:
+      sysdig_token:
         required: true
+      kms_gcp_poject:
+        required: false
+      gcp_wif:
+        required: false
+      cosign_key:
+        required: false
 
 jobs:
   release-docker:
@@ -32,124 +31,144 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       checksum: ${{ steps.docker-container-id.outputs.checksum }}
-
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      with:
+        show-progress: false
+    - name: Download Build Artifacts
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      with:
+        name: packages-build
+        path: packages/
+    - name: Docker Login to DockerHub
+      uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+      with:
+        username: ${{ secrets.docker_username }}
+        password: ${{ secrets.docker_token }}
+    - name: Login to Mia registry
+      uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+      with:
+        registry: nexus.mia-platform.eu
+        username: ${{ secrets.nexus_username }}
+        password: ${{ secrets.nexus_token }}
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
+      with:
+        platforms: amd64,arm64
+    - name: Configure docker metadata
+      id: meta
+      uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+      env:
+        DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
+      with:
+        images: |
+          docker.io/microlc/micro-lc
+          nexus.mia-platform.eu/microlc/micro-lc
+        tags: |
+          type=raw,value=latest,enable={{is_default_branch}}
+          type=semver,pattern={{version}}
+        labels: |
+          org.opencontainers.image.documentation=https://micro-lc.io/
+          org.opencontainers.image.vendor=Mia s.r.l.
+        annotations: |
+          org.opencontainers.image.documentation=https://micro-lc.io/
+          org.opencontainers.image.vendor=Mia s.r.l.
+    - name: Setup Buildx Context
+      uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
+      id: buildx
+      with:
+        platforms: linux/amd64,linux/arm64
+    - name: Build test image
+      uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
+      with:
+        context: .
+        file: ./.docker/Dockerfile
+        load: true
+        tags: local/microlc:${{ github.sha }}
+        labels: ${{ steps.meta.outputs.labels }}
+        annotations: ${{ steps.meta.output.annotations }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+      env:
+        DOCKER_BUILD_SUMMARY: false
+    - name: Test image
+      run: |
+        cat > "${FOLDER_PATH}/csp.html" <<EOF
+        **CSP_NONCE**
+        EOF
 
-      - name: Use Node.js ${{ inputs.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ inputs.node-version }}
-          cache: yarn
+        export CONTAINER_NAME="microlc"
+        docker run \
+          --detach \
+          --rm \
+          --publish 8080:8080 \
+          --name "${CONTAINER_NAME}" \
+          --env NGINX_ENTRYPOINT_QUIET_LOGS="" \
+          --volume "${FOLDER_PATH}/csp.html":"/usr/static/csp.html" \
+          "local/microlc:${COMMIT_SHA}"
 
-      - name: Install
-        run: yarn install --immutable
+        curl --retry 5 --retry-delay 1 --retry-all-errors --fail "http://127.0.0.1:8080/index.html" > /dev/null
+        export CSP=$(curl --retry 5 --retry-delay 1 --retry-all-errors --fail "http://127.0.0.1:8080/csp.html")
 
-      - name: Build Cache
-        uses: actions/cache@v4
-        id: build-cache
-        with:
-          path: |
-            ./node_modules
-            ./packages/**/dist
-            ./packages/**/node_modules
-          key: ${{ runner.os }}-build-${{ github.sha }}
-
-      - name: Build
-        if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn initialize --cleanup orchestrator
-
-      - name: Configure docker metadata
-        id: prepare-docker-container
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            docker.io/microlc/micro-lc
-            nexus.mia-platform.eu/microlc/micro-lc
-          tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=semver,pattern={{version}}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.docker_username }}
-          password: ${{ secrets.docker_token }}
-
-      - name: Login to Mia registry
-        uses: docker/login-action@v3
-        with:
-          registry: nexus.mia-platform.eu
-          username: ${{ secrets.nexus_username }}
-          password: ${{ secrets.nexus_token }}
-
-      - name: Build and export to Docker
-        uses: docker/build-push-action@v5
-        with:
-          context: ./
-          file: ./.docker/Dockerfile
-          build-args: |
-            COMMIT_SHA=${GITHUB_SHA}
-            DESCRIPTION="The Mia-Platform micro frontend solution"
-            VERSION=${{ inputs.version }}
-          load: true
-          tags: ${{ steps.prepare-docker-container.outputs.tags }}
-
-      - name: Test
-        run: |
-          echo '**CSP_NONCE**' > csp.html
-
-          export CONTAINER_NAME=microlc
-          docker run \
-            -d \
-            -p 8080:8080 \
-            --name $CONTAINER_NAME \
-            -v `pwd`/csp.html:/usr/static/csp.html \
-            microlc/micro-lc:${{ inputs.version }}
-          docker exec $CONTAINER_NAME sh -c 'curl --retry 5 --retry-max-time 120 --retry-connrefused --fail "http://0.0.0.0:8080/index.html"' > /dev/null
-          export CSP=$(docker exec $CONTAINER_NAME sh -c 'curl --retry 5 --retry-max-time 120 --retry-connrefused --fail "http://0.0.0.0:8080/csp.html"')
-
-          docker stop $CONTAINER_NAME
-          [[ "$CSP" != "**CSP_NONCE**" ]] && exit 0 || exit 1
-
-      - name: Build and push
-        if: ${{ inputs.push }}
-        uses: docker/build-push-action@v5
-        with:
-          context: ./
-          platforms: linux/amd64,linux/arm64
-          file: ./.docker/Dockerfile
-          build-args: |
-            COMMIT_SHA=${GITHUB_SHA}
-            DESCRIPTION="The Mia-Platform micro frontend solution"
-            VERSION=${{ inputs.version }}
-          push: true
-          tags: ${{ steps.prepare-docker-container.outputs.tags }}
-
-      - name: Get checksum
-        id: docker-container-id
-        run: |
-          export DOCKER_IMAGE=microlc/micro-lc:${{ inputs.version }}
-          CHECKSUM=$(docker inspect --format '{{.Id}}' $DOCKER_IMAGE)
-          echo "checksum=$CHECKSUM" >> GITHUB_OUTPUT
-
-  security-checks:
-    needs:
-      - release-docker
-    name: Triggers security checks
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Invoke API
-        if: ${{ inputs.push }}
-        run: |
-          curl --request POST \
-            --form token=${{ secrets.security_checks_token }} \
-            --form ref=main \
-            --form "variables[VERSION]=${{ inputs.version }}" \
-            --form "variables[CHECKSUM]=${{ needs.release-docker.outputs.checksum }}" \
-            "https://git.tools.mia-platform.eu/api/v4/projects/75704/trigger/pipeline"
-
+        docker logs "${CONTAINER_NAME}"
+        docker stop "${CONTAINER_NAME}"
+        [[ "${CSP}" != "**CSP_NONCE**" ]] && exit 0 || exit 1
+      env:
+        FOLDER_PATH: ${{ github.workspace }}
+        COMMIT_SHA: ${{ github.sha }}
+    - name: Build Docker Image
+      id: docker-build
+      if: ${{ inputs.push }}
+      uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
+      with:
+        context: .
+        file: ./.docker/Dockerfile
+        load: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        annotations: ${{ steps.meta.output.annotations }}
+        platforms: ${{ steps.buildx.outputs.platforms }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    - name: Scan image
+      if: ${{ inputs.push }}
+      uses: sysdiglabs/scan-action@0065d3b93bd4115371b55720251adb1d228fe188 # v5.1.1
+      with:
+        image-tag: nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.output.version.main }}
+        sysdig-secure-url: "https://eu1.app.sysdig.com"
+        sysdig-secure-token: ${{ secrets.sysdig_token }}
+        registry-user: ${{ secrets.nexus_username }}
+        registry-password: ${{ secrets.nexus_token }}
+        stop-on-processing-error: true
+    - name: Generate SBOM
+      uses: anchore/sbom-action@f5e124a5e5e1d497a692818ae907d3c45829d033 # v0.17.3
+      if: ${{ inputs.push && ( github.ref_type == 'tag') }}
+      with:
+        artifact-name: micro-lc-sbom.spdx.json
+        output-file: ./micro-lc-sbom.spdx.json
+        image: nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.output.version.main }}
+        upload-release-assets: true
+    - name: GCP Auth
+      uses: google-github-actions/auth@8254fb75a33b976a221574d287e93919e6a36f70 # v2.1.6
+      if: ${{ inputs.push && ( github.ref_type == 'tag') }}
+      with:
+        project_id: ${{ secrets.kms_gcp_poject }}
+        workload_identity_provider: ${{ secrets.gcp_wif }}
+        create_credentials_file: true
+    - name: Sign image with a key
+      if: ${{ inputs.push && ( github.ref_type == 'tag') }}
+      run: |
+        for tag in ${TAGS}; do
+          image="${tag}@${DIGEST}"
+          cosign sign --recursive --yes --key "${COSIGN_PRIVATE_KEY}" "${image}"
+          cosign attest --recursive --yes --key "${COSIGN_PRIVATE_KEY}" --predicate "micro-lc-sbom.spdx.json" --type="spdxjson" "${image}"
+        done
+      env:
+        TAGS: |
+          docker.io/microlc/micro-lc:${{ steps.meta.output.version.main }}
+          nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.output.version.main }}
+        DIGEST: ${{ steps.docker-build.outputs.digest }}
+        COSIGN_PRIVATE_KEY: ${{ secrets.cosign_key }}
