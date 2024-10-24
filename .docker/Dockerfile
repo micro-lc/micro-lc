@@ -38,6 +38,8 @@ RUN chown -R nginx:0 /var/cache/nginx \
 
 STOPSIGNAL SIGTERM
 
+HEALTHCHECK --interval=5s --timeout=1s --retries=3 CMD wget -q --spider -O- http://localhost:${HTTP_PORT}
+
 EXPOSE ${HTTP_PORT}
 
 USER nginx
