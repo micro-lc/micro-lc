@@ -259,6 +259,7 @@ export interface ComposableApplication {
    * Path on which the plugin will be rendered
    */
   route?: string
+  options?: ComposableApplicationOptions
 }
 /**
  * Composer configuration. It can be an url or an in-line configuration
@@ -352,6 +353,13 @@ export interface VoidComponent {
     [k: string]: unknown
   }
 }
+export interface ComposableApplicationOptions {
+  /**
+   * Whether of not application config should be fetch on each mount
+   */
+  fetchConfigOnMount?: boolean
+  [k: string]: unknown
+}
 export interface ParcelApplication {
   /**
    * Type of the application: micro front-end loaded using parcels
@@ -407,6 +415,7 @@ export interface ComposableApplication1 {
    * Path on which the plugin will be rendered
    */
   route?: string
+  options?: ComposableApplicationOptions
 }
 export interface ParcelApplication1 {
   /**
@@ -470,6 +479,7 @@ export interface ComposableApplication2 {
    * Path on which the plugin will be rendered
    */
   route: string
+  options?: ComposableApplicationOptions
 }
 export interface ParcelApplication2 {
   /**
