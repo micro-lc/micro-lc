@@ -456,3 +456,58 @@ test(`
   await expect(page.getByText('Go Home')).toBeVisible()
   await expect(page.frameLocator('iframe').getByText('Example Domain')).toBeVisible()
 })
+
+test(`
+  [composition]
+  fetch configuration at each mount if properly configured
+`, async ({ page }) => {
+  // file is served by ./tests/server.ts
+  const config = {
+    applications: {
+      inline: {
+        config: { content: { attributes: { id: 'test' }, content: 'Hello', tag: 'div' } },
+        integrationMode: 'compose' as const,
+        options: { fetchConfigOnMount: true },
+        route: './inline',
+      },
+      noRefetch: {
+        config: '/configurations/home.config.json',
+        integrationMode: 'compose' as const,
+        route: './no-refetch',
+      },
+      refetch: {
+        config: '/configurations/home.config.json',
+        integrationMode: 'compose' as const,
+        options: { fetchConfigOnMount: true },
+        route: './refetch',
+      },
+    },
+    settings: {
+      composerUri: '/packages/composer/dist/composer.development.js',
+      defaultUrl: './refetch',
+    },
+    version: 2 as const,
+  }
+
+  let configCallCount = 0
+  page.on('request', req => {
+    if (req.url().endsWith('/home.config.json')) {
+      configCallCount += 1
+    }
+  })
+
+  await goto(page, config)
+  await expect(() => expect(configCallCount).toBe(1)).toPass()
+
+  await page.evaluate(() => window.history.pushState('', '', '/inline'))
+
+  await page.evaluate(() => window.history.pushState('', '', '/no-refetch'))
+  await expect(() => expect(configCallCount).toBe(2)).toPass()
+
+  await page.evaluate(() => window.history.pushState('', '', '/refetch'))
+  await expect(() => expect(configCallCount).toBe(3)).toPass()
+
+  await page.evaluate(() => window.history.pushState('', '', '/no-refetch'))
+  await page.evaluate(() => window.history.pushState('', '', '/refetch'))
+  await expect(() => expect(configCallCount).toBe(4)).toPass()
+})
