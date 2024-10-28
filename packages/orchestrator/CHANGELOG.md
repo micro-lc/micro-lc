@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.4.3] - 2024-10-28
+
 ### Versioning
 
 - Upgraded `@micro-lc/composer`
