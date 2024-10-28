@@ -18,7 +18,7 @@ on:
         required: true
       sysdig_token:
         required: true
-      kms_gcp_poject:
+      kms_gcp_project:
         required: false
       gcp_wif:
         required: false
@@ -155,7 +155,7 @@ jobs:
       uses: google-github-actions/auth@8254fb75a33b976a221574d287e93919e6a36f70 # v2.1.6
       if: ${{ inputs.push && ( github.ref_type == 'tag') }}
       with:
-        project_id: ${{ secrets.kms_gcp_poject }}
+        project_id: ${{ secrets.kms_gcp_project }}
         workload_identity_provider: ${{ secrets.gcp_wif }}
         create_credentials_file: true
     - name: Sign image with a key
