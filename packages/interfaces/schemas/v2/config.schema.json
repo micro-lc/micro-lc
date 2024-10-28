@@ -222,6 +222,16 @@
         "route": {
           "description": "Path on which the plugin will be rendered",
           "type": "string"
+        },
+        "options": {
+          "title": "ComposableApplicationOptions",
+          "type": "object",
+          "properties": {
+            "fetchConfigOnMount": {
+              "description": "Whether of not application config should be fetch on each mount",
+              "type": "boolean"
+            }
+          }
         }
       },
       "additionalProperties": false
