@@ -13,39 +13,33 @@
 # limitations under the License.
 #
 
-ARG NGINX_VERSION="1.25.5"
+# syntax=docker/dockerfile:1
+FROM scratch AS build
 
-FROM nginx:${NGINX_VERSION}-alpine
+COPY ".docker/" "/tmp/"
+COPY "packages/orchestrator/dist" "/tmp/usr/static"
 
-ARG COMMIT_SHA
-ARG DESCRIPTION
-ARG VERSION
+FROM docker.io/library/nginx:1.27.2-alpine-slim@sha256:e9293c9bedb0db866e7d2b69e58131db4c2478e6cd216cdd99b134830703983a
 
-LABEL name="micro-lc" \
-      description=${DESCRIPTION} \
-      eu.mia-platform.url="https://www.mia-platform.eu" \
-      eu.mia-platform.version=${VERSION}
-
-COPY packages/orchestrator/dist /usr/static
-COPY .docker/etc/nginx /etc/nginx
-COPY .docker/usr/static /usr/static
-
-RUN touch ./off \
-  && chmod o+rw ./off \
-  && echo "[micro-lc]: ${COMMIT_SHA}" >> /etc/nginx/commit.sha
+COPY --from=build "/tmp" "/"
 
 ENV BASE_PATH="/"
 ENV MODE="production"
 ENV CONFIG_SRC="./config.json"
+ENV HTTP_PORT="8080"
+ENV NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
+ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
 
-RUN chown nginx /etc/nginx/nginx.conf
-RUN chown -R nginx /etc/nginx/conf.d/*
-RUN chown -R nginx /usr/static/*
+# nginx user must own the cache and etc directory to write cache and tweak the nginx config
+RUN chown -R nginx:0 /var/cache/nginx \
+    && chmod -R go+w /var/cache/nginx \
+    && chown -R nginx:0 /etc/nginx \
+    && chmod -R go+w /etc/nginx
 
 STOPSIGNAL SIGTERM
 
-EXPOSE 8080
+HEALTHCHECK --interval=5s --timeout=1s --retries=3 CMD wget -q --spider -O- http://localhost:${HTTP_PORT}
+
+EXPOSE ${HTTP_PORT}
 
 USER nginx
-
-CMD ["/bin/sh" , "-c" , "envsubst '$$BASE_PATH $$MODE $$CONFIG_SRC' < /etc/nginx/conf.d/default.conf >> /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]
