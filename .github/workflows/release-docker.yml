@@ -28,6 +28,11 @@ on:
 jobs:
   release-docker:
     name: Build web-server docker container
+    permissions:
+      actions: read
+      contents: write
+      packages: write
+      id-token: write
     runs-on: ubuntu-latest
     outputs:
       checksum: ${{ steps.docker-container-id.outputs.checksum }}
