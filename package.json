@@ -1,9 +1,9 @@
 {
   "name": "micro-lc",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "The micro frontend solution by Mia-Platform",
   "type": "module",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "Apache-2.0",
   "packageManager": "yarn@4.1.0",
   "workspaces": [
     "packages/*"

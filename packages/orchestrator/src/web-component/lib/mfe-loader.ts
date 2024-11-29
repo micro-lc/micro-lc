@@ -112,10 +112,15 @@ const prepareApplicationConfig = <T extends BaseExtension, E extends MicrolcEven
     ): LoadableAppContext<T, E> => {
       const context = contextMaker(container, { ...sharedProperties, microlcApi })
 
+      const fetchConfigOnMount = app.integrationMode !== 'compose'
+        ? undefined
+        : app.options?.fetchConfigOnMount
+
       return {
         ...context,
         props: {
           ...context.props,
+          options: { fetchConfigOnMount },
           schema: getApplicationSchema(),
         },
       }

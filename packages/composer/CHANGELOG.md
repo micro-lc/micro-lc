@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.2.0] - 2024-10-28
+
+### Added
+
+- Added opt-in support for re-fetching compose applications' configuration on each mount
+
 ## [2.1.0] - 2024-06-20
 
 ### Added
