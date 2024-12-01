@@ -38,7 +38,7 @@ jobs:
       checksum: ${{ steps.docker-container-id.outputs.checksum }}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         show-progress: false
     - name: Download Build Artifacts
@@ -65,7 +65,7 @@ jobs:
         platforms: amd64,arm64
     - name: Configure docker metadata
       id: meta
-      uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+      uses: docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5.6.1
       env:
         DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
       with:
@@ -82,12 +82,12 @@ jobs:
           org.opencontainers.image.documentation=https://micro-lc.io/
           org.opencontainers.image.vendor=Mia s.r.l.
     - name: Setup Buildx Context
-      uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
+      uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3.7.1
       id: buildx
       with:
         platforms: linux/amd64,linux/arm64
     - name: Build test image
-      uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
+      uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355 # v6.10.0
       with:
         context: .
         file: ./.docker/Dockerfile
@@ -127,7 +127,7 @@ jobs:
     - name: Build Docker Image
       id: docker-build
       if: ${{ inputs.push }}
-      uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
+      uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355 # v6.10.0
       with:
         context: .
         file: ./.docker/Dockerfile
@@ -149,7 +149,7 @@ jobs:
         registry-password: ${{ secrets.nexus_token }}
         stop-on-processing-error: true
     - name: Generate SBOM
-      uses: anchore/sbom-action@f5e124a5e5e1d497a692818ae907d3c45829d033 # v0.17.3
+      uses: anchore/sbom-action@55dc4ee22412511ee8c3142cbea40418e6cec693 # v0.17.8
       if: ${{ inputs.push && ( github.ref_type == 'tag') }}
       with:
         artifact-name: micro-lc-sbom.spdx.json
@@ -157,7 +157,7 @@ jobs:
         image: nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.output.version.main }}
         upload-release-assets: true
     - name: GCP Auth
-      uses: google-github-actions/auth@8254fb75a33b976a221574d287e93919e6a36f70 # v2.1.6
+      uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f # v2.1.7
       if: ${{ inputs.push && ( github.ref_type == 'tag') }}
       with:
         project_id: ${{ secrets.kms_gcp_project }}
