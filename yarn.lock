@@ -2630,7 +2630,7 @@ __metadata:
     sinon-chai: "npm:^3.7.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.4.5"
-    vite: "npm:^6.0.1"
+    vite: "npm:^6.0.3"
     vite-plugin-banner: "npm:^0.7.1"
   peerDependencies:
     es-module-shims: "*"
@@ -2754,7 +2754,7 @@ __metadata:
     sinon: "npm:^17.0.1"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.4.5"
-    vite: "npm:^6.0.1"
+    vite: "npm:^6.0.3"
     vite-plugin-banner: "npm:^0.7.1"
     vite-plugin-dynamic-import: "npm:^1.5.0"
     vite-plugin-replace: "npm:^0.1.1"
@@ -2804,7 +2804,7 @@ __metadata:
     sinon-chai: "npm:^3.7.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.4.5"
-    vite: "npm:^6.0.1"
+    vite: "npm:^6.0.3"
     vite-plugin-banner: "npm:^0.7.1"
   peerDependencies:
     ajv: ">=8.11.0"
@@ -14777,7 +14777,7 @@ __metadata:
     stylelint-declaration-block-no-ignored-properties: "npm:^2.8.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.4.5"
-    vite: "npm:^6.0.1"
+    vite: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
 
@@ -21806,9 +21806,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "vite@npm:6.0.1"
+"vite@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "vite@npm:6.0.3"
   dependencies:
     esbuild: "npm:^0.24.0"
     fsevents: "npm:~2.3.3"
@@ -21854,7 +21854,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/a42bf6e92425920335175b59d0e4d98cae8f2bfa473c1e32bd62e1feb4b808341992f92632d1883103351f8e9ec4ae53179266b0a815731e9c109a2e3768cde5
+  checksum: 10/eca0949b8cbc887e78977515d8fc22eaa2d03425d60a0a422f2db1da9d26bd1b431b2815a273c798e8e3fe176a99e105c3d87b0ba615ca19b8bf19e0334d807a
   languageName: node
   linkType: hard
 
