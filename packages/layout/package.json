@@ -46,7 +46,7 @@
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
-    "@ant-design/colors": "^7.0.0",
+    "@ant-design/colors": "^7.2.0",
     "@ant-design/icons": "^4.8.1",
     "@ant-design/icons-svg": "^4.2.1",
     "@ctrl/tinycolor": "^3.6.0",
