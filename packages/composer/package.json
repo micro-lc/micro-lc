@@ -56,7 +56,7 @@
     "chai": "^4.3.8",
     "chai-string": "^1.5.0",
     "es-module-shims": "^1.8.0",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.25.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
     "rollup-plugin-visualizer": "^5.12.0",

@@ -86,7 +86,7 @@
     "@types/react-dom": "^18.2.21",
     "@types/sinon": "^17.0.3",
     "cssnano": "^7.0.2",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.25.0",
     "glob": "^10.3.10",
     "json-schema-to-typescript": "^13.0.2",
     "less": "^4.1.3",
