@@ -43,7 +43,7 @@
     "@web/dev-server-esbuild": "^1.0.2",
     "@web/dev-server-import-maps": "^0.2.0",
     "@web/dev-server-rollup": "^0.6.1",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.25.0",
     "glob": "^10.3.10",
     "jsdom": "^22.1.0",
     "jszip": "^3.10.1",
