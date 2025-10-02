@@ -1,8 +1,5 @@
 name: Pull on Main
 
-env:
-  NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
 on:
   pull_request:
     branches:
@@ -33,7 +30,7 @@ jobs:
       diff: ${{ steps.filter.outputs.diff }}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       with:
         show-progress: false
 

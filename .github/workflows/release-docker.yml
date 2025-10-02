@@ -38,34 +38,34 @@ jobs:
       checksum: ${{ steps.docker-container-id.outputs.checksum }}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       with:
         show-progress: false
     - name: Download Build Artifacts
-      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
       with:
         name: packages-build
         path: packages/
     - name: Docker Login to DockerHub
-      uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+      uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
       with:
         username: ${{ secrets.docker_username }}
         password: ${{ secrets.docker_token }}
     - name: Login to Mia registry
-      uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+      uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
       with:
         registry: nexus.mia-platform.eu
         username: ${{ secrets.nexus_username }}
         password: ${{ secrets.nexus_token }}
     - name: Install Cosign
-      uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
+      uses: sigstore/cosign-installer@d7543c93d881b35a8faa02e8e3605f69b7a1ce62 # v3.10.0
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
+      uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
       with:
         platforms: amd64,arm64
     - name: Configure docker metadata
       id: meta
-      uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+      uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
       env:
         DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
       with:
@@ -82,19 +82,19 @@ jobs:
           org.opencontainers.image.documentation=https://micro-lc.io/
           org.opencontainers.image.vendor=Mia s.r.l.
     - name: Setup Buildx Context
-      uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
+      uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
       id: buildx
       with:
         platforms: linux/amd64,linux/arm64
     - name: Build test image
-      uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
+      uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
       with:
         context: .
         file: ./.docker/Dockerfile
         load: true
         tags: local/microlc:${{ github.sha }}
         labels: ${{ steps.meta.outputs.labels }}
-        annotations: ${{ steps.meta.output.annotations }}
+        annotations: ${{ steps.meta.outputs.annotations }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
       env:
@@ -126,38 +126,36 @@ jobs:
         COMMIT_SHA: ${{ github.sha }}
     - name: Build Docker Image
       id: docker-build
-      if: ${{ inputs.push }}
-      uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
+      uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
       with:
         context: .
         file: ./.docker/Dockerfile
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        annotations: ${{ steps.meta.output.annotations }}
+        annotations: ${{ steps.meta.outputs.annotations }}
         platforms: ${{ steps.buildx.outputs.platforms }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
     - name: Scan image
-      if: ${{ inputs.push }}
-      uses: sysdiglabs/scan-action@0065d3b93bd4115371b55720251adb1d228fe188 # v5.1.1
+      uses: sysdiglabs/scan-action@f82dfca019814742e751f7e5118cc107b0a14acb # v6.1.3
       with:
-        image-tag: nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.output.version.main }}
+        image-tag: nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.outputs.version }}
         sysdig-secure-url: "https://eu1.app.sysdig.com"
         sysdig-secure-token: ${{ secrets.sysdig_token }}
         registry-user: ${{ secrets.nexus_username }}
         registry-password: ${{ secrets.nexus_token }}
         stop-on-processing-error: true
     - name: Generate SBOM
-      uses: anchore/sbom-action@f5e124a5e5e1d497a692818ae907d3c45829d033 # v0.17.3
+      uses: anchore/sbom-action@f8bdd1d8ac5e901a77a92f111440fdb1b593736b # v0.20.6
       if: ${{ inputs.push && ( github.ref_type == 'tag') }}
       with:
         artifact-name: micro-lc-sbom.spdx.json
         output-file: ./micro-lc-sbom.spdx.json
-        image: nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.output.version.main }}
+        image: nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.outputs.version }}
         upload-release-assets: true
     - name: GCP Auth
-      uses: google-github-actions/auth@8254fb75a33b976a221574d287e93919e6a36f70 # v2.1.6
+      uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
       if: ${{ inputs.push && ( github.ref_type == 'tag') }}
       with:
         project_id: ${{ secrets.kms_gcp_project }}
@@ -169,11 +167,11 @@ jobs:
         for tag in ${TAGS}; do
           image="${tag}@${DIGEST}"
           cosign sign --recursive --yes --key "${COSIGN_PRIVATE_KEY}" "${image}"
-          cosign attest --recursive --yes --key "${COSIGN_PRIVATE_KEY}" --predicate "micro-lc-sbom.spdx.json" --type="spdxjson" "${image}"
+          cosign attest --yes --key "${COSIGN_PRIVATE_KEY}" --predicate "micro-lc-sbom.spdx.json" --type="spdxjson" "${image}"
         done
       env:
         TAGS: |
-          docker.io/microlc/micro-lc:${{ steps.meta.output.version.main }}
-          nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.output.version.main }}
+          docker.io/microlc/micro-lc:${{ steps.meta.outputs.version }}
+          nexus.mia-platform.eu/microlc/micro-lc:${{ steps.meta.outputs.version }}
         DIGEST: ${{ steps.docker-build.outputs.digest }}
         COSIGN_PRIVATE_KEY: ${{ secrets.cosign_key }}

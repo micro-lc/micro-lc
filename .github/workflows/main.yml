@@ -1,8 +1,5 @@
 name: Main
 
-env:
-  NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
 on:
   workflow_dispatch:
   push:
@@ -20,12 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           show-progress: false
 
       - name: Verify CHANGELOG Updates
-        uses: tj-actions/changed-files@c3a1bb2c992d77180ae65be6ae6c166cf40f857c # v45.0.3
+        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47.0.0
         id: changelog-updates
         with:
           since_last_remote_commit: true
@@ -33,7 +30,7 @@ jobs:
 
       - name: Trigger 'micro-lc.github.io' Updates
         if: steps.changelog-updates.outputs.any_changed == 'true'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v70.1
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           github-token: ${{ secrets.PAT_DOCS_TOKEN }}
           script: |
