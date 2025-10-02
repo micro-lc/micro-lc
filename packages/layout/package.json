@@ -4,6 +4,10 @@
   "type": "module",
   "types": "./dist/types/index.d.ts",
   "module": "./dist/index.js",
+  "repository": {
+    "url": "git+https://github.com/micro-lc/micro-lc.git",
+    "directory": "packages/layout"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js",

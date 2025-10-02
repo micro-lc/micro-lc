@@ -10,6 +10,10 @@
     "useIcon",
     "package.json"
   ],
+  "repository": {
+    "url": "git+https://github.com/micro-lc/micro-lc.git",
+    "directory": "packages/iconic"
+  },
   "scripts": {
     "check:types": "tsc --project scripts/tsconfig.types.json && echo \"✓ check types\"",
     "bundle:dependencies": "node --no-warnings --loader=ts-node/esm ./scripts/pre-bundle.ts",

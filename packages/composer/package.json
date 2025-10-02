@@ -8,6 +8,10 @@
     "dist",
     "package.json"
   ],
+  "repository": {
+    "url": "git+https://github.com/micro-lc/micro-lc.git",
+    "directory": "packages/composer"
+  },
   "exports": {
     ".": {
       "default": "./dist/lib/index.js",
