@@ -41,12 +41,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ant-design/colors@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@ant-design/colors@npm:7.0.0"
+"@ant-design/colors@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@ant-design/colors@npm:7.2.0"
   dependencies:
-    "@ctrl/tinycolor": "npm:^3.4.0"
-  checksum: 10/9d8aaf924e98e75912ddbffcefaa6d54810c28b347141dbc4561ffa5cae94d80ab4495f4b263bb4d297e49d4a7f7e3f6677762f63a987d5f86d7fe771fa2a6f9
+    "@ant-design/fast-color": "npm:^2.0.6"
+  checksum: 10/a65047f1d8821cca1f573dd0d24bb575614b23a8001262ce573f1f1400adc63ca2552f205624ebfeeafb6c8f2e5c32b7b8c970cd13a7febecc027c996e32ee3c
+  languageName: node
+  linkType: hard
+
+"@ant-design/fast-color@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@ant-design/fast-color@npm:2.0.6"
+  dependencies:
+    "@babel/runtime": "npm:^7.24.7"
+  checksum: 10/94167d70e10d4c267875b97bbe282fe32e6a60aabbfb70dd9f3c5500c559e4c91c4881a364168629ec1c150441e37f0da3fa97d34cb3d24373535a792d91e627
   languageName: node
   linkType: hard
 
@@ -1548,6 +1557,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.24.7":
+  version: 7.26.0
+  resolution: "@babel/runtime@npm:7.26.0"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 10/9f4ea1c1d566c497c052d505587554e782e021e6ccd302c2ad7ae8291c8e16e3f19d4a7726fb64469e057779ea2081c28b7dbefec6d813a22f08a35712c0f699
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.12.7, @babel/template@npm:^7.18.10, @babel/template@npm:^7.22.15, @babel/template@npm:^7.22.5, @babel/template@npm:^7.7.0":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -2705,7 +2723,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@micro-lc/layout@workspace:packages/layout"
   dependencies:
-    "@ant-design/colors": "npm:^7.0.0"
+    "@ant-design/colors": "npm:^7.2.0"
     "@ant-design/icons": "npm:^4.8.1"
     "@ant-design/icons-svg": "npm:^4.2.1"
     "@babel/core": "npm:^7.22.9"
