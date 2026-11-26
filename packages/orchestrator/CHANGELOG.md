@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Security
+
+- docker image: base image bumped to `nginx:1.27.5-alpine-slim` and OS packages upgraded to fix critical/high CVEs (OpenSSL, musl, zlib)
+
 ## [2.4.3] - 2024-10-28
 
 ### Versioning
