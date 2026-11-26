@@ -19,7 +19,7 @@ FROM scratch AS build
 COPY ".docker/" "/tmp/"
 COPY "packages/orchestrator/dist" "/tmp/usr/static"
 
-FROM docker.io/library/nginx:1.27.2-alpine-slim@sha256:e9293c9bedb0db866e7d2b69e58131db4c2478e6cd216cdd99b134830703983a
+FROM docker.io/library/nginx:1.27.5-alpine-slim@sha256:b947b2630c97622793113555e13332eec85bdc7a0ac6ab697159af78942bb856
 
 COPY --from=build "/tmp" "/"
 
@@ -30,8 +30,10 @@ ENV HTTP_PORT="8080"
 ENV NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
 ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
 
+# upgrade OS packages to pick up security fixes not yet in the base image
 # nginx user must own the cache and etc directory to write cache and tweak the nginx config
-RUN chown -R nginx:0 /var/cache/nginx \
+RUN apk upgrade --no-cache \
+    && chown -R nginx:0 /var/cache/nginx \
     && chmod -R go+w /var/cache/nginx \
     && chown -R nginx:0 /etc/nginx \
     && chmod -R go+w /etc/nginx
