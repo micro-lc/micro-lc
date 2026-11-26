@@ -30,8 +30,10 @@ ENV HTTP_PORT="8080"
 ENV NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
 ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
 
+# upgrade OS packages to pick up security fixes not yet in the base image
 # nginx user must own the cache and etc directory to write cache and tweak the nginx config
-RUN chown -R nginx:0 /var/cache/nginx \
+RUN apk upgrade --no-cache \
+    && chown -R nginx:0 /var/cache/nginx \
     && chmod -R go+w /var/cache/nginx \
     && chown -R nginx:0 /etc/nginx \
     && chmod -R go+w /etc/nginx
